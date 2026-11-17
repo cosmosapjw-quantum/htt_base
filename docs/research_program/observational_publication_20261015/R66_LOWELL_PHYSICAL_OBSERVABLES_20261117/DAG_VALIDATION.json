@@ -1,0 +1,85 @@
+{
+  "stage": "R10 additive finalization",
+  "commands": [
+    {
+      "argv": [
+        ".venv/bin/python",
+        "-B",
+        "scripts/r66/finalize_r66_dag.py"
+      ],
+      "returncode": 0,
+      "stdout": "{\n  \"canonical_card_added\": \"PR-R66-LOWELL-PHYSICAL-OBSERVABLES\",\n  \"old_backlog_entries\": 289,\n  \"new_backlog_entries\": 290,\n  \"old_completed_count\": 224,\n  \"new_completed_count\": 225,\n  \"five_PR_checkpoint_required\": true,\n  \"previous_cards_semantically_unchanged\": true,\n  \"original_node_payload_sha256\": \"e3264e105cabf78ddac37addc36cacc3cfa05ee942e33e54b431b22e3e87de0d\",\n  \"original_nodes_unchanged\": true,\n  \"original_paper_contracts_preserved\": true,\n  \"selected_scope\": \"P2 companion only\",\n  \"stage10_completed_only_after_review\": true,\n  \"automatic_successor\": false,\n  \"local_agent_prompt_created\": false\n}\n\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        ".venv/bin/python",
+        "-B",
+        "scripts/codex_harness/validate_pr_dag.py",
+        "docs/codex_handoff/pr_backlog.yaml"
+      ],
+      "returncode": 0,
+      "stdout": "OK: 290 PRs, DAG valid\ntopological_order=PR-000,PR-001,PR-003,PR-002,PR-004,PR-005,PR-020,PR-010,PR-021,PR-011,PR-013,PR-014,PR-040,PR-012,PR-022,PR-070,PR-015,PR-050,PR-041,PR-023,PR-071,PR-080,PR-030,PR-113,PR-051,PR-042,PR-072,PR-081,PR-031,PR-052,PR-043,PR-073,PR-082,PR-032,PR-053,PR-074,PR-083,PR-054,PR-075,PR-055,PR-076,PR-056,PR-060,PR-090,PR-100,PR-084,PR-061,PR-091,PR-101,PR-102,PR-062,PR-092,PR-063,PR-110,PR-064,PR-065,PR-066,PR-103,PR-111,PR-112,PR-114,PR-115,PR-116,PR-117,PR-118,PR-119,PR-120,PR-121,PR-122,PR-123,PR-124,PR-125,PR-126,PR-127,PR-128,PR-129,PR-130,PR-131,PR-132,PR-133,PR-134,PR-135,PR-136,PR-137,PR-138,PR-139,PR-140,PR-141,PR-142,PR-143,PR-144,PR-145,PR-146,PR-147,PR-148,PR-149,PR-150,PR-151,PR-152,PR-153,PR-154,PR-155,PR-156,PR-157,PR-158,PR-159,PR-160,PR-161,PR-162,PR-163,PR-164,PR-165,PR-166,PR-167,PR-168,PR-169,PR-170,PR-171,PR-172,PR-173,PR-174,PR-175,PR-176,PR-177,PR-178,PR-179,PR-184,PR-180,PR-181,PR-182,PR-183,PR-185,PR-186,PR-187,PR-188,PR-189,PR-190,PR-191,PR-192,PR-193,PR-194,PR-195,PR-196,PR-197,PR-198,PR-199,PR-200,PR-201,PR-202,PR-203,PR-204,PR-205,PR-206,PR-207,PR-208,PR-209,PR-210,PR-211,PR-213,PR-212,PR-214,PR-223,PR-215,PR-219,PR-216,PR-217,PR-218,PR-220,PR-222,PR-221,PR-225,PR-224,PR-226,PR-227,PR-228,PR-229,PR-230,PR-231,PR-232,PR-233,PR-234,PR-235,PR-236,PR-237,PR-238,PR-239,PR-240,PR-241,PR-242,PR-243,PR-244,PR-245,PR-246,PR-247,PR-CATALOG-001,PR-CATALOG-002,PR-CATALOG-003,PR-CATALOG-004,PR-REPLAN-20260927,PR-R9-REV2,PR-R9-INTAKE,PR-R9-MULTIDEPTH,PR-R9-SELECTED-LAW,PR-R9-FIBRE,PR-R9-DEPTH-FORMAL,PR-R9-MOVING-Q,PR-R9-DEPTH-MATHLIB,PR-MES-R7-SOURCE-IMAGE,PR-MES-I3-SCREEN,PR-MES-FULL-HANDOFF,PR-MES-I1-I2-MATERIALIZE,PR-TYPEFREE-INFERENCE-PORT,PR-GR-STATISTICS-CAS-HANDOFF,PR-OBS-ANALYSIS-PREP,PR-OBS-REBOOT,PR-REBOOT-01,PR-REBOOT-02,PR-REBOOT-03,PR-REBOOT-04,PR-REBOOT-05,PR-REBOOT-06,PR-REBOOT-07,PR-REBOOT-08,PR-REBOOT-09,PR-REBOOT-10,PR-REBOOT-11,PR-REBOOT-12,PR-REBOOT-13,PR-REBOOT-14,PR-REBOOT-15,PR-REBOOT-16,PR-REBOOT-17,PR-REBOOT-18,PR-REBOOT-19,PR-REBOOT-20,PR-REBOOT-21,PR-REBOOT-22,PR-REBOOT-DISTANCE-JOINT,PR-REBOOT-PLANCK-PR3,PR-REBOOT-SCIENTIFIC-REPORT,PR-REBOOT-GAIA-BIAS,PR-SOLVER-FREE-DOSSIER,PR-SF-GAIA-CORRELATION,PR-SF-CF4-PRECISION,PR-SF-METHODS-MANUSCRIPT,PR-R32-01-QO-METHODS,PR-R32-02-P1-SELECTED,PR-R32-03-H03-STRUCTURED,PR-R32-04-BANDPASS-BOUNDS,PR-R32-05-P6-OPTICAL,PR-R32-06-P4-DESIGN,PR-R32-07-P5-ALGEBRA,PR-R32-08-H03-PAPER,PR-R32-09-BANDPASS-PAPER,PR-R36-00-INTEGRATION,PR-R36-01-CF4-OPERATOR,PR-R36-02-CF4-CORRELATED,PR-R36-03-PM-HISTORY,PR-R36-04-OPTICAL-JOINT,PR-R36-05-RADIATION-RESPONSE,PR-R36-06-PR4-MORPHOLOGY,PR-R36-07-FOREGROUND-BUDGET,PR-R36-08-PUBLIC-SN,PR-R36-09-ATLAS-INTAKE,PR-R36-10-GEOMETRY-IMAGE,PR-R36-11-SCIENCE-SYNTHESIS,PR-R37-CONVERGENCE,PR-R37-00-FIRST-REPORT,PR-R37-01-RADIATION,PR-R37-02-KINEMATICS,PR-R37-03-HUBBLE,PR-R37-04-CLASSIFICATION,PR-R37-05-FINAL-REPORT,PR-R50-OBSERVED-CONVERGENCE,PR-R51-OBSERVED-CONVERGENCE,PR-R52-OBSERVED-CONVERGENCE,PR-R53-OBSERVED-CONVERGENCE,PR-R54-TENSOR-FRAME-TOMOGRAPHY,PR-R55-LOCAL-CALIBRATION,PR-R56-JOINT-BENCHMARK,PR-R57-MANUSCRIPT-DECISION,PR-R58-MIXED-TENSOR-CONVERGENCE,PR-R59-NATIVE-REPLAY-MANUSCRIPT,PR-R60-COVARIANCE-CALIBRATION,PR-R61-KINEMATIC-MEASUREMENT,PR-R62-ANISOTROPY-CLASSIFICATION,PR-R63-LOCAL-BOOST-GLOBAL-TILT,PR-R64-DIRECTIONAL-HUBBLE,PR-R65-DIPOLE-ANOMALY,PR-R66-LOWELL-PHYSICAL-OBSERVABLES\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        ".venv/bin/python",
+        "-B",
+        "scripts/codex_harness/sync_pr_dag_mirrors.py",
+        "--write"
+      ],
+      "returncode": 0,
+      "stdout": "OK: PR-DAG, status, and remediation mirrors are synchronized\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        ".venv/bin/python",
+        "-B",
+        "scripts/codex_harness/sync_pr_dag_mirrors.py",
+        "--check"
+      ],
+      "returncode": 0,
+      "stdout": "OK: PR-DAG, status, and remediation mirrors are synchronized\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        ".venv/bin/python",
+        "-B",
+        "scripts/htt_publication_dag.py",
+        "--validate"
+      ],
+      "returncode": 0,
+      "stdout": "{\n  \"schema\": \"htt.observational_six_paper_dag/1\",\n  \"paper_count\": 6,\n  \"node_count\": 42,\n  \"reused_evidence_anchors\": 18,\n  \"new_tasks\": 24,\n  \"external_missing_nodes\": 7,\n  \"submission_gates\": 6,\n  \"ready_now\": 0\n}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        ".venv/bin/python",
+        "-B",
+        "scripts/codex_harness/progress_report.py",
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml",
+        "--checkpoint-every",
+        "5",
+        "--write-checkpoint-dir",
+        "docs/generated/progress_checkpoints",
+        "--write-scoreboard",
+        "docs/generated/progress_checkpoints/progress_scoreboard.md",
+        "--json"
+      ],
+      "returncode": 0,
+      "stdout": "{\n  \"total\": 290,\n  \"completed\": 225,\n  \"blocked\": [\n    \"PR-172\",\n    \"PR-190\",\n    \"PR-247\",\n    \"PR-R9-DEPTH-MATHLIB\",\n    \"PR-MES-R7-SOURCE-IMAGE\",\n    \"PR-REBOOT-08\",\n    \"PR-REBOOT-09\",\n    \"PR-REBOOT-10\",\n    \"PR-REBOOT-11\",\n    \"PR-REBOOT-12\",\n    \"PR-REBOOT-13\",\n    \"PR-REBOOT-14\",\n    \"PR-REBOOT-15\",\n    \"PR-REBOOT-16\",\n    \"PR-R36-07-FOREGROUND-BUDGET\",\n    \"PR-R36-09-ATLAS-INTAKE\"\n  ],\n  \"skipped\": [],\n  \"skipped_count\": 0,\n  \"pending\": [\n    \"PR-155\",\n    \"PR-156\",\n    \"PR-157\",\n    \"PR-158\",\n    \"PR-178\",\n    \"PR-181\",\n    \"PR-191\",\n    \"PR-192\",\n    \"PR-193\",\n    \"PR-194\",\n    \"PR-195\",\n    \"PR-198\",\n    \"PR-199\",\n    \"PR-201\",\n    \"PR-202\",\n    \"PR-203\",\n    \"PR-205\",\n    \"PR-206\",\n    \"PR-207\",\n    \"PR-208\"\n  ],\n  \"pending_count\": 20,\n  \"dormant_external\": [\n    \"PR-159\",\n    \"PR-160\",\n    \"PR-161\",\n    \"PR-162\",\n    \"PR-163\",\n    \"PR-164\",\n    \"PR-165\",\n    \"PR-166\",\n    \"PR-183\",\n    \"PR-196\",\n    \"PR-229\",\n    \"PR-230\",\n    \"PR-231\",\n    \"PR-232\",\n    \"PR-233\",\n    \"PR-234\",\n    \"PR-235\",\n    \"PR-236\",\n    \"PR-237\",\n    \"PR-238\",\n    \"PR-239\",\n    \"PR-240\",\n    \"PR-241\",\n    \"PR-242\",\n    \"PR-243\",\n    \"PR-244\",\n    \"PR-245\",\n    \"PR-246\"\n  ],\n  \"dormant_external_count\": 28,\n  \"in_progress\": null,\n  \"background_in_progress\": [\n    \"PR-151\"\n  ],\n  \"background_in_progress_count\": 1,\n  \"execution_lane\": {\n    \"PR-167\": \"defensible\",\n    \"PR-168\": \"defensible\",\n    \"PR-169\": \"defensible\",\n    \"PR-170\": \"defensible\",\n    \"PR-171\": \"defensible\",\n    \"PR-172\": \"defensible\",\n    \"PR-173\": \"defensible\",\n    \"PR-174\": \"hypothesis_only\",\n    \"PR-175\": \"hypothesis_only\",\n    \"PR-176\": \"defensible\",\n    \"PR-177\": \"defensible\",\n    \"PR-178\": \"defensible\",\n    \"PR-179\": \"defensible\",\n    \"PR-180\": \"defensible\",\n    \"PR-181\": \"defensible\",\n    \"PR-182\": \"hypothesis_only\",\n    \"PR-183\": \"needs_native\",\n    \"PR-184\": \"defensible\",\n    \"PR-185\": \"defensible\",\n    \"PR-186\": \"defensible\",\n    \"PR-187\": \"defensible\",\n    \"PR-188\": \"defensible\",\n    \"PR-189\": \"defensible\",\n    \"PR-190\": \"defensible\",\n    \"PR-191\": \"defensible\",\n    \"PR-192\": \"defensible\",\n    \"PR-193\": \"defensible\",\n    \"PR-194\": \"defensible\",\n    \"PR-195\": \"defensible\",\n    \"PR-196\": \"needs_native\",\n    \"PR-197\": \"defensible\",\n    \"PR-198\": \"defensible\",\n    \"PR-199\": \"defensible\",\n    \"PR-200\": \"defensible\",\n    \"PR-201\": \"defensible\",\n    \"PR-202\": \"defensible\",\n    \"PR-203\": \"defensible\",\n    \"PR-204\": \"defensible\",\n    \"PR-205\": \"defensible\",\n    \"PR-206\": \"defensible\",\n    \"PR-207\": \"defensible\",\n    \"PR-208\": \"defensible\",\n    \"PR-209\": \"defensible\",\n    \"PR-210\": \"defensible\",\n    \"PR-211\": \"defensible\",\n    \"PR-213\": \"defensible\",\n    \"PR-212\": \"defensible\",\n    \"PR-214\": \"defensible\",\n    \"PR-223\": \"defensible\",\n    \"PR-215\": \"defensible\",\n    \"PR-219\": \"defensible\",\n    \"PR-216\": \"defensible\",\n    \"PR-217\": \"defensible\",\n    \"PR-218\": \"defensible\",\n    \"PR-220\": \"defensible\",\n    \"PR-222\": \"defensible\",\n    \"PR-221\": \"defensible\",\n    \"PR-225\": \"defensible\",\n    \"PR-224\": \"defensible\",\n    \"PR-226\": \"defensible\",\n    \"PR-227\": \"defensible\",\n    \"PR-228\": \"defensible\",\n    \"PR-229\": \"needs_native\",\n    \"PR-230\": \"needs_native\",\n    \"PR-231\": \"needs_native\",\n    \"PR-232\": \"needs_native\",\n    \"PR-233\": \"needs_native\",\n    \"PR-234\": \"needs_native\",\n    \"PR-235\": \"needs_native\",\n    \"PR-236\": \"needs_native\",\n    \"PR-237\": \"needs_native\",\n    \"PR-238\": \"needs_native\",\n    \"PR-239\": \"needs_native\",\n    \"PR-240\": \"needs_native\",\n    \"PR-241\": \"needs_native\",\n    \"PR-242\": \"needs_native\",\n    \"PR-243\": \"needs_native\",\n    \"PR-244\": \"needs_native\",\n    \"PR-245\": \"needs_native\",\n    \"PR-246\": \"needs_native\"\n  },\n  \"execution_resolved_count\": 93,\n  \"percent_complete\": 77.59,\n  \"dependency_weighted_percent_complete\": 81.13,\n  \"critical_path\": [\n    \"PR-000\",\n    \"PR-003\",\n    \"PR-004\",\n    \"PR-010\",\n    \"PR-014\",\n    \"PR-050\",\n    \"PR-051\",\n    \"PR-052\",\n    \"PR-053\",\n    \"PR-054\",\n    \"PR-055\",\n    \"PR-060\",\n    \"PR-061\",\n    \"PR-062\",\n    \"PR-063\",\n    \"PR-064\",\n    \"PR-065\",\n    \"PR-066\",\n    \"PR-111\",\n    \"PR-114\",\n    \"PR-115\",\n    \"PR-116\",\n    \"PR-117\",\n    \"PR-118\",\n    \"PR-119\",\n    \"PR-121\",\n    \"PR-122\",\n    \"PR-123\",\n    \"PR-124\",\n    \"PR-125\",\n    \"PR-126\",\n    \"PR-127\",\n    \"PR-128\",\n    \"PR-131\",\n    \"PR-132\",\n    \"PR-133\",\n    \"PR-134\",\n    \"PR-135\",\n    \"PR-137\",\n    \"PR-138\",\n    \"PR-139\",\n    \"PR-140\",\n    \"PR-141\",\n    \"PR-142\",\n    \"PR-143\",\n    \"PR-153\",\n    \"PR-154\",\n    \"PR-167\",\n    \"PR-172\",\n    \"PR-184\",\n    \"PR-185\",\n    \"PR-186\",\n    \"PR-187\",\n    \"PR-188\",\n    \"PR-189\",\n    \"PR-190\",\n    \"PR-191\",\n    \"PR-193\",\n    \"PR-194\",\n    \"PR-198\",\n    \"PR-199\",\n    \"PR-202\",\n    \"PR-205\",\n    \"PR-206\",\n    \"PR-207\",\n    \"PR-208\"\n  ],\n  \"critical_path_completed\": 54,\n  \"critical_path_total\": 66,\n  \"critical_path_percent_complete\": 81.82,\n  \"unblocked_next\": [],\n  \"hypothesis_only_unblocked\": [],\n  \"current_checkpoint_at\": 225,\n  \"next_checkpoint_at\": 230,\n  \"checkpoint_due\": true,\n  \"checkpoint_artifact\": \"docs/generated/progress_checkpoints/checkpoint_225.md\",\n  \"previous_checkpoint_completed\": 150,\n  \"progress_delta_completed\": 75,\n  \"replan_required\": false,\n  \"replan_reason\": \"progress advanced; no replan required\",\n  \"artifact_metadata\": {\n    \"owner\": \"COMMON\",\n    \"implementation_scope\": \"common\",\n    \"claim_tier\": \"diagnostic_only\",\n    \"transfer_source\": \"none\",\n    \"config_hash\": \"5bfdbd75906e0c6ce4e2dec32ae33ca3687112a9d3be23e753f77ec1ce40391e\",\n    \"input_hashes\": [\n      \"docs/codex_handoff/pr_backlog.yaml:90026a4c6ec6e4ad4e0578e1da26a84f9d2aa5b73cdec9fdd2d51c9ac4360e1e\",\n      \"docs/codex_handoff/pr_status.yaml:6736307069ca540fde71110e586254fa8b59583ef17c14d928558d00a2f33135\"\n    ],\n    \"sky_support_mask_status\": \"not_applicable_governance\",\n    \"covariance_null_mock_status\": \"not_applicable_governance\",\n    \"caveats\": [\n      \"Progress percentages count DAG bookkeeping only.\",\n      \"This artifact cannot establish scientific readiness, native transfer validation, posterior support, or family identification.\"\n    ],\n    \"generating_command\": \"/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --write-checkpoint-dir docs/generated/progress_checkpoints --write-scoreboard docs/generated/progress_checkpoints/progress_scoreboard.md --json\",\n    \"git_commit_or_worktree_state\": \"3dd1893a3f74af8e1387c844e07897efeabdd0bf; dirty\"\n  }\n}\n",
+      "stderr": ""
+    }
+  ],
+  "status": "PASS",
+  "original42_equal_baseline": true,
+  "original42_sha256": "e3264e105cabf78ddac37addc36cacc3cfa05ee942e33e54b431b22e3e87de0d",
+  "preexisting_paper_contracts_equal_baseline": true,
+  "checkpoint_225_written": true,
+  "all_commands_exit0": true,
+  "scientific_submission_status": "NOT_READY_TO_SUBMIT"
+}

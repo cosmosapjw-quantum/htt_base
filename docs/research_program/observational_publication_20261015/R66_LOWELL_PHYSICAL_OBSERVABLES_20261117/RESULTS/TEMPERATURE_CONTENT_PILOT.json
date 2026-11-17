@@ -1,0 +1,42 @@
+{
+  "schema": "htt.r66.bare_temperature_content/2",
+  "status": "COMPLETE_NATIVE_UNIT_CONTENT_PILOT",
+  "ids_selected": [
+    200
+  ],
+  "selection": "sequential public scalar-T IDs; content qualification only",
+  "max_parallel_downloads": 1,
+  "download_enabled": false,
+  "unit_binding": "UNRESOLVED",
+  "coordinate_binding": "conditional product-family Galactic assumption",
+  "source_code_sha256": "c4ba4d7baf3ae127e2c5994761c276467ea4e56e6a6639b5ae90e250dc524435",
+  "sources": [
+    {
+      "id": 200,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r66_temperature_actual/npipe6v20_commander_cmb_mc_0200.fits",
+      "public_url": "https://pla.esac.esa.int/pla/aio/product-action?SIMULATED_MAP.FILE_ID=npipe6v20_commander_cmb_mc_0200.fits",
+      "bytes": 1610622720,
+      "sha256": "62420c23f3dcd05a6d95a851808e21f3a041c8c3ba47f0545970e791180de2be",
+      "product_bank": "bare scalar Commander temperature 0200..0299",
+      "unit_binding": "UNRESOLVED: TUNIT1 blank; raw values remain native numeric units",
+      "header_and_content": {
+        "NSIDE": 4096,
+        "ORDERING": "RING",
+        "TUNIT1": "",
+        "COORDSYS": "",
+        "assumed_coordinates": "Galactic product-family convention; absent header not silently bound",
+        "retained_raw_rms": 2067.040356348594,
+        "retained_raw_min": -3732.4818074297254,
+        "retained_raw_max": 3799.3184407745302
+      }
+    }
+  ],
+  "completed_ids": [
+    200
+  ],
+  "elapsed_seconds": 51.13802479399601,
+  "carrier_sha256": "83ae1116807dbdb8b5c58aa8a2d478ca7b9d97afbfa6293a428711e52be9354b",
+  "completed_rows": 1,
+  "qualified_physical_reference_rows": 0,
+  "use": "content/operator diagnostic only; no covariance or PTE estimated from this pilot"
+}

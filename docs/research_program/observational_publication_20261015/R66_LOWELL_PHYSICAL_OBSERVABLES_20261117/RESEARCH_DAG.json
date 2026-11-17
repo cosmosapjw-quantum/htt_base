@@ -1,0 +1,194 @@
+{
+  "schema": "htt.r66.research_dag/1",
+  "baseline_commit": "3dd1893a3f74af8e1387c844e07897efeabdd0bf",
+  "canonical_pr": "PR-R66-LOWELL-PHYSICAL-OBSERVABLES",
+  "parent_pr": "PR-R65-DIPOLE-ANOMALY",
+  "selected_paper": "P2",
+  "status": "COMPLETE_SCOPED_C0",
+  "tasks": [
+    {
+      "id": "R66-01",
+      "theory_stage": "R1",
+      "coding_stage": "C1",
+      "title": "Fix the independent P2 low-ell-to-observable question",
+      "depends_on": [],
+      "status": "complete_scoped",
+      "evidence": [
+        "RESEARCH_RECORD.json"
+      ]
+    },
+    {
+      "id": "R66-02",
+      "theory_stage": "R2",
+      "coding_stage": "C2",
+      "title": "Reuse exact internal history and primary physical/statistical sources",
+      "depends_on": [
+        "R66-01"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "HISTORY.md",
+        "HISTORY_SOURCES.json",
+        "LITERATURE.md",
+        "SOURCES.json",
+        "SOURCE_ADDENDUM.md"
+      ]
+    },
+    {
+      "id": "R66-03",
+      "theory_stage": "R3",
+      "coding_stage": "C3",
+      "title": "Choose a signed local radiation-stress target and physical claim scope",
+      "depends_on": [
+        "R66-02"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "THEORY.md",
+        "RESEARCH_RECORD.json"
+      ]
+    },
+    {
+      "id": "R66-04",
+      "theory_stage": "R4",
+      "coding_stage": "C4",
+      "title": "Construct finite operator, physical image and nuisance identified set",
+      "depends_on": [
+        "R66-03"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "THEORY.md"
+      ]
+    },
+    {
+      "id": "R66-05",
+      "theory_stage": "R5",
+      "coding_stage": "C5",
+      "title": "Implement native-pixel Commander extraction and tensor likelihood",
+      "depends_on": [
+        "R66-04"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "RESULTS/OBSERVED_EXTRACTION.json"
+      ]
+    },
+    {
+      "id": "R66-06",
+      "theory_stage": "R6",
+      "coding_stage": "C6",
+      "title": "Validate units, moments, response, quotient, finite MC and same-sky covariance",
+      "depends_on": [
+        "R66-05"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "VALIDATION.md",
+        "RESULTS/TEST_RECEIPT.json"
+      ]
+    },
+    {
+      "id": "R66-07",
+      "theory_stage": "R7",
+      "coding_stage": "C7",
+      "title": "Run two actual maps and an explicit ideal Gaussian reference; preserve the rejected zero-T bank",
+      "depends_on": [
+        "R66-06"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "RESULTS/OBSERVED_EXTRACTION.json",
+        "RESULTS/IDEAL_REFERENCE.json",
+        "RESULTS/SOURCE_FAILURE_AND_REPAIR.json",
+        "RESULTS/OBSERVABLES.json"
+      ]
+    },
+    {
+      "id": "R66-08",
+      "theory_stage": "R8",
+      "coding_stage": "C8",
+      "title": "Evaluate physical corrections, paired estimator and conventional method",
+      "depends_on": [
+        "R66-07"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "PAIRED_CONSTRUCTION.md",
+        "IDEAL_REFERENCE.md",
+        "REPORT_KO.md",
+        "RESEARCH_PLAN_KO.md"
+      ]
+    },
+    {
+      "id": "R66-09",
+      "theory_stage": "R9",
+      "coding_stage": "C9",
+      "title": "Close one fresh independent scientific/code review",
+      "depends_on": [
+        "R66-08"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "REVIEW/final_review.md",
+        "REVIEW/final_review.json"
+      ]
+    },
+    {
+      "id": "R66-10",
+      "theory_stage": "R10",
+      "coding_stage": "C10",
+      "title": "Preserve original scientific gates and publish the scoped research unit",
+      "depends_on": [
+        "R66-09"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "RESEARCH_DAG.json",
+        "DAG_VALIDATION.json"
+      ]
+    }
+  ],
+  "future_science": [
+    {
+      "id": "P2-R66-RESPONSE",
+      "depends_on": [
+        "R66-10"
+      ],
+      "status": "pending_conditional",
+      "needed": "Bind exact Commander DQ/beam/temperature-unit/simulation response or close manuscript scope at the achieved conditional released-map result.",
+      "stop": "One source-qualified response/rank update or explicit achieved-scope decision; no restricted SEVEM acquisition."
+    },
+    {
+      "id": "P2-R66-MATCHED-METHOD",
+      "depends_on": [
+        "R66-10"
+      ],
+      "status": "pending_conditional",
+      "completed": "Same-input conventional power-tensor comparison and paired GLS under an explicitly ideal reference executed; observed band sensitivity remains.",
+      "needed": "One frozen conditional harmonic/QML reconstruction comparison if claiming whole-sky physical stress; independent fixed-rule validation for paired estimator.",
+      "stop": "Same-estimand bias/variance/coverage table or integrate as P2 methods if only coordinate equivalence remains."
+    },
+    {
+      "id": "P2-R66-PAPER",
+      "depends_on": [
+        "P2-R66-RESPONSE",
+        "P2-R66-MATCHED-METHOD"
+      ],
+      "status": "pending_conditional",
+      "needed": "Integrate physical map, actual data, error hierarchy and closest-method comparison into P2 at achieved claim level.",
+      "stop": "Submit only after existing P2 acceptance; otherwise preserve NOT_READY_TO_SUBMIT and end standalone novelty claim."
+    }
+  ],
+  "original_42_node_payload_sha256": "e3264e105cabf78ddac37addc36cacc3cfa05ee942e33e54b431b22e3e87de0d",
+  "original_42_node_states_changed": false,
+  "submission_status": "NOT_READY_TO_SUBMIT",
+  "claim_tier": "C0",
+  "qualified_actual_temperature_MC_count": 0,
+  "zero_I_products_audited": 100,
+  "ideal_synthetic_carriers": 4096,
+  "physical_PTE_qualified": false,
+  "automatic_successor": false,
+  "local_agent_prompt_created": false,
+  "new_no_go": false
+}

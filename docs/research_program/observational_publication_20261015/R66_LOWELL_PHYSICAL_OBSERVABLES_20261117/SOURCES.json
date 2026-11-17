@@ -1,0 +1,155 @@
+{
+  "stage": "R2/R3",
+  "task_date": "2026-11-17",
+  "runtime_model_identity": "UNKNOWN",
+  "requested_profile": "gpt-6.1-sol/high",
+  "research_tools_used": [
+    "Exa search",
+    "Exa fetch",
+    "SciSpace search",
+    "SciSpace extract_data"
+  ],
+  "primary_sources": [
+    {
+      "id": "S1",
+      "title": "Maxwell's Multipole Vectors and the CMB",
+      "url": "https://arxiv.org/abs/astro-ph/0412231v2",
+      "version": "v2",
+      "date": "2004-12-14",
+      "read_scope": "Original body sections II-IV; Eq21-23/Table4",
+      "status": "literature-supported"
+    },
+    {
+      "id": "S2",
+      "title": "On the proper kinetic quadrupole CMB removal and the quadrupole anomalies",
+      "url": "https://arxiv.org/abs/1504.02076v2",
+      "doi": "10.1088/1475-7516/2015/06/047",
+      "version": "v2",
+      "date": "2015-05-22",
+      "read_scope": "Original body section2 Eqs2.1-2.7, section3/Table1",
+      "status": "literature-supported"
+    },
+    {
+      "id": "S3",
+      "title": "Geodesic-light-cone coordinates and the Bianchi I spacetime",
+      "url": "https://arxiv.org/abs/1602.04461v2",
+      "doi": "10.1088/1475-7516/2016/06/008",
+      "version": "v2",
+      "date": "2016-06-08",
+      "read_scope": "Original body section4.1 and Eq4.30",
+      "status": "literature-supported"
+    },
+    {
+      "id": "S4",
+      "title": "Rogues' gallery: the full freedom of the Bianchi CMB anomalies",
+      "url": "https://arxiv.org/abs/0901.2122",
+      "version": null,
+      "read_scope": "Original body sectionII, Eqs2/8; exact version not pinned",
+      "status": "literature-supported"
+    },
+    {
+      "id": "S5",
+      "title": "How isotropic is the Universe?",
+      "url": "https://arxiv.org/abs/1605.07178",
+      "publisher_url": "https://link.aps.org/accepted/10.1103/PhysRevLett.117.131302",
+      "doi": "10.1103/PhysRevLett.117.131302",
+      "version": null,
+      "read_scope": "Original body shear/ABSolve/likelihood and publisher accepted manuscript",
+      "date": "2016-09-21",
+      "extraction_warning": "Arxiv HTML extraction spurious August2026 date ignored",
+      "status": "literature-supported"
+    },
+    {
+      "id": "S6",
+      "title": "Planck 2018 results IV. Diffuse component separation",
+      "url": "https://www.aanda.org/articles/aa/full_html/2020/09/aa33881-18/aa33881-18.html",
+      "arxiv": "1807.06208",
+      "version": "fixed journal HTML",
+      "read_scope": "Original body sections3-4; Eqs9 and mask/noise guidance",
+      "status": "literature-supported"
+    },
+    {
+      "id": "S7",
+      "title": "Planck 2018 results VII. Isotropy and Statistics of the CMB",
+      "url": "https://arxiv.org/html/1906.02552v2",
+      "publisher_url": "https://www.aanda.org/articles/aa/full_html/2020/09/aa35201-19/aa35201-19.html",
+      "version": "v2",
+      "read_scope": "Original body simulation/null and E/B, statistics sections; AppendixA methodology",
+      "status": "literature-supported"
+    },
+    {
+      "id": "S8",
+      "title": "Testing CMB Anomalies in E-mode Polarization with Current and Future Data",
+      "url": "https://arxiv.org/abs/2206.05920v2",
+      "doi": "10.3847/1538-4357/acb339",
+      "version": "v2",
+      "date": "2023-04-10",
+      "read_scope": "Publisher original body section3.2/4, AppendixC/Tables5-6; arxiv version metadata",
+      "status": "literature-supported"
+    },
+    {
+      "id": "S9",
+      "title": "LiteBIRD Science Goals and Forecasts. E-mode Anomalies",
+      "url": "https://arxiv.org/html/2508.16451v1",
+      "doi": "10.1088/1475-7516/2026/01/036",
+      "version": "v1",
+      "date": "2025-08-22",
+      "publication_date": "2026-01-22",
+      "read_scope": "Original body Eq3.1, section7, sections8.2.2-3",
+      "status": "literature-supported"
+    },
+    {
+      "id": "S10",
+      "title": "Cosmic microwave background anisotropies: Nonlinear dynamics",
+      "url": "https://arxiv.org/abs/astro-ph/9808163v2",
+      "doi": "10.1103/PhysRevD.59.083506",
+      "version": "v2",
+      "date": "1999-02-18",
+      "read_scope": "Original body Eqs25-28,47-50,57,77-80,89/93",
+      "extraction_warning": "HTML Eq81 inconsistent with Eqs49,50,80; quadrupole inverse must15/(8rho), not15/(2rho); PDF origin unresolved",
+      "status": "literature-supported"
+    },
+    {
+      "id": "S11",
+      "title": "Microwave background polarization in cosmological models",
+      "url": "https://arxiv.org/abs/astro-ph/9911481v2",
+      "doi": "10.1103/PhysRevD.62.043004",
+      "version": "v2",
+      "date": "2000-05-15",
+      "read_scope": "Original body Eqs14-15, sectionII.B Eqs21-26",
+      "conventions": "Opposite metric signature to requested -+++",
+      "status": "literature-supported"
+    },
+    {
+      "id": "D1",
+      "title": "Official ESA Planck Legacy Archive CMB maps documentation",
+      "url": "https://wiki.cosmos.esa.int/planck-legacy-archive/index.php/CMB_maps",
+      "type": "official documentation",
+      "read_scope": "2018 map description, Commander, quadrupole residual maps and file structure",
+      "release_warning": "Listed KQ residual filenames R2.02 do not establish R3.01/PR4 applicability",
+      "status": "literature-supported"
+    },
+    {
+      "id": "A1",
+      "title": "Forecasts of CMB E-mode anomalies for AliCPT-1",
+      "url": "https://arxiv.org/html/2604.20699v1",
+      "version": "v1",
+      "date": "2026-04-22",
+      "type": "auxiliary nearest recent development",
+      "read_scope": "Original relevant sections on constrained/unconstrained simulations and QO alignment",
+      "status": "literature-supported"
+    }
+  ],
+  "unresolved": [
+    "Release-matched PR3/PR4 kinematic residual response",
+    "Whether MGE Eq81 inconsistency appears in PDF or only HTML",
+    "Actual common-sky numerical results delegated to parent"
+  ],
+  "claims_not_made": [
+    "New PSTF/radiation-stress identification",
+    "New DQ removal method",
+    "Physical anomaly",
+    "Instantaneous spacetime shear measurement",
+    "Priority from failed search"
+  ]
+}

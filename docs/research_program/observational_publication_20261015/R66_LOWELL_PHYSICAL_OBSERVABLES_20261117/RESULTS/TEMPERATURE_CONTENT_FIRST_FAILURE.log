@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r66/acquire_r66_temperature_pilot.py", line 136, in <module>
+    if __name__=='__main__':run()
+                            ^^^^^
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r66/acquire_r66_temperature_pilot.py", line 110, in run
+    receipt=download(i);x,c,hdr=ring_coarse(Path(receipt['path']),mask)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r66/acquire_r66_temperature_pilot.py", line 80, in ring_coarse
+    maximum=max(maximum,float(selected.max()));minimum=min(minimum,float(selected.min()))
+                              ^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py", line 41, in _amax
+    return umr_maximum(a, axis, None, out, keepdims, initial, where)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: zero-size array to reduction operation maximum which has no identity

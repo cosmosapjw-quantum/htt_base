@@ -1,0 +1,199 @@
+{
+  "schema": "htt.r66.independent_final_review/1",
+  "date": "2026-11-17",
+  "verdict": "PASS",
+  "submission_status": "NOT_READY_TO_SUBMIT",
+  "observed_model": "UNKNOWN",
+  "reviewer_role": "One fresh independent scientific/code reviewer; native read-only access",
+  "baseline_commit": "3dd1893a3f74af8e1387c844e07897efeabdd0bf",
+  "branch": "research/r66-lowell-physical-observables-20261117",
+  "scope": "Selected P2 companion only: relating low-ell CMB morphology to signed radiation-stress proxies, a declared downstream Doppler-quadrupole quotient, and explicitly conditional statistical reference laws.",
+  "verdict_meaning": "The inspected implementation and conclusions are internally consistent within the declared finite released-map and ideal-model scope. This PASS does not promote physical PTE, whole-sky stress, instantaneous spacetime shear, standalone novelty, or original paper acceptance.",
+  "independent_native_execution": false,
+  "tests_rerun_by_reviewer": false,
+  "recorded_test_evidence": {
+    "count": 24,
+    "seconds": 2.02,
+    "process": 362547,
+    "exit_code": 0,
+    "source": "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/RESULTS/TEST_RECEIPT.json",
+    "qualification": "Reviewed receipt and test source; not independently reexecuted."
+  },
+  "findings": [
+    {
+      "id": "R66-REV-01",
+      "severity": "material_claim_boundary",
+      "status": "CLOSED",
+      "description": "The rejected 100 zero-I 005a products, one unqualified scalar-temperature content diagnostic, and 4096 ideal synthetic draws remain distinct. No zero covariance regularization or unsupported actual-temperature PTE enters the current analysis.",
+      "required_correction": "None for scoped implementation. The actual temperature source qualification remains unresolved and must stay so.",
+      "evidence": [
+        "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/RESULTS/SOURCE_FAILURE_AND_REPAIR.json",
+        "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/RESULTS/TEMPERATURE_CONTENT_PILOT.json",
+        "scripts/r66/acquire_r66_temperature_pilot.py",
+        "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/REPORT_KO.md"
+      ]
+    },
+    {
+      "id": "R66-REV-02",
+      "severity": "scientific",
+      "status": "CLOSED",
+      "description": "The signed STF normalization, C2 = 8*pi*||q||^2/75, linear pi/rho0 = 8 Q/(15 T0), restored-frame T^4 calculation and 24/35 dipole-octupole term are consistent. The quotient is a declared rank-one downstream nuisance reduction, not a full Lorentz invariant or an upstream Commander calibration.",
+      "required_correction": "None. Retain the stated spectral, missing-mode and frame limitations.",
+      "evidence": [
+        "htt/htt/htt/infer/r66_radiation_quotient.py",
+        "scripts/r66/analyze_r66_observables.py",
+        "tests/test_r66_radiation_quotient.py",
+        "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/THEORY.md",
+        "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/REPORT_KO.md"
+      ]
+    },
+    {
+      "id": "R66-REV-03",
+      "severity": "scientific_and_numerical",
+      "status": "CLOSED",
+      "description": "Native mask-first averaging, native polynomial columns and fixed finite least-squares response are implemented consistently. The 94.70315% DQ-orthogonal release-contrast power is a deterministic same-sky result. The 66.59579% band-vector change and 4.06739% resolution/support change are reported without treating them as independent skies or pure resolution convergence.",
+      "required_correction": "None for the achieved scope. Whole-sky reconstruction remains unqualified.",
+      "evidence": [
+        "scripts/r66/extract_r66_commander.py",
+        "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/RESULTS/OBSERVED_EXTRACTION.json",
+        "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/RESULTS/OBSERVABLES.json",
+        "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/REPORT_KO.md"
+      ]
+    },
+    {
+      "id": "R66-REV-04",
+      "severity": "statistical",
+      "status": "CLOSED",
+      "description": "The ideal covariance retains all 15-dimensional cross-operator blocks. The adjoint harmonic sum, m>0 factor two, native quadrupole block 15*C2*B2^2/(8*pi)*Ki*Kj^T, and explicit higher-mode approximation agree. Known analytic covariance is used for the selected chi-square4 law; the finite-N Student/F construction is separately qualified.",
+      "required_correction": "None. The lower-tail 0.0984010544 remains conditional on the specified ideal Gaussian model.",
+      "evidence": [
+        "scripts/r66/build_r66_ideal_reference.py",
+        "htt/htt/htt/infer/r66_radiation_quotient.py",
+        "tests/test_r66_radiation_quotient.py",
+        "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/IDEAL_REFERENCE.md",
+        "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/RESULTS/OBSERVABLES.json"
+      ]
+    },
+    {
+      "id": "R66-REV-05",
+      "severity": "statistical",
+      "status": "CLOSED",
+      "description": "The exploratory paired GLS uses 2048 training rows, separate 2048 heldout rows, unit common-sky response WJ=I4 and analytic W*C8*W^T. It neither counts the same sky twice nor promotes the small 1.52881% ellipsoid-volume reduction to a discovery or broad optimality claim.",
+      "required_correction": "None. Preserve exploratory status and the existing primary estimator.",
+      "evidence": [
+        "scripts/r66/analyze_r66_observables.py",
+        "htt/htt/htt/infer/r66_radiation_quotient.py",
+        "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/PAIRED_CONSTRUCTION.md",
+        "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/RESULTS/OBSERVABLES.json"
+      ]
+    },
+    {
+      "id": "R66-REV-06",
+      "severity": "scientific_semantics",
+      "status": "CLOSED",
+      "description": "The five views preserve the signed carrier and full covariance. F is explicitly a uniform-volume occupancy in a declared inscribed stress ball, with exact realized-sky physical F unavailable. G_F is NOT_APPLICABLE. The same-input quadratic power tensor comparison and full-harmonic/STF equivalence do not manufacture extra information.",
+      "required_correction": "None. The unit-free angular law must remain unapplied to the insufficient unqualified single-file pilot.",
+      "evidence": [
+        "htt/htt/htt/infer/r66_radiation_quotient.py",
+        "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/THEORY.md",
+        "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/UNIT_FREE_DIRECTION.md",
+        "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/REPORT_KO.md"
+      ]
+    },
+    {
+      "id": "R66-REV-07",
+      "severity": "execution_provenance",
+      "status": "CLOSED",
+      "description": "The recorded final analysis module hash matches the focused-test receipt. The original extraction module hash is preserved separately; the selected extraction kernels match the reviewed final definitions, and the source-identity receipt records their AST identity. This supports semantic reuse without claiming original and final module byte identity.",
+      "required_correction": "No computational correction. See the nonblocking historical hash-field naming advisory.",
+      "evidence": [
+        "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/PROVENANCE/SOURCE_IDENTITY.json",
+        "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/PROVENANCE/extraction_module_snapshot.py",
+        "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/PROVENANCE/original_extraction_script.py",
+        "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/RESULTS/OBSERVED_EXTRACTION.json",
+        "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/RESULTS/TEST_RECEIPT.json",
+        "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/RESULTS/OBSERVABLES.json"
+      ]
+    },
+    {
+      "id": "R66-REV-08",
+      "severity": "scope_preservation",
+      "status": "CLOSED",
+      "description": "The reviewed draft finalizer requires the fresh PASS, NOT_READY_TO_SUBMIT and completed first nine stages before its single additive R66 card. Its assertions preserve existing cards, the 42-node payload hash and preexisting paper contracts while adding only the selected P2 pointer. Stage10 execution and its resulting validation are still pending by design.",
+      "required_correction": "No additional review gate. Root should complete the already planned additive validation and authorized branch closeout; this review does not claim those actions occurred.",
+      "evidence": [
+        "scripts/r66/finalize_r66_dag.py",
+        "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/RESEARCH_RECORD.json",
+        "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/RESEARCH_PLAN_KO.md",
+        "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/PROVENANCE/ENVIRONMENT.json"
+      ]
+    }
+  ],
+  "nonblocking_editorial_advisories": [
+    {
+      "id": "R66-NOTE-01",
+      "description": "REPORT_KO.md describes 1.21544e-5 as a relative Frobenius change. The implementation actually computes ||L/rho-(8/15)I5||_F/(8/15). Normalizing by ||(8/15)I5||_F instead gives 5.4356186057e-6.",
+      "suggested_change": "State the implemented denominator explicitly in the report; retain the computed number and source field. This is a notation clarification, not a changed physical result or a required new test."
+    },
+    {
+      "id": "R66-NOTE-02",
+      "description": "PROVENANCE/SOURCE_IDENTITY.json preserves current_module_sha256=ef12... from an intermediate snapshot alongside the correct final_module_sha256=0b603.... The final identity is clear from final_module_sha256, OBSERVABLES and TEST_RECEIPT, but the historical field name can mislead.",
+      "suggested_change": "Rename or annotate the old current_module_sha256 field as intermediate/historical while preserving its value. Keep final_module_sha256 unchanged."
+    }
+  ],
+  "bounded_closeout": {
+    "maximum": 1,
+    "kind": "Two editorial/provenance naming clarifications only; no further science loop or new acceptance gate.",
+    "retest_required_for_these_wording_changes": false
+  },
+  "numerical_crosschecks_from_saved_result": {
+    "PR4_primary_q_norm_uK": 26.693837970877823,
+    "PR4_primary_quotient_norm_uK": 26.67642118121682,
+    "PR4_quotient_pi_over_rho0_norm": 0.000005220153745388814,
+    "release_contrast_DQ_orthogonal_power_fraction": 0.9470315057396517,
+    "fitted_band_relative_quotient_shift": 0.6659578518010858,
+    "resolution_and_support_relative_quotient_shift": 0.04067390642366747,
+    "octupole_retained_effect_uK": 0.02286757461080547,
+    "full_retained_nonlinear_quotient_difference_uK": 0.0228295343294164,
+    "ideal_lower_tail": 0.09840105439416326,
+    "paired_analytic_volume_ratio": 0.9847118920694299,
+    "qualification": "Arithmetic inspection of recorded arrays and equations; no native fit or test rerun."
+  },
+  "reviewed_files": [
+    "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/REPORT_KO.md",
+    "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/VALIDATION.md",
+    "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/IDEAL_REFERENCE.md",
+    "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/PAIRED_CONSTRUCTION.md",
+    "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/RESEARCH_PLAN_KO.md",
+    "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/THEORY.md",
+    "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/UNIT_FREE_DIRECTION.md",
+    "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/HISTORY.md",
+    "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/RESULTS/OBSERVABLES.json",
+    "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/RESULTS/OBSERVED_EXTRACTION.json",
+    "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/RESULTS/TEST_RECEIPT.json",
+    "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/RESULTS/SOURCE_FAILURE_AND_REPAIR.json",
+    "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/RESULTS/TEMPERATURE_CONTENT_PILOT.json",
+    "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/RESEARCH_RECORD.json",
+    "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/PROVENANCE/SOURCE_IDENTITY.json",
+    "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/PROVENANCE/ENVIRONMENT.json",
+    "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/PROVENANCE/extraction_module_snapshot.py",
+    "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/PROVENANCE/original_extraction_script.py",
+    "htt/htt/htt/infer/r66_radiation_quotient.py",
+    "scripts/r66/extract_r66_commander.py",
+    "scripts/r66/build_r66_ideal_reference.py",
+    "scripts/r66/analyze_r66_observables.py",
+    "scripts/r66/acquire_r66_temperature_pilot.py",
+    "scripts/r66/finalize_r66_dag.py",
+    "tests/test_r66_radiation_quotient.py"
+  ],
+  "limitations": [
+    "Review is native read-only through RDC read_file. No native commands, raw FITS reads, independent rehashes, downloads, tests, fits, repository mutation, Git actions or publication were performed.",
+    "OBSERVABLES.json was inspected through decisive major fields rather than a semantic audit of every stored number. Original source snapshots were read in the extraction-kernel sections.",
+    "24 passing focused tests and process exit evidence are recorded execution facts from the root receipt, not reruns by this reviewer. The full repository suite is not claimed.",
+    "No actual source-qualified Commander temperature reference population exists here. The complete scalar0200 file has unresolved physical unit and header coordinates and contributes zero qualified covariance rows.",
+    "Commander upstream DQ/beam/noise/foreground response, missing true-sky/spectral completion and instantaneous kinematic inversion remain unresolved. They are properly outside the achieved claim.",
+    "The ideal higher-ell pixel-centre/window model and Lref=256 cutoff are explicit approximations; cutoff stability cannot close observed fitted-band sensitivity.",
+    "The reviewed DAG closeout code has not yet been executed. Existing untracked-path preservation is supported by the root provenance record; this reviewer did not independently inventory those paths.",
+    "No independent literature-wide novelty claim or final manuscript acceptance is issued. Submission remains NOT_READY_TO_SUBMIT."
+  ]
+}
