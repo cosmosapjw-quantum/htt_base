@@ -1,0 +1,82 @@
+{
+ "all_killed": true,
+ "gates": [
+  {
+   "file": "htt/htt/htt/infer/r58_mixed_tensor_likelihood.py",
+   "id": "G58-01",
+   "meaning": "simultaneous radius from chi2 with `rank` degrees of freedom replaced by one degree of freedom",
+   "mutation": "c2 = float(stats.chi2.ppf(level, 1)) if simultaneous and rank",
+   "pattern": "c2 = float(stats.chi2.ppf(level, rank)) if simultaneous and rank",
+   "pytest_exit_code": 1,
+   "status": "KILLED",
+   "test": "tests/r58/test_mixed_tensor_likelihood.py::test_common_cylinder_versus_pointwise_radius"
+  },
+  {
+   "file": "htt/htt/htt/infer/r58_mixed_tensor_likelihood.py",
+   "id": "G58-02",
+   "meaning": "union-null p over the nuisance variants taken as the minimum instead of the maximum",
+   "mutation": "    return float(np.min(values))",
+   "pattern": "    return float(np.max(values))",
+   "pytest_exit_code": 1,
+   "status": "KILLED",
+   "test": "tests/r58/test_mixed_tensor_likelihood.py::test_union_interval_is_union_not_intersection_or_independent_product"
+  },
+  {
+   "file": "scripts/r58/build_r58_views.py",
+   "id": "G58-03",
+   "meaning": "sign of the A/(cH) block in d_H flipped (k[3:6,8:11] = -I -> +I)",
+   "mutation": "k[3:6,8:11]=np.eye(3)",
+   "pattern": "k[3:6,8:11]=-np.eye(3)",
+   "pytest_exit_code": 1,
+   "status": "KILLED",
+   "test": "tests/r58/test_five_views.py::test_acceleration_sign_from_incoming_null_contraction"
+  },
+  {
+   "file": "scripts/r58/run_r58_owned_tensor.py",
+   "id": "G58-04",
+   "meaning": "reported fit uses the block-diagonal covariance instead of the full polar-STF covariance",
+   "mutation": "        fit = mt.fit_linear(y, linalg.block_diag(c[:12, :12], c[12:, 12:]), d, parameter_scale=SCALE)",
+   "pattern": "        fit = mt.fit_linear(y, c, d, parameter_scale=SCALE)",
+   "pytest_exit_code": 1,
+   "status": "KILLED",
+   "test": "tests/r58/test_owned_tensor_runner.py::test_existing_data_reanalysis_reproduces_frozen_marginals_and_mixed_covariance"
+  },
+  {
+   "file": "htt/htt/htt/infer/r58_mixed_tensor_likelihood.py",
+   "id": "G58-05",
+   "meaning": "fit_linear accepts a numerically ambiguous rank (declared-scale and column-equilibrated ranks disagree) instead of failing closed",
+   "mutation": "    if False:",
+   "pattern": "    if rank != eq_rank:",
+   "pytest_exit_code": 1,
+   "status": "KILLED",
+   "test": "tests/r58/test_mixed_tensor_likelihood.py::test_disagreeing_numerical_ranks_fail_closed_before_calibrated_tests"
+  },
+  {
+   "file": "scripts/r58/run_r58_owned_tensor.py",
+   "id": "G58-06",
+   "meaning": "runner accepts a rank-deficient common 11-coefficient target instead of failing closed",
+   "mutation": "        if False:",
+   "pattern": "        if fit[\"rank\"] != 11 or approx[\"rank\"] != 11:",
+   "pytest_exit_code": 1,
+   "status": "KILLED",
+   "test": "tests/r58/test_owned_tensor_runner.py::test_rank_deficient_common_target_fails_closed_before_any_output"
+  }
+ ],
+ "schema": "htt.r58.mutation_receipt/1",
+ "sources_sha256": {
+  "htt/htt/htt/infer/r58_mixed_tensor_likelihood.py": "f1c07d8ba7253f225af9354277a2973b5cab96c86febd08d4f8c5e1a11555bc0",
+  "scripts/r58/build_r58_views.py": "d84a05df99fb4393546222023cc37d8fe07d3bb3977c3520a60040e99445ab20",
+  "scripts/r58/run_r58_owned_tensor.py": "0f446fb79967c1afc00004abd9350b7f2db6db454a66aa738141f4b98d5694ff",
+  "tests/r58/test_five_views.py": "7b64637790703c75995af127f416d5c18a1dbf7ff81e1afc94157ac24c4d16a3",
+  "tests/r58/test_mixed_tensor_likelihood.py": "272efb9253651215cd887036aa8f4269f4ccd9deb6ef48bd2844e79f927cadbc",
+  "tests/r58/test_owned_tensor_runner.py": "85eebdedcc38c3dca9ae1cd5e994909e56afc80d5642ff192a67e16552bfdbc9",
+  "tests/r58/test_r54_repairs.py": "f9aa01ad60296a40ac92a04e8b2c4398f684860c7e2a09e33ce6a95a6133c409"
+ },
+ "unmutated_suite": [
+  "tests/r58/test_mixed_tensor_likelihood.py",
+  "tests/r58/test_five_views.py",
+  "tests/r58/test_owned_tensor_runner.py",
+  "tests/r58/test_r54_repairs.py"
+ ],
+ "unmutated_suite_exit_code": 0
+}

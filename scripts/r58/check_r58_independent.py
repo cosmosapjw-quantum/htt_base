@@ -103,6 +103,76 @@ def check(root: Path, results: Path, output: Path, candidate_root: Path) -> None
     print(json.dumps({'status':out['status'],'seconds':out['elapsed_seconds'],'max_wald_p':maxp,'distance_quad_rel':out['distance_integrator_relative_error_vs_quad_at_13_quantiles']}))
 
 
+def check_axis_diagnostics(root: Path, output: Path) -> dict:
+    """Referee repair M1: recompute D1 (block Wald), D2 (principal frame of K) and D4 (fixed-axis contrasts) of
+    RESULTS/AXIS_DIAGNOSTICS.json from the committed fit with code written here: the STF basis is written out from its
+    definition (orthonormal, trace-free, symmetric; same convention as R54), Galactic coordinates from the J2000 pole
+    (RA 192.85948, Dec 27.12825) and the longitude of the celestial pole (122.93192 deg). No candidate function is called."""
+    pkg = root / R58_RELATIVE
+    fit_doc = json.loads((pkg / "RESULTS/OWNED_TENSOR_RESULT.json").read_text())
+    diag = json.loads((pkg / "RESULTS/AXIS_DIAGNOSTICS.json").read_text())
+    s2, s6 = 1 / np.sqrt(2.0), 1 / np.sqrt(6.0)
+    basis = np.array([[[s2, 0, 0], [0, -s2, 0], [0, 0, 0]], [[s6, 0, 0], [0, s6, 0], [0, 0, -2 * s6]],
+                      [[0, s2, 0], [s2, 0, 0], [0, 0, 0]], [[0, 0, s2], [0, 0, 0], [s2, 0, 0]], [[0, 0, 0], [0, 0, s2], [0, s2, 0]]])
+    gram = np.einsum("aij,bij->ab", basis, basis)
+    assert np.allclose(gram, np.eye(5)) and np.allclose(np.einsum("aii->a", basis), 0)
+    ra_p, dec_p, l_ncp = np.radians(192.85948), np.radians(27.12825), np.radians(122.93192)
+
+    def lb(v):
+        v = np.asarray(v, float) / np.linalg.norm(v)
+        ra, dec = np.arctan2(v[1], v[0]), np.arcsin(np.clip(v[2], -1, 1))
+        sb = np.sin(dec) * np.sin(dec_p) + np.cos(dec) * np.cos(dec_p) * np.cos(ra - ra_p)
+        y = np.cos(dec) * np.sin(ra - ra_p)
+        x = np.sin(dec) * np.cos(dec_p) - np.cos(dec) * np.sin(dec_p) * np.cos(ra - ra_p)
+        return [float(np.degrees(l_ncp - np.arctan2(y, x)) % 360.0), float(np.degrees(np.arcsin(np.clip(sb, -1, 1))))]
+
+    def angdist(a, b):           # headless angular distance in degrees between two (RA, Dec) or (l, b) pairs
+        a, b = np.radians(a), np.radians(b)
+        c = np.sin(a[1]) * np.sin(b[1]) + np.cos(a[1]) * np.cos(b[1]) * np.cos(a[0] - b[0])
+        return float(np.degrees(np.arccos(min(1.0, abs(c)))))
+
+    c95 = stats.chi2.ppf(0.95, 11)
+    report, worst = {}, {"wald_rel": 0.0, "p_abs": 0.0, "eig_abs": 0.0, "axis_deg": 0.0, "lb_deg": 0.0, "contrast_rel": 0.0}
+    for m, var in diag["variants"].items():
+        fit = fit_doc["variants"][m]["fit"]
+        a, cov = np.array(fit["estimate"], float), np.array(fit["covariance"], float)
+        for name, sl in (("V", slice(0, 3)), ("dH", slice(3, 6)), ("kappa", slice(6, 11))):
+            w = float(a[sl] @ linalg.solve(cov[sl, sl], a[sl], assume_a="pos"))
+            got = var["D1_block_wald"][name]
+            worst["wald_rel"] = max(worst["wald_rel"], abs(w - got["wald"]) / w)
+            worst["p_abs"] = max(worst["p_abs"], abs(stats.chi2.sf(w, sl.stop - sl.start) - got["p"]))
+        k = np.einsum("a,aij->ij", a[6:], basis)
+        evals, evecs = linalg.eigh(k)
+        worst["eig_abs"] = max(worst["eig_abs"], float(np.max(np.abs(evals - var["D2_principal_frame"]["eigenvalues"]))))
+        for i, ax in enumerate(("neg", "mid", "pos")):
+            v = evecs[:, i]
+            radec = [float(np.degrees(np.arctan2(v[1], v[0])) % 360.0), float(np.degrees(np.arcsin(v[2])))]
+            worst["axis_deg"] = max(worst["axis_deg"], angdist(radec, var["D2_principal_frame"][ax]["ra_dec"]))
+            worst["lb_deg"] = max(worst["lb_deg"], angdist(lb(v), var["D2_principal_frame"][ax]["l_b"]))
+        for r, got in var["D4_fixed_axis_contrasts"].items():
+            n = np.array(diag["reference_axes"][r]["icrs_unit"], float)
+            c = np.r_[np.zeros(6), np.einsum("i,aij,j->a", n, basis, n)]
+            est, sd = float(c @ a), float(np.sqrt(c @ cov @ c))
+            exp = [est, sd, est - np.sqrt(c95) * sd, est + np.sqrt(c95) * sd]
+            obs = [got["estimate"], got["sd"], *got["simultaneous_95"]]
+            worst["contrast_rel"] = max(worst["contrast_rel"], max(abs(x - y) / max(abs(sd), 1e-300) for x, y in zip(exp, obs)))
+        report[m] = "checked"
+    # the M87 reference axis from its catalogue coordinates, and the Galactic transform on the Galactic pole itself
+    m87 = np.array(diag["reference_axes"]["M87"]["ra_dec"], float)
+    assert angdist(m87, [187.7059308, 12.39112326]) < 1e-9
+    assert abs(lb([np.cos(dec_p) * np.cos(ra_p), np.cos(dec_p) * np.sin(ra_p), np.sin(dec_p)])[1] - 90.0) < 1e-6
+    tol = {"wald_rel": 1e-9, "p_abs": 1e-12, "eig_abs": 1e-12, "axis_deg": 1e-6, "lb_deg": 1e-3, "contrast_rel": 1e-9}
+    ok = all(worst[k] <= tol[k] for k in tol)
+    out = {"schema": "htt.r58.axis_diagnostics_independent_check/1", "status": "D1_D2_D4_INDEPENDENTLY_REPRODUCED" if ok else "MISMATCH",
+           "max_deviation": worst, "tolerance": tol, "variants": report,
+           "inputs_sha256": {p: hashlib.sha256((pkg / p).read_bytes()).hexdigest() for p in ("RESULTS/OWNED_TENSOR_RESULT.json", "RESULTS/AXIS_DIAGNOSTICS.json")},
+           "note": "lb tolerance reflects the rounded published J2000 pole constants used here versus the R_I2G matrix of the candidate"}
+    output.write_text(json.dumps(out, indent=1, sort_keys=True) + "\n")
+    if not ok:
+        raise SystemExit(f"axis diagnostics differ from the independent recomputation: {worst}")
+    return out
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[2],
@@ -113,8 +183,13 @@ def main() -> None:
                         help="Review JSON path; defaults to root/R58/REVIEW/DATA_INDEPENDENT_REPLAY.json.")
     parser.add_argument("--candidate-root", type=Path,
                         help="Separate candidate source root for isolated patch validation; defaults to --root.")
+    parser.add_argument("--axis-diagnostics", type=Path, metavar="OUTPUT",
+                        help="Only recompute D1, D2 and D4 of RESULTS/AXIS_DIAGNOSTICS.json independently and write the check to OUTPUT.")
     args = parser.parse_args()
     root = args.root.resolve()
+    if args.axis_diagnostics is not None:
+        print(json.dumps(check_axis_diagnostics(root, args.axis_diagnostics)["max_deviation"]))
+        return
     results = args.results if args.results is not None else root / R58_RELATIVE / "RESULTS"
     output = args.output if args.output is not None else root / R58_RELATIVE / "REVIEW/DATA_INDEPENDENT_REPLAY.json"
     check(root, results, output, args.candidate_root if args.candidate_root is not None else root)
