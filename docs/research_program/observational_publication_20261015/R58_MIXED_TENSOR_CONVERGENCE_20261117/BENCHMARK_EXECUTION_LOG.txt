@@ -1,0 +1,25 @@
+R59 native execution log
+logs: /mnt/extdrive/workdir/r59_logs (outside the repository)
+environment:
+  3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]
+  numpy 2.4.2 scipy 1.17.0
+commands:
+  [pytest_r58] PYTHONPATH=htt/src:htt:. PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -m pytest tests/r58 -q
+  [runner] OPENBLAS_NUM_THREADS=1 python scripts/r58/run_r58_owned_tensor.py --root . --output docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/RESULTS/NATIVE_REPLAY
+  [views] OPENBLAS_NUM_THREADS=1 python scripts/r58/build_r58_views.py --root . --results docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/RESULTS/NATIVE_REPLAY
+  [checker] OPENBLAS_NUM_THREADS=1 python scripts/r58/check_r58_independent.py --root . --results docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/RESULTS/NATIVE_REPLAY --output docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/RESULTS/NATIVE_REPLAY/INDEPENDENT_CHECK.json
+  [dag] python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml
+  [mirror] python scripts/codex_harness/sync_pr_dag_mirrors.py --check
+  [parity] python scripts/r58/compare_r59_native_replay.py --root .
+exit codes:
+  pytest_r58 exit 0 1s
+  runner exit 0 3s
+  views exit 0 1s
+  checker exit 0 1s
+  dag exit 0 1s
+  mirror exit 0 1s
+  parity exit 0
+  final_pytest_r58 exit 0
+  final_parity exit 0
+  final_dag exit 0
+  final_mirror exit 0

@@ -1,0 +1,140 @@
+{
+ "acceptance": {
+  "cache_identity_labels_and_model_keys": true,
+  "carrier_arrays_parity": true,
+  "changed_inputs_are_allowlisted_repairs": true,
+  "five_view_numeric_parity_except_basis": true,
+  "frozen_marginal_max_abs_error_below_2e-7": true,
+  "independent_checker_status": "IMPLEMENTATION_AND_FINITE_ASSERTION_VERIFIED_CONDITIONAL",
+  "n_groups_35970": true,
+  "n_models_7": true,
+  "null_subspaces_equal": true,
+  "owned_result_numeric_parity": true,
+  "physical_rank_11_all_models": true
+ },
+ "accepted": true,
+ "allowed_repaired_hashes": {
+  "htt/htt/htt/infer/r54_tensor_five_view.py": [
+   "47f9ab5fd40da9ffb8725ff9720a8d4cba7116c905a6a4c11e05b79f972e17a8"
+  ]
+ },
+ "basis_note": "null_basis leaves that differ elementwise are a different orthonormal basis of the same null subspace (largest principal angle listed); no tolerance was changed",
+ "cache_note": "operator byte fingerprints differ (exact_operator_bytes false in reference and replay); accepted only with equal model keys, equal row labels and the numeric parity above (LOCAL_AGENT_CONTRACT.json R59-A)",
+ "cache_reuse": [
+  {
+   "exact_operator_bytes": false,
+   "file": "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L05_COSMIC_COV.npz",
+   "model_key_equal": true,
+   "row_labels_equal": true
+  },
+  {
+   "exact_operator_bytes": false,
+   "file": "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L04_COSMIC_COV.npz",
+   "model_key_equal": true,
+   "row_labels_equal": true
+  }
+ ],
+ "carrier_arrays_compared": 66,
+ "carrier_arrays_outside_tolerance": [],
+ "changed_inputs": {
+  "htt/htt/htt/infer/r54_tensor_five_view.py": [
+   "4811340d211f2c4d2fa330bd5d6cf160fc83a04458b5eb9c3a259fd1cb731b6d",
+   "47f9ab5fd40da9ffb8725ff9720a8d4cba7116c905a6a4c11e05b79f972e17a8"
+  ]
+ },
+ "files_sha256": {
+  "docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/RESULTS/NATIVE_REPLAY/FIVE_VIEW_RESULT.json": "f235b2bf85c8c8f6d8b4781f09db3711e0f55f0c2522222ac5460c60c46418e7",
+  "docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/RESULTS/NATIVE_REPLAY/INDEPENDENT_CHECK.json": "9eba54693fe6ca224e650810615b44ec45d3a7bee526593234019a9316827c8d",
+  "docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/RESULTS/NATIVE_REPLAY/OWNED_TENSOR_CARRIERS.npz": "5bbca876f141a58674aa763eee6c75a97d849290354ab0d58cf4ee3bcc4ae338",
+  "docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/RESULTS/NATIVE_REPLAY/OWNED_TENSOR_RESULT.json": "225e4ddd8c99552560ff8b54ad5b6c4ca5ffb52efbc5ff75d81ab2148a086711"
+ },
+ "five_view_result": {
+  "basis_leaves_elementwise_different": 1463,
+  "leaves_reference": 21673,
+  "leaves_replay": 21673,
+  "nonnumeric_differences": {},
+  "null_subspace_max_principal_angle": {
+   "log": 1.2048486436628905e-15,
+   "log_mono": 1.2849541417111022e-15,
+   "log_mono_error": 1.3020023190715212e-15,
+   "log_mono_galactic": 1.6508568491627083e-15,
+   "log_mono_radial": 1.1099470204106831e-15,
+   "log_split": 1.272668768306514e-15,
+   "log_survey": 1.436909493991452e-15
+  },
+  "numeric_leaves": 20247,
+  "numeric_outside_tolerance": [],
+  "only_reference": [],
+  "only_replay": [],
+  "provenance_differences": {
+   "/source_carrier_sha256": [
+    "42f6bc5158fdf2f876720db12c44b088bc2db9734887e0d84ae098b234a7e64d",
+    "5bbca876f141a58674aa763eee6c75a97d849290354ab0d58cf4ee3bcc4ae338"
+   ],
+   "/source_result_sha256": [
+    "264160d6b53112e7b21278bbeb19baaa9c45e22037b8269debc20baa294f09b9",
+    "225e4ddd8c99552560ff8b54ad5b6c4ca5ffb52efbc5ff75d81ab2148a086711"
+   ]
+  }
+ },
+ "frozen_marginal_max_abs_error": 5.684341886080801e-13,
+ "independent_check": {
+  "status": "IMPLEMENTATION_AND_FINITE_ASSERTION_VERIFIED_CONDITIONAL"
+ },
+ "owned_result": {
+  "basis_leaves_elementwise_different": 0,
+  "leaves_reference": 12485,
+  "leaves_replay": 12485,
+  "nonnumeric_differences": {},
+  "numeric_leaves": 11978,
+  "numeric_outside_tolerance": [],
+  "only_reference": [],
+  "only_replay": [],
+  "provenance_differences": {
+   "/cache_reuse[0]/operator_fingerprint_current": [
+    "29455b98d69c4c1434c86b13bc12e44ef51ca7591f3910ee3c6d5071dbf149f4",
+    "d1ec1852db85af29e1ea0078ce9872a6bac1f4ca0898844840a417b8f253c421"
+   ],
+   "/cache_reuse[1]/operator_fingerprint_current": [
+    "4415709c55183f15ae7414a58507c1ba28143961326bbc2262cf2feb011f95cf",
+    "3aff0d13f73f2de76d89c9baae4d35ce8e1cc0b5a16974e44df1c2b6e83bce55"
+   ],
+   "/carrier_sha256": [
+    "42f6bc5158fdf2f876720db12c44b088bc2db9734887e0d84ae098b234a7e64d",
+    "5bbca876f141a58674aa763eee6c75a97d849290354ab0d58cf4ee3bcc4ae338"
+   ],
+   "/implementation/numpy": [
+    "2.3.5",
+    "2.4.2"
+   ],
+   "/implementation/python": [
+    "3.12.14",
+    "3.12.3"
+   ],
+   "/inputs_sha256/htt/htt/htt/infer/r54_tensor_five_view.py": [
+    "4811340d211f2c4d2fa330bd5d6cf160fc83a04458b5eb9c3a259fd1cb731b6d",
+    "47f9ab5fd40da9ffb8725ff9720a8d4cba7116c905a6a4c11e05b79f972e17a8"
+   ],
+   "/source_root_head": [
+    "77f61c17ba33ff28ff4f16a7d42621d8041e5ce4",
+    "f50d978adb68481cd172e0910c614f2409e930e2"
+   ]
+  }
+ },
+ "physical_ranks": {
+  "log": 11,
+  "log_mono": 11,
+  "log_mono_error": 11,
+  "log_mono_galactic": 11,
+  "log_mono_radial": 11,
+  "log_split": 11,
+  "log_survey": 11
+ },
+ "schema": "htt.r59.native_replay_parity/1",
+ "tolerances": {
+  "atol": 1e-09,
+  "frozen_marginal_abs": 2e-07,
+  "null_subspace_angle_rad": 1e-09,
+  "rtol": 1e-07
+ }
+}

@@ -1,0 +1,314 @@
+{
+ "base_sha": "77f61c17ba33ff28ff4f16a7d42621d8041e5ce4",
+ "benchmark_decisions": {
+  "B01_DIRECT_GLS": "TIE",
+  "B02_SCORE": "TIE",
+  "B03S_SURVEY_MOCK_REPLAY": "BLOCKED_EXISTING_INPUT",
+  "B03_CROSS_BLOCK_ABLATION": "BETTER_CALIBRATED_THAN_ABLATION",
+  "B04_SCALAR_ABLATION": "NOT_COMPARABLE",
+  "B05_MORPHOLOGY_BIPOSH": "NOT_COMPARABLE",
+  "B06A_BOUBEL_2025": "NOT_COMPARABLE",
+  "B06B_SALZANO_2025": "NOT_COMPARABLE",
+  "B06C_VICENTE_2026": "NOT_COMPARABLE",
+  "B06X_KALBOUNEH_2025": "NOT_COMPARABLE",
+  "B06_KINEMATIC_COSMOGRAPHY": "TIE",
+  "B07_BOOST_INTRINSIC_DIPOLE": "NOT_COMPARABLE",
+  "B08_BIANCHI": "NOT_COMPARABLE",
+  "B09_ROBUST_ENVELOPE": "TIE"
+ },
+ "changed_dependencies": {
+  "allowed_repaired_hashes": {
+   "htt/htt/htt/infer/r54_tensor_five_view.py": [
+    "47f9ab5fd40da9ffb8725ff9720a8d4cba7116c905a6a4c11e05b79f972e17a8"
+   ]
+  },
+  "explanation": "r54_tensor_five_view.py differs from the R58 base only by input validation of the finite-MC helper (allowlisted repair); Python/NumPy differ from the reference environment",
+  "inputs": {
+   "htt/htt/htt/infer/r54_tensor_five_view.py": [
+    "4811340d211f2c4d2fa330bd5d6cf160fc83a04458b5eb9c3a259fd1cb731b6d",
+    "47f9ab5fd40da9ffb8725ff9720a8d4cba7116c905a6a4c11e05b79f972e17a8"
+   ]
+  }
+ },
+ "claim_admissions": {
+  "C01": "ADMITTED",
+  "C02": "ADMITTED_CONDITIONAL",
+  "C03": "ADMITTED_CONDITIONAL",
+  "C04": "ADMITTED",
+  "C05": "ADMITTED_CONDITIONAL",
+  "C06": "ADMITTED",
+  "C07": "ADMITTED_CONDITIONAL",
+  "C08": "NOT_CLAIMED",
+  "C09": "NOT_CLAIMED",
+  "C10": "NOT_CLAIMED",
+  "C11": "NOT_CLAIMED",
+  "C12": "NOT_CLAIMED",
+  "C13": "NOT_CLAIMED"
+ },
+ "code_hashes": {
+  "htt/htt/htt/infer/r58_mixed_tensor_likelihood.py": "f1c07d8ba7253f225af9354277a2973b5cab96c86febd08d4f8c5e1a11555bc0",
+  "scripts/r58/build_r58_views.py": "d84a05df99fb4393546222023cc37d8fe07d3bb3977c3520a60040e99445ab20",
+  "scripts/r58/build_r59_outputs.py": "280daf69f0d08b2a4ec23548c725699fc88761be7f13324a4f54050e98555d85",
+  "scripts/r58/check_r58_independent.py": "f267556649fc67f0c021d37a6449671d693f861285f57d6687dd2475127b79f5",
+  "scripts/r58/compare_r59_native_replay.py": "e390c33c2d157de1bc45fd702997c5e7a6c93aaa7648509509103380b1a52d68",
+  "scripts/r58/run_r58_owned_tensor.py": "0f446fb79967c1afc00004abd9350b7f2db6db454a66aa738141f4b98d5694ff"
+ },
+ "commands": {
+  "checker": "OPENBLAS_NUM_THREADS=1 python scripts/r58/check_r58_independent.py --root . --results docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/RESULTS/NATIVE_REPLAY --output docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/RESULTS/NATIVE_REPLAY/INDEPENDENT_CHECK.json",
+  "dag": "python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml",
+  "mirror": "python scripts/codex_harness/sync_pr_dag_mirrors.py --check",
+  "parity": "python scripts/r58/compare_r59_native_replay.py --root .",
+  "pytest_r58": "PYTHONPATH=htt/src:htt:. PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -m pytest tests/r58 -q",
+  "runner": "OPENBLAS_NUM_THREADS=1 python scripts/r58/run_r58_owned_tensor.py --root . --output docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/RESULTS/NATIVE_REPLAY",
+  "views": "OPENBLAS_NUM_THREADS=1 python scripts/r58/build_r58_views.py --root . --results docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/RESULTS/NATIVE_REPLAY"
+ },
+ "commands_exit_codes": [
+  "pytest_r58 exit 0 1s",
+  "runner exit 0 3s",
+  "views exit 0 1s",
+  "checker exit 0 1s",
+  "dag exit 0 1s",
+  "mirror exit 0 1s",
+  "parity exit 0",
+  "final_pytest_r58 exit 0",
+  "final_parity exit 0",
+  "final_dag exit 0",
+  "final_mirror exit 0"
+ ],
+ "decision": "BOUNDED_METHODS_APPLICATION",
+ "decision_basis": [
+  "evidence: the native replay reproduces the committed R58 outputs under unchanged tolerances (REFERENCE_PARITY.json accepted); the independent checker, the 24 GLS oracles, the seeded Gaussian calibrations and the exact weighted chi-square coverage agree",
+  "validity: every statement is conditional on the fixed Gaussian law with the inherited linear-LCDM body and on a post hoc nuisance family; survey-level coverage is BLOCKED_EXISTING_INPUT and stays unresolved",
+  "novelty: weak; the STF basis, joint mask-coupled CF4 multipoles and the H0-dipole/zero-point/bulk-flow confusion are prior work (Vicente et al. 2026; Kalbouneh et al. 2025; Salzano et al. 2025; Boubel et al. 2025; Stiskalek et al. 2025); the note is limited to the error-budget effect of the dipole-quadrupole cross covariance and the explicit 22-to-11 calibration quotient on a seven-variant union",
+  "risk: moderate to high referee risk; the coverage effect is a synthetic ablation and full GLS is nominal by construction; the note is a short bounded application, not a discovery or a methods advance over GLS",
+  "comparison table: WIN 0; TIE 4 (B01, B02, B06, B09); BETTER_CALIBRATED_THAN_ABLATION 1 (B03, synthetic, conditional); NOT_COMPARABLE 8; BLOCKED_EXISTING_INPUT 1 (B03S survey mocks)"
+ ],
+ "decision_review": {
+  "agent": "a622c7eab9660521b",
+  "closeout": {
+   "new_findings_fixed_after_closeout": [
+    {
+     "id": "R59-RV-09",
+     "resolution": "reworded to 'could also explain it; not quantified here'",
+     "resolution_status": "FIXED",
+     "severity": "minor",
+     "summary": "untested equivalence 'misspecification explains it as well as a coherent signal'"
+    },
+    {
+     "id": "R59-RV-10",
+     "resolution": "described as Gaussian weights with dispersion read from the pipeline constant",
+     "resolution_status": "FIXED",
+     "severity": "minor",
+     "summary": "windows described as width, they are Gaussian redshift weights"
+    },
+    {
+     "id": "R59-RV-11",
+     "resolution": "'a fit with free calibration'",
+     "resolution_status": "FIXED",
+     "severity": "minor",
+     "summary": "'calibration-free fit' inverted meaning"
+    },
+    {
+     "id": "R59-RV-12",
+     "resolution": "rewritten as limitations of this note (calibration freedom, constant coefficients, CONST_V only, no Bianchi transfer, coverage conditional)",
+     "resolution_status": "FIXED",
+     "severity": "minor",
+     "summary": "Section 7 copied internal lane text on topics outside the note"
+    }
+   ],
+   "verdict": "OPEN_ITEMS (RV-01..RV-08 CLOSED; four new minor wording items, none blocking the decision)"
+  },
+  "findings": [
+   {
+    "id": "R59-RV-01",
+    "resolution": "prior-work section added, abstracts verified 2026-11-17; novelty limited to the cross-covariance error budget and the calibration quotient; NOT_COMPARABLE rows B06A-B06C added; claim C13 NOT_CLAIMED",
+    "resolution_status": "FIXED",
+    "severity": "major",
+    "summary": "closer CF4 prior art missing (Boubel et al. 2025, Salzano et al. 2025, Vicente et al. 2026); 'closest study' sentence wrong"
+   },
+   {
+    "id": "R59-RV-02",
+    "resolution": "Section 1 states C_noise (indicator error plus nonlinear dispersion read from the pipeline constant) and the undamped linear body; alpha=0 means no coherent mean beyond that body; covariance misspecification named as an alternative explanation; V and beta_MR relabelled",
+    "resolution_status": "FIXED",
+    "severity": "major",
+    "summary": "null alpha=0 and V defined relative to the inherited linear-LCDM body was not stated"
+   },
+   {
+    "id": "R59-RV-03",
+    "resolution": "B03 labelled synthetic and not attributed to any published analysis; exact Imhof coverage reported next to the draws; full-GLS nominality by construction stated",
+    "resolution_status": "FIXED",
+    "severity": "major",
+    "summary": "B03 is a constructed ablation; full GLS coverage nominal by construction; MC is a numerical check"
+   },
+   {
+    "id": "R59-RV-04",
+    "resolution": "replaced by a finite-difference score check; the quadratic identity is labelled an arithmetic check",
+    "resolution_status": "FIXED",
+    "severity": "minor",
+    "summary": "B02 likelihood-ratio and MOPED checks tautological"
+   },
+   {
+    "id": "R59-RV-05",
+    "resolution": "acceptance key changed_inputs_are_allowlisted_repairs against the runner's ALLOWED_REPAIRED_HASHES; npz key-set equality enforced",
+    "resolution_status": "FIXED",
+    "severity": "minor",
+    "summary": "parity exempted all sha256 leaves; npz key sets not compared"
+   },
+   {
+    "id": "R59-RV-06",
+    "resolution": "input_hashes now the frozen inputs; replay output hashes separate; environment values, changed dependencies, command strings and exit codes in LOCAL_RESULT.json and BENCHMARK_EXECUTION_LOG.txt",
+    "resolution_status": "FIXED",
+    "severity": "minor",
+    "summary": "LOCAL_RESULT lacked frozen input hashes, version values, command strings"
+   },
+   {
+    "id": "R59-RV-07",
+    "resolution": "K maps theta (22) to x; 'seven variants (one without an extra template)'; g(z), windows and selection described; internal labels removed from the text; every reference cited where used; Stiskalek year and wording corrected",
+    "resolution_status": "FIXED",
+    "severity": "minor",
+    "summary": "map direction, nuisance wording, internal labels, uncited references, Stiskalek wording"
+   },
+   {
+    "id": "R59-RV-08",
+    "resolution": "C07 carries the numeric hulls; full replay paths; same_data=partial for the CF4 literature rows",
+    "resolution_status": "FIXED",
+    "severity": "minor",
+    "summary": "C07 circular value, short evidence paths, B06X same_data"
+   }
+  ],
+  "independent_of_author": true,
+  "recommendation": "BOUNDED_METHODS_APPLICATION",
+  "role": "scientific diff reviewer (physmath-coding-harness:scientific-diff-reviewer), single independent final code/claim/source review, read and run only",
+  "verdict": "ACCEPT_WITH_REQUIRED_CHANGES"
+ },
+ "environment": {
+  "native": [
+   "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+   "numpy 2.4.2 scipy 1.17.0"
+  ],
+  "reference_result_implementation": {
+   "fit_module_sha256": "f1c07d8ba7253f225af9354277a2973b5cab96c86febd08d4f8c5e1a11555bc0",
+   "numpy": "2.3.5",
+   "python": "3.12.14",
+   "runner_sha256": "0f446fb79967c1afc00004abd9350b7f2db6db454a66aa738141f4b98d5694ff"
+  },
+  "replay_result_implementation": {
+   "fit_module_sha256": "f1c07d8ba7253f225af9354277a2973b5cab96c86febd08d4f8c5e1a11555bc0",
+   "numpy": "2.4.2",
+   "python": "3.12.3",
+   "runner_sha256": "0f446fb79967c1afc00004abd9350b7f2db6db454a66aa738141f4b98d5694ff"
+  }
+ },
+ "failures": [
+  {
+   "affected_claim": "C09 survey coverage",
+   "category": "INPUT",
+   "command": "survey-mock replay (B03S_SURVEY_MOCK_REPLAY)",
+   "exit_code": null,
+   "minimal_next_action": "release-matched CF4 end-to-end mocks under a new owner scope"
+  },
+  {
+   "affected_claim": "none: null_basis entries differ elementwise between LAPACK builds while the null subspaces agree",
+   "category": "ENVIRONMENT",
+   "command": "python scripts/r58/compare_r59_native_replay.py --root .",
+   "exit_code": 0,
+   "minimal_next_action": "none"
+  }
+ ],
+ "head_sha": "f50d978adb68481cd172e0910c614f2409e930e2",
+ "input_hashes": {
+  "docs/research_program/cf4_schur_loop8_20261015/inputs/selected_source_observables.npz": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+  "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-01-CF4-OPERATOR/audit_backup/derived/A_RAW_36x35970.npz": "e835df014bf0eb96fd715994c823eec9c8449f98d3f132b1dc736b760fd2772e",
+  "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L04_COSMIC_COV.npz": "b6f92bff4d28affc68c0e41ad03ad02cf4a31aa4353a39710c7649cfba3e2a02",
+  "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L04_RESULT.json": "1c057c92471b5ed0e9f5b58b07cd7f08cd340277938169c6d0db75d59f82b94c",
+  "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L04_SURVEY_LABELS.npz": "7b5cac5e296abaa811477c01912c0233e430682cd865f6a1e3262c891dfced95",
+  "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L05_CF4_EXACT.json": "8f9535fa126164f72d5aaa4820283c228b4181b180feb54ce14df5a715d9beb8",
+  "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L05_COSMIC_COV.npz": "f0acb8e1be3f09d212303967ff7678178fd59364ec0131ab12ba3f5149879cae",
+  "htt/htt/htt/infer/r54_distance_estimators.py": "9640b9785d2c4a5164e75018c2bfd2d0c8f6eb8072cb1a445e4f7589f9876d50",
+  "htt/htt/htt/infer/r54_lcdm_body.py": "a61e88bb012fedeff78e57a31278f1e62e9225c03cca5f10c29c23cf996b3085",
+  "htt/htt/htt/infer/r54_survey.py": "57aa6a3834d4c9cb8c04c9ac5d15044135eaea37e6e9d9bcfe9f9ee51237485a",
+  "htt/htt/htt/infer/r54_tensor_five_view.py": "47f9ab5fd40da9ffb8725ff9720a8d4cba7116c905a6a4c11e05b79f972e17a8",
+  "scripts/r54/run_r54_cf4_exact.py": "0d84ec958dfc964d28f39ac2edc506dd5c8ed8009ad1c12019cb425b15418300",
+  "scripts/r54/run_r54_lowz_frames.py": "030ff65972be94b1f7a1d7f00b2c7f4e2b45592286dc1aae3c0af5eb2fa9a0c5",
+  "tests/fixtures/r54/planck18_linear_pk_z0.csv": "f4f99b2817ee0ade6b4b4cba107843d95f46c13e82293fb3def061bc56d0a45d"
+ },
+ "next_action": "STOP (R59 terminal; no R60, no new data, no native solver)",
+ "reference_parity": {
+  "acceptance": {
+   "cache_identity_labels_and_model_keys": true,
+   "carrier_arrays_parity": true,
+   "changed_inputs_are_allowlisted_repairs": true,
+   "five_view_numeric_parity_except_basis": true,
+   "frozen_marginal_max_abs_error_below_2e-7": true,
+   "independent_checker_status": "IMPLEMENTATION_AND_FINITE_ASSERTION_VERIFIED_CONDITIONAL",
+   "n_groups_35970": true,
+   "n_models_7": true,
+   "null_subspaces_equal": true,
+   "owned_result_numeric_parity": true,
+   "physical_rank_11_all_models": true
+  },
+  "accepted": true,
+  "basis_leaves_elementwise_different": 1463,
+  "null_subspace_max_principal_angle": {
+   "log": 1.2048486436628905e-15,
+   "log_mono": 1.2849541417111022e-15,
+   "log_mono_error": 1.3020023190715212e-15,
+   "log_mono_galactic": 1.6508568491627083e-15,
+   "log_mono_radial": 1.1099470204106831e-15,
+   "log_split": 1.272668768306514e-15,
+   "log_survey": 1.436909493991452e-15
+  },
+  "provenance_differences": {
+   "/cache_reuse[0]/operator_fingerprint_current": [
+    "29455b98d69c4c1434c86b13bc12e44ef51ca7591f3910ee3c6d5071dbf149f4",
+    "d1ec1852db85af29e1ea0078ce9872a6bac1f4ca0898844840a417b8f253c421"
+   ],
+   "/cache_reuse[1]/operator_fingerprint_current": [
+    "4415709c55183f15ae7414a58507c1ba28143961326bbc2262cf2feb011f95cf",
+    "3aff0d13f73f2de76d89c9baae4d35ce8e1cc0b5a16974e44df1c2b6e83bce55"
+   ],
+   "/carrier_sha256": [
+    "42f6bc5158fdf2f876720db12c44b088bc2db9734887e0d84ae098b234a7e64d",
+    "5bbca876f141a58674aa763eee6c75a97d849290354ab0d58cf4ee3bcc4ae338"
+   ],
+   "/implementation/numpy": [
+    "2.3.5",
+    "2.4.2"
+   ],
+   "/implementation/python": [
+    "3.12.14",
+    "3.12.3"
+   ],
+   "/inputs_sha256/htt/htt/htt/infer/r54_tensor_five_view.py": [
+    "4811340d211f2c4d2fa330bd5d6cf160fc83a04458b5eb9c3a259fd1cb731b6d",
+    "47f9ab5fd40da9ffb8725ff9720a8d4cba7116c905a6a4c11e05b79f972e17a8"
+   ],
+   "/source_root_head": [
+    "77f61c17ba33ff28ff4f16a7d42621d8041e5ce4",
+    "f50d978adb68481cd172e0910c614f2409e930e2"
+   ]
+  },
+  "tolerances": {
+   "atol": 1e-09,
+   "frozen_marginal_abs": 2e-07,
+   "null_subspace_angle_rad": 1e-09,
+   "rtol": 1e-07
+  }
+ },
+ "replay_output_hashes": {
+  "docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/RESULTS/NATIVE_REPLAY/FIVE_VIEW_RESULT.json": "f235b2bf85c8c8f6d8b4781f09db3711e0f55f0c2522222ac5460c60c46418e7",
+  "docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/RESULTS/NATIVE_REPLAY/INDEPENDENT_CHECK.json": "9eba54693fe6ca224e650810615b44ec45d3a7bee526593234019a9316827c8d",
+  "docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/RESULTS/NATIVE_REPLAY/OWNED_TENSOR_CARRIERS.npz": "5bbca876f141a58674aa763eee6c75a97d849290354ab0d58cf4ee3bcc4ae338",
+  "docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/RESULTS/NATIVE_REPLAY/OWNED_TENSOR_RESULT.json": "225e4ddd8c99552560ff8b54ad5b6c4ca5ffb52efbc5ff75d81ab2148a086711"
+ },
+ "schema": "htt.r59.local_result/1",
+ "unmeasured": [
+  "survey-level coverage (no release-matched end-to-end CF4 survey mocks)",
+  "individual sigma/H, omega/H, A/(cH)",
+  "evolving global tilt",
+  "Bianchi class",
+  "E-mode physical calibration",
+  "occupancy F_occupancy",
+  "true cosmic covariance (inherited linear body, not recomputed)"
+ ]
+}

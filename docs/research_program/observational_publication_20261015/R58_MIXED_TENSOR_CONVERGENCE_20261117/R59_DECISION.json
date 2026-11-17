@@ -1,0 +1,120 @@
+{
+ "schema": "htt.r59.decision/1",
+ "node": "PR-R59-NATIVE-REPLAY-MANUSCRIPT",
+ "date_kst": "2026-11-17",
+ "decision": "BOUNDED_METHODS_APPLICATION",
+ "basis": [
+  "evidence: the native replay reproduces the committed R58 outputs under unchanged tolerances (REFERENCE_PARITY.json accepted); the independent checker, the 24 GLS oracles, the seeded Gaussian calibrations and the exact weighted chi-square coverage agree",
+  "validity: every statement is conditional on the fixed Gaussian law with the inherited linear-LCDM body and on a post hoc nuisance family; survey-level coverage is BLOCKED_EXISTING_INPUT and stays unresolved",
+  "novelty: weak; the STF basis, joint mask-coupled CF4 multipoles and the H0-dipole/zero-point/bulk-flow confusion are prior work (Vicente et al. 2026; Kalbouneh et al. 2025; Salzano et al. 2025; Boubel et al. 2025; Stiskalek et al. 2025); the note is limited to the error-budget effect of the dipole-quadrupole cross covariance and the explicit 22-to-11 calibration quotient on a seven-variant union",
+  "risk: moderate to high referee risk; the coverage effect is a synthetic ablation and full GLS is nominal by construction; the note is a short bounded application, not a discovery or a methods advance over GLS",
+  "comparison table: WIN 0; TIE 4 (B01, B02, B06, B09); BETTER_CALIBRATED_THAN_ABLATION 1 (B03, synthetic, conditional); NOT_COMPARABLE 8; BLOCKED_EXISTING_INPUT 1 (B03S survey mocks)"
+ ],
+ "unidentified_physical_targets_preserved": [
+  "sigma/H, omega/H and A/(cH) individually (free calibration; omega has no scalar-distance column)",
+  "evolving global tilt (only CONST_V is defined)",
+  "Bianchi class (no transfer likelihood)",
+  "E-mode physical calibration",
+  "F_occupancy (no physical ceiling and measure)",
+  "survey-level coverage (no release-matched end-to-end CF4 mocks)"
+ ],
+ "review": {
+  "agent": "a622c7eab9660521b",
+  "role": "scientific diff reviewer (physmath-coding-harness:scientific-diff-reviewer), single independent final code/claim/source review, read and run only",
+  "independent_of_author": true,
+  "verdict": "ACCEPT_WITH_REQUIRED_CHANGES",
+  "recommendation": "BOUNDED_METHODS_APPLICATION",
+  "findings": [
+   {
+    "id": "R59-RV-01",
+    "severity": "major",
+    "summary": "closer CF4 prior art missing (Boubel et al. 2025, Salzano et al. 2025, Vicente et al. 2026); 'closest study' sentence wrong",
+    "resolution": "prior-work section added, abstracts verified 2026-11-17; novelty limited to the cross-covariance error budget and the calibration quotient; NOT_COMPARABLE rows B06A-B06C added; claim C13 NOT_CLAIMED",
+    "resolution_status": "FIXED"
+   },
+   {
+    "id": "R59-RV-02",
+    "severity": "major",
+    "summary": "null alpha=0 and V defined relative to the inherited linear-LCDM body was not stated",
+    "resolution": "Section 1 states C_noise (indicator error plus nonlinear dispersion read from the pipeline constant) and the undamped linear body; alpha=0 means no coherent mean beyond that body; covariance misspecification named as an alternative explanation; V and beta_MR relabelled",
+    "resolution_status": "FIXED"
+   },
+   {
+    "id": "R59-RV-03",
+    "severity": "major",
+    "summary": "B03 is a constructed ablation; full GLS coverage nominal by construction; MC is a numerical check",
+    "resolution": "B03 labelled synthetic and not attributed to any published analysis; exact Imhof coverage reported next to the draws; full-GLS nominality by construction stated",
+    "resolution_status": "FIXED"
+   },
+   {
+    "id": "R59-RV-04",
+    "severity": "minor",
+    "summary": "B02 likelihood-ratio and MOPED checks tautological",
+    "resolution": "replaced by a finite-difference score check; the quadratic identity is labelled an arithmetic check",
+    "resolution_status": "FIXED"
+   },
+   {
+    "id": "R59-RV-05",
+    "severity": "minor",
+    "summary": "parity exempted all sha256 leaves; npz key sets not compared",
+    "resolution": "acceptance key changed_inputs_are_allowlisted_repairs against the runner's ALLOWED_REPAIRED_HASHES; npz key-set equality enforced",
+    "resolution_status": "FIXED"
+   },
+   {
+    "id": "R59-RV-06",
+    "severity": "minor",
+    "summary": "LOCAL_RESULT lacked frozen input hashes, version values, command strings",
+    "resolution": "input_hashes now the frozen inputs; replay output hashes separate; environment values, changed dependencies, command strings and exit codes in LOCAL_RESULT.json and BENCHMARK_EXECUTION_LOG.txt",
+    "resolution_status": "FIXED"
+   },
+   {
+    "id": "R59-RV-07",
+    "severity": "minor",
+    "summary": "map direction, nuisance wording, internal labels, uncited references, Stiskalek wording",
+    "resolution": "K maps theta (22) to x; 'seven variants (one without an extra template)'; g(z), windows and selection described; internal labels removed from the text; every reference cited where used; Stiskalek year and wording corrected",
+    "resolution_status": "FIXED"
+   },
+   {
+    "id": "R59-RV-08",
+    "severity": "minor",
+    "summary": "C07 circular value, short evidence paths, B06X same_data",
+    "resolution": "C07 carries the numeric hulls; full replay paths; same_data=partial for the CF4 literature rows",
+    "resolution_status": "FIXED"
+   }
+  ],
+  "closeout": {
+   "verdict": "OPEN_ITEMS (RV-01..RV-08 CLOSED; four new minor wording items, none blocking the decision)",
+   "new_findings_fixed_after_closeout": [
+    {
+     "id": "R59-RV-09",
+     "severity": "minor",
+     "summary": "untested equivalence 'misspecification explains it as well as a coherent signal'",
+     "resolution": "reworded to 'could also explain it; not quantified here'",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R59-RV-10",
+     "severity": "minor",
+     "summary": "windows described as width, they are Gaussian redshift weights",
+     "resolution": "described as Gaussian weights with dispersion read from the pipeline constant",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R59-RV-11",
+     "severity": "minor",
+     "summary": "'calibration-free fit' inverted meaning",
+     "resolution": "'a fit with free calibration'",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R59-RV-12",
+     "severity": "minor",
+     "summary": "Section 7 copied internal lane text on topics outside the note",
+     "resolution": "rewritten as limitations of this note (calibration freedom, constant coefficients, CONST_V only, no Bianchi transfer, coverage conditional)",
+     "resolution_status": "FIXED"
+    }
+   ]
+  }
+ },
+ "stop": "R59 terminal; no R60, audit-only loop, new data or native solver is created"
+}

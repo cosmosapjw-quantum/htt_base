@@ -1,0 +1,493 @@
+{
+ "claim_tier": "C0",
+ "literature_checked_2026_11_17": {
+  "Alsing2018": "Alsing J., Wandelt B. 2018, arXiv:1712.00012 (generalized massive optimal data compression).",
+  "Boubel2025": "Boubel P., Colless M., Said K., Staveley-Smith L. 2025, JCAP 03, 066, arXiv:2412.14607 (testing anisotropic Hubble expansion with CF4 Tully-Fisher distances).",
+  "Cowell2022": "Cowell J. A., Dhawan S., Macpherson H. J. 2022, arXiv:2212.13569 (quadrupolar Hubble expansion in Pantheon+).",
+  "Heinesen2021": "Heinesen A. 2021, arXiv:2010.06534 (multipole decomposition of the luminosity-distance Hubble law).",
+  "Kalbouneh2025": "Kalbouneh B., Marinoni C., Maartens R. et al. 2025, arXiv:2510.02510, accepted by JCAP (anisotropic expansion rate of the local Universe, CF4 and Pantheon+).",
+  "Maartens2024": "Maartens R., Santiago J., Clarkson C., Kalbouneh B., Marinoni C. 2024, arXiv:2312.09875 (covariant cosmography: observer dependence of H).",
+  "Saadeh2016": "Saadeh D., Feeney S. M., Pontzen A., Peiris H. V., McEwen J. D. 2016, arXiv:1605.07178 (how isotropic is the Universe?).",
+  "Salzano2025": "Salzano V., Beltran Jimenez J., Bettoni D., Brax P., Valade A. 2025, arXiv:2512.02526 (dipolar anisotropy of local H0 from CF4).",
+  "Stiskalek2025": "Stiskalek R., Desmond H., Lavaux G. 2025, arXiv:2509.14997 (no evidence for local H0 anisotropy from Tully-Fisher or supernova distances).",
+  "Tully2023": "Tully R. B. et al. 2023, ApJ 944, 94 (Cosmicflows-4).",
+  "Vicente2026": "Vicente J. G., Pereira T. S., Rodrigues R. G., Vitenti S. D. P., Gomes V. M. 2026, arXiv:2607.07821 (multipolar structure of the local expansion rate from incomplete sky data)."
+ },
+ "rows": [
+  {
+   "actual_execution": "reused: 24 independent GLS/logL oracles (R58 review); replayed: independent checker on the native output",
+   "common_estimand": "11 apparent coefficients on the same 32 rows, covariance and response",
+   "comparator_id": "B01_DIRECT_GLS",
+   "input_sha256": {
+    "carriers": "5bbca876f141a58674aa763eee6c75a97d849290354ab0d58cf4ee3bcc4ae338",
+    "owned_result": "225e4ddd8c99552560ff8b54ad5b6c4ca5ffb52efbc5ff75d81ab2148a086711"
+   },
+   "limitations": "identical statistic by construction; a tie is not a win",
+   "metrics": {
+    "native_checker_status": "IMPLEMENTATION_AND_FINITE_ASSERTION_VERIFIED_CONDITIONAL",
+    "oracle_max_estimate_abs_error": 4.2099657093785936e-13,
+    "oracle_max_logL_abs_error": 1.0160761121369433e-12
+   },
+   "next_action": "none (R59 terminal)",
+   "nuisance_models": [
+    "log",
+    "log_mono",
+    "log_mono_error",
+    "log_mono_galactic",
+    "log_mono_radial",
+    "log_split",
+    "log_survey"
+   ],
+   "null_hypothesis": "n/a",
+   "outcome": "TIE",
+   "response_identity": "X_m = O_m [g(z) n, n, STF5(n)], orthonormal STF basis, ICRS observer-to-source, z_CMB",
+   "same_data": "yes",
+   "seed_and_sample_count": "n/a (deterministic)",
+   "uncertainty": "n/a"
+  },
+  {
+   "actual_execution": "computed from the stored carriers: re-solved estimate/covariance, finite-difference score of the full log-likelihood, quadratic identity",
+   "common_estimand": "same retained 32-row fixed-covariance linear-mean experiment",
+   "comparator_id": "B02_SCORE",
+   "input_sha256": {
+    "carriers": "5bbca876f141a58674aa763eee6c75a97d849290354ab0d58cf4ee3bcc4ae338",
+    "owned_result": "225e4ddd8c99552560ff8b54ad5b6c4ca5ffb52efbc5ff75d81ab2148a086711"
+   },
+   "limitations": "the quadratic identity is an arithmetic check, not independent evidence; the covariance does not depend on the fitted parameters, so no covariance-derivative score term exists; exact sufficiency (Alsing & Wandelt 2018) only inside the fixed-C Gaussian law",
+   "metrics": {
+    "fisher_rank_all_models": [
+     11
+    ],
+    "max_estimate_rel_error_vs_stored": 1.1298324594543276e-13,
+    "max_finite_difference_score_rel_error": 3.254818556180892e-12,
+    "max_quadratic_identity_arithmetic_rel": 1.5852568494197206e-15
+   },
+   "next_action": "none (R59 terminal)",
+   "nuisance_models": [
+    "log",
+    "log_mono",
+    "log_mono_error",
+    "log_mono_galactic",
+    "log_mono_radial",
+    "log_split",
+    "log_survey"
+   ],
+   "null_hypothesis": "n/a",
+   "outcome": "TIE",
+   "response_identity": "X_m = O_m [g(z) n, n, STF5(n)], orthonormal STF basis, ICRS observer-to-source, z_CMB",
+   "same_data": "yes",
+   "seed_and_sample_count": "20 parameter points per model, seed 20261117",
+   "uncertainty": "n/a"
+  },
+  {
+   "actual_execution": "exact weighted-chi-square (Imhof) coverage from the stored variance eigenvalues; reused: Gaussian 20000 draws (seed 20261117) and independent Gaussian 60000 draws (seed 9345081), replayed natively",
+   "common_estimand": "same 11 coefficients; only the polar-STF cross covariance removed",
+   "comparator_id": "B03_CROSS_BLOCK_ABLATION",
+   "input_sha256": {
+    "carriers": "5bbca876f141a58674aa763eee6c75a97d849290354ab0d58cf4ee3bcc4ae338",
+    "owned_result": "225e4ddd8c99552560ff8b54ad5b6c4ca5ffb52efbc5ff75d81ab2148a086711"
+   },
+   "limitations": "synthetic ablation, not attributed to any published analysis; it models an error budget that treats the dipole and quadrupole blocks as independent; full-GLS coverage is nominal by construction under the assumed law; not survey coverage, not validation of the cosmic covariance",
+   "metrics": {
+    "block_nominal95_coverage_60k_range": [
+     0.9328833333333333,
+     0.9372833333333334
+    ],
+    "block_nominal95_coverage_exact_range": [
+     0.9325613332074332,
+     0.9366719157158216
+    ],
+    "full_GLS_coverage_60k_range": [
+     0.9497166666666667,
+     0.9506666666666667
+    ],
+    "max_abs_exact_minus_60k": 0.0006114176175117114,
+    "max_mc_se_60k": 0.001021534953898807,
+    "variance_ratio_eigenvalues_range": [
+     0.534707701682094,
+     1.4725569367016706
+    ]
+   },
+   "next_action": "none (R59 terminal)",
+   "nuisance_models": [
+    "log",
+    "log_mono",
+    "log_mono_error",
+    "log_mono_galactic",
+    "log_mono_radial",
+    "log_split",
+    "log_survey"
+   ],
+   "null_hypothesis": "n/a",
+   "outcome": "BETTER_CALIBRATED_THAN_ABLATION",
+   "response_identity": "X_m = O_m [g(z) n, n, STF5(n)], orthonormal STF basis, ICRS observer-to-source, z_CMB",
+   "same_data": "yes",
+   "seed_and_sample_count": "exact; 20000 (seed 20261117) and 60000 (seed 9345081) per model as numerical checks",
+   "uncertainty": 0.001021534953898807
+  },
+  {
+   "actual_execution": "not executed: no release-matched end-to-end CF4 survey mock exists locally (htt/obsstat/pv_forward_mocks.py records the CF4TF L-PICOLA mocks of Qin et al. 2021 as request-only; its in-house Gaussian-field generator is a velocity forward model, not a catalogue mock with selection and zero-point calibration, and its MV interpretation is quarantined)",
+   "common_estimand": "same pipeline replayed on release-matched end-to-end CF4 survey mocks",
+   "comparator_id": "B03S_SURVEY_MOCK_REPLAY",
+   "input_sha256": {
+    "carriers": "5bbca876f141a58674aa763eee6c75a97d849290354ab0d58cf4ee3bcc4ae338",
+    "owned_result": "225e4ddd8c99552560ff8b54ad5b6c4ca5ffb52efbc5ff75d81ab2148a086711"
+   },
+   "limitations": "empirical survey-level coverage of the full and block intervals stays UNRESOLVED",
+   "metrics": {},
+   "next_action": "requires release-matched CF4 survey mocks (new owner scope)",
+   "nuisance_models": [
+    "log",
+    "log_mono",
+    "log_mono_error",
+    "log_mono_galactic",
+    "log_mono_radial",
+    "log_split",
+    "log_survey"
+   ],
+   "null_hypothesis": "n/a",
+   "outcome": "BLOCKED_EXISTING_INPUT",
+   "response_identity": "X_m = O_m [g(z) n, n, STF5(n)], orthonormal STF basis, ICRS observer-to-source, z_CMB",
+   "same_data": "no",
+   "seed_and_sample_count": "none",
+   "uncertainty": "n/a"
+  },
+  {
+   "actual_execution": "reused: tests/r58/test_mixed_tensor_likelihood.py::test_scalar_norm_loses_signed_target_likelihood",
+   "common_estimand": "scalar norm vs signed vector/STF target",
+   "comparator_id": "B04_SCALAR_ABLATION",
+   "input_sha256": {
+    "carriers": "5bbca876f141a58674aa763eee6c75a97d849290354ab0d58cf4ee3bcc4ae338",
+    "owned_result": "225e4ddd8c99552560ff8b54ad5b6c4ca5ffb52efbc5ff75d81ab2148a086711"
+   },
+   "limitations": "target mismatch: a norm cannot identify signed contrasts without a direction assumption; no power claim",
+   "metrics": {},
+   "next_action": "none (R59 terminal)",
+   "nuisance_models": [
+    "log",
+    "log_mono",
+    "log_mono_error",
+    "log_mono_galactic",
+    "log_mono_radial",
+    "log_split",
+    "log_survey"
+   ],
+   "null_hypothesis": "n/a",
+   "outcome": "NOT_COMPARABLE",
+   "response_identity": "X_m = O_m [g(z) n, n, STF5(n)], orthonormal STF basis, ICRS observer-to-source, z_CMB",
+   "same_data": "yes",
+   "seed_and_sample_count": "n/a",
+   "uncertainty": "n/a"
+  },
+  {
+   "actual_execution": "classified only",
+   "common_estimand": "none: CF4 apparent Hubble coefficients vs CMB a_lm irreps",
+   "comparator_id": "B05_MORPHOLOGY_BIPOSH",
+   "input_sha256": {
+    "carriers": "5bbca876f141a58674aa763eee6c75a97d849290354ab0d58cf4ee3bcc4ae338",
+    "owned_result": "225e4ddd8c99552560ff8b54ad5b6c4ca5ffb52efbc5ff75d81ab2148a086711"
+   },
+   "limitations": "different data, estimand and law; no common transfer response",
+   "metrics": {},
+   "next_action": "none (R59 terminal)",
+   "nuisance_models": [
+    "log",
+    "log_mono",
+    "log_mono_error",
+    "log_mono_galactic",
+    "log_mono_radial",
+    "log_split",
+    "log_survey"
+   ],
+   "null_hypothesis": "n/a",
+   "outcome": "NOT_COMPARABLE",
+   "response_identity": "X_m = O_m [g(z) n, n, STF5(n)], orthonormal STF basis, ICRS observer-to-source, z_CMB",
+   "same_data": "no",
+   "seed_and_sample_count": "n/a",
+   "uncertainty": "n/a"
+  },
+  {
+   "actual_execution": "same linear model reduces to direct GLS; physical pullback recomputed natively",
+   "common_estimand": "same apparent low-z coefficients on the selected CF4 rows",
+   "comparator_id": "B06_KINEMATIC_COSMOGRAPHY",
+   "input_sha256": {
+    "carriers": "5bbca876f141a58674aa763eee6c75a97d849290354ab0d58cf4ee3bcc4ae338",
+    "owned_result": "225e4ddd8c99552560ff8b54ad5b6c4ca5ffb52efbc5ff75d81ab2148a086711"
+   },
+   "limitations": "sigma/H, omega/H and A/(cH) individually unbounded with free calibration; beta conditional on the constant-velocity response",
+   "metrics": {
+    "identified_physical_coordinates": [
+     "beta_MR_0",
+     "beta_MR_1",
+     "beta_MR_2"
+    ],
+    "physical_dimension": [
+     22
+    ],
+    "physical_rank": [
+     11
+    ]
+   },
+   "next_action": "none (R59 terminal)",
+   "nuisance_models": [
+    "log",
+    "log_mono",
+    "log_mono_error",
+    "log_mono_galactic",
+    "log_mono_radial",
+    "log_split",
+    "log_survey"
+   ],
+   "null_hypothesis": "n/a",
+   "outcome": "TIE",
+   "response_identity": "X_m = O_m [g(z) n, n, STF5(n)], orthonormal STF basis, ICRS observer-to-source, z_CMB",
+   "same_data": "yes",
+   "seed_and_sample_count": "n/a",
+   "uncertainty": "n/a"
+  },
+  {
+   "actual_execution": "classified from the abstract only (Boubel P., Colless M., Said K., Staveley-Smith L. 2025, JCAP 03, 066, arXiv:2412.14607 (testing anisotropic Hubble expansion with CF4 Tully-Fisher distances).)",
+   "common_estimand": "CF4 Tully-Fisher H0 dipole vs constant H0 plus LCDM bulk flow",
+   "comparator_id": "B06A_BOUBEL_2025",
+   "input_sha256": {
+    "carriers": "5bbca876f141a58674aa763eee6c75a97d849290354ab0d58cf4ee3bcc4ae338",
+    "owned_result": "225e4ddd8c99552560ff8b54ad5b6c4ca5ffb52efbc5ff75d81ab2148a086711"
+   },
+   "limitations": "TF subsample with differential zero points and a dipole-only model; different estimator, sample and law",
+   "metrics": {},
+   "next_action": "none (R59 terminal)",
+   "nuisance_models": [
+    "log",
+    "log_mono",
+    "log_mono_error",
+    "log_mono_galactic",
+    "log_mono_radial",
+    "log_split",
+    "log_survey"
+   ],
+   "null_hypothesis": "n/a",
+   "outcome": "NOT_COMPARABLE",
+   "response_identity": "X_m = O_m [g(z) n, n, STF5(n)], orthonormal STF basis, ICRS observer-to-source, z_CMB",
+   "same_data": "partial",
+   "seed_and_sample_count": "n/a",
+   "uncertainty": "n/a"
+  },
+  {
+   "actual_execution": "classified from the abstract only (Salzano V., Beltran Jimenez J., Bettoni D., Brax P., Valade A. 2025, arXiv:2512.02526 (dipolar anisotropy of local H0 from CF4).)",
+   "common_estimand": "CF4 log-H0 sky maps fitted with spherical harmonics to l = 3",
+   "comparator_id": "B06B_SALZANO_2025",
+   "input_sha256": {
+    "carriers": "5bbca876f141a58674aa763eee6c75a97d849290354ab0d58cf4ee3bcc4ae338",
+    "owned_result": "225e4ddd8c99552560ff8b54ad5b6c4ca5ffb52efbc5ff75d81ab2148a086711"
+   },
+   "limitations": "conservative distance-modulus/redshift subsample and map-based harmonic fit; different estimator and law",
+   "metrics": {},
+   "next_action": "none (R59 terminal)",
+   "nuisance_models": [
+    "log",
+    "log_mono",
+    "log_mono_error",
+    "log_mono_galactic",
+    "log_mono_radial",
+    "log_split",
+    "log_survey"
+   ],
+   "null_hypothesis": "n/a",
+   "outcome": "NOT_COMPARABLE",
+   "response_identity": "X_m = O_m [g(z) n, n, STF5(n)], orthonormal STF basis, ICRS observer-to-source, z_CMB",
+   "same_data": "partial",
+   "seed_and_sample_count": "n/a",
+   "uncertainty": "n/a"
+  },
+  {
+   "actual_execution": "classified from the abstract only (Vicente J. G., Pereira T. S., Rodrigues R. G., Vitenti S. D. P., Gomes V. M. 2026, arXiv:2607.07821 (multipolar structure of the local expansion rate from incomplete sky data).)",
+   "common_estimand": "CF4 expansion-rate multipoles l = 1-3 in harmonics and STF tensors with mask-coupling inversion",
+   "comparator_id": "B06C_VICENTE_2026",
+   "input_sha256": {
+    "carriers": "5bbca876f141a58674aa763eee6c75a97d849290354ab0d58cf4ee3bcc4ae338",
+    "owned_result": "225e4ddd8c99552560ff8b54ad5b6c4ca5ffb52efbc5ff75d81ab2148a086711"
+   },
+   "limitations": "z = 0.01-0.05 in the CMB frame, pixel mask, pseudo-inverse and maximum-likelihood reconstruction; STF basis and joint mask-coupled multipoles predate this work",
+   "metrics": {},
+   "next_action": "none (R59 terminal)",
+   "nuisance_models": [
+    "log",
+    "log_mono",
+    "log_mono_error",
+    "log_mono_galactic",
+    "log_mono_radial",
+    "log_split",
+    "log_survey"
+   ],
+   "null_hypothesis": "n/a",
+   "outcome": "NOT_COMPARABLE",
+   "response_identity": "X_m = O_m [g(z) n, n, STF5(n)], orthonormal STF basis, ICRS observer-to-source, z_CMB",
+   "same_data": "partial",
+   "seed_and_sample_count": "n/a",
+   "uncertainty": "n/a"
+  },
+  {
+   "actual_execution": "classified from the abstract only (Kalbouneh B., Marinoni C., Maartens R. et al. 2025, arXiv:2510.02510, accepted by JCAP (anisotropic expansion rate of the local Universe, CF4 and Pantheon+).)",
+   "common_estimand": "CF4+Pantheon+ expansion-rate fluctuation multipoles",
+   "comparator_id": "B06X_KALBOUNEH_2025",
+   "input_sha256": {
+    "carriers": "5bbca876f141a58674aa763eee6c75a97d849290354ab0d58cf4ee3bcc4ae338",
+    "owned_result": "225e4ddd8c99552560ff8b54ad5b6c4ca5ffb52efbc5ff75d81ab2148a086711"
+   },
+   "limitations": "different sample combination, estimator and redshift binning",
+   "metrics": {},
+   "next_action": "none (R59 terminal)",
+   "nuisance_models": [
+    "log",
+    "log_mono",
+    "log_mono_error",
+    "log_mono_galactic",
+    "log_mono_radial",
+    "log_split",
+    "log_survey"
+   ],
+   "null_hypothesis": "n/a",
+   "outcome": "NOT_COMPARABLE",
+   "response_identity": "X_m = O_m [g(z) n, n, STF5(n)], orthonormal STF basis, ICRS observer-to-source, z_CMB",
+   "same_data": "partial",
+   "seed_and_sample_count": "n/a",
+   "uncertainty": "n/a"
+  },
+  {
+   "actual_execution": "classified only",
+   "common_estimand": "none: CMB observer boost vs CF4 coherent V",
+   "comparator_id": "B07_BOOST_INTRINSIC_DIPOLE",
+   "input_sha256": {
+    "carriers": "5bbca876f141a58674aa763eee6c75a97d849290354ab0d58cf4ee3bcc4ae338",
+    "owned_result": "225e4ddd8c99552560ff8b54ad5b6c4ca5ffb52efbc5ff75d81ab2148a086711"
+   },
+   "limitations": "no global-tilt transfer; V is not a measured global tilt",
+   "metrics": {},
+   "next_action": "none (R59 terminal)",
+   "nuisance_models": [
+    "log",
+    "log_mono",
+    "log_mono_error",
+    "log_mono_galactic",
+    "log_mono_radial",
+    "log_split",
+    "log_survey"
+   ],
+   "null_hypothesis": "n/a",
+   "outcome": "NOT_COMPARABLE",
+   "response_identity": "X_m = O_m [g(z) n, n, STF5(n)], orthonormal STF basis, ICRS observer-to-source, z_CMB",
+   "same_data": "no",
+   "seed_and_sample_count": "n/a",
+   "uncertainty": "n/a"
+  },
+  {
+   "actual_execution": "classified only",
+   "common_estimand": "none: class-specific transfer parameters",
+   "comparator_id": "B08_BIANCHI",
+   "input_sha256": {
+    "carriers": "5bbca876f141a58674aa763eee6c75a97d849290354ab0d58cf4ee3bcc4ae338",
+    "owned_result": "225e4ddd8c99552560ff8b54ad5b6c4ca5ffb52efbc5ff75d81ab2148a086711"
+   },
+   "limitations": "local STF eigenvalues do not determine the Lie-algebra class; no Bianchi transfer likelihood evaluated (cf. Saadeh et al. 2016 for CMB Bianchi constraints)",
+   "metrics": {},
+   "next_action": "none (R59 terminal)",
+   "nuisance_models": [
+    "log",
+    "log_mono",
+    "log_mono_error",
+    "log_mono_galactic",
+    "log_mono_radial",
+    "log_split",
+    "log_survey"
+   ],
+   "null_hypothesis": "n/a",
+   "outcome": "NOT_COMPARABLE",
+   "response_identity": "X_m = O_m [g(z) n, n, STF5(n)], orthonormal STF basis, ICRS observer-to-source, z_CMB",
+   "same_data": "no",
+   "seed_and_sample_count": "n/a",
+   "uncertainty": "n/a"
+  },
+  {
+   "actual_execution": "union of the seven 95% ellipsoids and max modelwise p, replayed natively",
+   "common_estimand": "common 11-coefficient target under the seven declared nuisance-model variants",
+   "comparator_id": "B09_ROBUST_ENVELOPE",
+   "input_sha256": {
+    "carriers": "5bbca876f141a58674aa763eee6c75a97d849290354ab0d58cf4ee3bcc4ae338",
+    "owned_result": "225e4ddd8c99552560ff8b54ad5b6c4ca5ffb52efbc5ff75d81ab2148a086711"
+   },
+   "limitations": "standard union-of-confidence-sets envelope; the two p-values test different nulls; post hoc nuisance family",
+   "metrics": {
+    "max_null_p_32_rows_zero": 0.11221289218462652,
+    "max_wald_p_common_11_zero": 0.01534273828859841
+   },
+   "next_action": "none (R59 terminal)",
+   "nuisance_models": [
+    "log",
+    "log_mono",
+    "log_mono_error",
+    "log_mono_galactic",
+    "log_mono_radial",
+    "log_split",
+    "log_survey"
+   ],
+   "null_hypothesis": "alpha = 0 (11) and E[y32] = 0 (32), separately",
+   "outcome": "TIE",
+   "response_identity": "X_m = O_m [g(z) n, n, STF5(n)], orthonormal STF basis, ICRS observer-to-source, z_CMB",
+   "same_data": "yes",
+   "seed_and_sample_count": "n/a",
+   "uncertainty": "n/a"
+  }
+ ],
+ "schema": "htt.r59.benchmark_results/1",
+ "score_checks": {
+  "log": {
+   "covariance_rel_error_vs_stored": 2.938066750414546e-15,
+   "estimate_rel_error_vs_stored": 6.152623795584059e-14,
+   "finite_difference_score_rel_error": 1.6765185026822831e-12,
+   "fisher_rank": 11,
+   "quadratic_identity_arithmetic_rel": 1.400297180672456e-15
+  },
+  "log_mono": {
+   "covariance_rel_error_vs_stored": 4.530642443782487e-15,
+   "estimate_rel_error_vs_stored": 1.3824152739667522e-14,
+   "finite_difference_score_rel_error": 7.045987780697737e-13,
+   "fisher_rank": 11,
+   "quadratic_identity_arithmetic_rel": 1.3936137864157457e-15
+  },
+  "log_mono_error": {
+   "covariance_rel_error_vs_stored": 3.4105339619821604e-15,
+   "estimate_rel_error_vs_stored": 1.8373438410860126e-14,
+   "finite_difference_score_rel_error": 9.769686995000066e-13,
+   "fisher_rank": 11,
+   "quadratic_identity_arithmetic_rel": 1.1800612064979911e-15
+  },
+  "log_mono_galactic": {
+   "covariance_rel_error_vs_stored": 4.373281880758009e-15,
+   "estimate_rel_error_vs_stored": 1.1298324594543276e-13,
+   "finite_difference_score_rel_error": 3.254818556180892e-12,
+   "fisher_rank": 11,
+   "quadratic_identity_arithmetic_rel": 9.401843795896638e-16
+  },
+  "log_mono_radial": {
+   "covariance_rel_error_vs_stored": 2.0945650794559133e-15,
+   "estimate_rel_error_vs_stored": 6.189640424344916e-15,
+   "finite_difference_score_rel_error": 1.5806097794420238e-12,
+   "fisher_rank": 11,
+   "quadratic_identity_arithmetic_rel": 1.5852568494197206e-15
+  },
+  "log_split": {
+   "covariance_rel_error_vs_stored": 3.5879804053912935e-15,
+   "estimate_rel_error_vs_stored": 5.99414354697758e-15,
+   "finite_difference_score_rel_error": 1.5077594661877718e-12,
+   "fisher_rank": 11,
+   "quadratic_identity_arithmetic_rel": 9.205618970044048e-16
+  },
+  "log_survey": {
+   "covariance_rel_error_vs_stored": 1.2913574140062816e-15,
+   "estimate_rel_error_vs_stored": 8.769902249892302e-15,
+   "finite_difference_score_rel_error": 1.4018110669246746e-12,
+   "fisher_rank": 11,
+   "quadratic_identity_arithmetic_rel": 7.415285415566131e-16
+  }
+ }
+}
