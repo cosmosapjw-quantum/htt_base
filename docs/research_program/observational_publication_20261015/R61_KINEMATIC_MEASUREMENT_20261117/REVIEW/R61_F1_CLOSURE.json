@@ -1,0 +1,107 @@
+{
+  "finding": "R61-F1",
+  "status": "TARGETED_CORRECTION_VERIFIED",
+  "old_report_sha256": "ec7dd00710bd6a38eb69b9e1798a657e715a4e6af04391483c5eb89c974bd72c",
+  "corrected_report_sha256": "fd4c741bc44c803d5fab32e506a4c121974660f1c56e712434602e5a3f271864",
+  "original_runner_snapshot": "REVIEW/executed_depth_runner_before_R61_F1.py",
+  "corrected_runner_sha256": "e7168efd30d75183d811de382e1159a3858496fcab0504a48f7c66231284bcd1",
+  "old_numeric_leaves_compared": 6159,
+  "old_numeric_values_changed": 0,
+  "old_response_arrays_byte_equal": true,
+  "counterexamples": {
+    "log": {
+      "raw_STF_calibration": "0.01*((z-0.02)/0.05)*((z-0.08)/0.05)*E0",
+      "physical_endpoint_values": "Both endpoint tensors are exactly zero.",
+      "induced_delta_kappa": [
+        0.003696880207709714,
+        0.00021093957742888546,
+        3.623848846809991e-05,
+        4.705048484424589e-05,
+        0.00033484030117136854
+      ],
+      "induced_fullsky_rms": 0.0013577954572978831,
+      "bias_map_vs_refit_max_abs": 1.1079190950086248e-17
+    },
+    "log_mono": {
+      "raw_STF_calibration": "0.01*((z-0.02)/0.05)*((z-0.08)/0.05)*E0",
+      "physical_endpoint_values": "Both endpoint tensors are exactly zero.",
+      "induced_delta_kappa": [
+        0.003678537403544187,
+        0.00022138580254356193,
+        4.067039663473778e-05,
+        -4.942988735098645e-06,
+        0.0003032035247011902
+      ],
+      "induced_fullsky_rms": 0.00135027207107964,
+      "bias_map_vs_refit_max_abs": 1.894643296418419e-17
+    },
+    "log_split": {
+      "raw_STF_calibration": "0.01*((z-0.02)/0.05)*((z-0.08)/0.05)*E0",
+      "physical_endpoint_values": "Both endpoint tensors are exactly zero.",
+      "induced_delta_kappa": [
+        0.0036372915145050596,
+        0.0001334404703553368,
+        2.6175212774605958e-05,
+        -9.006505714071806e-05,
+        0.00028322224957200897
+      ],
+      "induced_fullsky_rms": 0.00133350203697149,
+      "bias_map_vs_refit_max_abs": 8.900622209748188e-18
+    },
+    "log_survey": {
+      "raw_STF_calibration": "0.01*((z-0.02)/0.05)*((z-0.08)/0.05)*E0",
+      "physical_endpoint_values": "Both endpoint tensors are exactly zero.",
+      "induced_delta_kappa": [
+        0.0036767155957979614,
+        0.00018519045088172194,
+        3.3178481097297064e-05,
+        1.10576711451158e-05,
+        0.00030533923282716506
+      ],
+      "induced_fullsky_rms": 0.0013489249154436183,
+      "bias_map_vs_refit_max_abs": 1.0462550964485118e-17
+    },
+    "log_mono_radial": {
+      "raw_STF_calibration": "0.01*((z-0.02)/0.05)*((z-0.08)/0.05)*E0",
+      "physical_endpoint_values": "Both endpoint tensors are exactly zero.",
+      "induced_delta_kappa": [
+        0.003836842392454339,
+        0.0002821644730439788,
+        5.6887701881160816e-05,
+        -0.00039355057927169604,
+        0.00015515799064247252
+      ],
+      "induced_fullsky_rms": 0.0014134199001246842,
+      "bias_map_vs_refit_max_abs": 6.5052130349130266e-18
+    },
+    "log_mono_galactic": {
+      "raw_STF_calibration": "0.01*((z-0.02)/0.05)*((z-0.08)/0.05)*E0",
+      "physical_endpoint_values": "Both endpoint tensors are exactly zero.",
+      "induced_delta_kappa": [
+        0.0021328131861416137,
+        0.0003479403161380933,
+        -0.0008002123903030189,
+        0.0011203588454231249,
+        0.0008992666885237069
+      ],
+      "induced_fullsky_rms": 0.0009915764512313727,
+      "bias_map_vs_refit_max_abs": 1.951563910473908e-17
+    },
+    "log_mono_error": {
+      "raw_STF_calibration": "0.01*((z-0.02)/0.05)*((z-0.08)/0.05)*E0",
+      "physical_endpoint_values": "Both endpoint tensors are exactly zero.",
+      "induced_delta_kappa": [
+        0.003698369827382753,
+        0.00023508134844123956,
+        5.2905080672076017e-05,
+        -2.4711975444079908e-05,
+        0.0002873141556202864
+      ],
+      "induced_fullsky_rms": 0.0013574074148312361,
+      "bias_map_vs_refit_max_abs": 2.0067904586348884e-17
+    }
+  },
+  "maximum_counterexample_refit_check": 2.0067904586348884e-17,
+  "scope": "Endpoint-only calibration bound restricted to fitted affine-z STF subspace. General calibration uses the released GLS-induced 5x32 contrast bias operator. Original result and runner preserved; previously reported numeric endpoints unchanged.",
+  "byte_identity_check": "dtype,shape,and array.tobytes() equal for every original response array"
+}

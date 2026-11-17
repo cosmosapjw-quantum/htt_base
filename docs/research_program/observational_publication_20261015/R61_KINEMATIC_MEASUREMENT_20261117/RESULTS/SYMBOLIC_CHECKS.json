@@ -1,0 +1,30 @@
+{
+  "schema": "htt.r61.symbolic_checks/1",
+  "method": "Wolfram evaluator calls executed during R5; compact transcription of returned expressions, independently checked by handwritten derivation and NumPy hard-case regression",
+  "checks": [
+    {
+      "expression": "Tr[(beta beta^T-(beta.beta)I/3)^2]",
+      "returned": "2 (x^2+y^2+z^2)^2/3",
+      "use": "STF beta-beta contraction"
+    },
+    {
+      "expression": "(15/2) Tr[(beta beta^T-(beta.beta)I/3)^2]",
+      "returned": "5 (x^2+y^2+z^2)^2",
+      "use": "Squared angular-calibration support coefficient; multiplication by rho^2 gives 5 rho^2 |beta|^4"
+    },
+    {
+      "expression": "Minimize[-2 u^2+v^2+3 v/5,u^2+v^2<=1]",
+      "returned_minimum": "-203/100",
+      "returned_witness": {
+        "u": "-3 sqrt(11)/10",
+        "v": "-1/10"
+      },
+      "independent_numeric_value": -2.03
+    }
+  ],
+  "warnings": [
+    "The first exploratory symbolic evaluation reported undefined symbol T; its result was not used as the sole evidence and the computation was repeated with explicit Module-local variables.",
+    "Minimize emitted CholeskyDecomposition::npdef on the indefinite hard-case input; the returned extremum and witness satisfy the independent analytic trust-region conditions."
+  ],
+  "status": "SYMBOLIC_RESULTS_CHECKED; NOT_A_FORMAL_PROOF_ASSISTANT_CERTIFICATE"
+}

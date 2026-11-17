@@ -1,0 +1,165 @@
+{
+  "status": "IMPLEMENTATION_VERIFIED_WITH_FLOAT64_ANALYTIC_GLOBAL_ENCLOSURES",
+  "scope": "R5/C5 bounded mixed-invariant component; no later full loop",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime": {
+    "model": "UNKNOWN",
+    "reasoning_effort": "UNKNOWN"
+  },
+  "versions": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0"
+  },
+  "source": {
+    "baseline": "fb6ae9f21585e194ef29dabc91d79a529e0ac57e",
+    "R58_carrier_sha256_observed_and_recorded": "42f6bc5158fdf2f876720db12c44b088bc2db9734887e0d84ae098b234a7e64d",
+    "source_head_observed": "fb6ae9f21585e194ef29dabc91d79a529e0ac57e",
+    "input_materialization": "read-only remote NPZ extraction; selected estimates and covariances preserved as float64 roundtrippable JSON",
+    "source_path": "docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/RESULTS/OWNED_TENSOR_CARRIERS.npz"
+  },
+  "sha256": {
+    "r61_mixed_invariant.py": "aa4394f6f25ddd29c0247a2928b12b2af7da678642c2f06a100ab2dacf7ebee6",
+    "r61_mixed_inputs.json": "f8094c1d41d4eec225c45d1d126500fa1e34ee27d6282669694a5d1c9e8bcc75",
+    "r61_mixed_validation.py": "d163855cfc7fc846d86b84819cde8eb589e05caac26e1c8315831f0121752583"
+  },
+  "cutoff": 19.67513757268249,
+  "cutoff_dof": 11,
+  "confidence_level": 0.95,
+  "lambda": 1.0,
+  "c_km_s": 299792.458,
+  "checks": {
+    "zero_center_isotropic": [
+      {
+        "rho": 0.0,
+        "exact_absolute_extremum": 1.632993161855452e-08,
+        "outer_range": [
+          -1.7142937957852296e-08,
+          1.7142937957852296e-08
+        ],
+        "feasible_range": [
+          -1.632993161855452e-08,
+          1.632993161855452e-08
+        ],
+        "max_gap": 8.13006339297775e-10,
+        "status": "NODE_CAP",
+        "witness_checks": [
+          {
+            "ellipsoid_quadratic": 3.0,
+            "cutoff_excess": 0.0,
+            "calibration_rms": 0.0,
+            "phi_reconstruction_abs_error": 0.0
+          },
+          {
+            "ellipsoid_quadratic": 3.0,
+            "cutoff_excess": 0.0,
+            "calibration_rms": 0.0,
+            "phi_reconstruction_abs_error": 0.0
+          }
+        ]
+      },
+      {
+        "rho": 0.003,
+        "exact_absolute_extremum": 3.128207364389419e-08,
+        "outer_range": [
+          -3.339433939219876e-08,
+          3.339433939219876e-08
+        ],
+        "feasible_range": [
+          -3.12820736438942e-08,
+          3.12820736438942e-08
+        ],
+        "max_gap": 2.1122657483045615e-09,
+        "status": "NODE_CAP",
+        "witness_checks": [
+          {
+            "ellipsoid_quadratic": 3.0000000000000004,
+            "cutoff_excess": 4.440892098500626e-16,
+            "calibration_rms": 0.003,
+            "phi_reconstruction_abs_error": 0.0
+          },
+          {
+            "ellipsoid_quadratic": 3.0000000000000004,
+            "cutoff_excess": 4.440892098500626e-16,
+            "calibration_rms": 0.003,
+            "phi_reconstruction_abs_error": 0.0
+          }
+        ]
+      }
+    ],
+    "rotation_covariance": {
+      "det_rotation": 0.9999999999999997,
+      "feasible_endpoint_max_abs_difference": 3.4135427774348304e-19,
+      "unrotated_outer": [
+        -5.221457959496523e-07,
+        4.4748258822903474e-07
+      ],
+      "rotated_outer": [
+        -5.221450076902957e-07,
+        4.4748107585827875e-07
+      ]
+    },
+    "conditional_calibration_lift": [
+      {
+        "ellipsoid_quadratic": 19.675137572682488,
+        "cutoff_excess": -3.552713678800501e-15,
+        "calibration_rms": 0.002302585092994046,
+        "phi_reconstruction_abs_error": 0.0
+      },
+      {
+        "ellipsoid_quadratic": 19.675137572682484,
+        "cutoff_excess": -7.105427357601002e-15,
+        "calibration_rms": 0.0023025850929940463,
+        "phi_reconstruction_abs_error": 0.0
+      }
+    ],
+    "direct_8d_samples": {
+      "n": 20000,
+      "sample_range": [
+        -4.7505132069296753e-07,
+        3.976483747897986e-07
+      ],
+      "outer_range": [
+        -5.221457959496523e-07,
+        4.4748258822903474e-07
+      ]
+    },
+    "box_upper_bound_sampling": {
+      "feasible_point_checks": 28394,
+      "smallest_upper_minus_sample": 1.6629287511105e-09
+    },
+    "cap_reporting": {
+      "status": "NODE_CAP",
+      "max_gap": 2.2407501971821103e-06,
+      "outer_range": [
+        -2.696748062726128e-06,
+        2.6881355190860085e-06
+      ],
+      "converged": false
+    },
+    "zero_cutoff": {
+      "observed": [
+        -3.58002610482613e-08,
+        -1.7354936783853e-08
+      ],
+      "analytic": [
+        -3.5800261048261294e-08,
+        -1.735493678385299e-08
+      ]
+    },
+    "invalid_input_rejections": 6
+  },
+  "max_pilot_gap": 9.996924350757372e-11,
+  "elapsed_seconds": 27.863435546998517,
+  "limitations": [
+    "Analytic enclosures evaluated in float64 with guard; not a formal outward-rounded interval proof.",
+    "Conditional fixed-covariance Gaussian law and chosen calibration RMS domain are inherited assumptions.",
+    "Random-point bound checks are falsification tests, not the proof of the analytic bound.",
+    "Local optimization only supplies feasible witnesses. Every global endpoint carries a branch-and-bound gap."
+  ],
+  "actual_input_cases": 28,
+  "role": "Isolated component validation before production integration; full actual output rerun in RESULTS/MIXED"
+}

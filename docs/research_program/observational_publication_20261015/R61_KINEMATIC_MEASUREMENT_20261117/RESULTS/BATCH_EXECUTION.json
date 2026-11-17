@@ -1,0 +1,72 @@
+{
+  "schema": "htt.r61.execution/1",
+  "started_utc": "2026-11-17T07:23:37.703519+00:00",
+  "runner_sha256": "d0d99fe8361ee12c9265448ce7ac268f6bf51f83bc295f0fcda15cef5cb6f485",
+  "status": "COMPLETE",
+  "commands": [
+    {
+      "name": "TESTS",
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/r61"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 22.208439329988323,
+      "log": "TESTS_EXECUTION.log",
+      "log_sha256": "f1ea1e0bbe062b448971b153a79dd830652bb55309e1a91d6fe9f32aa573a7bd"
+    },
+    {
+      "name": "IMAGES",
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "scripts/r61/run_r61_kinematic_images.py",
+        "--repo-root",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+        "--output",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R61_KINEMATIC_MEASUREMENT_20261117/RESULTS/IMAGES"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 4.0089425170153845,
+      "log": "IMAGES_EXECUTION.log",
+      "log_sha256": "132a19e96ef7319437ba3ea7c1f659e97d5dd101515430365a801a3a844aca25"
+    },
+    {
+      "name": "DEPTH",
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "scripts/r61/run_r61_depth_measurement.py",
+        "--repo-root",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+        "--output",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R61_KINEMATIC_MEASUREMENT_20261117/RESULTS/DEPTH"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 3.0388787949923426,
+      "log": "DEPTH_EXECUTION.log",
+      "log_sha256": "d62e808230eaed8f87e55bdbc547183ae3479f72830322ab82b1e497f492077c"
+    },
+    {
+      "name": "MIXED",
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "scripts/r61/run_r61_mixed_invariant.py",
+        "--repo-root",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+        "--output",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R61_KINEMATIC_MEASUREMENT_20261117/RESULTS/MIXED"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 22.747384362999583,
+      "log": "MIXED_EXECUTION.log",
+      "log_sha256": "d9eb6b1e0fa3ab6895c93d27f4bfff5b501f48f0ffac10718576c968bd6efa57"
+    }
+  ],
+  "finished_utc": "2026-11-17T07:24:29.710071+00:00"
+}

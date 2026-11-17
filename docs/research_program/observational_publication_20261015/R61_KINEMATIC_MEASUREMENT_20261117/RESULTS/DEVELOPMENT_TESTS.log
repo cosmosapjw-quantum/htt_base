@@ -1,0 +1,29 @@
+......F......                                                            [100%]
+=================================== FAILURES ===================================
+_______________ test_mixed_quadratic_independent_cartesian_slsqp _______________
+
+    def test_mixed_quadratic_independent_cartesian_slsqp():
+        rng=np.random.default_rng(6105)
+        for case in range(4):
+            A=rng.normal(size=(5,5)); C=A@A.T+np.eye(5)
+            M=rng.normal(size=(5,5)); M=.5*(M+M.T)
+            h=rng.normal(size=5); cutoff=4.2
+            result=quadratic_ellipsoid_range(h,C,M,cutoff=cutoff)
+            precision=linalg.inv(C)
+            for sense,key in [(1,'minimum'),(-1,'maximum')]:
+                def f(x):return sense*(x@M@x)
+                def jac(x):return sense*2*M@x
+                cons={'type':'ineq','fun':lambda x:cutoff-(x-h)@precision@(x-h),
+                      'jac':lambda x:-2*precision@(x-h)}
+                best=None
+                for start in [h,*[h+.1*rng.normal(size=5) for _ in range(3)]]:
+                    opt=optimize.minimize(f,start,jac=jac,constraints=cons,method='SLSQP',
+                            options={'ftol':1e-11,'maxiter':500})
+                    if opt.success and (best is None or opt.fun<best.fun):best=opt
+>               assert best is not None
+E               assert None is not None
+
+tests/r61/test_kinematic_images.py:59: AssertionError
+=========================== short test summary info ============================
+FAILED tests/r61/test_kinematic_images.py::test_mixed_quadratic_independent_cartesian_slsqp
+1 failed, 12 passed in 1.44s

@@ -1,8 +1,12 @@
 # HTT 관측논문 6트랙 출판 중심 DAG
 
-## Current observed convergence — 2026-11-17
+## Current kinematic measurement study — R61, 2026-11-17
 
-[R60 실제 결과·출판성 심사](R60_COVARIANCE_CALIBRATION_20261117/REPORT_KO.md), [수렴 연구계획](R60_COVARIANCE_CALIBRATION_20261117/RESEARCH_PLAN_KO.md), [현재 연구 DAG](R60_COVARIANCE_CALIBRATION_20261117/RESEARCH_DAG.json)을 현재 결과의 진입점으로 사용한다. 기존 six-track/42-node 과학 gate는 보존한다. CF4 covariance/calibration frontier, axial witnesses, finite radial response, Commander tensor morphology, count-dipole sensitivity와 코드 교정을 실행했다. 전체 physical identification·submission readiness는 아직 승인되지 않았다. R59 이후 이번 한 개 과학 단위는 2026-11-17 사용자의 명시적 재개 요청에 따른다. 로컬 agent용 재개 프롬프트와 자동 후속작업은 생성하지 않았다.
+[R61 실제 운동학 결과·심사](R61_KINEMATIC_MEASUREMENT_20261117/REPORT_KO.md), [단일 논문 연구계획](R61_KINEMATIC_MEASUREMENT_20261117/RESEARCH_PLAN_KO.md), [연구 DAG](R61_KINEMATIC_MEASUREMENT_20261117/RESEARCH_DAG.json)이 현재 선택된 P6 가지의 진입점이다. 사용자 지정 10단계 이론·코딩 연구를 수행했고, 실제 CF4 공동 신뢰범위·혼합 불변량·STF 깊이 차이·국소 외삽 오차를 산출했다. 독립 심사의 R61-F1은 실제 calibration bias operator와 반례로 교정했다. 기존 다른 연구 가지와 42개 과학 gate의 상태는 보존하며 submission readiness를 자동 승인하지 않는다.
+
+## Previous multi-branch result — R60, 2026-11-17
+
+[R60 실제 결과·출판성 심사](R60_COVARIANCE_CALIBRATION_20261117/REPORT_KO.md), [수렴 연구계획](R60_COVARIANCE_CALIBRATION_20261117/RESEARCH_PLAN_KO.md), [현재 연구 DAG](R60_COVARIANCE_CALIBRATION_20261117/RESEARCH_DAG.json)은 이전 여섯 가지 통합 결과의 진입점이다. 기존 six-track/42-node 과학 gate는 보존한다. CF4 covariance/calibration frontier, axial witnesses, finite radial response, Commander tensor morphology, count-dipole sensitivity와 코드 교정을 실행했다. 전체 physical identification·submission readiness는 아직 승인되지 않았다. R59 이후 이번 한 개 과학 단위는 2026-11-17 사용자의 명시적 재개 요청에 따른다. 로컬 agent용 재개 프롬프트와 자동 후속작업은 생성하지 않았다.
 
 
 ## Historical finite convergence route — 2026-10-28

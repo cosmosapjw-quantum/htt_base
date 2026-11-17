@@ -1,0 +1,10 @@
+{
+  "purpose": "Record the earlier, stricter analytic-manifold stress run without concealing node-cap outcomes.",
+  "inputs": {"center8": "zero", "beta_variance": 1e-6, "kappa_variance": 1e-4, "cross_covariance": 0, "cutoff": 3, "atol": 1e-10, "max_nodes_per_endpoint": 100000},
+  "results": [
+    {"rho": 0, "analytic_absolute_extremum": 1.632993161855452e-8, "outer_range": [-1.6429845942742395e-8, 1.6429845942742395e-8], "feasible_range": [-1.632993161855452e-8, 1.632993161855452e-8], "max_gap": 9.991432418787454e-11, "status": "TOLERANCE_MET", "expanded_nodes_each": 59111},
+    {"rho": 0.01, "analytic_absolute_extremum": 7.283528489045186e-8, "outer_range": [-7.438612632081533e-8, 7.438612632081533e-8], "feasible_range": [-7.283528275908587e-8, 7.283528275908587e-8], "max_gap": 1.5508435617294582e-9, "status": "NODE_CAP", "expanded_nodes_each": 100000}
+  ],
+  "interpretation": "Both returned enclosing brackets contain the analytic extrema. Rotationally degenerate optimum manifolds require substantially more subdivision than the actual R58 isolated extrema. The cap is explicit; sharpness was not asserted when the requested gap was unmet.",
+  "arithmetic": "FLOAT64_ANALYTIC_ENCLOSURE_NOT_FORMAL_INTERVAL_PROOF"
+}

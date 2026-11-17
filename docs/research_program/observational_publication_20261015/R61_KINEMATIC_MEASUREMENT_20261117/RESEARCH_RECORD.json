@@ -1,0 +1,240 @@
+{
+  "schema": "htt.r61.integrated_research/1",
+  "baseline_commit": "fb6ae9f21585e194ef29dabc91d79a529e0ac57e",
+  "scope": "Beyond-FLRW kinematic quantity measurement only; ten sequential integrated stages, each tracking Rn/Cn.",
+  "objective": "Compute physical kinematic confidence images and depth-response sensitivity from owned CF4 full-covariance data; establish publication plan with explicit transfer and calibration assumptions.",
+  "authority": "Current user explicitly requests the complete ten-stage theory/coding loop; prior repository push authorization persists.",
+  "stage1": {
+    "status": "complete",
+    "basis": "Current branch/HEAD/read-only inputs verified; root/nested AGENTS and selected skills read.",
+    "assumptions": [
+      "metric (-,+,+,+)",
+      "c retained",
+      "existing primary checkout; one production writer",
+      "CF4 conditional first-order apparent response separated from local kinematics",
+      "R60 historical results and unresolved inputs preserved"
+    ]
+  },
+  "stages": [
+    {
+      "number": 1,
+      "theory_stage": "R1",
+      "coding_stage": "C1",
+      "status": "complete"
+    },
+    {
+      "number": 2,
+      "theory_stage": "R2",
+      "coding_stage": "C2",
+      "status": "complete"
+    },
+    {
+      "number": 3,
+      "theory_stage": "R3",
+      "coding_stage": "C3",
+      "status": "complete"
+    },
+    {
+      "number": 4,
+      "theory_stage": "R4",
+      "coding_stage": "C4",
+      "status": "complete"
+    },
+    {
+      "number": 5,
+      "theory_stage": "R5",
+      "coding_stage": "C5",
+      "status": "complete"
+    },
+    {
+      "number": 6,
+      "theory_stage": "R6",
+      "coding_stage": "C6",
+      "status": "complete"
+    },
+    {
+      "number": 7,
+      "theory_stage": "R7",
+      "coding_stage": "C7",
+      "status": "complete"
+    },
+    {
+      "number": 8,
+      "theory_stage": "R8",
+      "coding_stage": "C8",
+      "status": "complete"
+    },
+    {
+      "number": 9,
+      "theory_stage": "R9",
+      "coding_stage": "C9",
+      "status": "complete"
+    },
+    {
+      "number": 10,
+      "theory_stage": "R10",
+      "coding_stage": "C10",
+      "status": "complete_scoped"
+    }
+  ],
+  "routes": [
+    {
+      "id": "A",
+      "question": "Simultaneous nonlinear confidence images of normalized shear, acceleration, relative velocity and their mixed functions",
+      "status": "selected"
+    },
+    {
+      "id": "B",
+      "question": "Actual finite-depth STF response: constant versus redshift slope, local extrapolation and covariance",
+      "status": "selected"
+    },
+    {
+      "id": "C",
+      "question": "Can owned astrometric data independently identify additional kinematics under an authenticated source transfer?",
+      "status": "deferred_missing_physical_response_and_law"
+    }
+  ],
+  "runtime": {
+    "parent_role": "root production author",
+    "requested_children": [
+      {
+        "task": "r61_kinematic_sources",
+        "model": "gpt-6.1-sol",
+        "effort": "high",
+        "scope": "R2 source support"
+      },
+      {
+        "task": "r61_owned_inputs",
+        "model": "gpt-6.1-sol",
+        "effort": "high",
+        "scope": "R1/R2/C2 input support"
+      },
+      {
+        "task": "r61_mixed_invariant",
+        "scope": "R5/C5 isolated mixed solver and bounded R8 box-comparison correction",
+        "model": "gpt-6-astra",
+        "effort": "xhigh"
+      },
+      {
+        "task": "r61_final_review",
+        "scope": "single fresh R9/C9 review",
+        "model": "inherited",
+        "effort": "inherited",
+        "observed": "UNKNOWN"
+      }
+    ],
+    "observed_model_identity": "UNKNOWN"
+  },
+  "updated_utc": "2026-11-17T07:54:32.483230+00:00",
+  "stage2": {
+    "status": "complete",
+    "reuse": [
+      "R58 full32D carrier and fit_linear; R60 calibration/radial response; R36/R50/A22 owned astrometric response limitations"
+    ],
+    "primary_sources": [
+      "Heinesen 2010.06534v2",
+      "Maartens et al 2312.09875v3",
+      "Heinesen-Korzynski 2406.06167v1"
+    ],
+    "additional_finding": "R39 0.92/0.18 coefficients are phenomenological; exclude from physical measurement transfer."
+  },
+  "stage3": {
+    "status": "complete",
+    "target": "One fixed-Gaussian simultaneous alpha11 ellipsoid, pulled back to normalized kinematics with deterministic full-sky angular-calibration ball. Report marginal5 versus simultaneous11 distinctly.",
+    "variables": {
+      "Sigma": "sqrt(s_ab*s_ab/6)",
+      "acceleration": "norm(A)/(c H)",
+      "relative_speed": "norm(V)/c",
+      "angular_expansion_rms": "sqrt(a.a/3+2*s:s/15)",
+      "mixed_work": "beta.a",
+      "mixed_shear": "beta^T s beta"
+    },
+    "physical_bridge": "V=c beta_MR, dH=-a+dcal, kappa=s+qcal, first-order constant-response finite-depth closure. Finite-z apparent estimates are not automatically local t0 values.",
+    "unidentified": [
+      "absolute H/Theta after monopole nuisance treatment",
+      "omega in distance-only response",
+      "free shear/calibration and acceleration/calibration separation"
+    ],
+    "higher_order_limit": "No general-acceleration high-order formula imported from unresolved source errata."
+  },
+  "stage4": {
+    "status": "complete",
+    "selected": [
+      "A: global quadratic confidence extrema, full covariance mixed invariant and calibration image",
+      "B: add one linear-in-z STF slope to retained operator; constant-vs-depth test and pivot/intercept uncertainty"
+    ],
+    "deferred_route": "C astrometric direct kinematics: existing endpoint history, NNR, centroid calibration and spatial covariance do not supply current local sigma/omega likelihood; use existing actual inputs as proof of exact dependency, no duplicate mock rerun.",
+    "resources": "Use existing .venv, one BLAS thread, 32-dimensional likelihood and 3-dimensional reduced mixed optimization; no new O(N^2) cosmic covariance or new solver."
+  },
+  "stage5": {
+    "status": "complete",
+    "theory": [
+      "global trust-region primal/dual construction",
+      "conditional reduction of beta.T s beta to three beta coordinates",
+      "exact common angular-calibration cancellation in depth contrast",
+      "trace-optimal depth pivot and exact-log diagnostic closure"
+    ],
+    "implementation": [
+      "r61_kinematic_images.py",
+      "r61_mixed_invariant.py",
+      "run_r61_kinematic_images.py",
+      "run_r61_depth_measurement.py"
+    ],
+    "mixed_component_local_validation": "28 actual-input cases converged to endpoint gap <=1e-10; native production execution confirmed in stage7 and RESULTS/MIXED."
+  },
+  "stage6": {
+    "status": "complete",
+    "initial_image_tests": "12 passed; unscaled independent SLSQP oracle termination failure; DEVELOPMENT_TESTS.log retained",
+    "correction": "normalized oracle objective and constraint without changing production solver; 13 passed in IMAGE_TESTS.log",
+    "symbolic_checks": "STF(beta beta) norm squared=2/3 beta^4, calibration support squared=5 rho^2 beta^4; independent analytic hard case -203/100; Wolfram warnings preserved in final validation record",
+    "execution_evidence": "RESULTS/TESTS_EXECUTION.log; all R61 tests; existing symbolic and isolated mixed checks"
+  },
+  "stage7": {
+    "status": "complete",
+    "execution_evidence": "RESULTS/IMAGES, original RESULTS/DEPTH and active RESULTS/DEPTH_CORRECTED, RESULTS/MIXED; original three runners and targeted corrected depth run exited zero."
+  },
+  "stage8": {
+    "status": "complete",
+    "scientific_result": "Conditional kinematic upper limits and mixed signed ranges; no evidence requiring linear STF redshift slope; local extrapolation increases RMS errors 2.69-3.01 times",
+    "comparison_correction": "Actual coordinate-box extrema separately computed; legacy triangle slack no longer conflated with domain geometry",
+    "evidence": [
+      "REPORT_KO.md",
+      "THEORY.md",
+      "RESEARCH_PLAN_KO.md",
+      "RESULTS/BOX_EXECUTION.json",
+      "RESULTS/BOX_COMPARISON/R61_BOX_COMPARISON_RESULT.json"
+    ],
+    "figures": "All four primary plots inspected; improved shared-legend constraints figure inspected; original computed data unchanged"
+  },
+  "stage9": {
+    "status": "complete",
+    "independent_review": "PASS WITH MINOR REVISIONS; one required semantic correction R61-F1",
+    "review": "REVIEW/final_review.md",
+    "targeted_closeout": "REVIEW/R61_F1_CLOSURE.json",
+    "correction": "Affine-z STF or estimator-induced depth calibration budget; actual nonlinear-depth counterexample and released 5x32 bias operator",
+    "numeric_old_leaves_compared": 6159,
+    "numeric_old_leaves_changed": 0,
+    "original_response_arrays_byte_equal": true,
+    "additional_review_loop": false
+  },
+  "stage10": {
+    "status": "complete_scoped",
+    "evidence": [
+      "RESEARCH_DAG.json",
+      "RESEARCH_PLAN_KO.md",
+      "DAG_UPDATE_RECEIPT.json",
+      "DAG_VALIDATION.json",
+      "ARTIFACT_MANIFEST.json"
+    ],
+    "current_tree_tests": "34 passed; actual single final run in RESULTS/FINAL_CURRENT_TESTS.log",
+    "canonical_cards": 285,
+    "previous_284_cards_unchanged": true,
+    "original_42_science_nodes_unchanged": true,
+    "release_branch": "research/r61-kinematic-measurement-20261117",
+    "release_identity": "The containing Git commit identifies this artifact. Remote publication is verified separately against that commit; no self-referential commit hash is embedded.",
+    "submission_status": "NOT_READY_TO_SUBMIT",
+    "automatic_successor": false,
+    "local_agent_prompt_created": false
+  },
+  "status": "COMPLETE_SCOPED_C0"
+}

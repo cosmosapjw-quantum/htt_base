@@ -1,0 +1,217 @@
+{
+  "schema": "htt.r61.research_dag/1",
+  "baseline_commit": "fb6ae9f21585e194ef29dabc91d79a529e0ac57e",
+  "canonical_pr": "PR-R61-KINEMATIC-MEASUREMENT",
+  "parent_pr": "PR-R60-COVARIANCE-CALIBRATION",
+  "selected_paper": "P6",
+  "claim_tier": "C0",
+  "scope": "single ten-stage beyond-FLRW kinematic measurement study",
+  "owner_authorization": "Explicit current request; prior non-force GitHub publication authorization persists. No local-agent restart prompt.",
+  "status": "COMPLETE_SCOPED_C0",
+  "tasks": [
+    {
+      "id": "R61-01",
+      "theory_stage": "R1",
+      "coding_stage": "C1",
+      "title": "Bind the kinematic question and live source identities",
+      "depends_on": [],
+      "status": "complete_scoped",
+      "evidence": [
+        "REVIEW/owned_inputs.md",
+        "RESEARCH_RECORD.json"
+      ]
+    },
+    {
+      "id": "R61-02",
+      "theory_stage": "R2",
+      "coding_stage": "C2",
+      "title": "Reuse internal history and verify primary physical sources",
+      "depends_on": [
+        "R61-01"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "REVIEW/kinematic_sources.md",
+        "REVIEW/paper_positioning.md"
+      ]
+    },
+    {
+      "id": "R61-03",
+      "theory_stage": "R3",
+      "coding_stage": "C3",
+      "title": "Define physical state, likelihood and null directions",
+      "depends_on": [
+        "R61-02"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "THEORY.md"
+      ]
+    },
+    {
+      "id": "R61-04",
+      "theory_stage": "R4",
+      "coding_stage": "C4",
+      "title": "Select finite observables, calibration body and depth response",
+      "depends_on": [
+        "R61-03"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "THEORY.md",
+        "RESEARCH_PLAN_KO.md"
+      ]
+    },
+    {
+      "id": "R61-05",
+      "theory_stage": "R5",
+      "coding_stage": "C5",
+      "title": "Derive and implement quadratic and mixed confidence images",
+      "depends_on": [
+        "R61-04"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "THEORY.md",
+        "REVIEW/mixed_invariant_derivation.md"
+      ]
+    },
+    {
+      "id": "R61-06",
+      "theory_stage": "R6",
+      "coding_stage": "C6",
+      "title": "Check symbolic identities and affected numerical implementations",
+      "depends_on": [
+        "R61-05"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "RESULTS/TESTS_EXECUTION.log",
+        "RESULTS/SYMBOLIC_CHECKS.json"
+      ]
+    },
+    {
+      "id": "R61-07",
+      "theory_stage": "R7",
+      "coding_stage": "C7",
+      "title": "Execute the three actual owned-data measurements",
+      "depends_on": [
+        "R61-06"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "RESULTS/BATCH_EXECUTION.json"
+      ]
+    },
+    {
+      "id": "R61-08",
+      "theory_stage": "R8",
+      "coding_stage": "C8",
+      "title": "Interpret measurements and correct the box comparison",
+      "depends_on": [
+        "R61-07"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "REPORT_KO.md",
+        "RESULTS/BOX_COMPARISON/R61_BOX_COMPARISON_RESULT.json"
+      ]
+    },
+    {
+      "id": "R61-09",
+      "theory_stage": "R9",
+      "coding_stage": "C9",
+      "title": "Apply one fresh review and close its concrete finding",
+      "depends_on": [
+        "R61-08"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "REVIEW/final_review.md",
+        "REVIEW/R61_F1_CLOSURE.json"
+      ]
+    },
+    {
+      "id": "R61-10",
+      "theory_stage": "R10",
+      "coding_stage": "C10",
+      "title": "Update paper plan and DAG, validate and publish the scoped branch",
+      "depends_on": [
+        "R61-09"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "VALIDATION.md",
+        "DAG_VALIDATION.json"
+      ]
+    }
+  ],
+  "future_science": [
+    {
+      "id": "P1-PHYSICAL-REMAINDER",
+      "depends_on": [
+        "R61-10"
+      ],
+      "status": "unresolved_input",
+      "needed": "A source/congruence-qualified finite-z cosmographic family and bounded higher-order/angular leakage; current fitted-state log closure does not provide a uniform physical remainder."
+    },
+    {
+      "id": "P2-CALIBRATION",
+      "depends_on": [
+        "R61-10"
+      ],
+      "status": "unresolved_input",
+      "needed": "Independent angular calibration information and an estimator-induced depth-bias budget; endpoint values alone are insufficient for arbitrary calibration."
+    },
+    {
+      "id": "P3-MATCHED-SURVEY",
+      "depends_on": [
+        "P1-PHYSICAL-REMAINDER",
+        "P2-CALIBRATION"
+      ],
+      "status": "unresolved_input",
+      "needed": "A matched raw-source comparison and selection/error/grouping/velocity law for survey-level coverage."
+    },
+    {
+      "id": "P4-PAPER-DECISION",
+      "depends_on": [
+        "P3-MATCHED-SURVEY"
+      ],
+      "status": "pending",
+      "needed": "One manuscript integration and evidence-based submission decision; no automatic additional research or review loop."
+    }
+  ],
+  "original_42_node_payload_sha256": "e3264e105cabf78ddac37addc36cacc3cfa05ee942e33e54b431b22e3e87de0d",
+  "original_42_node_states_changed": false,
+  "key_results": {
+    "joint11_Sigma_union": [
+      0,
+      0.06254876346135956
+    ],
+    "mixed_union": [
+      -6.281510541990794e-07,
+      5.044205982216458e-07
+    ],
+    "depth_slope_p_range": [
+      0.5633190899534043,
+      0.9432869179435148
+    ],
+    "depth_RMS_union": [
+      0,
+      0.16340399602136726
+    ],
+    "actual_box_to_joint_width_range": [
+      4.3857657902090255,
+      5.81407726799209
+    ],
+    "calibration_counterexample_induced_RMS": [
+      0.0009915764512313727,
+      0.0014134199001246842
+    ]
+  },
+  "conditions": "Fixed Gaussian law, chosen response and calibration family; apparent normalized kinematics, no unqualified local or survey inference.",
+  "next_action": "Use the single-paper plan; obtain the P1-P3 physical and observational inputs before promoting the claims.",
+  "automatic_successor": false,
+  "local_agent_prompt_created": false,
+  "submission_status": "NOT_READY_TO_SUBMIT"
+}
