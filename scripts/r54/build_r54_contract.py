@@ -16,6 +16,7 @@ import json
 import math
 import os
 import subprocess
+import re
 import sys
 from pathlib import Path
 
@@ -384,9 +385,9 @@ def numbers_local() -> dict:
     if x is not None and x.get("status") == "DONE_SCOPED_C0":
         tp, ts, cl, idn = x["transport_table"]["polar_vector"], x["transport_table"]["stf2"], x["transport_table"]["tilt_closure"], x["identification"]
         for i, h in enumerate(tp):
-            out.update({f"l06_p{i}_chi2": h["chi2"], f"l06_p{i}_dof": h["dof"], f"l06_p{i}_p": h["p_value"], f"l06_p{i}_name": h["hypothesis"]})
+            out.update({f"l06_p{i}_chi2": h["chi2"], f"l06_p{i}_dof": h["dof"], f"l06_p{i}_p": h["p_value"], f"l06_p{i}_name": const_v_label(h["hypothesis"])})
         for i, h in enumerate(ts):
-            out.update({f"l06_s{i}_chi2": h["chi2"], f"l06_s{i}_dof": h["dof"], f"l06_s{i}_p": h["p_value"], f"l06_s{i}_name": h["hypothesis"]})
+            out.update({f"l06_s{i}_chi2": h["chi2"], f"l06_s{i}_dof": h["dof"], f"l06_s{i}_p": h["p_value"], f"l06_s{i}_name": const_v_label(h["hypothesis"])})
         out.update({"l06_np": len(tp), "l06_ns": len(ts), "l06_closure_p": cl["tail"]["p_value"], "l06_closure_chi2": cl["tail"]["statistic"],
                     "l06_closure_prelim_p": cl["preliminary_receipt_closure_p_R54_L05"],
                     "l06_rank_p": idn["polar_vector_V_w_free"]["rank"], "l06_dim_p": idn["polar_vector_V_w_free"]["dim"],
@@ -767,7 +768,7 @@ def hypotheses_cloud(n: dict) -> list[dict]:
           "HOLD", "CF4 execution with the exact body", "linear", "LOW", "HIGH", "not robust to inter-method zero points", "none",
           "survey-resolved zero points leave no preference (R54-L04)",
           f"delta chi2 (V - A) = {g3(n['g_chi2_V']-n['g_chi2_A'])} pooled, {g3(n['m_chi2_V']-n['m_chi2_A'])} after method monopoles", "R54-L04, R54-L06"),
-        h("H-L6b", "L6", "A single global tilt explains both the CF4 flow and a count-dipole excess.", "HOLD",
+        h("H-L6b", "L6", "One depth-constant velocity (CONST_V, a global-tilt submodel) explains both the CF4 flow and a count-dipole excess; a time-dependent homogeneous tilt is not tested: it needs a source-bound transfer V_j = T(z_j) beta_0 with the shell windows, which no node built.", "HOLD",
           "R52 + R54-L05 closure test", "linear; the count side is the receipt estimator", "n/a", "LOW until R54-L03",
           f"count-side power against a doubled dipole is {n['count_power']:.2f}", "rejecting on an underpowered count side",
           "the closure test rejects at p < 0.01 once the count side is calibrated (R54-L03)",
@@ -795,10 +796,10 @@ def hypotheses_cloud(n: dict) -> list[dict]:
           "the null space equals the orbit; delta + d_p is identified, delta is not", "state the calibration body with every bound on a constant multipole"),
         h("H-T8", "THM", "The T and E quadrupole kernels form a Chebyshev system: a shear history invisible to T changes sign at least once, one invisible to T and E at least twice, and no norm of the history is bounded from above without a sign or family restriction (T8).",
           "PROMOTE", "proof + checks on the committed ionization history", "type I, first order, positive scattering rate on the support",
-          "LOW to MEDIUM, UNVERIFIED (addendum task R54-A2): the kernels are classical (E46) and the sign-change argument is standard (E68); the statement for this pair was not found in the searches run",
+          "LOW to MEDIUM, UNVERIFIED (addendum task R54-A2): the kernels are classical (E46) and the sign-change argument is standard (E68, quoted from a standard text that was not re-read in the attribution check); the statement for this pair was not found in the searches run",
           "HIGH", "exact", "quoting an upper limit on a shear amplitude without naming the family or the sign restriction", "a non-zero history with fewer sign changes in the common kernel",
           "one-sign-change identity and two-sign-change kernel elements verified numerically", "the manuscript quotes shear limits only with their family (theorem_usage); addendum task R54-A2 checks priority"),
-        h("H-T9", "THM", "Frame algebra: count-dipole excess plus bulk flow of the same shell vanishes identically; a global tilt is a linear hypothesis across shells with 3 (n_c + n_d - 1) degrees of freedom (T9).",
+        h("H-T9", "THM", "Frame algebra: count-dipole excess plus bulk flow of the same shell vanishes identically; across different shells the depth-constant velocity submodel CONST_V is a linear hypothesis with 3 (n_c + n_d - 1) residual degrees of freedom; it says nothing about other global-tilt histories (T9).",
           "PROMOTE", "proof (substitution) + check", "first order in velocities; no intrinsic dipole; known Ellis-Baldwin coefficient", "NONE claimed (kinematic identity; context E60, E61, E62)",
           "done", "exact", "reading the same-shell identity as a physical test", "n/a", "identity verified to machine precision", "the manuscript reads the closure of R54-EQ-38 as a physical test only across different shells (theorem_usage)"),
         h("H-L6c", "L6", "Map-level aberration and Doppler-modulation estimators on owned CMB maps separate the observer boost from an intrinsic dipole inside this programme.", "HOLD",
@@ -828,7 +829,7 @@ EQUATIONS = {
     "R54-EQ-35": "R36 linear estimator: c z_i = d_i (H + D.n_i + n_i.q.n_i), weights W(z_i)/hypot(250, 70 (ln10/5) d_i e_mu,i)^2 ; biased by errors in d_i (exp(+s^2/2) for homogeneous errors)",
     "R54-EQ-36": "Delta mu = -(5/ln10) Delta eta ; hemisphere step s: Delta mu(north - south) = -(5/ln10) 2 s",
     "R54-EQ-37": "exact body of an operator O acting on eta: O diag(g) C_uu diag(g) O^T with C_uu of R54-EQ-31 at redshift-space positions r_i = (c/H_fid) chi_hat(z_i)",
-    "R54-EQ-38": "global-tilt closure across depths: V_CF4 + c beta_excess(counts) = 0 with beta_excess = D/c_EB - beta_CMB",
+    "R54-EQ-38": "CONST_V closure across depths (depth-constant velocity, a global-tilt submodel): V_CF4 + c beta_excess(counts) = 0 with beta_excess = D/c_EB - beta_CMB",
 }
 
 CONVENTIONS = {
@@ -975,7 +976,7 @@ def local_nodes(n: dict) -> list[dict]:
          "steps": [
              "1. Assemble one precision-form carrier per irreducible block with typed coordinates. Polar vector: beta_RO, V_w per depth, A_cal,p per distance sample. STF2: Sigma_T, Sigma_E, q_w per depth, q_cal,p per sample. Axial vector: omega has no column and is reported as unidentified.",
              "2. Add probes by adding (F, t); profile nuisance with r54_tensor_five_view.profiled_precision; never invert a singular block.",
-             "3. Transport hypotheses on the same data and covariance: LCDM body only; one global tilt V_w = V for all depths; type-I shear with perfect-fluid and with stress histories; zero-point terms. Report residual chi2, dof and delta chi2 for each. Repeat the tilt closure of R54-EQ-38 with the count covariance of R54-L03 in place of the receipt errors.",
+             "3. Transport hypotheses on the same data and covariance: LCDM body only; the depth-constant velocity submodel CONST_V (V_w = V for all depths; a time-dependent tilt needs a transfer V_w = T(z_w) beta_0 that this node does not build); type-I shear with perfect-fluid and with stress histories; zero-point terms. Report residual chi2, dof and delta chi2 for each. Repeat the tilt closure of R54-EQ-38 with the count covariance of R54-L03 in place of the receipt errors.",
              "4. Five views per block with fv.five_view_record; identification table from fv.identify with the scale vector stated.",
              "5. Write RESULTS/R54_L06_JOINT.json and one table for the manuscript."],
          "outputs": [{"path": REL + "/RESULTS/R54_L06_JOINT.json", "schema": "htt.r54.l06_joint/1",
@@ -1046,7 +1047,7 @@ CLOUD_GATES = [
     ("MG-29", MOD + "/r54_tensor_five_view.py", "    fs = d[:, None] * _sym(f, \"precision\") * d[None, :]", "    fs = _sym(f, \"precision\")",
      "tests/r54/test_r54_modules.py::test_eq21_support_interval_in_scaled_coordinates", "support interval computed in unscaled coordinates (R54-IR-08)"),
     ("MG-21", "scripts/r54/run_r54_cf4_exact.py", "    s, cs = v + b, cv + np.diag(sb**2)", "    s, cs = v - b, cv + np.diag(sb**2)",
-     "tests/r54/test_r54_conventions.py::test_mg21_eq38_tilt_closure_vanishes_for_one_frame_offset", "sign of the global-tilt closure (R54-EQ-38)"),
+     "tests/r54/test_r54_conventions.py::test_mg21_eq38_tilt_closure_vanishes_for_one_frame_offset", "sign of the CONST_V closure (R54-EQ-38)"),
     ("MG-22", "scripts/r54/run_r54_cf4_exact.py", '"delta_mu_north_minus_south_mag": float(-2.0 * theta[i] / de.LN10_OVER_5),',
      '"delta_mu_north_minus_south_mag": float(2.0 * theta[i] / de.LN10_OVER_5),',
      "tests/r54/test_r54_conventions.py::test_mg22_eq36_north_modulus_offset_gives_negative_step_and_positive_delta_mu", "sign of the hemisphere-step magnitude (R54-EQ-36)"),
@@ -1067,7 +1068,7 @@ CLOUD_GATES = [
     # gates of node R54-THM (renumbered above the gates of the independent diff review)
     ("MG-30", MOD + "/r54_identifiability.py", '    if kind == "axial":\n        return det * g', '    if kind == "axial":\n        return g.copy()',
      "tests/r54/test_r54_theorems.py::test_t6_selection_rule_counted_without_schur", "axial vectors treated as polar (parity dropped from the selection rule)"),
-    ("MG-31", MOD + "/r54_identifiability.py", "return SQRT6 * (x - 1.0) / (x + 6.0)", "return SQRT6 * (x - 1.0) / (x + 1.0)",
+    ("MG-31", MOD + "/r54_identifiability.py", "return SQRT6 * (-np.expm1(-0.7 * tau)) / (1.0 + 6.0 * e)", "return SQRT6 * (-np.expm1(-0.7 * tau)) / (1.0 + 1.0 * e)",
      "tests/r54/test_r54_theorems.py::test_t8_kernel_properties", "wrong kernel ratio of the shear-history moment problem"),
     ("MG-32", MOD + "/r54_identifiability.py", "(n - 1.0) / (n - p + k - 1.0), (n - p + k) / float(n)", "(n - 1.0) / (n - p + k - 2.0), (n - p + k) / float(n)",
      "tests/r54/test_r54_theorems.py::test_t5_exact_second_moments_with_a_simulated_covariance", "wrong Wishart factor of the estimator covariance"),
@@ -1239,6 +1240,69 @@ def pr4_doc(n: dict) -> dict:
             "not_bypassed": "any statement that needs the NPIPE end-to-end simulation law is out of scope and is not made"}
 
 
+#: directories of the observational publication tree inventoried by the R54 history audit of 2026-11-16 (frozen at commit 77f61c17;
+#: later sibling directories such as R58 were not audited by R54 and must not appear here)
+HISTORY_DIRECTORIES_20261116 = (
+    'ADAPTIVE_RESEARCH_20261023',
+    'ADVERSARIAL_AUDIT_20261022',
+    'CF4_POSTRECOVERY_20261017',
+    'CMB_SPECTRAL_IDENTIFIABILITY_20261025',
+    'CONTINUATION_20261018',
+    'CONTINUATION_RESULTS_20261024_R27',
+    'CONTINUATION_RESULTS_20261024_R28',
+    'CONTINUOUS_RESEARCH_20261023',
+    'CONTROLLER_LIFECYCLE_20261024_R29',
+    'CONTROLLER_LIFECYCLE_20261025_R29_CLOSEOUT',
+    'CONVERGENCE_20261028',
+    'EXTERNAL_AUDIT_20261025_R34',
+    'EXTERNAL_AUDIT_20261025_R35',
+    'FRONTIER_20261020',
+    'H01_20261016',
+    'H02_L03_20261017',
+    'H03_20261016',
+    'HTT_SIX_LOOP_INTEGRATED_20261109',
+    'L01_20261016',
+    'L01_NATIVE_K_R7_C7_20261017',
+    'L01_R10_C10_RUNTIME_RECOVERY_20261017',
+    'L01_R8_C8_TWO_MASK_STABILITY_20261017',
+    'L01_R9_C9_SAME_SKY_BEAM_20261017',
+    'L01_S02_SHARP_20261017',
+    'L01_SMICA_QU_BAND_ACCOUNTING_20261017',
+    'METHOD_EXECUTION_20261023',
+    'METHOD_REBOOT_20261023',
+    'MOVING_LENS_RESPONSE_20261025',
+    'NEXT_20261016',
+    'OBSERVABLE_BRIDGE_RECONCILIATION_20261027',
+    'OBSERVATIONAL_CONVERGENCE_20261107',
+    'OBSERVATIONAL_CONVERGENCE_R39_20261107',
+    'OE_TYPED_IDENTITY_20261017',
+    'OPEN_INPUTS_20261018',
+    'P1_SELECTED_TENSOR_LAW_20261024',
+    'PUBLICATION_ACCELERATION_20261025',
+    'R41_PUBLICATION_GATE_20261107',
+    'R42_FIVEVAR_COMPETITIVE_BENCHMARK_20261108',
+    'R43_THEORY_PROOF_MOCK_EXPERIMENT_20261109',
+    'R44_BAYES_FACTOR_DESIGN_20261109',
+    'R45_MODEL_POSTERIOR_INFORMATION_LOSS_20261109',
+    'R46_TARGET_POSTERIOR_COMPRESSION_20261109',
+    'R47_SOLVER_FREE_MORPHOLOGY_LIKELIHOOD_20261109',
+    'R48_TENSORIZED_OBSERVATIONAL_CONVERGENCE_20261109',
+    'R49_GENERAL_TILTED_BIANCHI_20261112',
+    'R50_OBSERVED_CONVERGENCE_20261115',
+    'R8_SPIN2_S02_COHERENT_20261017',
+    'READY_20261016',
+    'REPORT_20261024_REV1',
+    'RESEARCH_LOOP_20261022',
+    'S01_20261016',
+    'TENSOR_X_RESEARCH_LOOPS_20261107',
+    'X02_20261016',
+    'cf4_404_recovery_20261017',
+    'idle_data_seven_gate_20261016',
+    'physical_input_3week_audit_20261016',
+    'physical_input_data_theory_20261016',
+)
+
+
 def tracked_subdirs(base: Path) -> list[str]:
     """Git-tracked first-level directories of ``base`` except this one (stable across machines); falls back to the file system."""
     rel = base.relative_to(ROOT)
@@ -1253,7 +1317,7 @@ def tracked_subdirs(base: Path) -> list[str]:
 
 def history_doc() -> dict:
     idx = json.loads((R54 / "HISTORY_PR_INDEX.json").read_text())
-    dirs = tracked_subdirs(PUB)
+    dirs = list(HISTORY_DIRECTORIES_20261116)
     return {"schema": "htt.r54.history_audit/1", "date": DATE,
             "coverage_statement": "Machine inventory is exhaustive at the metadata level (all pull requests; all directories of the observational publication tree). Documents were read selectively; the list below is the complete set read in this session. Anything not listed was inventoried, not read.",
             "pull_requests": {"count": idx["count"], "state_counts": idx["state_counts"], "by_month": idx["by_month"], "lane_keyword_counts": idx["lane_keyword_counts"], "index_file": REL + "/HISTORY_PR_INDEX.json"},
@@ -1318,18 +1382,21 @@ THEOREM_USAGE = [
                               "A measured power ratio different from one is a defect to locate, never a result. A different nuisance model or covariance is a different analysis and is labelled as such."},
     {"theorem": "T2", "rule": "Views, bodies and directions read from one cylinder of R54-EQ-20 are valid simultaneously when c^2 is the chi-square quantile with rank(F) degrees of freedom. "
                               "State rank(F); do not split the level between views."},
-    {"theorem": "T3", "rule": "Along a direction outside row(F) the interval is reported as unbounded. A finite number there is quoted only together with the named body or prior that produces it."},
-    {"theorem": "T5", "rule": "Where a covariance estimated from n simulations enters a GLS fit with p - k > 0, the second moments carry the factors of wishart_gls_factors(n, p, k). "
-                              "Leave-one-out calibration (R54-L01) remains the test of the intervals; this rule adds no obligation to an executed node."},
+    {"theorem": "T3", "rule": "Along a direction outside row(F) the interval is reported as unbounded. A finite number there is quoted only together with the named body or prior that produces it. "
+                              "Data can narrow a marginal interval through a prior correlation while the conditional law of the unidentified part given the identified part is unchanged."},
+    {"theorem": "T5", "rule": "Where a covariance estimated from simulations enters a GLS fit with p - k > 0, the second moments carry the factors of wishart_gls_factors(n, p, k), "
+                              "with n the Wishart degrees of freedom (the number of simulations minus one when the mean is estimated). "
+                              "Domain: Sigma positive definite, integer n >= p and n > p - k + 1; outside it the helper raises. Leave-one-out calibration (R54-L01) remains the test of the intervals; this rule adds no obligation to an executed node."},
     {"theorem": "T6", "rule": "Identification is stated per irreducible block (l, parity) as the rank of a multiplicity matrix. Vorticity has no column in any scalar observable at first order; "
                               "say so together with the scope clause C6.6 (tensors at the observer or homogeneous histories, isotropic and parity-symmetric sources and measurement, first order). "
                               "B_2 and the toroidal proper-motion quadrupole are null channels: a signal there is a gate failure, not a parameter estimate."},
     {"theorem": "T7", "rule": "Relative distances identify only the sums of a depth-independent Hubble multipole and the zero-point pattern of each sample. Equality of zero points between samples "
                               "is testable; a vanishing constant multipole is not. A bound on a constant Hubble multipole is quoted only with its calibration body."},
-    {"theorem": "T8", "rule": "A limit on a shear amplitude is quoted only with its history family (at most two parameters per tensor component with T and E, one with T alone) or with its sign "
-                              "restriction. A ratio Sigma_E/Sigma_T outside [rho_min, rho_max] is reported as a sign change of the history."},
+    {"theorem": "T8", "rule": "A limit on a shear amplitude is quoted only with the restriction that produces it: an identified finite-dimensional family (at most two parameters per tensor component "
+                              "with T and E, one with T alone), a sign restriction, or a declared physical norm or stress budget; the interval (finite length, finite optical depth) "
+                              "and the amplitude regime are stated. A ratio Sigma_E/Sigma_T outside [rho_min, rho_max] is reported as a sign change of the history."},
     {"theorem": "T9", "rule": "The closure of R54-EQ-38 between a count population and a distance window of the same shell is an identity and tests only the measurement chain. "
-                              "A global tilt is tested across different shells; its residual degrees of freedom are 3 (n_c + n_d - 1) at full rank."},
+                              "Across different shells the relation tests CONST_V with 3 (n_c + n_d - 1) residual degrees of freedom at full rank; accepting or rejecting CONST_V says nothing about other global-tilt histories."},
 ]
 
 
@@ -1480,9 +1547,14 @@ None for the cloud nodes. Local nodes need the data drive; PR4 simulations are n
 REVIEW_SCOPE_START = [MOD + "/r54_tensor_five_view.py", MOD + "/r54_type1_thomson.py", MOD + "/r54_lcdm_body.py", MOD + "/r54_distance_estimators.py",
                       "scripts/r54/run_r54_cmb_type1.py", "scripts/r54/run_r54_lowz_frames.py", "scripts/r54/run_r54_cf4_exact.py", "scripts/r54/build_r54_contract.py",
                       "tests/r54/test_r54_modules.py", "tests/r54/test_r54_results_binding.py"]
-#: files of node R54-THM and of the handoff update; they entered the scope after that review and count only if a reviewer lists them in `files`
+#: files of node R54-THM and of the handoff update; they entered the scope after that review and count only at a content (sha256) that a recorded reviewer read
 REVIEW_SCOPE_ADDED = (MOD + "/r54_identifiability.py", REL + "/THEOREMS.md", "tests/r54/test_r54_theorems.py", "scripts/r54/handoff_merge.py", "tests/r54/test_r54_handoff.py")
 REVIEW_SCOPE = REVIEW_SCOPE_START + list(REVIEW_SCOPE_ADDED)
+
+
+def const_v_label(name: str) -> str:
+    """Hypothesis labels of the frozen R54_L06_JOINT.json say 'global tilt' for the depth-constant velocity model; relabel at render time."""
+    return name.replace("global tilt:", "CONST_V (labelled 'global tilt' in R54_L06_JOINT.json):") if name.startswith("global tilt:") else name
 
 
 def review_record() -> dict:
@@ -1490,25 +1562,90 @@ def review_record() -> dict:
     return json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {"reviewers": [], "incomplete_reviews": []}
 
 
+#: the recorded diff review of the start scope (INDEPENDENT_REVIEW.json) is identified by this prefix of its `scope`
+START_SCOPE_REVIEW_PREFIX = "LOCAL_AGENT_CONTRACT.json:pending_independent_review.scope (10 files)"
+SHA256_HEX = re.compile(r"^[0-9a-f]{64}$")
+COMMIT_HEX = re.compile(r"^[0-9a-f]{40}$")
+
+
+ACCEPTING_VERDICTS = ("ACCEPT", "ACCEPT_WITH_REQUIRED_CHANGES")
+
+
+def reviewer_can_cover(reviewer: dict) -> bool:
+    """A review covers files only if it completed with an accepting verdict and left no critical or major finding unresolved."""
+    open_serious = [f for f in reviewer.get("findings", []) if f.get("severity") in ("critical", "major") and f.get("resolution_status") != "FIXED"]
+    return reviewer.get("status") == "COMPLETE" and reviewer.get("verdict") in ACCEPTING_VERDICTS and not open_serious
+
+
+def recorded_file_hashes(rec: dict) -> dict:
+    """sha256 values of files that a covering reviewer read in full (`files_coverage[path] == "FULL"`), per path; entries that are
+    not a hash (e.g. UNKNOWN), partial reads and reviews that cannot cover (reviewer_can_cover) cover nothing."""
+    out: dict = {}
+    for reviewer in rec["reviewers"]:
+        if not reviewer_can_cover(reviewer):
+            continue
+        for rel, digest in reviewer.get("files_sha256", {}).items():
+            if isinstance(digest, str) and SHA256_HEX.match(digest) and reviewer.get("files_coverage", {}).get(rel) == "FULL":
+                out.setdefault(rel, set()).add(digest)
+    return out
+
+
 def review_coverage() -> dict:
-    """Files of REVIEW_SCOPE covered by a completed, recorded review, and the files that no recorded review covers."""
+    """Files of REVIEW_SCOPE covered by a completed, recorded review at their current content.
+
+    A file of REVIEW_SCOPE_ADDED is covered only if its current sha256 equals a hash that a recorded reviewer read
+    (`files_sha256`); otherwise it is uncovered, with reason CHANGED_AFTER_REVIEW (a reviewer lists the path, but read
+    other content) or NEVER_REVIEWED. The start scope stays covered by the recorded diff review as a whole; how far its
+    files changed after that review is reported separately (start_scope_changed_after_review) and changes no status."""
     rec = review_record()
-    read = {rel for reviewer in rec["reviewers"] for rel in reviewer.get("files", [])}
-    if not rec.get("incomplete_reviews"):
-        read |= set(REVIEW_SCOPE_START)
-    return {"covered": [rel for rel in REVIEW_SCOPE if rel in read], "uncovered": [rel for rel in REVIEW_SCOPE if rel not in read]}
+    listed = {rel for reviewer in rec["reviewers"] for rel in reviewer.get("files", [])}
+    hashes = recorded_file_hashes(rec)
+    start_covered = not rec.get("incomplete_reviews")
+    covered, uncovered, reasons = [], [], {}
+    for rel in REVIEW_SCOPE:
+        if rel in REVIEW_SCOPE_START and start_covered:
+            covered.append(rel)
+        elif (ROOT / rel).is_file() and sha(ROOT / rel) in hashes.get(rel, ()):
+            covered.append(rel)
+        else:
+            uncovered.append(rel)
+            reasons[rel] = "CHANGED_AFTER_REVIEW" if rel in listed else "NEVER_REVIEWED"
+    return {"covered": covered, "uncovered": uncovered, "uncovered_reasons": reasons}
+
+
+def start_scope_changed_after_review() -> dict:
+    """Information only: files of the start scope whose content differs from the commit that the recorded diff review read."""
+    rec = review_record()
+    commits = [r.get("reviewed_commit") for r in rec["reviewers"] if str(r.get("scope", "")).startswith(START_SCOPE_REVIEW_PREFIX)]
+    commit = commits[0] if commits and isinstance(commits[0], str) and COMMIT_HEX.match(commits[0]) else None
+    if commit is None:
+        return {"reviewed_commit": "UNKNOWN", "changed_after_review": list(REVIEW_SCOPE_START)}
+    changed = []
+    for rel in REVIEW_SCOPE_START:
+        run = subprocess.run(["git", "show", f"{commit}:{rel}"], cwd=ROOT, capture_output=True)
+        if run.returncode != 0 or hashlib.sha256(run.stdout).hexdigest() != sha(ROOT / rel):
+            changed.append(rel)
+    return {"reviewed_commit": commit, "changed_after_review": changed}
 
 
 def proofs_reviewed() -> bool:
-    return REL + "/THEOREMS.md" in review_coverage()["covered"]
+    covered = review_coverage()["covered"]
+    return REL + "/THEOREMS.md" in covered and MOD + "/r54_identifiability.py" in covered
 
 
 def pending_review_doc() -> dict:
     """Review work that is still open: reviews that were interrupted, and files of the scope that no recorded review covers."""
     open_items = review_record().get("incomplete_reviews", [])
-    uncovered = review_coverage()["uncovered"]
+    cov = review_coverage()
+    uncovered = cov["uncovered"]
+    start = start_scope_changed_after_review()
     doc = {"status": "PENDING_LOCAL" if open_items or uncovered else "NONE", "scope": REVIEW_SCOPE, "uncovered": uncovered,
-           "interrupted": [{"role": r["role"], "reason": r["reason"]} for r in open_items]}
+           "uncovered_reasons": cov["uncovered_reasons"],
+           "interrupted": [{"role": r["role"], "reason": r["reason"]} for r in open_items],
+           "start_scope_changed_after_review": {
+               "reviewed_commit": start["reviewed_commit"], "files": start["changed_after_review"],
+               "note": "information only; does not change status and starts no review. These files of the start scope differ from the content that the "
+                       "recorded diff review read; an independent diff review of them is owner question Q3 of HANDOFF_UPDATE.json"}}
     if doc["status"] == "NONE":
         return doc
     return doc | {
@@ -1520,11 +1657,11 @@ def pending_review_doc() -> dict:
                        "statements in generated documents that are stronger than the decision recorded in state/HYPOTHESES.json"],
             "report_format": "one line per finding: id | severity (critical, major, minor) | file:line | defect | concrete failure scenario | suggested fix; then one verdict",
             "record": "append the reviewer to INDEPENDENT_REVIEW.json:reviewers with role, independent_of_author, status COMPLETE, verdict, `files` (exactly the repository paths that this reviewer "
-                      "read line by line) and every finding with its resolution; a review without a finding records `checks_performed` (the commands run and what was compared) and never an invented finding; "
+                      "read line by line), `reviewed_commit` and `files_sha256` (sha256 of each listed file as read, computed by a command, never typed) and every finding with its resolution; a review without a finding records `checks_performed` (the commands run and what was compared) and never an invented finding; "
                       "when THEOREMS.md is in `files`, replace the status sentence at the top of THEOREMS.md by one line that starts with 'Independent review:' and names the reviewer role and the "
                       "date (YYYY-MM-DD); then run the tests and the builder",
             "rule": "a critical finding blocks every citation of the theorem it concerns until it is FIXED; a finding is never resolved by weakening a test; a file of the added scope counts as "
-                    "reviewed only if a recorded reviewer lists it in `files`"}
+                    "reviewed only if its current sha256 equals a hash that a recorded reviewer read (`files_sha256`); any later edit makes it uncovered again"}
 
 
 def review_prompt_line() -> str:
@@ -1657,7 +1794,7 @@ def local_section_ko(n: dict) -> str:
 
 - 식별: polar 블록(V_w 4깊이, A_cal, beta_ex) rank {n['l06_rank_p']} / {n['l06_dim_p']} (깊이별 V_w와 A_cal이 퇴화); STF2 블록 rank {n['l06_rank_s']} / {n['l06_dim_s']} (완전유체 지도),
   복사 응력 가설에서는 rank {n['l06_rank_s_stress']} / {n['l06_dim_s']} (E lane 없이 CMB가 s0를 고정하지 않음); 축 벡터 omega는 열이 없어 미식별.
-- 전역 tilt 폐합(R54-EQ-38, R54-L03 계수 공분산): chi2 {n['l06_closure_chi2']:.2f} / 3, p = {g3(n['l06_closure_p'])} (R54-L05의 예비값 {g3(n['l06_closure_prelim_p'])}).
+- CONST_V(깊이 상수 속도) 폐합(R54-EQ-38, R54-L03 계수 공분산): chi2 {n['l06_closure_chi2']:.2f} / 3, p = {g3(n['l06_closure_p'])} (R54-L05의 예비값 {g3(n['l06_closure_prelim_p'])}).
 - 완전유체 s0의 Frobenius 95% 상한 {g3(n['l06_s0_max'])} (CMB T + CF4 사중극, 보정 사중극 q_cal 자유).
 
 | polar 블록 수송 가설 | chi2 | dof | p |
@@ -1786,7 +1923,7 @@ Zero-point nuisance 모형별 요약. 세 모형 중 어느 것도 선험적으�
 - Jackknife(적도대, 북극관, 남극관 제외): 극 dipole {100*n['jk_lo']:.1f}% ~ {100*n['jk_hi']:.1f}%.
 - 주입 시험(실제 footprint, exact body 잡음; 상수 법칙 선호 비율, 계단 주입 / 유동 주입): {n['inj_step_mag']:.2f} mag와 {n['inj_flow']:.0f} km/s에서 {pc('inj_step_A')} / {pc('inj_flow_A')}; 관측 크기({n['inj_obs_step_mag']:.3f} mag, {n['inj_obs_flow']:.0f} km/s)에서 {pc('inj_obs_step_A')} / {pc('inj_obs_flow_A')}; 방법 monopole 연산자는 관측 크기에서 {pc('injm_obs_step_A')} / {pc('injm_obs_flow_A')}. 관측 크기에서는 두 법칙이 결과를 보기 전에 정한 기준(90% / 10%)만큼 갈리지 않는다(H-C3 {n['h_c3_decision']}).
 - Bulk-only 벤치마크: white 오차면 {n['gw_V_km_s']:.0f} km/s, E10 방향에서 {n['gw_V_watkins']:.0f}도(재현). Exact body면 {n['g_V_km_s']:.0f} km/s, (l,b) = ({n['g_V_l']:.0f}, {n['g_V_b']:.0f}).
-- Global tilt 닫힘 시험(R54-EQ-38, 예비): V_CF4 + c beta_excess = 0의 p = {g3(n['tt_close_p'])} (V만), {g3(n['tt_close_p_A'])} (상수 dipole 주변화). Count 쪽 검정력이 낮아 예비 수치다(H-L6b HOLD).
+- CONST_V(깊이 상수 속도, global tilt의 부분모형) 닫힘 시험(R54-EQ-38, 예비): V_CF4 + c beta_excess = 0의 p = {g3(n['tt_close_p'])} (V만), {g3(n['tt_close_p_A'])} (상수 dipole 주변화). Count 쪽 검정력이 낮아 예비 수치다(H-L6b HOLD).
 - 판정 규칙의 지위: 규칙과 임계값은 exact-body 수치를 보기 전에 코드에 넣었으나 커밋하지 않았으므로 사전 등록이 아니다. 물리적 방향 의존 Hubble 인자나 A_a의 검출이 아니다. 상수 dipole은 거리 zero-point dipole과 분리되지 않는다(H-L3b). 남은 질문은 survey 수준 zero-point와 nuisance 변형에서 분류가 하나로 모이는가이고 R54-L04가 답한다.
 
 ### 2.4 데이터 없이 증명한 진술 (R54-THM, `THEOREMS.md`)
@@ -1799,7 +1936,7 @@ Zero-point nuisance 모형별 요약. 세 모형 중 어느 것도 선험적으�
 - T6 (선택 규칙): O(3) 등변성 아래 1차 응답은 (다중극, parity) 블록으로 대각이고 식별성은 블록별 rank 진술이 된다. vorticity는 어떤 스칼라 관측량에도 열이 없고 (1,+) 형 관측량(toroidal 고유운동 dipole과 편광각 회전 같은 pseudo-scalar dipole)에만 나타난다. B_2는 null 채널이다. 유한 파장 모드와 parity를 깨는 측정 사슬에는 적용되지 않는다.
 - T7 (gauge 궤도): 깊이와 무관한 Hubble 다중극은 거리 표본들의 zero-point 패턴 공통 부분과 분리되지 않고, vorticity는 기준 좌표계의 spin과 분리되지 않는다. "물리적 dipole 없음" 가설은 상대 거리만으로는 검정할 수 없다.
 - T8 (shear history 모멘트 문제): T와 E의 kernel은 Chebyshev 계를 이룬다. T에 보이지 않는 history는 부호가 한 번 이상, T와 E 모두에 보이지 않는 history는 두 번 이상 바뀐다. 부호나 family 제한이 없으면 shear 진폭의 상한은 없다.
-- T9 (프레임 대수): 같은 shell의 count 초과와 bulk flow의 합은 항등적으로 0이다. Global tilt는 shell 사이의 선형 가설이다.
+- T9 (프레임 대수): 같은 shell의 count 초과와 bulk flow의 합은 항등적으로 0이다. 깊이 상수 속도 부분모형 CONST_V는 shell 사이의 선형 가설이며, 다른 global tilt 이력에 대해서는 아무것도 말하지 않는다. 시간에 따라 변하는 균질 tilt는 shell 창을 포함한 전달 V_j = T(z_j) beta_0가 필요하고 어느 노드도 만들지 않아 시험되지 않았다.
 - 신규성: 통계 부분은 주장하지 않는다. T6과 T8은 구성 요소가 모두 문헌에 있고(E18, E25, E46, E50, E51) 하나의 진술로 묶은 형태는 이번 검색에서 찾지 못했다. 검색에 걸리지 않았다는 뜻일 뿐이다. {a2_novelty_ko()}
 
 ## 3. 주제별 결정
@@ -1813,7 +1950,7 @@ Zero-point nuisance 모형별 요약. 세 모형 중 어느 것도 선험적으�
 | Beyond-FLRW 운동학 측정 | PROMOTE (H-L3a, H-L3b: R52에서 승계한 구조적 식별성 진술; H-L3d: 조건부), REJECT (H-L3c: 조건 없는 진술) | 2.1, state/HYPOTHESIS_GRAPH.md |
 | 비등방성 분류 | HOLD (H-L4a: 불변량의 null 보정 없음; family 식별은 차단 유지) | state/HYPOTHESIS_GRAPH.md |
 | 방향·적색편이 의존 Hubble | REJECT (H-L5e 물리적 검출), PROMOTE (H-L5f 추정량 편향), HOLD (H-L5a body 초과, H-L5c 극 고정, H-L5g 공통 계단, H-L5h 상수 quadrupole) | 2.3 |
-| Local boost 대 global tilt | HOLD (H-L6a 깊이 법칙, H-L6b 단일 global tilt, H-L6c map 수준 aberration) | 2.3 |
+| Local boost 대 global tilt | HOLD (H-L6a 깊이 법칙, H-L6b 깊이 상수 속도 CONST_V, H-L6c map 수준 aberration) | 2.3 |
 
 ## 4. 텐서화 5변수의 역할
 
@@ -1974,7 +2111,7 @@ Decision: PROMOTE H-L5f; HOLD H-L5a, H-L5c, H-L5g, H-L5h; REJECT H-L5e.
 ## Loop L6: local boost versus global tilt
 
 Depth laws: observer boost or coherent flow gives D proportional to 1/d; a zero-point or acceleration term is constant;
-a global tilt is a constant velocity at every depth including the count-dipole shells; LCDM flows are a zero-mean body
+the depth-constant velocity submodel CONST_V (CONST_V_ON_SELECTED_WINDOWS, the only global-tilt form tested here) has the same velocity at every depth including the count-dipole shells, and a time-dependent homogeneous tilt is not tested: it needs a source-bound transfer V_j = T(z_j) beta_0 with the shell windows, which no node built; LCDM flows are a zero-mean body
 with strong cross-depth correlation. On CF4 with the exact body the pooled fit prefers the constant term (chi2 {n['g_chi2_A']:.1f} against {n['g_chi2_V']:.1f}),
 but the preference disappears when method monopoles are marginalised ({n['m_chi2_A']:.1f} against {n['m_chi2_V']:.1f}).
 Injections on the real footprint (constant law preferred for an injected step / an injected flow): {pc('inj_step_A')} / {pc('inj_flow_A')} at
@@ -2052,7 +2189,7 @@ WHAT IS ALREADY DONE (do not redo)
 - Counts: the receipt estimator has power {n['count_power']:.2f} against a doubled dipole; its non-detection decides nothing.
 - Theorems (THEOREMS.md, tests/r54/test_r54_theorems.py, {MOD}/r54_identifiability.py): statements proved without data (node R54-THM). They change
   no executed node. Rules for manuscript statements that rest on them: LOCAL_AGENT_CONTRACT.json:theorem_usage. Open addendum tasks R54-A1 to R54-A4:
-  HANDOFF_UPDATE.json. {'The proofs were read by an independent reviewer.' if proofs_reviewed() else 'The proofs have not been read by an independent reviewer: cite no theorem before R54-A1.'}
+  HANDOFF_UPDATE.json. {'The current text of THEOREMS.md is covered by a recorded independent review.' if proofs_reviewed() else 'The current text of THEOREMS.md or r54_identifiability.py is not covered by a recorded review (see pending_independent_review.uncovered_reasons): cite no theorem until a review of the current text is recorded.'}
 - Independent review: INDEPENDENT_REVIEW.json lists every finding and its resolution. Do not re-promote a hypothesis that the review moved to HOLD
   unless the decision_checks of the node that owns it say so.
 
@@ -2174,8 +2311,8 @@ def claim_table_md(n: dict) -> str:
          f"tails with receipt systematics Quaia {g3(n['l03_p_q'])}, NVSS {g3(n['l03_p_n'])}; mock-only tails {g3(n['l03_pi_q'])}, {g3(n['l03_pi_n'])}; power {n['count_power']:.2f} "
          f"against a doubled dipole (kill criterion power >= 0.8 not met); the published amplitudes are reproduced on owned data ({n['l03_w_status']}, {n['l03_m_status']})",
          "R54_L03_RESULT.json"),
-        ("L6 frames", "One global tilt across depths and probes (R54-EQ-38)", "undecided at this precision",
-         f"closure p = {g3(n['l06_closure_p'])}; global-tilt hypothesis p = {g3(n['l06_p1_p'])} against independent frames p = {g3(n['l06_p2_p'])}", "R54_L06_JOINT.json"),
+        ("L6 frames", "One depth-constant velocity CONST_V across depths and probes (R54-EQ-38); other global-tilt histories not tested", "undecided at this precision",
+         f"closure p = {g3(n['l06_closure_p'])}; CONST_V hypothesis p = {g3(n['l06_p1_p'])} against independent frames p = {g3(n['l06_p2_p'])}", "R54_L06_JOINT.json"),
         ("L6 pooled polar tail", "Polar block against the LCDM body only", "HOLD; not for the abstract",
          f"p = {g3(n['l06_p0_p'])} on the pooled zero-point carrier; a calibration dipole with a count offset fits with p = {g3(n['l06_p3_p'])}; the log_survey CF4 dipole null is "
          f"p = {g3(n['l04_ls_dip_p'])}; the count covariance carries the receipt systematics; five-view Pi (polar {g3(n['l06_pi_polar'])}, STF2 {g3(n['l06_pi_stf2'])}) under the same restriction; forking paths apply",
@@ -2356,7 +2493,7 @@ def handoff_doc(n: dict) -> dict:
             "known_limits": ["first order in the kinematic variables", "T6 needs tensors at the observer or homogeneous histories and an isotropic, parity-symmetric source population and measurement (C6.6)",
                              "T5 gives second moments only", "T8 needs an interval on which the scattering rate is positive almost everywhere",
                              "T1 does not cover a misspecified covariance, a non-Gaussian law or nuisance models that differ between analyses",
-                             "the proofs were read by an independent reviewer" if proofs_reviewed() else "the proofs were not read by an independent reviewer"],
+                             "the current text of the proofs is covered by a recorded independent review" if proofs_reviewed() else "the current text of the proofs is not covered by a recorded review (CHANGED_AFTER_REVIEW or NEVER_REVIEWED); earlier texts were reviewed (INDEPENDENT_REVIEW.json)"],
             "tolerances": "none introduced by this update; the numerical tolerances of the executable checks are those written in tests/r54/test_r54_theorems.py",
             "reference_cases": ["tests/r54/test_r54_theorems.py::test_t6_selection_rule_counted_without_schur", "tests/r54/test_r54_theorems.py::test_t7a_zero_point_gauge_orbit_and_testable_combinations",
                                 "tests/r54/test_r54_theorems.py::test_t9_frame_closure_identity_and_degrees_of_freedom", "tests/r54/test_r54_handoff.py::test_structural_and_numeric_identification_layers_agree"],
@@ -2537,7 +2674,7 @@ def mutation_receipt() -> None:
         finally:
             path.write_text(original, encoding="utf-8")
             backup.unlink(missing_ok=True)
-        rows.append({"id": gid, "file": rel, "test": test, "meaning": meaning, "pytest_exit_code": run.returncode,
+        rows.append({"id": gid, "file": rel, "pattern": old, "mutation": new, "test": test, "meaning": meaning, "pytest_exit_code": run.returncode,
                      "status": "KILLED" if run.returncode == 1 else "SURVIVED_OR_ERROR"})
         print(gid, rows[-1]["status"])
     jdump(R54 / "MUTATION_GATE_RECEIPT.json", {"schema": "htt.r54.mutation_receipt/1", "date": DATE, "unmutated_suite_exit_code": clean.returncode,

@@ -293,7 +293,9 @@
    "role": "scientific diff reviewer (physmath-coding-harness:scientific-diff-reviewer)",
    "scope": "LOCAL_AGENT_CONTRACT.json:pending_independent_review.scope (10 files), read and run only, before the first edit of any local node",
    "status": "COMPLETE",
-   "verdict": "ACCEPT_WITH_REQUIRED_CHANGES"
+   "verdict": "ACCEPT_WITH_REQUIRED_CHANGES",
+   "reviewed_commit": "35a28e20cb66096c358296755c04db9cfa4a7ca6",
+   "reviewed_commit_basis": "the review ran 'before the first edit of any local node' and its fixes were committed in e3b873183; its parent 35a28e20c is the content read"
   },
   {
    "agent": "adbc43b828f0873d1",
@@ -381,7 +383,9 @@
       "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md:T3"
      ],
      "resolution": "reworded: the width does not shrink with data and is fixed by the conditional prior of nu given iota together with the posterior of iota.",
-     "resolution_status": "FIXED"
+     "resolution_status": "FIXED",
+     "superseded_by": "PRV-01",
+     "correction": "the replacement sentence of the resolution was wrong: a marginal width can shrink with data through a prior correlation while the conditional law of the unidentified part is unchanged (PRV-01 counterexample); THEOREMS.md T3 was corrected in f50d978a"
     },
     {
      "id": "R54-A1-07",
@@ -444,7 +448,396 @@
      "resolution_status": "FIXED"
     }
    ],
-   "verdict_as_reported": "PASS_WITH_FINDINGS (no critical finding; five major and seven minor findings, all fixed); mapped to the vocabulary of this record"
+   "verdict_as_reported": "PASS_WITH_FINDINGS (no critical finding; five major and seven minor findings, all fixed); mapped to the vocabulary of this record",
+   "reviewed_commit": "UNKNOWN",
+   "reviewed_commit_basis": "the reviewer read the uncommitted working tree before its own findings were fixed; the fixed files were committed in 77f61c17 with different content, so no commit holds the bytes it read",
+   "files_sha256": {
+    "htt/htt/htt/infer/r54_identifiability.py": "UNKNOWN",
+    "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md": "UNKNOWN",
+    "tests/r54/test_r54_theorems.py": "UNKNOWN",
+    "scripts/r54/handoff_merge.py": "UNKNOWN",
+    "tests/r54/test_r54_handoff.py": "UNKNOWN"
+   }
+  },
+  {
+   "agent": "/root/proof_review",
+   "role": "independent proof reviewer of the R58 session (cloud child agent), mathematical and physical audit of R54",
+   "independent_of_author": true,
+   "status": "COMPLETE",
+   "date": "2026-11-17",
+   "scope": "R54 theorems and their checks at the audited revision, before the fixes of f50d978a; recorded in docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/REVIEW/R54_THEOREM_REVIEW.md",
+   "source_record": "docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/REVIEW/R54_THEOREM_REVIEW.md",
+   "files": [
+    "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md",
+    "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEORY_LOOPS.md",
+    "tests/r54/test_r54_theorems.py",
+    "htt/htt/htt/infer/r54_identifiability.py"
+   ],
+   "reviewed_commit": "77f61c17ba33ff28ff4f16a7d42621d8041e5ce4",
+   "files_sha256": {
+    "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md": "ca49a673fc21e4adc47a4e1785d67b41639461ac18c4dad2290e47ce197ab3b2",
+    "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEORY_LOOPS.md": "93563496da31996854aa79a0ae97e45f2c131857303e102daf9facdac2bcb077",
+    "tests/r54/test_r54_theorems.py": "9d8941c4f11e4d679818417972ca8f0c8e97a14395a00d407a5e7a4d17da016a",
+    "htt/htt/htt/infer/r54_identifiability.py": "b6c9d4a178bfca6b6e9397498563fbb4d48133b502e3caf3914d71652ba45cb3"
+   },
+   "files_note": "as the source record states ('Full text read: THEOREMS.md (361 lines), THEORY_LOOPS.md (195 lines), tests/r54/test_r54_theorems.py, r54_identifiability.py'); proof_checks.py executed two functions (wishart_gls_factors, rho_ratio) extracted from the git object. This review read the text before the corrections; it is not a review of the corrected text",
+   "verdict": "ACCEPT_WITH_REQUIRED_CHANGES",
+   "verdict_as_reported": "correct only after the stated restrictions and local corrections",
+   "findings": [
+    {
+     "id": "PRV-01",
+     "severity": "major",
+     "severity_as_reported": "major",
+     "summary": "T3(iv) 'its width does not shrink with data' is false: with a proper correlated Gaussian prior the marginal variance of nu decreases with n while the conditional variance given iota is unchanged",
+     "evidence": [
+      "docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/REVIEW/R54_THEOREM_REVIEW.md"
+     ],
+     "resolution": "T3 removes false marginal non-contraction; states conditional-prior invariance and bounded-interval uniform coverage. Gaussian correlated-prior counterexample now in proof.",
+     "resolution_status": "FIXED",
+     "fixed_in": "f50d978adb68481cd172e0910c614f2409e930e2",
+     "status_as_reported": "closed_in_reviewed_document"
+    },
+    {
+     "id": "PRV-02",
+     "severity": "major",
+     "severity_as_reported": "moderate",
+     "summary": "T5: n > p - k + 1 does not imply an invertible sample covariance; Sigma positive definite and integer n >= p are needed and the helper must reject inputs outside that domain",
+     "evidence": [
+      "docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/REVIEW/R54_THEOREM_REVIEW.md"
+     ],
+     "resolution": "T5 requires positive-definite Sigma and integer n>=p; both factor helpers reject nonsingular-domain and count-type violations.",
+     "resolution_status": "FIXED",
+     "fixed_in": "f50d978adb68481cd172e0910c614f2409e930e2",
+     "status_as_reported": "closed"
+    },
+    {
+     "id": "PRV-03",
+     "severity": "major",
+     "severity_as_reported": "moderate",
+     "summary": "rho_ratio returns NaN at large optical depth (tau = 1100, 10000); stable form sqrt(6)(-expm1(-0.7 tau))/(1 + 6 exp(-0.7 tau)) with input validation",
+     "evidence": [
+      "docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/REVIEW/R54_THEOREM_REVIEW.md"
+     ],
+     "resolution": "rho_ratio uses negative-exponent/expm1 stable formula and rejects nonfinite or negative optical depth; 0,1e-20,1100,10000 limits tested.",
+     "resolution_status": "FIXED",
+     "fixed_in": "f50d978adb68481cd172e0910c614f2409e930e2",
+     "status_as_reported": "closed"
+    },
+    {
+     "id": "PRV-04",
+     "severity": "major",
+     "severity_as_reported": "major interpretation restriction",
+     "summary": "T9 and THEORY_LOOPS L6: 'a global tilt is the linear hypothesis V_j = V' is valid only for the constant-velocity submodel, not for every homogeneous tilt history",
+     "evidence": [
+      "docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/REVIEW/R54_THEOREM_REVIEW.md"
+     ],
+     "resolution": "THEOREMS T9 labels CONST_V and requires source-bound windowed transfer for evolving homogeneous tilt. R54 historical THEORY_LOOPS wording needs explicit supersession in root integration. The R54 generated wording (THEORY_LOOPS L6, H-L6b, H-T9, theorem_usage T9) was aligned in the referee repair of 2026-11-17.",
+     "resolution_status": "FIXED",
+     "fixed_in": "f50d978adb68481cd172e0910c614f2409e930e2",
+     "status_as_reported": "closed_in_reviewed_document"
+    },
+    {
+     "id": "PRV-05",
+     "severity": "major",
+     "severity_as_reported": "moderate domain/claim restriction",
+     "summary": "T8(iv): the least-norm projection needs square-integrable kernels with a positive-definite Gram matrix; an arbitrary interval with positive scattering does not imply it",
+     "evidence": [
+      "docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/REVIEW/R54_THEOREM_REVIEW.md"
+     ],
+     "resolution": "T8 norm domain now finite/nonzero interval/finite optical depth or L2 kernels with positive-definite Gram; upper bounds require nullspace-controlling restriction and physical amplitude scope.",
+     "resolution_status": "FIXED",
+     "fixed_in": "f50d978adb68481cd172e0910c614f2409e930e2",
+     "status_as_reported": "closed_in_reviewed_document"
+    }
+   ],
+   "files_coverage": {
+    "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md": "FULL",
+    "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEORY_LOOPS.md": "FULL",
+    "tests/r54/test_r54_theorems.py": "FULL",
+    "htt/htt/htt/infer/r54_identifiability.py": "FULL"
+   }
+  },
+  {
+   "agent": "/root/proof_review",
+   "role": "independent closeout review of the R58 session (pass r58_independent_review): PRV-01..05 repairs and the R58 Gaussian carrier module",
+   "independent_of_author": true,
+   "status": "COMPLETE",
+   "date": "2026-11-17",
+   "scope": "R54 PRV-01..05 local repair closeout; R58 mixed tensor Gaussian carrier module and unit tests. No data runner or observed result review.",
+   "source_record": "docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/REVIEW/MATH_IMPLEMENTATION_REVIEW.json",
+   "files": [
+    "htt/htt/htt/infer/r54_identifiability.py",
+    "htt/htt/htt/infer/r54_tensor_five_view.py",
+    "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md",
+    "htt/htt/htt/infer/r58_mixed_tensor_likelihood.py",
+    "tests/r58/test_mixed_tensor_likelihood.py"
+   ],
+   "reviewed_commit": "f50d978adb68481cd172e0910c614f2409e930e2",
+   "files_sha256": {
+    "htt/htt/htt/infer/r54_identifiability.py": "382b429fd32ea7ad2d5997be1b39c9ccd15b0d55f7e0066b7f656e205a5ced92",
+    "htt/htt/htt/infer/r54_tensor_five_view.py": "47f9ab5fd40da9ffb8725ff9720a8d4cba7116c905a6a4c11e05b79f972e17a8",
+    "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md": "f4aac3900a636e7a5d4f4b60f6529c003c049c65c06b94b643847a9fbf2917f2",
+    "htt/htt/htt/infer/r58_mixed_tensor_likelihood.py": "f1c07d8ba7253f225af9354277a2973b5cab96c86febd08d4f8c5e1a11555bc0",
+    "tests/r58/test_mixed_tensor_likelihood.py": "272efb9253651215cd887036aa8f4269f4ccd9deb6ef48bd2844e79f927cadbc"
+   },
+   "files_note": "coverage as reported per file: full changed source/diff read; hashes recomputed from git objects of f50d978a and equal to the hashes in the source record",
+   "verdict": "ACCEPT_WITH_REQUIRED_CHANGES",
+   "verdict_as_reported": "PASS_SCOPED_WITH_EXPLICIT_LIMITATIONS",
+   "findings": [
+    {
+     "id": "R58-IR-01",
+     "severity": "major",
+     "summary": "Initial termwise cancellation test falsely called theta1 unidentifiable for X=[[1,1,1],[0,1,1]] because null-basis coordinate was -6.99e-17.",
+     "evidence": [
+      "r58_mixed_tensor_likelihood.py:linear_interval"
+     ],
+     "resolution": "Column-equilibrated estimability chart with roundoff tolerance; exact zero-column checks. Added coordinate, unit-change and rotation tests. Independent repaired sd=sqrt(2).",
+     "resolution_status": "FIXED",
+     "status_as_reported": "closed"
+    },
+    {
+     "id": "R58-IR-02",
+     "severity": "major",
+     "summary": "Declared-scale rank truncation produced spurious central adequacy p for X=diag(1,1e-13), theta=(0,1e14).",
+     "evidence": [
+      "r58_mixed_tensor_likelihood.py:fit_linear"
+     ],
+     "resolution": "Disagreement with column-equilibrated rank raises ValueError before inference outputs. Exact chi-square calibration condition explicitly requires discarded modes to be zero in the declared model.",
+     "resolution_status": "FIXED",
+     "status_as_reported": "closed_scoped"
+    },
+    {
+     "id": "R58-IR-03",
+     "severity": "major",
+     "summary": "Rounded singular precision quadratic could give logL 14.55 too high on a 1e8 null displacement and 281769 too high at1e10.",
+     "evidence": [
+      "r58_mixed_tensor_likelihood.py:gaussian_log_likelihood"
+     ],
+     "resolution": "Evaluate squared residual from retained whitened likelihood factor and offset; reject minimal singular records lacking factor. Independent far-null checks now preserve PSD and agree with direct residual within backward-error budget.",
+     "resolution_status": "FIXED",
+     "status_as_reported": "closed"
+    },
+    {
+     "id": "R58-IR-04",
+     "severity": "minor",
+     "summary": "Full singular representative covariance is gauge dependent; union support envelope is an interval hull, not the possibly disconnected projected union itself.",
+     "evidence": [
+      "fit_linear/robust_interval docstrings"
+     ],
+     "resolution": "Docstrings/metadata now distinguish identifiable-contrast covariance and interval hull, retain per-model intervals.",
+     "resolution_status": "FIXED",
+     "status_as_reported": "closed"
+    }
+   ],
+   "checks_performed": [
+    "python -m pytest /workspace/scratch/ca5a06f498ba/r58_patch/tests/r58/test_mixed_tensor_likelihood.py -q: 25 passed in 0.63 s; one unrelated pytest plugin deprecation warning",
+    "python /workspace/scratch/ca5a06f498ba/r58_review_checks.py: 24 independent full-rank GLS/contrast/logL oracles; repaired estimability/rank/large-null witnesses; r54 count domain and optical-depth limits passed",
+    "manual derivation: Whitened SVD fit, rank confidence cylinder, pointwise contrast law, nuisance-model interval-hull coverage and max-p union-null validity checked under fixed known SPD covariance and common scientific target/null."
+   ],
+   "remaining_limitations": [
+    "Numerical rank is a declared tolerance-dependent model decision. Agreement of two rank estimates alone is not a proof that every discarded singular mode is exactly zero.",
+    "Probability and simultaneous coverage claims require fixed correctly specified covariance and linear response; finite-MC, selection and model discrepancy calibration remain outside this module.",
+    "Five-view reporting has no power advantage over exact Gaussian GLS on the same experiment. Interval unions cover only included valid nuisance models with common estimand/units.",
+    "No full repository test suite, raw-data likelihood, data runner, Bianchi transfer or manuscript-source synchronization reviewed in this pass."
+   ],
+   "files_coverage": {
+    "htt/htt/htt/infer/r54_identifiability.py": "CHANGED_SOURCE_OR_DIFF",
+    "htt/htt/htt/infer/r54_tensor_five_view.py": "CHANGED_SOURCE_OR_DIFF",
+    "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md": "CHANGED_SOURCE_OR_DIFF",
+    "htt/htt/htt/infer/r58_mixed_tensor_likelihood.py": "CHANGED_SOURCE_OR_DIFF",
+    "tests/r58/test_mixed_tensor_likelihood.py": "CHANGED_SOURCE_OR_DIFF"
+   }
+  },
+  {
+   "agent": "scientific-diff-reviewer of the local session (referee repair of 2026-11-17)",
+   "role": "scientific diff reviewer (physmath-coding-harness:scientific-diff-reviewer), single independent review of the referee repair, read and run only",
+   "independent_of_author": true,
+   "status": "COMPLETE",
+   "date": "2026-11-17",
+   "scope": "whole repair diff against d0e08c8d with sections 3 and 4 of the repair task as contract; files read in full listed in files_coverage",
+   "files": [
+    "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md",
+    "htt/htt/htt/infer/r54_identifiability.py",
+    "tests/r54/test_r54_theorems.py",
+    "scripts/r54/handoff_merge.py",
+    "tests/r54/test_r54_handoff.py"
+   ],
+   "reviewed_commit": "WORKTREE",
+   "reviewed_base_commit": "d0e08c8d8d97496124dc8b323a9afd5e8ee1d95d",
+   "files_sha256": {
+    "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md": "487264608d9b38838c1809bed051c97e0dbdab7ed06ed73cc41fc0fda53cce68",
+    "htt/htt/htt/infer/r54_identifiability.py": "382b429fd32ea7ad2d5997be1b39c9ccd15b0d55f7e0066b7f656e205a5ced92",
+    "tests/r54/test_r54_theorems.py": "9d8941c4f11e4d679818417972ca8f0c8e97a14395a00d407a5e7a4d17da016a",
+    "scripts/r54/handoff_merge.py": "c292118531c58064572c9c1eacd02510642de69145e44d39c747ac1b394e4988",
+    "tests/r54/test_r54_handoff.py": "41f9444ef56691548a9d75e57c9d05ac1e801823d233ebb10360c6a16fb2db23"
+   },
+   "files_blob": {
+    "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md": "5236f642110bbd74edd02ee54269146d128275f1",
+    "htt/htt/htt/infer/r54_identifiability.py": "8e253f94c28b7ffba1c674560dc1520304c147af",
+    "tests/r54/test_r54_theorems.py": "96a15680cb61b59d899b33b3951baf8a15e6b12c",
+    "scripts/r54/handoff_merge.py": "3b1b41cda610c638ec100fdac88cc53c3963d8ec",
+    "tests/r54/test_r54_handoff.py": "45e801422965093b3ad4b155b293daa30ba9cd51"
+   },
+   "files_coverage": {
+    "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md": "FULL",
+    "htt/htt/htt/infer/r54_identifiability.py": "FULL",
+    "tests/r54/test_r54_theorems.py": "FULL",
+    "scripts/r54/handoff_merge.py": "FULL",
+    "tests/r54/test_r54_handoff.py": "FULL"
+   },
+   "also_read": "scripts/r54/build_r54_contract.py (every diff hunk), build_r59_outputs.py, check_r58_independent.py, r58_mutation_receipt.py and the four test files (diff); REVIEW/R54_THEOREM_REVIEW.md and MATH_IMPLEMENTATION_REVIEW.json",
+   "hashes_note": "files_sha256 computed by sha256sum after the review and equal to the hashes the reviewer reported; files_blob from git hash-object -w at recording",
+   "verdict": "ACCEPT_WITH_REQUIRED_CHANGES",
+   "findings": [
+    {
+     "id": "R54-RR-01",
+     "severity": "major",
+     "summary": "generated Korean closure line, L06 hypothesis table label and MG-21 meaning still name the depth-constant model 'global tilt'",
+     "evidence": [
+      "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/R54_REPORT_KO.md"
+     ],
+     "resolution": "builder relabels at render time (const_v_label: \"CONST_V (labelled 'global tilt' in R54_L06_JOINT.json)\"; the frozen result is untouched), Korean closure line and MG-21 meaning say CONST_V; a test scans every generated document for 'global tilt', 'global-tilt' and the Korean wording outside lines that name CONST_V or the lane title",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R54-RR-02",
+     "severity": "major",
+     "summary": "task m4 not done while the status note claims it",
+     "evidence": [
+      "docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/R59_DECISION.json"
+     ],
+     "resolution": "`revision` entry appended to R59_DECISION.json; no existing field edited",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R54-RR-03",
+     "severity": "minor",
+     "summary": "uncovered branch says the proofs were never read and sends the next session to R54-A1",
+     "evidence": [
+      "scripts/r54/build_r54_contract.py"
+     ],
+     "resolution": "both texts now say that the current text is not covered by a recorded review and that earlier texts were reviewed; no pointer to R54-A1",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R54-RR-04",
+     "severity": "minor",
+     "summary": "withdrawn-phrase guard skips LOCAL_AGENT_CONTRACT.json and HANDOFF_UPDATE.json and is case sensitive",
+     "evidence": [
+      "tests/r54/test_r54_results_binding.py"
+     ],
+     "resolution": "both files added to the scanned set; comparison in lower case",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R54-RR-05",
+     "severity": "minor",
+     "summary": "coverage counts hashes of any reviewer regardless of verdict and of partial reads",
+     "evidence": [
+      "scripts/r54/build_r54_contract.py"
+     ],
+     "resolution": "reviewer_can_cover: status COMPLETE, verdict ACCEPT or ACCEPT_WITH_REQUIRED_CHANGES, no unresolved critical or major finding; only files with files_coverage FULL count; the R58 closeout entry is recorded as CHANGED_SOURCE_OR_DIFF and no longer covers anything",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R54-RR-06",
+     "severity": "minor",
+     "summary": "WORKTREE review hashes are not checked against git",
+     "evidence": [
+      "tests/r54/test_r54_results_binding.py"
+     ],
+     "resolution": "each WORKTREE entry records files_blob (git hash-object -w at recording); the test reads each blob with git cat-file and compares its sha256 with files_sha256",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R54-RR-07",
+     "severity": "minor",
+     "summary": "no general guard against a gate pattern that no longer occurs (the MG-31 situation)",
+     "evidence": [
+      "tests/r54/test_r54_results_binding.py"
+     ],
+     "resolution": "binding test asserts that every implemented gate pattern occurs exactly once and that each receipt row stores the pattern and mutation of its gate; the receipt rows now store both",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R54-RR-08",
+     "severity": "minor",
+     "summary": "'the redshift windows do not reach the Virgo cluster' is wrong for Gaussian windows",
+     "evidence": [
+      "docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/MANUSCRIPT.md"
+     ],
+     "resolution": "the sentence now says the catalogue cut (z_CMB range) contains no group at the Virgo redshift",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R54-RR-09",
+     "severity": "minor",
+     "summary": "tables out of order; 'pooled variant' undefined",
+     "evidence": [
+      "docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/MANUSCRIPT.md"
+     ],
+     "resolution": "tables renumbered in order of appearance; 'pooled variant (log: no zero-point nuisance template)' defined at first use",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R54-RR-10",
+     "severity": "minor",
+     "summary": "T5 usage rule calls n the number of simulations",
+     "evidence": [
+      "scripts/r54/build_r54_contract.py"
+     ],
+     "resolution": "rule says n is the Wishart degrees of freedom (simulations minus one when the mean is estimated)",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R54-RR-11",
+     "severity": "minor",
+     "summary": "finish prints HANDOFF OK before its last git call",
+     "evidence": [
+      "scripts/r54/handoff_merge.py"
+     ],
+     "resolution": "declined in this repair: the exit status is already non-zero on that failure and no path reports success after a failed step; editing this reviewed receipt source would leave it uncovered without a second review round, which the task allows only after a critical finding. Recorded as an open cosmetic item.",
+     "resolution_status": "DECLINED"
+    },
+    {
+     "id": "R54-RR-12",
+     "severity": "minor",
+     "summary": "head_sha rendered from an uncommitted tree",
+     "evidence": [
+      "docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/LOCAL_RESULT.json"
+     ],
+     "resolution": "LOCAL_RESULT records working_tree_clean (git status of tracked files) next to head_sha",
+     "resolution_status": "FIXED"
+    }
+   ],
+   "checks_performed": [
+    "THEOREMS.md T1-T9, L1, L2 re-derived; m1 and m3 edits exactly as specified",
+    "r54_identifiability.py functions against statements; test_r54_theorems.py has no vacuous test",
+    "INDEPENDENT_REVIEW.json append-only against d0e08c8d; all 9 commit-bound hashes equal git show",
+    "41 R54 and 6 R58 gate patterns occur once; receipts current",
+    "AXIS_DIAGNOSTICS regenerated byte-identical; independent check identical; selected D1/D5 values recomputed",
+    "V10: no PINS file or pre-existing RESULTS file changed",
+    "tests/r58 68 passed; tests/r54 93 passed, 1 skipped (by-design THEOREMS test excluded)",
+    "V1 and V2 OK"
+   ],
+   "also_read_files": {
+    "scripts/r58/build_r58_axis_diagnostics.py": {
+     "sha256": "5e899d0c4e40166c1ad7111ef0f7ac33c4e891e3829d81f4f13d1cb990a61ed2",
+     "blob": "0ed37c89fdd000f820a582adb3c3a0a45a9ee501",
+     "coverage": "FULL"
+    },
+    "docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/MANUSCRIPT.md": {
+     "sha256": "b61dcb5492b53a0e4324ca1375742248827b223cfc749e7d15c1dfceb5164fad",
+     "blob": "345039f20b8ef55b7520a523ea71305300ef9a3b",
+     "coverage": "SECTIONS (abstract, 1-3.1, Table 8, Section 7 addition, references)"
+    },
+    "docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/CLAIM_TABLE.csv": {
+     "sha256": "aac00ef5eaa8a04cf22ac302704293084c45032dd1862cffa3cd5a4b140a6dec",
+     "blob": "a2b4c249aae80945e682994fdf3443c918258238",
+     "coverage": "ROWS C13-C18"
+    }
+   },
+   "also_read_note": "R58/R59 files outside the R54 review scope that this reviewer read; kept apart so that the R54 record lists only R54-scope files"
   }
  ],
  "rule": "Reviewer output is information, not authority. No number proposed by a reviewer entered a document without being re-executed by the run scripts.",

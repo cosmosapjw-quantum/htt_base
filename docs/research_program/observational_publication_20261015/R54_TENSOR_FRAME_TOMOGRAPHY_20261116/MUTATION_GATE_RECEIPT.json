@@ -6,6 +6,8 @@
    "file": "htt/htt/htt/infer/r54_type1_thomson.py",
    "id": "MG-01",
    "meaning": "E kernel sign flipped",
+   "mutation": "return (6.0 * e1 + e2) / 7.0, SQRT6 * (e1 - e2) / 7.0",
+   "pattern": "return (6.0 * e1 + e2) / 7.0, SQRT6 * (e2 - e1) / 7.0",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_modules.py::test_eq03_kernel_shape"
@@ -14,6 +16,8 @@
    "file": "htt/htt/htt/infer/r54_type1_thomson.py",
    "id": "MG-02",
    "meaning": "sharp last scattering instead of the T kernel",
+   "mutation": "            kt, ke = (1.0 if n > -math.log(1090.94) else 0.0), thomson_kernels(hist.tau(n))[1]",
+   "pattern": "            kt, ke = thomson_kernels(hist.tau(n))",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_modules.py::test_eq04_kernel_form_equals_ode_form_for_perfect_fluid"
@@ -22,6 +26,8 @@
    "file": "htt/htt/htt/infer/r54_tensor_five_view.py",
    "id": "MG-03",
    "meaning": "tail accepted without a law name",
+   "mutation": "def chi2_null_tail(stat: float, dof: int, law: str) -> dict:\n    if False:",
+   "pattern": "def chi2_null_tail(stat: float, dof: int, law: str) -> dict:\n    if not law.strip():",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_modules.py::test_eq22_named_laws_and_calibration"
@@ -30,6 +36,8 @@
    "file": "htt/htt/htt/infer/r54_tensor_five_view.py",
    "id": "MG-04",
    "meaning": "unidentified direction silently bounded",
+   "mutation": "    if False:\n        return (-math.inf, math.inf)",
+   "pattern": "    if not is_identified(f, v, scale):\n        return (-math.inf, math.inf)",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_modules.py::test_eq20_singular_precision_and_hard_case"
@@ -38,6 +46,8 @@
    "file": "htt/htt/htt/infer/r54_type1_thomson.py",
    "id": "MG-05",
    "meaning": "neutrino anisotropic stress dropped",
+   "mutation": "    use_nu = False",
+   "pattern": "    use_nu = stress == STRESS_PHOTON_NEUTRINO",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_modules.py::test_eq05_radiation_era_oscillator_matches_analytic_solution"
@@ -46,6 +56,8 @@
    "file": "htt/htt/htt/infer/r54_lcdm_body.py",
    "id": "MG-06",
    "meaning": "wrong dipole Cartesian factor",
+   "mutation": "1: 1.0 / (4.0 * math.pi)",
+   "pattern": "1: 3.0 / (4.0 * math.pi)",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_modules.py::test_eq11_point_window_recovers_velocity_dispersion"
@@ -54,6 +66,8 @@
    "file": "htt/htt/htt/infer/r54_lcdm_body.py",
    "id": "MG-07",
    "meaning": "cross-depth covariance dropped",
+   "mutation": "                    out[9 * a + j, 9 * b + j] = c[a, b] if a == b else 0.0",
+   "pattern": "                    out[9 * a + j, 9 * b + j] = c[a, b]",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_modules.py::test_eq11_eq12_stacked_body_structure"
@@ -62,6 +76,8 @@
    "file": "htt/htt/htt/infer/r54_tensor_five_view.py",
    "id": "MG-08",
    "meaning": "Q or F accepted without a declared body",
+   "mutation": "        if False:",
+   "pattern": "        if status == AVAILABLE and name in (\"Q\", \"F\") and not str(v.get(\"body\", \"\")).strip():",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_modules.py::test_five_view_record_fails_closed"
@@ -70,6 +86,8 @@
    "file": "htt/htt/htt/infer/r54_tensor_five_view.py",
    "id": "MG-09",
    "meaning": "transport design mis-ordered",
+   "mutation": "    return np.kron(np.eye(dim), tau[:, None])",
+   "pattern": "    return np.kron(tau[:, None], np.eye(dim))",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_modules.py::test_eq23_transport_recovers_law"
@@ -78,6 +96,8 @@
    "file": "htt/htt/htt/infer/r54_type1_thomson.py",
    "id": "MG-10",
    "meaning": "wrong E self-coupling in the ODE",
+   "mutation": "-k * (SQRT6 / 10.0 * th + 1.0 * ec), -s]",
+   "pattern": "-k * (SQRT6 / 10.0 * th + 0.4 * ec), -s]",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_modules.py::test_eq04_kernel_form_equals_ode_form_for_perfect_fluid"
@@ -86,6 +106,8 @@
    "file": "htt/htt/htt/infer/r54_tensor_five_view.py",
    "id": "MG-11",
    "meaning": "Q_min replaced by the centre gauge",
+   "mutation": "        w_min = nu",
+   "pattern": "        w_min = lam * ap * nu / (1.0 + lam * ap)",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_modules.py::test_eq20_gauge_range_exact_in_two_dimensions"
@@ -94,6 +116,8 @@
    "file": "htt/htt/htt/infer/r54_tensor_five_view.py",
    "id": "MG-12",
    "meaning": "finite-MC inflation truncated",
+   "mutation": "return math.sqrt(n * (n - 1.0) / (m * m))",
+   "pattern": "return math.sqrt(n * (n - 1.0) / (m * (m - 1.0)))",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_modules.py::test_eq22_named_laws_and_calibration"
@@ -102,6 +126,8 @@
    "file": "htt/htt/htt/infer/r54_lcdm_body.py",
    "id": "MG-14",
    "meaning": "anisotropic term of the velocity correlation tensor dropped",
+   "mutation": "mm = 0.0 * cos",
+   "pattern": "mm = (ri - rj * cos) * (ri * cos - rj) / safe**2",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_modules.py::test_eq31_pair_sum_equals_dense_and_harmonic_forms"
@@ -110,6 +136,8 @@
    "file": "htt/htt/htt/infer/r54_lcdm_body.py",
    "id": "MG-15",
    "meaning": "wrong Psi_par kernel",
+   "mutation": "par[a:a + 64] = norm * ((j0 - 1.0 * j1x) @ weight)",
+   "pattern": "par[a:a + 64] = norm * ((j0 - 2.0 * j1x) @ weight)",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_modules.py::test_eq30_velocity_correlation_limits_and_identity"
@@ -118,6 +146,8 @@
    "file": "htt/htt/htt/infer/r54_lcdm_body.py",
    "id": "MG-16",
    "meaning": "sign of the luminosity-distance velocity term",
+   "mutation": "\"g_per_km_s\": ((1.0 + z) / (e_z * chi_hat) + 1.0) / c}",
+   "pattern": "\"g_per_km_s\": ((1.0 + z) / (e_z * chi_hat) - 1.0) / c}",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_modules.py::test_eq33_distance_factors_low_redshift_limits"
@@ -126,6 +156,8 @@
    "file": "htt/htt/htt/infer/r54_distance_estimators.py",
    "id": "MG-17",
    "meaning": "cosmographic factor dropped (c z instead of H0 d_L)",
+   "mutation": "return {\"eta\": np.log(C_KM_S * np.asarray(z, float) / distance_mpc(mu)), \"g_per_km_s\": fac[\"g_per_km_s\"],",
+   "pattern": "return {\"eta\": np.log(fac[\"y_km_s\"] / distance_mpc(mu)), \"g_per_km_s\": fac[\"g_per_km_s\"],",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_modules.py::test_eq34_log_estimator_is_unbiased_and_eq35_linear_estimator_is_not"
@@ -134,6 +166,8 @@
    "file": "htt/htt/htt/infer/r54_distance_estimators.py",
    "id": "MG-18",
    "meaning": "R36 weight law altered",
+   "mutation": "sigma = np.hypot(sigma_star, h_sigma * LN10_OVER_5 * np.asarray(e_mu, float))",
+   "pattern": "sigma = np.hypot(sigma_star, h_sigma * LN10_OVER_5 * d * np.asarray(e_mu, float))",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_modules.py::test_eq35_r36_operator_is_reproduced_from_the_committed_source"
@@ -142,6 +176,8 @@
    "file": "htt/htt/htt/infer/r54_distance_estimators.py",
    "id": "MG-19",
    "meaning": "rank-deficient design accepted",
+   "mutation": "    if False:",
+   "pattern": "    if diag.min() <= 0 or np.linalg.cond(r) > cond_limit:",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_modules.py::test_wls_operator_identity_and_fail_closed"
@@ -150,6 +186,8 @@
    "file": "htt/htt/htt/infer/r54_type1_thomson.py",
    "id": "MG-20",
    "meaning": "wrong non-relativistic limit of the collisionless stress weight",
+   "mutation": "(4.0 * xx * xx + 4.0 * mm * mm)",
+   "pattern": "(4.0 * xx * xx + 5.0 * mm * mm)",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_modules.py::test_eq06_massive_neutrino_stress_weight"
@@ -158,6 +196,8 @@
    "file": "htt/htt/htt/infer/r54_tensor_five_view.py",
    "id": "MG-29",
    "meaning": "support interval computed in unscaled coordinates (R54-IR-08)",
+   "mutation": "    fs = _sym(f, \"precision\")",
+   "pattern": "    fs = d[:, None] * _sym(f, \"precision\") * d[None, :]",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_modules.py::test_eq21_support_interval_in_scaled_coordinates"
@@ -165,7 +205,9 @@
   {
    "file": "scripts/r54/run_r54_cf4_exact.py",
    "id": "MG-21",
-   "meaning": "sign of the global-tilt closure (R54-EQ-38)",
+   "meaning": "sign of the CONST_V closure (R54-EQ-38)",
+   "mutation": "    s, cs = v - b, cv + np.diag(sb**2)",
+   "pattern": "    s, cs = v + b, cv + np.diag(sb**2)",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_conventions.py::test_mg21_eq38_tilt_closure_vanishes_for_one_frame_offset"
@@ -174,6 +216,8 @@
    "file": "scripts/r54/run_r54_cf4_exact.py",
    "id": "MG-22",
    "meaning": "sign of the hemisphere-step magnitude (R54-EQ-36)",
+   "mutation": "\"delta_mu_north_minus_south_mag\": float(2.0 * theta[i] / de.LN10_OVER_5),",
+   "pattern": "\"delta_mu_north_minus_south_mag\": float(-2.0 * theta[i] / de.LN10_OVER_5),",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_conventions.py::test_mg22_eq36_north_modulus_offset_gives_negative_step_and_positive_delta_mu"
@@ -182,6 +226,8 @@
    "file": "scripts/r54/run_r54_lowz_frames.py",
    "id": "MG-23",
    "meaning": "ICRS to Galactic rotation transposed",
+   "mutation": "    g = R_I2G.T @ (np.asarray(v, float) / np.linalg.norm(v))",
+   "pattern": "    g = R_I2G @ (np.asarray(v, float) / np.linalg.norm(v))",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_conventions.py::test_mg23_icrs_to_galactic_rotation"
@@ -190,6 +236,8 @@
    "file": "scripts/r54/run_r54_cf4_exact.py",
    "id": "MG-24",
    "meaning": "direction of the axis-locking tail",
+   "mutation": "        return float((1 + np.sum(null[k] >= obs[k])) / (n_draw + 1))",
+   "pattern": "        return float((1 + np.sum(null[k] <= obs[k])) / (n_draw + 1))",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_conventions.py::test_mg24_axis_locking_tail_is_small_for_a_pole_aligned_signal"
@@ -198,6 +246,8 @@
    "file": "scripts/r54/run_r54_cmb_type1.py",
    "id": "MG-25",
    "meaning": "sign of the ideal E response (R54-EQ-04)",
+   "mutation": "    j_e[e2, :] = -j_ideal[t2, :]",
+   "pattern": "    j_e[e2, :] = j_ideal[t2, :]",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_conventions.py::test_mg25_eq04_ideal_e_response_has_the_sign_of_the_t_response"
@@ -206,6 +256,8 @@
    "file": "scripts/r54/run_r54_cf4_exact.py",
    "id": "MG-26",
    "meaning": "pair-sum cache key blind to a row permutation",
+   "mutation": "    return np.array(_digest(np.sort(stack, axis=0)))",
+   "pattern": "    return np.array(_digest(stack))",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_conventions.py::test_mg26_pair_sum_cache_key_changes_under_row_permutation_and_positions"
@@ -214,6 +266,8 @@
    "file": "scripts/r54/run_r54_cmb_type1.py",
    "id": "MG-27",
    "meaning": "reionization quadrupole attenuated to today instead of to z = 50",
+   "mutation": "    theta_re = -th.history_functionals(s_of_n, hist, n_start, n_re)[\"Sigma_T\"]",
+   "pattern": "    theta_re = -th.history_functionals(s_of_n, _ShiftedDepth(hist, n_re), n_start, n_re)[\"Sigma_T\"]",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_conventions.py::test_mg27_reionization_only_e_equals_the_propagated_quadrupole"
@@ -222,6 +276,8 @@
    "file": "scripts/r54/run_r54_lowz_frames.py",
    "id": "MG-28",
    "meaning": "linear-estimator magnitude map applied to the log estimator",
+   "mutation": "return 5.0 * math.log10(1.0 + abs(a) / h_fit) if True else abs(a) * 5.0 / math.log(10.0)",
+   "pattern": "return 5.0 * math.log10(1.0 + abs(a) / h_fit) if estimator == \"linear\" else abs(a) * 5.0 / math.log(10.0)",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_conventions.py::test_mg28_eq36_log_estimator_magnitude_map"
@@ -230,6 +286,8 @@
    "file": "htt/htt/htt/infer/r54_identifiability.py",
    "id": "MG-30",
    "meaning": "axial vectors treated as polar (parity dropped from the selection rule)",
+   "mutation": "    if kind == \"axial\":\n        return g.copy()",
+   "pattern": "    if kind == \"axial\":\n        return det * g",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_theorems.py::test_t6_selection_rule_counted_without_schur"
@@ -238,6 +296,8 @@
    "file": "htt/htt/htt/infer/r54_identifiability.py",
    "id": "MG-31",
    "meaning": "wrong kernel ratio of the shear-history moment problem",
+   "mutation": "return SQRT6 * (-np.expm1(-0.7 * tau)) / (1.0 + 1.0 * e)",
+   "pattern": "return SQRT6 * (-np.expm1(-0.7 * tau)) / (1.0 + 6.0 * e)",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_theorems.py::test_t8_kernel_properties"
@@ -246,6 +306,8 @@
    "file": "htt/htt/htt/infer/r54_identifiability.py",
    "id": "MG-32",
    "meaning": "wrong Wishart factor of the estimator covariance",
+   "mutation": "(n - 1.0) / (n - p + k - 2.0), (n - p + k) / float(n)",
+   "pattern": "(n - 1.0) / (n - p + k - 1.0), (n - p + k) / float(n)",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_theorems.py::test_t5_exact_second_moments_with_a_simulated_covariance"
@@ -254,6 +316,8 @@
    "file": "htt/htt/htt/infer/r54_identifiability.py",
    "id": "MG-33",
    "meaning": "zero-point dipole columns dropped from the gauge design",
+   "mutation": "        block[:, 3 * (p + 1):3 * (p + 2)] = 0.0 * nhat",
+   "pattern": "        block[:, 3 * (p + 1):3 * (p + 2)] = nhat",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_theorems.py::test_t7a_zero_point_gauge_orbit_and_testable_combinations"
@@ -262,6 +326,8 @@
    "file": "htt/htt/htt/infer/r54_identifiability.py",
    "id": "MG-34",
    "meaning": "constant law not profiled out of the depth-law test",
+   "mutation": "    lam = gvv",
+   "pattern": "    lam = gvv - gav.T @ np.linalg.solve(gaa, gav)",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_theorems.py::test_t7c_depth_law_noncentrality_is_a_design_quantity"
@@ -270,6 +336,8 @@
    "file": "scripts/r54/handoff_merge.py",
    "id": "MG-35",
    "meaning": "merge helper treats the hand-written builder as a generated file and overwrites local work",
+   "mutation": "    if path in GENERATED or path.startswith(\"scripts/r54/\"):\n        return \"generated\"",
+   "pattern": "    if path in GENERATED:\n        return \"generated\"",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_handoff.py::test_merge_helper_never_resolves_a_hand_written_file"
@@ -278,6 +346,8 @@
    "file": "htt/htt/htt/infer/r54_calibration.py",
    "id": "MG-L01",
    "meaning": "permute the 300 simulation rows relative to nothing (control) and permute the 135 columns of the simulations only",
+   "mutation": "    return float(np.max(np.abs(np.sort(np.diag(s)) - np.sort(np.diag(s_ref)))) / np.max(np.abs(s_ref)))",
+   "pattern": "    return float(np.max(np.abs(s - s_ref)) / np.max(np.abs(s_ref)))",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_calibration.py::test_mg_l01_covariance_identity_detects_column_but_not_row_permutation"
@@ -286,6 +356,8 @@
    "file": "htt/htt/htt/infer/r54_calibration.py",
    "id": "MG-L02",
    "meaning": "use sims[i] inside its own covariance (no leave-one-out)",
+   "mutation": "        s_i = full",
+   "pattern": "        s_i = np.cov(np.delete(sims, i, axis=0).T, ddof=1) if leave_one_out else full",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_calibration.py::test_mg_l02_leave_one_out_obeys_the_hotelling_law_and_self_inclusion_does_not"
@@ -294,6 +366,8 @@
    "file": "htt/htt/htt/infer/r54_calibration.py",
    "id": "MG-L03",
    "meaning": "use a single split-difference vector as the null distribution",
+   "mutation": "        if False:",
+   "pattern": "        if v.size < MIN_NULL_REALISATIONS:",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_calibration.py::test_mg_l03_empirical_null_refuses_a_single_split_difference"
@@ -302,6 +376,8 @@
    "file": "htt/htt/htt/infer/r54_counts.py",
    "id": "MG-L04",
    "meaning": "run the mock null with a different latitude cut than the data",
+   "mutation": "    return hashlib.sha256(np.packbits(np.ones_like(np.asarray(used, bool))).tobytes()).hexdigest()",
+   "pattern": "    return hashlib.sha256(np.packbits(np.asarray(used, bool)).tobytes()).hexdigest()",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_counts.py::test_mg_l04_mask_hash_distinguishes_latitude_cuts"
@@ -310,6 +386,8 @@
    "file": "htt/htt/htt/infer/r54_survey.py",
    "id": "MG-L05",
    "meaning": "join the survey labels by row order after shuffling the raw table",
+   "mutation": "    for pgc, grp, fp in zip(gal[\"pgc\"].tolist(), sorted(gal[\"group\"].tolist()), gal[\"has_fp\"].tolist()):",
+   "pattern": "    for pgc, grp, fp in zip(gal[\"pgc\"].tolist(), gal[\"group\"].tolist(), gal[\"has_fp\"].tolist()):",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_survey.py::test_mg_l05_labels_are_joined_on_identifiers_not_on_row_order"
@@ -318,6 +396,8 @@
    "file": "htt/htt/htt/infer/r54_survey.py",
    "id": "MG-L06",
    "meaning": "fit the survey step without the redshift-bin monopoles",
+   "mutation": "    mono = np.ones((z.size, 1))\n    step = ",
+   "pattern": "    mono = np.column_stack([(zbin == b).astype(float) for b in range(len(z_bins) - 1) if np.any(sel & (zbin == b))])\n    step = ",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_survey.py::test_mg_l06_survey_step_needs_the_redshift_monopoles"
@@ -326,6 +406,8 @@
    "file": "htt/htt/htt/infer/r54_joint.py",
    "id": "MG-L07",
    "meaning": "add 1e-6 * I to a singular block before inversion",
+   "mutation": "    fs = np.asarray(f, float) + 1e-6 * np.eye(np.asarray(f).shape[0])\n",
+   "pattern": "    fs = np.asarray(f, float)\n",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_joint.py::test_mg_l07_singular_block_keeps_its_null_direction"
@@ -336,12 +418,12 @@
   "htt/htt/htt/infer/r54_calibration.py": "bf2b458033ed4c63c6126e359e3736cfd94a2584dbb3b0808ba8c15ce2d04ae2",
   "htt/htt/htt/infer/r54_counts.py": "5af9e9f817d4ae1b2fdff64bad6bf87767862175596493ad830fb46a546691f1",
   "htt/htt/htt/infer/r54_distance_estimators.py": "9640b9785d2c4a5164e75018c2bfd2d0c8f6eb8072cb1a445e4f7589f9876d50",
-  "htt/htt/htt/infer/r54_identifiability.py": "b6c9d4a178bfca6b6e9397498563fbb4d48133b502e3caf3914d71652ba45cb3",
+  "htt/htt/htt/infer/r54_identifiability.py": "382b429fd32ea7ad2d5997be1b39c9ccd15b0d55f7e0066b7f656e205a5ced92",
   "htt/htt/htt/infer/r54_joint.py": "900016d855f4cd825681a0c51a656d3cca76425f77ec77692a5c558c4cb3b9ee",
   "htt/htt/htt/infer/r54_lcdm_body.py": "a61e88bb012fedeff78e57a31278f1e62e9225c03cca5f10c29c23cf996b3085",
   "htt/htt/htt/infer/r54_pr4_bypass.py": "a23de9a134f30f2685bfd26bde8b6d9e03f17996e3e73366c474735b79aa04fd",
   "htt/htt/htt/infer/r54_survey.py": "57aa6a3834d4c9cb8c04c9ac5d15044135eaea37e6e9d9bcfe9f9ee51237485a",
-  "htt/htt/htt/infer/r54_tensor_five_view.py": "4811340d211f2c4d2fa330bd5d6cf160fc83a04458b5eb9c3a259fd1cb731b6d",
+  "htt/htt/htt/infer/r54_tensor_five_view.py": "47f9ab5fd40da9ffb8725ff9720a8d4cba7116c905a6a4c11e05b79f972e17a8",
   "htt/htt/htt/infer/r54_type1_thomson.py": "607a6e268ba98bc49466f8ac903b6e55b2d4a802bea9003589dc4544b66be433",
   "scripts/r54/handoff_merge.py": "c292118531c58064572c9c1eacd02510642de69145e44d39c747ac1b394e4988",
   "scripts/r54/run_r54_cf4_exact.py": "0d84ec958dfc964d28f39ac2edc506dd5c8ed8009ad1c12019cb425b15418300",

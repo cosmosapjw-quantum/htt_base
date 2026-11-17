@@ -91,7 +91,7 @@ Zero-point nuisance 모형별 요약. 세 모형 중 어느 것도 선험적으�
 - Jackknife(적도대, 북극관, 남극관 제외): 극 dipole -3.6% ~ -3.1%.
 - 주입 시험(실제 footprint, exact body 잡음; 상수 법칙 선호 비율, 계단 주입 / 유동 주입): 0.05 mag와 300 km/s에서 93% / 24%; 관측 크기(0.036 mag, 371 km/s)에서 82% / 20%; 방법 monopole 연산자는 관측 크기에서 83% / 22%. 관측 크기에서는 두 법칙이 결과를 보기 전에 정한 기준(90% / 10%)만큼 갈리지 않는다(H-C3 HOLD).
 - Bulk-only 벤치마크: white 오차면 283 km/s, E10 방향에서 11도(재현). Exact body면 371 km/s, (l,b) = (310, -44).
-- Global tilt 닫힘 시험(R54-EQ-38, 예비): V_CF4 + c beta_excess = 0의 p = 0.0895 (V만), 0.0123 (상수 dipole 주변화). Count 쪽 검정력이 낮아 예비 수치다(H-L6b HOLD).
+- CONST_V(깊이 상수 속도, global tilt의 부분모형) 닫힘 시험(R54-EQ-38, 예비): V_CF4 + c beta_excess = 0의 p = 0.0895 (V만), 0.0123 (상수 dipole 주변화). Count 쪽 검정력이 낮아 예비 수치다(H-L6b HOLD).
 - 판정 규칙의 지위: 규칙과 임계값은 exact-body 수치를 보기 전에 코드에 넣었으나 커밋하지 않았으므로 사전 등록이 아니다. 물리적 방향 의존 Hubble 인자나 A_a의 검출이 아니다. 상수 dipole은 거리 zero-point dipole과 분리되지 않는다(H-L3b). 남은 질문은 survey 수준 zero-point와 nuisance 변형에서 분류가 하나로 모이는가이고 R54-L04가 답한다.
 
 ### 2.4 데이터 없이 증명한 진술 (R54-THM, `THEOREMS.md`)
@@ -104,7 +104,7 @@ Zero-point nuisance 모형별 요약. 세 모형 중 어느 것도 선험적으�
 - T6 (선택 규칙): O(3) 등변성 아래 1차 응답은 (다중극, parity) 블록으로 대각이고 식별성은 블록별 rank 진술이 된다. vorticity는 어떤 스칼라 관측량에도 열이 없고 (1,+) 형 관측량(toroidal 고유운동 dipole과 편광각 회전 같은 pseudo-scalar dipole)에만 나타난다. B_2는 null 채널이다. 유한 파장 모드와 parity를 깨는 측정 사슬에는 적용되지 않는다.
 - T7 (gauge 궤도): 깊이와 무관한 Hubble 다중극은 거리 표본들의 zero-point 패턴 공통 부분과 분리되지 않고, vorticity는 기준 좌표계의 spin과 분리되지 않는다. "물리적 dipole 없음" 가설은 상대 거리만으로는 검정할 수 없다.
 - T8 (shear history 모멘트 문제): T와 E의 kernel은 Chebyshev 계를 이룬다. T에 보이지 않는 history는 부호가 한 번 이상, T와 E 모두에 보이지 않는 history는 두 번 이상 바뀐다. 부호나 family 제한이 없으면 shear 진폭의 상한은 없다.
-- T9 (프레임 대수): 같은 shell의 count 초과와 bulk flow의 합은 항등적으로 0이다. Global tilt는 shell 사이의 선형 가설이다.
+- T9 (프레임 대수): 같은 shell의 count 초과와 bulk flow의 합은 항등적으로 0이다. 깊이 상수 속도 부분모형 CONST_V는 shell 사이의 선형 가설이며, 다른 global tilt 이력에 대해서는 아무것도 말하지 않는다. 시간에 따라 변하는 균질 tilt는 shell 창을 포함한 전달 V_j = T(z_j) beta_0가 필요하고 어느 노드도 만들지 않아 시험되지 않았다.
 - 신규성: 통계 부분은 주장하지 않는다. T6과 T8은 구성 요소가 모두 문헌에 있고(E18, E25, E46, E50, E51) 하나의 진술로 묶은 형태는 이번 검색에서 찾지 못했다. 검색에 걸리지 않았다는 뜻일 뿐이다. 부록 작업 R54-A2의 우선권 확인 결과: T6 LOW (searched), T8 LOW-MODERATE (searched); 둘 다 출처를 밝힌 재유도로 인용한다.
 
 ## 3. 주제별 결정
@@ -118,7 +118,7 @@ Zero-point nuisance 모형별 요약. 세 모형 중 어느 것도 선험적으�
 | Beyond-FLRW 운동학 측정 | PROMOTE (H-L3a, H-L3b: R52에서 승계한 구조적 식별성 진술; H-L3d: 조건부), REJECT (H-L3c: 조건 없는 진술) | 2.1, state/HYPOTHESIS_GRAPH.md |
 | 비등방성 분류 | HOLD (H-L4a: 불변량의 null 보정 없음; family 식별은 차단 유지) | state/HYPOTHESIS_GRAPH.md |
 | 방향·적색편이 의존 Hubble | REJECT (H-L5e 물리적 검출), PROMOTE (H-L5f 추정량 편향), HOLD (H-L5a body 초과, H-L5c 극 고정, H-L5g 공통 계단, H-L5h 상수 quadrupole) | 2.3 |
-| Local boost 대 global tilt | HOLD (H-L6a 깊이 법칙, H-L6b 단일 global tilt, H-L6c map 수준 aberration) | 2.3 |
+| Local boost 대 global tilt | HOLD (H-L6a 깊이 법칙, H-L6b 깊이 상수 속도 CONST_V, H-L6c map 수준 aberration) | 2.3 |
 
 ## 4. 텐서화 5변수의 역할
 
@@ -132,11 +132,14 @@ F 뷰는 매개변수 공간에 선언된 볼록 body가 있어야 한다. CMB l
 
 ## 6. 독립 심사
 
-작성자와 분리된 심사 중 보고서를 받은 것 3건, 중단된 것 0건. 상세는 `INDEPENDENT_REVIEW.json`.
+작성자와 분리된 심사 중 보고서를 받은 것 6건, 중단된 것 0건. 상세는 `INDEPENDENT_REVIEW.json`.
 
 - adversarial reviewer (physmath-research-harness:adversarial-reviewer): 판정 ACCEPT_WITH_REQUIRED_CHANGES; critical 2, major 7, minor 7; 수정 14건, 로컬 노드로 이관 2건 (R54-L04).
 - scientific diff reviewer (physmath-coding-harness:scientific-diff-reviewer): 판정 ACCEPT_WITH_REQUIRED_CHANGES; critical 2, major 2, minor 4; 수정 8건, 로컬 노드로 이관 0건.
 - scientific diff reviewer (physmath-coding-harness:scientific-diff-reviewer), addendum task R54-A1: 판정 ACCEPT_WITH_REQUIRED_CHANGES; critical 0, major 5, minor 7; 수정 12건, 로컬 노드로 이관 0건.
+- independent proof reviewer of the R58 session (cloud child agent), mathematical and physical audit of R54: 판정 ACCEPT_WITH_REQUIRED_CHANGES; critical 0, major 5, minor 0; 수정 5건, 로컬 노드로 이관 0건.
+- independent closeout review of the R58 session (pass r58_independent_review): PRV-01..05 repairs and the R58 Gaussian carrier module: 판정 ACCEPT_WITH_REQUIRED_CHANGES; critical 0, major 3, minor 1; 수정 4건, 로컬 노드로 이관 0건.
+- scientific diff reviewer (physmath-coding-harness:scientific-diff-reviewer), single independent review of the referee repair, read and run only: 판정 ACCEPT_WITH_REQUIRED_CHANGES; critical 0, major 2, minor 10; 수정 11건, 로컬 노드로 이관 1건.
 - 파일 단위 추적: 심사 범위 15개 파일 가운데 기록된 심사가 다룬 파일 15개. 남은 파일 목록은 계약의 pending_independent_review.uncovered (부록 작업 R54-A1). 정리 증명(`THEOREMS.md`) 심사 상태: 완료.
 
 ## 7. 로컬 노드 (R54-L01..L08)
@@ -211,13 +214,13 @@ F 뷰는 매개변수 공간에 선언된 볼록 body가 있어야 한다. CMB l
 
 - 식별: polar 블록(V_w 4깊이, A_cal, beta_ex) rank 15 / 18 (깊이별 V_w와 A_cal이 퇴화); STF2 블록 rank 10 / 10 (완전유체 지도),
   복사 응력 가설에서는 rank 5 / 10 (E lane 없이 CMB가 s0를 고정하지 않음); 축 벡터 omega는 열이 없어 미식별.
-- 전역 tilt 폐합(R54-EQ-38, R54-L03 계수 공분산): chi2 6.58 / 3, p = 0.0865 (R54-L05의 예비값 0.0895).
+- CONST_V(깊이 상수 속도) 폐합(R54-EQ-38, R54-L03 계수 공분산): chi2 6.58 / 3, p = 0.0865 (R54-L05의 예비값 0.0895).
 - 완전유체 s0의 Frobenius 95% 상한 1.3e-09 (CMB T + CF4 사중극, 보정 사중극 q_cal 자유).
 
 | polar 블록 수송 가설 | chi2 | dof | p |
 |---|---|---|---|
 | LCDM body only (V = A_cal = beta_ex = 0) | 39.3 | 18 | 0.00259 |
-| global tilt: V_w = V at all depths, c beta_ex = -V, A_cal = 0 | 23.0 | 15 | 0.0832 |
+| CONST_V (labelled 'global tilt' in R54_L06_JOINT.json): V_w = V at all depths, c beta_ex = -V, A_cal = 0 | 23.0 | 15 | 0.0832 |
 | bulk flow V and an independent count frame offset, A_cal = 0 | 16.8 | 12 | 0.158 |
 | zero point A_cal and a count frame offset, V = 0 | 11.0 | 12 | 0.531 |
 | V + A_cal + count frame offset | 5.6 | 9 | 0.783 |

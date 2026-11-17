@@ -5,7 +5,7 @@ mathematical physics alone. Nothing here uses an observation; no result number o
 Each statement has a proof, an attribution, and an executable check in `tests/r54/test_r54_theorems.py`
 (tools in `htt/htt/htt/infer/r54_identifiability.py`). Evidence ids (E..) refer to `state/EVIDENCE_LEDGER.md`.
 
-Independent review: scientific-diff-reviewer agent of the local session (read and run only, not an author of this file), 2026-11-17; findings R54-A1-01 to R54-A1-12 and their resolutions are recorded in `INDEPENDENT_REVIEW.json`.
+Independent review: four recorded reviews read this file (`INDEPENDENT_REVIEW.json`): R54-A1, scientific-diff-reviewer of the local session, 2026-11-17, on the text before its fixes (R54-A1-01 to R54-A1-12); the R58 proof review, 2026-11-17, on the text of commit 77f61c17 (PRV-01 to PRV-05); the R58 closeout review, 2026-11-17, on the corrected text of commit f50d978a; and the referee-repair review of 2026-11-17, recorded last, which covers the current text. Coverage is bound to the file content: any later edit leaves this file uncovered until a new review is recorded.
 
 ## 0. Overview
 
@@ -73,7 +73,7 @@ scripts use). The degrees of freedom are rank(F), not the number of parameters.
 ### T3. Unidentified directions
 
 **Statement.** Let v be outside row(F). (i) Let C be a measurable set-valued map (every {a in C(y)} is an event).
-Any confidence procedure C(y) for v.theta with coverage at least 1 - alpha for all theta contains, under every theta,
+For any confidence procedure C(y) for v.theta with coverage at least 1 - alpha for all theta there is, under every theta,
 an event of probability at least 1 - alpha on which C(Y) is unbounded. (ii) If C(y) is
 bounded for every y, then inf over theta of P_theta(v.theta in C(Y)) = 0. (iii) Split theta into its component
 iota in row(F) and nu in ker F. For every prior, the posterior of nu given iota equals the prior of nu given
@@ -85,7 +85,7 @@ finite equal-tailed intervals at levels strictly between zero and one are bounde
 **Proof.** Choose k in ker F with v.k != 0. The law of Y is the same under theta and theta + s k.
 (i) For s_j -> infinity let A_j = {v.theta + s_j v.k in C(Y)}. Validity at theta + s_j k gives
 P_theta(A_j) >= 1 - alpha, and the reverse Fatou lemma gives P_theta(limsup A_j) >= 1 - alpha; on that event
-C(Y) contains an unbounded sequence. Part (i) has no executable check; the tests cover (ii) in a Gaussian instance and (iii). (ii) For fixed y the indicator of {v.theta + s v.k in C(y)} tends to zero
+C(Y) contains an unbounded sequence. (ii) For fixed y the indicator of {v.theta + s v.k in C(y)} tends to zero
 as s grows; dominated convergence gives coverage tending to zero along theta + s k. (iii) The likelihood
 depends on iota only, so pi(iota, nu | y) is proportional to L(iota; y) pi(iota) pi(nu | iota). (iv) follows
 from (ii); the conditional-law statement is (iii). For example, a bivariate unit Gaussian prior
@@ -97,6 +97,7 @@ which decreases with n for r != 0 although Var(nu | iota, y) = 1-r^2 is unchange
 **Consequence.** For the unidentified kinematic directions of T6 and T7 a finite interval is always a statement
 dependent on a prior or a declared body; data can affect its marginal width through prior correlations.
 The likelihood itself remains flat on the null orbit. The Q view makes a declared body explicit.
+Part (i) has no executable check; the tests cover (ii) in a Gaussian instance and (iii).
 
 ### T4. Polar duality of Q and F
 
@@ -240,8 +241,8 @@ measure Sigma_T(f) = int K_T f dN and Sigma_E(f) = int K_E f dN with K_T = k_T(t
 k_T = (6 e^-tau + e^(-3 tau/10))/7 and k_E = (sqrt6/7)(e^(-3 tau/10) - e^-tau) (R54-EQ-03, a re-derivation of
 E46). Let I be an interval on which the scattering rate is positive almost everywhere, so that tau is
 strictly monotone, and let rho = k_E/k_T. For the norm statements, take I to have finite,
-nonzero length and finite nonnegative optical depth; equivalently for (iv), require the two kernels
-to lie in L^2(I) with positive-definite Gram matrix. Norm conclusions concern the unrestricted
+nonzero length and finite nonnegative optical depth; more generally, (iv) needs only that the two kernels
+lie in L^2(I) with a positive-definite Gram matrix. Norm conclusions concern the unrestricted
 linear-history function space; a perturbative physical application also declares its amplitude regime.
 
 **Statement.**
@@ -279,7 +280,8 @@ suppressed by a factor of order tau_max relative to the sensitivity of T to a si
 blind spot quantified numerically in `RESULTS/R54_L1_TYPE1_TE.json:data.late_time_shear_bounds`.
 
 **Attribution.** The kernels are those of the classical transfer problem (E46). The sign-change statement is
-the standard property of Chebyshev systems (E68) applied to this pair; it was not found in the searches of
+the standard property of Chebyshev systems (E68, quoted from a standard text that was not re-read in the
+attribution check) applied to this pair; it was not found in the searches of
 2026-11-16 for this problem. E44 writes the temperature quadrupole as a line-of-sight integral of the shear
 and weights the polarization by the visibility; a history with vanishing temperature integral is the case
 that T8 counts.

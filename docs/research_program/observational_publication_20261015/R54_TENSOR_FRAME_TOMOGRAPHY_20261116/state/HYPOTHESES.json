@@ -296,7 +296,7 @@
   "l06_p0_p": 0.002590801587948327,
   "l06_p1_chi2": 23.046718089396585,
   "l06_p1_dof": 15,
-  "l06_p1_name": "global tilt: V_w = V at all depths, c beta_ex = -V, A_cal = 0",
+  "l06_p1_name": "CONST_V (labelled 'global tilt' in R54_L06_JOINT.json): V_w = V at all depths, c beta_ex = -V, A_cal = 0",
   "l06_p1_p": 0.0831529800981318,
   "l06_p2_chi2": 16.7789647230196,
   "l06_p2_dof": 12,
@@ -1374,7 +1374,7 @@
    "kill_criterion": "the closure test rejects at p < 0.01 once the count side is calibrated (R54-L03)",
    "lane": "L6",
    "next_action": "R54-L03, R54-L06",
-   "statement": "A single global tilt explains both the CF4 flow and a count-dipole excess."
+   "statement": "One depth-constant velocity (CONST_V, a global-tilt submodel) explains both the CF4 flow and a count-dipole excess; a time-dependent homogeneous tilt is not tested: it needs a source-bound transfer V_j = T(z_j) beta_0 with the shell windows, which no node built."
   },
   {
    "decision": "PROMOTE",
@@ -1476,7 +1476,7 @@
    "kill_criterion": "n/a",
    "lane": "THM",
    "next_action": "the manuscript reads the closure of R54-EQ-38 as a physical test only across different shells (theorem_usage)",
-   "statement": "Frame algebra: count-dipole excess plus bulk flow of the same shell vanishes identically; a global tilt is a linear hypothesis across shells with 3 (n_c + n_d - 1) degrees of freedom (T9)."
+   "statement": "Frame algebra: count-dipole excess plus bulk flow of the same shell vanishes identically; across different shells the depth-constant velocity submodel CONST_V is a linear hypothesis with 3 (n_c + n_d - 1) residual degrees of freedom; it says nothing about other global-tilt histories (T9)."
   },
   {
    "decision": "HOLD",

@@ -17,6 +17,7 @@ import json
 import math
 import os
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -446,6 +447,12 @@ def test_mutation_receipt_is_current_and_complete(builder):
     assert set(receipt["sources_sha256"]) == set(builder.RECEIPT_SOURCES)
     for rel, digest in receipt["sources_sha256"].items():
         assert _sha(ROOT / rel) == digest, f"{rel} changed after the receipt: run scripts/r54/build_r54_contract.py mutation-receipt"
+    # a gate whose pattern no longer occurs tests nothing (the MG-31 situation): every pattern occurs exactly once, and the receipt
+    # row was produced by the gate as it is defined now
+    rows = {r["id"]: r for r in receipt["gates"]}
+    for gid, rel, old, new, test, meaning in builder.implemented_gates():
+        assert (ROOT / rel).read_text(encoding="utf-8").count(old) == 1, f"{gid}: pattern does not occur exactly once in {rel}"
+        assert (rows[gid]["file"], rows[gid]["pattern"], rows[gid]["mutation"], rows[gid]["test"]) == (rel, old, new, test), gid
 
 
 def test_language_and_claim_guards():
@@ -495,9 +502,14 @@ def test_independent_review_record_is_complete_and_resolved(builder):
     read = {rel for reviewer in rec["reviewers"] for rel in reviewer.get("files", [])}
     assert all((ROOT / rel).is_file() for rel in read), "a reviewer lists a file that does not exist"
     assert pending["scope"] == builder.REVIEW_SCOPE and all((ROOT / rel).is_file() for rel in pending["scope"])
-    assert not set(pending["uncovered"]) & read                          # a file that a recorded reviewer lists is covered
-    for rel in builder.REVIEW_SCOPE_ADDED:                               # a file added after the diff review counts only if a reviewer lists it
-        assert (rel in pending["uncovered"]) is (rel not in read), rel
+    hashes = builder.recorded_file_hashes(rec)
+    for rel in builder.REVIEW_SCOPE_ADDED:                               # a file added after the diff review counts only at a content that a recorded reviewer read
+        assert (rel in pending["uncovered"]) is (_sha(ROOT / rel) not in hashes.get(rel, set())), rel
+        if rel in pending["uncovered"]:
+            assert pending["uncovered_reasons"][rel] == ("CHANGED_AFTER_REVIEW" if rel in read else "NEVER_REVIEWED"), rel
+    for reviewer in rec["reviewers"]:                                    # a reviewer that lists files records what it read: the commit and one hash per file
+        if reviewer.get("files"):
+            assert reviewer.get("reviewed_commit") and set(reviewer["files_sha256"]) == set(reviewer["files"]), reviewer["agent"]
     if not rec["incomplete_reviews"]:                                    # the recorded diff review covers the scope of the start commit as a whole
         assert set(pending["uncovered"]) <= set(builder.REVIEW_SCOPE_ADDED)
     assert pending["status"] == ("PENDING_LOCAL" if rec["incomplete_reviews"] or pending["uncovered"] else "NONE")
@@ -521,12 +533,21 @@ def test_independent_review_record_is_complete_and_resolved(builder):
 
 
 def test_withdrawn_statements_do_not_reappear():
-    withdrawn = ("no pole-specific locking", "singles out no axis", "사전 규칙", "locking came from the estimator bias", "(met)")
+    withdrawn = ("no pole-specific locking", "singles out no axis", "사전 규칙", "locking came from the estimator bias", "(met)",
+                 "A global tilt is tested across different shells", "a global tilt is a constant velocity at every depth",
+                 "a global tilt is a linear hypothesis across shells")
     for path in _generated_text_files() + [R54 / "state/HYPOTHESES.json", R54 / "ADVERSARIAL_BENCHMARK_SPEC.json", R54 / "HISTORY_AUDIT.json",
-                                           ROOT / "docs/codex_handoff/pr_status.yaml"]:
-        text = path.read_text(encoding="utf-8")
+                                           R54 / "LOCAL_AGENT_CONTRACT.json", R54 / "HANDOFF_UPDATE.json", ROOT / "docs/codex_handoff/pr_status.yaml"]:
+        text = path.read_text(encoding="utf-8").lower()
         for phrase in withdrawn:
-            assert phrase not in text, f"{path.name} repeats a withdrawn statement: '{phrase}'"
+            assert phrase.lower() not in text, f"{path.name} repeats a withdrawn statement: '{phrase}'"
+    # M2: 'global tilt' names the question (lane title) or appears next to CONST_V; never the depth-constant model on its own
+    for path in _generated_text_files() + [R54 / name for name in ("state/HYPOTHESES.json", "LOCAL_AGENT_CONTRACT.json", "HANDOFF_UPDATE.json", "MUTATION_GATES.json",
+                                                                    "MUTATION_GATE_RECEIPT.json", "RESEARCH_DAG.json")]:
+        for line in path.read_text(encoding="utf-8").splitlines():
+            low = line.lower()
+            if any(t in low for t in ("global tilt", "global-tilt", "전역 tilt")):
+                assert "const_v" in low or "local boost" in low, f"{path.name}: 'global tilt' without CONST_V: {line.strip()[:160]}"
     theory = (R54 / "THEORY_LOOPS.md").read_text(encoding="utf-8")
     assert "## Forking-path register" in theory and theory.count("| FP-") >= 10
 
@@ -595,7 +616,8 @@ def test_theorem_usage_is_bound_to_the_theorems_and_changes_no_node(builder):
     contract = _json(R54 / "LOCAL_AGENT_CONTRACT.json")
     theorems = (R54 / "THEOREMS.md").read_text(encoding="utf-8")
     usage = contract["theorem_usage"]
-    assert usage["proofs_independently_reviewed"] is (not any(rel.endswith("THEOREMS.md") for rel in contract["pending_independent_review"]["uncovered"]))
+    uncovered = contract["pending_independent_review"]["uncovered"]
+    assert usage["proofs_independently_reviewed"] is (not any(rel.endswith(("THEOREMS.md", "r54_identifiability.py")) for rel in uncovered))
     assert all(f"### {rule['theorem']}." in theorems and rule["rule"] for rule in usage["rules"])
     for node in contract["nodes"]:                                                       # executed nodes carry no step that was added after they ran
         assert "THEOREMS.md" not in " ".join(node["steps"]) and "H-T" not in " ".join(node["steps"]), node["id"]
@@ -618,3 +640,46 @@ def test_a2_attribution_is_bound_to_its_script_and_covers_the_rows_of_the_task()
     for hid, chk in rec["novelty_checks"].items():
         assert chk["searches"] and chk["nearest_prior_art"] and "searched" in chk["novelty"], hid
     assert {c["status"] for c in rec["evidence_verification"].values()} <= {"VERIFIED", "IDENTIFIER_ONLY", "NOT_FOUND"}
+
+
+def test_history_inventory_is_frozen_at_the_audited_commit(builder, monkeypatch):
+    """B1.b: the history audit of 2026-11-16 does not change when a sibling directory is added to the live tree."""
+    before = builder.history_doc()
+    injected = sorted(list(builder.HISTORY_DIRECTORIES_20261116) + ["ZZ_INJECTED_SIBLING_20991231"])
+    monkeypatch.setattr(builder, "tracked_subdirs", lambda base: injected)
+    assert builder.history_doc() == before
+    dirs = before["observational_tree"]["directories"]
+    assert len(dirs) == before["observational_tree"]["n_directories"] == 57
+    assert "R58_MIXED_TENSOR_CONVERGENCE_20261117" not in dirs and "ZZ_INJECTED_SIBLING_20991231" not in dirs
+
+
+def test_review_coverage_is_bound_to_file_content(builder, monkeypatch):
+    """M3.e (1): a changed THEOREMS.md (hash changed in memory) is uncovered and the proofs count as not reviewed."""
+    theorems = builder.REL + "/THEOREMS.md"
+    real = builder.sha
+    monkeypatch.setattr(builder, "sha", lambda path: "0" * 64 if str(path).endswith(theorems) else real(path))
+    cov = builder.review_coverage()
+    assert theorems in cov["uncovered"] and cov["uncovered_reasons"][theorems] == "CHANGED_AFTER_REVIEW"
+    assert builder.proofs_reviewed() is False
+    assert builder.pending_review_doc()["status"] == "PENDING_LOCAL"
+
+
+def test_recorded_review_hashes_equal_the_files_at_the_reviewed_commit():
+    """M3.e (2): every hash recorded with a known reviewed_commit is the hash of that file at that commit."""
+    rec = _json(R54 / "INDEPENDENT_REVIEW.json")
+    checked = 0
+    for reviewer in rec["reviewers"]:
+        commit = reviewer.get("reviewed_commit", "")
+        for rel, digest in reviewer.get("files_sha256", {}).items():
+            if re.fullmatch(r"[0-9a-f]{40}", commit):
+                blob = subprocess.run(["git", "show", f"{commit}:{rel}"], cwd=ROOT, capture_output=True, check=True).stdout
+                assert hashlib.sha256(blob).hexdigest() == digest, (reviewer["agent"], rel)
+                checked += 1
+            elif commit == "UNKNOWN":
+                assert digest == "UNKNOWN", (reviewer["agent"], rel)       # an unknown commit never covers a file
+            else:                                                           # a review of an uncommitted tree: the bytes it read are git blobs
+                assert commit == "WORKTREE" and re.fullmatch(r"[0-9a-f]{40}", reviewer["reviewed_base_commit"]), reviewer["agent"]
+                blob = subprocess.run(["git", "cat-file", "blob", reviewer["files_blob"][rel]], cwd=ROOT, capture_output=True, check=True).stdout
+                assert hashlib.sha256(blob).hexdigest() == digest, (reviewer["agent"], rel)
+                checked += 1
+    assert checked >= 1

@@ -100,7 +100,7 @@
   "R54-EQ-35": "R36 linear estimator: c z_i = d_i (H + D.n_i + n_i.q.n_i), weights W(z_i)/hypot(250, 70 (ln10/5) d_i e_mu,i)^2 ; biased by errors in d_i (exp(+s^2/2) for homogeneous errors)",
   "R54-EQ-36": "Delta mu = -(5/ln10) Delta eta ; hemisphere step s: Delta mu(north - south) = -(5/ln10) 2 s",
   "R54-EQ-37": "exact body of an operator O acting on eta: O diag(g) C_uu diag(g) O^T with C_uu of R54-EQ-31 at redshift-space positions r_i = (c/H_fid) chi_hat(z_i)",
-  "R54-EQ-38": "global-tilt closure across depths: V_CF4 + c beta_excess(counts) = 0 with beta_excess = D/c_EB - beta_CMB"
+  "R54-EQ-38": "CONST_V closure across depths (depth-constant velocity, a global-tilt submodel): V_CF4 + c beta_excess(counts) = 0 with beta_excess = D/c_EB - beta_CMB"
  },
  "module_api": {
   "htt/htt/htt/infer/r54_calibration.py": [
@@ -675,7 +675,7 @@
    "steps": [
     "1. Assemble one precision-form carrier per irreducible block with typed coordinates. Polar vector: beta_RO, V_w per depth, A_cal,p per distance sample. STF2: Sigma_T, Sigma_E, q_w per depth, q_cal,p per sample. Axial vector: omega has no column and is reported as unidentified.",
     "2. Add probes by adding (F, t); profile nuisance with r54_tensor_five_view.profiled_precision; never invert a singular block.",
-    "3. Transport hypotheses on the same data and covariance: LCDM body only; one global tilt V_w = V for all depths; type-I shear with perfect-fluid and with stress histories; zero-point terms. Report residual chi2, dof and delta chi2 for each. Repeat the tilt closure of R54-EQ-38 with the count covariance of R54-L03 in place of the receipt errors.",
+    "3. Transport hypotheses on the same data and covariance: LCDM body only; the depth-constant velocity submodel CONST_V (V_w = V for all depths; a time-dependent tilt needs a transfer V_w = T(z_w) beta_0 that this node does not build); type-I shear with perfect-fluid and with stress histories; zero-point terms. Report residual chi2, dof and delta chi2 for each. Repeat the tilt closure of R54-EQ-38 with the count covariance of R54-L03 in place of the receipt errors.",
     "4. Five views per block with fv.five_view_record; identification table from fv.identify with the scale vector stated.",
     "5. Write RESULTS/R54_L06_JOINT.json and one table for the manuscript."
    ],
@@ -790,8 +790,22 @@
    "scripts/r54/handoff_merge.py",
    "tests/r54/test_r54_handoff.py"
   ],
+  "start_scope_changed_after_review": {
+   "files": [
+    "htt/htt/htt/infer/r54_tensor_five_view.py",
+    "scripts/r54/run_r54_cmb_type1.py",
+    "scripts/r54/run_r54_lowz_frames.py",
+    "scripts/r54/run_r54_cf4_exact.py",
+    "scripts/r54/build_r54_contract.py",
+    "tests/r54/test_r54_modules.py",
+    "tests/r54/test_r54_results_binding.py"
+   ],
+   "note": "information only; does not change status and starts no review. These files of the start scope differ from the content that the recorded diff review read; an independent diff review of them is owner question Q3 of HANDOFF_UPDATE.json",
+   "reviewed_commit": "35a28e20cb66096c358296755c04db9cfa4a7ca6"
+  },
   "status": "NONE",
-  "uncovered": []
+  "uncovered": [],
+  "uncovered_reasons": {}
  },
  "read_order": [
   "LOCAL_AGENT_RESTART_PROMPT.txt",
@@ -818,11 +832,11 @@
     "theorem": "T2"
    },
    {
-    "rule": "Along a direction outside row(F) the interval is reported as unbounded. A finite number there is quoted only together with the named body or prior that produces it.",
+    "rule": "Along a direction outside row(F) the interval is reported as unbounded. A finite number there is quoted only together with the named body or prior that produces it. Data can narrow a marginal interval through a prior correlation while the conditional law of the unidentified part given the identified part is unchanged.",
     "theorem": "T3"
    },
    {
-    "rule": "Where a covariance estimated from n simulations enters a GLS fit with p - k > 0, the second moments carry the factors of wishart_gls_factors(n, p, k). Leave-one-out calibration (R54-L01) remains the test of the intervals; this rule adds no obligation to an executed node.",
+    "rule": "Where a covariance estimated from simulations enters a GLS fit with p - k > 0, the second moments carry the factors of wishart_gls_factors(n, p, k), with n the Wishart degrees of freedom (the number of simulations minus one when the mean is estimated). Domain: Sigma positive definite, integer n >= p and n > p - k + 1; outside it the helper raises. Leave-one-out calibration (R54-L01) remains the test of the intervals; this rule adds no obligation to an executed node.",
     "theorem": "T5"
    },
    {
@@ -834,11 +848,11 @@
     "theorem": "T7"
    },
    {
-    "rule": "A limit on a shear amplitude is quoted only with its history family (at most two parameters per tensor component with T and E, one with T alone) or with its sign restriction. A ratio Sigma_E/Sigma_T outside [rho_min, rho_max] is reported as a sign change of the history.",
+    "rule": "A limit on a shear amplitude is quoted only with the restriction that produces it: an identified finite-dimensional family (at most two parameters per tensor component with T and E, one with T alone), a sign restriction, or a declared physical norm or stress budget; the interval (finite length, finite optical depth) and the amplitude regime are stated. A ratio Sigma_E/Sigma_T outside [rho_min, rho_max] is reported as a sign change of the history.",
     "theorem": "T8"
    },
    {
-    "rule": "The closure of R54-EQ-38 between a count population and a distance window of the same shell is an identity and tests only the measurement chain. A global tilt is tested across different shells; its residual degrees of freedom are 3 (n_c + n_d - 1) at full rank.",
+    "rule": "The closure of R54-EQ-38 between a count population and a distance window of the same shell is an identity and tests only the measurement chain. Across different shells the relation tests CONST_V with 3 (n_c + n_d - 1) residual degrees of freedom at full rank; accepting or rejecting CONST_V says nothing about other global-tilt histories.",
     "theorem": "T9"
    }
   ],

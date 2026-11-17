@@ -183,7 +183,7 @@
   {
    "file": "scripts/r54/run_r54_cf4_exact.py",
    "id": "MG-21",
-   "meaning": "sign of the global-tilt closure (R54-EQ-38)",
+   "meaning": "sign of the CONST_V closure (R54-EQ-38)",
    "must_fail": "tests/r54/test_r54_conventions.py::test_mg21_eq38_tilt_closure_vanishes_for_one_frame_offset",
    "replace": "    s, cs = v + b, cv + np.diag(sb**2)",
    "status": "IMPLEMENTED",
@@ -266,9 +266,9 @@
    "id": "MG-31",
    "meaning": "wrong kernel ratio of the shear-history moment problem",
    "must_fail": "tests/r54/test_r54_theorems.py::test_t8_kernel_properties",
-   "replace": "return SQRT6 * (x - 1.0) / (x + 6.0)",
+   "replace": "return SQRT6 * (-np.expm1(-0.7 * tau)) / (1.0 + 6.0 * e)",
    "status": "IMPLEMENTED",
-   "with": "return SQRT6 * (x - 1.0) / (x + 1.0)"
+   "with": "return SQRT6 * (-np.expm1(-0.7 * tau)) / (1.0 + 1.0 * e)"
   },
   {
    "file": "htt/htt/htt/infer/r54_identifiability.py",

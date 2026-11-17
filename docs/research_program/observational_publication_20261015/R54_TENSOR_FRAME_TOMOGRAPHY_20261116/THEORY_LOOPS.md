@@ -26,7 +26,7 @@ The decisions in this file are the ones that stand after the independent review 
 - **R54-EQ-35**: `R36 linear estimator: c z_i = d_i (H + D.n_i + n_i.q.n_i), weights W(z_i)/hypot(250, 70 (ln10/5) d_i e_mu,i)^2 ; biased by errors in d_i (exp(+s^2/2) for homogeneous errors)`
 - **R54-EQ-36**: `Delta mu = -(5/ln10) Delta eta ; hemisphere step s: Delta mu(north - south) = -(5/ln10) 2 s`
 - **R54-EQ-37**: `exact body of an operator O acting on eta: O diag(g) C_uu diag(g) O^T with C_uu of R54-EQ-31 at redshift-space positions r_i = (c/H_fid) chi_hat(z_i)`
-- **R54-EQ-38**: `global-tilt closure across depths: V_CF4 + c beta_excess(counts) = 0 with beta_excess = D/c_EB - beta_CMB`
+- **R54-EQ-38**: `CONST_V closure across depths (depth-constant velocity, a global-tilt submodel): V_CF4 + c beta_excess(counts) = 0 with beta_excess = D/c_EB - beta_CMB`
 
 ## CORE: tensorized five views on a precision-form carrier
 
@@ -161,7 +161,7 @@ Decision: PROMOTE H-L5f; HOLD H-L5a, H-L5c, H-L5g, H-L5h; REJECT H-L5e.
 ## Loop L6: local boost versus global tilt
 
 Depth laws: observer boost or coherent flow gives D proportional to 1/d; a zero-point or acceleration term is constant;
-a global tilt is a constant velocity at every depth including the count-dipole shells; LCDM flows are a zero-mean body
+the depth-constant velocity submodel CONST_V (CONST_V_ON_SELECTED_WINDOWS, the only global-tilt form tested here) has the same velocity at every depth including the count-dipole shells, and a time-dependent homogeneous tilt is not tested: it needs a source-bound transfer V_j = T(z_j) beta_0 with the shell windows, which no node built; LCDM flows are a zero-mean body
 with strong cross-depth correlation. On CF4 with the exact body the pooled fit prefers the constant term (chi2 10.4 against 16.2),
 but the preference disappears when method monopoles are marginalised (6.7 against 7.3).
 Injections on the real footprint (constant law preferred for an injected step / an injected flow): 93% / 24% at

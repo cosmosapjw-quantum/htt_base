@@ -312,7 +312,7 @@ Depth laws separate an observer boost or bulk flow (1/d), a zero-point or accele
 
 ### H-L6b (L6) - HOLD
 
-A single global tilt explains both the CF4 flow and a count-dipole excess.
+One depth-constant velocity (CONST_V, a global-tilt submodel) explains both the CF4 flow and a count-dipole excess; a time-dependent homogeneous tilt is not tested: it needs a source-bound transfer V_j = T(z_j) beta_0 with the shell windows, which no node built.
 
 - evidence: R52 + R54-L05 closure test
 - validity: linear; the count side is the receipt estimator
@@ -396,7 +396,7 @@ The T and E quadrupole kernels form a Chebyshev system: a shear history invisibl
 
 ### H-T9 (THM) - PROMOTE
 
-Frame algebra: count-dipole excess plus bulk flow of the same shell vanishes identically; a global tilt is a linear hypothesis across shells with 3 (n_c + n_d - 1) degrees of freedom (T9).
+Frame algebra: count-dipole excess plus bulk flow of the same shell vanishes identically; across different shells the depth-constant velocity submodel CONST_V is a linear hypothesis with 3 (n_c + n_d - 1) residual degrees of freedom; it says nothing about other global-tilt histories (T9).
 
 - evidence: proof (substitution) + check
 - validity: first order in velocities; no intrinsic dipole; known Ellis-Baldwin coefficient
