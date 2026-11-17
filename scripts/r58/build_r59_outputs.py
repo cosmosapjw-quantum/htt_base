@@ -15,6 +15,7 @@ import argparse
 import ast
 import csv
 import hashlib
+import io
 import json
 import subprocess
 from pathlib import Path
@@ -42,14 +43,19 @@ LITERATURE = {
     "Heinesen2021": "Heinesen A. 2021, arXiv:2010.06534 (multipole decomposition of the luminosity-distance Hubble law).",
     "Maartens2024": "Maartens R., Santiago J., Clarkson C., Kalbouneh B., Marinoni C. 2024, arXiv:2312.09875 (covariant cosmography: observer dependence of H).",
     "Boubel2025": "Boubel P., Colless M., Said K., Staveley-Smith L. 2025, JCAP 03, 066, arXiv:2412.14607 (testing anisotropic Hubble expansion with CF4 Tully-Fisher distances).",
-    "Stiskalek2025": "Stiskalek R., Desmond H., Lavaux G. 2025, arXiv:2509.14997 (no evidence for local H0 anisotropy from Tully-Fisher or supernova distances).",
-    "Kalbouneh2025": "Kalbouneh B., Marinoni C., Maartens R. et al. 2025, arXiv:2510.02510, accepted by JCAP (anisotropic expansion rate of the local Universe, CF4 and Pantheon+).",
+    "Stiskalek2025": "Stiskalek R., Desmond H., Lavaux G. 2026, MNRAS 546, staf2048, arXiv:2509.14997 (no evidence for local H0 anisotropy from Tully-Fisher or supernova distances).",
+    "Kalbouneh2025": "Kalbouneh B., Marinoni C., Maartens R. et al. 2026, JCAP 03, 084, arXiv:2510.02510 (anisotropic expansion rate of the local Universe and its covariant cosmographic interpretation, CF4 and Pantheon+).",
     "Salzano2025": "Salzano V., Beltran Jimenez J., Bettoni D., Brax P., Valade A. 2025, arXiv:2512.02526 (dipolar anisotropy of local H0 from CF4).",
     "Vicente2026": "Vicente J. G., Pereira T. S., Rodrigues R. G., Vitenti S. D. P., Gomes V. M. 2026, arXiv:2607.07821 (multipolar structure of the local expansion rate from incomplete sky data).",
     "Cowell2022": "Cowell J. A., Dhawan S., Macpherson H. J. 2022, arXiv:2212.13569 (quadrupolar Hubble expansion in Pantheon+).",
     "Alsing2018": "Alsing J., Wandelt B. 2018, arXiv:1712.00012 (generalized massive optimal data compression).",
     "Saadeh2016": "Saadeh D., Feeney S. M., Pontzen A., Peiris H. V., McEwen J. D. 2016, arXiv:1605.07178 (how isotropic is the Universe?).",
+    "BattyeMoss2026": "Battye R. A., Moss A. 2026, Phys. Rev. D 113, 123533, arXiv:2601.22351 (how isotropic is dark energy? Bianchi I with anisotropic dark-energy stress).",
 }
+#: journal references verified on 2026-11-17: Kalbouneh (Crossref, DOI 10.1088/1475-7516/2026/03/084), Stiskalek (OUP, DOI 10.1093/mnras/staf2048),
+#: Battye & Moss (Crossref, DOI 10.1103/7195-wl39); their abstracts were read on arXiv
+AXES = f"{PKG}/RESULTS/AXIS_DIAGNOSTICS.json"
+AXES_CHECK = f"{PKG}/RESULTS/AXIS_DIAGNOSTICS_INDEPENDENT_CHECK.json"
 
 
 def sha(p: Path) -> str:
@@ -104,6 +110,8 @@ def load(root: Path) -> dict:
          "windows": source_constant(root, "scripts/r54/run_r54_cf4_exact.py", "CENTERS"),
          "window_width": source_constant(root, "scripts/r54/run_r54_cf4_exact.py", "WIDTH"),
          "sigma_star": source_constant(root, "scripts/r54/run_r54_cf4_exact.py", "SIGMA_STAR")}
+    d["axes"] = json.loads((root / AXES).read_text())
+    d["axes_check"] = json.loads((root / AXES_CHECK).read_text())
     dec = pkg / "R59_DECISION.json"
     d["decision"] = json.loads(dec.read_text()) if dec.is_file() else None
     env = LOG_DIR / "env.txt"
@@ -147,6 +155,41 @@ def same_input_score_checks(z) -> dict:
     return out
 
 
+def axis_summary(ax: dict) -> dict:
+    """Ranges of the post hoc axis diagnostics (referee repair M1). The text of Section 3.1 states a pattern only if the
+    numbers show it: each pattern is checked here and the build stops when one fails, so no sentence outlives its data."""
+    V = ax["variants"]
+    rng_ = lambda xs: (min(xs), max(xs))
+    d1 = {m: V[m]["D1_block_wald"] for m in MODELS}
+    ang = lambda m, a, r: V[m]["D2_principal_frame"][a]["angle_to_reference_deg"][r]
+    z = lambda m, r: V[m]["D4_fixed_axis_contrasts"][r]["z_one_degree_exploratory"]
+    sim = {m: V[m]["D4_fixed_axis_contrasts"]["M87"]["simultaneous_95"] for m in MODELS}
+    A = {"p_kappa": rng_([d1[m]["kappa"]["p"] for m in MODELS]), "p_V_min": min(d1[m]["V"]["p"] for m in MODELS),
+         "p_dH_log": d1["log"]["dH"]["p"], "p_dH_other_min": min(d1[m]["dH"]["p"] for m in MODELS if m != "log"),
+         "neg_M87": rng_([ang(m, "neg", "M87") for m in MODELS]), "neg_Gal": rng_([ang(m, "neg", "Galactic_pole") for m in MODELS]),
+         "neg_fp": rng_([ang(m, "neg", "footprint_major") for m in MODELS]), "pos_ICRS": rng_([ang(m, "pos", "ICRS_pole") for m in MODELS]),
+         "mid_SG": rng_([ang(m, "mid", "supergalactic_pole") for m in MODELS]),
+         "gal_z": rng_([abs(z("log_mono_galactic", r)) for r in ("M87", "Galactic_pole")]),
+         "other_z_M87": rng_([abs(z(m, "M87")) for m in MODELS if m != "log_mono_galactic"]),
+         "m87_excl": [m for m in MODELS if not (sim[m][0] < 0 < sim[m][1])], "m87_hull": ax["contrast_hulls"]["M87"],
+         "fw": rng_([V[m]["D5_alignment"]["familywise_16"] for m in MODELS]),
+         "tail_neg_M87": rng_([V[m]["D5_alignment"]["pairs"]["neg~M87"]["tail"] for m in MODELS]),
+         "zmin": ax["sample"]["z_CMB_min"], "zmax": ax["sample"]["z_CMB_max"], "m87_z": ax["sample"]["M87_redshift_NED"],
+         "fp_eig": ax["footprint_tensor_eigenvalues"], "fp_major": ax["reference_axes"]["footprint_major"]["ra_dec"],
+         "fp_minor": ax["reference_axes"]["footprint_minor"]["ra_dec"],
+         "fp_Gal": ax["reference_axis_angles_deg"]["footprint_major"]["Galactic_pole"], "fp_M87": ax["reference_axis_angles_deg"]["footprint_major"]["M87"],
+         "M87_Gal": ax["reference_axis_angles_deg"]["M87"]["Galactic_pole"], "radius": ax["simultaneous_radius_sd_rank11"]}
+    checks = {"kappa block excludes zero in every variant": A["p_kappa"][1] < 0.05, "velocity block compatible with zero": A["p_V_min"] > 0.05,
+              "dH departs only in the pooled variant": A["p_dH_log"] < 0.05 < A["p_dH_other_min"],
+              "Galactic template leaves the M87/pole contrast unconstrained": A["gal_z"][1] < 1.5,
+              "M87 simultaneous interval excludes zero in some variants": bool(A["m87_excl"]), "seven-variant hull contains zero": A["m87_hull"]["contains_zero"],
+              "M87 lies below the catalogue redshift range": A["m87_z"] < A["zmin"]}
+    failed = [k for k, ok in checks.items() if not ok]
+    if failed:
+        raise SystemExit("axis diagnostics no longer show the stated pattern: " + "; ".join(failed))
+    return A
+
+
 def collect(d: dict) -> dict:
     o, v, ind = d["owned"], d["views"], d["indep"]
     c95 = float(stats.chi2.ppf(0.95, 11))
@@ -183,6 +226,7 @@ def collect(d: dict) -> dict:
     n["exact_vs_60k_max_abs"] = max(abs(n["models"][m]["cov_block_exact"] - n["models"][m]["cov_block_60k"]) for m in MODELS)
     n["score"] = same_input_score_checks(d["carriers"])
     n["gls_oracle"] = d["bench_contract"]["result_snapshot"]["independent_gls_oracle"]
+    n["axes"] = axis_summary(d["axes"])
     return n
 
 
@@ -263,6 +307,7 @@ def benchmark_rows(d: dict, n: dict) -> list[dict]:
 
 
 def claim_rows(n: dict) -> list[list[str]]:
+    A = n["axes"]
     lo, hi = n["range_cov_block_60k"]
     elo, ehi = n["range_cov_block_exact"]
     flo, fhi = n["range_cov_full_60k"]
@@ -300,7 +345,22 @@ def claim_rows(n: dict) -> list[list[str]]:
          "no admitted physical ceiling and measure"],
         ["C12", "The five views are independent evidence.", "NOT_CLAIMED", f"{REPLAY}/FIVE_VIEW_RESULT.json:definition_guard", "one likelihood", "never multiplied"],
         ["C13", "The STF basis or the joint fit of mask-coupled CF4 multipoles is new.", "NOT_CLAIMED", "BENCHMARK_RESULTS.json:B06A..B06C,B06X", "NOT_COMPARABLE",
-         "prior CF4 multipole work (Vicente et al. 2026; Kalbouneh et al. 2025; Salzano et al. 2025; Boubel et al. 2025)"],
+         "prior CF4 multipole work (Vicente et al. 2026; Kalbouneh et al. 2026; Salzano et al. 2025; Boubel et al. 2025)"],
+        ["C14", "In every variant the exclusion of the origin comes from the quadrupole (kappa) block; the velocity block is compatible with zero and the dH block departs from zero only in the pooled variant (log, no zero-point nuisance template).",
+         "ADMITTED_CONDITIONAL", f"{AXES}:variants.*.D1_block_wald",
+         f"p_kappa {g(A['p_kappa'][0])}-{g(A['p_kappa'][1])}; p_V >= {g(A['p_V_min'])}; p_dH {g(A['p_dH_log'])} (log), >= {g(A['p_dH_other_min'])} otherwise",
+         "marginal blocks of one joint fit: correlated, not additive, post hoc; null relative to the linear-LCDM body"],
+        ["C15", "The negative principal axis of the apparent quadrupole lies near the M87 direction, the positive axis near the ICRS pole.", "ADMITTED_CONDITIONAL",
+         f"{AXES}:variants.*.D2_principal_frame,D5_alignment",
+         f"neg-M87 {A['neg_M87'][0]:.1f}-{A['neg_M87'][1]:.1f} deg; pos-ICRS pole {A['pos_ICRS'][0]:.1f}-{A['pos_ICRS'][1]:.1f} deg; family-wise alignment value {A['fw'][0]:.3f}-{A['fw'][1]:.3f}",
+         "reference family chosen after seeing the axes: post hoc; M87 is a direction label (outside the redshift range); origin not identified"],
+        ["C16", "With the Galactic template the M87 and Galactic-pole contrasts are not constrained.", "ADMITTED_CONDITIONAL",
+         f"{AXES}:variants.log_mono_galactic.D4_fixed_axis_contrasts", f"|z| {A['gal_z'][0]:.2f}-{A['gal_z'][1]:.2f} (one-degree, exploratory)",
+         "degenerate with a Galactic-latitude nuisance pattern"],
+        ["C17", "The quadrupole is detected, its alignment is significant, or Virgo, local structure, extinction or calibration causes it.", "NOT_CLAIMED",
+         f"{AXES}", "-", "no local-structure, footprint or selection model was fitted; the seven-variant hull of the M87 contrast contains zero"],
+        ["C18", "A shear sigma/H is measured.", "NOT_CLAIMED", f"{REPLAY}/FIVE_VIEW_RESULT.json:models.*.x.physical_pullback", "unbounded",
+         "kappa = sigma/H + q_cal with free q_cal"],
     ]
 
 
@@ -319,6 +379,33 @@ def manuscript(d: dict, n: dict, rows: list[dict]) -> str:
     tb = "\n".join(f"| {k} | {g(b['lower'], 4)} | {g(b['upper'], 4)} |" for k, b in n["beta_hull"].items())
     tbench = "\n".join(f"| {r['comparator_id']} | {r['outcome']} | {r['limitations']} |" for r in rows)
     refs = "\n".join(f"- {v}" for v in LITERATURE.values())
+    A, AV = n["axes"], d["axes"]["variants"]
+    t5 = "\n".join(f"| {m} | {g(AV[m]['D1_block_wald']['V']['p'])} | {g(AV[m]['D1_block_wald']['dH']['p'])} | {g(AV[m]['D1_block_wald']['kappa']['p'])} | "
+                   + " | ".join(f"{x:+.4f}" for x in AV[m]['D2_principal_frame']['eigenvalues'])
+                   + f" | {AV[m]['D2_principal_frame']['neg']['ra_dec'][0]:.1f}, {AV[m]['D2_principal_frame']['neg']['ra_dec'][1]:+.1f}"
+                   + f" | {AV[m]['D2_principal_frame']['pos']['ra_dec'][0]:.1f}, {AV[m]['D2_principal_frame']['pos']['ra_dec'][1]:+.1f} |" for m in MODELS)
+    pa = lambda m, a, r: AV[m]["D2_principal_frame"][a]["angle_to_reference_deg"][r]
+    pt = lambda m, k: AV[m]["D5_alignment"]["pairs"][k]["tail"]
+    t6 = "\n".join(f"| {m} | {pa(m, 'neg', 'M87'):.1f} | {pa(m, 'neg', 'Galactic_pole'):.1f} | {pa(m, 'neg', 'footprint_major'):.1f} | {pa(m, 'pos', 'ICRS_pole'):.1f} | "
+                   f"{pa(m, 'mid', 'supergalactic_pole'):.1f} | {pt(m, 'neg~M87'):.4f} | {pt(m, 'pos~ICRS_pole'):.4f} | {AV[m]['D5_alignment']['familywise_16']:.4f} |" for m in MODELS)
+    zc = lambda m, r: AV[m]["D4_fixed_axis_contrasts"][r]
+    t7 = "\n".join(f"| {m} | {zc(m, 'M87')['z_one_degree_exploratory']:+.2f} | {zc(m, 'Galactic_pole')['z_one_degree_exploratory']:+.2f} | "
+                   f"{zc(m, 'ICRS_pole')['z_one_degree_exploratory']:+.2f} | {zc(m, 'footprint_major')['z_one_degree_exploratory']:+.2f} | "
+                   f"[{zc(m, 'M87')['simultaneous_95'][0]:+.4f}, {zc(m, 'M87')['simultaneous_95'][1]:+.4f}] |" for m in MODELS)
+    def pub_rows():
+        out = []
+        for r in d["axes"]["D6_published_axes"]["rows"]:
+            if "angle_to_D2_axes_deg" not in r:
+                out.append(f"| {r['comparator_id']} | {r['object']} | not stated | {r['locator']} | - |")
+                continue
+            lbs = r.get("axes_lb") or [[r["l"], r["b"]]]
+            ang = r["angle_to_D2_axes_deg"]
+            for i, (l, b) in enumerate(lbs):
+                rngs = {a: (min(ang[m][a][i] for m in MODELS), max(ang[m][a][i] for m in MODELS)) for a in ("neg", "mid", "pos")}
+                out.append(f"| {r['comparator_id']} | {r['object']} | ({l:.0f}, {b:+.0f}) | {r['locator']} | "
+                           + "; ".join(f"{a} {lo:.0f}-{hi:.0f}" for a, (lo, hi) in rngs.items()) + " |")
+        return "\n".join(out)
+    t8 = pub_rows()
     return f"""# Joint dipole-quadrupole covariance and calibration freedom in the apparent low-redshift Hubble-rate anisotropy of Cosmicflows-4 groups
 
 *Bounded methods/application note (claim tier C0). Every number below is generated by `scripts/r58/build_r59_outputs.py` from the
@@ -337,6 +424,9 @@ ablation that keeps the response but drops the cross covariance, the actual-to-n
 {f4(elo)}-{f4(ehi)} (exact weighted chi-square; 60,000-draw check {f4(lo)}-{f4(hi)}), whereas full GLS is nominal by construction. Every
 coordinate interval hull of the seven-variant union contains zero, whereas the joint 11-dimensional union excludes the origin (largest
 modelwise p = {g(n['robust']['max_wald_p'], 4)}): a post hoc tension with the assumed linear-LCDM covariance, not a detection.
+The exclusion comes from the quadrupole block in every variant; post hoc, the negative principal axis of the apparent tensor lies
+{A['neg_M87'][0]:.0f}-{A['neg_M87'][1]:.0f} degrees from the M87 direction, a direction label outside the fitted redshift range, and the origin
+of the pattern is not identified.
 The map from 22 normalised kinematic and calibration coordinates to x has rank {M['log']['physical_rank']}: with free dipole and STF
 calibration the shear sigma/H, the vorticity omega/H and the acceleration A/(cH) are individually unbounded. Full GLS on the same carrier
 ties with the tensor carrier and with score compression. We claim no information advantage over GLS, no cosmological anisotropy, tilt or
@@ -407,6 +497,56 @@ order) on the six fixed ICRS axes; simultaneous 95% union hulls. The axes were n
 |---|---:|---:|
 {t3}
 
+### 3.1 Which block excludes the origin, and where the apparent quadrupole points (post hoc)
+
+These diagnostics use only the committed fit of each variant (estimate, covariance and rank; `{AXES}`, independently recomputed in
+`{AXES_CHECK}`, status `{d['axes_check']['status']}`). No refit and no new variant enter. The reference axes below were chosen after the
+principal axes had been seen, so every alignment number in this subsection is post hoc.
+
+Table 4. Block Wald p-values W_b = a_b^T Sigma_bb^-1 a_b against chi2 with dim b degrees of freedom (marginal blocks of one joint fit:
+correlated, not additive, post hoc), eigenvalues of K = sum_A kappa_A E^A, and its negative and positive principal axes (RA, Dec in
+degrees, ICRS/J2000, headless, representative with Dec >= 0).
+
+| variant | p(V) | p(d_H) | p(kappa) | eig. neg | eig. mid | eig. pos | neg. axis | pos. axis |
+|---|---:|---:|---:|---:|---:|---:|---|---|
+{t5}
+
+In all seven variants the exclusion of the origin comes from the quadrupole block (p(kappa) {g(A['p_kappa'][0])}-{g(A['p_kappa'][1])}).
+The velocity block is compatible with zero (p(V) >= {g(A['p_V_min'])}). The d_H block departs from zero only in the pooled variant
+(`log`, the variant without a zero-point nuisance template; p = {g(A['p_dH_log'])}; at least {g(A['p_dH_other_min'])} once zero points are modelled).
+
+The closed reference family has eight axes: the ICRS, Galactic, ecliptic and supergalactic poles, the CMB dipole apex, the M87
+direction, and the major and minor axes of the footprint tensor T = mean_i n_i n_i^T of the selected groups (eigenvalues
+{', '.join(f'{x:.4f}' for x in A['fp_eig'])}; major axis at RA {A['fp_major'][0]:.2f}, Dec {A['fp_major'][1]:+.2f}, which lies
+{A['fp_Gal']:.1f} degrees from the Galactic pole and {A['fp_M87']:.1f} degrees from M87; M87 lies {A['M87_Gal']:.1f} degrees from the
+Galactic pole). Sources of the coordinates are listed in the result file.
+
+Table 5. Headless angles (degrees) of the principal axes to reference axes, and alignment tails: the fraction of 200,000 draws
+kappa* ~ N(0, Sigma_kappa) whose axis lies at least as close to the reference axis; the family-wise value treats the 16 pairs
+(negative or positive axis times eight reference axes) jointly.
+
+| variant | neg.-M87 | neg.-Gal. pole | neg.-footprint major | pos.-ICRS pole | mid.-SG pole | tail neg.~M87 | tail pos.~ICRS pole | family-wise (16) |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+{t6}
+
+Table 6. Fixed-axis contrasts q(n) = n.K.n: one-degree z (exploratory) for four reference axes, and the simultaneous 95% interval of the
+M87 contrast (rank 11, radius {A['radius']:.4f} sd).
+
+| variant | z(M87) | z(Gal. pole) | z(ICRS pole) | z(footprint major) | M87 simultaneous 95% |
+|---|---:|---:|---:|---:|---|
+{t7}
+
+The negative axis of the apparent quadrupole lies {A['neg_M87'][0]:.1f}-{A['neg_M87'][1]:.1f} degrees from the M87 direction,
+{A['neg_Gal'][0]:.1f}-{A['neg_Gal'][1]:.1f} degrees from the Galactic pole and {A['neg_fp'][0]:.1f}-{A['neg_fp'][1]:.1f} degrees from
+the major axis of the footprint. The positive axis lies {A['pos_ICRS'][0]:.1f}-{A['pos_ICRS'][1]:.1f} degrees from the ICRS pole, the middle
+axis {A['mid_SG'][0]:.1f}-{A['mid_SG'][1]:.1f} degrees from the supergalactic pole. With the Galactic template the contrasts along the M87
+and Galactic-pole directions are not constrained (|z| {A['gal_z'][0]:.2f}-{A['gal_z'][1]:.2f}): that contrast is degenerate with a
+Galactic-latitude nuisance pattern. The simultaneous interval of the M87 contrast excludes zero in {len(A['m87_excl'])} of
+{len(MODELS)} variants ({', '.join(A['m87_excl'])}), and the seven-variant hull [{A['m87_hull']['lower']:+.4f}, {A['m87_hull']['upper']:+.4f}]
+contains zero. The catalogue (z_CMB {A['zmin']:.3f}-{A['zmax']:.3f}) contains no group at the Virgo redshift (NED redshift of M87
+{A['m87_z']:.4f}), so M87 is a direction label; the Gaussian window weights alone would not exclude it. No local-structure, footprint or selection model was
+fitted, and the origin of the pattern is not identified. The apparent tensor is kappa = sigma/H + q_cal; nothing here bears on sigma/H.
+
 ## 4. What the coefficients identify
 
 At low redshift and first order, with the same congruence for sources and observer, the directional Hubble rate is
@@ -415,11 +555,11 @@ observer-to-source convention. With theta = (sigma/H [5], omega/H [3], A/(cH) [3
 V = c beta_MR, d_H = -A/(cH) + d_cal, kappa = sigma/H + q_cal, the map K from theta to x has rank {M['log']['physical_rank']} in
 {M['log']['physical_dim']} dimensions in every variant. The free calibration dipole and STF cancel A and sigma; omega has no column in a
 scalar distance response. The only identified physical coordinates are {', '.join(M['log']['identified_physical'])}, conditional on the
-constant-velocity response (Table 4); beta_MR is the coherent mean velocity beyond the LCDM covariance over c, not the total observer or
-sample velocity. No ridge or prior was added to bound the null directions. Stiskalek, Desmond & Lavaux (2025) likewise model an H0
+constant-velocity response (Table 7); beta_MR is the coherent mean velocity beyond the LCDM covariance over c, not the total observer or
+sample velocity. No ridge or prior was added to bound the null directions. Stiskalek, Desmond & Lavaux (2026) likewise model an H0
 anisotropy through a dipole in the indicator zero point or absolute magnitude, which a fit with free calibration cannot separate from it.
 
-Table 4. Union hull of beta_MR = V/c (simultaneous 95%), constant-velocity response only (CONST_V; not a test of an evolving global tilt).
+Table 7. Union hull of beta_MR = V/c (simultaneous 95%), constant-velocity response only (CONST_V; not a test of an evolving global tilt).
 
 | coordinate | lower | upper |
 |---|---:|---:|
@@ -437,7 +577,7 @@ multiplied.
 
 Anisotropy of the local expansion rate in CF4 has been studied with several estimators: a Tully-Fisher H0 dipole tested against a
 constant H0 with an LCDM bulk flow (Boubel et al. 2025); log-H0 sky maps fitted with harmonics to l = 3 (Salzano et al. 2025);
-expansion-rate multipoles of CF4 and Pantheon+ (Kalbouneh et al. 2025; see Cowell et al. 2022 for a Pantheon+ quadrupole); and dipole to
+expansion-rate multipoles of CF4 and Pantheon+ (Kalbouneh et al. 2026; see Cowell et al. 2022 for a Pantheon+ quadrupole); and dipole to
 octupole in harmonic and STF bases with an inverted mask-coupling kernel and a maximum-likelihood reconstruction (Vicente et al. 2026).
 The STF basis and the joint treatment of mask-coupled multipoles are therefore not new here. Each of these studies differs from this one
 in sample, estimator or law, so no numerical comparison is made. What this note adds is narrower: the size of the error-budget change
@@ -447,6 +587,14 @@ coordinates to rank 11) under a seven-variant nuisance union.
 | comparator | outcome | limitation |
 |---|---|---|
 {tbench}
+
+Table 8. Axes stated in the primary sources (Galactic l, b in degrees; read on 2026-11-17) and their headless angles to the principal
+axes of Table 4 (range over the seven variants). Different samples, estimands and laws: orientation only; the outcomes stay NOT_COMPARABLE.
+Vicente et al. list Maxwell multipole vectors, which are not principal axes; Cowell et al. fix their quadrupole axes a priori.
+
+| comparator | stated object | (l, b) | locator | angle to neg / mid / pos axis |
+|---|---|---|---|---|
+{t8}
 
 ## 7. Limitations
 
@@ -461,6 +609,8 @@ coordinates to rank 11) under a seven-variant nuisance union.
 coverage numbers above hold only under the fixed Gaussian law with the assumed covariance. The cosmic-variance body was inherited, not
 recomputed; unknown systematics, selection misspecification and model-search multiplicity are outside the stated coverage. A Bianchi
 interpretation would need class-specific transfer likelihoods such as those used for the CMB (Saadeh et al. 2016); none was evaluated.
+  Global Bianchi I models with anisotropic dark-energy stress are constrained through the CMB quadrupole (Battye & Moss 2026); no transfer
+  connects such a model to the apparent low-redshift tensor of this note.
 
 ## 8. Conclusion
 
@@ -481,43 +631,46 @@ rtol 1e-7 / atol 1e-9 of the committed reference (null-space bases compared as s
 """
 
 
-def main() -> int:
-    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[2])
-    args = ap.parse_args()
-    root = args.root
+def render(root: Path) -> dict:
+    """Text of every R59 output, keyed by its name inside the package; nothing is written (tests/r58/test_r59_documents.py)."""
     d = load(root)
     n = collect(d)
     rows = benchmark_rows(d, n)
     pkg = d["pkg"]
     claims = claim_rows(n)
 
-    (pkg / "BENCHMARK_RESULTS.json").write_text(json.dumps({"schema": "htt.r59.benchmark_results/1", "claim_tier": "C0", "rows": rows, "score_checks": n["score"],
+    files = {}
+    files["BENCHMARK_RESULTS.json"] = (json.dumps({"schema": "htt.r59.benchmark_results/1", "claim_tier": "C0", "rows": rows, "score_checks": n["score"],
                                                             "literature_checked_2026_11_17": LITERATURE}, indent=1, sort_keys=True) + "\n")
-    with (pkg / "BENCHMARK_TABLE.csv").open("w", newline="") as fh:
+    with io.StringIO(newline="") as fh:
         w = csv.writer(fh)
         w.writerow(["competitor", "same_data", "same_estimand", "same_law", "metric", "value", "uncertainty", "verdict", "limitation"])
         for r in rows:
             same = r["outcome"] in ("TIE", "BETTER_CALIBRATED_THAN_ABLATION")
             w.writerow([r["comparator_id"], r["same_data"], "yes" if same else "no", "yes" if same else "no", ";".join(r["metrics"]) or "-",
                         json.dumps(r["metrics"], sort_keys=True) if r["metrics"] else "-", r["uncertainty"], r["outcome"], r["limitations"]])
+        files["BENCHMARK_TABLE.csv"] = fh.getvalue()
     ref_impl, rep_impl = d["owned_ref"]["implementation"], d["owned"]["implementation"]
     env = {"native": d["env_native"], "replay_result_implementation": rep_impl, "reference_result_implementation": ref_impl}
     log_lines = ["R59 native execution log", f"logs: {LOG_DIR} (outside the repository)", "environment:"] + [f"  {x}" for x in d["env_native"]] + ["commands:"]
     log_lines += [f"  [{k}] {v}" for k, v in COMMANDS.items()] + ["exit codes:"] + [f"  {x}" for x in d["exit_lines"]]
-    (pkg / "BENCHMARK_EXECUTION_LOG.txt").write_text("\n".join(log_lines) + "\n")
-    with (pkg / "CLAIM_TABLE.csv").open("w", newline="") as fh:
+    files["BENCHMARK_EXECUTION_LOG.txt"] = "\n".join(log_lines) + "\n"
+    with io.StringIO(newline="") as fh:
         w = csv.writer(fh)
         w.writerow(["claim_id", "statement", "status", "evidence", "value", "limitation"])
         w.writerows(claims)
-    (pkg / "MANUSCRIPT.md").write_text(manuscript(d, n, rows))
+        files["CLAIM_TABLE.csv"] = fh.getvalue()
+    files["MANUSCRIPT.md"] = manuscript(d, n, rows)
 
     head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True).stdout.strip()
+    # review finding R54-RR-12: a render from a tree with uncommitted tracked changes is not the content of head_sha
+    clean = not subprocess.run(["git", "status", "--porcelain", "--untracked-files=no"], cwd=root, capture_output=True, text=True).stdout.strip()
     code = {p: sha(root / p) for p in ("scripts/r58/run_r58_owned_tensor.py", "scripts/r58/build_r58_views.py", "scripts/r58/check_r58_independent.py",
                                          "scripts/r58/compare_r59_native_replay.py", "scripts/r58/build_r59_outputs.py", "htt/htt/htt/infer/r58_mixed_tensor_likelihood.py")}
     dec = d["decision"] or {"decision": "PENDING_REVIEW", "basis": [], "review": None}
     local = {
-        "schema": "htt.r59.local_result/1", "base_sha": d["dag"]["base_sha"], "head_sha": head,
+        "schema": "htt.r59.local_result/1", "base_sha": d["dag"]["base_sha"], "head_sha": head, "working_tree_clean": clean,
+        "head_sha_note": "HEAD when the outputs were rendered; working_tree_clean false means the rendered code and inputs are those of the working tree on top of head_sha",
         "input_hashes": d["owned"]["inputs_sha256"], "replay_output_hashes": d["parity"]["files_sha256"], "code_hashes": code,
         "environment": env,
         "changed_dependencies": {"inputs": d["parity"]["changed_inputs"], "allowed_repaired_hashes": d["parity"]["allowed_repaired_hashes"],
@@ -540,9 +693,23 @@ def main() -> int:
         "decision": dec["decision"], "decision_basis": dec.get("basis", []), "decision_review": dec.get("review"),
         "next_action": "STOP (R59 terminal; no R60, no new data, no native solver)",
     }
-    (pkg / "LOCAL_RESULT.json").write_text(json.dumps(local, indent=1, sort_keys=True) + "\n")
-    print(json.dumps({"decision": local["decision"], "benchmark": local["benchmark_decisions"],
-                      "exact_block_coverage": [round(x, 5) for x in n["range_cov_block_exact"]], "exact_vs_60k": n["exact_vs_60k_max_abs"]}, indent=1))
+    files["LOCAL_RESULT.json"] = json.dumps(local, indent=1, sort_keys=True) + "\n"
+    files["_summary"] = json.dumps({"decision": local["decision"], "benchmark": local["benchmark_decisions"],
+                      "exact_block_coverage": [round(x, 5) for x in n["range_cov_block_exact"]], "exact_vs_60k": n["exact_vs_60k_max_abs"]}, indent=1)
+    return files
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[2])
+    args = ap.parse_args()
+    files = render(args.root)
+    pkg = args.root / PKG
+    for name, text in files.items():
+        if not name.startswith("_"):
+            with (pkg / name).open("w", newline="") as fh:
+                fh.write(text)
+    print(files["_summary"])
     return 0
 
 

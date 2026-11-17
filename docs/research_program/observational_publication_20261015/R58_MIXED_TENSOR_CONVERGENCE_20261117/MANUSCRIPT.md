@@ -16,6 +16,9 @@ ablation that keeps the response but drops the cross covariance, the actual-to-n
 0.9326-0.9367 (exact weighted chi-square; 60,000-draw check 0.9329-0.9373), whereas full GLS is nominal by construction. Every
 coordinate interval hull of the seven-variant union contains zero, whereas the joint 11-dimensional union excludes the origin (largest
 modelwise p = 0.01534): a post hoc tension with the assumed linear-LCDM covariance, not a detection.
+The exclusion comes from the quadrupole block in every variant; post hoc, the negative principal axis of the apparent tensor lies
+1-6 degrees from the M87 direction, a direction label outside the fitted redshift range, and the origin
+of the pattern is not identified.
 The map from 22 normalised kinematic and calibration coordinates to x has rank 11: with free dipole and STF
 calibration the shear sigma/H, the vorticity omega/H and the acceleration A/(cH) are individually unbounded. Full GLS on the same carrier
 ties with the tensor carrier and with score compression. We claim no information advantage over GLS, no cosmological anisotropy, tilt or
@@ -107,6 +110,74 @@ order) on the six fixed ICRS axes; simultaneous 95% union hulls. The axes were n
 | -z | -0.06954 | 0.128 |
 | +z | -0.06604 | 0.08148 |
 
+### 3.1 Which block excludes the origin, and where the apparent quadrupole points (post hoc)
+
+These diagnostics use only the committed fit of each variant (estimate, covariance and rank; `docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/RESULTS/AXIS_DIAGNOSTICS.json`, independently recomputed in
+`docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/RESULTS/AXIS_DIAGNOSTICS_INDEPENDENT_CHECK.json`, status `D1_D2_D4_INDEPENDENTLY_REPRODUCED`). No refit and no new variant enter. The reference axes below were chosen after the
+principal axes had been seen, so every alignment number in this subsection is post hoc.
+
+Table 4. Block Wald p-values W_b = a_b^T Sigma_bb^-1 a_b against chi2 with dim b degrees of freedom (marginal blocks of one joint fit:
+correlated, not additive, post hoc), eigenvalues of K = sum_A kappa_A E^A, and its negative and positive principal axes (RA, Dec in
+degrees, ICRS/J2000, headless, representative with Dec >= 0).
+
+| variant | p(V) | p(d_H) | p(kappa) | eig. neg | eig. mid | eig. pos | neg. axis | pos. axis |
+|---|---:|---:|---:|---:|---:|---:|---|---|
+| log | 0.226 | 0.0168 | 0.000379 | -0.0234 | -0.0007 | +0.0241 | 187.0, +10.2 | 7.1, +79.8 |
+| log_mono | 0.742 | 0.579 | 5.8e-05 | -0.0262 | +0.0019 | +0.0243 | 185.8, +9.4 | 16.7, +80.4 |
+| log_mono_error | 0.748 | 0.696 | 0.000121 | -0.0254 | +0.0015 | +0.0239 | 184.6, +9.7 | 14.0, +80.2 |
+| log_mono_galactic | 0.738 | 0.587 | 0.0262 | -0.0235 | +0.0009 | +0.0226 | 185.3, +7.2 | 12.6, +82.7 |
+| log_mono_radial | 0.73 | 0.758 | 0.00023 | -0.0253 | +0.0035 | +0.0219 | 186.3, +10.8 | 25.8, +78.5 |
+| log_split | 0.757 | 0.733 | 0.00166 | -0.0233 | +0.0050 | +0.0183 | 186.4, +12.4 | 17.7, +77.4 |
+| log_survey | 0.661 | 0.81 | 0.00116 | -0.0237 | +0.0042 | +0.0195 | 186.5, +10.3 | 29.6, +78.8 |
+
+In all seven variants the exclusion of the origin comes from the quadrupole block (p(kappa) 5.8e-05-0.0262).
+The velocity block is compatible with zero (p(V) >= 0.226). The d_H block departs from zero only in the pooled variant
+(`log`, the variant without a zero-point nuisance template; p = 0.0168; at least 0.579 once zero points are modelled).
+
+The closed reference family has eight axes: the ICRS, Galactic, ecliptic and supergalactic poles, the CMB dipole apex, the M87
+direction, and the major and minor axes of the footprint tensor T = mean_i n_i n_i^T of the selected groups (eigenvalues
+0.1674, 0.2634, 0.5692; major axis at RA 187.25, Dec +26.46, which lies
+5.1 degrees from the Galactic pole and 14.1 degrees from M87; M87 lies 15.5 degrees from the
+Galactic pole). Sources of the coordinates are listed in the result file.
+
+Table 5. Headless angles (degrees) of the principal axes to reference axes, and alignment tails: the fraction of 200,000 draws
+kappa* ~ N(0, Sigma_kappa) whose axis lies at least as close to the reference axis; the family-wise value treats the 16 pairs
+(negative or positive axis times eight reference axes) jointly.
+
+| variant | neg.-M87 | neg.-Gal. pole | neg.-footprint major | pos.-ICRS pole | mid.-SG pole | tail neg.~M87 | tail pos.~ICRS pole | family-wise (16) |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| log | 2.3 | 17.8 | 16.3 | 10.2 | 17.1 | 0.0008 | 0.0167 | 0.0121 |
+| log_mono | 3.5 | 18.9 | 17.1 | 9.6 | 15.8 | 0.0015 | 0.0152 | 0.0240 |
+| log_mono_error | 4.1 | 19.1 | 17.0 | 9.8 | 16.6 | 0.0021 | 0.0159 | 0.0324 |
+| log_mono_galactic | 5.7 | 21.1 | 19.3 | 7.3 | 16.9 | 0.0128 | 0.0029 | 0.0448 |
+| log_mono_radial | 2.1 | 17.4 | 15.7 | 11.5 | 13.7 | 0.0006 | 0.0227 | 0.0091 |
+| log_split | 1.2 | 15.9 | 14.1 | 12.6 | 14.9 | 0.0002 | 0.0274 | 0.0033 |
+| log_survey | 2.4 | 17.8 | 16.2 | 11.2 | 13.1 | 0.0007 | 0.0226 | 0.0119 |
+
+Table 6. Fixed-axis contrasts q(n) = n.K.n: one-degree z (exploratory) for four reference axes, and the simultaneous 95% interval of the
+M87 contrast (rank 11, radius 4.4357 sd).
+
+| variant | z(M87) | z(Gal. pole) | z(ICRS pole) | z(footprint major) | M87 simultaneous 95% |
+|---|---:|---:|---:|---:|---|
+| log | -4.40 | -3.37 | +3.64 | -3.46 | [-0.0469, +0.0002] |
+| log_mono | -4.88 | -3.73 | +3.68 | -3.85 | [-0.0496, -0.0024] |
+| log_mono_error | -4.72 | -3.61 | +3.60 | -3.74 | [-0.0488, -0.0015] |
+| log_mono_galactic | -1.08 | -0.75 | +2.87 | -0.79 | [-0.1179, +0.0717] |
+| log_mono_radial | -4.73 | -3.77 | +3.17 | -3.87 | [-0.0490, -0.0016] |
+| log_split | -4.32 | -3.50 | +2.55 | -3.59 | [-0.0473, +0.0006] |
+| log_survey | -4.36 | -3.47 | +2.78 | -3.56 | [-0.0477, +0.0004] |
+
+The negative axis of the apparent quadrupole lies 1.2-5.7 degrees from the M87 direction,
+15.9-21.1 degrees from the Galactic pole and 14.1-19.3 degrees from
+the major axis of the footprint. The positive axis lies 7.3-12.6 degrees from the ICRS pole, the middle
+axis 13.1-17.1 degrees from the supergalactic pole. With the Galactic template the contrasts along the M87
+and Galactic-pole directions are not constrained (|z| 0.75-1.08): that contrast is degenerate with a
+Galactic-latitude nuisance pattern. The simultaneous interval of the M87 contrast excludes zero in 3 of
+7 variants (log_mono, log_mono_error, log_mono_radial), and the seven-variant hull [-0.1179, +0.0717]
+contains zero. The catalogue (z_CMB 0.010-0.100) contains no group at the Virgo redshift (NED redshift of M87
+0.0043), so M87 is a direction label; the Gaussian window weights alone would not exclude it. No local-structure, footprint or selection model was
+fitted, and the origin of the pattern is not identified. The apparent tensor is kappa = sigma/H + q_cal; nothing here bears on sigma/H.
+
 ## 4. What the coefficients identify
 
 At low redshift and first order, with the same congruence for sources and observer, the directional Hubble rate is
@@ -115,11 +186,11 @@ observer-to-source convention. With theta = (sigma/H [5], omega/H [3], A/(cH) [3
 V = c beta_MR, d_H = -A/(cH) + d_cal, kappa = sigma/H + q_cal, the map K from theta to x has rank 11 in
 22 dimensions in every variant. The free calibration dipole and STF cancel A and sigma; omega has no column in a
 scalar distance response. The only identified physical coordinates are beta_MR_0, beta_MR_1, beta_MR_2, conditional on the
-constant-velocity response (Table 4); beta_MR is the coherent mean velocity beyond the LCDM covariance over c, not the total observer or
-sample velocity. No ridge or prior was added to bound the null directions. Stiskalek, Desmond & Lavaux (2025) likewise model an H0
+constant-velocity response (Table 7); beta_MR is the coherent mean velocity beyond the LCDM covariance over c, not the total observer or
+sample velocity. No ridge or prior was added to bound the null directions. Stiskalek, Desmond & Lavaux (2026) likewise model an H0
 anisotropy through a dipole in the indicator zero point or absolute magnitude, which a fit with free calibration cannot separate from it.
 
-Table 4. Union hull of beta_MR = V/c (simultaneous 95%), constant-velocity response only (CONST_V; not a test of an evolving global tilt).
+Table 7. Union hull of beta_MR = V/c (simultaneous 95%), constant-velocity response only (CONST_V; not a test of an evolving global tilt).
 
 | coordinate | lower | upper |
 |---|---:|---:|
@@ -139,7 +210,7 @@ multiplied.
 
 Anisotropy of the local expansion rate in CF4 has been studied with several estimators: a Tully-Fisher H0 dipole tested against a
 constant H0 with an LCDM bulk flow (Boubel et al. 2025); log-H0 sky maps fitted with harmonics to l = 3 (Salzano et al. 2025);
-expansion-rate multipoles of CF4 and Pantheon+ (Kalbouneh et al. 2025; see Cowell et al. 2022 for a Pantheon+ quadrupole); and dipole to
+expansion-rate multipoles of CF4 and Pantheon+ (Kalbouneh et al. 2026; see Cowell et al. 2022 for a Pantheon+ quadrupole); and dipole to
 octupole in harmonic and STF bases with an inverted mask-coupling kernel and a maximum-likelihood reconstruction (Vicente et al. 2026).
 The STF basis and the joint treatment of mask-coupled multipoles are therefore not new here. Each of these studies differs from this one
 in sample, estimator or law, so no numerical comparison is made. What this note adds is narrower: the size of the error-budget change
@@ -163,6 +234,26 @@ coordinates to rank 11) under a seven-variant nuisance union.
 | B08_BIANCHI | NOT_COMPARABLE | local STF eigenvalues do not determine the Lie-algebra class; no Bianchi transfer likelihood evaluated (cf. Saadeh et al. 2016 for CMB Bianchi constraints) |
 | B09_ROBUST_ENVELOPE | TIE | standard union-of-confidence-sets envelope; the two p-values test different nulls; post hoc nuisance family |
 
+Table 8. Axes stated in the primary sources (Galactic l, b in degrees; read on 2026-11-17) and their headless angles to the principal
+axes of Table 4 (range over the seven variants). Different samples, estimands and laws: orientation only; the outcomes stay NOT_COMPARABLE.
+Vicente et al. list Maxwell multipole vectors, which are not principal axes; Cowell et al. fix their quadrupole axes a priori.
+
+| comparator | stated object | (l, b) | locator | angle to neg / mid / pos axis |
+|---|---|---|---|---|
+| B06A_BOUBEL_2025 | H0 (zero-point) dipole maximum | (142, +52) | abstract; Sec. 4.1; Fig. 4 | neg 51-56; mid 81-85; pos 35-40 |
+| B06A_BOUBEL_2025 | quadrupole axis | not stated | Sec. 4.1 | - |
+| B06B_SALZANO_2025 | H0 dipole maximum, CF4, mu in [31, 36] | (299, +2) | Table 1 | neg 68-73; mid 85-89; pos 17-22 |
+| B06B_SALZANO_2025 | H0 dipole maximum, CF4, z in [0.03, 0.06] | (299, -14) | Table 1 | neg 84-89; mid 83-88; pos 4-7 |
+| B06B_SALZANO_2025 | quadrupole axis | not stated | fiducial-analysis text: 'we assumed axial symmetry and retained only the m=0 terms' | - |
+| B06C_VICENTE_2026 | expansion-rate dipole maximum (Nside 8) | (290, -4) | abstract; Sec. V.1; Table 2 | neg 73-78; mid 75-79; pos 17-20 |
+| B06C_VICENTE_2026 | quadrupole multipole vector 1 (Nside 8; a Maxwell multipole vector, not a principal axis) | (284, +52) | Table 2 | neg 17-22; mid 83-86; pos 69-74 |
+| B06C_VICENTE_2026 | quadrupole multipole vector 2 (Nside 8; a Maxwell multipole vector, not a principal axis) | (316, -19) | Table 2 | neg 84-89; mid 77-81; pos 10-14 |
+| B06X_KALBOUNEH_2025 | common symmetry axis of dipole, quadrupole and octupole | (299, +5) | Sec. 4.2 (the abstract gives l = 295 deg) | neg 65-70; mid 85-89; pos 20-25 |
+| B06X_KALBOUNEH_2025 | quadrupole maximum, CF4c | (296, +8) | Table 2 | neg 62-67; mid 83-87; pos 24-29 |
+| COWELL_2022 | Hubble quadrupole eigenvectors, fixed a priori (not fitted) | (118, +85) | Sec. 4.5; Sec. 5.2 | neg 21-26; mid 82-85; pos 65-70 |
+| COWELL_2022 | Hubble quadrupole eigenvectors, fixed a priori (not fitted) | (341, +4) | Sec. 4.5; Sec. 5.2 | neg 76-79; mid 49-53; pos 40-44 |
+| COWELL_2022 | Hubble quadrupole eigenvectors, fixed a priori (not fitted) | (71, -4) | Sec. 4.5; Sec. 5.2 | neg 68-72; mid 38-42; pos 54-58 |
+
 ## 7. Limitations
 
 - Kinematics: with free dipole and STF calibration only beta_MR (under the constant-velocity response) is bounded; sigma/H, omega/H and
@@ -176,6 +267,8 @@ coordinates to rank 11) under a seven-variant nuisance union.
 coverage numbers above hold only under the fixed Gaussian law with the assumed covariance. The cosmic-variance body was inherited, not
 recomputed; unknown systematics, selection misspecification and model-search multiplicity are outside the stated coverage. A Bianchi
 interpretation would need class-specific transfer likelihoods such as those used for the CMB (Saadeh et al. 2016); none was evaluated.
+  Global Bianchi I models with anisotropic dark-energy stress are constrained through the CMB quadrupole (Battye & Moss 2026); no transfer
+  connects such a model to the apparent low-redshift tensor of this note.
 
 ## 8. Conclusion
 
@@ -196,10 +289,11 @@ rtol 1e-7 / atol 1e-9 of the committed reference (null-space bases compared as s
 - Heinesen A. 2021, arXiv:2010.06534 (multipole decomposition of the luminosity-distance Hubble law).
 - Maartens R., Santiago J., Clarkson C., Kalbouneh B., Marinoni C. 2024, arXiv:2312.09875 (covariant cosmography: observer dependence of H).
 - Boubel P., Colless M., Said K., Staveley-Smith L. 2025, JCAP 03, 066, arXiv:2412.14607 (testing anisotropic Hubble expansion with CF4 Tully-Fisher distances).
-- Stiskalek R., Desmond H., Lavaux G. 2025, arXiv:2509.14997 (no evidence for local H0 anisotropy from Tully-Fisher or supernova distances).
-- Kalbouneh B., Marinoni C., Maartens R. et al. 2025, arXiv:2510.02510, accepted by JCAP (anisotropic expansion rate of the local Universe, CF4 and Pantheon+).
+- Stiskalek R., Desmond H., Lavaux G. 2026, MNRAS 546, staf2048, arXiv:2509.14997 (no evidence for local H0 anisotropy from Tully-Fisher or supernova distances).
+- Kalbouneh B., Marinoni C., Maartens R. et al. 2026, JCAP 03, 084, arXiv:2510.02510 (anisotropic expansion rate of the local Universe and its covariant cosmographic interpretation, CF4 and Pantheon+).
 - Salzano V., Beltran Jimenez J., Bettoni D., Brax P., Valade A. 2025, arXiv:2512.02526 (dipolar anisotropy of local H0 from CF4).
 - Vicente J. G., Pereira T. S., Rodrigues R. G., Vitenti S. D. P., Gomes V. M. 2026, arXiv:2607.07821 (multipolar structure of the local expansion rate from incomplete sky data).
 - Cowell J. A., Dhawan S., Macpherson H. J. 2022, arXiv:2212.13569 (quadrupolar Hubble expansion in Pantheon+).
 - Alsing J., Wandelt B. 2018, arXiv:1712.00012 (generalized massive optimal data compression).
 - Saadeh D., Feeney S. M., Pontzen A., Peiris H. V., McEwen J. D. 2016, arXiv:1605.07178 (how isotropic is the Universe?).
+- Battye R. A., Moss A. 2026, Phys. Rev. D 113, 123533, arXiv:2601.22351 (how isotropic is dark energy? Bianchi I with anisotropic dark-energy stress).
