@@ -1,0 +1,50 @@
+{
+  "data_source": {
+    "table3.dat": "c2351c52de3e38a7fd80256b6f0818c550dd9f105b91e84fbcc1eb7234160b4d",
+    "table4.dat": "b6edfec68bdfddeada8f3b8f11938f3bbda98a8e2894ff136a369c2ad6594e94"
+  },
+  "primary_method": "FP-TF",
+  "radial_polynomial_variations": [
+    {
+      "radial_polynomial_degree": 0,
+      "group_count": 694,
+      "wild_group_p": 0.07125427037579307,
+      "naive_chisq_p": 0.004953094796537431,
+      "delta_working": 21.97997719634953,
+      "rank_all": 9
+    },
+    {
+      "radial_polynomial_degree": 1,
+      "group_count": 694,
+      "wild_group_p": 0.1366520253782333,
+      "naive_chisq_p": 0.020708554065604325,
+      "delta_working": 18.06989231075556,
+      "rank_all": 10
+    },
+    {
+      "radial_polynomial_degree": 2,
+      "group_count": 694,
+      "wild_group_p": 0.1376281112737921,
+      "naive_chisq_p": 0.019972052466789077,
+      "delta_working": 18.172176654143772,
+      "rank_all": 11
+    },
+    {
+      "radial_polynomial_degree": 3,
+      "group_count": 694,
+      "wild_group_p": 0.15080527086383602,
+      "naive_chisq_p": 0.0209373581331009,
+      "delta_working": 18.038815213290178,
+      "rank_all": 12
+    }
+  ],
+  "exploratory_large_standardized_residual_filter": {
+    "rule": "|radial-only residual/error|<=3",
+    "retained": 690,
+    "excluded": 4,
+    "wild_group_p": 0.13421181063933627,
+    "warning": "Posthoc sensitivity, never replace primary results"
+  },
+  "bootstrap": "Group-rademacher, upstream correlation and selection uncalibrated",
+  "status": "exploratory robustness only"
+}

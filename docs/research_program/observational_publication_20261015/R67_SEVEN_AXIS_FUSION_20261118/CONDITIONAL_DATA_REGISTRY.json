@@ -1,0 +1,66 @@
+{
+  "schema": "htt.r67.conditional_data/1",
+  "date": "2026-11-18",
+  "root": "/mnt/extdrive/workdir",
+  "data_census": "2026-11-18 partial enumerated 219893 files; 79 directories unvisited after 240s, no whole-filesystem identity claim",
+  "on_demand_only": true,
+  "automatic_downloads": false,
+  "items": [
+    {
+      "id": "D-PR4-COMMANDER-T-MC",
+      "kind": "scalar-temperature MC ensemble 0200..0299",
+      "already_local": "one verified completed 0200, the old 005a I fields are zero",
+      "trigger": "P2 candidate stress/doppler result requires real source-qualified Commander T covariance/exchangeability, and exact 0200 product unit+response contract has been verified",
+      "download_condition": "number of additional realizations prescribed by predeclared desired tail resolution and covariance rank; no broad campaign",
+      "status": "DORMANT_CONDITIONAL"
+    },
+    {
+      "id": "D-DESI-DR1-PV",
+      "kind": "98,292-object DR1 Fundamental Plane PV value-added release and matched random/selection",
+      "already_local": "Fuji limited FP tables, DESI BGS clustering mocks and SDSS PV, not the full DR1 PV source file",
+      "trigger": "CF4 method-matched source comparison cannot discriminate calibration vs real bulk and official DR1 PV product is publicly and source-qualified available",
+      "download_condition": "confirmed official DESI DR1 VAC and overlapping source IDs/covariance protocol",
+      "status": "DORMANT_CONDITIONAL"
+    },
+    {
+      "id": "D-RACS-RMS-MISSING",
+      "kind": "RACS missing RMS/footprint tiles",
+      "already_local": "267 candidate FITS plus control/partial metadata and radio catalogues",
+      "trigger": "actual sky completeness of those 267 FITS tiles insufficient for a frozen RACS dipole selection model",
+      "download_condition": "download only missing coverage tiles with official release receipts",
+      "status": "DORMANT_CONDITIONAL"
+    },
+    {
+      "id": "D-GAIA-QSO-Z",
+      "kind": "source-qualified quasar redshifts and AGN structure-motion covariates",
+      "already_local": "Gaia-CRF3 1,614,173 proper motions, scanning-law and ICRF3, VLBA 713",
+      "trigger": "physical redshift dependence of VSH l>=2 has a fixed source/observer frame transfer and current crossmatches cannot support bins",
+      "download_condition": "source IDs, predictive-z bias/validation, Gaia frame error budget predeclared; do not count raw Gaia PMs as cosmological matter shear",
+      "status": "DORMANT_CONDITIONAL"
+    },
+    {
+      "id": "D-REMOTE-DIPOLE",
+      "kind": "kSZ remote CMB dipole reconstruction window and bias response",
+      "already_local": "published theory and some high-l maps; exact W_v,b_v and full cross-covariance unqualified",
+      "trigger": "P4 physical compensated-history source model passes frame/normalization injection and cannot be constrained by existing independent channels",
+      "download_condition": "official window/bias/covariance maps or coefficients with comparable velocity units; not convert quoted amplitude directly",
+      "status": "DORMANT_CONDITIONAL"
+    },
+    {
+      "id": "D-HSC-Y3-ADDITIONAL-MOCK",
+      "kind": "more independent weak lensing ray-tracing realizations",
+      "already_local": "6 survey fields×108 mock catalogs, 108 underlying parent realizations among 1404 placements",
+      "trigger": "actual source-optical transfer exists and current parent-realization covariance/coverage is insufficient for predeclared inference accuracy",
+      "download_condition": "explicit independent underlying parent IDs rather than counting placements as independent skies",
+      "status": "DORMANT_CONDITIONAL"
+    },
+    {
+      "id": "D-BIANCHI-TRANSFER",
+      "kind": "polarized source/metric physical Bianchi transfer calibration",
+      "already_local": "R62 normal-frame constraint and R66 signed radiation stress; no source-qualified full polarised high-l transfer",
+      "trigger": "one chosen type/mode/tilt family and observer/surface epoch passed constraint/optical injection but missing polarized/finite-k response",
+      "download_condition": "first use verified external result/benchmark, not build an unvalidated native solver as an implicit data intake",
+      "status": "CONDITIONAL_PHYSICS_NOT_PURE_DOWNLOAD"
+    }
+  ]
+}

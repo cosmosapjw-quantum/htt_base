@@ -292,7 +292,8 @@
       "PR-R63-LOCAL-BOOST-GLOBAL-TILT",
       "PR-R64-DIRECTIONAL-HUBBLE",
       "PR-R65-DIPOLE-ANOMALY",
-      "PR-R66-LOWELL-PHYSICAL-OBSERVABLES"
+      "PR-R66-LOWELL-PHYSICAL-OBSERVABLES",
+      "PR-R67-SEVEN-AXIS-FUSION"
     ],
     "strict_extension_cards": [
       "PR-SOLVER-FREE-DOSSIER",
@@ -391,7 +392,8 @@
       "PR-R63-LOCAL-BOOST-GLOBAL-TILT",
       "PR-R64-DIRECTIONAL-HUBBLE",
       "PR-R65-DIPOLE-ANOMALY",
-      "PR-R66-LOWELL-PHYSICAL-OBSERVABLES"
+      "PR-R66-LOWELL-PHYSICAL-OBSERVABLES",
+      "PR-R67-SEVEN-AXIS-FUSION"
     ],
     "checkpoint_every_completed_prs": 5,
     "no_native_lowell_solver_implementation": true,
@@ -15177,6 +15179,50 @@
       "kill": "No exact total-sky stress, instantaneous shear, unconditional anomaly, Bianchi attribution, new general no-go, automatic successor or local-agent prompt.",
       "user_authorized": true,
       "authorization": "Explicit owner-selected low-ell physical-observables full10 study; inherited non-force branch push authorization."
+    },
+    {
+      "id": "PR-R67-SEVEN-AXIS-FUSION",
+      "wave": 0,
+      "title": "Fuse seven observational research axes with source-qualified same-group calibration and Gaia frame diagnostics",
+      "owner": "HTT",
+      "depends": [
+        "PR-R66-LOWELL-PHYSICAL-OBSERVABLES"
+      ],
+      "files": [
+        "docs/research_program/observational_publication_20261015/R67_SEVEN_AXIS_FUSION_20261118",
+        "docs/research_program/observational_publication_20261015/PUBLICATION_DAG.json",
+        "docs/research_program/observational_publication_20261015/README.md",
+        "scripts/r67",
+        "tests/test_r67_fusion.py",
+        "tests/test_r67_gaia_frame.py",
+        "tests/test_r67_likelihood_contract.py",
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml",
+        "machine_readable/pr_backlog.yaml",
+        "machine_readable/pr_status.yaml"
+      ],
+      "tests": [
+        "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -B -m pytest -p no:cacheprovider -q tests/test_r67_fusion.py tests/test_r67_gaia_frame.py tests/test_r67_likelihood_contract.py",
+        ".venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml",
+        ".venv/bin/python -B scripts/codex_harness/sync_pr_dag_mirrors.py --check",
+        ".venv/bin/python -B scripts/htt_publication_dag.py --validate"
+      ],
+      "dod": [
+        "Preserve all original six papers, 42 science nodes and paper-specific acceptance criteria; register exactly seven research axes in a cross-paper fusion DAG.",
+        "Execute ten theory and ten coding stages with an explicit finite scientific claim, no fabricated physical transfer or double-counted likelihoods.",
+        "Verify actual CF4 998 co-observed groups and 1090 same-group contrasts, group-wild conditional sensitivity, and Gaia E/B l=1 proper motion as distinct physical channels.",
+        "Record seven conditional data acquisition triggers without automatic downloads or masquerading as already-qualified physical input.",
+        "Repair concrete independent code review findings, run affected regression tests, and preserve provenance including native subagent NOT_RUN.",
+        "Publish scoped evidence without promoting cosmological anisotropy/tilt/Bianchi family claims or the existing six submission gates."
+      ],
+      "notes": "docs/research_program/observational_publication_20261015/R67_SEVEN_AXIS_FUSION_20261118/FUSION_DAG.json",
+      "kill": "No physical Hubble/shear/omega/global tilt detection, no Gaussian score information creation, no independent multiplication of shared CF4 or PR3/PR4 data, no native Bianchi solver fabrication, no automatic data download.",
+      "level": "L0",
+      "scope": "science",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "2026-11-18 owner requested seven-axis fusion, sequential ten-stage theory loop, executable coding loop, conditional data DAG updates and continuation after interruption."
     }
   ]
 }

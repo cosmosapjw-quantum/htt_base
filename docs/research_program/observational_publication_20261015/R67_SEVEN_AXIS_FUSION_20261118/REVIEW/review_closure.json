@@ -1,0 +1,64 @@
+{
+  "schema": "htt.r67.review_closure/1",
+  "review": "one independent read-only Codex CLI reviewer",
+  "review_original_result": "NEEDS_REPAIR",
+  "review_artifact": "REVIEW/independent_read_only_review.md",
+  "review_elapsed_seconds": 72.59,
+  "native_subagent": "NOT_RUN_NO_HOST_SPAWN_TOOL",
+  "closing_mode": "one parent-owned bounded repair followed by targeted tests and actual data rerun; not a second independent reviewer PASS",
+  "test_result": "19 passed",
+  "scientific_submission_status": "NOT_READY_TO_SUBMIT",
+  "findings": [
+    {
+      "id": "R67-F1",
+      "initial": "HIGH",
+      "object": "scripts/r67/fusion.py score_model",
+      "issue": "deficient nuisance QR may eat angular column",
+      "repair": "fail closed when rank(X0)<number of columns",
+      "regression": "test_rank_deficient_nuisance_fails_closed",
+      "closure": "PARENT_TESTED_FIXED"
+    },
+    {
+      "id": "R67-F2",
+      "initial": "HIGH",
+      "object": "scripts/r67/likelihood_contract.py source_joint_ready",
+      "issue": "cross covariance may disagree with marginals; distinct source labels do not imply independence",
+      "repair": "check full joint diagonal blocks; explicit independent or joint covariance evidence and source provenance flags required",
+      "regression": "test_joint_covariance_inconsistent_diagonal_blocks_rejected; test_unqualified_joint_covariance_still_blocked",
+      "closure": "PARENT_TESTED_FIXED"
+    },
+    {
+      "id": "R67-F3",
+      "initial": "MEDIUM",
+      "object": "scripts/r67/fusion.py pair_experiment",
+      "issue": "signed logH conversion incorrectly labeled RMS",
+      "repair": "retain signed pointwise relation; RMS uses positive absolute factor; rerun actual CF4",
+      "regression": "test_equivalent_lnH_rms_has_nonnegative_sign",
+      "closure": "PARENT_TESTED_FIXED"
+    },
+    {
+      "id": "R67-F4",
+      "initial": "MEDIUM",
+      "object": "scripts/r67/build_r67_dag.py baseline verification",
+      "issue": "memory-only original six paper acceptance check",
+      "repair": "git show pinned baseline compare exact six papers and all 42 nodes, fail on mismatch",
+      "regression": "build_r67_dag.py actual baseline comparison, publication DAG validator",
+      "closure": "PARENT_TESTED_FIXED"
+    },
+    {
+      "id": "R67-F5",
+      "initial": "LOW",
+      "object": "CODING_10_STAGES.md table4 hash",
+      "issue": "SHA transcription error",
+      "repair": "full matching SHA256 from real CF4 file and saved JSON",
+      "regression": "sha256sum table4; compare provenance source_sha256",
+      "closure": "PARENT_TESTED_FIXED"
+    }
+  ],
+  "limitations": [
+    "No evidence shared method calibration covariance is complete",
+    "No physical matter shear, vorticity, tilt or Bianchi identification from reported summaries",
+    "Bootstrap is only conditional group-wild law",
+    "Spatial patch sandwich is not an official Gaia systematic covariance"
+  ]
+}

@@ -1,5 +1,10 @@
 # HTT 관측논문 6트랙 출판 중심 DAG
 
+## Current cross-paper seven-axis fusion — R67, 2026-11-18
+
+[R67 실자료 CF4/Gaia 융합 보고서](R67_SEVEN_AXIS_FUSION_20261118/REPORT_KO.md), [융합 논문화 계획](R67_SEVEN_AXIS_FUSION_20261118/RESEARCH_PLAN_KO.md), [10단계 이론 유도](R67_SEVEN_AXIS_FUSION_20261118/THEORY_10_STAGES.md), [융합 DAG](R67_SEVEN_AXIS_FUSION_20261118/FUSION_DAG.json), [조건부 데이터 목록](R67_SEVEN_AXIS_FUSION_20261118/CONDITIONAL_DATA_REGISTRY.json). 일곱 연구 축과 기존 6편 P1–P6를 구분하고, 실제 CF4 그룹별 FP/TF/SN 상대 보정 네트워크와 Gaia-CRF3 observer-frame E/B를 별도 실행하였다. 32,768회 group-wild 조건부 검정과 독립 심사에서 발견한 코드 결함의 표적 회귀검증을 남겼다. Cross-probe 물리 전달함수 및 공분산이 없는 경우 likelihood 결합을 허용하지 않는다. **기존 42개 과학 노드·P1–P6 acceptance는 불변, 모든 제출 상태 NOT_READY_TO_SUBMIT**이다. 조건부 추가자료 7종은 자동 다운로드나 과학 gate 통과를 의미하지 않는다.
+
+
 ## Current low-ell physical-observables study — R66, 2026-11-17
 
 [R66 실제 Commander 결과](R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/REPORT_KO.md), [P2 논문화 계획](R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/RESEARCH_PLAN_KO.md), [연구 DAG](R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/RESEARCH_DAG.json)가 현재 선택된 P2 companion이다. 실제 PR3/PR4 온도를 처리하고 공개005a100개의 I=0을 확인해 온도법칙에서 제외했다. 별도 scalarT제품을 확인하고 명시적인 이상적 Gaussian공분산과4096합성carrier를 계산했다. 이를 바탕으로 signed radiation-stress proxy·DQ quotient·dipole–octupole 비선형 항·공동 operator covariance·같은 입력의 power tensor를 계산했다. R36/R60 이론·코드는 재사용이며 새 일반이론으로 주장하지 않는다. harmonic truncation과 release dependence 및 미확보 upstream response를 보존한다. 물리적 anomaly나 spacetime shear 측정은 주장하지 않으며 원래42개·모든 논문 acceptance와 NOT_READY_TO_SUBMIT을 유지한다. 다음 범위는 정확한 response/동일 estimand 비교/원고 통합 세 패키지로 수렴한다.
