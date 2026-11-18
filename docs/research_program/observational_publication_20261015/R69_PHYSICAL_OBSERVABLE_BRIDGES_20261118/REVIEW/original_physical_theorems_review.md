@@ -1,0 +1,26 @@
+**Verdict: NEEDS_REPAIR.** The main blocking issue is that the Bianchi-I fossil relation is stated as exact where the preceding photon calculation establishes it only to first order. The frame comparison is correctly labelled counterfactual, but its boost-subtracted tensor also needs a more precise interpretation.
+
+1. **The fossil tensor equality and signed-shape condition need a weak-anisotropy qualification.** [Theorem 6](</home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R69_PHYSICAL_OBSERVABLE_BRIDGES_20261118/PHYSICAL_THEOREMS_KO.md:81>) states \(Q_{\rm CMB}/T_0=-\mathcal I\sigma_o\) and opposite \(\chi\) without a remainder. For finite integrated shear, the exact temperature is nonlinear in direction. A reproducible counterexample using the supplied angular integration is:
+
+   ```python
+   import numpy as np
+   from scripts.r69.physical_bridges import bianchi_I_radiation_moment
+   from scripts.r68.fiveview_geometry import stf_shape
+
+   d = np.array([0.4, -0.1, -0.3])
+   S = bianchi_I_radiation_moment(d, np.zeros(3))["STF_pressure"]
+   print(np.diag(S), stf_shape(S)["signed_chi"],
+         -stf_shape(np.diag(d))["signed_chi"])
+   ```
+
+   It gives approximately `[-0.17677, 0.02339, 0.15338]`, with stress \(\chi=-0.3581\) versus \(-\chi(d)=-0.6651\). The exact diagonal tensors remain coaxial, but their eigenvalues are generally not proportional. State the proportionality, \(C_-=1\), and opposite-\(\chi\) conditions to leading order with the appropriate remainder; qualify the corresponding statements in theorem 9. The benchmark inversion is already labelled conditional.
+
+2. **Boost subtraction is an observer-frame algebraic residual, not generally a recovered rest-frame non-boost stress.** [physical_bridges.py](</home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r69/physical_bridges.py:122>) subtracts a normalized pure-boost stress from the normalized observed stress. A Lorentz transformation mixes energy, flux and anisotropic stress, and the normalization changes. For example, a rest-frame tensor with \(\rho=1\), \(\pi=\operatorname{diag}(0.1,-0.1,0)\), zero flux and \(\beta=0.5\) along \(x\) yields a subtraction residual \(\operatorname{diag}(0.07808,-0.07287,-0.00521)\), not the original \(\pi/\rho\). Rename or explicitly qualify `residual_non_boost_STF5` and its use in the fossil inversion; a physical separation requires a specified full stress tensor and frame transformation. The actual boost is small and the report already warns that the physical transfer is unqualified, but no error bound for this approximation is supplied.
+
+3. **The isotropic shortcut bypasses the stated input contract.** [physical_bridges.py:241](</home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r69/physical_bridges.py:241>) returns zero before checking trace-free inputs: `bianchi_I_radiation_moment(np.ones(3), np.ones(3))` succeeds although both inputs violate its declared convention. Validate inputs before the shortcut. Existing isotropic tests use only valid zeros and cannot expose this.
+
+The independently checked signs and factors otherwise agree with the stated conventions: sourceward directional cosmography and hemisphere first moment; full-sky STF moments \(2/15\) and \(8/105\); observer-direction Bianchi-I redshift and the linear radiation stress \(-8\Delta\beta/15\); and boost-only stress \(4\beta^2/(3+\beta^2)\) with \(\chi=+1\). The local affine E2/B1/B2 selection and proper-motion conversion are consistent. The zero-total-anisotropic-stress shear decay and Type-V zero-momentum shape are conditional on the stated normal-frame assumptions. The cited primary treatments provide context for the [directional Hubble law](https://arxiv.org/abs/2010.06534) and [Bianchi-I light propagation](https://arxiv.org/abs/1410.8473).
+
+The coordinate operation \(Q_{\rm ICRS}=R^\mathsf T Q_{\rm Galactic}R\) has the correct direction, and R66 identifies its sky vectors as Galactic. The calculation compares *templates*: rotating coordinates does not make Gaia’s apparent proper-motion E2 a matter-normal shear or the R66 retained-map stress a source-qualified intrinsic photon tensor. The report explicitly acknowledges that distinction. The Gaia mask, selection, spatial correlations and AGN systematics remain consequential; the nominal source-independent Wald values are not calibrated astrophysical significances.
+
+**Verification and limits.** The focused suite passed: **16 tests** using capture and plugin autoload disabled for the read-only environment. Several checks are self-consistency checks or inspect saved values; they do not establish the finite-shear equality, a physical cross-probe transfer, or a calibrated Gaia likelihood. Current R66 and Gaia-result hashes match the identities consumed by R69; the present Gaia FITS hash also matches the R67 provenance record, although R69’s Gaia JSON itself records a path rather than that input hash. The CF4 file hash matches its R69 result. I did not rerun the full catalogue fits, independently validate the complete source selection or scanning-law covariance, establish a physical CMB/Gaia frame transformation, or perform four-axis proof validation. Scientific admission remains **HOLD**.

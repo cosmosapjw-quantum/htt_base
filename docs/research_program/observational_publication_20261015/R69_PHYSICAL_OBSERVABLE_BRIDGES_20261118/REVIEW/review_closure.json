@@ -1,0 +1,89 @@
+{
+  "schema": "htt.r69.review_closure/1",
+  "review_sequence": [
+    {
+      "name": "original_physical_theorems_review.md",
+      "verdict": "NEEDS_REPAIR"
+    },
+    {
+      "name": "x_to_fiveview_adversarial_review.md",
+      "verdict": "NEEDS_REPAIR"
+    },
+    {
+      "name": "postrepair_bounded_review.md",
+      "verdict": "NEEDS_REPAIR"
+    }
+  ],
+  "scientific_and_independent_scope": "fresh read-only local Codex CLI; not a native host-subagent; no second independent scientific-article acceptance",
+  "findings": [
+    {
+      "id": "R69-01",
+      "severity": "HIGH",
+      "initial": "Bianchi-I finite-δβ fossil exact proportionality falsely asserted",
+      "repair": "retain only O(δβ²) stress relation, exact shared eigenaxes but not eigenvalues, finite-shear counterexample in test",
+      "evidence": "tests/test_r69_physical_bridges.py",
+      "closure": "PARENT_TARGETED_REGRESSION_PASS"
+    },
+    {
+      "id": "R69-02",
+      "severity": "MEDIUM",
+      "initial": "subtracting normalized boost-only stress erroneously named as deboost",
+      "repair": "label formal algebraic template, not recovered rest-frame T_ab; condition on unknown photon flux",
+      "evidence": "scripts/r69/physical_bridges.py and results",
+      "closure": "PARENT_TARGETED_REGRESSION_PASS"
+    },
+    {
+      "id": "R69-03",
+      "severity": "MEDIUM",
+      "initial": "isotropic Bianchi I shortcut bypassed tracefree input",
+      "repair": "validate beta_i before exact isotropic return, regressions",
+      "evidence": "tests/test_r69_physical_bridges.py",
+      "closure": "PARENT_TARGETED_REGRESSION_PASS"
+    },
+    {
+      "id": "R69-04",
+      "severity": "HIGH",
+      "initial": "Hubble Q minimizer falsely declared positive at 10^-12 physical scale",
+      "repair": "scale-normalized global quadratic secular minimizer; KKT residual, hard case and unit-rescaling regression",
+      "evidence": "tests/test_r69_fiveview_response.py",
+      "closure": "PARENT_TARGETED_REGRESSION_PASS"
+    },
+    {
+      "id": "R69-05",
+      "severity": "MEDIUM",
+      "initial": "un-split cap Gauss-Legendre masked at discontinuity; F values wrong",
+      "repair": "Gauss quadrature for moments, disjoint cap integral using scipy.quad, analytic independent integral test; report numbers updated",
+      "evidence": "tests/test_r69_fiveview_response.py and atlas",
+      "closure": "PARENT_TARGETED_REGRESSION_PASS"
+    },
+    {
+      "id": "R69-06",
+      "severity": "MEDIUM",
+      "initial": "Codazzi extrinsic curvature and q units undefined",
+      "repair": "specify K with m^-1, j energy density J/m³, qflux=c j; ADM 8πGj/c^4 vs 8πGqflux/c^5 and R62 nondim sign separate",
+      "evidence": "PHYSICAL_THEOREMS_KO.md",
+      "closure": "PARENT_UNIT_AND_SOURCE_AUDIT"
+    },
+    {
+      "id": "R69-07",
+      "severity": "MEDIUM",
+      "initial": "stale tests referred to old overclaimed physical status fields",
+      "repair": "match explicit FORMAL_template_only, WEAK_ANISOTROPY_ONLY keys, preserve failure record",
+      "evidence": "tests/test_r69_physical_bridges.py",
+      "closure": "PARENT_TARGETED_REGRESSION_PASS"
+    },
+    {
+      "id": "R69-08",
+      "severity": "MEDIUM",
+      "initial": "after numeric repairs document still displayed obsolete F and atlas physical labels ambiguous",
+      "repair": "single source authoritative F boost=.153597590183, ME=.152919418110; inline P1/P6 apparent input and R62 hypothetical physical vertex flags",
+      "evidence": "X_TO_FIVEVIEW_PHYSICAL_RESPONSE_KO.md, scripts/r69/fiveview_response.py and atlas",
+      "closure": "PARENT_TARGETED_REGRESSION_PASS"
+    }
+  ],
+  "numerical_reproduction": "41 focused tests PASS after two targeted repair episodes, plus exact SymPy source result and real R69 data readouts",
+  "status": "PARENT_BOUNDED_REPAIR_AND_TESTS_PASS; SECOND_INDEPENDENT_PASS_NOT_CLAIMED",
+  "physical_science": "NOT_READY_TO_SUBMIT; no published physical cosmological anisotropy/shear/vorticity/tilt/Bianchi measurement",
+  "source_run_limits": "real Gaia uses uncalibrated sourcewise working covariance and spatial patch diagnostic, CF4 original unweighted hemispheres, R66 finite-band photon moment",
+  "conditional_data": "no new downloads"
+}
