@@ -1,0 +1,210 @@
+{
+  "schema": "htt.r70.p2_theory_checks/1",
+  "date": "2026-11-19",
+  "intent": "finite algebraic and source readout checks, no cosmological detection",
+  "symbolic": {
+    "koszul_residual_after_unit_sphere_constraint": [
+      "0",
+      "0",
+      "0"
+    ],
+    "unconstrained_difference": "a_i*(u_i*u_i-1); zero on |u|=1"
+  },
+  "sky_velocity": {
+    "generic_class_B_max_sky_tangency_residual": 8.673617379884035e-18,
+    "generic_class_B_max_divergence_residual": 6.000866470401434e-12,
+    "type_II_n_diag_0p3_sky_drift": [
+      -0.0,
+      -0.08313843876330611,
+      0.072
+    ],
+    "type_V_a_minus_e1_sky_drift": [
+      0.84,
+      -0.24,
+      -0.27712812921102037
+    ],
+    "N_proportional_to_I_is_zero": true
+  },
+  "initial_isotropic_kinetic": {
+    "initial_isotropic_photon_flux_dot": [
+      7.807055029239603e-17,
+      5.623239978584486e-19,
+      -1.402885084000134e-18
+    ],
+    "initial_isotropic_photon_stress_dot": [
+      [
+        -0.015999999999999917,
+        -0.0042666666666666495,
+        -1.1608953448420642e-17
+      ],
+      [
+        -0.0042666666666666495,
+        0.010666666666666595,
+        -0.002133333333333336
+      ],
+      [
+        -1.1608953448420642e-17,
+        -0.002133333333333336,
+        0.005333333333333353
+      ]
+    ],
+    "prediction_minus_8sigma_over_15_residual": 1.1521644387690812e-16
+  },
+  "higher_multipole_nonautonomy": [
+    {
+      "epsilon": 0.0,
+      "m0_flux": 0.0,
+      "STF5_same_zero": true,
+      "m2zz": 0.333333333333331,
+      "m4zz": 0.19999999999999718,
+      "Szz_dot_per_second": -0.02488888888888887,
+      "Szz_dot_formula": -0.02488888888888889,
+      "physical_cap_energy_fraction_abs_mu_greater_0p9": 0.09999999999999998
+    },
+    {
+      "epsilon": 0.5,
+      "m0_flux": 0.0,
+      "STF5_same_zero": true,
+      "m2zz": 0.33333333333332926,
+      "m4zz": 0.21269841269840833,
+      "Szz_dot_per_second": -0.02399999999999992,
+      "Szz_dot_formula": -0.024,
+      "physical_cap_energy_fraction_abs_mu_greater_0p9": 0.12853562499999996
+    },
+    {
+      "epsilon": 1.0,
+      "m0_flux": 0.0,
+      "STF5_same_zero": true,
+      "m2zz": 0.33333333333332765,
+      "m4zz": 0.22539682539681943,
+      "Szz_dot_per_second": -0.02311111111111097,
+      "Szz_dot_formula": -0.023111111111111114,
+      "physical_cap_energy_fraction_abs_mu_greater_0p9": 0.15707124999999997
+    }
+  ],
+  "R66_actual_signed_source": {
+    "R66_source_json_sha256": "6d9c3f11a23995565dca25fe8ae02ef1ad79b3bc3f8ddf99f3c8c0a497b39d01",
+    "released_temperature_carrier_sha256": "807b8eb391b6d150596ab431885f4b720bcafedd52fffdfe61c6db132661cc48",
+    "source_qualified_physical_PTE": false,
+    "source_MC_count": 0,
+    "ell6_to_ell8_PR4_quotient_relative_shift": 0.6659578518010858,
+    "nside64_to128_PR4_quotient_relative_shift": 0.04067390642366747,
+    "releases": {
+      "PR3": {
+        "observed_full_STF5_uK": [
+          -4.975293925239662,
+          -8.146576264196533,
+          20.837071448004398,
+          4.422025897640091,
+          8.783842469828251
+        ],
+        "observed_DQ_quotient_STF5_uK": [
+          -5.598021305330343,
+          -8.701932543858943,
+          20.968959205969348,
+          4.273434256284464,
+          7.365085492558086
+        ],
+        "best_projection_coefficient": -0.48958124760468374,
+        "raw_full_signed_chi": -0.2928943623824744,
+        "raw_full_F_solid_angle": 0.5414087522025114,
+        "unknown_DQ_amplitude_sensitivity": [
+          {
+            "alpha_fixed_comparator": -2.0,
+            "signed_chi": -0.8166454208872732,
+            "F_solid_angle_positive_quadrupole": 0.5708856267969984,
+            "Q_stress_only_radiation_body": 1.1922235670465838e-05,
+            "full_flux_measured": false
+          },
+          {
+            "alpha_fixed_comparator": -1.0,
+            "signed_chi": -0.5815367353025147,
+            "F_solid_angle_positive_quadrupole": 0.5603543052710374,
+            "Q_stress_only_radiation_body": 1.1362065631998733e-05,
+            "full_flux_measured": false
+          },
+          {
+            "alpha_fixed_comparator": 0.0,
+            "signed_chi": -0.29289436238247457,
+            "F_solid_angle_positive_quadrupole": 0.5414087522025114,
+            "Q_stress_only_radiation_body": 1.0893404332971644e-05,
+            "full_flux_measured": false
+          },
+          {
+            "alpha_fixed_comparator": 1.0,
+            "signed_chi": -0.010679937530656252,
+            "F_solid_angle_positive_quadrupole": 0.5036465896215923,
+            "Q_stress_only_radiation_body": 1.05616784988903e-05,
+            "full_flux_measured": false
+          },
+          {
+            "alpha_fixed_comparator": 2.0,
+            "signed_chi": 0.21209430957042424,
+            "F_solid_angle_positive_quadrupole": 0.4660477453475918,
+            "Q_stress_only_radiation_body": 1.0430818183836086e-05,
+            "full_flux_measured": false
+          }
+        ],
+        "meaning": "Same source finite-band released-temperature signed tensor; alpha is not inferred and quotient is not a physical rest-frame tensor."
+      },
+      "PR4": {
+        "observed_full_STF5_uK": [
+          -7.69830204530552,
+          -8.236856808222589,
+          21.944865857718817,
+          4.071190172483334,
+          9.343425186823236
+        ],
+        "observed_DQ_quotient_STF5_uK": [
+          -8.060444497850332,
+          -8.559820100962053,
+          22.02156419740497,
+          3.984777814285192,
+          8.51835767294764
+        ],
+        "best_projection_coefficient": -0.2847123145632219,
+        "raw_full_signed_chi": -0.3033583226399427,
+        "raw_full_F_solid_angle": 0.5422803409066129,
+        "unknown_DQ_amplitude_sensitivity": [
+          {
+            "alpha_fixed_comparator": -2.0,
+            "signed_chi": -0.7980497303269882,
+            "F_solid_angle_positive_quadrupole": 0.5701564781428659,
+            "Q_stress_only_radiation_body": 1.2783394907765969e-05,
+            "full_flux_measured": false
+          },
+          {
+            "alpha_fixed_comparator": -1.0,
+            "signed_chi": -0.5769516505015818,
+            "F_solid_angle_positive_quadrupole": 0.560115647619958,
+            "Q_stress_only_radiation_body": 1.219316813162468e-05,
+            "full_flux_measured": false
+          },
+          {
+            "alpha_fixed_comparator": 0.0,
+            "signed_chi": -0.3033583226399426,
+            "F_solid_angle_positive_quadrupole": 0.5422803409066134,
+            "Q_stress_only_radiation_body": 1.1678535670373036e-05,
+            "full_flux_measured": false
+          },
+          {
+            "alpha_fixed_comparator": 1.0,
+            "signed_chi": -0.02624482273407367,
+            "F_solid_angle_positive_quadrupole": 0.507516740208399,
+            "Q_stress_only_radiation_body": 1.1276153475960488e-05,
+            "full_flux_measured": false
+          },
+          {
+            "alpha_fixed_comparator": 2.0,
+            "signed_chi": 0.20693737008652788,
+            "F_solid_angle_positive_quadrupole": 0.46657442153507417,
+            "Q_stress_only_radiation_body": 1.1039962940888333e-05,
+            "full_flux_measured": false
+          }
+        ],
+        "meaning": "Same source finite-band released-temperature signed tensor; alpha is not inferred and quotient is not a physical rest-frame tensor."
+      }
+    }
+  },
+  "tests": "all assertions checked at execution; no independent suite or native GR solver"
+}
