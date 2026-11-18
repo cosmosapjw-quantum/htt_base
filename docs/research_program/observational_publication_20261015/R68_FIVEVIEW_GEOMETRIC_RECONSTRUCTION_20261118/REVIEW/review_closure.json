@@ -1,0 +1,41 @@
+{
+  "schema": "htt.r68.review_closure/1",
+  "review_type": "fresh read-only local Codex CLI",
+  "independent_review_verdict": "NEEDS_REPAIR",
+  "independent_review_file": "REVIEW/independent_read_only_review.md",
+  "repairs": [
+    {
+      "severity": "HIGH",
+      "issue": "nuisance design scale 1e-12 incorrectly erased column",
+      "repair": "column-wise whitening normalization and fail-closed near-singular rank",
+      "regression": "test_nuisance_units_invariant_and_duplicate_columns",
+      "status": "TARGETED_REPAIR_VERIFIED"
+    },
+    {
+      "severity": "HIGH",
+      "issue": "tiny nonzero physical target null leakage reported exactly identified",
+      "repair": "tri-state identified=True/False/None, numerical status and null leakage explicit",
+      "regression": "test_tiny_nonzero_target_leakage_is_never_certified_identified",
+      "status": "TARGETED_REPAIR_VERIFIED"
+    },
+    {
+      "severity": "LOW",
+      "issue": "absolute STF trace tolerance and tiny shape fixed cutoff",
+      "repair": "relative tensor-scale validation, shape from scaled tensor",
+      "regression": "test_relative_stf_domain_at_tiny_scale",
+      "status": "TARGETED_REPAIR_VERIFIED"
+    },
+    {
+      "severity": "LOW",
+      "issue": "embedded R66 carrier hash alone not actual source file identity",
+      "repair": "pin and verify entire OBSERVABLES.json SHA256 plus carrier SHA",
+      "regression": "test_r66_byte_hash_fails_closed_on_source_mutation",
+      "status": "TARGETED_REPAIR_VERIFIED"
+    }
+  ],
+  "repair_verification": "14 targeted tests PASS, R66 derived outputs and 85000-draw toy identical within numeric tolerance",
+  "second_independent_review": "NOT_RUN",
+  "scoped_final_status": "PARENT_TARGETED_TESTS_PASS",
+  "scientific_discovery_status": "NOT_CLAIMED",
+  "submission": "NOT_READY_TO_SUBMIT"
+}

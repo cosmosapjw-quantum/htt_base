@@ -1,0 +1,144 @@
+{
+  "schema": "htt.r68.typed_fiveview_specializations/1",
+  "date": "2026-11-18",
+  "paper_tracks": 6,
+  "distinct_scientific_axes": 7,
+  "common": {
+    "evidence_contract": "No independent multiplication of the five views; each is derived from exactly one qualified experiment",
+    "required_observation_provenance": [
+      "physical_referent",
+      "observer_frame",
+      "source_frame",
+      "epoch",
+      "units",
+      "parity_or_spin",
+      "measurement_operator",
+      "selection_or_mask",
+      "cross_covariance",
+      "null_or_posterior_law"
+    ],
+    "auxiliaries_not_part_of_five": [
+      "identified_set",
+      "support_function",
+      "target_stability_modulus",
+      "source_response_qualification"
+    ],
+    "status_no_transfer": "UNAVAILABLE_OR_NOT_APPLICABLE",
+    "posterior_promotion": "forbidden_without_source_qualified_likelihood"
+  },
+  "studies": [
+    {
+      "id": "P1_TENSOR",
+      "source": [
+        "R39",
+        "R42",
+        "R54"
+      ],
+      "target": "local kinematical tensors and physically typed functionals",
+      "x": "joint signed carrier+physics pullback; normal/matter/observer frames separately",
+      "Q": "valid physical convex body else PRIOR_CONDITIONAL, statistical ellipsoid separately",
+      "Pi": "specified source posterior vs matched frequency null, never interchange",
+      "F": "occupancy only if finite reference body+measure; retain signed state",
+      "GF": "physical time/depth with full joint covariance, else NA",
+      "key_gain": "target-specific identification modulus, not new full-data Fisher information",
+      "blocking": "some physical x_C and calibration/MES anchors unqualified"
+    },
+    {
+      "id": "P2_LOWELL",
+      "source": [
+        "R60",
+        "R66"
+      ],
+      "target": "finite-band photon radiation stress and typed optical response",
+      "x": "signed alm and radiation STF5 plus PR3-PR4 paired processing",
+      "Q": "K_rad= {S: trace S=0, S+I/3 PSD}; exact gauge max(0,-3 lambda_min)",
+      "Pi": "simulation calibrated fixed-or-scanned axis null; no chi1 when optimize axis",
+      "F": "occupation in radiation stress body with source-qualified measure",
+      "GF": "NOT_APPLICABLE for one last scattering sky; release change is processing",
+      "key_gain": "invariant signed eigenvalue shape and physically positive body",
+      "blocking": "actual Commander matched temperature MC, beam/foreground/source transport"
+    },
+    {
+      "id": "RADIO_DIPOLE",
+      "source": [
+        "R65"
+      ],
+      "target": "source-count dipole per flux and selection",
+      "x": "signed dipole, flux bins, membership and selection response",
+      "Q": "survey selection/calibration-feasible body, not unit-norm physical speed",
+      "Pi": "conditional ring likelihood with clustering and source-component covariance",
+      "F": "only with a frozen catalog selection measure and bounded source body",
+      "GF": "flux-threshold path is NOT cosmological depth",
+      "key_gain": "separate shared-source contrast and directional response",
+      "blocking": "source association, LSS correlations and cross-survey overlap"
+    },
+    {
+      "id": "P6_KINEMATICS",
+      "source": [
+        "R61"
+      ],
+      "target": "sigma/H, omega/H, A/(cH), beta of specified congruence",
+      "x": "physical STF5+axial3+polar3+relative velocities, tensor mixed products",
+      "Q": "causality and GR Einstein constraints only where physically derived",
+      "Pi": "source-matched radial and nonradial law with calibration",
+      "F": "partial set occupancy only if physical measure specified; support remains auxiliary",
+      "GF": "covariant Fermi/parallel transport and actual depth/time overlap",
+      "key_gain": "rank + stability of target, including omega null under radial-only data",
+      "blocking": "physical weak-lensing/astrometric response to the same matter congruence"
+    },
+    {
+      "id": "P5_BIANCHI",
+      "source": [
+        "R48",
+        "R62"
+      ],
+      "target": "Bianchi structure constants, intrinsic curvature and tilted source history",
+      "x": "signed STF orbit plus a_i, n_ij, geometry and matter tilt",
+      "Q": "Jacobi, Hamiltonian, momentum and stress constraints",
+      "Pi": "family transfer likelihood and nonregular boundary/null law",
+      "F": "no canonical uniform over noncompact family parameter space",
+      "GF": "physical Bianchi history only with Einstein and optical transfer",
+      "key_gain": "stratified orbit invariants plus constraint-compatible candidate exclusion",
+      "blocking": "family-specific photon/PV/astrometric transfer & confidence coverage"
+    },
+    {
+      "id": "P3_DIRECTIONAL_H",
+      "source": [
+        "R64",
+        "R67"
+      ],
+      "target": "distance-defined H_D(z,n) distinct from Theta/3",
+      "x": "source log-distance, radial derivatives, signed mono/dipole/STF",
+      "Q": "D_L positivity and derivative H_D positive with physical optical conditions",
+      "Pi": "method/shared source covariance, PV and selection-calibrated null",
+      "F": "only reference-measure conditional occupancy",
+      "GF": "redshift transport and actual cross-shell covariance",
+      "key_gain": "physically intelligible calibration-limited directional derivative",
+      "blocking": "heterogeneous distance-indicator shared calibration and source selection"
+    },
+    {
+      "id": "P4_LOCAL_TILT",
+      "source": [
+        "R63",
+        "R65",
+        "R67"
+      ],
+      "target": "observer O relative to radiation R and matter M; normal N distinct",
+      "x": "beta_O|R, beta_M|R, beta_M|N, Gaia observer acceleration E1 and frame-spin B1 separate",
+      "Q": "causal speed ball with physical source-frame convention",
+      "Pi": "CMB aberration, radio count, Gaia/ICRF, kSZ remote dipole distinct null laws",
+      "F": "optional if an admitted physical reference measure exists",
+      "GF": "actual compensated velocity history with frame/matter transport",
+      "key_gain": "distinguish observer derivative/velocity/global tilt rather than relabeling a dipole",
+      "blocking": "source-qualified independent anchor, bias windows, full cross law"
+    }
+  ],
+  "research_priority": [
+    "nonregular STF P2 score control",
+    "physical Q_rad source-qualified R66 readout",
+    "target stability CF4 P3/P6",
+    "covariant transport P4/P5"
+  ],
+  "automatic_downloads": false,
+  "publication_claim": "NOT_READY_TO_SUBMIT; methodological framework, no new cosmological discovery"
+}
