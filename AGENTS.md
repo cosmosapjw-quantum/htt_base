@@ -4,6 +4,15 @@
 
 Upgrade `htt_base` before the external native low-ell Bianchi solver arrives. The active goal is not to fake a solver or force Bianchi family identification. The goal is to turn the current repository into a claim-tiered, manifest-backed, transfer-provenance-aware, MIO/HTT-separated observatory and inference framework that can later consume native solver outputs cleanly.
 
+## Research-loop interpretation policy (owner, 2026-11-19)
+
+- Every future cosmology/mathematical-physics research loop should connect its topic-specialized signed tensor/field carrier `x` and the four *dependent* views `Q, Pi, F, G_F` to actual GR/Einstein, kinetic/Boltzmann, Sachs/optical, cosmographic or relevant physics equations. Do not manufacture a view when physical scale/body, matched null, finite measure or source-transport law is missing. When only two scale-free geometric outputs are justified, report those explicitly, not four simulated observational quantities.
+- Assess physical explanatory power, geometry, signs, source/frame interpretation, counterexamples and falsifiable predictions alongside statistical power. A physical explanation is useful even without a demonstrable power gain. A representation alone does not increase full-likelihood Fisher information.
+- Explore general low-ell multipoles and nonlinear/redshift-dependent mappings, including finite-z Jacobi/geodesic transport or explicitly scoped arbitrary-z expansion. Never extrapolate a z→0 STF/quadrupole identity into a global high-z relation without an actual forward model.
+- For Bianchi cosmology start from an arbitrary admissible 3D Lie algebra `C^k_ij`, Jacobi `N^{ij}a_j=0`, homogeneous Gauss/Hamiltonian/Codazzi and tracefree Einstein evolution, and include observer/normal/matter frames, tilt, kinetic and multifluid normal flux/anisotropic stress. Do not restrict to non-tilted Type I. State exactly when a theorem requires Class A/B, one fluid, a special closure, or a congruence.
+- Preserve R68/R69 meanings: `x` is the signed carrier; `Q` is a typed physical or statistical body gauge; `Pi` is a law-calibrated exceedance, not truth; `F` is measure-dependent occupancy; `G_F` is transported physical occupancy change, not an arbitrary redshift slope. Distinguish auxiliary orbit shape `chi`, identified set, and `G_x` from those views.
+- Source of this standing interpretation contract: `docs/research_program/observational_publication_20261015/R69_P1_GR_PHYSICAL_TENSOR_LOOP_20261119/GENERAL_LOWELL_TILTED_BIANCHI_KO.md`. This policy is theory/handoff guidance only, not permission to change six-paper science DAG gates, implement the forbidden native low-ell solver, or publish unqualified observational claims.
+
 Work in the canonical DAG defined by `docs/codex_handoff/pr_backlog.yaml`; `machine_readable/pr_backlog.yaml` is a synchronized compatibility mirror. Never skip dependency gates to chase figures or headline results.
 
 ## Existing-checkout policy (owner reaffirmed 2026-10-14)
