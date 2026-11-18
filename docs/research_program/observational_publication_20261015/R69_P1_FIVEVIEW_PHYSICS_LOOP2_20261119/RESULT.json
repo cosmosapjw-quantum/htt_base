@@ -1,0 +1,187 @@
+{
+  "schema": "htt.r69.p1_physical_explanation_morphology/1",
+  "source": "CF4 original table4 fixed-width raw Galactic group coordinates; transformed with Astropy to ICRS for K0",
+  "raw_input_sha256": "b6edfec68bdfddeada8f3b8f11938f3bbda98a8e2894ff136a369c2ad6594e94",
+  "raw_rows": 38053,
+  "K0_status": "R62 actual apparent response STF5, NOT physical GR shear",
+  "K0_STF5": [
+    -0.012703128010752934,
+    -0.019952470814724125,
+    -0.00020715995373952114,
+    0.006235564252596576,
+    0.0008323006667775552
+  ],
+  "K0_chi": -0.1227664664766674,
+  "K0_eigenvalues": [
+    -0.01770261283423775,
+    0.0008196595646288132,
+    0.016882953269608945
+  ],
+  "K0_fullsky_intrinsic_positive_area": 0.5236421641269079,
+  "K0_CF4_unweighted_geometry_occupancy": [
+    {
+      "band_Mpc": [
+        0,
+        40
+      ],
+      "n": 2127,
+      "F_sample": 0.3723554301833568,
+      "F_plus": 0.35218093699515346,
+      "F_minus": 0.40044994375703036,
+      "F_hemisphere_gap": -0.0482690067618769
+    },
+    {
+      "band_Mpc": [
+        40,
+        80
+      ],
+      "n": 4073,
+      "F_sample": 0.32138472870120305,
+      "F_plus": 0.31432610744580586,
+      "F_minus": 0.32906201947719116,
+      "F_hemisphere_gap": -0.014735912031385301
+    },
+    {
+      "band_Mpc": [
+        80,
+        140
+      ],
+      "n": 6630,
+      "F_sample": 0.2692307692307692,
+      "F_plus": 0.22626463992025916,
+      "F_minus": 0.3351165456629729,
+      "F_hemisphere_gap": -0.10885190574271372
+    },
+    {
+      "band_Mpc": [
+        140,
+        220
+      ],
+      "n": 7040,
+      "F_sample": 0.29857954545454546,
+      "F_plus": 0.23407611910865708,
+      "F_minus": 0.46470289487049266,
+      "F_hemisphere_gap": -0.23062677576183557
+    },
+    {
+      "band_Mpc": [
+        220,
+        400
+      ],
+      "n": 13906,
+      "F_sample": 0.22493887530562348,
+      "F_plus": 0.21687382297551788,
+      "F_minus": 0.39461172741679873,
+      "F_hemisphere_gap": -0.17773790444128085
+    },
+    {
+      "band_Mpc": [
+        400,
+        null
+      ],
+      "n": 4277,
+      "F_sample": 0.2066869300911854,
+      "F_plus": 0.2070908664005635,
+      "F_minus": 0.1111111111111111,
+      "F_hemisphere_gap": 0.0959797552894524
+    },
+    {
+      "band_Mpc": [
+        40,
+        400
+      ],
+      "n": 31649,
+      "F_sample": 0.26300988972795347,
+      "F_plus": 0.2304235938074425,
+      "F_minus": 0.37430245535714285,
+      "F_hemisphere_gap": -0.14387886154970034
+    }
+  ],
+  "K0_CF4_40_400_sample_minus_fullsky": -0.2606322743989544,
+  "chi_zero_saddle_asymptotic": [
+    {
+      "delta": 0.01,
+      "chi": -0.026107692582467368,
+      "F": 0.5074858304404726,
+      "slope_F_delta_over_log": 0.16255274263803138,
+      "expected_limit_1_over_2pi": 0.15915494309189535
+    },
+    {
+      "delta": 0.001,
+      "chi": -0.002599372321587785,
+      "F": 0.5011125244583664,
+      "slope_F_delta_over_log": 0.16105441108364443,
+      "expected_limit_1_over_2pi": 0.15915494309189535
+    },
+    {
+      "delta": 0.0001,
+      "chi": -0.00025982060859298624,
+      "F": 0.5001478580694677,
+      "slope_F_delta_over_log": 0.1605348591867354,
+      "expected_limit_1_over_2pi": 0.15915494309189535
+    },
+    {
+      "delta": 1e-05,
+      "chi": -2.59808920142811e-05,
+      "F": 0.5000184499094057,
+      "slope_F_delta_over_log": 0.16025387693015053,
+      "expected_limit_1_over_2pi": 0.15915494309189535
+    }
+  ],
+  "two_depth_shape_calibration_schur": [
+    {
+      "bands": [
+        [
+          40,
+          80
+        ],
+        [
+          80,
+          140
+        ]
+      ],
+      "n": [
+        4073,
+        6630
+      ],
+      "unit_delta_response_eigenvalues": [
+        202.1244196201731,
+        232.58317921029237,
+        356.9099922690057,
+        421.4316774272697,
+        456.09516651101524
+      ],
+      "unit_delta_response_condition": 1.5021674320463,
+      "calibration_profile": "one shared five-component angular calibration across the two bins; independent noise and homoscedastic weights; g1-g2=1 formal normalization",
+      "physical_response_g_z": "UNQUALIFIED, no actual Fisher/posterior"
+    },
+    {
+      "bands": [
+        [
+          80,
+          140
+        ],
+        [
+          140,
+          220
+        ]
+      ],
+      "n": [
+        6630,
+        7040
+      ],
+      "unit_delta_response_eigenvalues": [
+        240.71820323080888,
+        266.29912957117364,
+        487.5710663964828,
+        581.952313563255,
+        677.9549534099182
+      ],
+      "unit_delta_response_condition": 1.6782086396299862,
+      "calibration_profile": "one shared five-component angular calibration across the two bins; independent noise and homoscedastic weights; g1-g2=1 formal normalization",
+      "physical_response_g_z": "UNQUALIFIED, no actual Fisher/posterior"
+    }
+  ],
+  "tests": "exact integral and axial/symmetric limits, sign inversion, Schur equivalent forms",
+  "physical_inference": "NOT MADE; no source-specific likelihood/covariance, full-sky physical sigma or z response supplied"
+}

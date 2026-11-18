@@ -1,0 +1,70 @@
+{
+  "schema": "htt.r69.p1_optical_tilt_consistency/1",
+  "constant_tidal_toy": {
+    "weyl_pure_tracefree": [
+      {
+        "weyl_epsilon": 0.2,
+        "DA_over_affine": 0.9997777601371263,
+        "deficit": 0.00022223986287372988,
+        "quadratic_epsilon2_prediction": 0.00022222222222222226
+      },
+      {
+        "weyl_epsilon": 0.1,
+        "DA_over_affine": 0.99994444334209,
+        "deficit": 5.5556657910016405e-05,
+        "quadratic_epsilon2_prediction": 5.5555555555555565e-05
+      },
+      {
+        "weyl_epsilon": 0.05,
+        "DA_over_affine": 0.999986111042217,
+        "deficit": 1.3888957782981493e-05,
+        "quadratic_epsilon2_prediction": 1.3888888888888891e-05
+      },
+      {
+        "weyl_epsilon": 0.025,
+        "DA_over_affine": 0.9999965277734718,
+        "deficit": 3.4722265281894593e-06,
+        "quadratic_epsilon2_prediction": 3.472222222222223e-06
+      }
+    ],
+    "ricci_isotropic": [
+      {
+        "trace_k": 0.2,
+        "DA": 0.9669984170995507,
+        "linear_deficit_pred": 0.03333333333333333,
+        "exact_deficit": 0.0330015829004493
+      },
+      {
+        "trace_k": 0.1,
+        "DA": 0.9834164685292783,
+        "linear_deficit_pred": 0.016666666666666666,
+        "exact_deficit": 0.01658353147072167
+      },
+      {
+        "trace_k": 0.05,
+        "DA": 0.9916874752156221,
+        "linear_deficit_pred": 0.008333333333333333,
+        "exact_deficit": 0.00831252478437794
+      }
+    ]
+  },
+  "tilt_two_perfect_fluids": {
+    "beta": 0.3,
+    "gamma2": 1.0989010989010988,
+    "one_fluid_P0_P1_P2": [
+      1.1318681318681318,
+      -0.6593406593406574,
+      0.06593406593405769
+    ],
+    "equal_opposite_two_fluids_P0_P1_P2": [
+      2.2637362637362637,
+      -1.3010426069826053e-17,
+      0.13186813186811547
+    ],
+    "two_fluid_normal_momentum_sum": "exactly zero for equal enthalpy and opposite beta",
+    "two_fluid_quadrupole_coefficient_over_2fluid_monopole": 0.05825242718445878,
+    "remark": "local null contraction only; source-specific GR geometry and null geodesics not solved"
+  },
+  "c_G": "restored in analytic report; code normalizes k=omega(N+e), eps and lambda",
+  "status": "ODE solver agrees with exact constant-tidal Jacobi; analytical Legendre low multipoles agree with quadrature; no observational inference"
+}

@@ -1,0 +1,52 @@
+{
+  "schema": "htt.r69.p1_matrix_transfer_identifiability/1",
+  "source": "CF4 table4 40-80 and 80-140 Mpc sky positions, unit weight",
+  "theorem": "profiled Fisher=(G2-G1)^T(A1^-1+A2^-1)^-1(G2-G1)",
+  "two_depth_G_case_rotation_only": [
+    {
+      "axis_z_rotation_radians": 0.0,
+      "effective_rank": 0,
+      "fisher_eigenvalues": [
+        9.965503289302586e-30,
+        1.1467236080688253e-29,
+        1.7597021223984511e-29,
+        2.0778185909005338e-29,
+        2.2487227870050474e-29
+      ]
+    },
+    {
+      "axis_z_rotation_radians": 0.37,
+      "effective_rank": 4,
+      "fisher_eigenvalues": [
+        2.1316282072796884e-14,
+        31.58764143236235,
+        48.4576259602111,
+        193.96280851247494,
+        219.41898303097156
+      ]
+    },
+    {
+      "axis_z_rotation_radians": 3.141592653589793,
+      "effective_rank": 2,
+      "fisher_eigenvalues": [
+        -1.8076520064389836e-13,
+        -6.493192074828506e-14,
+        4.291870903981398e-29,
+        974.1517927926773,
+        1433.058244296868
+      ]
+    }
+  ],
+  "two_depth_G_case_rotation_with_10pct_amplitude_change": {
+    "eig": [
+      2.4767691274840797,
+      37.07867202658843,
+      56.887553091109794,
+      217.350669497533,
+      245.6675454372841
+    ],
+    "rank": 5
+  },
+  "general_matrix_schur_residual_Frob": 5.348972958972869e-13,
+  "qualification": "R matrices only illustrative source-response operators; pure tetrad coordinate rotation is gauge, not a physical signal; no actual shear posterior"
+}
