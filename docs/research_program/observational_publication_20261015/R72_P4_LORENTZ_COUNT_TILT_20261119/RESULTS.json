@@ -1,0 +1,136 @@
+{
+  "schema": "htt.r72.p4_lorentz_count_tilt_physics/1",
+  "symbolic": {
+    "count_density_coeff_difference": "exact symbolic zero through order beta^2",
+    "log_count_coeff_difference": "exact symbolic zero through order beta^2",
+    "power_law_specialization": "exact symbolic zero",
+    "independent_tool": "SymPy"
+  },
+  "finite_flux_mixture": {
+    "lower_flux": 20.0,
+    "upper_flux": 80.0,
+    "alpha": 0.75,
+    "beta_CMB_reference": 0.001233586736861806,
+    "population_A": {
+      "k": 4.0,
+      "kappa": 0.0,
+      "a2_exact": 1.01449031031126e-05,
+      "a2_quadratic": 1.0144908249075725e-05,
+      "Q_STF_amplitude_over_beta2": 10.0
+    },
+    "population_B": {
+      "k": 4.000000000002989,
+      "kappa": 0.999996962677569,
+      "a2_exact": 1.0652149691803324e-05,
+      "a2_quadratic": 1.065215366152951e-05,
+      "Q_STF_amplitude_over_beta2": 10.5
+    },
+    "same_first_order_dipole_both": 0.004934346947447224,
+    "second_order_difference_is_physical_selection_curvature": true
+  },
+  "R65_actual_mask_geometry": {
+    "source_mask_sha256": "dc1d4d635737c844ff0e2c9e6db5084762959ed13e5bbddeeabd685d093b3d64",
+    "source_mask_pixels": 33000,
+    "source_exposure_model": "uniform equal-area retained pixels, not ring-conditioned likelihood",
+    "CMB_ICRS_RA_DEC_deg": [
+      167.94190332672108,
+      -6.944259977548064
+    ],
+    "plus_minus_pixels": [
+      16799,
+      16201
+    ],
+    "STF_hemisphere_window_operator_Frobenius": 0.16820549195687107,
+    "unit_rank1_quadrupole_leakage": -0.02010943263177169,
+    "illustrative_k": 3.8254286132431075,
+    "illustrative_beta_CMB": 0.001233586736861806,
+    "pure_boost_count_STF_coefficient": 1.4045117734618819e-05,
+    "pure_boost_chi": 0.9999999999999998,
+    "pure_boost_intrinsic_FOmega": 0.42264973081037416,
+    "pure_boost_masked_hemisphere_mean_leakage": -2.82439348889619e-07,
+    "observed_counts_not_a_boost_measurement": [
+      {
+        "bin": 0,
+        "observed_total_masked": 115906,
+        "observed_CMB_hemispheres": [
+          59342,
+          56564
+        ],
+        "observed_hemisphere_fraction": 0.5119838489810709,
+        "uniform_mask_sky_pixel_fraction": 0.5090606060606061,
+        "meaning": "raw selected component count fraction, NOT corrected cosmic occupancy or posterior"
+      },
+      {
+        "bin": 1,
+        "observed_total_masked": 65260,
+        "observed_CMB_hemispheres": [
+          33465,
+          31795
+        ],
+        "observed_hemisphere_fraction": 0.5127949739503525,
+        "uniform_mask_sky_pixel_fraction": 0.5090606060606061,
+        "meaning": "raw selected component count fraction, NOT corrected cosmic occupancy or posterior"
+      },
+      {
+        "bin": 2,
+        "observed_total_masked": 55581,
+        "observed_CMB_hemispheres": [
+          28421,
+          27160
+        ],
+        "observed_hemisphere_fraction": 0.5113438045375218,
+        "uniform_mask_sky_pixel_fraction": 0.5090606060606061,
+        "meaning": "raw selected component count fraction, NOT corrected cosmic occupancy or posterior"
+      }
+    ]
+  },
+  "R65_actual_paired_source_and_fisher": {
+    "R65_source_sha256": "203f6cf070661afb923aa095ce992278c720f3e7a7149107c14c7e8a28c761c7",
+    "paired_integrated_minus_peak_delta": [
+      -0.0016440241048542026,
+      0.005524671826759816
+    ],
+    "paired_cross_source_covariance_verified": true,
+    "paired_working_wald": 30.989468960483375,
+    "wrong_independent_working_wald": 1.315439672822672,
+    "paired_same_source_n": 241892,
+    "paired_left_right_n": [
+      241892,
+      263158
+    ],
+    "flux_bin_k_assumed_alpha_0p75": [
+      3.3580293513709387,
+      3.521797425681888,
+      4.133305446105684
+    ],
+    "synthetic_source_response_Fisher_rank": 2,
+    "equal_k_projected_rank": 0,
+    "synthetic_Schur_fisher_eigenvalues": [
+      0.08547614340306622,
+      0.11681577185201504
+    ],
+    "R65_actual_beta_plus_residual_rank": 4,
+    "R65_beta_perp_hat": [
+      -0.0013730496478864328,
+      0.0051183662781890136
+    ],
+    "R65_beta_perp_working_sd": [
+      0.010367059240497786,
+      0.011715376167975373
+    ],
+    "CMB_beta_xy_ICRS": [
+      -0.0011975195919932478,
+      0.0002558100403982073
+    ],
+    "conditional_beta_minus_CMB_Wald2": 0.17235042220995178,
+    "meaning": "working R65 same-source conditional Poisson/Gaussian; LSS and physical 3D velocity not qualified"
+  },
+  "R63_actual_CF4_compensated_history": {
+    "R63_source_sha256": "cdde616bb5a95bd3e8cd3353471f11b8a8bbc0fb7a2cd4187f14a42e3c6c787a",
+    "actual_CF4_selected_groups": 35970,
+    "restricted_history_working_power_alpha": 0.1,
+    "restricted_history_power_upper_bound": 0.10000041873089793,
+    "meaning": "compensated dust/radiation history vs constant bulk only, NOT a global-tilt exclusion"
+  },
+  "scope": "source and geometry checks, no re-estimated radio cosmic dipole, source velocity or Bianchi tilt posterior"
+}
