@@ -1,0 +1,107 @@
+{
+  "schema": "htt.r79.pre_dag_ten_node_code_physics/1",
+  "lane_default": "auto",
+  "read_only_source_sha256": {
+    "docs/research_program/observational_publication_20261015/R61_KINEMATIC_MEASUREMENT_20261117/RESULTS/IMAGES/KINEMATIC_IMAGES.json": "2aa780b488378f85293077c59c10cd6c13cb05e92628a9c681b9fe8c3b896be8",
+    "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/RESULTS/NVSS_CONDITIONAL_CARRIERS.npz": "44e5d4ec3830e84112a328902adb2f3fdb822f7fc88324cff5da18800a9ff1ac",
+    "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/RESULTS/OBSERVABLES.json": "6d9c3f11a23995565dca25fe8ae02ef1ad79b3bc3f8ddf99f3c8c0a497b39d01",
+    "docs/research_program/observational_publication_20261015/R74_P4_SOURCE_SCORE_FIVEVIEW_20261119/RESULTS.json": "60eb29ed1c49caf35c0b90c9bd17d2fb357fd4e3ce2fde2517716d51b0cd4bad",
+    "docs/research_program/observational_publication_20261015/R75_P5_LIE_TILT_FIVEVIEW_20261119/RESULTS.json": "ed6ae8e36f0e79b7afcdc27ea679a4658c690d66fde817acb0a64c3a2ab67b45",
+    "docs/research_program/observational_publication_20261015/R79_PRE_DAG_CODING_20261119/C7_GAIA_FULL_REPLAY.json": "6b64dd00e379e48b4acb8bd2cb93b8603a7dbfe89aa0a48d5264f82964275e8a"
+  },
+  "SQ-RADIO": {
+    "bin_1": {
+      "selected_count": 115906,
+      "source_F": 0.5121375145877464,
+      "conditional_dF_dbeta": [
+        -0.9405345451699523,
+        0.07556093253380754,
+        2.7104667085783018e-17
+      ],
+      "old_R74_F_absolute_error": 2.220446049250313e-16,
+      "old_R74_gradient_max_error": 3.205291001762106e-17,
+      "observed_physical_beta_or_GF": false
+    },
+    "bin_2": {
+      "selected_count": 65260,
+      "source_F": 0.5127116806149393,
+      "conditional_dF_dbeta": [
+        -0.9877193496276692,
+        0.07883247238813669,
+        1.539880639122788e-17
+      ],
+      "old_R74_F_absolute_error": 1.1102230246251565e-16,
+      "old_R74_gradient_max_error": 5.551115123125783e-16,
+      "observed_physical_beta_or_GF": false
+    },
+    "bin_3": {
+      "selected_count": 55581,
+      "source_F": 0.512609784917573,
+      "conditional_dF_dbeta": [
+        -1.1572618060150475,
+        0.09305826044273091,
+        3.759902951128586e-17
+      ],
+      "old_R74_F_absolute_error": 1.1102230246251565e-16,
+      "old_R74_gradient_max_error": 2.220446049250313e-16,
+      "observed_physical_beta_or_GF": false
+    }
+  },
+  "SQ-PHOTON_FLUX_AND_LIE_FLUX": {
+    "PR3": {
+      "P_min_eigen": 0.3333294543316302,
+      "photon_flux_source_missing": true
+    },
+    "PR4": {
+      "P_min_eigen": 0.33332917157133457,
+      "photon_flux_source_missing": true
+    },
+    "exceptional_VI_minus_one_ninth": {
+      "Codazzi_map_rank": 2,
+      "rotation_equivariance": "PASS",
+      "total_flux_from_independent_physical_source": "UNAVAILABLE"
+    }
+  },
+  "SQ-CF4_AND_P1_ANCHOR": {
+    "R61_source_rows": 35970,
+    "simultaneous11_cutoff": 19.67513757268249,
+    "three_source_angular_lower": [
+      -0.04817617031772065,
+      -0.0691375250313068,
+      -0.06529863306583229
+    ],
+    "three_source_angular_upper": [
+      0.07403019312391212,
+      0.06352977782911115,
+      0.06823104775169105
+    ],
+    "conditional_Schur_eigen_min": 1.6628172607389852e-05,
+    "physical_H_and_vorticity_unidentified": true
+  },
+  "SQ-OPTICAL": {
+    "0.0": {
+      "fixed_affine_J_analytic": 1.0,
+      "Frobenius_error": 3.1401849173675503e-16
+    },
+    "0.1": {
+      "fixed_affine_J_analytic": 0.9834164685292911,
+      "Frobenius_error": 7.395135480400581e-14
+    }
+  },
+  "SQ-GAIA": {
+    "full_Gaia_total": 1614173,
+    "quality": 1580645,
+    "R69_source_parity_max_error": 4.1777494858939505e-13,
+    "R69_192_patch_cov_relative_error": 1.2896798275409711e-14,
+    "original_data_sha": "e69cfff82f762c00d1d6a259c6d003fd20f805f3b1fcd4acc81d847c485120c0",
+    "physical_kinematic_transfer": "NOT_ESTABLISHED"
+  },
+  "SQ-CMB_NULL": {
+    "synthetic_draws": 135,
+    "relative_sample_cov_error": 5.11267594731491e-16,
+    "actual_CMB_matched_MC_null": "BLOCKED_SOURCE"
+  },
+  "SQ-FRAME": "proper SO(3) STF and Lie rank tested; physical beta/normal reference not measured",
+  "SQ-CROSS_COV": "Schur SPD arithmetic tested; actual cross-probe source C missing",
+  "science_claim": "NUMERIC_PREPARATION_CHECKED; no SQ5-10 science gate promoted"
+}

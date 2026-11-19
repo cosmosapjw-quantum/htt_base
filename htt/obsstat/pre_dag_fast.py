@@ -14,6 +14,140 @@ from scipy.linalg import cho_factor,cho_solve
 from scripts.r68.fiveview_geometry import E,stf_matrix
 
 
+# Automatic accelerated data-analysis lane (versioned source-verified kernels).
+# Compiled outputs are placed in a disposable cache, never in the repository.
+import fcntl
+import hashlib
+import json
+import os
+import platform
+import shutil
+import subprocess
+import tempfile
+import threading
+
+_RECEIPT = threading.local()
+_POLICY_FILE=Path(__file__).with_name("analysis_lane.json")
+_KERNEL_SOURCES={
+    "gaia":Path(__file__).parent/"native"/"vsh_normal.cpp",
+    "hemisphere":Path(__file__).parent/"native"/"hemisphere_moments.f90",
+}
+_KERNEL_CONFIG_NAMES={
+    "gaia":"gaia_correlated_vsh_2x2_to_normal_equations",
+    "hemisphere":"cf4_weighted_hemisphere_geometry",
+}
+_MODE_CHOICES=frozenset(("auto","native","numpy"))
+
+def analysis_lane_policy():
+    """Effective project-wide persistent default and explicitly allowed override."""
+    config=json.loads(_POLICY_FILE.read_text())
+    mode=os.environ.get("HTT_ANALYSIS_BACKEND",config["default_backend"])
+    if mode not in _MODE_CHOICES:
+        raise ValueError("HTT_ANALYSIS_BACKEND must be auto, native or numpy")
+    return {
+        "mode":mode,
+        "source":"htt/obsstat/analysis_lane.json",
+        "fallback":config["fallback"],
+        "kernels":config["supported_native"],
+        "native_cache":"temporary_certified_by_source_sha",
+    }
+
+def last_backend_receipt():
+    """The calling thread's last *actual* kernel selection and fallback."""
+    return dict(getattr(_RECEIPT,"value",
+                        {"used":"NOT_RUN","source_certified":False}))
+
+def _set_backend_receipt(**attrs):
+    _RECEIPT.value=dict(attrs)
+
+@lru_cache(maxsize=4)
+def _certified_cached_native(kind):
+    """One build per certified source/compiler/architecture with safe process lock.
+
+    Failure here is a transparent NumPy fallback in auto mode, not a successful
+    native execution. Changed native source SHA invalidates automatic trust.
+    """
+    if kind not in _KERNEL_SOURCES:
+        raise ValueError("unknown native kernel")
+    spec=analysis_lane_policy()["kernels"][_KERNEL_CONFIG_NAMES[kind]]
+    source=_KERNEL_SOURCES[kind]
+    src_sha=hashlib.sha256(source.read_bytes()).hexdigest()
+    if src_sha!=spec["certified_source_sha256"]:
+        raise RuntimeError(f"uncertified_{kind}_source_sha256_change")
+    compiler_name="g++" if kind=="gaia" else "gfortran"
+    compiler=shutil.which(compiler_name)
+    if compiler is None:
+        raise RuntimeError(f"{compiler_name}_compiler_unavailable")
+    version=subprocess.check_output([compiler,"--version"],text=True,timeout=10).splitlines()[0]
+    flags=(["-O3","-std=c++17","-fPIC","-shared","-fopenmp",
+            "-ffp-contract=off","-fno-fast-math"] if kind=="gaia" else
+           ["-O3","-fPIC","-shared","-fno-fast-math"])
+    key=hashlib.sha256(
+        (src_sha+str(flags)+version+platform.machine()).encode("utf-8")).hexdigest()[:24]
+    cache_root=Path(os.environ.get("HTT_NATIVE_CACHE_DIR",
+                                 str(Path(tempfile.gettempdir())/"htt_r79_native_cache")))
+    folder=cache_root/kind/key
+    folder.mkdir(parents=True,exist_ok=True)
+    binary=folder/("libhtt_r79_vsh.so" if kind=="gaia" else "libhtt_r79_hemisphere.so")
+    receipt=folder/"source_and_binary.json"
+    lock=folder/"build.lock"
+    with lock.open("a+b") as fd:
+        fcntl.flock(fd,fcntl.LOCK_EX)
+        if binary.is_file() and receipt.is_file():
+            try:
+                state=json.loads(receipt.read_text())
+                if (state.get("source_sha256")==src_sha and
+                    state.get("binary_sha256")==
+                        hashlib.sha256(binary.read_bytes()).hexdigest()):
+                    return str(binary)
+            except (OSError,ValueError,TypeError):
+                pass
+        temporary=folder/f"temporary_{os.getpid()}.so"
+        command=[compiler,*flags,str(source),"-o",str(temporary)]
+        try:
+            subprocess.run(command,check=True,capture_output=True,
+                           text=True,timeout=90)
+            if not temporary.is_file() or temporary.stat().st_size==0:
+                raise RuntimeError("native_compiler_produced_no_binary")
+            os.replace(temporary,binary)
+            receipt.write_text(json.dumps({
+                "source_sha256":src_sha,
+                "binary_sha256":hashlib.sha256(binary.read_bytes()).hexdigest(),
+                "compiler_version":version,"flags":flags,
+                "kind":kind,"certified_source":True},sort_keys=True)+"\n")
+        finally:
+            if temporary.exists():
+                temporary.unlink()
+    return str(binary)
+
+def _select_native(kind,rows,requested):
+    """Return path or None; 'auto' safe-falls-back, 'native' requires native."""
+    if requested is None:
+        return None,"explicit_numpy_reference",False
+    if requested!="auto":
+        return str(requested),"explicit_native_binary",False
+    policy=analysis_lane_policy()
+    mode=policy["mode"]
+    if mode=="numpy":
+        return None,"HTT_ANALYSIS_BACKEND_numpy",False
+    spec=policy["kernels"][_KERNEL_CONFIG_NAMES[kind]]
+    if mode=="auto" and rows<spec["minimum_rows"]:
+        return None,"small_input_prefers_numpy",False
+    try:
+        return _certified_cached_native(kind),None,True
+    except (OSError,RuntimeError,ValueError,subprocess.SubprocessError) as ex:
+        if mode=="native":
+            raise RuntimeError(f"required_native_{kind}_unavailable: {ex}") from ex
+        return None,str(ex)[:240],False
+
+def _threads(kind,requested):
+    if requested is None:
+        spec=analysis_lane_policy()["kernels"][_KERNEL_CONFIG_NAMES[kind]]
+        requested=min(spec["default_threads"],max(1,os.cpu_count() or 1))
+    if not isinstance(requested,int) or not 1<=requested<=64:
+        raise ValueError("native threads must be integer 1..64")
+    return requested
+
 def _array(x,name,ndim=None,shape_tail=None):
     z=np.asarray(x,dtype=np.float64)
     if ndim is not None and z.ndim!=ndim:
@@ -40,7 +174,7 @@ def _library(path):
     return ctypes.CDLL(str(path.resolve()))
 
 
-def accumulate_gaia(B,mu,e1,e2,rho,*,native_lib=None,threads=1):
+def accumulate_gaia(B,mu,e1,e2,rho,*,native_lib="auto",threads=None):
     """Real source 2x2 correlated astrometric Gaussian Fisher, score and chi2.
 
     B[N,2,P] physical tangent templates, mu[N,2], e1/e2 positive errors,
@@ -60,8 +194,8 @@ def accumulate_gaia(B,mu,e1,e2,rho,*,native_lib=None,threads=1):
         raise ValueError("per-source Gaia covariance dimensions mismatch")
     if np.any(e1<=0) or np.any(e2<=0) or np.any(np.abs(rho)>=1):
         raise ValueError("non-SPD per-source astrometric covariance")
-    if not isinstance(threads,int) or threads<1 or threads>64:
-        raise ValueError("threads must be integer 1..64")
+    threads=_threads("gaia",threads)
+    native_lib,fallback,certified=_select_native("gaia",n,native_lib)
     if native_lib is not None:
         lib=_library(str(native_lib))
         fn=lib.htt_vsh_normal_v1
@@ -77,6 +211,10 @@ def accumulate_gaia(B,mu,e1,e2,rho,*,native_lib=None,threads=1):
             raise RuntimeError(f"C++ Gaia source kernel failed, code {rc}")
         if not np.all(np.isfinite(F)) or not np.all(np.isfinite(score)) or not np.isfinite(chi[0]):
             raise FloatingPointError("native Gaia accumulation nonfinite")
+        _set_backend_receipt(kernel="gaia_weighted_normal_equations",
+                             used="cpp_native",source_certified=certified,
+                             native_threads=threads,n_rows=n,
+                             binary_path=str(native_lib),fallback_reason=None)
         return F,score,float(chi[0])
     inv=1.0/(1-rho*rho)
     w00=inv/(e1*e1);w11=inv/(e2*e2);w01=-rho*inv/(e1*e2)
@@ -89,10 +227,13 @@ def accumulate_gaia(B,mu,e1,e2,rho,*,native_lib=None,threads=1):
     chi=float(np.sum(mu[:,0]*v0+mu[:,1]*v1))
     if not np.all(np.isfinite(F)) or not np.all(np.isfinite(score)) or not np.isfinite(chi):
         raise FloatingPointError("source covariance accumulation overflow")
+    _set_backend_receipt(kernel="gaia_weighted_normal_equations",
+                         used="numpy_reference",source_certified=False,
+                         native_threads=0,n_rows=n,fallback_reason=fallback)
     return F,score,chi
 
 
-def hemisphere_moments(directions,axis,weights=None,*,native_lib=None):
+def hemisphere_moments(directions,axis,weights=None,*,native_lib="auto"):
     """Normalized weighted hemisphere m and M, plus weight totals/counts.
 
     Negative dot belongs to hemisphere 0; exactly zero also belongs to 0.
@@ -108,6 +249,7 @@ def hemisphere_moments(directions,axis,weights=None,*,native_lib=None):
     counts=np.bincount(labels.astype(np.int64),minlength=2)
     if any(counts==0):
         raise ValueError("both hemispheres require sources")
+    native_lib,fallback,certified=_select_native("hemisphere",len(n),native_lib)
     if native_lib is not None:
         lib=_library(str(native_lib))
         fn=lib.htt_hemisphere_moments_v1
@@ -140,6 +282,11 @@ def hemisphere_moments(directions,axis,weights=None,*,native_lib=None):
             second[h]=np.einsum("n,ni,nj->ij",wh,rows,rows)
     if np.any(sumw<=0) or not np.all(np.isfinite(second)):
         raise ValueError("empty weight hemisphere or nonfinite result")
+    _set_backend_receipt(kernel="weighted_hemisphere_moments",
+                         used="fortran_native" if native_lib is not None else "numpy_reference",
+                         source_certified=certified,native_threads=1 if native_lib else 0,
+                         n_rows=len(n),binary_path=str(native_lib) if native_lib else None,
+                         fallback_reason=fallback if native_lib is None else None)
     return {"weights":sumw,"means":moments/sumw[:,None],
             "second":second/sumw[:,None,None],"counts":counts}
 

@@ -1,0 +1,73 @@
+{
+  "schema": "htt.r79.gaia_16D_full_source_replay/1",
+  "original_source_sha256": "e69cfff82f762c00d1d6a259c6d003fd20f805f3b1fcd4acc81d847c485120c0",
+  "original_R69_saved_result_sha256": "070fdc7278837709a16195eb3fb3833a075b1ec460343bfb14e42d9a2082d6f6",
+  "source_total_rows": 1614173,
+  "selection": "original R69 valid, RUWE<1.4, 8+ visibility periods, nonduplicated source",
+  "covariance": "same 2x2 per-source astrometric statistical error, no LSS/scanning calibration",
+  "operator": "original R69 tangent templates; new C++ compensated normal equations + original R69 fit_case",
+  "chunk_rows": 65536,
+  "threads": 8,
+  "library_sha256": "e446d4cf0b546b981d075f4acd4d45264abf468b86fb074c5a9ddb1de2fa87a7",
+  "original_saved_fit_comparison": {
+    "all": {
+      "n": 1614173,
+      "errors": {
+        "beta_coeff_relative": 1.0573609382079019e-14,
+        "formal_cov_relative": 6.555974593314044e-15,
+        "chi2_per_dof_abs": 4.440892098500626e-16,
+        "E2_shape_chi_abs": 7.771561172376096e-16,
+        "F_condition_relative": 7.700898676238112e-15
+      },
+      "E2_shape_chi": 0.7208191322480045,
+      "F_condition": 7.7274038552833515
+    },
+    "quality": {
+      "n": 1580645,
+      "errors": {
+        "beta_coeff_relative": 1.2237661448480209e-14,
+        "formal_cov_relative": 6.397298895266889e-15,
+        "chi2_per_dof_abs": 0.0,
+        "E2_shape_chi_abs": 1.7763568394002505e-15,
+        "F_condition_relative": 5.882167952099215e-15
+      },
+      "E2_shape_chi": 0.7108927156212632,
+      "F_condition": 7.700749073059215
+    },
+    "quality_north": {
+      "n": 862532,
+      "errors": {
+        "beta_coeff_relative": 2.0388288548192597e-13,
+        "formal_cov_relative": 4.1777494858939505e-13,
+        "chi2_per_dof_abs": 0.0,
+        "E2_shape_chi_abs": 1.2989609388114332e-13,
+        "F_condition_relative": 2.8055137151533384e-13
+      },
+      "E2_shape_chi": 0.8272102784778397,
+      "F_condition": 349.7104306560831
+    },
+    "quality_south": {
+      "n": 718113,
+      "errors": {
+        "beta_coeff_relative": 7.417760150023229e-14,
+        "formal_cov_relative": 2.5442594789637125e-13,
+        "chi2_per_dof_abs": 6.661338147750939e-16,
+        "E2_shape_chi_abs": 9.825473767932635e-14,
+        "F_condition_relative": 1.4690806567187315e-13
+      },
+      "E2_shape_chi": 0.6224871321664087,
+      "F_condition": 355.9773598050186
+    }
+  },
+  "original_saved_patch_covariance_comparison": {
+    "relative_covariance": 1.2896798275409711e-14,
+    "patch_192_cov_positive_min_eigen": 1.953981698635817e-07,
+    "source": "same original Gaia catalogue/quality mask and R69 patch residual score"
+  },
+  "native_fit_elapsed_seconds": 2.255452466022689,
+  "original_patch_second_pass_seconds": 1.309242729039397,
+  "maxrss_kib": 497556,
+  "numpy": "2.5.4",
+  "python": "3.12.3",
+  "scientific_limits": "Original source processing reproduced but no new proper-motion cosmology, cosmic shear, vorticity, tilted Bianchi or source-calibrated null."
+}

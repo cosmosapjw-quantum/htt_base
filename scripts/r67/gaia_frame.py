@@ -22,7 +22,8 @@ def eb_design(ra_rad, dec_rad):
     return n,B
 
 
-def accumulate(B, mu, e1, e2, corr):
+def accumulate_numpy(B, mu, e1, e2, corr):
+    """Original 2026 reference implementation, retained for exact benchmarks."""
     inv=1/(1-corr*corr)
     w00=inv/e1**2;w11=inv/e2**2;w01=-corr*inv/e1/e2
     v0=w00*mu[:,0]+w01*mu[:,1]
@@ -33,6 +34,16 @@ def accumulate(B, mu, e1, e2, corr):
     F+=np.einsum('ni,nj,n->ij',B0,B1,w01)+np.einsum('ni,nj,n->ij',B1,B0,w01)
     chi=np.sum(mu[:,0]*v0+mu[:,1]*v1)
     return F,score,float(chi)
+
+
+def accumulate(B, mu, e1, e2, corr):
+    """Default certified accelerated lane; NumPy fallback explicitly recorded.
+
+    Source B/y/covariance and output contract are unchanged. Use
+    HTT_ANALYSIS_BACKEND=numpy to force the original reference lane.
+    """
+    from htt.obsstat.pre_dag_fast import accumulate_gaia
+    return accumulate_gaia(B,mu,e1,e2,corr)
 
 
 def finalize(F,score,chisq,N):

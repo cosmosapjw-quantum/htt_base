@@ -5,7 +5,7 @@ import numpy as np
 from astropy.io import fits
 from threadpoolctl import threadpool_info
 from scripts.r69.gaia_e2_b2 import prepare,templates
-from scripts.r67.gaia_frame import accumulate
+from scripts.r67.gaia_frame import accumulate_numpy
 
 GAIA=Path("/mnt/extdrive/workdir/raw/observational_bundles/Gaia_CRF3_astrometry/gaia_crf3_astrometry_full.fits")
 PIN="e69cfff82f762c00d1d6a259c6d003fd20f805f3b1fcd4acc81d847c485120c0"
@@ -34,10 +34,10 @@ def main():
         mu=np.column_stack((y1[good],y2[good]))
         e1,e2,rho=e1[good],e2[good],rho[good]
     inputs_sec=time.perf_counter()-t0
-    accumulate(B,mu,e1,e2,rho)
+    accumulate_numpy(B,mu,e1,e2,rho)
     times=[];out=None
     for i in range(a.repeat):
-        t=time.perf_counter();out=accumulate(B,mu,e1,e2,rho);times.append(time.perf_counter()-t)
+        t=time.perf_counter();out=accumulate_numpy(B,mu,e1,e2,rho);times.append(time.perf_counter()-t)
     F,score,chisq=out
     payload={
       "schema":"htt.r79.gaia_source_gaussian_accumulate_baseline/1",

@@ -7,7 +7,7 @@ from pathlib import Path
 import numpy as np
 from astropy.io import fits
 from scripts.r69.gaia_e2_b2 import prepare,templates
-from scripts.r67.gaia_frame import accumulate as old_accumulate
+from scripts.r67.gaia_frame import accumulate_numpy as old_accumulate
 from htt.obsstat.pre_dag_fast import accumulate_gaia,hemisphere_moments
 
 GAIA=Path("/mnt/extdrive/workdir/raw/observational_bundles/Gaia_CRF3_astrometry/gaia_crf3_astrometry_full.fits")
@@ -104,7 +104,7 @@ def main():
     B,y,e1,e2,rho=load_gaia(args.n)
     inputs=(B,y,e1,e2,rho)
     ref,raw=benchmark(lambda:old_accumulate(*inputs),args.repeat)
-    npout,python=benchmark(lambda:accumulate_gaia(*inputs),args.repeat)
+    npout,python=benchmark(lambda:accumulate_gaia(*inputs,native_lib=None),args.repeat)
     native,native1=benchmark(lambda:accumulate_gaia(*inputs,native_lib=args.gaia_so,threads=1),args.repeat)
     native4,native4t=benchmark(lambda:accumulate_gaia(*inputs,native_lib=args.gaia_so,threads=4),args.repeat)
     native8,native8t=benchmark(lambda:accumulate_gaia(*inputs,native_lib=args.gaia_so,threads=8),args.repeat)
@@ -115,7 +115,7 @@ def main():
             raise AssertionError(f"{name} Gaia numerical parity exceeded 2e-11: {v}")
     dirs,axis,n_all=load_cf4()
     truew=np.ones(len(dirs))
-    covref,covpy=benchmark(lambda:hemisphere_moments(dirs,axis,weights=truew),args.repeat)
+    covref,covpy=benchmark(lambda:hemisphere_moments(dirs,axis,weights=truew,native_lib=None),args.repeat)
     covnat,covna=benchmark(lambda:hemisphere_moments(dirs,axis,weights=truew,native_lib=args.hemi_so),args.repeat)
     cerr=compare_hemisphere(covref,covnat)
     if max(cerr.values())>3e-11:raise AssertionError(f"Fortran group source parity failed: {cerr}")

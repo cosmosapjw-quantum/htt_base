@@ -159,3 +159,60 @@ def test_radial_design_rank_and_single_radius_degeneracy():
     assert A.shape==(150,12)
     assert np.linalg.matrix_rank(A)==12
     assert np.linalg.matrix_rank(B)==9
+
+def test_persistent_default_lane_selects_native_cpp_on_representative_gaia(monkeypatch):
+    monkeypatch.delenv("HTT_ANALYSIS_BACKEND",raising=False)
+    B,y,e1,e2,rho=gaussian_case(n=5000,p=16,seed=99)
+    out=api().accumulate_gaia(B,y,e1,e2,rho)
+    ref=reference_vsh(B,y,e1,e2,rho)
+    for a,b in zip(out,ref):
+        np.testing.assert_allclose(a,b,rtol=2e-11,atol=1e-10)
+    assert api().analysis_lane_policy()["mode"]=="auto"
+    actual=api().last_backend_receipt()
+    assert actual["used"]=="cpp_native"
+    assert actual["source_certified"] is True
+
+def test_persistent_default_lane_selects_native_fortran_on_actual_mask_sized_batch(monkeypatch):
+    monkeypatch.delenv("HTT_ANALYSIS_BACKEND",raising=False)
+    n=np.tile(np.eye(3), (800,1))
+    n[::2]*=-1
+    w=np.ones(len(n))
+    a=api().hemisphere_moments(n,np.array([0.,0.,1.]),weights=w)
+    assert a["counts"].sum()==len(n)
+    actual=api().last_backend_receipt()
+    assert actual["used"]=="fortran_native"
+    assert actual["source_certified"] is True
+
+def test_analysis_lane_numpy_override_reverses_native_default(monkeypatch):
+    monkeypatch.setenv("HTT_ANALYSIS_BACKEND","numpy")
+    B,y,e1,e2,rho=gaussian_case(n=5000,seed=101)
+    api().accumulate_gaia(B,y,e1,e2,rho)
+    assert api().last_backend_receipt()["used"]=="numpy_reference"
+    n=np.tile(np.eye(3),(500,1));n[::2]*=-1
+    api().hemisphere_moments(n,np.array([0.,0.,1.]))
+    assert api().last_backend_receipt()["used"]=="numpy_reference"
+
+def test_original_gaia_entrypoint_defaults_to_accelerated_lane(monkeypatch):
+    monkeypatch.delenv("HTT_ANALYSIS_BACKEND",raising=False)
+    from scripts.r67.gaia_frame import accumulate, accumulate_numpy
+    B,y,e1,e2,rho=gaussian_case(n=6000,seed=88)
+    expected=accumulate_numpy(B,y,e1,e2,rho)
+    observed=accumulate(B,y,e1,e2,rho)
+    for a,b in zip(observed,expected):
+        np.testing.assert_allclose(a,b,rtol=2e-11,atol=1e-10)
+    assert api().last_backend_receipt()["used"]=="cpp_native"
+
+def test_unavailable_auto_compiler_is_explicit_numpy_fallback(monkeypatch):
+    monkeypatch.delenv("HTT_ANALYSIS_BACKEND",raising=False)
+    import htt.obsstat.pre_dag_fast as m
+    def unavailable(*args,**kwargs):
+        raise RuntimeError("TEST_SIMULATED_COMPILER_UNAVAILABLE")
+    monkeypatch.setattr(m,"_certified_cached_native",unavailable,raising=False)
+    B,y,e1,e2,rho=gaussian_case(n=5000,seed=76)
+    observed=m.accumulate_gaia(B,y,e1,e2,rho)
+    ref=reference_vsh(B,y,e1,e2,rho)
+    for a,b in zip(observed,ref):
+        np.testing.assert_allclose(a,b,rtol=1e-13,atol=1e-13)
+    receipt=m.last_backend_receipt()
+    assert receipt["used"]=="numpy_reference"
+    assert receipt["fallback_reason"].startswith("TEST_SIMULATED_COMPILER_UNAVAILABLE")

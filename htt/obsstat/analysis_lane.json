@@ -1,0 +1,27 @@
+{
+  "schema": "htt.r79.default_accelerated_analysis_lane/1",
+  "default_backend": "auto",
+  "supported_native": {
+    "gaia_correlated_vsh_2x2_to_normal_equations": {
+      "language": "C++17+OpenMP",
+      "certified_source_sha256": "f46dbb3ce2f2303eeb33d5cbb7829eaae5621722eba0c91206f797cc8fcedd23",
+      "minimum_rows": 4096,
+      "default_threads": 8,
+      "scope": "source-selected 2x2 astrometric working Gaussian normal equations (p<=32)"
+    },
+    "cf4_weighted_hemisphere_geometry": {
+      "language": "Fortran ISO_C_BINDING",
+      "certified_source_sha256": "d73858d5b1ed380ae9176301beb58f769f5e9cb41bc6afa38209f6f836d80606",
+      "minimum_rows": 1024,
+      "default_threads": 1,
+      "scope": "weighted unit-sphere source mask first/second angular moments"
+    }
+  },
+  "fallback": "numpy_reference_explicitly_recorded_if_native_compiler_unavailable_or_small_input",
+  "invalid_native_numeric_result": "raise_do_not_silently_fallback",
+  "override_env": "HTT_ANALYSIS_BACKEND=auto|numpy|native",
+  "approved_precision": "R79 sampled full-sky original Gaia 16D <=2e-11 relative matrix/fit errors; original CF4 selected full table4 geometry <=3e-11",
+  "source_limits": "does not infer real GR shear, photon flux, physical observer beta or astrophysical Pi. Native low-ell Bianchi Boltzmann solver forbidden.",
+  "auto_build": "compile only certified original source SHA in temporary versioned cache; source hash changes require revalidation and config bump",
+  "runner_policy": "future analyses call htt.obsstat.pre_dag_fast; existing scripts.r67.gaia_frame.accumulate uses accelerated auto for 16D/6D VSH. Unsupported methods remain vectorized NumPy/SciPy."
+}
