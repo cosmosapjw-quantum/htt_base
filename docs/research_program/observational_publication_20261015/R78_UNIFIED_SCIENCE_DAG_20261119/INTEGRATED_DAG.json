@@ -1,7 +1,7 @@
 {
   "schema": "htt.r78.unified_science_dag/1",
   "date": "2026-11-19 KST",
-  "revision": 1,
+  "revision": 3,
   "science_SSOT": "docs/research_program/observational_publication_20261015/R78_UNIFIED_SCIENCE_DAG_20261119/INTEGRATED_DAG.json",
   "historical_42_node_source": "docs/research_program/observational_publication_20261015/PUBLICATION_DAG.json",
   "original_42_payload_sha256": "e3264e105cabf78ddac37addc36cacc3cfa05ee942e33e54b431b22e3e87de0d",
@@ -3086,7 +3086,7 @@
       "evidence": "docs/research_program/observational_publication_20261015/R69_PHYSICAL_OBSERVABLE_BRIDGES_20261118/PROVENANCE.json",
       "evidence_sha256": "610799a29482442b8efb6ab0ca4aef967b63b8dc1272dbcd631806b33b65032c",
       "reported_scope_status": "DERIVED_CONDITIONAL",
-      "last_matching_git_commit": "dd857ff8decbcfe90fd566a9dd87dcf5be60f609"
+      "last_matching_git_commit": "e8922f591f2f779f8c5331453734797e51d4e6c2"
     },
     {
       "id": "R70",
@@ -3145,6 +3145,20 @@
       "last_matching_git_commit": "dd857ff8decbcfe90fd566a9dd87dcf5be60f609"
     }
   ],
+  "inherited_regression_constraints": {
+    "receipt": "docs/research_program/observational_publication_20261015/R78_UNIFIED_SCIENCE_DAG_20261119/REGRESSION_RECEIPT.json",
+    "selected_legacy_suite_20261119": {
+      "passed": 59,
+      "failed": 8,
+      "classification": "INHERITED_OLD_RELEASE_HASH_AND_PR122_VENV_AND_STALE_V03_TEST_FIXTURE"
+    },
+    "unaffected_scoped_dag_regressions": {
+      "passed": 42,
+      "failed": 0
+    },
+    "this_plan_strict_structure_source_authority_checks_expected": 31,
+    "publication_claim_gate": "NO_CHANGE_NOT_READY_TO_SUBMIT"
+  },
   "review_status": "REVISED_UNDER_LIMITED_ADVERSARIAL_AUDIT",
   "no_native_boltzmann_solver_implementation": true
 }

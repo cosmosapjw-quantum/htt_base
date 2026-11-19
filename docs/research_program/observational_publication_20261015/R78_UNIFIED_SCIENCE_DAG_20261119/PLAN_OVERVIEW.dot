@@ -1,0 +1,21 @@
+digraph R78Overview {
+ graph [rankdir=LR, bgcolor="white", fontname="DejaVu Sans", fontsize=16, pad=.45,
+ label="R78: one science SSOT, 42 immutable goals + 11 source qualifiers + 7 PHY links", labelloc=t, nodesep=.42, ranksep=.95];
+ node [shape=box, style="filled,rounded", fontname="DejaVu Sans", fontsize=13, penwidth=1.3, margin=".17,.10"];
+ edge [arrowsize=.75, penwidth=1.4];
+ E [label="R60–R66\nobserved-source results",fillcolor="#dcefe3",color="#4c9276"];
+ T [label="R67–R77\nconditional physics and 5 views",fillcolor="#dcefe3",color="#4c9276"];
+ CF [label="SQ-CF4\nNEXT: same-group calibration",fillcolor="#fff0c5",color="#d8a744"];
+ GA [label="SQ-GAIA\nredshift/scanning/AGN",fillcolor="#fff0c5",color="#d8a744"];
+ RA [label="SQ-RADIO\nk, kappa and LSS",fillcolor="#fff0c5",color="#d8a744"];
+ FR [label="SQ-FRAME → SQ-OPTICAL\nobserver/Sachs transfers",fillcolor="#fff0c5",color="#d8a744"];
+ EX [label="CMB / photon flux / normal flux\nexternal native transfer blocked",fillcolor="#f9dcdc",color="#bd7171"];
+ P [label="P1–P6\n42 original science goals\n18 scoped · 23 pending · 1 blocked",fillcolor="#e8edf2",color="#7e8e9a"];
+ PHY [label="PHY-01–07\n7 conditional physical links",fillcolor="#dce9fb",color="#638eb8"];
+ J [label="SQ-CROSS-COV\nheldout, real joint source law",fillcolor="#fff0c5",color="#d8a744"];
+ E -> T; E -> CF; E -> GA; E -> RA;
+ T -> PHY; CF -> P; GA -> P; RA -> P; FR -> P; EX -> P;
+ CF -> PHY; GA -> PHY; RA -> PHY; FR -> PHY; EX -> PHY;
+ CF -> J; GA -> J; RA -> J; FR -> J;
+ J -> P; J -> PHY;
+ }

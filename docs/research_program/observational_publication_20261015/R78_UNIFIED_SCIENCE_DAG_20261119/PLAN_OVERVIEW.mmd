@@ -1,0 +1,82 @@
+flowchart TB
+  subgraph E["재사용 근거 · R60–R77"]
+    R60["R60–R66<br/>실제 source·조건부 통계"]
+    R67["R67–R77<br/>5뷰 물리 정리·반례"]
+    R60 --> R67
+  end
+
+  subgraph Q["11개 자료·물리 전달 확인"]
+    CF4["SQ-CF4<br/>CF4 calibration"]
+    GAIA["SQ-GAIA<br/>Gaia VSH systematics"]
+    RADIO["SQ-RADIO<br/>source k / κ"]
+    FRAME["SQ-FRAME<br/>observer·source frame"]
+    OPT["SQ-OPTICAL<br/>Sachs/Jacobi"]
+    FLUX["Photon flux"]
+    NORMAL["Bianchi normal flux"]
+    CMB["CMB matched null"]
+    NATIVE["외부 native transfer"]
+    JOINT["SQ-CROSS-COV<br/>공동 C·heldout"]
+    FRAME --> OPT
+    CF4 --> JOINT
+    GAIA --> JOINT
+    RADIO --> JOINT
+    OPT --> JOINT
+  end
+
+  subgraph P["원래 42개 과학 DAG 목표 · acceptance 불변"]
+    P1["P1<br/>signed inference"]
+    P2["P2<br/>CMB morphology"]
+    P3["P3<br/>H(z,n) · CF4"]
+    P4["P4<br/>boost / tilt"]
+    P5["P5<br/>Bianchi"]
+    P6["P6<br/>GR kinematics"]
+  end
+
+  subgraph PHY["PHY-01–07 · 조건부 물리 결합"]
+    PHY1["01 · CF4 × normal GR"]
+    PHY2["02 · Photon × Codazzi"]
+    PHY3["03 · Radio × photon"]
+    PHY4["04 · Gaia × Lie B2"]
+    PHY5["05 · Bianchi × tilt"]
+    PHY6["06 · Shear × kinetic"]
+    PHY7["07 · CF4 × radio"]
+  end
+
+  R67 --> CF4
+  R67 --> GAIA
+  R67 --> RADIO
+  CF4 --> P3
+  GAIA --> P6
+  RADIO --> P4
+  CMB --> P2
+  NATIVE --> P5
+  FRAME --> P4
+  OPT --> P3
+  JOINT --> P6
+
+  CF4 --> PHY1
+  OPT --> PHY1
+  CMB --> PHY2
+  NORMAL --> PHY2
+  FLUX --> PHY2
+  RADIO --> PHY3
+  FLUX --> PHY3
+  GAIA --> PHY4
+  OPT --> PHY4
+  FRAME --> PHY4
+  NORMAL --> PHY5
+  OPT --> PHY5
+  CMB --> PHY6
+  FLUX --> PHY6
+  CF4 --> PHY7
+  RADIO --> PHY7
+
+  classDef completed fill:#d8ede3,stroke:#4f9579,color:#173b32
+  classDef available fill:#fff1c8,stroke:#d5a13f,color:#553b12
+  classDef blocked fill:#f7dddd,stroke:#b96767,color:#522121
+  classDef route fill:#dceafa,stroke:#7396bf,color:#163f68
+  class R60,R67 completed
+  class CF4,GAIA,RADIO,FRAME available
+  class FLUX,NORMAL,CMB,NATIVE blocked
+  class OPT,JOINT available
+  class PHY1,PHY2,PHY3,PHY4,PHY5,PHY6,PHY7 route

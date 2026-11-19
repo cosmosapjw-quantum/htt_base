@@ -1,0 +1,59 @@
+{
+  "schema": "htt.r78.inherited_regression_receipt/1",
+  "date": "2026-11-19 KST",
+  "base_before_R78": "dd857ff8decbcfe90fd566a9dd87dcf5be60f609",
+  "selected_legacy_regression": {
+    "total": 67,
+    "passed": 59,
+    "failed": 8,
+    "exit_code": 1,
+    "cmd": "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -B -m pytest -p no:cacheprovider -q tests/contracts/test_research_program_dag.py tests/contracts/test_publication_claim_freeze.py tests/contracts/test_pr_dag_extension_receipts.py tests/test_r67_fusion.py tests/obsstat/test_htt_publication_dag.py tests/test_publication_frontier_preflight_parameterized.py tests/test_publication_frontier_uptake.py"
+  },
+  "failures": [
+    {
+      "class": "INHERITED_RELEASE_EVIDENCE_HASH",
+      "count": 5,
+      "files": [
+        "tests/contracts/test_publication_claim_freeze.py"
+      ],
+      "detail": "Older evidence graph expects htt/mio/formalism/budget_spec.py sha256 49b0afc480d4a311eedbae1bfaf6b7b8076a72cc11fc43d069b758b47f1a182f; actual tracked file sha256 25213b00a1f0e6c373e17960e15de567240ce6f22d914a54e6cad8047a4d727e. Actual sha is identical at dd857ff8 before R78."
+    },
+    {
+      "class": "INHERITED_PR122_CANONICAL_VENV_NOT_AVAILABLE",
+      "count": 2,
+      "files": [
+        "tests/contracts/test_publication_claim_freeze.py"
+      ],
+      "detail": "PR-122 source-only wrapper requires repository venv/bin/python, which is absent; tested repo uses .venv/bin/python instead. Do not silently change execution trust environment or create a symlink."
+    },
+    {
+      "class": "STALE_LEGACY_TEST_FIXTURE",
+      "count": 1,
+      "files": [
+        "tests/obsstat/test_htt_publication_dag.py"
+      ],
+      "detail": "test_blocked_input_does_not_block_independent_study expects V03 blocked in its synthetic four-anchor fixture. Original immutable science DAG already records V03 completed_scoped in dd857ff8 prior R78; fixture semantics reflect an earlier state."
+    }
+  ],
+  "source_baseline_check": {
+    "budget_spec_actual_sha": "25213b00a1f0e6c373e17960e15de567240ce6f22d914a54e6cad8047a4d727e",
+    "budget_spec_sha_at_prior_HEAD": "25213b00a1f0e6c373e17960e15de567240ce6f22d914a54e6cad8047a4d727e",
+    "V03_original_science_state_prior_HEAD": "completed_scoped",
+    "V03_current_original_science_state": "completed_scoped",
+    "PR122_expected_canonical_python": "venv/bin/python",
+    "PR122_python_available": false
+  },
+  "targeted_unaffected_subset": {
+    "passed": 42,
+    "failed": 0,
+    "exit_code": 0,
+    "cmd": "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -B -m pytest -p no:cacheprovider -q tests/contracts/test_research_program_dag.py tests/contracts/test_pr_dag_extension_receipts.py tests/test_r67_fusion.py tests/test_publication_frontier_preflight_parameterized.py tests/test_publication_frontier_uptake.py"
+  },
+  "R78_unified_graph_strict_validation": {
+    "passed_checks": 30,
+    "failed_checks": 0,
+    "original_42_node_payload_unchanged": true
+  },
+  "scientific_admission": "NOT_READY_TO_SUBMIT, no astrophysical evidence promotion",
+  "resolution": "Inherited baseline/validation-environment status is recorded but not repaired inside this science-plan scope. Independent remediation requires separate authorized PR-122 evidence-graph/source-root task; old test fixture requires separate scoped synchronization."
+}

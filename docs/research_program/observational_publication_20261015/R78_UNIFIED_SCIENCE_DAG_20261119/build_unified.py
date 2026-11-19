@@ -326,6 +326,14 @@ def build(revision=0):
          "stop":"no matched global selection/calibration source => record blocker and choose SQ-GAIA, never promote H04",
          "commit_policy":"scoped validated source/result changes only on active research branch"},
      "evidence_R60_R77":[{k:v for k,v in x.items() if k in ("id","evidence","evidence_sha256","reported_scope_status","last_matching_git_commit")} for x in census["R60_R77_evidence"]],
+     "inherited_regression_constraints":{
+         "receipt":"docs/research_program/observational_publication_20261015/R78_UNIFIED_SCIENCE_DAG_20261119/REGRESSION_RECEIPT.json",
+         "selected_legacy_suite_20261119":{"passed":59,"failed":8,
+             "classification":"INHERITED_OLD_RELEASE_HASH_AND_PR122_VENV_AND_STALE_V03_TEST_FIXTURE"},
+         "unaffected_scoped_dag_regressions":{"passed":42,"failed":0},
+         "this_plan_strict_structure_source_authority_checks_expected":32,
+         "publication_claim_gate":"NO_CHANGE_NOT_READY_TO_SUBMIT"
+       },
      "review_status":"CANDIDATE_UNREVIEWED" if revision==0 else "REVISED_UNDER_LIMITED_ADVERSARIAL_AUDIT",
      "no_native_boltzmann_solver_implementation":True
     }

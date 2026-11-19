@@ -16,6 +16,14 @@ Upgrade `htt_base` before the external native low-ell Bianchi solver arrives. Th
 
 Work in the canonical DAG defined by `docs/codex_handoff/pr_backlog.yaml`; `machine_readable/pr_backlog.yaml` is a synchronized compatibility mirror. Never skip dependency gates to chase figures or headline results.
 
+## Active unified science-program DAG (owner, 2026-11-19)
+
+- **For P1–P6 scientific research sequencing**, the one current science SSOT is docs/research_program/observational_publication_20261015/R78_UNIFIED_SCIENCE_DAG_20261119/INTEGRATED_DAG.json, with RESEARCH_PLAN_KO.md, SOURCE_CENSUS.json, ADVERSARIAL_REVIEW.md and VALIDATION.json in the same folder. Read its NEXT_ID and exact HEAD first. This authority supersedes older R60–R77 narrative next-action pointers, not their evidence.
+- The **original 42 scientific publication gates/acceptance texts and states** in PUBLICATION_DAG.json remain immutable, canonical sorted-json node SHA256 e3264e105cabf78ddac37addc36cacc3cfa05ee942e33e54b431b22e3e87de0d. R78 adds 11 qualified source/physics work packages and 7 conditional cross-paper PHY research routes, not 18 accepted new papers or independent likelihoods.
+- The separate **software PR SSOT** remains docs/codex_handoff/pr_backlog.yaml and machine_readable/pr_backlog.yaml mirror, 291 entries as of this plan; the PUBLICATION_DAG historical 245 baseline is not current. Do not merge the two DAG populations, change existing PR statuses, or infer GitHub PR merge from source-branch ancestry.
+- Default next bounded science work is **SQ-CF4**, exact selected 35,970-group CF4 indicator/PV/selection covariance with provenance and heldout check. If missing, record precise blocked source and choose SQ-GAIA. No forced physical expansion/tilt detection, no new native low-ell Bianchi solver, no automatic next-loop or main merge.
+- R78/REGRESSION_RECEIPT.json distinguishes 8 inherited legacy regression failures (release-evidence SHA, PR-122 canonical venv and stale V03 fixture) from R78 strict source/DAG 32 checks and unaffected 42 scoped regressions. Never assert repo-wide PASS from the latter; repair legacy evidence/environment only as an explicitly scoped separate task.
+
 ## Existing-checkout policy (owner reaffirmed 2026-10-14)
 
 Use the existing primary checkout for ongoing work. On the owner's machine this

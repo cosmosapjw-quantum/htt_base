@@ -100,6 +100,15 @@ def main():
         p=old.get("current_integrated_science_dag",{})
         check("active_publication_pointer",p.get("path")==str(DAG) and
               old.get("current_scientific_route",{}).get("research_dag")==str(DAG))
+        check("active_science_pointer_sha256",p.get("sha256")==sha(DAG) and
+              p.get("revision")==d["revision"] and d["revision"]==3)
+        reg=load(DIR/"REGRESSION_RECEIPT.json")
+        check("inherited_regression_receipt_is_explicit_and_baseline_verified",
+              reg["selected_legacy_regression"]["passed"]==59 and
+              reg["selected_legacy_regression"]["failed"]==8 and
+              reg["targeted_unaffected_subset"]["passed"]==42 and
+              reg["source_baseline_check"]["budget_spec_actual_sha"]==reg["source_baseline_check"]["budget_spec_sha_at_prior_HEAD"] and
+              reg["source_baseline_check"]["V03_original_science_state_prior_HEAD"]=="completed_scoped")
         ag=Path("AGENTS.md").read_text()
         check("AGENTS_current_science_pointer","R78_UNIFIED_SCIENCE_DAG_20261119" in ag)
     out={"schema":"htt.r78.dag_verification/1","strict_authority":args.strict_authority,
