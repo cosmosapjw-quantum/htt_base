@@ -1,0 +1,277 @@
+{
+  "schema": "htt.r77.seven_cross_phy_theorems/1",
+  "source_sha256": {
+    "/mnt/extdrive/workdir/raw/cf4_full/table4.dat": "b6edfec68bdfddeada8f3b8f11938f3bbda98a8e2894ff136a369c2ad6594e94",
+    "R61_KINEMATIC_MEASUREMENT_20261117/RESULTS/IMAGES/KINEMATIC_IMAGES.json": "2aa780b488378f85293077c59c10cd6c13cb05e92628a9c681b9fe8c3b896be8",
+    "R65_DIPOLE_ANOMALY_20261117/RESULTS/INTERPRETATION_SUMMARY.json": "203f6cf070661afb923aa095ce992278c720f3e7a7149107c14c7e8a28c761c7",
+    "R65_DIPOLE_ANOMALY_20261117/RESULTS/NVSS_CONDITIONAL_CARRIERS.npz": "44e5d4ec3830e84112a328902adb2f3fdb822f7fc88324cff5da18800a9ff1ac",
+    "R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/RESULTS/OBSERVABLES.json": "6d9c3f11a23995565dca25fe8ae02ef1ad79b3bc3f8ddf99f3c8c0a497b39d01",
+    "R73_P1_P4_TYPED_PHYSICAL_FIVEVIEW_20261119/RESULTS.json": "290b4bc426cf049ff10562d3f595ffce97938cb2a4457ac51a266e674b6f0b14",
+    "R74_P4_SOURCE_SCORE_FIVEVIEW_20261119/RESULTS.json": "60eb29ed1c49caf35c0b90c9bd17d2fb357fd4e3ce2fde2517716d51b0cd4bad",
+    "R75_P5_LIE_TILT_FIVEVIEW_20261119/RESULTS.json": "ed6ae8e36f0e79b7afcdc27ea679a4658c690d66fde817acb0a64c3a2ab67b45",
+    "R76_P6_COVARIANT_DRIFT_FIVEVIEW_20261119/RESULTS.json": "faaa1d3071c603dd4d852c9ab7c0fee54a1721fe4b6f04a51355ee63850d1f55"
+  },
+  "source_frame": "original CF4 Galactocentric galactic l,b and distance; R65/Gaia ICRS separate; physical joint frame transfer not applied",
+  "scientific_evidence": "7 conditional derivations, 7 finite original-data/synthetic route checks; NOT cross-probe physical cosmological likelihood",
+  "results": {
+    "PHY-01": {
+      "source": "original CF4 table4 38053 full groups, conditional subset 40-400 Mpc; NOT identical to R61 35970 selected",
+      "selected_n": 31649,
+      "hemisphere_pixel_counts": [
+        25035,
+        6614
+      ],
+      "CMB_axis_galactic_deg": [
+        264.021,
+        48.253
+      ],
+      "mask_direction_mean_difference": [
+        -0.07949693721674585,
+        -0.3765348068907657,
+        1.229575389973813
+      ],
+      "mask_quadrupole_window_difference_eigenvalues": [
+        -0.1606662201092351,
+        -0.012413261722949442,
+        0.17307948183218447
+      ],
+      "TypeV_zero_total_flux_signed_chi": 4.100971979142792e-16,
+      "TypeV_zero_flux_FOmega": 0.5,
+      "TypeV_shear_eigen_amplitude": 0.03,
+      "sharp_max_even_to_odd_mask_leakage": 0.010012371058242587,
+      "explicit_zero_flux_shear_leakage": 0.010012371058242587,
+      "explicit_mask_mean_direct_check": 0.010012371058242589,
+      "random_SO3_500_max_leakage": 0.00968915382028146,
+      "physical_scope": "Type V j_total=0 conditional shear shape and actual CF4 geometric window; no source normal-shear measurement"
+    },
+    "PHY-02": {
+      "R66_same_sky_finiteband_photon_pressure": {
+        "PR3": {
+          "actual_R66_normalized_STF5": [
+            -1.3488917876809042e-06,
+            -1.9255093308409354e-06,
+            4.158989056983618e-06,
+            7.771164743364344e-07,
+            8.71865424229173e-07
+          ],
+          "P_eigenvalues": [
+            0.3333294543316302,
+            0.3333343732889586,
+            0.33333617237941093
+          ],
+          "P_positive": true,
+          "max_normal_photon_only_flux_ratio_to_rho_total_for_eta_0p2": 0.11547054557408326,
+          "synthetic_eta_rho_gamma_over_total": 0.2,
+          "synthetic_normal_photon_flux": [
+            0.04605473022866016,
+            0.06230954898512116,
+            0.05029799142857542
+          ],
+          "synthetic_OmegaN": 0.3,
+          "P_positive_schur_ratio": 0.6399999999999999,
+          "Einstein_Codazzi_photon_only_joint_ellipsoid_ratio": 0.6399999999999997,
+          "same_frame_flux_observed": false
+        },
+        "PR4": {
+          "actual_R66_normalized_STF5": [
+            -1.881906573978555e-06,
+            -1.9432715628638585e-06,
+            4.375814467055548e-06,
+            7.086608442911998e-07,
+            9.814133052179442e-07
+          ],
+          "P_eigenvalues": [
+            0.33332917157133457,
+            0.33333442663982005,
+            0.3333364017888455
+          ],
+          "P_positive": true,
+          "max_normal_photon_only_flux_ratio_to_rho_total_for_eta_0p2": 0.11547058530878684,
+          "synthetic_eta_rho_gamma_over_total": 0.2,
+          "synthetic_normal_photon_flux": [
+            0.044196539957376664,
+            0.06669007462431203,
+            0.04617912610903491
+          ],
+          "synthetic_OmegaN": 0.3,
+          "P_positive_schur_ratio": 0.6400000000000005,
+          "Einstein_Codazzi_photon_only_joint_ellipsoid_ratio": 0.6400000000000003,
+          "same_frame_flux_observed": false
+        }
+      },
+      "VI_exceptional_flux_left_null_constraint": [
+        0.0,
+        3.0,
+        3.0
+      ],
+      "normal_flux_allowed_unit_example": [
+        0.0,
+        0.7071067811865475,
+        -0.7071067811865475
+      ],
+      "normal_flux_excluded_unit_example": [
+        0.0,
+        0.7071067811865475,
+        0.7071067811865475
+      ],
+      "multi_fluid_counterexample": "opposing matter flux invalidates photon-only total momentum substitution",
+      "original_R75_Codazzi_exceptional_rank": 2
+    },
+    "PHY-03": {
+      "same_frame_CMB_speed_synthetic_beta": 0.001233586736861806,
+      "radio_first_order_k": 3.8254286125,
+      "count_selection_A_coefficient": 9.229666340916838,
+      "photon_flux_m_norm": 0.0016447814815078803,
+      "m_to_beta_inverse": 0.001233586736861806,
+      "pure_boost_signed_STF_chi": 0.9999999999999999,
+      "pure_boost_Q_count_Frobenius": 1.1467790605049946e-05,
+      "exact_radio_to_photon_STF_error": 0.0,
+      "R65_saved_theoretical_peak_bin_k_alpha_0p75": [
+        3.3580293513709387,
+        3.521797425681888,
+        4.133305446105684
+      ],
+      "actual_R66_finiteband_stress": {
+        "PR3": {
+          "R66_signed_chi_finiteband": -0.7074485821161334,
+          "can_be_exact_pure_boost_stress_if_source_matching_yes": false,
+          "physical_boost_significance_calibrated": false
+        },
+        "PR4": {
+          "R66_signed_chi_finiteband": -0.6950341118626684,
+          "can_be_exact_pure_boost_stress_if_source_matching_yes": false,
+          "physical_boost_significance_calibrated": false
+        }
+      },
+      "common_physical_3D_beta_observed": false
+    },
+    "PHY-04": {
+      "toy_dimensionless_Nbar_stf": [
+        [
+          0.013,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.017,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.004000000000000001
+        ]
+      ],
+      "normal_Lie_B2_dimensionless_rate_squared_skymean": 9.480000000000014e-05,
+      "exact_STF_prediction": 9.48e-05,
+      "skymean_B2_dot_local_E2": -3.702985260289171e-23,
+      "TypeI_TypeV_Nzero_direct_B2": true,
+      "R69_actual_Gaia_quality_EB2_maxFisherCanonical": 0.08042406258067819,
+      "R69_actual_Gaia_north_EB2_maxFisherCanonical": 0.8810936317598093,
+      "R69_actual_Gaia_south_EB2_maxFisherCanonical": 0.8788536147906798,
+      "Gaia_B2_formal_chi2_p": 1.5987976932312695e-09,
+      "Gaia_B2_patch_nominal_p": 0.1695561303803899,
+      "normal_to_Gaia_physical_optical_transfer": false
+    },
+    "PHY-05": {
+      "exceptional_VI_m1_9_signed_shear_to_flux_rank": 2,
+      "exceptional_M_signed_STF5_to_u": [
+        [
+          -3.0,
+          0.0,
+          0.0,
+          0.0,
+          -6.0
+        ],
+        [
+          0.0,
+          0.0,
+          -3.0,
+          3.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          3.0,
+          -3.0,
+          0.0
+        ]
+      ],
+      "exceptional_left_normal_flux_constraint": [
+        0.0,
+        3.0,
+        3.0
+      ],
+      "zero_flux_signed_sigma_nonzero_example": [
+        -2.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "source_R49_posterior_chi_median": 0.35861084119957815,
+      "source_R49_posterior_FOmega_median": 0.4534080088390925,
+      "synthetic_independent_joint_noise_residual_covariance_rank": 3,
+      "synthetic_gaussian_Tmean": 2.95460044590974,
+      "synthetic_gaussian_T95tail": 0.04822222222222222,
+      "actual_independent_normal_j_source": false
+    },
+    "PHY-06": {
+      "Einstein_shear_initial_chi": 0.6651477158057465,
+      "Einstein_driver_noncommutator_norm": 0.000282842712474619,
+      "chi_time_derivative_exact": 0.0,
+      "chi_time_derivative_finite_difference": -1.7885692926711272e-09,
+      "signed_eigenframe_projector_change_at_dt": 7.071279923745094e-05,
+      "photon_nonclosed_smooth_positive_sky_cases": {
+        "0.0": {
+          "same_initial_f_and_STF5_zero": true,
+          "actual_kinetic_synthetic_cap_F": 0.09999999999999998,
+          "instantaneous_dS_gamma_zz": -0.02488888888888889
+        },
+        "1.0": {
+          "same_initial_f_and_STF5_zero": true,
+          "actual_kinetic_synthetic_cap_F": 0.15707124999999997,
+          "instantaneous_dS_gamma_zz": -0.023111111111111117
+        }
+      },
+      "physical_Boltzmann_time_solution_fully_integrated": false
+    },
+    "PHY-07": {
+      "CF4_full_group_geometric_radial_leverage": {
+        "40-400": {
+          "actual_unweighted_CF4_table4_n": 31649,
+          "actual_geometric_rank12": 12,
+          "column_normalized_condition": 5.276982947570388,
+          "synthetic_single_radius_rank": 9,
+          "physical_source_covariance_provided": false
+        },
+        "80-220": {
+          "actual_unweighted_CF4_table4_n": 13670,
+          "actual_geometric_rank12": 12,
+          "column_normalized_condition": 9.416684477575902,
+          "synthetic_single_radius_rank": 9,
+          "physical_source_covariance_provided": false
+        },
+        "140-220": {
+          "actual_unweighted_CF4_table4_n": 7040,
+          "actual_geometric_rank12": 12,
+          "column_normalized_condition": 21.26929326500519,
+          "synthetic_single_radius_rank": 9,
+          "physical_source_covariance_provided": false
+        }
+      },
+      "source_CF4_R61_selected_sample_n": 35970,
+      "source_CF4_full_table4_n": 38053,
+      "radio_source_k_assumed_alpha_0p75": [
+        3.3580293513709387,
+        3.521797425681888,
+        4.133305446105684
+      ],
+      "radio_working_fixed_k_common_residual_p": 0.40902467987323543,
+      "common_physical_beta_and_CF4_radio_cross_covariance_available": false
+    }
+  },
+  "original_six_paper_42_science_DAG_unchanged": true
+}
