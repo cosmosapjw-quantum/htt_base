@@ -1,0 +1,27 @@
+{
+  "schema": "htt.r79.gaia_sky_order_numerical_conditioning/1",
+  "date": "2026-11-19 KST",
+  "input_gaia_sha256": "e69cfff82f762c00d1d6a259c6d003fd20f805f3b1fcd4acc81d847c485120c0",
+  "first_60000": {
+    "quality_rows": 59279,
+    "sky_region": "RA 5/50/95 pct [13.064,36.600,72.374] deg; Dec [7.684,29.060,48.502] deg",
+    "min_F_eig": 1.8596503045386439,
+    "max_F_eig": 1610799.76318387,
+    "F_condition": 866184.2278908934,
+    "Cpp1_F_frobenius_relative_to_original": 6.171842434447815e-15,
+    "Cpp1_beta_relative_to_original": 1.5310953192806433e-9,
+    "source_referent": "narrow sky-ordered prefix, ill-conditioned, not representative all-sky VSH"
+  },
+  "all_sky_uniform_row_stride_60000": {
+    "quality_rows": 58750,
+    "F_condition": 8.062248946727806,
+    "F_min_eig": 82261.321866115,
+    "F_max_eig": 663211.2555715227,
+    "Cpp1_F_frobenius_relative_to_original": 6.8723782914445725e-15,
+    "Cpp1_beta_relative_to_original": 9.072215057910429e-15,
+    "source_referent": "a uniformly spaced set of original FITS catalogue rows covering sky; not cosmological resampling"
+  },
+  "causal_diagnosis": "Source original FITS is sky sorted; first 60000 rows have large parameter-degeneracy condition. F sums agree at approx 6e-15 in both cases, but linear-solve coefficient error is condition-amplified in narrow sky. Do not relax coefficient accuracy claim or infer an implementation fault; compare at fixed accepted source footprint and monitor condition.",
+  "resolution": "C8 source-equivalent performance and coefficient parity performed on full-sky row-stratified 58750 quality sources. Retain original C1 first-prefix baseline separately. Later source-selected science fit must use its own exact geometry and covariance.",
+  "accuracy_claim": "Rel F/score/chi2 <2e-11 on original source; beta coefficient parity <2e-11 on representative fullsky well-conditioned source; no guarantee for adversarial ill-conditioned n-prefix without extended-precision solve."
+}
