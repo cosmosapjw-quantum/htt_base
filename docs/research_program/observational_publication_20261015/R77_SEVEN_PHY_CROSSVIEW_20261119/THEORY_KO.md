@@ -89,3 +89,71 @@ For each PHY, retain TWO competing realizations: (A) an exact local physical+sou
 **PHY-07 (P1/P3/radio dipole):** A1 for a *declared* source conditional radial model \(y(r,n)=\mathcal H_0+\gamma\cdot n+S:nn+v_{\rm PV}\cdot n/r\), depth variation gives independent columns n and n/r (after source mask and calibration), whereas fixed radius r0 makes them exactly collinear. A2 actual radio multi-bin d_b=k_b beta_O|S+a_b is a different selection/source law; multiple k values only identify transverse beta with shared a and do NOT calibrate CF4 distance dipole or Gaia proper acceleration. Exact full source-specific same-frame optical response needed. Cheapest check original CF4 35,970 group directions/radii from retained R58/R65 raw CF4 table and R65 flux-bin k; report rank/conditioning not physical Fisher/velocity. Also R64 finite-z \(H_D/H_{\rm ref}=e^\eta/(1-B\eta_z)\), which cannot be simply set equal to local \(\mathcal H(n)\).
 
 Selection objective R4: pursue all seven, with one analytic claim plus one explicit counterexample each. Prioritize PHY01/02/04/05/07 for actual original source geometry; PHY03/06 for exact physical moment algebra and finite signed tensor examples; do not launch a new all-instruments posterior without the missing physical source maps.
+
+## R5: seven constructive theorems, precise mathematical arrows and counterexamples
+
+### PHY-01 theorem: mask-selected directional Hubble parity cannot be read as a pure acceleration dipole
+Assume a single source-qualified local observer congruence and \(h(n)=1+d\cdot n+nSn\), \(S\in\mathrm{STF}(3)\). For any positive source-selected exposure w(n) and opposite masked regions \(H_\pm=\{n\cdot p\gtrless0\}\) with nonzero weights, define normalized mean \(\bar h_\pm=\int_{H_\pm}wh/\int_{H_\pm}w\). With \(m_\pm=\langle n\rangle_{H_\pm,w}\), \(M_\pm=\langle nn^T\rangle_{H_\pm,w}\), EXACTLY
+\[
+\boxed{\bar h_+-\bar h_-=d\cdot(m_+-m_-)+S:(M_+-M_-)_{\rm STF}.}
+\]
+Proof: linearity of the two conditional averages; traces of S vanish. On complete antipodal round hemispheres \(m_\pm=\pm p/2\), \(M_+=M_-=I/3\), hence difference \(d\cdot p\); incomplete source w permits even shear leakage. For Class B tilted Lie normal, Codazzi \(L(S)=-3\Omega_N j/\rho_N\) constrains source-normal S, NOT observer acceleration d by itself. **Counterexample:** Type V zero-total-normal-flux \(S a=0\), χ(S)=0 and fullsky F_S=1/2, nevertheless asymmetrically masked M_+−M_- can yield any small nonzero shear contribution by rotating S with respect to mask; a measurable hemisphere odd contrast is not necessarily physical A. Full source-mask angle and tensor are required to test the term. This is exact angular algebra; actual CF4 footprint numerical check in R7 cannot by itself qualify R61 apparent κ as normal S.
+
+### PHY-02 theorem: photon pressure ellipsoid intersects the Einstein–Codazzi normal-flux cone
+Let p(n)≥0 be unit-normalized angular photon energy probability at a fixed event in a single normal tetrad; \(f=\int n p\), \(P=\int nn^T p=I/3+S_\gamma\), TrP=1. Basic positive covariance gives \(P-ff^T\succeq0\), hence when P≻0
+\[
+\boxed{ f^TP^{-1}f\le1.}
+\]
+If (and only if) the TOTAL normal momentum is provided solely by photon radiation in that same tetrad, no opposing matter flux, set \(u_N=j_N/\rho_N=\eta_\gamma f\), where \(\eta_\gamma=\rho_\gamma/\rho_N>0\). Under Einstein Codazzi \(L(S)=-3\Omega_N u_N\) obtain
+\[
+\boxed{
+\frac{L(S)^TP^{-1}L(S)}{9\Omega_N^2\eta_\gamma^2}\le1.
+}
+\]
+This **joint necessary feasibility ellipsoid** is stricter than DEC \(|u_N|\le1\) for isotropic photon pressure P=I/3, giving \(\|u_N\|\le\eta_\gamma/\sqrt3\). Proof: generalized Schur complement, substitution. In a Class B rank-deficient VI_-1/9 stratum the same photons must also satisfy the Lie image condition \(\ell\cdot u_N=0\). Multi-fluid counterexample: photon f≠0 with equal opposing matter normal momentum gives u_N=0; photon-only equation is then FALSE even though photon PSD holds. No photon flux f or normal \(\eta_\gamma,\Omega_N\) measured by R66 temperature STF; the actual PR3/4 S only fixes feasible P, not a detected physical constraint or photon cap F.
+
+### PHY-03 theorem: three boost observables collapse to one relative-velocity fibre only under a strong shared frame
+Assume both a selected radio source population and an initially **rest-isotropic** radiation field share the SAME relative source/electron velocity β (not generally true), with unresolved pointlike radio flux selection giving k and Doppler curvature κ, and no intrinsic source anisotropy. Define \(\Gamma=(1-\beta²)^{-1/2}\), \(A=(k²+k+\kappa)/2\). To \(O(\beta²)\) in the count field,
+\[
+d_{\rm radio}=k\beta+O(\beta^3),\
+Q_{\rm radio}=A\,\mathrm{STF}(\beta\beta)+O(\beta^4),
+\]
+where the normal photon moments of the *exact boost of isotropic radiation* satisfy
+\[
+m_\gamma=\frac{4\beta}{3+\beta²},\qquad
+S_\gamma=\frac4{3+\beta²}\mathrm{STF}(\beta\beta).
+\]
+Hence on the common β fibre
+\[
+\boxed{Q_{\rm radio}=\frac{A(3+\beta²)}4S_\gamma+O(\beta^4),\quad
+d_{\rm radio}=\frac{k(3+\beta²)}4m_\gamma+O(\beta^3).}
+\]
+For m=|mγ|, \(0\le m<1\), the physical β magnitude is uniquely \(\beta=3m/(2+\sqrt{4-3m²})\). If A>0, both nonzero STF tensors have rank-one shape χ=+1 and intrinsic positive scalar-potential solid angle \(1-1/\sqrt3\). This is **a closure test**, not an additional Fisher likelihood from the same β. Counterexamples: mixed source populations with identical k but different κ yield different Qradio (R72); intrinsic photon stress allows observed χ≠+1 even when the photon frame is boosted; R66 actual χ_PR3/PR4 are negative and therefore cannot be *identical* to an ideal pure-boost tensor under that strict hypothesis, without assessing selection, source photon flux, or full covariance. A beta from R65's 2D source log dipole is not the physical common 3D β.
+
+### PHY-04 theorem: general Bianchi spatial structure supplies a B2-like sky direction field orthogonal to local shear E2 on the full sphere
+For a chosen oriented normal Lie frame and **a fixed local angular advection operator** including \(V_{N}(n)=-c\,n\times N n\) (N symmetric with m⁻¹), only \(N_{\rm STF}\) contributes since \(n\times(I n)=0\). Its signed B2 potential may be written \(\Psi(n)=-(c/2)nN_{\rm STF}n\), since \(n\times\nabla_{S²}\Psi=-c\,n\times N n\). Thus
+\[
+\boxed{\langle|V_N|^2\rangle=\frac{c^2}{5}\operatorname{tr}(N_{\rm STF}^2),\quad
+\langle V_N\cdot P_n S n\rangle=0}
+\]
+on a uniform round sphere (for any fixed symmetric S), by STF 2nd/4th angular moments and gradient–curl orthogonality. In the **local affine matter drift** B=HI+σ+ω, the B2 sector is absent, so the two operators are physically different. A general Bianchi photon/geodesic sky advection can contain this B2 but observed high-z Gaia proper motions need the actual integrated Sachs/Jacobi/observer-source transport, not an instantaneous substitution. **Counterexample:** even with an underlying pure E2 local affine sky, an incomplete weighted Gaia mask mixes E2/B2 in the fitted 16D Fisher, especially northern-only R69. A nonzero fitted Gaia B2 is not automatically cosmic vorticity, N_STF or tilt. R7 checks exact angular orthogonality, actual Gaia covariance coupling and symbolic N=0 Type I/V null.
+
+### PHY-05 theorem: rank/DEC and signed morphology distinguish physically conditional Bianchi subspaces
+Take normal STF5 \(x=S\), Lie \(M_{a,N}:\mathbb R^5\to\mathbb R^3\) and total normal \(u=j/\rho_N\). Jacobi \(Na=0\), Codazzi \(Mx=-3\Omega_Nu\). Under total DEC and Ω>0, \(Q_{\rm Lie}=\|Mx\|/(3\Omega_N)=|u|\le1\). For Class A diagonal N instantaneous ranks 0/2/3; Class B canonical a=(a,0,0),N=diag(0,n2,n3), lower subdeterminant \(9a²+n2n3\) gives rank3 except VI_-1/9 rank2. At the exceptional locus a left-null \(\ell=(0,n2,3a)\) gives \(\ell\cdot u=0\). If *independently observed* \(\hat x,\hat u\) share a normal tetrad and covariance C, the residual \(r=\hat u+M\hat x/(3\Omega_N)\), covariance \(C_r=[M/(3\Omega_N),I]C[M/(3\Omega_N),I]^T\) supplies a rank-aware conditional test, but using u computed from the SAME x is tautological. **Counterexample:** Type V total j=0 ⇒ S a=0 ⇒ χ(S)=0,FΩ=1/2 for S≠0; exceptional VI_-1/9 total j=0 permits S=(-2,0,0,0,1), χ=.464758,FΩ≈.4462463 (R75 exact example). Therefore Q=0 does not fix morphology or matter species tilt. R49 posterior cannot furnish independent u; family-level Pi remains unqualified.
+
+### PHY-06 theorem: the signed shear–photon response is not autonomously closed on five STF coordinates
+Take a geodesic homogeneous normal state with \(\sigma\in\mathrm{STF}(3)\), \(D_t\sigma=-3H\sigma+D\), \(D=(8\pi G/c²)\pi_N-c²\,{}^{(3)}R_{\rm STF}\). \(S_\gamma=\pi_\gamma/\rho_\gamma\) for photon brightness. At an instantaneous normal-isotropic **collisionless** photon distribution,
+\[
+\boxed{D_tS_\gamma|_{t_0}=-\frac8{15}\sigma(t_0)}
+\]
+for all Bianchi Lie types at that instant (R70), with additional collision contributions only when defined. This gives \(S_\gamma(t_0+\Delta t)=-(8/15)\sigma_0\Delta t+O(\Delta t²)\) and a *specific short-time anti-alignment*, not an all-redshift fossil identity. Shear χ under same physical normal:
+\[
+D_t\chi=\frac{3\sqrt6}{I_2^{3/2}}
+\left[\operatorname{tr}(\sigma^2D)-\frac{I_3}{I_2}\operatorname{tr}(\sigma D)\right].
+\]
+If D(t)∥σ(t), the χ derivative vanishes though amplitude evolves. If [D,σ]≠0, signed eigenframe orientation generically rotates even at equal χ, so a shape-only F(χ) cannot describe full sky alignment; for Σ=0, χ undefined. **Explicit kinetic counterexample:** two strictly positive \(p_\epsilon(n)=(1+\epsilon P_4(n_z))/(4\pi)\), ε=0,1, have identical photon flux and STF5=0 but differ in cap F and future \(D_tS_\gamma\) under an axial shear; R70 original computed \(\dot S_{zz}=-16s/45+8εs/315\) and R73 cap F(ε)=.1+.05707125ε at cut |n_z|>.9. Thus one instantaneous STF5 \(x\) does NOT uniquely determine kinetic F or GF without higher moments/closure. This is a constructive restricted nonclosure, not a no-go for all physically calibrated closures.
+
+### PHY-07 theorem: radial-distance leverage and flux-count response give complementary but not automatically joint identification
+Specify a *phenomenological low-z* directional Hubble-like scalar \(Y(r,n)=H+\gamma\cdot n+S:nn+(v_{\rm rel}\cdot n)/r\), \(S\in\mathrm{STF}(3)\), r>0 and observer/source frame declared. Define design \(X=[1,n_3,nE_A n,(r_*/r)n_3]\) for fixed reference length r_* (Mpc), dimensionless signed angular coefficients. For all sources at one radius r0, the dipole and 1/r dipole columns are exactly proportional, so rank≤9 instead of 12; multiple sufficiently varied r and angles can give rank12. This is a rank/conditioning theorem, not a new GR distance law; correct physical finite-z \(H_D\) needs Sachs/Jacobi and distance/velocity source. Independent R65 selected count \(d_b=k_b\beta+a\) with known unequal k gives transverse \(\beta\)/common a separation **only within R65's source law**, while CF4's fitted V3 has different radial/observer transfer. With unconstrained CF4 intrinsic \(\gamma\), an extra distance dipole equation with a free amplitude nuisance cannot increase β Fisher, even if data look aligned. **Counterexample**: choose arbitrary \(\gamma\) to absorb a would-be β-induced CF4 dipole; the radio likelihood stays unchanged and the CF4 apparent dipole adds no velocity identification until a physically matched transfer/nuisance restriction is supplied. R7 computes actual CF4 table4 geometric rank/condition and R65 k responses; never call this a common physical observer velocity measurement.
+
+R5 status: seven conditional derived or literature-reused theorem applications, one counterexample each. Exact original source response and acceptance will be measured in R7; no already-published generic GR theorem is newly claimed as first discovered.
