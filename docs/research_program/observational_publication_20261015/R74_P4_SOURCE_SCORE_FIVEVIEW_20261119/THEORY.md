@@ -179,3 +179,13 @@ Output C: GF **only** if a physically identified count population evolves under 
 Output D: if a true same-frame beta is found, physical causality Q_beta=|beta|<1, pure-boost STF Qcount and energy-photon tilts may be compared through qualified source maps. If beta remains two-dimensional apparent and unknown beta_z, do not fabricate Q_beta or a Bianchi family.
 
 **Admission condition**: P4 scientific claim remains NOT_READY_TO_SUBMIT. Original 42 science nodes unchanged; bounded R1–R10 provides theory+source-conditioned data diagnostics and a finite next coding slice, no source catalogue mutation or release publication.
+
+## R10. Bounded closeout and next executable science slice
+
+R1–R10 theory loop is complete at the level of physical definitions, exact claims, adversarial constraints, saved R65 conditional-source data, reproducible finite tests and six-paper/seven-combination application contracts. Distinguish (i) established SR/source-score and Reynolds mathematics, (ii) new project-specific applied derivation and saved-source numerical diagnostics, (iii) physical hypotheses which would need a different source law, and (iv) blocked astrophysical evidence. No new Bianchi family identification, CMB/radio kinematic anomaly detection, physical observer 3D beta, true count time GF or publisher-level scientific acceptance.
+
+Source/read-only inputs: original R65 NVSS_OBSERVED_RESULT.json, INTERPRETATION_SUMMARY.json, NVSS_CONDITIONAL_CARRIERS.npz and R63 INTERPRETATION_SUMMARY.json. \`verify_p4.py\` produces \`RESULTS.json\`. \`APPLICATIONS.json\` carries full six-P and seven-PHY contracts. \`REPORT_KO.md\` is the human source-linked outcome. \`PROVENANCE.json\` closes checks, file hashes, stage-push Git identity.
+
+Immediate next **bounded coding experiment** upon a separate next-stage request: with the same 241,892 overlapping peak/integrated source IDs, compute selection derivative k and curvature κ under actual per-source α/SED, beam/size and migration cut; source-preserving small-beta Lorentz flux and aberration plus ring-crossing selection injection, and compare actual predicted F score and dipole differences against the previous fixed-ring surrogate. Fit a physically qualified overdispersed/LSS source law and propagate paired covariance. If physics/selection source missing, retain present conditional finite response and clearly mark physical blocker rather than invent velocity detection.
+
+Original six-paper 42 science DAG nodes are untouched, no new full native low-ell solver, no unrelated source file staged, no new cloned worktree. Every R1–R10 substantive stage pushes to the existing branch under owner's standing directive; final host remote SHA is the actual completion receipt.
