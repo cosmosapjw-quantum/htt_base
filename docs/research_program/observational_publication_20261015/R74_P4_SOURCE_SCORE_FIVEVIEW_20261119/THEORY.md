@@ -65,3 +65,54 @@ F. **General tilted Bianchi matter-radiation frame:** \(\Gamma_{MR}=-g(U_M,U_R)/
 G. **True information versus views:** The entire x=(6 signed coordinates+joint C) carries the base Gaussian source information; Q_stat and Pi are deterministic functions thereof under one null, F_source is a different descriptive source-weighted functional, and physical G_F requires a time law. Comparing independent photon/cosmography data with different source/frame/covariance could improve identification, but *not by multiplying five views or counting six papers as independent draws*.
 
 Prioritize A+B+C+D for constructive proof and actual source computation, retain E+F as physical checks and six-paper applications. No required source extrapolation beyond the saved R65 pixels / original Gaussian mean law.
+
+## R5. Constructive theorems and proofs
+
+**P4-R74-T1 (affine-line and ordering theorem for source-bin kinematic response).** Let \(v_b\in\mathbb R^2\), b=1,2,3, and suppose the *physical selection model* admits a common intrinsic transverse residual \(a\), an observer-source relative transverse velocity \(\beta\), and scalar population responses \(k_b\):
+\(v_b=a+k_b\beta\).
+Then
+\[
+\boxed{\det(v_2-v_1,\ v_3-v_1)=0}
+\]
+independently of the magnitudes of k. Proof: subtract \(v_1\): \(v_i-v_1=(k_i-k_1)\beta\), and the wedge of collinear vectors vanishes. For unrestricted real k, the converse holds: if the two differences span dimension at most one, choose any nonzero vector along the common line as beta, choose k differences to match, and define a=v_1-k_1 beta. When both differences vanish beta can be zero. Thus collinearity is **necessary and sufficient for existence of some unrestricted scalar-response fit**, not for a physically calibrated Lorentz boost.
+If *known* \(k_1<k_2<k_3\) and \(\beta\ne0\), a stronger geometric prediction is that \(v_2\) lies strictly on the segment joining \(v_1\) and \(v_3\), with \(\|v_2-v_1\|/\|v_3-v_1\|=(k_2-k_1)/(k_3-k_1)\in(0,1)\). Actual R65 base64 2D point fits yield differences \(v_2-v_1=(-.00156107,+.01202339)\), \(v_3-v_1=(-.00097140,+.00634237)\), determinant \(+1.77864755\cdot10^{-6}\). The point order has \(\|v_2-v_1\|>\|v_3-v_1\|\), contrary to the fixed ordering k1<k2<k3, but noisy point nonconformity does **not** establish rejection. With arbitrary bin-specific \(a_b\) the model has no such collinearity restriction. Near beta=0 and all v_b equal the determinant has zero gradient, so a normal/Wilks approximation for determinant is generally nonregular.
+
+**P4-R74-T2 (nuisance-profiled physical score and its conditional Pi).** With the saved R65 signed 6D Gaussian coefficient approximation \(\hat v\sim N_6(X\vartheta,C_6)\), \(X=[K\otimes I_2,\mathbf1_3\otimes I_2]\in\mathbb R^{6\times4}\), \(\vartheta=(\beta_x,\beta_y,a_x,a_y)\), \(C_6\succ0\), and fixed known k, the profile residual
+\[
+\boxed{T_{\rm common}=\min_\vartheta(\hat v-X\vartheta)^\top C_6^{-1}(\hat v-X\vartheta)}
+\]
+has conditional \(\chi^2_{6-\mathrm{rank}X}=\chi^2_2\) under a regular exact fixed-Gaussian source law (or asymptotically if C estimated). Its \(Q_{\rm score}=\sqrt T\) and \(\Pi_{\rm conditional}=\exp(-T/2)\) are deterministic views of ONE null. The efficient Fisher for beta after profiling common residual is \(D^\top[C^{-1}-C^{-1}H(H^\top C^{-1}H)^{-1}H^\top C^{-1}]D\), rank2 iff at least two known k differ and C>0. If the astrophysical residual varies independently by bin, the column span expands to full 6D, T is zero and beta wholly nonidentified. A free-k collinearity test is different and generally nonregular at zero.
+R65 stored \(\hat\beta_\perp=(-.00137305,+.00511837)\) and conditional beta SD≈(.01037,.01172) with near-perfect beta-a correlation; the original \(T=1.6688570127\) over 2 df is **not a cosmic PTE or a true observer velocity measurement**. Verify by recomputing from saved independent-bin estimates and block covariance in R7.
+
+**P4-R74-T3 (hemisphere occupancy susceptibility of the *ring-conditioned* count experiment).** For a chosen source bin b, pixels p grouped into declination rings r, fixed observed ring totals \(N_{br}\), positive baseline exposures \(w_{brp}>0\), and a bounded chosen event \(A\) on the **same fixed mask**, let the *conditionally defined score-tilted* pixel probabilities be
+\[
+p_{brp}(\beta)=\frac{w_{brp}\exp[k_b\beta\cdot n_p]}
+ {\sum_{q\in r}w_{brq}\exp[k_b\beta\cdot n_q]},\quad
+F_{b,A}(\beta)=\sum_r\frac{N_{br}}{N_b}\sum_{p\in r}\mathbf1_A(p)p_{brp}(\beta).
+\]
+Here \(w_{brp}=\exp(\hat v_b\cdot(n_{px},n_{py}))\) is the **actual R65 fitted log-link model baseline** with equal-area pixel exposure (alternative empirical baseline \(w=N_{bp}\) is only a reweighted observed point measure). Differentiation of the log-normalizer yields the **exact score covariance identity**
+\[
+\boxed{\nabla_\beta F_{b,A}(0)=k_b\sum_r\frac{N_{br}}{N_b}
+\operatorname{Cov}_{p_b(\cdot|r)}(\mathbf1_A,n)\,.}
+\]
+Proof: \(\partial_{\beta_j}p_{brp}=k_b p_{brp}(n_{pj}-\mathbb E_r n_j)\), insert into F. This uses a **declared conditional source family**, and measures sensitivity of an actual selected-source occupancy to a hypothetical infinitesimal count-score boost. It does not automatically implement exact physical aberration/reselection of point sources or their morphology.
+Since HEALPix declination ring r has \(n_z\) constant on all its pixels, every within-ring covariance with n_z vanishes identically. Therefore
+\[
+\boxed{\partial_{\beta_z}F_{b,A}^{\rm ring}=0}
+\]
+for any event A and any positive baseline pixel intensity, provided all ring totals are held fixed. This is a universal **conditional-likelihood axial-null theorem** explaining why this source law cannot identify longitudinal local observer velocity. It does NOT prohibit second-order recovery from a different **linear-density** source law or from external physically matched redshift/size information. By contrast the unconditional same-mask family \(p_p\propto w_p e^{k\beta\cdot n_p}\) has derivative \(k\operatorname{Cov}_{p}(1_A,n_z)\), which can be nonzero. This is an actual, falsifiable change of source conditioning, not physics evidence for beta_z.
+With an actual observer/source velocity history \(\beta(\tau)\) and frozen source selection/exposure, the chain rule would give \(\dot F_{b,A}=\nabla_\beta F\cdot\dot\beta\); however R65 has no \(\beta(\tau)\), and the physical selected population itself evolves. Therefore this derivative is a susceptibility, NOT observed G_F.
+
+**P4-R74-T4 (physical sky number transport and true G_F).** Suppose a single physically identified source population has nonnegative angular number density \(\rho(\tau,n)\), angular velocity field \(V(\tau,n)\) from fully specified observer/source null geometry, and source/selection balance \(s(\tau,n)\) (birth, death, crossing flux/redshift limits). Assume the sphere conservation law
+\[
+\partial_\tau\rho+\nabla_{S^2}\cdot(\rho V)=s.
+\]
+For a moving event A(\tau) with boundary normal speed \(W_A\cdot\nu_A\), write \(N_A=\int_A\rho,\ N=\int_{S^2}\rho\), \(F_A=N_A/N\). Reynolds transport and surface divergence theorem yield
+\[
+\boxed{\dot F_A=
+-\frac1N\oint_{\partial A}\rho(V-W_A)\cdot\nu_A\,d\ell+
+\frac1N\Big(\int_A s\,d\Omega-F_A\int_{S^2}s\,d\Omega\Big).}
+\]
+Proof: \(\dot N_A=-\oint_{\partial A}\rho(V-W_A)\nu+\int_A s\), \(\dot N=\int_{S^2}s\); apply quotient rule. If \(s=\rho\,h\), the source term equals \(\operatorname{Cov}_{p}(\mathbf1_A,h)\). If the selected population has true equal-time frame transport and cross-epoch covariance, then \(G_F(\tau_1,\tau_2)=\int_{\tau_1}^{\tau_2}\dot F_A d\tau\). A single R65 catalogue at one observer epoch gives neither V nor s nor joint time law. Flux-cut changes without source genealogy are not physical GF. The theorem is a standard balance-law/Reynolds corollary now typed for source-count anisotropy, not a new global GR law.
+
+**P4-R74-T5 (frame and source-identity no-conflation).** The observer count score \(\beta_{O|S}\) is relative to an assumed *selected* source rest frame. The invariant \(\Gamma_{MR}=-g(U_M,U_R)/c^2\) is a distinct matter–radiation relative speed at one event. In any Bianchi normal tetrad, \(N^{ij}a_j=0\) and total normal momentum Codazzi constrain \(\sum j_i^N\), while the observer count ring score does not. It is possible to make identical selected radio x with different \(\Gamma_{MR}\) by adjusting intrinsic source anisotropy, and vice versa. A nontrivial physical test requires at least one *independent* same-frame source of electron photon flux (remote kSZ), GR redshift optics, or selected-source morphology with actual covariance. The same P4 observer count cannot be multiplied into independent fake x/Q/Pi/F/GF likelihoods.
