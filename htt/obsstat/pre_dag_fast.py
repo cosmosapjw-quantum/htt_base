@@ -60,12 +60,11 @@ def last_backend_receipt():
 def _set_backend_receipt(**attrs):
     _RECEIPT.value=dict(attrs)
 
-@lru_cache(maxsize=4)
 def _certified_cached_native(kind):
-    """One build per certified source/compiler/architecture with safe process lock.
+    """Check the current source hash and cached binary on EVERY native call.
 
-    Failure here is a transparent NumPy fallback in auto mode, not a successful
-    native execution. Changed native source SHA invalidates automatic trust.
+    Keep the expensive compilation/compiler lookup cached by exact source SHA,
+    not by kind alone. Long-lived analysis agents must detect changed source.
     """
     if kind not in _KERNEL_SOURCES:
         raise ValueError("unknown native kernel")
@@ -74,6 +73,21 @@ def _certified_cached_native(kind):
     src_sha=hashlib.sha256(source.read_bytes()).hexdigest()
     if src_sha!=spec["certified_source_sha256"]:
         raise RuntimeError(f"uncertified_{kind}_source_sha256_change")
+    binary=Path(_compile_certified_native(kind,src_sha))
+    receipt=binary.with_name("source_and_binary.json")
+    if not binary.is_file() or not receipt.is_file():
+        raise RuntimeError(f"missing_{kind}_native_cached_binary")
+    metadata=json.loads(receipt.read_text())
+    if (metadata.get("source_sha256")!=src_sha or
+        metadata.get("binary_sha256")!=hashlib.sha256(binary.read_bytes()).hexdigest()):
+        raise RuntimeError(f"uncertified_{kind}_native_cached_binary")
+    return str(binary)
+
+
+@lru_cache(maxsize=8)
+def _compile_certified_native(kind,src_sha):
+    """Compile certified C++/Fortran once per source SHA and active runtime."""
+    source=_KERNEL_SOURCES[kind]
     compiler_name="g++" if kind=="gaia" else "gfortran"
     compiler=shutil.which(compiler_name)
     if compiler is None:
@@ -208,8 +222,16 @@ def accumulate_gaia(B,mu,e1,e2,rho,*,native_lib="auto",threads=None):
         chi=np.empty(1,np.float64)
         rc=fn(n,p,B,mu,e1,e2,rho,threads,F,score,chi)
         if rc:
+            _set_backend_receipt(kernel="gaia_weighted_normal_equations",
+                                 used="native_failed",source_certified=certified,
+                                 native_threads=threads,n_rows=n,
+                                 failure_reason=f"native_return_code_{rc}")
             raise RuntimeError(f"C++ Gaia source kernel failed, code {rc}")
         if not np.all(np.isfinite(F)) or not np.all(np.isfinite(score)) or not np.isfinite(chi[0]):
+            _set_backend_receipt(kernel="gaia_weighted_normal_equations",
+                                 used="native_failed",source_certified=certified,
+                                 native_threads=threads,n_rows=n,
+                                 failure_reason="nonfinite_native_output")
             raise FloatingPointError("native Gaia accumulation nonfinite")
         _set_backend_receipt(kernel="gaia_weighted_normal_equations",
                              used="cpp_native",source_certified=certified,
@@ -260,6 +282,10 @@ def hemisphere_moments(directions,axis,weights=None,*,native_lib="auto"):
         status=ctypes.c_int(-999)
         fn(len(n),n,w,p,raw,ctypes.byref(status))
         if status.value:
+            _set_backend_receipt(kernel="weighted_hemisphere_moments",
+                                 used="native_failed",source_certified=certified,
+                                 native_threads=1,n_rows=len(n),
+                                 failure_reason=f"fortran_return_code_{status.value}")
             raise RuntimeError(f"Fortran source mask kernel error {status.value}")
         raw=raw.reshape(2,10)
         sumw=raw[:,0]

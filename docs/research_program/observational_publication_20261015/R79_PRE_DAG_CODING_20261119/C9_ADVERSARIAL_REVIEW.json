@@ -1,0 +1,79 @@
+{
+  "schema": "htt.r79.c9_adversarial_code_validation/1",
+  "date": "2026-11-19 KST",
+  "initial_repo_sha": "35b4bfc0759ede4cbda552c1516c37e7da06fb30",
+  "scope": "R78 SQ-01..SQ-10 code preparation. Original 60-node science DAG unchanged",
+  "default_lane": "auto source-SHA-certified native C++/Fortran for supported operations; Python reference explicit and fallback logged",
+  "findings": [
+    {
+      "id": "C9-01",
+      "class": "IMPLEMENTATION_TRUST_CERTIFICATION_BUG",
+      "observation": "Long-lived process cached native certificate by kernel kind and failed to detect source SHA change",
+      "repair": "Check source SHA and binary manifest every call, cache compilation keyed by exact source SHA",
+      "test": "warm certified then source changes: automatic fallback or native strict error"
+    },
+    {
+      "id": "C9-02",
+      "class": "TEST_HARNESS_REFERENCE_IDENTITY_BUG",
+      "observation": "Original test reference imported accelerated scripts.r67.gaia_frame.accumulate after default activation",
+      "repair": "Always import and compare with frozen accumulate_numpy",
+      "test": "NumPy reference and 174 scoped regressions"
+    },
+    {
+      "id": "C9-03",
+      "class": "FAILURE_PROVENANCE",
+      "observation": "Native runtime error could leave stale previous successful receipt",
+      "repair": "Record used=native_failed with exact return-code or nonfinite reason before raising",
+      "test": "native bad-return fixture"
+    },
+    {
+      "id": "C9-04",
+      "class": "CACHED_BINARY_INTEGRITY",
+      "observation": "Cached library may be corrupted despite source SHA certification",
+      "repair": "Check binary SHA against source-and-binary manifest every call",
+      "test": "injected binary SHA mismatch yields explicit NumPy fallback"
+    },
+    {
+      "id": "C9-05",
+      "class": "SOURCE_CONDITIONING_NUMERICS",
+      "observation": "Sky-ordered Gaia prefix has Fisher condition 866184 with 1.53e-9 solution relative discrepancy, despite 6.17e-15 matrix error",
+      "repair": "Use sky-stratified sample to benchmark, monitor matrix conditioning and actual solved coefficient/covariance. Do not relax tolerances.",
+      "test": "well-conditioned original 58750-row sky sample solution difference 9.07e-15"
+    },
+    {
+      "id": "C9-06",
+      "class": "EXECUTION_ENVIRONMENT_BLOCKER",
+      "observation": "Later C9 full Gaia rerun blocked: /mnt/extdrive/workdir/raw absent; source device /dev/sda2 with NTFS identity visible but not available at pinned path",
+      "repair": "No unapproved source remapping/copy; preserve earlier C7 verified results; report current source availability blocked",
+      "test": "C9 FITS open failed FileNotFoundError, source path absence and device metadata independently checked"
+    }
+  ],
+  "results": {
+    "scoped_regression_tests": {
+      "passed": 174,
+      "failed": 0
+    },
+    "R78_strict_science_plan_checks": {
+      "passed": 32,
+      "failed": 0
+    },
+    "earlier_real_Gaia_replay": {
+      "source_total": 1614173,
+      "source_quality": 1580645,
+      "max_relative_source_result_error": 4.1777494858939505e-13,
+      "patch_relative_cov_error": 1.2896798275409711e-14,
+      "was_run_before_external_source_path_disappeared": true
+    },
+    "earlier_matched_kernel_benchmark": {
+      "Gaia_cpp8_speedup_60k": 9.715688534665514,
+      "Gaia_cpp8_speedup_120k": 9.989401567465835,
+      "CF4_fortran_speedup": 2.608951063715735,
+      "benchmarks_are_in_memory_core_kernels_only": true
+    },
+    "C9_original_external_source_present_now": false,
+    "native_Bianchi_Einstein_Boltzmann_solver_implemented": false,
+    "astrophysical_combined_null_or_global_tilt_detected": false
+  },
+  "scientific_claim": "SOURCE_CONDITIONAL_CODE_PREPARATION_VERIFIED; original R78 science source gates unchanged",
+  "next_environment_dependency": "Restore access to original /mnt/extdrive/workdir/raw via authorized host procedure before *new* CF4/Gaia original-source full re-analysis"
+}

@@ -6,7 +6,7 @@ cosmological parameter inference.
 import os
 import numpy as np
 import pytest
-from scripts.r67.gaia_frame import accumulate as reference_vsh
+from scripts.r67.gaia_frame import accumulate_numpy as reference_vsh
 from scripts.r68.fiveview_geometry import E,stf_matrix,stf_coordinates
 
 def api():
@@ -216,3 +216,79 @@ def test_unavailable_auto_compiler_is_explicit_numpy_fallback(monkeypatch):
     receipt=m.last_backend_receipt()
     assert receipt["used"]=="numpy_reference"
     assert receipt["fallback_reason"].startswith("TEST_SIMULATED_COMPILER_UNAVAILABLE")
+
+def test_native_auto_rechecks_source_hash_after_warm_cached_compile(monkeypatch,tmp_path):
+    """A long-lived analysis process must not reuse stale verified code if source changes."""
+    from htt.obsstat import pre_dag_fast as m
+    monkeypatch.setenv("HTT_ANALYSIS_BACKEND","auto")
+    B,y,e1,e2,rho=gaussian_case(n=5000,seed=812)
+    m.accumulate_gaia(B,y,e1,e2,rho)
+    assert m.last_backend_receipt()["used"]=="cpp_native"
+    changed=tmp_path/"vsh_normal_modified.cpp"
+    changed.write_bytes(m._KERNEL_SOURCES["gaia"].read_bytes()+b"\n// intentionally not source certified\n")
+    monkeypatch.setitem(m._KERNEL_SOURCES,"gaia",changed)
+    got=m.accumulate_gaia(B,y,e1,e2,rho)
+    original=reference_vsh(B,y,e1,e2,rho)
+    for a,b in zip(got,original):
+        np.testing.assert_allclose(a,b,rtol=2e-11,atol=1e-10)
+    receipt=m.last_backend_receipt()
+    assert receipt["used"]=="numpy_reference"
+    assert receipt["source_certified"] is False
+    assert "uncertified_gaia_source_sha256_change" in receipt["fallback_reason"]
+
+
+def test_strict_native_refuses_changed_source_even_with_cached_binary(monkeypatch,tmp_path):
+    from htt.obsstat import pre_dag_fast as m
+    monkeypatch.setenv("HTT_ANALYSIS_BACKEND","native")
+    B,y,e1,e2,rho=gaussian_case(n=5000,seed=813)
+    m.accumulate_gaia(B,y,e1,e2,rho)
+    changed=tmp_path/"vsh_normal_modified.cpp"
+    changed.write_bytes(m._KERNEL_SOURCES["gaia"].read_bytes()+b"\n// unverified\n")
+    monkeypatch.setitem(m._KERNEL_SOURCES,"gaia",changed)
+    with pytest.raises(RuntimeError,match="required_native_gaia_unavailable"):
+        m.accumulate_gaia(B,y,e1,e2,rho)
+
+
+def test_manual_native_binary_invalid_output_fails_not_falls_back(monkeypatch):
+    from htt.obsstat import pre_dag_fast as m
+    B,y,e1,e2,rho=gaussian_case(n=100,seed=814)
+    class Broken:
+        def __getattr__(self,name):
+            def method(n,p,b,mu,e1,e2,rho,threads,F,score,chi):
+                return 3
+            return method
+    monkeypatch.setattr(m,"_library",lambda path:Broken())
+    with pytest.raises(RuntimeError,match=r"C\+\+ Gaia source kernel failed"):
+        m.accumulate_gaia(B,y,e1,e2,rho,native_lib="bad.so")
+    receipt=m.last_backend_receipt()
+    assert receipt["used"]=="native_failed"
+    assert receipt["failure_reason"]=="native_return_code_3"
+
+
+def test_explicit_numpy_reference_is_original_even_with_auto_default():
+    B,y,e1,e2,rho=gaussian_case(n=5200,seed=815)
+    a=api().accumulate_gaia(B,y,e1,e2,rho,native_lib=None)
+    b=reference_vsh(B,y,e1,e2,rho)
+    for x,z in zip(a,b):
+        np.testing.assert_allclose(x,z,rtol=2e-11,atol=1e-10)
+    assert api().last_backend_receipt()["used"]=="numpy_reference"
+
+def test_auto_falls_back_on_cached_binary_integrity_mismatch(monkeypatch,tmp_path):
+    """Authenticated source alone must not certify a corrupted cached binary."""
+    from htt.obsstat import pre_dag_fast as m
+    monkeypatch.setenv("HTT_ANALYSIS_BACKEND","auto")
+    x=tmp_path/"fake.so"
+    x.write_bytes(b"not a real native shared object")
+    y=tmp_path/"source_and_binary.json"
+    import json
+    expected=m.analysis_lane_policy()["kernels"]["gaia_correlated_vsh_2x2_to_normal_equations"]["certified_source_sha256"]
+    y.write_text(json.dumps({"source_sha256":expected,"binary_sha256":"0"*64}))
+    monkeypatch.setattr(m,"_compile_certified_native",lambda kind,sha:str(x))
+    B,z,e1,e2,rho=gaussian_case(n=5000,seed=816)
+    got=m.accumulate_gaia(B,z,e1,e2,rho)
+    baseline=reference_vsh(B,z,e1,e2,rho)
+    for a,b in zip(got,baseline):
+        np.testing.assert_allclose(a,b,rtol=2e-11,atol=1e-10)
+    receipt=m.last_backend_receipt()
+    assert receipt["used"]=="numpy_reference"
+    assert "uncertified_gaia_native_cached_binary" in receipt["fallback_reason"]
