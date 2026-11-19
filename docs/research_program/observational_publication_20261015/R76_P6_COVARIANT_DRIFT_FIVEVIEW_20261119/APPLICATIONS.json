@@ -1,0 +1,200 @@
+{
+  "schema": "htt.r76.p6_covariant_kinematics_fiveview_sixpaper_sevenphy/1",
+  "date": "2026-11-19",
+  "original_science_DAG_42_nodes_modified": false,
+  "conventions": "metric(-,+,+,+), U.U=-c^2, observer-to-source n, same Fermi observer frame unless explicitly transported, R68 orthonormal STF5, H=Theta/3 with physical time s^-1",
+  "primary_x": "Physical (d=-A/(cH) 3D, S=sigma/H STF5) plus H, omega3 and beta3 state packet. Observed R61 11D (V3,dH3,kappa5), independent Gaia R69 VSH16D E1/B1/E2/B2 with distinct source transfer.",
+  "five_view_contract": {
+    "x": "signed source carrier with full covariance, observer/source frame, redshift/time, actual linear/nonlinear forward map",
+    "Q": "physical one-sided Q_H=max(0,-min_n[d.n+nSn]) if same local congruence and H>0; Q_beta=|beta| if actual physical 3D relative velocity; source Q_stat separately",
+    "Pi": "tail under declared matched source null; R61 fixed-C Gaussian and R69 Gaia formal/patch not cosmic anisotropy calibrated; unavailable physical cross-probe null",
+    "F": "round-sphere sign event F_Hplus=area{1+d.n+nSn>0}/4pi or signed pure shear F_S; Gaussian ellipsoid volume and empirical source masks are different typed F",
+    "GF": "same physically identified congruence and Fermi sky time transported via Raychaudhuri/Einstein and null optics; no observed time GF in current R61/Gaia; depth K1 only G_x"
+  },
+  "theorems": [
+    {
+      "id": "P6-T1",
+      "formula": "mu_E2/H=(1/2)grad_S²(n S n); <|mu_E2|²>/H²=(3/2)<(n S n)²>; B1=Omega×n; no B2 in *restricted local affine* model",
+      "status": "derived, Wolfram exact and numerical checked, source common-tensor hypothesis NOT established"
+    },
+    {
+      "id": "P6-T2",
+      "formula": "h(n)=1+d.n+nSn; Q_H=max(0,-min_n(d.n+nSn)); global lower>=1-|dhat|-||Shat||op-sqrt(5*c11*lambda_max(C8)/3)-sqrt(8)*rho under one R61 simultaneous11 ellipsoid and RMS cal",
+      "status": "derived exact sufficient allsky certificate; seven source model variants checked; cosmological H unobserved"
+    },
+    {
+      "id": "P6-T3",
+      "formula": "source weighted Fisher F=Tt W T, Schur-profile E1/B1; canonical norm ||G_EE^-1/2 G_EB G_BB^-1/2||2; full uniform sky=0 for E2/B2",
+      "status": "source R69 actual Gaia 16D covariance verified; north/south alias not physical vorticity"
+    },
+    {
+      "id": "P6-T4",
+      "formula": "dotF_Hplus=(1/4pi)integral_h=0 dot h/|gradS h| d ell, Raychaudhuri dotTheta=-Theta²/3-sigma²+omega²-R_UU+div A and dotS=dot sigma/H -S dotH/H",
+      "status": "derived conditional Einstein/congruence transport; d-only synthetic checked, actual time GF unavailable"
+    },
+    {
+      "id": "P6-T5",
+      "formula": "same-physical STF source k=T_C s+eps_C, e=T_G s+eps_G; residual e-R k with R=T_G T_C^-1 and C_delta=C_G+R C_C Rt-R C_CG-C_GC Rt",
+      "status": "exact covariance algebra; T_C,T_G and cross-probe C unqualified, not an executed observational null"
+    },
+    {
+      "id": "P6-T6",
+      "formula": "general tangent E/B harmonic mu=grad Phi+n×grad Psi, <|grad Phi|²>=sum_lm l(l+1)|Phi_lm|²/(4pi); if Phi_l=g_l/2 then tangent/scalar power ratio l(l+1)/4, l=2 gives 3/2",
+      "status": "established Hodge/vector harmonic identity, NOT a generic physical Phi_l=g_l/2 law at finite z"
+    }
+  ],
+  "papers": [
+    {
+      "id": "P1",
+      "title": "selected tensorized inference",
+      "x": "P1 selected 274-row 15D signed tensor/covariance; conditional physical target local g_H(n)=d.n+nSn (8D) in same observer frame",
+      "equation": "Hcal_o(n)=H[1+d.n+nSn], scalar STF5 from source optical map; if common physical shear then mu_E2/H=.5 grad g_quad",
+      "Q": "physical Q_H<1 only after source-optical transfer, else statistical source Q and confidence set",
+      "Pi": "P1 selected F/common-scale law and nuisance-profiled model; not Gaia formal Gaussian tail or cosmic anisotropy PTE",
+      "F": "fullsky local positive expansion or signed STF lobe area; R62 CF4 selected sky fraction is a different mask measure",
+      "GF": "requires same observer congruence Einstein evolution, not source distance-window K(z2)-K(z1)",
+      "test": "Construct matched P1 scalar x and Gaia tangent E2 with source lightcone Jacobians, then verify cross-channel power/shape and covariance",
+      "blocker": "P1 apparent STF unqualified as local physical shear, no common observation time/cross-source covariance"
+    },
+    {
+      "id": "P2",
+      "title": "CMB low-l photon kinetic",
+      "x": "R66 finite-band photon angular stress S_gamma STF5, optional flux m_gamma and T/E/B retained full signed low-L",
+      "equation": "Einstein shear driver D_t sigma+3Hsigma=(8piG/c²)pi_N-c² R3_STF for geodesic homogeneous normal; R70 photon Boltzmann transports pi_gamma and sky gradient/curl modes",
+      "Q": "photon PSD moment cone Q_gamma if flux measured; actual source lacks flux, P6 Q_H separate GR source",
+      "Pi": "matched CMB Commander/SMICA T/E/B instrumental+cosmic covariance; PR3 and PR4 null lanes must not be mixed",
+      "F": "photon energy angular cap only with higher moments/closure, vs normal shear sign F_S on an actual same frame",
+      "GF": "true photon Boltzmann evolution and Einstein observer sky transport, not a single observed CMB sky",
+      "test": "One general tilted Bianchi Einstein-Boltzmann photon stress to normal shear evolution and position drift forward map",
+      "blocker": "incomplete same-frame photon flux, emission/Thomson, full-source cross-epoch covariance"
+    },
+    {
+      "id": "P3",
+      "title": "directional finite-z Hubble",
+      "x": "R64 signed eta_lm(z), eta_z,eta_zz with CF4 68D same-source covariance and U_O/U_emitter frame",
+      "equation": "at vertex Hcal=H(1+d.n+nSn); at finite z H_D=c/[d_z(D_L/(1+z))]; Sachs Jacobi optical kinematics, no direct H_D=Hcal",
+      "Q": "local Q_H for normal congruence, separate derivative-domain Q_D=max(0,sup B eta_z)",
+      "Pi": "R64 fixed working source Gaussian, not same-shear Gaia physical p",
+      "F": "physical Hcal positive-sky event at local vertex vs D>0 finite-z source model event and source selection F",
+      "GF": "physical normal/observer transport and optical cross-depth covariance; R61 K1 not dot sigma",
+      "test": "Calibrate T_C(z) for physical scalar tensor, T_G(z) for Gaia E2 and source covariance then apply T5 residual",
+      "blocker": "independent local Hcal and complete general high-z optical transfer not present"
+    },
+    {
+      "id": "P4",
+      "title": "radio counts and observer boost vs global tilt",
+      "x": "R65 signed three-bin transverse log-count carrier 6D plus shared peak-integrated covariance; physical observer beta_O|S distinct from beta_M|R",
+      "equation": "d_b=k_b beta_O|S+a_b and second-order Qkin=(k²+k+kappa)/2 STF(beta beta); source count VSH aberration differs from proper-motion E2 shear",
+      "Q": "causal |beta| only for fully identified physical 3D frame, P6 Q_H for same local congruence not radio count",
+      "Pi": "ring-conditioned multinomial/Gaussian and LSS-calibrated null required, no independent cosmic p",
+      "F": "selected-source mask hemisphere occupancy and Lorentz sensitivity, not fullsky intrinsic expansion",
+      "GF": "same source time continuity plus celestial aberration, flux cuts not time",
+      "test": "Joint observer aberration Gaia E1 and radio count k_b beta with independent frame spin and selection",
+      "blocker": "3D observer/source beta, radio LSS and Gaia source redshift/selection missing"
+    },
+    {
+      "id": "P5",
+      "title": "general tilted Bianchi Lie Class A and B",
+      "x": "normal Sigma STF5 plus A_i,N_ij,rho_N,j_N,pi_N,multi-fluid beta_s state packet and SO3 triad",
+      "equation": "Jacobi N a=0, Codazzi L(Sigma)=-3Omega_N j_N/rho_N; Lie photon direction evolution may add B2 to local E2 affine model; finite-z null-Jacobi T_G(z)",
+      "Q": "Q_Lie=|L|/(3Omega_N)<=1 under total DEC, physically separate from Q_H local directional expansion",
+      "Pi": "family-specific source-qualified Einstein-Boltzmann/Sachs/polarized likelihood and proper singular stratum null",
+      "F": "normal signed STF F_S=F(chi), observed Gaia E2 signed F only an apparent template",
+      "GF": "Einstein+kinetic and Fermi/optical frame transported sky evolution",
+      "test": "Type II/V/exceptional VI_-1/9 forward source normal-to-observer E2/B2 plus matched CMB/CF4",
+      "blocker": "R49 posterior equivalence-set ceiling, poor CMB/Gaia/CF4 PPC; no calibrated native full transfer"
+    },
+    {
+      "id": "P6",
+      "title": "beyond-FLRW covariant kinematic measurement",
+      "x": "physical (H,d3,S5,omega3,beta3), actual R61 CF4 11D and R69 Gaia VSH16D kept distinct",
+      "equation": "Hcal/H=1+d.n+nSn, mu_E2/H=.5 grad(nSn) only in local affine, mu_B1=Omega×n, B2 independent finite-z/curvature template; Raychaudhuri drives actual time",
+      "Q": "R61 point Q_H~.036-.062 conditional; conservative allsky 11D +10mmag positive margin >=.7758825, physical Q_beta and vorticity unavailable",
+      "Pi": "R61 fixed-C source Gaussian and Gaia per-star formal vs exploratory patch cannot jointly calibrate cosmic shear/rotation",
+      "F": "apparent local H positive all sky under declared response; Gaia E2 potential positive area ~.43449 but different sky source; no physically common F",
+      "GF": "physical Fermi sky Einstein time transport only, R61 depth K1 and Gaia north/south are not temporal",
+      "test": "Test physical transfer-calibrated shared STF5 using T5 full cross-probe residual and sky-source heldout",
+      "blocker": "no T_C,T_G and cross-probe covariance, cosmic significance not calibrated"
+    }
+  ],
+  "combinations": [
+    {
+      "id": "PHY-01",
+      "axes": [
+        "P3",
+        "P6",
+        "P5"
+      ],
+      "theorem": "Hcal(n)=H+d_H.n+sigma:nn; mask opposite hemisphere mean difference H d.p +sigma:(Mplus-Mminus)_STF, normal Bianchi Lie Codazzi restricts j_N",
+      "test": "source-matched R61 CF4 sky and normal-frame shear/momentum, calibrated survey operator",
+      "stop": "apparent finite-z h not physical local H without Sachs transfer"
+    },
+    {
+      "id": "PHY-02",
+      "axes": [
+        "P2",
+        "P6",
+        "P5"
+      ],
+      "theorem": "Photon stress/flux from kinetic Boltzmann enters Einstein shear and normal Codazzi, which sources local E2 field and finite-z photon B2 transport; same-source frame required",
+      "test": "one multi-fluid tilted Type II/V/VII_h observer+electron photon source angular position drift",
+      "stop": "no common observed photon flux or full polarized transfer"
+    },
+    {
+      "id": "PHY-03",
+      "axes": [
+        "P2",
+        "P4"
+      ],
+      "theorem": "Pure boosted radiation S_gamma=4 STF(beta_R|E beta_R|E)/(3+beta²) and radio Qcount=(k²+k+kappa)/2 STF(beta_O|S beta_O|S); observer acceleration position drift E1 separate",
+      "test": "same physical relative velocity, source kappa, photon source and Gaia E1 with reference frame model",
+      "stop": "distinct beta frames and selected sources"
+    },
+    {
+      "id": "PHY-04",
+      "axes": [
+        "P6",
+        "P4",
+        "P5"
+      ],
+      "theorem": "Local E2=.5H grad scalar shear potential, B1=Omega×n; general Lie N,a photon geodesic advection can generate B2; radio scalar count dipole only selection/boost",
+      "test": "R69 Gaia weighted Fisher E2/B2 source geometry, plus future Bianchi exact ray and radio matched observer",
+      "stop": "observed Gaia B2 not fluid omega or Bianchi N without full optical transfer"
+    },
+    {
+      "id": "PHY-05",
+      "axes": [
+        "P5",
+        "P6"
+      ],
+      "theorem": "P5 L(Sigma)=-3Omega_N j_N/rho_N and P6 Hcal/H=1+d.n+nSn; finite observer frame and intrinsic fluid tilt changes d and null optical transfer",
+      "test": "independent normal-frame shear+flux with 5D/3D joint covariance and Gaia source selection",
+      "stop": "R49 normal flux not independently observed; family identification remains unresolved"
+    },
+    {
+      "id": "PHY-06",
+      "axes": [
+        "P1",
+        "P2",
+        "P5",
+        "P6"
+      ],
+      "theorem": "D_t sigma+3Hsigma=(8piG/c²)pi_N-c²Ricci3_STF then scalar g(n) and E2 proper drift from same normal sigma; photon anisotropic stress controls physical shape GF",
+      "test": "same-normal-frame cosmic shear tensor transported from recombination photons to local CF4 and Gaia with cross-source null",
+      "stop": "R66 full photon closure and R49 full nonlinear likelihood missing"
+    },
+    {
+      "id": "PHY-07",
+      "axes": [
+        "P1",
+        "P3",
+        "RADIO_DIPOLE"
+      ],
+      "theorem": "CF4 η(z,n) and H_D/Href=e^η/(1-Bη_z) depend on Doppler/optical mapping distinct from radio d_b=k_b beta_O|S+a_b; proper motion E1 and E2 supply potential independent observer frame check",
+      "test": "matched Gaia E1/E2, CF4 R61/R64 and R65 observer/source k with survey masks and cross covariance",
+      "stop": "no common instrument+cosmological source likelihood or independent beta3"
+    }
+  ],
+  "no_independent_observational_multiplied_views": true,
+  "claim_ceiling": "DERIVED_SOURCE_CONDITIONAL_NO_NEW_COSMOLOGICAL_SHEAR_VORTICITY_DETECTION_OR_ALL_REDSHIFT_SOLVER"
+}
