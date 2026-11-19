@@ -1,0 +1,225 @@
+{
+  "schema": "htt.r72.p4_lorentz_selection_tilt_application_cards/1",
+  "date": "2026-11-19",
+  "controlling_paper": "P4 = Radio/source-count dipole plus local observer boost versus global matter-radiation tilt",
+  "paper_routes": 6,
+  "combined_axes": 7,
+  "original_42_science_nodes_unchanged": true,
+  "status": "CONDITIONAL_PHYSICAL_EQUATIONS_AND_ACTUAL_R63_R65_SOURCE_DIAGNOSTICS_NOT_SEVEN_NEW_LIKELIHOODS",
+  "P4_theorem_registry": [
+    {
+      "id": "P4-T1",
+      "label": "Finite flux-bin selected boost and tied STF quadrupole",
+      "statement": "k=2+s[Lg(L)-Ug(U)]/N; kappa=F''/F-(F'/F)^2; Q_count=(k²+k+kappa)/2 STF(beta beta); d=k beta, second-order isotropic-rest limit",
+      "proof": "Lorentz aberration delta^2 and frequency/flux delta^s, differentiate t=ln delta twice, compose SR beta expansion",
+      "status": "DERIVED_SYMBOLICALLY_CHECKED_PLUS_NUMERIC_QUADRATURE",
+      "limits": "unresolved same SED/sharp flux/no sky-selection/independent rest isotropy; no generic radio flux proxy"
+    },
+    {
+      "id": "P4-T2",
+      "label": "Heterogeneous count response has independent curvature",
+      "statement": "equal selected mix of k1=3,k2=5 and single k=4 both have k=4 but kappa=1 vs 0; Q amplitudes 10.5 vs 10 beta²",
+      "proof": "log-sum-exp cumulant curvature=variance(k)",
+      "status": "DERIVED_NUMERICALLY_CHECKED",
+      "limits": "example source population; not a universal lack of observability"
+    },
+    {
+      "id": "P4-T3",
+      "label": "Boost STF morphology and hemisphere parity",
+      "statement": "positive tied Q has signed chi=+1,F_Omega=1-1/sqrt3; full hemispheres no even l2 difference; mask leakage Q:(Mplus-Mminus)_STF",
+      "proof": "STF eigenvalues and antipodal parity, actual NVSS source mask injection",
+      "status": "DERIVED_REAL_MASK_GEOMETRY_NUMERICALLY_CHECKED",
+      "limits": "F and chi deterministic images, tiny synthetic boost not observed quadrupole"
+    },
+    {
+      "id": "P4-T4",
+      "label": "Flux-bin versus common residual transverse Fisher",
+      "statement": "I_beta|a=D^T[C^-1-C^-1H(H^TC^-1H)^-1H^TC^-1]D; rank=2 iff k varies",
+      "proof": "Gaussian Schur; declination ring conditional profile exact v_z cancellation for log-link",
+      "status": "DERIVED_VALIDATED_ACTUAL_R65_RANK_WIDE_ERRORS",
+      "limits": "actual C6 full source likelihood only original R65; physical nonlinear density may partially recover v_z"
+    },
+    {
+      "id": "P4-T5",
+      "label": "Observer velocity and global tilt are distinct",
+      "statement": "Gamma_MR=-g(U_M,U_R)/c²; d_b=k_b beta_O|S+u_b not equal beta_M|R; photon m=4beta_R|M/(3+beta²) and S_gamma=4STF(beta beta)/(3+beta²) for rest-isotropic radiation",
+      "proof": "two physically distinguishable forward scenarios same d_b; exact stress-energy perfect radiation Lorentz boost",
+      "status": "DERIVED_CONDITIONAL_PHYSICAL_NONIDENTIFICATION",
+      "limits": "no generic global Bianchi/family no-go; electron-frame photon source needed"
+    }
+  ],
+  "papers": [
+    {
+      "id": "P1",
+      "name": "Selected tensorized inference",
+      "equation": "Observed selected tensor K_P1=O_CF4[eta_GR(Theta,sigma,A,source beta,Jacobi)+cal]; radio count Q_kin=(k²+k+kappa)/2 STF(beta_O|S beta_O|S)",
+      "x": "source-conditioned signed STF5 and full Gaussian covariance, not same tensor as radio count Q",
+      "Q": "physical source/normal Einstein domain only when common frame qualified",
+      "Pi": "R61/R64 fixed working null, no independent joint P4 physical PTE",
+      "F": "same-frame fullsky signed morphology only if angular field reconstructed",
+      "GF": "transported physical epoch occupancy only",
+      "prediction": "conditional shared observer boost direction may induce constrained tensor relation AFTER all Doppler/optical maps",
+      "actual_evidence": "P1 CF4 selected and R65 source are not common sky photons/galaxy fluxes",
+      "blocker": "common observer-source Lorentz lightcone operator and cross covariance missing"
+    },
+    {
+      "id": "P2",
+      "name": "CMB low-ell radiation",
+      "equation": "S_gamma=4 STF(beta_R|E beta_R|E)/(3+beta_R|E²), m_gamma=4 beta_R|E/(3+beta_R|E²); Q_count=A STF(beta_O|S beta_O|S)",
+      "x": "retained signed photon stress STF5 and radio count STF5 with two different physical carriers",
+      "Q": "joint kinetic moment body only with matched flux m_gamma",
+      "Pi": "same-sky Commander T/E/B plus selection-constrained radio null unavailable",
+      "F": "photon energy angular occupancy with full brightness, not radio selected fraction",
+      "GF": "single CMB sky not a physical time history",
+      "prediction": "if SAME physical relative velocity and rest-isotropic photons, radio Q_count=(A(3+beta²)/4) S_gamma at matched frame",
+      "actual_evidence": "R66 PR3/PR4 finite-band stress only, R65 radio transverse source count",
+      "blocker": "radiation/galaxy rest frames, full photon flux, instrument null, shared physical beta missing"
+    },
+    {
+      "id": "P3",
+      "name": "Directional and redshift Hubble",
+      "equation": "Hcal=Theta/3+sigma_nn-A.n/c, H_D=c/d_z[D_L/(1+z)]; observer Lorentz boost changes observed z,n,D_L jointly and not via radio k alone",
+      "x": "R64 9-component signed eta_lm path and derivative covariance",
+      "Q": "positive derivative-domain Q_D under optical source reference only",
+      "Pi": "conditional R64 fixed-C source working null",
+      "F": "source-qualified allsky D>0 event if reconstructed",
+      "GF": "same congruence time/depth transport absent",
+      "prediction": "common observer beta_O might tie radio and distance dipole only after exact source-Doppler/aberration Jacobians and PV covariance",
+      "actual_evidence": "R63/R64 overlap CF4, R65 radio source selection distinct",
+      "blocker": "no coupled physical Lorentz source model/selection covariance"
+    },
+    {
+      "id": "P4",
+      "name": "Radio count, local observer boost vs global matter-radiation tilt",
+      "equation": "N'_b(n)=delta² int_(L delta^-s)^(U delta^-s) g_b(S)dS; d_b=k_b beta_O|S+a_b; Gamma_MR=-g(U_M,U_R)/c²",
+      "x": "R65 three signed transverse log-count dipoles + same-source peak/integrated 4D carrier and full covariance; R63 W history separate",
+      "Q": "Q_caus=|beta| if full physical velocity identified, else conditional statistical Q; source physical counts positivity under chosen model",
+      "Pi": "R65 ring-conditioned multinomial or paired Poisson working PTE, physical LSS null unavailable",
+      "F": "selected-source hemisphere fraction with actual exposure/measure; intrinsic F requires selection correction",
+      "GF": "redshift/time-transported *same* population only; flux cut not GF",
+      "prediction": "finite k,κ tied quadrupole and rank-one shape, same-source selection contrast, distinct electron photon kSZ for true tilt",
+      "actual_evidence": "R65 1.8M raw input metadata, 33k masked pixels, paired shared 241892, R63 35970 CF4",
+      "blocker": "frequency/beam/size/redshift selection response and LSS covariance, independent remote electron source"
+    },
+    {
+      "id": "P5",
+      "name": "General Bianchi Lie classification and tilt",
+      "equation": "Na=0; C_i(sigma,N,a)=-(8piG/c³)j_i^N and Einstein D_t sigma+3Hsigma=(8piG/c²)pi_N-c² 3R_STF; observer radio beta_O|S distinct from matter beta_M|R",
+      "x": "normal (a,N,sigma,j_N,pi_N) and photon intensity/observer tetrad plus source count map",
+      "Q": "Q_Lie=c³|C|/(8piG rho_N)<=1 under DEC and rho_N>0; local causal beta under chosen frames",
+      "Pi": "Bianchi family-selected Einstein-Boltzmann/optical likelihood missing",
+      "F": "defined full-sky count/expansion source event or compact physical measure",
+      "GF": "Einstein+kinetic source-history transport only",
+      "prediction": "tilted matter affects normal flux and optical ray response but local observer aberration alone does not determine Lie type",
+      "actual_evidence": "R69 Lie-Codazzi validated algebra; no native full tilt source solver",
+      "blocker": "normal/matter congruence and source T_ab, j_N optical model"
+    },
+    {
+      "id": "P6",
+      "name": "Beyond-FLRW kinematic measurement",
+      "equation": "Gaia local-affine dot n=P sigma n+Omega×n; observer proper acceleration E1; photon normal Bianchi Lie drift V=-P sigma n-cP a-c n×Nn includes independent B2",
+      "x": "(Theta,sigma5,omega3,A3,beta3) + Gaia VSH; radio signed 2D log dipole",
+      "Q": "causal beta or positivity Hcal only with physical frame identification",
+      "Pi": "R61 Gaia source/residual null and radio source null not independent without transfer",
+      "F": "same-source actual sky orientation event with matched selection",
+      "GF": "physical frame-time transport only",
+      "prediction": "pure observer boost changes counts but cannot be promoted to cosmological shear/rotation from apparent Gaia B2",
+      "actual_evidence": "R69 Gaia actual apparent VSH and R65 conditional NVSS",
+      "blocker": "Gaia scanning law source redshift and extrinsic RF transfer"
+    }
+  ],
+  "combinations": [
+    {
+      "id": "PHY-01",
+      "axes": [
+        "P3",
+        "P6",
+        "P5"
+      ],
+      "formula": "Hcal(n)=H-A.n/c+sigma:nn; hemisphere difference fullsky=-A.p/c, masked adds sigma:(Mplus-Mminus)_STF; observer radio beta changes count dipole through k_b, not the same Hcal",
+      "claim": "Source-registered joint parity test can separate ideal dipole from even-mode leakage ONLY with full selection/optics",
+      "data": "R64 CF4 mask and R65 radio window",
+      "stop": "no common physical frame/cross-source likelihood"
+    },
+    {
+      "id": "PHY-02",
+      "axes": [
+        "P2",
+        "P6",
+        "P5"
+      ],
+      "formula": "photon j_gamma=rho_gamma m_gamma and pi_gamma=rho_gamma S_gamma feed normal Codazzi and Einstein; locally rest-isotropic tilted photon m=4beta/(3+beta²) and S=4STF(beta beta)/(3+beta²)",
+      "claim": "matter-radiation relative flux has independent kinetic meaning from observer radio count dipole",
+      "data": "R66 low-ell stress and R70 photon kinetic theory",
+      "stop": "matching photon flux and collision source unavailable"
+    },
+    {
+      "id": "PHY-03",
+      "axes": [
+        "P2",
+        "P4"
+      ],
+      "formula": "Q_count=(k²+k+kappa)/2 STF(beta beta), S_gamma=4/(3+beta²) STF(beta beta) => Q_count=A(3+beta²)S_gamma/4 if SAME physical beta",
+      "claim": "Lorentz matched-source rank-one 5-component tensor relation with shape chi=+1 for A>0",
+      "data": "R65 radio per-bin k not full kappa; R66 measured finite-band photon STF",
+      "stop": "same rest frame, source SED and radiation-body flux unqualified"
+    },
+    {
+      "id": "PHY-04",
+      "axes": [
+        "P6",
+        "P4",
+        "P5"
+      ],
+      "formula": "observer acceleration E1 VSH vs Bianchi normal Lie B2 photon direction, cosmic shear E2; radio counts Lorentz d=k beta and tied second-order even Q",
+      "claim": "E/B sky vector modes and number-count scalar multipoles must be transferred through same physical source before source velocity interpretation",
+      "data": "R69 Gaia VSH and R65 NVSS actual",
+      "stop": "Gaia B2 and normal N not same measured tensor"
+    },
+    {
+      "id": "PHY-05",
+      "axes": [
+        "P5",
+        "P6"
+      ],
+      "formula": "normal C_i=-3sigma_ij a^j+eps_ijk sigma^j_l N^lk=-(8piG/c³)j_Ni; Gamma_MR=-g(U_M,U_R)/c²; pure observer beta_O produces no automatic j_N",
+      "claim": "Lie/Codazzi constrains total normal tilt flux, not our observer aberration or radio kinematic dipole",
+      "data": "R69 Class A/B Lie universal theorem",
+      "stop": "source-qualified normal j_N and tilt history missing"
+    },
+    {
+      "id": "PHY-06",
+      "axes": [
+        "P1",
+        "P2",
+        "P5",
+        "P6"
+      ],
+      "formula": "Einstein D_t sigma+3Hsigma=(8piG/c²)(rho_gamma S_gamma+pi_other)-c²3R_STF, with photon S_gamma controlled by higher kinetic moments; radio Qkin by selected beta_O",
+      "claim": "same signed shape of radio/CMB/distance STF does not imply common cosmological fossil; require commutator, frame and transfer",
+      "data": "R66 finite-band photon STF, R64 distance STF, R65 transverse count",
+      "stop": "no physically common tensor and cross-probe covariance"
+    },
+    {
+      "id": "PHY-07",
+      "axes": [
+        "P1",
+        "P3",
+        "RADIO_DIPOLE"
+      ],
+      "formula": "radio d_b=k_b beta_O|S+a_b and count Qkin tied to d, while distance eta has source-dependent g(z)n.V, finite-z H_D and mask multipole mixing",
+      "claim": "same observer Lorentz boost may appear with distinct coefficients in radio and distance; source-calibrated joint odd/even morphology distinguishes only with common frame",
+      "data": "R65 NVSS and R63/R64 CF4 same-source partial overlap/correlated PV",
+      "stop": "no source radiation/galaxy velocity matching or independent angular calibration"
+    }
+  ],
+  "source_authorities": {
+    "R63": "R63_LOCAL_BOOST_GLOBAL_TILT_20261117/RESULTS/INTERPRETATION_SUMMARY.json",
+    "R65": "R65_DIPOLE_ANOMALY_20261117/RESULTS/INTERPRETATION_SUMMARY.json",
+    "R65_mask": "R65_DIPOLE_ANOMALY_20261117/RESULTS/NVSS_CONDITIONAL_CARRIERS.npz",
+    "R69": "R69_PHYSICAL_OBSERVABLE_BRIDGES_20261118/PHYSICAL_THEOREMS_KO.md",
+    "R70": "R70_P2_KINETIC_LIE_LOWELL_20261119/THEORY.md",
+    "R71": "R71_P3_FINITEZ_PHYSICAL_HUBBLE_20261119/THEORY.md"
+  },
+  "claim_firewall": "Five views dependent images of source likelihood; no physical velocity, cosmic dipole anomaly PTE or Bianchi family claim without full instrument/LSS/null and normal-frame history."
+}
