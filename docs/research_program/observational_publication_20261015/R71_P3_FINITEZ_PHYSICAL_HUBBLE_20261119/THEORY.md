@@ -56,3 +56,52 @@ General Bianchi class A/B with tilt enters through spatial homogeneous frame com
 **Route G: matched seven-axis physics.** Carry P3 results into P1 tensor inference, P2 kinetic stress, P4 radio/tilt, P5 Bianchi, P6 kinematics and R69 PHY-01..07, but do not multiply dependent x,Q,Pi,F,G_F into extra likelihoods. Construct exact equation-bearing application cards by R9.
 
 R4 first-case reduction: in flat FLRW reference \(B=H_{\rm ref}\chi/c\), put \(\eta(z,n)=a(z)P_2(\mu)\), \(\mu=\cos\theta\). Then \(D=1-B a'P_2\) and for \(|B a'|<1\), \([\ln H_D/H_{\rm ref}]_{\ell4}=(9/35)(B a')^2+O((B a')^3)\). This creates a tied hexadecapole even though \(\eta\) contains only a quadrupole, but it is *not* an independent GR shear observation.
+
+## R5 — constructive derivations and five physical implications
+
+### Theorem P3-T1: universal null-convergence monotone optical slope (established Sachs corollary)
+Assume the R3 regular monotonic-redshift lightcone, normalised \(\lambda\), no caustic \(D_A>0\), and Einstein+NEC \(T_{ab}k^ak^b\ge0\). Sachs gives
+ \(D_{A,\lambda\lambda}=-\mathscr F D_A,\quad \mathscr F=|\hat\sigma_{\rm opt}|^2+\frac12R_{ab}k^ak^b\ge0,\quad z_{,\lambda}=(1+z)^2\mathcal H/c>0\).
+Define an exact dimensionless optical slope \(M(z,n_o):=(1+z)^2\mathcal H(z,n_o)D_{A,z}(z,n_o)/c =D_{A,\lambda}\). By chain rule,
+ \(M_z=-\frac{c\,\mathscr F D_A}{(1+z)^2\mathcal H}\le0,\quad M(0,n_o)=1\).
+Thus \(M(z)\le1\) for all z on the prescribed regular branch. Integrating gives
+ \(M(z)=1-\int_0^z[c\,\mathscr F(z')D_A(z')/((1+z')^2\mathcal H(z'))]dz'\).
+This is a focusing-history inequality, valid in arbitrary spacetime including **ALL Bianchi Class A/B with tilted imperfect/kinetic matter**, because Lie structure enters only through the computed geometry, \(\mathcal H\), and R_ab; tilt must be accounted in total normal matter source. No probability Pi or Bianchi family label is created. A negative M is possible after the maximum of D_A and does not contradict NEC; it only shows the beam's area shrinking with affine distance before any caustic.
+
+### Theorem P3-T2: exact optical-energy-condition differential consistency in redshift space
+Put \(R=(1+z)D_A\), \(Y=\mathcal H^2>0\), \(A=R'-R/(1+z)\). Differentiation of \(D_A=R/(1+z)\), using \(D_{A,\lambda}=[(1+z)^2\mathcal H/c]D_{A,z}\), gives
+ \(\tfrac12 A(z)Y'(z)+R''(z)Y(z)+\frac{c^2\mathscr F(z)R(z)}{(1+z)^4}=0\).
+For R>0 under NEC this implies the necessary inequality
+ \(\boxed{\tfrac12(R'-R/(1+z))(\mathcal H^2)'+R''\,\mathcal H^2\le0}\).
+Equivalently, with a source-qualified independently measured congruence \(\mathcal H\),
+ \(\mathscr F_{\rm inferred}(z,n_o)= -\frac{(1+z)^4}{c^2 R}[\frac12A Y'+R''Y]\ge0\).
+This *joint* kinematic/optical diagnostic is a formal corollary of Sachs and R64's ODE, not a new foundational theorem. The dimensionless sign residual is physically interpretable under the stated source/NEC/congruence conditions; it is **not** an original Minkowski-gauge Q without specifying a bounded physical body. When A=0 the equation is still meaningful as an identity but cannot be solved uniquely for Y' there. No physical \(\mathcal H\) is measured by CF4 alone.
+
+The exact distance–physical-kinematics factorization is \(c/H_D=R'=D_A+cM/[(1+z)\mathcal H]\), hence
+ \(\boxed{\frac{(1+z)\mathcal H}{H_D}=M+\frac{(1+z)\mathcal H D_A}{c}}\).
+A ray with \(\mathcal H>0\) and \(\mathscr F\ge0\) need NOT have \(H_D>0\) beyond the maximum D_A. A constant-\(\mathcal H\), constant-positive-focusing synthetic optical/redshift pair with \(\mathscr F=\kappa^2,\,D_A=\sin(\kappa\lambda)/\kappa,\,\mathcal H/c=0.1,\kappa=2.5,\lambda=1\) has positive D_A and \(\mathcal H\), yet \(R'<0,H_D<0\) before the caustic \(\lambda=\pi/\kappa\). This is an optical-ODE counterexample, not a certified exact Einstein cosmological solution. R64 already has the physically consistent Milne/curved-FLRW example of H_D≠physical H.
+
+### Theorem P3-T3: calibration-invariant focusing under a conditional known Hcal reference
+Assume the **strong extra physical hypothesis** \(\mathcal H(z,n_o)=H_{\rm ref}(z)>0\) along the same ray, with the R64 flat reference \(\chi' = c/H_{\rm ref}\), \(\eta=\ln(\chi/R)\). Set \(H=H_{\rm ref},H'=dH/dz\). Direct substitution of \(R=\chi e^{-\eta}\) into P3-T2 and using \(\chi''=-\chi'H'/H\) gives the exact conditional source
+ \[
+ \boxed{\mathscr F_{\rm inf}=\frac{(1+z)^4}{c^2}\left[
+ H^2(\eta_{zz}-\eta_z^2)+
+ \left(2H^2\frac{\chi'}{\chi}+HH'\right)\eta_z+
+ \frac{HH'}{1+z}
+ \right].}
+ \]
+For \(\eta=0\), the reference optical source is \(\mathscr F_{\rm ref}=(1+z)^3HH'/c^2\), positive for standard expanding matter+Lambda reference with H'>0. More usefully,
+ \(\mathscr F_{\rm inf}/\mathscr F_{\rm ref}=1+\frac{(1+z)}{HH'}[H^2(\eta_{zz}-\eta_z^2)+(2H^2\chi'/\chi+HH')\eta_z]\).
+On each fixed observed direction, this *optical focusing comparator* is exactly invariant under \(\eta(z,n)\mapsto\eta(z,n)+a(n)\) with z-independent a, even when a contains arbitrary high ell: only eta_z and eta_zz appear. A depth-dependent calibration a(z,n) does not cancel. If \(\mathscr F_{\rm inf}<0\), the R64 distance field is incompatible with the **joint hypotheses** of same Hcal=Href, NEC, and qualified source/observer optics. It does *not* imply observed NEC violation, as Hcal=Href and survey/source transfer have not been independently measured. At z→0 use a proper regular limit since chi=0 in the displayed division.
+
+### Theorem P3-T4: exact nonlinear finite-z low-ell hierarchy of the distance rate
+Assume D=1-B eta_z>0 and uniform \(\sup_{n}|B\eta_z|<1\). Then
+ \(\Delta\ln H_D(z,n):=\ln(H_D/H_{\rm ref})=\eta(z,n)+\sum_{p=1}^{\infty}(B(z)^p/p)(\partial_z\eta(z,n))^p\).
+If the signed \(\eta_z\) has harmonics through ell=L, the pth term carries harmonics through ell=pL with Gaunt-coupled fixed coefficients; \(\eta\) itself may have separate low/higher ell. It is a nonlinear coordinate image, NOT new independent sky information or a physical shear source by itself.
+For \(\eta(z,n)=\eta_0(z)+d(z)\cdot n+S(z):nn\), S STF, the quadratic high-harmonic terms are
+ \(\big[\Delta\ln H_D\big]_{\ell=3}=B^2[(d_z\cdot n)(S_z:nn)-\frac25(S_zd_z)\cdot n]+O((B\eta_z)^3)\),
+ \(\big[\Delta\ln H_D\big]_{\ell=4}=\frac{B^2}{2}[(S_z:nn)^2-\frac47 (S_z^2)_{\rm STF}:nn-\frac2{15}{\rm tr}(S_z^2)]+O((B\eta_z)^3)\).
+Here the O notation refers ONLY to terms generated by the nonlinear log denominator, with existing eta harmonic >=3 excluded by hypothesis. For axisymmetric \(\eta=a(z)P_2(\mu)\), Legendre P4 coefficient at second order is \(9B^2[a'(z)]^2/35\). This vanishes in the z→0 flat regular reference B→0 if eta_z finite and is potentially useful at larger z, subject to the D>0 domain. Changing only the amplitude of eta with no radial slope does not generate the log denominator's nonlinear higher ell.
+
+### Theorem P3-T5: positive-domain morphology vs survey hemisphere leakage
+Given \(D=1-B\eta_z\) at a fixed z, define the actual round-sky event \(E_D=\{n:D(z,n)>0\}\). Its solid-angle fraction \(F_\Omega(z)=\mathrm{area}(E_D)/(4\pi)\) is a well-defined deterministic F only when the full-sky inferred distance field and round measure are chosen; no photon-energy or cosmological posterior meaning. It is invariant under any redshift-independent angular calibration of eta. For \(\eta_z=\alpha+d\cdot n+nSn\) with B>0, the **pointwise** necessary/sufficient all-sky domain criterion is \(\alpha+\max_{S^2}(d\cdot n+nSn)<1/B\); its global max requires a sphere trust-region solve (handle degenerate eigen hard case) and is not certified by a grid of54 sampled directions. If d=0 the maximum is \(\alpha+\lambda_{\max}(S)\) exactly. For an even field d=0, the indicator E_D(n)=E_D(-n); complete opposite hemispheres have identical intrinsic event fraction. Any raw empirical hemispherical difference from a non-antipodally symmetric source/mask is an operator effect, not automatically an intrinsic dipole. A source-sampled F and its depth trend are NOT the round-sky F or physical G_F. Coarea transports the event only if common physical sky/frame/source weight and regular nodal contours are specified.
