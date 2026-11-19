@@ -1,0 +1,528 @@
+{
+  "schema": "htt.r76.p6_physical_fiveview_scalar_tangent/1",
+  "evidence_status": "DERIVED_AND_SAVED_SOURCE_CONDITIONAL_NUMERICALLY_CHECKED",
+  "input_files_sha256": {
+    "R61_images": "2aa780b488378f85293077c59c10cd6c13cb05e92628a9c681b9fe8c3b896be8",
+    "R61_depth": "fd4c741bc44c803d5fab32e506a4c121974660f1c56e712434602e5a3f271864",
+    "R58_selected_CF4_carrier": "42f6bc5158fdf2f876720db12c44b088bc2db9734887e0d84ae098b234a7e64d",
+    "R69_Gaia_VSH": "070fdc7278837709a16195eb3fb3833a075b1ec460343bfb14e42d9a2082d6f6",
+    "R69_original_provenance": "610799a29482442b8efb6ab0ca4aef967b63b8dc1272dbcd631806b33b65032c"
+  },
+  "exact_synthetic_geometry": {
+    "model": "Euclidean local-affine tangent versus local vertex; not general finite-z Gaia",
+    "cases": [
+      {
+        "toy": 0,
+        "scalar_rms2": 0.000273344797381654,
+        "E2_over_H_rms2": 0.00041001719607247904,
+        "E2_vs_scalar_power_ratio": 1.499999999999993,
+        "B1_rotational_rms2": 0.007323954164175698,
+        "physical_normalization": "V_E2=H times normalized tangent; S=sigma/H"
+      },
+      {
+        "toy": 1,
+        "scalar_rms2": 0.0003091300915000661,
+        "E2_over_H_rms2": 0.00046369513725010047,
+        "E2_vs_scalar_power_ratio": 1.5000000000000042,
+        "B1_rotational_rms2": 0.003144422690041312,
+        "physical_normalization": "V_E2=H times normalized tangent; S=sigma/H"
+      },
+      {
+        "toy": 2,
+        "scalar_rms2": 0.00013162790541387353,
+        "E2_over_H_rms2": 0.00019744185812081062,
+        "E2_vs_scalar_power_ratio": 1.5000000000000024,
+        "B1_rotational_rms2": 0.0005708165875985922,
+        "physical_normalization": "V_E2=H times normalized tangent; S=sigma/H"
+      },
+      {
+        "toy": 3,
+        "scalar_rms2": 0.00017214797849587763,
+        "E2_over_H_rms2": 0.0002582219677438163,
+        "E2_vs_scalar_power_ratio": 1.4999999999999991,
+        "B1_rotational_rms2": 6.63493030104366e-05,
+        "physical_normalization": "V_E2=H times normalized tangent; S=sigma/H"
+      }
+    ],
+    "quadrupole_basis_pointwise_sum": 0.6666666666666666,
+    "CF4_11D_affine_row_norm2": 1.6666666666666667,
+    "identity": "pointwise sum_A(n E_A n)^2=2/3; 8D row norm2=5/3"
+  },
+  "R61_CF4_11D_simultaneous_source_models": {
+    "source_sha256": "2aa780b488378f85293077c59c10cd6c13cb05e92628a9c681b9fe8c3b896be8",
+    "source_R58_carrier_sha256": "42f6bc5158fdf2f876720db12c44b088bc2db9734887e0d84ae098b234a7e64d",
+    "common_simultaneous11_95pct_cutoff": 19.67513757268249,
+    "proof_global_lower": "h>=1-|d|-||S||op-sqrt((5/3)*cutoff*lambda_max(C8))-sqrt(8)*rho",
+    "models": {
+      "log": {
+        "source": "R61 saved same CF4 group model log covariance x11, zero-calibration local interpretation",
+        "n_groups": 35970,
+        "point_directional_min_allsky_trust_region": 0.9382871153684584,
+        "point_Q_H_apparent": 0.0617128846315416,
+        "point_fullsky_positive_H_area_fraction": 1.0000000000000024,
+        "shear_signed_chi": 0.07386010925565696,
+        "shear_fullsky_signed_positive_area": 0.4832809774628294,
+        "CF4_directional_calibration_nuisance": "zero baseline plus 0/1/5/10 mmag deterministic allowance",
+        "sufficient_global_min_at_0mmag": 0.8418975342066689,
+        "uniform_gaussian_ellipsoid_angular_error_upper": 0.09348371876199753,
+        "source_covariance_max_eig_d_S_8D": 0.0002665050439811716,
+        "global_strict_positive_sufficient_certificate": {
+          "0mmag": {
+            "global_uniform_lower_bound": 0.8418975342066689,
+            "strict_positive_certified": true,
+            "max_point_calibration_bias": 0.0
+          },
+          "1mmag": {
+            "global_uniform_lower_bound": 0.8405949953798568,
+            "strict_positive_certified": true,
+            "max_point_calibration_bias": 0.0013025388268121177
+          },
+          "5mmag": {
+            "global_uniform_lower_bound": 0.8353848400726083,
+            "strict_positive_certified": true,
+            "max_point_calibration_bias": 0.0065126941340605884
+          },
+          "10mmag": {
+            "global_uniform_lower_bound": 0.8288721459385477,
+            "strict_positive_certified": true,
+            "max_point_calibration_bias": 0.013025388268121177
+          }
+        },
+        "finite_sphere_min_directional_joint_lower": 0.8815489984004771,
+        "finite_sphere_min_direction_index": 9681,
+        "finite_sphere_extremal_ellipsoid_witness_h": 0.8815489984004771,
+        "finite_sphere_extremal_ellipsoid_distance_squared": 19.675137572682488,
+        "finite_sphere_number_directions": 16000,
+        "source_adequacy_p_working": 0.8883385009503209,
+        "source_model_scope": "NOT_GR_normal_shear_or_vorticity; no H monopole; no global cosmic p"
+      },
+      "log_mono": {
+        "source": "R61 saved same CF4 group model log_mono covariance x11, zero-calibration local interpretation",
+        "n_groups": 35970,
+        "point_directional_min_allsky_trust_region": 0.9583290238158062,
+        "point_Q_H_apparent": 0.04167097618419374,
+        "point_fullsky_positive_H_area_fraction": 1.0000000000000024,
+        "shear_signed_chi": -0.1936542257783665,
+        "shear_fullsky_signed_positive_area": 0.5326564689171962,
+        "CF4_directional_calibration_nuisance": "zero baseline plus 0/1/5/10 mmag deterministic allowance",
+        "sufficient_global_min_at_0mmag": 0.8591622728881964,
+        "uniform_gaussian_ellipsoid_angular_error_upper": 0.09379377549465699,
+        "source_covariance_max_eig_d_S_8D": 0.0002682758061246748,
+        "global_strict_positive_sufficient_certificate": {
+          "0mmag": {
+            "global_uniform_lower_bound": 0.8591622728881964,
+            "strict_positive_certified": true,
+            "max_point_calibration_bias": 0.0
+          },
+          "1mmag": {
+            "global_uniform_lower_bound": 0.8578597340613843,
+            "strict_positive_certified": true,
+            "max_point_calibration_bias": 0.0013025388268121177
+          },
+          "5mmag": {
+            "global_uniform_lower_bound": 0.8526495787541357,
+            "strict_positive_certified": true,
+            "max_point_calibration_bias": 0.0065126941340605884
+          },
+          "10mmag": {
+            "global_uniform_lower_bound": 0.8461368846200752,
+            "strict_positive_certified": true,
+            "max_point_calibration_bias": 0.013025388268121177
+          }
+        },
+        "finite_sphere_min_directional_joint_lower": 0.8965243682871116,
+        "finite_sphere_min_direction_index": 9841,
+        "finite_sphere_extremal_ellipsoid_witness_h": 0.8965243682871116,
+        "finite_sphere_extremal_ellipsoid_distance_squared": 19.675137572682488,
+        "finite_sphere_number_directions": 16000,
+        "source_adequacy_p_working": 0.6524062445291606,
+        "source_model_scope": "NOT_GR_normal_shear_or_vorticity; no H monopole; no global cosmic p"
+      },
+      "log_mono_error": {
+        "source": "R61 saved same CF4 group model log_mono_error covariance x11, zero-calibration local interpretation",
+        "n_groups": 35970,
+        "point_directional_min_allsky_trust_region": 0.9617673503431818,
+        "point_Q_H_apparent": 0.038232649656818204,
+        "point_fullsky_positive_H_area_fraction": 1.0000000000000024,
+        "shear_signed_chi": -0.1574108723143049,
+        "shear_fullsky_signed_positive_area": 0.527679614746568,
+        "CF4_directional_calibration_nuisance": "zero baseline plus 0/1/5/10 mmag deterministic allowance",
+        "sufficient_global_min_at_0mmag": 0.8632417599195941,
+        "uniform_gaussian_ellipsoid_angular_error_upper": 0.09367055409115134,
+        "source_covariance_max_eig_d_S_8D": 0.0002675713754375659,
+        "global_strict_positive_sufficient_certificate": {
+          "0mmag": {
+            "global_uniform_lower_bound": 0.8632417599195941,
+            "strict_positive_certified": true,
+            "max_point_calibration_bias": 0.0
+          },
+          "1mmag": {
+            "global_uniform_lower_bound": 0.861939221092782,
+            "strict_positive_certified": true,
+            "max_point_calibration_bias": 0.0013025388268121177
+          },
+          "5mmag": {
+            "global_uniform_lower_bound": 0.8567290657855334,
+            "strict_positive_certified": true,
+            "max_point_calibration_bias": 0.0065126941340605884
+          },
+          "10mmag": {
+            "global_uniform_lower_bound": 0.8502163716514729,
+            "strict_positive_certified": true,
+            "max_point_calibration_bias": 0.013025388268121177
+          }
+        },
+        "finite_sphere_min_directional_joint_lower": 0.9003290552347133,
+        "finite_sphere_min_direction_index": 9840,
+        "finite_sphere_extremal_ellipsoid_witness_h": 0.9003290552347133,
+        "finite_sphere_extremal_ellipsoid_distance_squared": 19.675137572682484,
+        "finite_sphere_number_directions": 16000,
+        "source_adequacy_p_working": 0.5519836840257977,
+        "source_model_scope": "NOT_GR_normal_shear_or_vorticity; no H monopole; no global cosmic p"
+      },
+      "log_mono_galactic": {
+        "source": "R61 saved same CF4 group model log_mono_galactic covariance x11, zero-calibration local interpretation",
+        "n_groups": 35970,
+        "point_directional_min_allsky_trust_region": 0.9609863908675403,
+        "point_Q_H_apparent": 0.03901360913245964,
+        "point_fullsky_positive_H_area_fraction": 1.0000000000000024,
+        "shear_signed_chi": -0.10636676339262237,
+        "shear_fullsky_signed_positive_area": 0.5211618424580454,
+        "CF4_directional_calibration_nuisance": "zero baseline plus 0/1/5/10 mmag deterministic allowance",
+        "sufficient_global_min_at_0mmag": 0.7889079322273982,
+        "uniform_gaussian_ellipsoid_angular_error_upper": 0.1669769861718902,
+        "source_covariance_max_eig_d_S_8D": 0.0008502501334402499,
+        "global_strict_positive_sufficient_certificate": {
+          "0mmag": {
+            "global_uniform_lower_bound": 0.7889079322273982,
+            "strict_positive_certified": true,
+            "max_point_calibration_bias": 0.0
+          },
+          "1mmag": {
+            "global_uniform_lower_bound": 0.7876053934005861,
+            "strict_positive_certified": true,
+            "max_point_calibration_bias": 0.0013025388268121177
+          },
+          "5mmag": {
+            "global_uniform_lower_bound": 0.7823952380933376,
+            "strict_positive_certified": true,
+            "max_point_calibration_bias": 0.0065126941340605884
+          },
+          "10mmag": {
+            "global_uniform_lower_bound": 0.775882543959277,
+            "strict_positive_certified": true,
+            "max_point_calibration_bias": 0.013025388268121177
+          }
+        },
+        "finite_sphere_min_directional_joint_lower": 0.8411804068685436,
+        "finite_sphere_min_direction_index": 10165,
+        "finite_sphere_extremal_ellipsoid_witness_h": 0.8411804068685435,
+        "finite_sphere_extremal_ellipsoid_distance_squared": 19.67513757268248,
+        "finite_sphere_number_directions": 16000,
+        "source_adequacy_p_working": 0.4337990866388309,
+        "source_model_scope": "NOT_GR_normal_shear_or_vorticity; no H monopole; no global cosmic p"
+      },
+      "log_mono_radial": {
+        "source": "R61 saved same CF4 group model log_mono_radial covariance x11, zero-calibration local interpretation",
+        "n_groups": 35970,
+        "point_directional_min_allsky_trust_region": 0.9619213999058658,
+        "point_Q_H_apparent": 0.0380786000941342,
+        "point_fullsky_positive_H_area_fraction": 1.0000000000000024,
+        "shear_signed_chi": -0.37080716275398085,
+        "shear_fullsky_signed_positive_area": 0.5476166695033051,
+        "CF4_directional_calibration_nuisance": "zero baseline plus 0/1/5/10 mmag deterministic allowance",
+        "sufficient_global_min_at_0mmag": 0.8622113167897656,
+        "uniform_gaussian_ellipsoid_angular_error_upper": 0.0961824746719156,
+        "source_covariance_max_eig_d_S_8D": 0.00028211447263854845,
+        "global_strict_positive_sufficient_certificate": {
+          "0mmag": {
+            "global_uniform_lower_bound": 0.8622113167897656,
+            "strict_positive_certified": true,
+            "max_point_calibration_bias": 0.0
+          },
+          "1mmag": {
+            "global_uniform_lower_bound": 0.8609087779629535,
+            "strict_positive_certified": true,
+            "max_point_calibration_bias": 0.0013025388268121177
+          },
+          "5mmag": {
+            "global_uniform_lower_bound": 0.855698622655705,
+            "strict_positive_certified": true,
+            "max_point_calibration_bias": 0.0065126941340605884
+          },
+          "10mmag": {
+            "global_uniform_lower_bound": 0.8491859285216444,
+            "strict_positive_certified": true,
+            "max_point_calibration_bias": 0.013025388268121177
+          }
+        },
+        "finite_sphere_min_directional_joint_lower": 0.8987041872163876,
+        "finite_sphere_min_direction_index": 9841,
+        "finite_sphere_extremal_ellipsoid_witness_h": 0.8987041872163876,
+        "finite_sphere_extremal_ellipsoid_distance_squared": 19.675137572682498,
+        "finite_sphere_number_directions": 16000,
+        "source_adequacy_p_working": 0.7420285421480758,
+        "source_model_scope": "NOT_GR_normal_shear_or_vorticity; no H monopole; no global cosmic p"
+      },
+      "log_split": {
+        "source": "R61 saved same CF4 group model log_split covariance x11, zero-calibration local interpretation",
+        "n_groups": 35970,
+        "point_directional_min_allsky_trust_region": 0.9614239027458596,
+        "point_Q_H_apparent": 0.0385760972541403,
+        "point_fullsky_positive_H_area_fraction": 1.0000000000000024,
+        "shear_signed_chi": -0.5806369889327501,
+        "shear_fullsky_signed_positive_area": 0.5598117796835173,
+        "CF4_directional_calibration_nuisance": "zero baseline plus 0/1/5/10 mmag deterministic allowance",
+        "sufficient_global_min_at_0mmag": 0.8548820315315762,
+        "uniform_gaussian_ellipsoid_angular_error_upper": 0.10517970996772084,
+        "source_covariance_max_eig_d_S_8D": 0.0003373629693218634,
+        "global_strict_positive_sufficient_certificate": {
+          "0mmag": {
+            "global_uniform_lower_bound": 0.8548820315315762,
+            "strict_positive_certified": true,
+            "max_point_calibration_bias": 0.0
+          },
+          "1mmag": {
+            "global_uniform_lower_bound": 0.8535794927047641,
+            "strict_positive_certified": true,
+            "max_point_calibration_bias": 0.0013025388268121177
+          },
+          "5mmag": {
+            "global_uniform_lower_bound": 0.8483693373975155,
+            "strict_positive_certified": true,
+            "max_point_calibration_bias": 0.0065126941340605884
+          },
+          "10mmag": {
+            "global_uniform_lower_bound": 0.841856643263455,
+            "strict_positive_certified": true,
+            "max_point_calibration_bias": 0.013025388268121177
+          }
+        },
+        "finite_sphere_min_directional_joint_lower": 0.8963834075418721,
+        "finite_sphere_min_direction_index": 10162,
+        "finite_sphere_extremal_ellipsoid_witness_h": 0.896383407541872,
+        "finite_sphere_extremal_ellipsoid_distance_squared": 19.675137572682488,
+        "finite_sphere_number_directions": 16000,
+        "source_adequacy_p_working": 0.7088901064387221,
+        "source_model_scope": "NOT_GR_normal_shear_or_vorticity; no H monopole; no global cosmic p"
+      },
+      "log_survey": {
+        "source": "R61 saved same CF4 group model log_survey covariance x11, zero-calibration local interpretation",
+        "n_groups": 35970,
+        "point_directional_min_allsky_trust_region": 0.9639662727363926,
+        "point_Q_H_apparent": 0.03603372726360738,
+        "point_fullsky_positive_H_area_fraction": 1.0000000000000024,
+        "shear_signed_chi": -0.4765109190921989,
+        "shear_fullsky_signed_positive_area": 0.5541567924347272,
+        "CF4_directional_calibration_nuisance": "zero baseline plus 0/1/5/10 mmag deterministic allowance",
+        "sufficient_global_min_at_0mmag": 0.8643572368719146,
+        "uniform_gaussian_ellipsoid_angular_error_upper": 0.09795132374100646,
+        "source_covariance_max_eig_d_S_8D": 0.00029258637060622155,
+        "global_strict_positive_sufficient_certificate": {
+          "0mmag": {
+            "global_uniform_lower_bound": 0.8643572368719146,
+            "strict_positive_certified": true,
+            "max_point_calibration_bias": 0.0
+          },
+          "1mmag": {
+            "global_uniform_lower_bound": 0.8630546980451025,
+            "strict_positive_certified": true,
+            "max_point_calibration_bias": 0.0013025388268121177
+          },
+          "5mmag": {
+            "global_uniform_lower_bound": 0.8578445427378539,
+            "strict_positive_certified": true,
+            "max_point_calibration_bias": 0.0065126941340605884
+          },
+          "10mmag": {
+            "global_uniform_lower_bound": 0.8513318486037934,
+            "strict_positive_certified": true,
+            "max_point_calibration_bias": 0.013025388268121177
+          }
+        },
+        "finite_sphere_min_directional_joint_lower": 0.899993694373614,
+        "finite_sphere_min_direction_index": 9841,
+        "finite_sphere_extremal_ellipsoid_witness_h": 0.899993694373614,
+        "finite_sphere_extremal_ellipsoid_distance_squared": 19.67513757268249,
+        "finite_sphere_number_directions": 16000,
+        "source_adequacy_p_working": 0.6325095401625952,
+        "source_model_scope": "NOT_GR_normal_shear_or_vorticity; no H monopole; no global cosmic p"
+      }
+    }
+  },
+  "R69_Gaia_VSH_actual_source": {
+    "source_sha256": "070fdc7278837709a16195eb3fb3833a075b1ec460343bfb14e42d9a2082d6f6",
+    "original_gaia_input_sha256_recorded_in_R69": "e69cfff82f762c00d1d6a259c6d003fd20f805f3b1fcd4acc81d847c485120c0",
+    "results": {
+      "all": {
+        "source_quality_case": "all",
+        "n_gaia_sources": 1614173,
+        "actual_rank": 16,
+        "source_condition": 7.727403855283292,
+        "E2_signed_coefficients_microasyr": [
+          -2.0505839990783086,
+          1.9034572068882027,
+          -2.6809687060079086,
+          -2.992062301544822,
+          3.236644592679987
+        ],
+        "B2_signed_coefficients_microasyr": [
+          1.8515468403560067,
+          2.3302215936166797,
+          1.7660865813968278,
+          1.0691207799874411,
+          -1.5668639052729278
+        ],
+        "E2_chi_from_cartesian_STF": 0.7208191322480054,
+        "E2_intrinsic_quadrupole_potential_FOmega": 0.4327613699547167,
+        "E2_local_affine_vector_to_scalar_rms2": 1.5000000000000004,
+        "E2_B2_profiled_design_canonical_corr": [
+          0.08046619176750779,
+          0.054445614206560786,
+          0.03306940086920714,
+          0.015780779855346497,
+          0.013459823327078521
+        ],
+        "E2_B2_profiled_design_maxcanonical": 0.08046619176750779,
+        "E2_B2_design_cross_block_frobenius": 0.3649888716688309,
+        "E2_working_formal_chi2_5": 116.45627039599344,
+        "B2_working_formal_chi2_5": 51.119020700581245,
+        "E2_formal_p_naive": 1.7662177706753018e-23,
+        "B2_formal_p_naive": 8.176504442062985e-10,
+        "gaia_B1_is_not_cosmological_fluid_vorticity": true,
+        "gaia_E2_not_a_measured_sigma_over_H": true
+      },
+      "quality": {
+        "source_quality_case": "quality",
+        "n_gaia_sources": 1580645,
+        "actual_rank": 16,
+        "source_condition": 7.7007490730591694,
+        "E2_signed_coefficients_microasyr": [
+          -2.131687544498296,
+          1.9517079364900793,
+          -2.7372867495615156,
+          -3.0461434882558,
+          3.1816611731106734
+        ],
+        "B2_signed_coefficients_microasyr": [
+          1.7591778245978749,
+          2.317809333437096,
+          1.7542177628736537,
+          1.0910717979665878,
+          -1.6650758952176272
+        ],
+        "E2_chi_from_cartesian_STF": 0.7108927156212654,
+        "E2_intrinsic_quadrupole_potential_FOmega": 0.4344851727591868,
+        "E2_local_affine_vector_to_scalar_rms2": 1.5000000000000002,
+        "E2_B2_profiled_design_canonical_corr": [
+          0.08042406258067819,
+          0.054099163998681636,
+          0.033043209991383396,
+          0.015436044768178623,
+          0.013364124046652926
+        ],
+        "E2_B2_profiled_design_maxcanonical": 0.08042406258067819,
+        "E2_B2_design_cross_block_frobenius": 0.360344702048042,
+        "E2_working_formal_chi2_5": 117.53443739568587,
+        "B2_working_formal_chi2_5": 49.69649940503446,
+        "E2_formal_p_naive": 1.0442991260945951e-23,
+        "B2_formal_p_naive": 1.5987976932312695e-09,
+        "gaia_B1_is_not_cosmological_fluid_vorticity": true,
+        "gaia_E2_not_a_measured_sigma_over_H": true,
+        "exploratory_patch_E2_chi2_5": 17.857680807382316,
+        "exploratory_patch_B2_chi2_5": 7.7669445866808235,
+        "exploratory_patch_E2_nominal_p_not_cosmic": 0.0031301617080657243,
+        "exploratory_patch_B2_nominal_p_not_cosmic": 0.1695561303803899,
+        "exploratory_patch_coefficient_error_correlation_max": 0.22848421247680892
+      },
+      "quality_north": {
+        "source_quality_case": "quality_north",
+        "n_gaia_sources": 862532,
+        "actual_rank": 16,
+        "source_condition": 349.71043065598496,
+        "E2_signed_coefficients_microasyr": [
+          -3.165599029352215,
+          -2.0219200735798544,
+          -3.562102020100554,
+          -7.211256933418157,
+          8.311623826474131
+        ],
+        "B2_signed_coefficients_microasyr": [
+          2.309580178201709,
+          6.865472663072473,
+          -0.2405220261156189,
+          -6.4777614059301065,
+          -5.3018701943202675
+        ],
+        "E2_chi_from_cartesian_STF": 0.8272102784777096,
+        "E2_intrinsic_quadrupole_potential_FOmega": 0.4282185673460438,
+        "E2_local_affine_vector_to_scalar_rms2": 1.5000000000000002,
+        "E2_B2_profiled_design_canonical_corr": [
+          0.8810936317598093,
+          0.862432255743563,
+          0.6704271225396551,
+          0.6318642042897861,
+          0.02864336655044158
+        ],
+        "E2_B2_profiled_design_maxcanonical": 0.8810936317598093,
+        "E2_B2_design_cross_block_frobenius": 1.9139235268995056,
+        "E2_working_formal_chi2_5": 44.424582524269354,
+        "B2_working_formal_chi2_5": 38.254776391319574,
+        "E2_formal_p_naive": 1.8991680464002944e-08,
+        "B2_formal_p_naive": 3.353678785203554e-07,
+        "gaia_B1_is_not_cosmological_fluid_vorticity": true,
+        "gaia_E2_not_a_measured_sigma_over_H": true
+      },
+      "quality_south": {
+        "source_quality_case": "quality_south",
+        "n_gaia_sources": 718113,
+        "actual_rank": 16,
+        "source_condition": 355.9773598050709,
+        "E2_signed_coefficients_microasyr": [
+          -8.307409650275892,
+          2.2527789517527355,
+          -4.986015790525117,
+          0.9434085698450281,
+          3.513991309707985
+        ],
+        "B2_signed_coefficients_microasyr": [
+          -0.1265480488978419,
+          -3.0101515003074986,
+          7.224938943923847,
+          7.18501960821738,
+          -2.93749751910515
+        ],
+        "E2_chi_from_cartesian_STF": 0.62248713216631,
+        "E2_intrinsic_quadrupole_potential_FOmega": 0.4376750641874808,
+        "E2_local_affine_vector_to_scalar_rms2": 1.4999999999999991,
+        "E2_B2_profiled_design_canonical_corr": [
+          0.8788536147906798,
+          0.8536950227900875,
+          0.6796483043307443,
+          0.6240549854590608,
+          0.012534656188037542
+        ],
+        "E2_B2_profiled_design_maxcanonical": 0.8788536147906798,
+        "E2_B2_design_cross_block_frobenius": 1.8210922514372074,
+        "E2_working_formal_chi2_5": 84.35034807246821,
+        "B2_working_formal_chi2_5": 60.64898829481468,
+        "E2_formal_p_naive": 1.0300452342777403e-16,
+        "B2_formal_p_naive": 8.924701371033248e-12,
+        "gaia_B1_is_not_cosmological_fluid_vorticity": true,
+        "gaia_E2_not_a_measured_sigma_over_H": true
+      }
+    },
+    "interpretation": "real source-weight/Fisher mixing and source-model template shape; no direct cosmic shear or vorticity identification"
+  },
+  "physical_GF_transport_toy_only": {
+    "explicit_toy": "observer Fermi sky sign event h=1+a(t) cos theta; no full Einstein model",
+    "a0": 1.5,
+    "adot_per_time": 0.2,
+    "F_Hplus": 0.8333333333333333,
+    "exact_GF_time_derivative": -0.044444444444444446,
+    "finite_difference_derivative": -0.04444444444140493,
+    "critical_nonregular_a_equals_one": "F continuous but derivative changes, coarea regularity fails at point zero",
+    "actual_cosmic_time_GF": "UNAVAILABLE_FROM_R61_REDSHIFT_SLOPE"
+  },
+  "nonclaims": "No full normalized GR shear/acceleration/omega identification, no calibrated cross CF4/Gaia joint null, no actual physical GF, no family posterior"
+}
