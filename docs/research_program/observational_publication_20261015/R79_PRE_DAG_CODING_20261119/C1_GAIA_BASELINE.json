@@ -1,0 +1,55 @@
+{
+  "schema": "htt.r79.gaia_source_gaussian_accumulate_baseline/1",
+  "baseline_code": "scripts.r67.gaia_frame.accumulate + scripts.r69.gaia_e2_b2.templates/prepare",
+  "source_path": "/mnt/extdrive/workdir/raw/observational_bundles/Gaia_CRF3_astrometry/gaia_crf3_astrometry_full.fits",
+  "source_sha256": "e69cfff82f762c00d1d6a259c6d003fd20f805f3b1fcd4acc81d847c485120c0",
+  "read_rows": 60000,
+  "quality_valid_rows": 59279,
+  "matrix_shape": [
+    59279,
+    2,
+    16
+  ],
+  "input_seconds": 0.056902066979091614,
+  "repeat_seconds": [
+    0.07391292101237923,
+    0.06984783202642575,
+    0.07078306603943929
+  ],
+  "median_seconds": 0.07078306603943929,
+  "min_seconds": 0.06984783202642575,
+  "F_trace": 2950409.9377029915,
+  "F_norm": 1890568.2020671484,
+  "score_norm": 6518.556003910735,
+  "chisq": 133927.99753791938,
+  "F_min_eigen": 1.8596503045386439,
+  "B_dtype": "float64",
+  "maxrss_kib": 302960,
+  "numpy": "2.5.4",
+  "python": "3.12.3",
+  "blas": [
+    {
+      "user_api": "blas",
+      "internal_api": "openblas",
+      "num_threads": 1,
+      "prefix": "libscipy_openblas",
+      "filepath": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/lib/python3.12/site-packages/numpy.libs/libscipy_openblas64_-f48b354e.so",
+      "version": "0.3.34.106.0",
+      "threading_layer": "pthreads",
+      "architecture": "Haswell"
+    },
+    {
+      "user_api": "blas",
+      "internal_api": "openblas",
+      "num_threads": 1,
+      "prefix": "libscipy_openblas",
+      "filepath": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/lib/python3.12/site-packages/scipy.libs/libscipy_openblas-5f890258.so",
+      "version": "0.3.31.dev",
+      "threading_layer": "pthreads",
+      "architecture": "Haswell"
+    }
+  ],
+  "claim": "source-qualified original 16D weighted Gaia normal equations; not inferred physical shear",
+  "benchmark_repeat": 3,
+  "native_compilation": "NOT_YET"
+}
