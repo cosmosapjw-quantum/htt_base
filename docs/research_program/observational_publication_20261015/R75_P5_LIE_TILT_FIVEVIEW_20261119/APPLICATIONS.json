@@ -1,0 +1,214 @@
+{
+  "schema": "htt.r75.p5_lie_rank_fiveview_six_papers_seven_phy/1",
+  "date": "2026-11-19",
+  "input_identity": "R75 initial primary checkout HEAD 580ecf5a75a96ddb92b267e42ccdd2dd35c65f1b; R49 historic 448a9c9e36be3ed67330b7a02aebb78337bb6bb1; source CHAIN SHA 4063be94...",
+  "science_status": "DERIVED_AND_CONDITIONAL_SOURCE_GEOMETRY_ONLY",
+  "canonical_P1_P6_42_nodes_mutated": false,
+  "P5_theorem_registry": [
+    {
+      "id": "P5-T1",
+      "claim": "Lie–Codazzi STF5 to total normal flux image rank",
+      "formula": "L_i=-3Sigma_ij A_j+eps_ijk Sigma^j_l Nbar^lk=-3Omega_N j_Ni/rho_N; class B rank3 unless 9a²+n2n3=0 then rank2; known VI_-1/9",
+      "evidence": "Symbolic exact determinant, 14 atlas labels covering 11 types+FLRW+aliases, 40 proper SO3 checks",
+      "novelty": "classical Lie/Einstein constraint; new P5 source-typed statistical map",
+      "conditions": "n timelike geodesic hypersurface-normal, oriented orthonormal frame, source-qualified a,N,H,j,rho, Einstein"
+    },
+    {
+      "id": "P5-T2",
+      "claim": "Energy condition physically constrains Q, invert tilt if one barotropic fluid",
+      "formula": "Q_Lie=|L|/(3Omega_N)=|j_N|/rho_N<=1 if DEC; q=(1+w)beta/(1+w beta²), beta=2q/(1+w+sqrt((1+w)²-4wq²))",
+      "evidence": "15 single-fluid exact/numeric inversion points; counter-streaming two tilted dust streams j_total0 pi!=0",
+      "novelty": "physical interpretation of Q; algebra previously known",
+      "conditions": "one perfect fluid w in [0,1], positive Omega and source normal; multi-fluid inverse invalid"
+    },
+    {
+      "id": "P5-T3",
+      "claim": "Zero-flux morphology stratifies conditional Bianchi states",
+      "formula": "Type V N0,j0 => Sigma a=0 => chi=0,F_Omega=.5; exceptional VI_-1/9 j0 can have chi=.464758,F=.446246 for x=(-2,0,0,0,1)",
+      "evidence": "symbolic M kernel, exact tr S²,tr S³; numerical full-sky area",
+      "novelty": "project-specific signed-orbit geometry under known Codazzi constraints",
+      "conditions": "fixed source normal, full celestial round measure, nonzero shear, no inference of unique family"
+    },
+    {
+      "id": "P5-T4",
+      "claim": "Shear morphology transported by Einstein curvature and normal anisotropic stress",
+      "formula": "D_t sigma+3Hsigma=D=(8piG/c²)pi_N-c²R3_STF; D_t chi=(3sqrt6/I2^(3/2)) (tr(sigma²D)-(I3/I2)tr(sigma D)); dotF=(1/4pi)int_zero dotf/|gradS f|",
+      "evidence": "R69 previously derived, R75 constrained limits and Type V j_total0 counterexample; coarea only regular",
+      "novelty": "applied GF transport semantics, not new Einstein equation",
+      "conditions": "full dynamical Einstein+matter solution and transported frame/sky, regular zero set for differential F"
+    },
+    {
+      "id": "P5-T5",
+      "claim": "Independent normal shear+flux produces a rank/covariance aware actual test",
+      "formula": "r=u+M x/(3Omega_N); C_r=D C_(x,u) D^T, D=[M/(3Omega_N),I3]; T=r^TC_r^+r with rank-aware matched null",
+      "evidence": "mathematical covariance derivation; no independently observed physical j_N in existing R49, therefore not observationally executed",
+      "novelty": "direct data-analysis contract specialized to Bianchi momentum constraints",
+      "conditions": "same normal frame/epoch/source, independent flux measurement, fixed or jointly sampled Lie parameters and Omega, declared null"
+    }
+  ],
+  "P1_P6": [
+    {
+      "id": "P1",
+      "name": "selected tensorized inference",
+      "x": "Original selected 274-row 15D signed source tensor+covariance and, after physical optical map, normal Sigma in STF5",
+      "equation": "Local Hdir(n)=H(1+Sigma:nn) for normal geodesic; Bianchi L(Sigma)=-3Omega_N u_N; finite-z eta from Jacobi ray tracing",
+      "Q": "Q_H=-lambda_min Sigma if local normal and H>0; Q_Lie requires rho_N and Lie source; statistical Q under original selected Gaussian/F law separate",
+      "Pi": "Original selected source law only; Bianchi physical Pi needs matched optical source+covariance",
+      "F": "intrinsic sky round-area sign of Sigma, F_Omega(chi), separately survey mask occupancy",
+      "GF": "Einstein shear time map or same lightcone source transport, NOT raw CF4 depth difference",
+      "conditional_prediction": "Known Type V zero-flux forces chi=0, but R62 observed STF is apparent and cannot test it directly",
+      "next_executable": "First prove transfer from normal Sigma to source-selected P1 carrier, then test normal-flux x/u residual with full covariance",
+      "blocked": "No observed physical normal-frame shear source"
+    },
+    {
+      "id": "P2",
+      "name": "low-ell CMB photon kinetic",
+      "x": "R66 PR3/PR4 finite-band signed photon Sgamma=pi_gamma/rho_gamma STF5 and optional same-frame photon flux m_gamma",
+      "equation": "j_gamma=rho_gamma m_gamma, pi_gamma=rho_gamma Sgamma; L(Sigma)=-3Omega total j/rho; collisionless dot Sgamma=-8sigma/15 at isotropic instant; full Einstein–Boltzmann and Thomson needed",
+      "Q": "moment PSD Qgamma if photon flux measured; Q_Lie if total normal rho,j sourced",
+      "Pi": "matched Commander T/E/B full null missing, do not substitute R49 SMICA PR3/FFP10",
+      "F": "photon directional energy occupancy requires higher moment/closure; Sigma F_Omega separate sky geometry",
+      "GF": "actual photon Boltzmann source history and Einstein shear evolution; one observed CMB sky not temporal",
+      "conditional_prediction": "Even j_gamma=0 may retain pi_gamma and drive D_t chi; Type V j_total0 does not set photon stress0",
+      "next_executable": "Joint full normal-frame photon flux/stress and CMB transfer with source-matched simulations",
+      "blocked": "R66 photon flux unavailable; R49 transfer conditional"
+    },
+    {
+      "id": "P3",
+      "name": "directional/redshift Hubble",
+      "x": "R64 actual selected 68D signed eta_lm(z),eta_z,eta_zz with covariance; latent normal Sigma STF5",
+      "equation": "Hcal_N(n)=H(1+Sigma:nn) at vertex; D_L=(1+z)²sqrt(det Jacobi) and H_D=c/d_z[D_L/(1+z)] at finite z, distinct from Hcal",
+      "Q": "Q_H=-lambda_minSigma if normal local and H>0; Q_D=max(0,sup B eta_z) if distance derivative source model",
+      "Pi": "R64 fixed source Gaussian only; extra Einstein/Bianchi family null not calibrated",
+      "F": "round-sky sign of physical Sigma vs R64 full-sky positive derivative D event are separate measures",
+      "GF": "same physically transported normal/observer optics and covariance, not arbitrary z-window contrast",
+      "conditional_prediction": "Lie allowed Sigma kernel causes source-family degeneracy; rank2 exceptional needs a physical normal flux observation to restrict",
+      "next_executable": "Build one Type V/VI_-1/9 Jacobi+observer map to actual CF4 selection and normal matter source",
+      "blocked": "Unqualified independent Hcal, normal j, source calibration"
+    },
+    {
+      "id": "P4",
+      "name": "radio counts plus observer boost vs matter tilt",
+      "x": "R65 three flux bins signed transverse log-count 6D and actual source covariance; latent observer beta_O|S and matter-radiation beta_M|R distinct",
+      "equation": "d_b=k_b beta_O|S+a_b; Gamma_MR=-g(U_M,U_R)/c²; normal Bianchi momentum j_N=sum_rho_s flux_s, constrained by L(Sigma)",
+      "Q": "Qbeta=|beta| only with physical 3D same-source frame; Q_Lie=|j_N|/rho_N with independent matter flux; beta count Qstat separate",
+      "Pi": "R65 fixed multinomial/Gaussian conditional test; no LSS/observer Bianchi physical null",
+      "F": "selected-source hemisphere occupancy under declared mask/exposure not intrinsic shear F_Omega",
+      "GF": "physical same-population number continuity not flux cut",
+      "conditional_prediction": "Pure observer aberration can change radio dipole without changing Bianchi Lie or total normal momentum; tilted matter q may cancel while radio d persists",
+      "next_executable": "Matched source IDs + physical k,kappa, observer-frame beta and independent electron-frame kSZ",
+      "blocked": "No selected 3D normal matter flux or common cosmological frame"
+    },
+    {
+      "id": "P5",
+      "name": "all-family tilted Bianchi geometry",
+      "x": "Sigma STF5 together with a,N,H,rho_N,j_N,pi_N and matter species source packet; actual R49 4000 conditional x samples are not direct cosmological shear detection",
+      "equation": "Lie Jacobi Na=0, Codazzi L=-3Omega_N j_N/rho_N, Hamiltonian and D_t Sigma; Type VI_-1/9 Delta=0 removes a normal momentum component",
+      "Q": "physical Q_Lie=|L|/(3Omega_N)<=1 under DEC; local Q_H=-lambda_minSigma conditional normal",
+      "Pi": "independent same-frame shear+normal flux with joint C and calibrated null, currently unavailable; R49 posterior ppc badly fits CMB/Gaia/CF4",
+      "F": "F_Omega(Sigma)=F(chi), signed shape and exact round measure; R49 model posterior pushforward median F=.453408",
+      "GF": "actual Einstein tilt/anisotropic stress evolution plus regular nodal coarea and frame transport; current posterior source depth not independent GF",
+      "conditional_prediction": "Type V j0 => chi0 F=.5; exceptional VI_-1/9 j0 admits nonzero chi; single-fluid q tilt inversion only under positive enthalpy",
+      "next_executable": "Independent normal-frame flux measurement from a source-qualified Einstein–Boltzmann/optical model and rank-aware projected likelihood",
+      "blocked": "No measured independent rho_N and j_N nor cosmological Bianchi predictive null"
+    },
+    {
+      "id": "P6",
+      "name": "beyond-FLRW covariant kinematics",
+      "x": "theta,sigma5,omega3,A3,beta and observer-frame Gaia VSH/CF4 apparent response",
+      "equation": "Normal Hdir=H+sigma:nn, general observer A contributes dipole, omega absent vertex but affects higher lightcone and tilt; Lie L constrains normal j independently of Gaia apparent spin",
+      "Q": "Q_H and Q_Lie only with proper normal matter source, causal relative beta after same frame identification",
+      "Pi": "R61/Gaia source-constrained null and family transfer not independently matched",
+      "F": "physical normal sky positive shear region vs survey-selected proper motion source area",
+      "GF": "matched Fermi frame and Einstein+geodesic transport, source cross-epoch covariance",
+      "conditional_prediction": "A Gaia B2-like vector mode may be Lie spatial advection, not fluid vorticity; a Class-B rank drop restricts normal momentum even if local Hdir has same STF shape",
+      "next_executable": "Common SO3 triad/kinematic source plus independent matter flux/optical transfer",
+      "blocked": "No proper frame/matter source linking Gaia and Bianchi normal"
+    }
+  ],
+  "PHY_01_07": [
+    {
+      "id": "PHY-01",
+      "axes": [
+        "P3",
+        "P6",
+        "P5"
+      ],
+      "theorem": "Hdir=H+sigma:nn-A.n/c; full hemisphere differences isolate odd A but actual mask leaks even Sigma via Sigma:(Mplus-Mminus)_STF; same Sigma must satisfy L=-3Omega u",
+      "test": "Source-matched CF4 directional expansion+normal-frame momentum and actual mask",
+      "stop": "R62/R64 apparent STF lacks same normal physical transfer"
+    },
+    {
+      "id": "PHY-02",
+      "axes": [
+        "P2",
+        "P6",
+        "P5"
+      ],
+      "theorem": "j_gamma=rho_gamma m_gamma,pi_gamma=rho_gamma Sgamma enter Codazzi and shear driver; collisionless dot Sgamma=-8/15 sigma isotropic instant, Lie rank restricts total normal momentum",
+      "test": "Common electron/normal frame photon flux+stress and Bianchi Type II/V/VI_-1/9 transport",
+      "stop": "No fully matched photon m_gamma and full transfer/Thomson"
+    },
+    {
+      "id": "PHY-03",
+      "axes": [
+        "P2",
+        "P4"
+      ],
+      "theorem": "For matched rest-isotropic radiation relative beta, Sgamma=4/(3+beta²)STF(beta beta), count Qkin=(k²+k+kappa)/2 STF(beta beta); both share signed chi+1 only if SAME physical beta",
+      "test": "Same-frame CMB electron photon and source radio selection with shared observer/lensing null",
+      "stop": "No common physical beta and R66 photon flux missing"
+    },
+    {
+      "id": "PHY-04",
+      "axes": [
+        "P6",
+        "P4",
+        "P5"
+      ],
+      "theorem": "Normal Lie photon sky V_E1(a)+V_E2(sigma)+V_B2(N_STF) differs from Gaia apparent VSH and radio observer aberration; Codazzi constraints normal j but not local count score",
+      "test": "One observer Fermi triad, Gaia scanning source, selected radio and Bianchi ray tracing",
+      "stop": "No common source transfer or Gaia spin/AGN selection"
+    },
+    {
+      "id": "PHY-05",
+      "axes": [
+        "P5",
+        "P6"
+      ],
+      "theorem": "All Bianchi rank map L:STF5->normal j, Class B exception Delta=0, single fluid q=(1+w)beta/(1+w beta²); Type V j0 => chi0,F=.5",
+      "test": "Independent normal-frame rho,j,sigma source and rank-adjusted matched Gaussian residual; compare exceptional VI_-1/9 to Type V",
+      "stop": "Independent normal flux not observed; R49 posterior Q_shear anchor unavailable"
+    },
+    {
+      "id": "PHY-06",
+      "axes": [
+        "P1",
+        "P2",
+        "P5",
+        "P6"
+      ],
+      "theorem": "D_t sigma+3Hsigma=(8piG/c²)(rho_gamma Sgamma+pi_other)-c²Ricci3_STF; photon kinetic higher moments determine subsequent pi; signed chi and full transfer need matched source frames",
+      "test": "Full Einstein–Boltzmann–Sachs shared state vs selected CMB/CF4/Gaia low ell and cross covariance",
+      "stop": "Original R49 CMB/Gaia/CF4 PPC poor; no native family atlas calibrated"
+    },
+    {
+      "id": "PHY-07",
+      "axes": [
+        "P1",
+        "P3",
+        "RADIO_DIPOLE"
+      ],
+      "theorem": "Radio d_b=k_b beta_O|S+a and CF4 eta/H_D respond to observer beta through different Lorentz/optical Jacobians; Bianchi normal momentum L(Sigma) constrains matter tilt, not local observer score",
+      "test": "Source-conditioned 3-bin NVSS + CF4 shared observer/selection and independent electron-frame flux",
+      "stop": "No actual common 3D source beta/tilt or cross-probe null"
+    }
+  ],
+  "non_claims": [
+    "No extra independent likelihood from x,Q,Pi,F,GF",
+    "No unique Bianchi type from chi, rank or Q alone",
+    "R49 conditional 4000 draws are not model-independent 8-probe cosmological detection",
+    "No observer/source time GF without validated transport",
+    "No native full nonlinear Einstein–Boltzmann solver in this theory loop"
+  ]
+}
