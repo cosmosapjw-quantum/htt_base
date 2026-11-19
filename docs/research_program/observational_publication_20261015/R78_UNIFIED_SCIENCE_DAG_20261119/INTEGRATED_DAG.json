@@ -1,0 +1,3150 @@
+{
+  "schema": "htt.r78.unified_science_dag/1",
+  "date": "2026-11-19 KST",
+  "revision": 1,
+  "science_SSOT": "docs/research_program/observational_publication_20261015/R78_UNIFIED_SCIENCE_DAG_20261119/INTEGRATED_DAG.json",
+  "historical_42_node_source": "docs/research_program/observational_publication_20261015/PUBLICATION_DAG.json",
+  "original_42_payload_sha256": "e3264e105cabf78ddac37addc36cacc3cfa05ee942e33e54b431b22e3e87de0d",
+  "software_PR_backlog_authority": "docs/codex_handoff/pr_backlog.yaml",
+  "current_software_PR_entries": 291,
+  "software_PR_baseline_historical": 245,
+  "publication_status": "NOT_READY_TO_SUBMIT",
+  "no_auto_merge_or_main_push": true,
+  "provenance_claim_rule": "R60-66 COMPLETE_SCOPED_C0, R67-77 conditional evidence; no original 42 science gate auto-promoted",
+  "count_original_science": 42,
+  "count_new_source_qualifiers": 11,
+  "count_cross_phy_theory_routes": 7,
+  "count_total_graph_nodes": 60,
+  "papers": [
+    "P1",
+    "P2",
+    "P3",
+    "P4",
+    "P5",
+    "P6"
+  ],
+  "seven_R67_research_axes": [
+    {
+      "id": "A1",
+      "name": "Tensorized five-variable inference",
+      "paper": "P1",
+      "prior": [
+        "R39",
+        "R58",
+        "R60"
+      ],
+      "role": "typed likelihood, nonlinear identified set"
+    },
+    {
+      "id": "A2",
+      "name": "Low-ell morphology to radiation observables",
+      "paper": "P2",
+      "prior": [
+        "R66"
+      ],
+      "role": "signed photon-stress and DQ quotient"
+    },
+    {
+      "id": "A3",
+      "name": "Radio/source-count dipole anomaly",
+      "paper": "P4",
+      "prior": [
+        "R65"
+      ],
+      "role": "population/flux-selection observer template"
+    },
+    {
+      "id": "A4",
+      "name": "Beyond-FLRW kinematical measurement",
+      "paper": "P6",
+      "prior": [
+        "R61"
+      ],
+      "role": "congruence-compatible sigma,omega,A,beta"
+    },
+    {
+      "id": "A5",
+      "name": "Anisotropy and Bianchi classification",
+      "paper": "P5",
+      "prior": [
+        "R62"
+      ],
+      "role": "source-matched class/equivalence"
+    },
+    {
+      "id": "A6",
+      "name": "Redshift/directional Hubble factor",
+      "paper": "P3",
+      "prior": [
+        "R64"
+      ],
+      "role": "H_D(z,n), calibration & depth"
+    },
+    {
+      "id": "A7",
+      "name": "Local observer boost versus global tilt",
+      "paper": "P4",
+      "prior": [
+        "R63"
+      ],
+      "role": "frame/history and independent probe"
+    }
+  ],
+  "seven_R77_PHY_combinations": [
+    {
+      "id": "PHY-01",
+      "axes": [
+        "P3",
+        "P6",
+        "P5"
+      ]
+    },
+    {
+      "id": "PHY-02",
+      "axes": [
+        "P2",
+        "P6",
+        "P5"
+      ]
+    },
+    {
+      "id": "PHY-03",
+      "axes": [
+        "P2",
+        "P4"
+      ]
+    },
+    {
+      "id": "PHY-04",
+      "axes": [
+        "P6",
+        "P4",
+        "P5"
+      ]
+    },
+    {
+      "id": "PHY-05",
+      "axes": [
+        "P5",
+        "P6"
+      ]
+    },
+    {
+      "id": "PHY-06",
+      "axes": [
+        "P1",
+        "P2",
+        "P5",
+        "P6"
+      ]
+    },
+    {
+      "id": "PHY-07",
+      "axes": [
+        "P1",
+        "P3",
+        "RADIO_DIPOLE"
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "E0",
+      "paper": "COMMON",
+      "depends_on": [],
+      "state": "completed_scoped",
+      "objective": "Reused published solver-free dossier (NOT newly revalidated astrophysical claims)",
+      "output": "evidence anchor",
+      "acceptance": "PR533@13d8d85f source identity available",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "evidence",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [
+        "commit:13d8d85fa470d645d008986e8f77d8d0f70fdf54",
+        "docs/solver_free_research_20261014/PLAN.json"
+      ],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "E1",
+      "paper": "COMMON",
+      "depends_on": [
+        "E0"
+      ],
+      "state": "completed_scoped",
+      "objective": "Reused real CF4 35,970-group Schur diagnostic only",
+      "output": "evidence anchor",
+      "acceptance": "17 scenarios/12 tests conditional; not physical shear",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "evidence",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [
+        "commit:915d8bfd22b09f4d57fa5902110bc6fd8d3aa734",
+        "docs/research_program/cf4_schur_loop8_20261015/results/result.json"
+      ],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "E2",
+      "paper": "COMMON",
+      "depends_on": [
+        "E1"
+      ],
+      "state": "completed_scoped",
+      "objective": "Reused Planck 9 same-sky + FFP10 999 signal / 300 noise MES conditioning",
+      "output": "evidence anchor",
+      "acceptance": "13 tests and 26,846 same-mask pixels conditional",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "evidence",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [
+        "commit:398dc461c849235581260d3c6d510599350abd59",
+        "docs/research_program/htt_mes_eps_loop9_20261015/results_v2/result.json"
+      ],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "E3",
+      "paper": "COMMON",
+      "depends_on": [
+        "E0"
+      ],
+      "state": "completed_scoped",
+      "objective": "Frozen PR066/PR521 samplewise functional operators (not physical likelihood)",
+      "output": "evidence anchor",
+      "acceptance": "Original code/ledger present at ancestor",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "evidence",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [
+        "docs/PR_DELTAS/pr-066.md",
+        "htt/htt/htt/departure/posterior_pushforward.py",
+        "docs/observational_upgrade_r2/R2-04/sources/research/LEGACY_THEORY_REUSE.md"
+      ],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "X01",
+      "paper": "COMMON",
+      "depends_on": [
+        "E0"
+      ],
+      "state": "completed_scoped",
+      "objective": "Bind physical source identities and overlaps across all 6 papers",
+      "output": "SOURCE_BINDINGS.json",
+      "acceptance": "Each claim connected to immutable release/estimator/shared-sky or marked local-uncommitted",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [
+        "source SHA pins",
+        "overlap graph: independence cannot be inferred from distinct filenames"
+      ],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [
+        "docs/research_program/observational_publication_20261015/READY_20261016/X01_SOURCE_BINDINGS.json",
+        "source SHA CF4 86dfd896... verified; Planck T/P same sky"
+      ],
+      "next_action": "bind verified CF4 and Planck shared-source overlaps, mark physical provenance gaps",
+      "submission_terminal": false
+    },
+    {
+      "id": "X02",
+      "paper": "COMMON",
+      "depends_on": [
+        "E0"
+      ],
+      "state": "completed_scoped",
+      "objective": "Complete precise six-paper primary literature novelty comparator",
+      "output": "NOVELTY_MATRIX.md",
+      "acceptance": "Six comparable estimands, releases and matched null/likelihoods with contrasts",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [
+        "doi/date primary-source audit",
+        "null-result counterexamples"
+      ],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [
+        "docs/research_program/observational_publication_20261015/X02_20261016/X02_NOVELTY_MATRIX.md",
+        "Six-paper primary-source DOI/estimand/release/null likelihood contrasts, historical negative controls; no publication novelty admission"
+      ],
+      "next_action": "Run source-matched model-specific likelihood/figure replication before any novelty or manuscript claim",
+      "submission_terminal": false
+    },
+    {
+      "id": "X03",
+      "paper": "COMMON",
+      "depends_on": [
+        "E0"
+      ],
+      "state": "completed_scoped",
+      "objective": "Freeze prospective statistics versus known historical choices",
+      "output": "CLAIM_SELECTION_LEDGER.json",
+      "acceptance": "Retrospective p=.039 and previous exploratory ranks never promoted to confirmatory",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [
+        "all axes, masks, tails, method and radial bins recorded before new null"
+      ],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [
+        "docs/research_program/observational_publication_20261015/READY_20261016/X03_CLAIM_SELECTION_LEDGER.json",
+        "retrospective historical p and cut-family registry, no future null tested"
+      ],
+      "next_action": "keep historical p=.039 and all prior chosen axes retrospective; pre-new-null protocol explicitly unregistered",
+      "submission_terminal": false
+    },
+    {
+      "id": "S01",
+      "paper": "P1",
+      "depends_on": [
+        "E3"
+      ],
+      "state": "completed_scoped",
+      "objective": "Define typed common x,F,Pi,Q,G_F and boundary domains",
+      "output": "STAT_FUNCTIONAL_CONTRACT.md + tests",
+      "acceptance": "Signed x, Q source anchor, F sign-clean samplewise, strict Pi unknown mass, G_F fixed floor/depth; F4 separate",
+      "inputs": [
+        "htt/mio/formalism/filling_fraction.py",
+        "htt/mio/formalism/isotropy_gap.py",
+        "htt/htt/htt/departure/posterior_pushforward.py"
+      ],
+      "planned_code": [
+        "htt/obsstat/publication_functionals.py (proposed)"
+      ],
+      "test_cases": [
+        "negative x not clipped",
+        "zero denominator undefined",
+        "sample IDs remain coupled",
+        "threshold ties excluded",
+        "MIO provenance firewall"
+      ],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [
+        "github:research/htt-sixpaper-p1-s01-partial-functionals-20261016/docs/research_program/observational_publication_20261015/S01_20261016/S01_THEORY_KO.md@db0810c002f2f6bd58e78097c9d22be4f0a7ae25",
+        "github:research/htt-sixpaper-p1-s01-partial-functionals-20261016/htt/obsstat/publication_functionals.py@ba20b4d9707de94011fc9e3f8e3d18f93905e5d7",
+        "github:research/htt-sixpaper-p1-s01-partial-functionals-20261016/docs/research_program/observational_publication_20261015/S01_20261016/S01_S2_VERIFICATION_KO.md@59de3c0c26ae1b16782e18fb6ee5995814b6a381",
+        "chatgpt-library:/HTT_RESEARCH_BACKUPS/20261016_SIX_PAPER_P1_S01/HTT_SIXPAPER_S01_STAGE2_20261016.zip sha256:e1485c0dfee1a0e03472b6ce655eeec3aad13e57a1ff6a24042aff0c627f0124"
+      ],
+      "next_action": "S02: actual-data coupled source samples with missing/domain-missing mass explicitly retained; release/calibration proof required for physical promotion",
+      "submission_terminal": false,
+      "completed_scope": "MATHEMATICAL_DERIVATION_AND_ISOLATED_SANDBOX_17_PASS__NO_OBSERVATIONAL_LIKELIHOOD"
+    },
+    {
+      "id": "S02",
+      "paper": "P1",
+      "depends_on": [
+        "S01",
+        "E2"
+      ],
+      "state": "blocked_input",
+      "objective": "Run actual-data conditional finite draw pushforward, retaining unknown physical sectors",
+      "output": "paired functional arrays + Pi interval plots",
+      "acceptance": "One joint source, exact normalized weights; posterior unknown mass not silently renormalized",
+      "inputs": [
+        "docs/research_program/htt_mes_eps_loop9_20261015/results_v2/result.json"
+      ],
+      "planned_code": [],
+      "test_cases": [
+        "strict tail and interval end cases",
+        "same sky never treated as nine draws"
+      ],
+      "external_missing": [
+        "Source-matched optical-to-kinematic response in a common congruence/frame, finite-redshift remainder/peculiar-flow controls, and directional calibration/selected covariance are unavailable; the supplied H03 field is apparent only"
+      ],
+      "resource": "medium",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [
+        "docs/research_program/observational_publication_20261015/NEXT_20261016/S02/S02_CONDITIONAL_PARTIAL_PUSHFORWARD.md",
+        "2048 joint working-Gaussian draws from one source, sample mass preserved, physical x,Q,F,G unknown all samples; no physical posterior admission",
+        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/FUNCTIONAL_SENSITIVITY_REPORT_KO.md; 2048 joint source-summary draws regenerated, physical unknown mass 1 retained",
+        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/S02_EXECUTION_20261018/REPORT_KO.md; exact fitted-field four-window calibration minimax on unchanged 2048 coupled draws; physical mapping missing, unknown mass 1; 12 tests",
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/conditional_fit/REPORT.md",
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/conditional_fit/INDEPENDENT_REVIEW.json",
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/SOURCE_INTAKE/S02_ACQUISITION_RAW.json",
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/SOURCE_INTAKE/SOURCE_CORRECTIONS.md"
+      ],
+      "next_action": "Supply the explicitly missing common-congruence physical response and calibrated observational law; apply them to the retained 2048 IDs and calibration minimax without replacing physical unknowns with apparent coefficients.",
+      "submission_terminal": false
+    },
+    {
+      "id": "S03",
+      "paper": "P1",
+      "depends_on": [
+        "S02",
+        "X01"
+      ],
+      "state": "pending",
+      "objective": "Evaluate nontrivial anchor/floor, depth and selection sensitivity",
+      "output": "source-coupled statistical invariants and counterexample figure",
+      "acceptance": "Outputs change on declared denominator/selection, zero/missing distinct",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [
+        "floor G_F and signed-quotient boundary adversarial injections"
+      ],
+      "external_missing": [],
+      "resource": "medium",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [
+        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/results/FUNCTIONAL_SENSITIVITY_RESULT.json; actual north-window sensitivity and anchor/floor/depth curves; pending S02"
+      ],
+      "next_action": "Reuse paired actual-source sensitivity; apply to S02-admitted functional mapping before node completion.",
+      "submission_terminal": false
+    },
+    {
+      "id": "S04",
+      "paper": "P1",
+      "depends_on": [
+        "S03",
+        "X03"
+      ],
+      "state": "pending",
+      "objective": "Qualify real observational law or rigorous externally calibrated identified interval",
+      "output": "source and coverage/partial-identification evidence",
+      "acceptance": "At least one actual selected likelihood or justified outer interval, not synthetic-only",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [
+        "Physical joint kinematic/tilt/curvature posterior unavailable for full x_C; a qualified narrower identifiable functional is allowed"
+      ],
+      "resource": "medium",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-CONGRUENCE/REPORT.md",
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-CONGRUENCE/INDEPENDENT_REVIEW.md"
+      ],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "S05",
+      "paper": "P1",
+      "depends_on": [
+        "S04",
+        "X02"
+      ],
+      "state": "pending",
+      "objective": "Write P1 real-data statistical-functional paper",
+      "output": "P1 manuscript with result figures and scope gate",
+      "acceptance": "Distinct from standard pushforward; model comparison and source-linked robustness",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "manuscript",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "S06",
+      "paper": "P1",
+      "depends_on": [
+        "S05"
+      ],
+      "state": "pending",
+      "objective": "Decide publication readiness without submitting",
+      "output": "P1 submitted_ready_decision.json",
+      "acceptance": "All P1 gates shown with actual evidence or HOLD",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "submission_gate",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": true
+    },
+    {
+      "id": "L01",
+      "paper": "P2",
+      "depends_on": [
+        "E2"
+      ],
+      "state": "completed_scoped",
+      "objective": "Map real Planck low-l harmonic/STF/beam/mask/transfer response",
+      "output": "operator ledger and paired injection tests",
+      "acceptance": "Match selected T/E/B source supports, corrected NESTED->RING and ell>5 remainder",
+      "inputs": [
+        "docs/research_program/htt_mes_eps_loop9_20261015/results_v2/result.json"
+      ],
+      "planned_code": [],
+      "test_cases": [
+        "spin2 parity",
+        "high-ell leakage",
+        "beam/instrument identity not invented"
+      ],
+      "external_missing": [],
+      "resource": "medium",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [
+        "source common-support Planck T 9 processing products and E/B 8 products, one physical sky: original Loop5 NPZ SHA256 900e6c6fa04a6313f63753747d89e7059486bdeb88d51c91d895fcc8b4e09459; T mask 26846, POL mask 30021 NSIDE64 RING pixels",
+        "source-based measured T finite mask response K6:32=2.4328695605629203 norm; original NPZ SHA a9aaeb393deba03c97ecf45bf4e1ab74e98e3a8747de7c4bc7a96bff27014007 and 91f496ca7cd1cbaed65153c64d83cf7abf84b21c141d8955d0cd8e07ed480a35",
+        "L01_20261016/results/source_v1/L01_T_EB_SOURCE_LEDGER.json and src/l01_source.py: same-sky 8 finite spin E/B image contrasts and paired-FFP processing-unit typed checks, without physical B spectrum",
+        "L01_20261016/src/spin2_finite.py, tests/test_l01.py: independent synthetic Wigner spin2, parity and mask-same-pixel-count leakage counterexample; 17 passed; true Planck Pol high-ell geometry still UNKNOWN",
+        "recovery S1 ZIP sha256 566fcce3157dfd2b9ff413d2531a3bfe9b06e5467ebb8c34ce42d2ac1f812656; final S2 ZIP sha256 43cf6a29dea7cbece3e81f6367101db6c2e15b6f4f39b8e14f67baa888edbf0e, clean extraction 24/24 hashes and 17 tests passed, Library upload ACK",
+        "docs/research_program/observational_publication_20261015/NEXT_20261016/L01/L01_REAL_T_FINITE_RESPONSE.md",
+        "Real T mask K6..32 singular spectrum 32x1053, bound and null checked; genuine Planck high-ell polarized mask/beam/E2E missing",
+        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P2/REPORT.md; historical summary geometry before the native split execution",
+        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/REPORT_KO.md; actual native five-product matched stream and original 30021-pixel selected EB response/remainder bridge; 59 focused tests",
+        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/INDEPENDENT_REVIEW_NATIVE_L01_20261018.md; PASS_SCOPED_L01_FINITE_SOURCE_RESPONSE with independent mask/all-column/QR checks"
+      ],
+      "next_action": "Reuse completed finite response/support results; execute dependency-safe L02/L03/V02. Intrinsic high-ell tails and physical null qualification remain unadmitted; additional W-weighted residual RHS is an optional runnable processing follow-up, not missing external input.",
+      "submission_terminal": false,
+      "completed_scope": "FINITE_DELIVERED_SOURCE_PROCESSING_RESPONSE_ONLY__NO_PHYSICAL_TAIL_OR_NULL_ADMISSION"
+    },
+    {
+      "id": "L02",
+      "paper": "P2",
+      "depends_on": [
+        "L01",
+        "X03"
+      ],
+      "state": "completed_scoped",
+      "objective": "Predefine tensor invariant/orbit morphology and selection family",
+      "output": "registered statistic and selected-trials declaration",
+      "acceptance": "Conservation under SO3/O3 and no posthoc pre-registration",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [
+        "rotation/parity metamorphic checks",
+        "joint multipole axes"
+      ],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [
+        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L02_EXECUTION_20261018/REPORT_KO.md; 25 actual T/E/B fields, 24 cross-field pairs, explicit retrospective family, 882 rotation/reflection checks and 16 targeted tests",
+        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/INDEPENDENT_REVIEW_NATIVE_L02_20261018.md; PASS_SCOPED, independent harmonic-polynomial reconstruction and exact source/result reproduction"
+      ],
+      "next_action": "Reuse fixed statistic-family algorithm on the source-qualified L03 bank and eventual L04 selection experiment. Historical observed application remains retrospective; no null rank or significance is admitted.",
+      "submission_terminal": false,
+      "completed_scope": "ARCHIVED_PROCESSED_COEFFICIENT_STF_ALGEBRA_AND_SELECTION_FAMILY__NO_NULL_OR_ROTATED_MAP_EQUIVARIANCE_ADMISSION"
+    },
+    {
+      "id": "L03",
+      "paper": "P2",
+      "depends_on": [
+        "L01",
+        "X01"
+      ],
+      "state": "pending",
+      "objective": "Establish release-matched Planck signal+noise+foreground null adequacy",
+      "output": "qualified null bank and coverage tests",
+      "acceptance": "Simulation IDs independent units; actual and null same mask/beam/foreground law",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [
+        "null autocorrelation",
+        "heldout injection",
+        "noise reuse rejected"
+      ],
+      "external_missing": [
+        "Source-qualified joint split/foreground/weight-selection law and statistic-specific coverage are unavailable. Planck VIII notes no half-mission FFP10 CMB in the 2018 release and weak shared noise-simulation residuals; distinct simulation IDs alone do not establish stochastic independence. Public split noise or FFP9 inputs require response qualification, not filename substitution."
+      ],
+      "resource": "heavy_external",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [
+        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L03_EXECUTION_20261018/QUALIFICATION_KO.md; eight actual FFP10 I/Q/U pairs through original T26846/P30021 child-average estimator, all 16 source identities verified; 25 tests, reusable cache and same-row noise/L02-family diagnostics; physical null unqualified",
+        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/INDEPENDENT_REVIEW_NATIVE_L03_20261018.md; fresh source-conditional pilot PASS, independent cache-only SVD/reducer/harmonic checks; nominal ID count is not stochastic independence; original L03 HOLD",
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-CMB/REPORT.md",
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-CMB/INDEPENDENT_REVIEW.json",
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/SOURCE_INTAKE/L03_ACQUISITION_RAW.json",
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/SOURCE_INTAKE/SOURCE_CORRECTIONS.md"
+      ],
+      "next_action": "Reuse the completed eight-row bank; obtain and qualify matched split CMB/noise response plus residual-foreground/weight-selection law and statistic-specific coverage. Split-product acquisition/integration may be runnable, but available noise or FFP9 inputs do not by themselves provide the absent joint law. Do not rerun completed pairs or expand to 300 merely to replace missing qualification.",
+      "submission_terminal": false
+    },
+    {
+      "id": "L04",
+      "paper": "P2",
+      "depends_on": [
+        "L02",
+        "L03"
+      ],
+      "state": "pending",
+      "objective": "Compute corrected joint large-angle morphology rarity",
+      "output": "look-elsewhere corrected ranks and robustness",
+      "acceptance": "Correct finite MC ranks, nuisance sensitivity and look elsewhere",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "medium",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "L05",
+      "paper": "P2",
+      "depends_on": [
+        "L04",
+        "X02"
+      ],
+      "state": "pending",
+      "objective": "Analyze anomaly versus robust negative null interpretation",
+      "output": "referee tables, plots, source diagnostics",
+      "acceptance": "No independent-sky multiplication or historical p reuse",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "medium",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "L06",
+      "paper": "P2",
+      "depends_on": [
+        "L05"
+      ],
+      "state": "pending",
+      "objective": "Decide and draft P2 manuscript",
+      "output": "P2 manuscript+publication readiness",
+      "acceptance": "Qualified simulations, method novelty over Planck VII and reporting of null results",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "submission_gate",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": true
+    },
+    {
+      "id": "H01",
+      "paper": "P3",
+      "depends_on": [
+        "E1"
+      ],
+      "state": "completed_scoped",
+      "objective": "Define H_W(z,n) under survey radial/angular window and velocity law",
+      "output": "dimension-correct source estimator and response test",
+      "acceptance": "Not Theta/3 unless independent physical mapping derived; isotropic window null returns zero spurious dipole",
+      "inputs": [],
+      "planned_code": [
+        "htt/obsstat/htt_hubble_depth_window.py (proposed)"
+      ],
+      "test_cases": [
+        "full-sky dipole cancellation",
+        "anisotropic mask leakage"
+      ],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [
+        "docs/research_program/observational_publication_20261015/H01_20261016/docs/H01_THEORY_KO.md source-bound window contraction and dimensions",
+        "docs/research_program/observational_publication_20261015/H01_20261016/src/hubble_window.py plus 11 passed tests/test_hubble_window.py",
+        "docs/research_program/observational_publication_20261015/H01_20261016/docs/H01_S2_SOURCE_RESULTS_KO.md actual 35,970 CF4 group working windows; source SHA86dfd896",
+        "docs/research_program/observational_publication_20261015/H01_20261016/src/run_h01_published.py exact 8 H_W and 8x8 working covariance replay",
+        "Archive H01_SIX_PAPER_S2_20261016.zip SHA11fca03489e6f5dafb67adf600e23f18f537422f3cfa619093a52adbfc25c002 (source-and-tests packaged)"
+      ],
+      "next_action": "P3/H03 READY for preregistered direction/redshift tomography using shared-window selection and covariance; H02 waits for calibrated method/source velocity selection and X01",
+      "submission_terminal": false
+    },
+    {
+      "id": "H02",
+      "paper": "P3",
+      "depends_on": [
+        "H01",
+        "X01"
+      ],
+      "state": "pending",
+      "objective": "Build empirical CF4 method-selection/calibration/velocity covariance model",
+      "output": "source-qualified distance-velocity likelihood",
+      "acceptance": "Use method-group overlap and correlated errors, reproduce source null simulations",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [
+        "lognormal bias and zero-point shift mock",
+        "same-source method overlap"
+      ],
+      "external_missing": [
+        "Published group source lacks directly admitted true selection law and shared calibration covariance"
+      ],
+      "resource": "medium",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [
+        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P3/RESULT_KO.md; historical spectral-only frontier before method centers were measured",
+        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/H02_EXECUTION_20261018/REPORT_KO.md; actual 20 fit blocks, coupled window covariance, method/group overlap, same-gamma calibration LP and post-calibration heldout diagnostics; 13 tests; empirical source law remains missing",
+        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/H02_UPSTREAM_SELECTION_20261018/REPORT_KO.md; official CDS TF 10737/9792-row release acquired; actual PGC to CF4 selected-group joins, quality/band/overlap/depth composition; 10 tests; not a true selection or shared covariance law",
+        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/INDEPENDENT_REVIEW_NATIVE_H02_UPSTREAM_20261018.md; scoped diagnostic PASS, independent joins and 150 window fields reproduced; original H02 HOLD",
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/conditional_fit/REPORT.md",
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/conditional_fit/INDEPENDENT_REVIEW.json",
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/SOURCE_INTAKE/H02_ACQUISITION_RAW.json",
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/SOURCE_INTAKE/SOURCE_CORRECTIONS.md"
+      ],
+      "next_action": "Reuse measured centers/coupled intervals and actual upstream CDS membership joins. Obtain true targeting/detection/rejected-source and calibration/velocity law plus qualified source null simulations; released-table inclusion fractions and method/galaxy identity matches do not supply selection probabilities, unchanged-ingestion proof or independent calibration validation.",
+      "submission_terminal": false
+    },
+    {
+      "id": "H03",
+      "paper": "P3",
+      "depends_on": [
+        "H01"
+      ],
+      "state": "completed_scoped",
+      "objective": "Fit observed depth windows monopole/dipole/STF2 with method and patch comparisons",
+      "output": "H_eff(z,n) empirical coefficient trajectories plus cross-window covariance",
+      "acceptance": "No physical global tilt inferred; nested sky/redshift windows correlated",
+      "inputs": [],
+      "planned_code": [
+        "scripts/run_htt_hubble_depth_tomography.py (proposed)"
+      ],
+      "test_cases": [
+        "overlapping shell cross covariance"
+      ],
+      "external_missing": [],
+      "resource": "medium",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [
+        "Real CF4 35970-group NPZ SHA256 86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c, four inherited Gaussian z windows; P3/H01 fixed working law",
+        "H03_20261016/src/h03_tomography.py and src/run_h03.py: 4x9 WLS and exact shared-source 36x36 conditional covariance, code Git blobs verified in draft PR541",
+        "H03_20261016/results/source_h03_v1/H03_SOURCE_TOMOGRAPHY.json: SHA256 5d31e2ab4fea682c538c31c15181ae7b07e11efba98b36c66aff6feca88f8326, working h0 75.168/75.303/74.559/72.445 km/s/Mpc",
+        "H03_20261016/results/source_h03_v1/H03_MEAN_GAUGE.json: fixed-W method-offset 13-column rank12, projected angular rank8; not physical CF4 likelihood",
+        "H03_20261016/tests/: 16 passed, QR-versus-independent SVD <=3.1e-14, exact shared-window covariance PSD and contraction; four method and 12 sky-patch deletes",
+        "ChatGPT Library H03 S2 full source-replay ZIP SHA256 303c78ff655237edf87db972ce882142837fac8588d269d6cd861c76346fb219, upload SUCCESS, archive 23/23 payload SHA and fresh-unzip 16 passed with JSON byte identity"
+      ],
+      "next_action": "P3/H03 complete in source-conditional processing scope only. P3/H02 still blocked by actual selection, calibrated method and peculiar-velocity covariance plus X01; H04 waits H02. Independent READY: P2/L01 and COMMON/X01/X02/X03. No H(z,n) physical or publication admission.",
+      "submission_terminal": false
+    },
+    {
+      "id": "H04",
+      "paper": "P3",
+      "depends_on": [
+        "H02",
+        "H03"
+      ],
+      "state": "pending",
+      "objective": "Infer physical H(z,n) alternatives with peculiar-velocity and survey covariance",
+      "output": "corrected joint H(z,n) posterior/identified set",
+      "acceptance": "False-positive calibration plus shared calibration posterior predictive checks",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "medium",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-SN/REPORT.md",
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-SN/INDEPENDENT_REVIEW.json"
+      ],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "H05",
+      "paper": "P3",
+      "depends_on": [
+        "H04",
+        "X02"
+      ],
+      "state": "pending",
+      "objective": "Compare 2025–26 CF4 conflicting null and anisotropic papers",
+      "output": "same-estimand comparison and heldout tracer results",
+      "acceptance": "Real novel difference is covariance/window/calibration robustness, not a recycled dipole",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "medium",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "H06",
+      "paper": "P3",
+      "depends_on": [
+        "H05"
+      ],
+      "state": "pending",
+      "objective": "Decide and draft P3 manuscript",
+      "output": "P3 paper+publication readiness",
+      "acceptance": "Actual full law, competing models, independent data validation or scientifically informative null",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "submission_gate",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": true
+    },
+    {
+      "id": "V01",
+      "paper": "P4",
+      "depends_on": [
+        "E1",
+        "E2"
+      ],
+      "state": "completed_scoped",
+      "objective": "Fix beta_RO, beta_RM, beta_MO, windowed B and rapidity with congruence",
+      "output": "finite Lorentz and 1+3 frame contract",
+      "acceptance": "Intrinsic radiation eps1 not raw solar CMB dipole; beta fraction != rapidity",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [
+        "observer relabeling invariance",
+        "Lorentz composition"
+      ],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [
+        "htt/obsstat/publication_frame_kinematics.py",
+        "26 sandbox-scoped tests across V01,K01,X01,X03,B01,S02/L01; physical transfer NOT_RUN"
+      ],
+      "next_action": "finite local-frame relative beta/rapidity and distinct survey bulk; all observed transfer conditional",
+      "submission_terminal": false
+    },
+    {
+      "id": "V02",
+      "paper": "P4",
+      "depends_on": [
+        "V01",
+        "L01"
+      ],
+      "state": "completed_scoped",
+      "objective": "Inject finite local observer boost through the actual processed Planck source",
+      "output": "local response columns with covariance/error envelopes",
+      "acceptance": "Matched mask/beam/input and mode leakage",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "medium",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [
+        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/V02_EXECUTION_20261018/REPORT_KO.md; finite source-defined actual INT_BEAM/boost/original mask local response, numerical controls and preserved centre counterfactual; 8 tests",
+        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/V02_EXECUTION_20261018/NATIVE_CHILD_EXTENSION/REPORT_KO.md; original actual-valid native-child averaging on exact T26846, 3 analytic local columns and 2 finite incremental injections, baseline mismatch retained, finite error vectors/envelopes; 4 tests",
+        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/INDEPENDENT_REVIEW_NATIVE_V02_20261018.md; fresh review plus one targeted native-operator repair closeout PASS_SCOPED_V02_SOURCE_DEFINED_FINITE_NATIVE_PROCESSING; no physical covariance/upstream/global-history admission"
+      ],
+      "next_action": "Reuse completed native finite response columns/error vectors for downstream work when independently qualified V03/H04 sources arrive. Do not repeat the completed source experiment or promote geometric rank to physical local/global identifiability.",
+      "submission_terminal": false
+    },
+    {
+      "id": "V03",
+      "paper": "P4",
+      "depends_on": [
+        "V01"
+      ],
+      "state": "completed_scoped",
+      "objective": "Obtain physically distinct global tilt source-history response (not endpoint copy)",
+      "output": "external Einstein-Boltzmann history response and validation OR DERIVED_PHYSICAL_HISTORY_SUBCASE: compensated dust+radiation linear post-decoupling IC, specified normal frame, finite interval and bolometric optics",
+      "acceptance": "Same-frame, different radial/temporal transfer and exact source units",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "analytic_reuse",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [
+        "docs/research_program/observational_publication_20261015/FRONTIER_20261020/theory/THEORY.md",
+        "docs/research_program/observational_publication_20261015/FRONTIER_20261020/INDEPENDENT_REVIEW.md",
+        "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/theory/THEORY_AUDIT.md"
+      ],
+      "next_action": "Reuse the validated restricted linear optical history. A V04 consumer must match source operator to V02 or derive a separate common operator; propagate source/IC/remainder restrictions. Do not claim external EB payload.",
+      "submission_terminal": false,
+      "scope_decision": "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/V03_SCOPE_DECISION.json",
+      "original_external_output_satisfied": false
+    },
+    {
+      "id": "V04",
+      "paper": "P4",
+      "depends_on": [
+        "V02",
+        "V03",
+        "H04"
+      ],
+      "state": "pending",
+      "objective": "Measure projected local-global information and stable singular values",
+      "output": "source/selection/covariance error robust identifiable subspace",
+      "acceptance": "Do not identify from a normalization of a null column",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "medium",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-SN/REPORT.md",
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-SN/INDEPENDENT_REVIEW.json"
+      ],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "V05",
+      "paper": "P4",
+      "depends_on": [
+        "V04",
+        "X03"
+      ],
+      "state": "pending",
+      "objective": "Calibrated local/global joint inference and independent injections",
+      "output": "physical posterior or identified intervals and model comparison",
+      "acceptance": "No unqualified Bayes evidence; calibrated null and prior family",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "heavy_external",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "V06",
+      "paper": "P4",
+      "depends_on": [
+        "V05",
+        "X02"
+      ],
+      "state": "pending",
+      "objective": "Decide and draft P4 manuscript",
+      "output": "P4 paper+readiness",
+      "acceptance": "Actual distinct transfer or physical non-identifiability statement and real-data significance",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "submission_gate",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": true
+    },
+    {
+      "id": "B01",
+      "paper": "P5",
+      "depends_on": [
+        "E2"
+      ],
+      "state": "completed_scoped",
+      "objective": "Inventory admissible Bianchi I–IX and exceptional VI_-1/9 source/mode templates",
+      "output": "family/IC/curvature sign/constraint atlas inventory",
+      "acceptance": "Do not count partial synthetic or scalar templates as physically verified T/E/B",
+      "inputs": [
+        "docs/lowell_bianchi_solver_reference.md"
+      ],
+      "planned_code": [],
+      "test_cases": [
+        "11 canonical + exceptional branch identities and degeneracies"
+      ],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [
+        "docs/research_program/observational_publication_20261015/READY_20261016/B01_BIANCHI_ATLAS_REGISTRY.json",
+        "11 class inventory + ANI nearFLRW subset, no current physical transfer tests"
+      ],
+      "next_action": "11 Lie types plus VI_-1/9 exception inventoried; external AniCLASS five-nearly-FLRW subset only",
+      "submission_terminal": false
+    },
+    {
+      "id": "B02",
+      "paper": "P5",
+      "depends_on": [
+        "B01"
+      ],
+      "state": "pending",
+      "objective": "Qualify external native polarized all-m and high-ell Bianchi transfer atlas",
+      "output": "physical atlas with source conventions and resolution acceptance",
+      "acceptance": "Einstein/Boltzmann physics, recombination, constraints, IC and mode test actual",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [
+        "Verified Bianchi temperature+polarization full physical atlas for paper scope unavailable"
+      ],
+      "resource": "heavy_external",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-ATLAS/REPORT.md",
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-ATLAS/INDEPENDENT_REVIEW.json"
+      ],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "B03",
+      "paper": "P5",
+      "depends_on": [
+        "B02",
+        "L03"
+      ],
+      "state": "pending",
+      "objective": "Convolve physical Bianchi atlas with actual Planck response and null",
+      "output": "matched likelihood and family equivalence support",
+      "acceptance": "No fake T/E/B source or forged full-sky score",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "heavy_external",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "B04",
+      "paper": "P5",
+      "depends_on": [
+        "B03"
+      ],
+      "state": "pending",
+      "objective": "Evaluate family equivalence, confusion/injection recovery and Bayes evidence",
+      "output": "family confusion matrix, allowed priors, null predictive plots",
+      "acceptance": "Degenerate families reported equivalence class and compared Saadeh 2016",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "heavy_external",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "B05",
+      "paper": "P5",
+      "depends_on": [
+        "B04",
+        "X02"
+      ],
+      "state": "pending",
+      "objective": "Decide/draft independent Bianchi identification paper or verified subset",
+      "output": "P5 paper+readiness",
+      "acceptance": "Real Planck likelihood and family physical mode calibration, hold if unavailable",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "submission_gate",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": true
+    },
+    {
+      "id": "K01",
+      "paper": "P6",
+      "depends_on": [
+        "E1",
+        "E2"
+      ],
+      "state": "completed_scoped",
+      "objective": "Freeze one-congruence sigma_ab, omega_a, A_a and beta_a; units and radial blindness",
+      "output": "physical measurement operator with antisymmetric counterexample",
+      "acceptance": "n^i Omega_ij n^j=0, apparent STF≠geometry sigma; 4accel dipole not assumed",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [
+        "metric sign and parity",
+        "radial vorticity blind",
+        "rapidities/speed units"
+      ],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [
+        "htt/obsstat/publication_frame_kinematics.py",
+        "26 sandbox-scoped tests across V01,K01,X01,X03,B01,S02/L01; physical transfer NOT_RUN"
+      ],
+      "next_action": "1+3 same-congruence definitions, radial rank-six and three vorticity nulls; no optical transport",
+      "submission_terminal": false
+    },
+    {
+      "id": "K02",
+      "paper": "P6",
+      "depends_on": [
+        "K01",
+        "H01"
+      ],
+      "state": "completed_scoped",
+      "objective": "Determine identified subspace from actual CF4 apparent STF and safe physics bridges",
+      "output": "conditioned rank and bounded unresolved-sector report",
+      "acceptance": "No measured omega from radial redshift and no manufactured A posterior",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [
+        "rank/nullspace invariance and sparse group deletions"
+      ],
+      "external_missing": [],
+      "resource": "medium",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [
+        "docs/research_program/observational_publication_20261015/NEXT_20261016/K02/K02_SOURCE_CONDITIONED_IDENTIFICATION.md",
+        "Real 35970 CF4 groups; four-window method-profiled shape rank 8 each, 32x32 covariance PSD, 7 source-scoped tests; physical optical map not admitted"
+      ],
+      "next_action": "K04 still blocked on H02 selection+physical optical/Jacobi bridge; pursue common-frame source-matched tangential data",
+      "submission_terminal": false
+    },
+    {
+      "id": "K03",
+      "paper": "P6",
+      "depends_on": [
+        "K01"
+      ],
+      "state": "pending",
+      "objective": "Secure nonradial physical observables and matching covariance for omega/A/beta",
+      "output": "physical kSZ/polarization/proper-motion channel response",
+      "acceptance": "Independent source qualification and nonradial response demonstrated",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [
+        "Source-matched nonradial curl/acceleration/tilt observational transfer unavailable"
+      ],
+      "resource": "heavy_external",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-Q/REPORT.md",
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-Q/INDEPENDENT_REVIEW.json",
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/K03_PM/REPORT.md",
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/K03_PM/CANDIDATE_MANIFEST.json",
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/K03_PM/INDEPENDENT_REVIEW.json"
+      ],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "K04",
+      "paper": "P6",
+      "depends_on": [
+        "K02",
+        "H04"
+      ],
+      "state": "pending",
+      "objective": "Fit physical partial-identification for available kinematic modes",
+      "output": "bounded identified sets and source-conditioned posterior parts",
+      "acceptance": "Output unbounded or undefined for genuinely null sectors; no zero fill",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [
+        "Full CF4 selection and physical optical response to kinematic normal/matter frame unavailable"
+      ],
+      "resource": "medium",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-CONGRUENCE/REPORT.md",
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-CONGRUENCE/INDEPENDENT_REVIEW.md"
+      ],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "K05",
+      "paper": "P6",
+      "depends_on": [
+        "K03",
+        "K04",
+        "V03"
+      ],
+      "state": "pending",
+      "objective": "Combine physically independent sector signals with common congruence",
+      "output": "four-sector physical set or explicit remaining nonidentifiability",
+      "acceptance": "Calibration, source clock, observer frame and shared sky treatment exact",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "heavy_external",
+      "task_kind": "research",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-Q/REPORT.md",
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-Q/INDEPENDENT_REVIEW.json"
+      ],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": false
+    },
+    {
+      "id": "K06",
+      "paper": "P6",
+      "depends_on": [
+        "K05",
+        "X02"
+      ],
+      "state": "pending",
+      "objective": "Decide/draft P6 paper",
+      "output": "P6 paper and four-sector claim matrix",
+      "acceptance": "Source-supported physical identified combinations with independent error budget",
+      "inputs": [],
+      "planned_code": [],
+      "test_cases": [],
+      "external_missing": [],
+      "resource": "light",
+      "task_kind": "submission_gate",
+      "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+      "existing_evidence": [],
+      "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+      "submission_terminal": true
+    },
+    {
+      "id": "SQ-CF4",
+      "paper": "P3",
+      "node_class": "source_qualification",
+      "state": "ready_scoped",
+      "depends_on": [
+        "E1",
+        "X01",
+        "H01"
+      ],
+      "objective": "CF4 selected-group method/PV calibration",
+      "physics_goal": "Qualify the source-selected 35,970-group full indicator/selection response; independent covariance/heldout, not full 38,053 table4 geometry.",
+      "source_identity": "R60,R61,R64,R67 and original CF4 table3/4 group IDs",
+      "acceptance": "Match exact group/method IDs, form source-level C=N+S_PV+Jcal Sigma_cal Jcal^T+Csel, compare heldout contrast/coverage with an explicit missing-source remainder.",
+      "stop_condition": "No physical H(z,n) claim if calibrated source law cannot be built; report identified subspace and limitations.",
+      "priority": 1,
+      "evidence": [
+        "R60",
+        "R64",
+        "R67",
+        "R73",
+        "R77"
+      ],
+      "scientific_claim_tier": "conditional_source_contract_not_detection",
+      "automatic_pub_claim": false
+    },
+    {
+      "id": "SQ-GAIA",
+      "paper": "P6",
+      "node_class": "source_qualification",
+      "state": "ready_scoped",
+      "depends_on": [
+        "X01",
+        "K01"
+      ],
+      "objective": "Gaia quasar redshift/scan/AGN source calibration",
+      "physics_goal": "Separate astrometric E1/B1 reference spin, E2/B2 source sky aliases, redshift and AGN morphology; properly calibrate heldout patch null.",
+      "source_identity": "R61,R69,R76; R69 Gaia-CRF3 1,580,645 quality source",
+      "acceptance": "Reproduce 16D fit on registered subset with stable cross-hemisphere/patch forecast and a source-specific null; keep local cosmic shear unqualified.",
+      "stop_condition": "If redshift/scanning-law source unavailable, publish source-conditional alias diagnostics without physical omega.",
+      "priority": 2,
+      "evidence": [
+        "R61",
+        "R69",
+        "R76",
+        "R77"
+      ],
+      "scientific_claim_tier": "conditional_source_contract_not_detection",
+      "automatic_pub_claim": false
+    },
+    {
+      "id": "SQ-RADIO",
+      "paper": "P4",
+      "node_class": "source_qualification",
+      "state": "ready_scoped",
+      "depends_on": [
+        "V01",
+        "X01"
+      ],
+      "objective": "Radio same-source selection response k,kappa and LSS null",
+      "physics_goal": "Use registered overlapping peak/integrated source IDs, flux, SED, beam, size and population source response.",
+      "source_identity": "R65,R72,R74 NVSS 33k masked pixels and selected components",
+      "acceptance": "Estimate one physically selected k,kappa and paired covariance; source-preserving Lorentz aberration/reselection/heldout validation; distinguish log-count vs count-density.",
+      "stop_condition": "Stop if morphology/SED source cannot support physical boost inference; keep conditional 6D count score.",
+      "priority": 3,
+      "evidence": [
+        "R63",
+        "R65",
+        "R72",
+        "R74",
+        "R77"
+      ],
+      "scientific_claim_tier": "conditional_source_contract_not_detection",
+      "automatic_pub_claim": false
+    },
+    {
+      "id": "SQ-FRAME",
+      "paper": "COMMON",
+      "node_class": "source_qualification",
+      "state": "ready_scoped",
+      "depends_on": [
+        "X01",
+        "V01",
+        "K01"
+      ],
+      "objective": "Observer/emitter normal and source frame matching",
+      "physics_goal": "Build observer-to-source and normal-to-observer velocity/acceleration/tilt frame map with exact sign and units.",
+      "source_identity": "R63,R69,R72,R75,R76",
+      "acceptance": "Produce a unit-tested local proper Lorentz/Fermi frame dictionary, source frame identity and redshift-dependent applicability; no unmeasured beta.",
+      "stop_condition": "If global observer/source 3D beta absent, keep a model/source-indexed conditional map only.",
+      "priority": 4,
+      "evidence": [
+        "R63",
+        "R69",
+        "R75",
+        "R76"
+      ],
+      "scientific_claim_tier": "conditional_source_contract_not_detection",
+      "automatic_pub_claim": false
+    },
+    {
+      "id": "SQ-P1-ANCHOR",
+      "paper": "P1",
+      "node_class": "source_qualification",
+      "state": "blocked_physical_anchor",
+      "depends_on": [
+        "S01",
+        "X01"
+      ],
+      "objective": "P1 selected 274-row source physical anchor and null",
+      "physics_goal": "Qualify P1 original 274-row 15D signed estimand, physical anchor and unknown-scale common selected law.",
+      "source_identity": "R60,R68,R69,R73; original P1 selected 274-row (not CF4 selected 35,970)",
+      "acceptance": "One identified physical x with actual source covariance and partial identified interval; original P1 F/common-scale null.",
+      "stop_condition": "Stop at valid conditional partial identification when positive scale/reference unavailable.",
+      "priority": 5,
+      "evidence": [
+        "R60",
+        "R68",
+        "R69",
+        "R73"
+      ],
+      "scientific_claim_tier": "conditional_source_contract_not_detection",
+      "automatic_pub_claim": false
+    },
+    {
+      "id": "SQ-CMB-NULL",
+      "paper": "P2",
+      "node_class": "source_qualification",
+      "state": "blocked_source",
+      "depends_on": [
+        "E2",
+        "L01"
+      ],
+      "objective": "Qualified release-matched CMB T/E/B Monte Carlo/null",
+      "physics_goal": "Audit Commander/MES/beam/mask/foreground temperature+polarization source exchangeability and source-calibrated null.",
+      "source_identity": "R66 actual PR3/PR4 finite-band plus Commander public MC source status",
+      "acceptance": "Same-release source-qualified T/E/B null and actual matched cosmic/instrument simulation coverage, no invented PTE.",
+      "stop_condition": "Unavailable matched MC remains blocked; PR4 vs PR3 not independent sky detections.",
+      "priority": 6,
+      "evidence": [
+        "R66",
+        "R67",
+        "R70",
+        "R77"
+      ],
+      "scientific_claim_tier": "conditional_source_contract_not_detection",
+      "automatic_pub_claim": false
+    },
+    {
+      "id": "SQ-PHOTON-FLUX",
+      "paper": "P2",
+      "node_class": "source_qualification",
+      "state": "blocked_source",
+      "depends_on": [
+        "L01",
+        "B01"
+      ],
+      "objective": "Photon flux/kinetic higher moments and common normal source",
+      "physics_goal": "Source physically same electron-normal f_gamma, rho_gamma/rho_N, j_other, high-L/Thomson closure.",
+      "source_identity": "R66,R70,R73,R77 photon stress without actual f",
+      "acceptance": "Check P-ff^T PSD and Einstein-Codazzi joint photon-only vs multifluid constraints with independently defined frame.",
+      "stop_condition": "Do not set photon-only total momentum if other species carry normal flux or f unobserved.",
+      "priority": 7,
+      "evidence": [
+        "R66",
+        "R70",
+        "R73",
+        "R77"
+      ],
+      "scientific_claim_tier": "conditional_source_contract_not_detection",
+      "automatic_pub_claim": false
+    },
+    {
+      "id": "SQ-LIE-FLUX",
+      "paper": "P5",
+      "node_class": "source_qualification",
+      "state": "blocked_source",
+      "depends_on": [
+        "B01",
+        "K01"
+      ],
+      "objective": "Independent normal-frame rho,j,pi and Bianchi family source",
+      "physics_goal": "Independent stress/flux in one normal Bianchi tetrad, including Class A/B exceptional rank and multiple tilted fluids.",
+      "source_identity": "R49 historical transfer-conditional posterior and R62,R75",
+      "acceptance": "Rank-aware normal Codazzi residual using independently sourced shear+u with covariance and Hamiltonian consistency.",
+      "stop_condition": "A flux computed from the same shear via Codazzi yields a tautology, not astrophysical validation.",
+      "priority": 8,
+      "evidence": [
+        "R62",
+        "R75",
+        "R77"
+      ],
+      "scientific_claim_tier": "conditional_source_contract_not_detection",
+      "automatic_pub_claim": false
+    },
+    {
+      "id": "SQ-OPTICAL",
+      "paper": "COMMON",
+      "node_class": "source_qualification",
+      "state": "pending_conditional",
+      "depends_on": [
+        "H01",
+        "K01",
+        "B01",
+        "SQ-FRAME"
+      ],
+      "objective": "Finite-redshift Sachs/Jacobi + position-drift transfer",
+      "physics_goal": "For one named family/observer/source, construct local-to-finite-z optical and Gaia position-drift Jacobians with boundaries.",
+      "source_identity": "R69,R71,R75,R76, and original source time/redshift distributions",
+      "acceptance": "Validate z->0 local H and same-tensor scalar/E2 consistency; compute T_C(z), T_G(z), and precise finite-z optical remainder with heldout prediction.",
+      "stop_condition": "No arbitrary extrapolation of low-z STF identity to full Gaia redshift; no native all-family solver here.",
+      "priority": 9,
+      "evidence": [
+        "R69",
+        "R71",
+        "R75",
+        "R76",
+        "R77"
+      ],
+      "scientific_claim_tier": "conditional_source_contract_not_detection",
+      "automatic_pub_claim": false
+    },
+    {
+      "id": "SQ-CROSS-COV",
+      "paper": "COMMON",
+      "node_class": "source_qualification",
+      "state": "pending_dependency",
+      "depends_on": [
+        "SQ-CF4",
+        "SQ-GAIA",
+        "SQ-RADIO",
+        "SQ-FRAME",
+        "SQ-OPTICAL"
+      ],
+      "objective": "Actual cross-probe source covariance and null/heldout",
+      "physics_goal": "Build a measured common observer/source covariance, not pseudo-independent CMB/Gaia/CF4/radio score multiplication.",
+      "source_identity": "R67,R73,R77 and original source IDs/systematics",
+      "acceptance": "Independent source-level cross-covariance and calibrated heldout predictive test; report identifiable target rank and nuisance profile.",
+      "stop_condition": "If no justified physical cross-covariance, do not compute cross-instrument astrophysical Pi/Bayes factor.",
+      "priority": 10,
+      "evidence": [
+        "R67",
+        "R73",
+        "R76",
+        "R77"
+      ],
+      "scientific_claim_tier": "conditional_source_contract_not_detection",
+      "automatic_pub_claim": false
+    },
+    {
+      "id": "SQ-NATIVE",
+      "paper": "P5",
+      "node_class": "source_qualification",
+      "state": "blocked_external",
+      "depends_on": [
+        "B01",
+        "L01"
+      ],
+      "objective": "External native polarized Bianchi transfer/atlas qualification",
+      "physics_goal": "Intake external native E/B all-m solver outputs and independent transfer validation only when real external source exists.",
+      "source_identity": "R49 historical transfer conditional, R67 source rules, AGENTS nonnegotiable no native implementation",
+      "acceptance": "Qualify actual external solver provenance, CMB/Planck response family confusion and injection with heldout calibrated null.",
+      "stop_condition": "Never implement or simulate future native low-ell solver in htt_base; stop pending real external data.",
+      "priority": 11,
+      "evidence": [
+        "R49",
+        "R66",
+        "R67",
+        "R75"
+      ],
+      "scientific_claim_tier": "conditional_source_contract_not_detection",
+      "automatic_pub_claim": false
+    },
+    {
+      "id": "PHY-01",
+      "paper": "CROSS",
+      "node_class": "physical_cross_route",
+      "state": "theory_verified_physical_data_pending",
+      "depends_on": [
+        "SQ-CF4",
+        "SQ-OPTICAL",
+        "SQ-LIE-FLUX"
+      ],
+      "objective": "Hemisphere shear leakage exact, Type V j0 chi0 still nonzero masked contrast",
+      "axes": [
+        "P3",
+        "P6",
+        "P5"
+      ],
+      "x": "H,d3,normal Sigma_STF5 and CF4 source angular window",
+      "Q": "Q_H local expansion; Q_Lie total normal momentum under DEC",
+      "Pi": "CF4 source likelihood plus independently measured normal-frame flux missing",
+      "F": "round-sky h>0 area; distinct normalized selected CF4 hemisphere mean",
+      "G_F": "Einstein/optical same normal/source time transport only",
+      "observable_evidence": {
+        "source": "original CF4 table4 38053 full groups, conditional subset 40-400 Mpc; NOT identical to R61 35970 selected",
+        "selected_n": 31649,
+        "hemisphere_pixel_counts": [
+          25035,
+          6614
+        ],
+        "CMB_axis_galactic_deg": [
+          264.021,
+          48.253
+        ],
+        "mask_direction_mean_difference": [
+          -0.07949693721674585,
+          -0.3765348068907657,
+          1.229575389973813
+        ],
+        "mask_quadrupole_window_difference_eigenvalues": [
+          -0.1606662201092351,
+          -0.012413261722949442,
+          0.17307948183218447
+        ],
+        "TypeV_zero_total_flux_signed_chi": 4.100971979142792e-16,
+        "TypeV_zero_flux_FOmega": 0.5,
+        "TypeV_shear_eigen_amplitude": 0.03,
+        "sharp_max_even_to_odd_mask_leakage": 0.010012371058242587,
+        "explicit_zero_flux_shear_leakage": 0.010012371058242587,
+        "explicit_mask_mean_direct_check": 0.010012371058242589,
+        "random_SO3_500_max_leakage": 0.00968915382028146,
+        "physical_scope": "Type V j_total=0 conditional shear shape and actual CF4 geometric window; no source normal-shear measurement"
+      },
+      "acceptance": "Physically matched source/null/frames and heldout independent predictive discriminator; preserve signed source data and joint covariance.",
+      "next_bounded_empirical_test": "recompute selected source-group 35970 weighted mask plus CF4 normal-shear calibration",
+      "stop_condition": "R61 selected 35970 groups differ from all CF4 table4 38053 source geometry; independent normal shear/flux missing",
+      "evidence": [
+        "R67",
+        "R68",
+        "R69",
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R74",
+        "R75",
+        "R76",
+        "R77"
+      ],
+      "scientific_claim_tier": "conditional_theory_not_cosmological_detection"
+    },
+    {
+      "id": "PHY-02",
+      "paper": "CROSS",
+      "node_class": "physical_cross_route",
+      "state": "theory_verified_physical_data_pending",
+      "depends_on": [
+        "SQ-CMB-NULL",
+        "SQ-PHOTON-FLUX",
+        "SQ-LIE-FLUX"
+      ],
+      "objective": "Photon moment covariance PSD plus Einstein normal-flux ellipsoid, exceptional Lie image",
+      "axes": [
+        "P2",
+        "P6",
+        "P5"
+      ],
+      "x": "photon f3,Sgamma_STF5; normal Sigma,a,N,Omega,rho_gamma/rho_N",
+      "Q": "Q_joint=(L Sigma)^T P^-1 (L Sigma)/(9Omega² eta²)<=1 photon-only normal momentum, P=I/3+Sgamma",
+      "Pi": "R66 finiteband photon STF only; no calibrated same-frame photon flux/E-B null",
+      "F": "photon angular energy cap with full intensity, bounded from P, not normal shear lobe",
+      "G_F": "Boltzmann angular transfer plus Einstein matter and same epoch",
+      "observable_evidence": {
+        "R66_same_sky_finiteband_photon_pressure": {
+          "PR3": {
+            "actual_R66_normalized_STF5": [
+              -1.3488917876809042e-06,
+              -1.9255093308409354e-06,
+              4.158989056983618e-06,
+              7.771164743364344e-07,
+              8.71865424229173e-07
+            ],
+            "P_eigenvalues": [
+              0.3333294543316302,
+              0.3333343732889586,
+              0.33333617237941093
+            ],
+            "P_positive": true,
+            "max_normal_photon_only_flux_ratio_to_rho_total_for_eta_0p2": 0.11547054557408326,
+            "synthetic_eta_rho_gamma_over_total": 0.2,
+            "synthetic_normal_photon_flux": [
+              0.04605473022866016,
+              0.06230954898512116,
+              0.05029799142857542
+            ],
+            "synthetic_OmegaN": 0.3,
+            "P_positive_schur_ratio": 0.6399999999999999,
+            "Einstein_Codazzi_photon_only_joint_ellipsoid_ratio": 0.6399999999999997,
+            "same_frame_flux_observed": false
+          },
+          "PR4": {
+            "actual_R66_normalized_STF5": [
+              -1.881906573978555e-06,
+              -1.9432715628638585e-06,
+              4.375814467055548e-06,
+              7.086608442911998e-07,
+              9.814133052179442e-07
+            ],
+            "P_eigenvalues": [
+              0.33332917157133457,
+              0.33333442663982005,
+              0.3333364017888455
+            ],
+            "P_positive": true,
+            "max_normal_photon_only_flux_ratio_to_rho_total_for_eta_0p2": 0.11547058530878684,
+            "synthetic_eta_rho_gamma_over_total": 0.2,
+            "synthetic_normal_photon_flux": [
+              0.044196539957376664,
+              0.06669007462431203,
+              0.04617912610903491
+            ],
+            "synthetic_OmegaN": 0.3,
+            "P_positive_schur_ratio": 0.6400000000000005,
+            "Einstein_Codazzi_photon_only_joint_ellipsoid_ratio": 0.6400000000000003,
+            "same_frame_flux_observed": false
+          }
+        },
+        "VI_exceptional_flux_left_null_constraint": [
+          0.0,
+          3.0,
+          3.0
+        ],
+        "normal_flux_allowed_unit_example": [
+          0.0,
+          0.7071067811865475,
+          -0.7071067811865475
+        ],
+        "normal_flux_excluded_unit_example": [
+          0.0,
+          0.7071067811865475,
+          0.7071067811865475
+        ],
+        "multi_fluid_counterexample": "opposing matter flux invalidates photon-only total momentum substitution",
+        "original_R75_Codazzi_exceptional_rank": 2
+      },
+      "acceptance": "Physically matched source/null/frames and heldout independent predictive discriminator; preserve signed source data and joint covariance.",
+      "next_bounded_empirical_test": "measure same normal-frame photon f, energy fraction, total other matter flux; then check PSD and Codazzi jointly",
+      "stop_condition": "R66 finiteband source lacks photon flux, eta and normal matter density",
+      "evidence": [
+        "R67",
+        "R68",
+        "R69",
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R74",
+        "R75",
+        "R76",
+        "R77"
+      ],
+      "scientific_claim_tier": "conditional_theory_not_cosmological_detection"
+    },
+    {
+      "id": "PHY-03",
+      "paper": "CROSS",
+      "node_class": "physical_cross_route",
+      "state": "theory_verified_physical_data_pending",
+      "depends_on": [
+        "SQ-RADIO",
+        "SQ-PHOTON-FLUX",
+        "SQ-FRAME"
+      ],
+      "objective": "Same beta implies Q_count=A(3+beta²)Sgamma/4 and d=k(3+beta²)m/4",
+      "axes": [
+        "P2",
+        "P4"
+      ],
+      "x": "radio d_b selected counts, count STF, photon m3 and Sgamma5 if same electron/source beta",
+      "Q": "causal |beta| and selected A=(k²+k+kappa)/2 with actual source kappa",
+      "Pi": "no joint radio LSS/CMB sky-instrument/source frame null",
+      "F": "selected radio hemisphere, photon energy cap, pure boost lobe different measures",
+      "G_F": "true selected population and photon same-frame time law only",
+      "observable_evidence": {
+        "same_frame_CMB_speed_synthetic_beta": 0.001233586736861806,
+        "radio_first_order_k": 3.8254286125,
+        "count_selection_A_coefficient": 9.229666340916838,
+        "photon_flux_m_norm": 0.0016447814815078803,
+        "m_to_beta_inverse": 0.001233586736861806,
+        "pure_boost_signed_STF_chi": 0.9999999999999999,
+        "pure_boost_Q_count_Frobenius": 1.1467790605049946e-05,
+        "exact_radio_to_photon_STF_error": 0.0,
+        "R65_saved_theoretical_peak_bin_k_alpha_0p75": [
+          3.3580293513709387,
+          3.521797425681888,
+          4.133305446105684
+        ],
+        "actual_R66_finiteband_stress": {
+          "PR3": {
+            "R66_signed_chi_finiteband": -0.7074485821161334,
+            "can_be_exact_pure_boost_stress_if_source_matching_yes": false,
+            "physical_boost_significance_calibrated": false
+          },
+          "PR4": {
+            "R66_signed_chi_finiteband": -0.6950341118626684,
+            "can_be_exact_pure_boost_stress_if_source_matching_yes": false,
+            "physical_boost_significance_calibrated": false
+          }
+        },
+        "common_physical_3D_beta_observed": false
+      },
+      "acceptance": "Physically matched source/null/frames and heldout independent predictive discriminator; preserve signed source data and joint covariance.",
+      "next_bounded_empirical_test": "calibrate per-source radio k,kappa, SED and photon electron-frame f under same beta; independent joint covariance",
+      "stop_condition": "electron-frame photon/radio source share no observed 3D beta, selected kappa uncalibrated",
+      "evidence": [
+        "R67",
+        "R68",
+        "R69",
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R74",
+        "R75",
+        "R76",
+        "R77"
+      ],
+      "scientific_claim_tier": "conditional_theory_not_cosmological_detection"
+    },
+    {
+      "id": "PHY-04",
+      "paper": "CROSS",
+      "node_class": "physical_cross_route",
+      "state": "theory_verified_physical_data_pending",
+      "depends_on": [
+        "SQ-GAIA",
+        "SQ-RADIO",
+        "SQ-OPTICAL",
+        "SQ-FRAME"
+      ],
+      "objective": "V_B=-c n×Nn, allsky B2 norm c²||N_STF||²/5 orthogonal local shear E2",
+      "axes": [
+        "P6",
+        "P4",
+        "P5"
+      ],
+      "x": "Gaia 16D E1/B1/E2/B2 and normal Lie N_STF plus radio selected dipole",
+      "Q": "physical c||N_STF||/H only with normal-to-observer optical transfer; Gaia B2 Qstat separate",
+      "Pi": "Gaia formal/patch working laws differ; radio-Lie high-z transfer absent",
+      "F": "signed B2/E2 potential fullsky, selected Gaia mask source fraction distinct",
+      "G_F": "normal geodesic sky drift plus physical source observer/epoch transport",
+      "observable_evidence": {
+        "toy_dimensionless_Nbar_stf": [
+          [
+            0.013,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            -0.017,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.004000000000000001
+          ]
+        ],
+        "normal_Lie_B2_dimensionless_rate_squared_skymean": 9.480000000000014e-05,
+        "exact_STF_prediction": 9.48e-05,
+        "skymean_B2_dot_local_E2": -3.702985260289171e-23,
+        "TypeI_TypeV_Nzero_direct_B2": true,
+        "R69_actual_Gaia_quality_EB2_maxFisherCanonical": 0.08042406258067819,
+        "R69_actual_Gaia_north_EB2_maxFisherCanonical": 0.8810936317598093,
+        "R69_actual_Gaia_south_EB2_maxFisherCanonical": 0.8788536147906798,
+        "Gaia_B2_formal_chi2_p": 1.5987976932312695e-09,
+        "Gaia_B2_patch_nominal_p": 0.1695561303803899,
+        "normal_to_Gaia_physical_optical_transfer": false
+      },
+      "acceptance": "Physically matched source/null/frames and heldout independent predictive discriminator; preserve signed source data and joint covariance.",
+      "next_bounded_empirical_test": "source-wise Gaia redshift/AGN/scanning-law covariance and one normal Bianchi null-geodesic position-drift transfer",
+      "stop_condition": "Gaia high-z proper motion not measured Bianchi normal Lie N without ray/observer transfer; AGN scanning law uncalibrated",
+      "evidence": [
+        "R67",
+        "R68",
+        "R69",
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R74",
+        "R75",
+        "R76",
+        "R77"
+      ],
+      "scientific_claim_tier": "conditional_theory_not_cosmological_detection"
+    },
+    {
+      "id": "PHY-05",
+      "paper": "CROSS",
+      "node_class": "physical_cross_route",
+      "state": "theory_verified_physical_data_pending",
+      "depends_on": [
+        "SQ-LIE-FLUX",
+        "SQ-OPTICAL"
+      ],
+      "objective": "exceptional VI_-1/9 rank M2 left flux null; independent noisy residual covariance can rank3",
+      "axes": [
+        "P5",
+        "P6"
+      ],
+      "x": "normal Sigma_STF5,a,N,Omega,independent u=j_N/rho_N and full C",
+      "Q": "Q_Lie=||M Sigma||/(3Omega)<=1 if total DEC; Q_H separate",
+      "Pi": "only independently measured same-frame normal flux allows rank-aware Gaussian residual Pi",
+      "F": "F_S=area(n Sigma n>0)/4pi=F(chi), different state prior/measure",
+      "G_F": "Einstein shear/normal matter time evolution and regular shape boundary",
+      "observable_evidence": {
+        "exceptional_VI_m1_9_signed_shear_to_flux_rank": 2,
+        "exceptional_M_signed_STF5_to_u": [
+          [
+            -3.0,
+            0.0,
+            0.0,
+            0.0,
+            -6.0
+          ],
+          [
+            0.0,
+            0.0,
+            -3.0,
+            3.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            3.0,
+            -3.0,
+            0.0
+          ]
+        ],
+        "exceptional_left_normal_flux_constraint": [
+          0.0,
+          3.0,
+          3.0
+        ],
+        "zero_flux_signed_sigma_nonzero_example": [
+          -2.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "source_R49_posterior_chi_median": 0.35861084119957815,
+        "source_R49_posterior_FOmega_median": 0.4534080088390925,
+        "synthetic_independent_joint_noise_residual_covariance_rank": 3,
+        "synthetic_gaussian_Tmean": 2.95460044590974,
+        "synthetic_gaussian_T95tail": 0.04822222222222222,
+        "actual_independent_normal_j_source": false
+      },
+      "acceptance": "Physically matched source/null/frames and heldout independent predictive discriminator; preserve signed source data and joint covariance.",
+      "next_bounded_empirical_test": "independent (Sigma,u) same normal joint measurement, then test residual with actual covariance rank",
+      "stop_condition": "R49 normal flux independent measurement unavailable and original CMB/Gaia/CF4 PPC poor",
+      "evidence": [
+        "R67",
+        "R68",
+        "R69",
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R74",
+        "R75",
+        "R76",
+        "R77"
+      ],
+      "scientific_claim_tier": "conditional_theory_not_cosmological_detection"
+    },
+    {
+      "id": "PHY-06",
+      "paper": "CROSS",
+      "node_class": "physical_cross_route",
+      "state": "theory_verified_physical_data_pending",
+      "depends_on": [
+        "SQ-CMB-NULL",
+        "SQ-PHOTON-FLUX",
+        "SQ-LIE-FLUX",
+        "SQ-OPTICAL"
+      ],
+      "objective": "commutator[D,sigma]!=0 can rotate eigenframe with dot chi=0; photon ell4 changes F and dot stress",
+      "axes": [
+        "P1",
+        "P2",
+        "P5",
+        "P6"
+      ],
+      "x": "normal time-dependent sigma_STF5,D stress/curvature and photon angular distribution beyond STF5",
+      "Q": "photon moment PSD, Q_Lie and Q_H are separate physical allowed bodies",
+      "Pi": "joint original CMB plus Einstein/Sachs null unavailable; no standalone shape p",
+      "F": "normal shear signed shape lobe vs photon energy cap requiring higher angular modes",
+      "G_F": "dot sigma=-3Hsigma+D and Boltzmann dot Sgamma, actual photon higher ell and Thomson",
+      "observable_evidence": {
+        "Einstein_shear_initial_chi": 0.6651477158057465,
+        "Einstein_driver_noncommutator_norm": 0.000282842712474619,
+        "chi_time_derivative_exact": 0.0,
+        "chi_time_derivative_finite_difference": -1.7885692926711272e-09,
+        "signed_eigenframe_projector_change_at_dt": 7.071279923745094e-05,
+        "photon_nonclosed_smooth_positive_sky_cases": {
+          "0.0": {
+            "same_initial_f_and_STF5_zero": true,
+            "actual_kinetic_synthetic_cap_F": 0.09999999999999998,
+            "instantaneous_dS_gamma_zz": -0.02488888888888889
+          },
+          "1.0": {
+            "same_initial_f_and_STF5_zero": true,
+            "actual_kinetic_synthetic_cap_F": 0.15707124999999997,
+            "instantaneous_dS_gamma_zz": -0.023111111111111117
+          }
+        },
+        "physical_Boltzmann_time_solution_fully_integrated": false
+      },
+      "acceptance": "Physically matched source/null/frames and heldout independent predictive discriminator; preserve signed source data and joint covariance.",
+      "next_bounded_empirical_test": "one Einstein–Boltzmann/Thomson+Sachs source history and heldout photon multipoles",
+      "stop_condition": "single finite-band CMB sky and signed normal tensor insufficient for photon hierarchy or kinetic time transfer",
+      "evidence": [
+        "R67",
+        "R68",
+        "R69",
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R74",
+        "R75",
+        "R76",
+        "R77"
+      ],
+      "scientific_claim_tier": "conditional_theory_not_cosmological_detection"
+    },
+    {
+      "id": "PHY-07",
+      "paper": "CROSS",
+      "node_class": "physical_cross_route",
+      "state": "theory_verified_physical_data_pending",
+      "depends_on": [
+        "SQ-CF4",
+        "SQ-RADIO",
+        "SQ-OPTICAL",
+        "SQ-FRAME"
+      ],
+      "objective": "radius variation makes dipole n and (100Mpc/r)n design rank12 vs fixed r rank9",
+      "axes": [
+        "P1",
+        "P3",
+        "RADIO_DIPOLE"
+      ],
+      "x": "CF4 angular redshift and r,n, radio flux three-bin signed dipoles, latent physical observer beta",
+      "Q": "finite-z Q_D and causal beta only if fully identified 3D, design rank not physical Q",
+      "Pi": "single joint CF4/radio/source-PV covariance & optical null not present",
+      "F": "CF4 H_D positive sky vs radio selected hemisphere count separate events",
+      "G_F": "same source/ray optical and selection physical time transport, not flux bins",
+      "observable_evidence": {
+        "CF4_full_group_geometric_radial_leverage": {
+          "40-400": {
+            "actual_unweighted_CF4_table4_n": 31649,
+            "actual_geometric_rank12": 12,
+            "column_normalized_condition": 5.276982947570388,
+            "synthetic_single_radius_rank": 9,
+            "physical_source_covariance_provided": false
+          },
+          "80-220": {
+            "actual_unweighted_CF4_table4_n": 13670,
+            "actual_geometric_rank12": 12,
+            "column_normalized_condition": 9.416684477575902,
+            "synthetic_single_radius_rank": 9,
+            "physical_source_covariance_provided": false
+          },
+          "140-220": {
+            "actual_unweighted_CF4_table4_n": 7040,
+            "actual_geometric_rank12": 12,
+            "column_normalized_condition": 21.26929326500519,
+            "synthetic_single_radius_rank": 9,
+            "physical_source_covariance_provided": false
+          }
+        },
+        "source_CF4_R61_selected_sample_n": 35970,
+        "source_CF4_full_table4_n": 38053,
+        "radio_source_k_assumed_alpha_0p75": [
+          3.3580293513709387,
+          3.521797425681888,
+          4.133305446105684
+        ],
+        "radio_working_fixed_k_common_residual_p": 0.40902467987323543,
+        "common_physical_beta_and_CF4_radio_cross_covariance_available": false
+      },
+      "acceptance": "Physically matched source/null/frames and heldout independent predictive discriminator; preserve signed source data and joint covariance.",
+      "next_bounded_empirical_test": "match CF4 selected groups/PV law and radio Doppler source frames with one real cross-probe optical response",
+      "stop_condition": "CF4 group source IDs and R65 radio selection/frame/cross-covariance do not provide a common physical beta",
+      "evidence": [
+        "R67",
+        "R68",
+        "R69",
+        "R70",
+        "R71",
+        "R72",
+        "R73",
+        "R74",
+        "R75",
+        "R76",
+        "R77"
+      ],
+      "scientific_claim_tier": "conditional_theory_not_cosmological_detection"
+    }
+  ],
+  "edges": [
+    {
+      "from": "E0",
+      "to": "E1",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "E1",
+      "to": "E2",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "E0",
+      "to": "E3",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "E0",
+      "to": "X01",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "E0",
+      "to": "X02",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "E0",
+      "to": "X03",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "E3",
+      "to": "S01",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "S01",
+      "to": "S02",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "E2",
+      "to": "S02",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "S02",
+      "to": "S03",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "X01",
+      "to": "S03",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "S03",
+      "to": "S04",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "X03",
+      "to": "S04",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "S04",
+      "to": "S05",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "X02",
+      "to": "S05",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "S05",
+      "to": "S06",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "E2",
+      "to": "L01",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "L01",
+      "to": "L02",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "X03",
+      "to": "L02",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "L01",
+      "to": "L03",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "X01",
+      "to": "L03",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "L02",
+      "to": "L04",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "L03",
+      "to": "L04",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "L04",
+      "to": "L05",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "X02",
+      "to": "L05",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "L05",
+      "to": "L06",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "E1",
+      "to": "H01",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "H01",
+      "to": "H02",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "X01",
+      "to": "H02",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "H01",
+      "to": "H03",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "H02",
+      "to": "H04",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "H03",
+      "to": "H04",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "H04",
+      "to": "H05",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "X02",
+      "to": "H05",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "H05",
+      "to": "H06",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "E1",
+      "to": "V01",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "E2",
+      "to": "V01",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "V01",
+      "to": "V02",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "L01",
+      "to": "V02",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "V01",
+      "to": "V03",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "V02",
+      "to": "V04",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "V03",
+      "to": "V04",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "H04",
+      "to": "V04",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "V04",
+      "to": "V05",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "X03",
+      "to": "V05",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "V05",
+      "to": "V06",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "X02",
+      "to": "V06",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "E2",
+      "to": "B01",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "B01",
+      "to": "B02",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "B02",
+      "to": "B03",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "L03",
+      "to": "B03",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "B03",
+      "to": "B04",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "B04",
+      "to": "B05",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "X02",
+      "to": "B05",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "E1",
+      "to": "K01",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "E2",
+      "to": "K01",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "K01",
+      "to": "K02",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "H01",
+      "to": "K02",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "K01",
+      "to": "K03",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "K02",
+      "to": "K04",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "H04",
+      "to": "K04",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "K03",
+      "to": "K05",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "K04",
+      "to": "K05",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "V03",
+      "to": "K05",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "K05",
+      "to": "K06",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "X02",
+      "to": "K06",
+      "kind": "original_science",
+      "hard": true
+    },
+    {
+      "from": "E1",
+      "to": "SQ-CF4",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "X01",
+      "to": "SQ-CF4",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "H01",
+      "to": "SQ-CF4",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "X01",
+      "to": "SQ-GAIA",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "K01",
+      "to": "SQ-GAIA",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "V01",
+      "to": "SQ-RADIO",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "X01",
+      "to": "SQ-RADIO",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "X01",
+      "to": "SQ-FRAME",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "V01",
+      "to": "SQ-FRAME",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "K01",
+      "to": "SQ-FRAME",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "S01",
+      "to": "SQ-P1-ANCHOR",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "X01",
+      "to": "SQ-P1-ANCHOR",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "E2",
+      "to": "SQ-CMB-NULL",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "L01",
+      "to": "SQ-CMB-NULL",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "L01",
+      "to": "SQ-PHOTON-FLUX",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "B01",
+      "to": "SQ-PHOTON-FLUX",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "B01",
+      "to": "SQ-LIE-FLUX",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "K01",
+      "to": "SQ-LIE-FLUX",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "H01",
+      "to": "SQ-OPTICAL",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "K01",
+      "to": "SQ-OPTICAL",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "B01",
+      "to": "SQ-OPTICAL",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "SQ-FRAME",
+      "to": "SQ-OPTICAL",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "SQ-CF4",
+      "to": "SQ-CROSS-COV",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "SQ-GAIA",
+      "to": "SQ-CROSS-COV",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "SQ-RADIO",
+      "to": "SQ-CROSS-COV",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "SQ-FRAME",
+      "to": "SQ-CROSS-COV",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "SQ-OPTICAL",
+      "to": "SQ-CROSS-COV",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "B01",
+      "to": "SQ-NATIVE",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "L01",
+      "to": "SQ-NATIVE",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "SQ-CF4",
+      "to": "PHY-01",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "SQ-OPTICAL",
+      "to": "PHY-01",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "SQ-LIE-FLUX",
+      "to": "PHY-01",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "SQ-CMB-NULL",
+      "to": "PHY-02",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "SQ-PHOTON-FLUX",
+      "to": "PHY-02",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "SQ-LIE-FLUX",
+      "to": "PHY-02",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "SQ-RADIO",
+      "to": "PHY-03",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "SQ-PHOTON-FLUX",
+      "to": "PHY-03",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "SQ-FRAME",
+      "to": "PHY-03",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "SQ-GAIA",
+      "to": "PHY-04",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "SQ-RADIO",
+      "to": "PHY-04",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "SQ-OPTICAL",
+      "to": "PHY-04",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "SQ-FRAME",
+      "to": "PHY-04",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "SQ-LIE-FLUX",
+      "to": "PHY-05",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "SQ-OPTICAL",
+      "to": "PHY-05",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "SQ-CMB-NULL",
+      "to": "PHY-06",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "SQ-PHOTON-FLUX",
+      "to": "PHY-06",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "SQ-LIE-FLUX",
+      "to": "PHY-06",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "SQ-OPTICAL",
+      "to": "PHY-06",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "SQ-CF4",
+      "to": "PHY-07",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "SQ-RADIO",
+      "to": "PHY-07",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "SQ-OPTICAL",
+      "to": "PHY-07",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "SQ-FRAME",
+      "to": "PHY-07",
+      "kind": "new_source_or_physical_route",
+      "hard": true
+    },
+    {
+      "from": "SQ-P1-ANCHOR",
+      "to": "S02",
+      "kind": "new_qualification_overlay",
+      "hard": true,
+      "changes_original_node_payload": false
+    },
+    {
+      "from": "SQ-CF4",
+      "to": "H02",
+      "kind": "new_qualification_overlay",
+      "hard": true,
+      "changes_original_node_payload": false
+    },
+    {
+      "from": "SQ-CMB-NULL",
+      "to": "L03",
+      "kind": "new_qualification_overlay",
+      "hard": true,
+      "changes_original_node_payload": false
+    },
+    {
+      "from": "SQ-FRAME",
+      "to": "V04",
+      "kind": "new_qualification_overlay",
+      "hard": true,
+      "changes_original_node_payload": false
+    },
+    {
+      "from": "SQ-RADIO",
+      "to": "V04",
+      "kind": "new_qualification_overlay",
+      "hard": true,
+      "changes_original_node_payload": false
+    },
+    {
+      "from": "SQ-NATIVE",
+      "to": "B02",
+      "kind": "new_qualification_overlay",
+      "hard": true,
+      "changes_original_node_payload": false
+    },
+    {
+      "from": "SQ-CMB-NULL",
+      "to": "B03",
+      "kind": "new_qualification_overlay",
+      "hard": true,
+      "changes_original_node_payload": false
+    },
+    {
+      "from": "SQ-OPTICAL",
+      "to": "B03",
+      "kind": "new_qualification_overlay",
+      "hard": true,
+      "changes_original_node_payload": false
+    },
+    {
+      "from": "SQ-GAIA",
+      "to": "K03",
+      "kind": "new_qualification_overlay",
+      "hard": true,
+      "changes_original_node_payload": false
+    },
+    {
+      "from": "SQ-OPTICAL",
+      "to": "K04",
+      "kind": "new_qualification_overlay",
+      "hard": true,
+      "changes_original_node_payload": false
+    },
+    {
+      "from": "SQ-CROSS-COV",
+      "to": "K05",
+      "kind": "new_qualification_overlay",
+      "hard": true,
+      "changes_original_node_payload": false
+    }
+  ],
+  "topological_order": [
+    "E0",
+    "E1",
+    "E2",
+    "B01",
+    "E3",
+    "H01",
+    "H03",
+    "K01",
+    "K02",
+    "L01",
+    "S01",
+    "SQ-CMB-NULL",
+    "SQ-LIE-FLUX",
+    "SQ-NATIVE",
+    "B02",
+    "SQ-PHOTON-FLUX",
+    "PHY-02",
+    "V01",
+    "V02",
+    "V03",
+    "X01",
+    "L03",
+    "SQ-CF4",
+    "H02",
+    "H04",
+    "SQ-FRAME",
+    "SQ-GAIA",
+    "K03",
+    "SQ-OPTICAL",
+    "B03",
+    "B04",
+    "K04",
+    "PHY-01",
+    "PHY-05",
+    "PHY-06",
+    "SQ-P1-ANCHOR",
+    "S02",
+    "S03",
+    "SQ-RADIO",
+    "PHY-03",
+    "PHY-04",
+    "PHY-07",
+    "SQ-CROSS-COV",
+    "K05",
+    "V04",
+    "X02",
+    "B05",
+    "H05",
+    "H06",
+    "K06",
+    "X03",
+    "L02",
+    "L04",
+    "L05",
+    "L06",
+    "S04",
+    "S05",
+    "S06",
+    "V05",
+    "V06"
+  ],
+  "source_qualification_overlay": {
+    "S02": [
+      "SQ-P1-ANCHOR"
+    ],
+    "H02": [
+      "SQ-CF4"
+    ],
+    "L03": [
+      "SQ-CMB-NULL"
+    ],
+    "V04": [
+      "SQ-FRAME",
+      "SQ-RADIO"
+    ],
+    "B02": [
+      "SQ-NATIVE"
+    ],
+    "B03": [
+      "SQ-CMB-NULL",
+      "SQ-OPTICAL"
+    ],
+    "K03": [
+      "SQ-GAIA"
+    ],
+    "K04": [
+      "SQ-OPTICAL"
+    ],
+    "K05": [
+      "SQ-CROSS-COV"
+    ]
+  },
+  "initial_executable_frontier": [
+    {
+      "id": "SQ-CF4",
+      "state": "ready_scoped",
+      "priority": 1,
+      "action": "CF4 selected-group method/PV calibration"
+    },
+    {
+      "id": "SQ-GAIA",
+      "state": "ready_scoped",
+      "priority": 2,
+      "action": "Gaia quasar redshift/scan/AGN source calibration"
+    },
+    {
+      "id": "SQ-RADIO",
+      "state": "ready_scoped",
+      "priority": 3,
+      "action": "Radio same-source selection response k,kappa and LSS null"
+    },
+    {
+      "id": "SQ-FRAME",
+      "state": "ready_scoped",
+      "priority": 4,
+      "action": "Observer/emitter normal and source frame matching"
+    }
+  ],
+  "not_currently_executable_frontier": [
+    {
+      "id": "SQ-P1-ANCHOR",
+      "state": "blocked_physical_anchor",
+      "priority": 5,
+      "action": "P1 selected 274-row source physical anchor and null"
+    },
+    {
+      "id": "SQ-CMB-NULL",
+      "state": "blocked_source",
+      "priority": 6,
+      "action": "Qualified release-matched CMB T/E/B Monte Carlo/null"
+    },
+    {
+      "id": "SQ-PHOTON-FLUX",
+      "state": "blocked_source",
+      "priority": 7,
+      "action": "Photon flux/kinetic higher moments and common normal source"
+    },
+    {
+      "id": "SQ-LIE-FLUX",
+      "state": "blocked_source",
+      "priority": 8,
+      "action": "Independent normal-frame rho,j,pi and Bianchi family source"
+    },
+    {
+      "id": "SQ-NATIVE",
+      "state": "blocked_external",
+      "priority": 11,
+      "action": "External native polarized Bianchi transfer/atlas qualification"
+    }
+  ],
+  "next_action_id": "SQ-CF4",
+  "next_action_contract": {
+    "node_id": "SQ-CF4",
+    "scope": "one bounded CF4 selected-method source covariance/identity slice; no new 10-stage meta loop",
+    "input": "R58/R61 original 35970 selected group IDs and method32, original table3/4 and R64 full group genealogy; original source covariance",
+    "physical_estimand": "method-conditioned angular/radial response and partially identifiable PV-Hubble dipole, NOT local GR shear yet",
+    "action": "audit exact selected source IDs, fit one same-source calibration nuisance or measure missing cross-indicator terms, compare heldout coverage/contrast",
+    "pass": "actual source-conditional calibrated covariance/coverage or reproducible partially identified limitation with source IDs and heldout",
+    "stop": "no matched global selection/calibration source => record blocker and choose SQ-GAIA, never promote H04",
+    "commit_policy": "scoped validated source/result changes only on active research branch"
+  },
+  "evidence_R60_R77": [
+    {
+      "id": "R60",
+      "evidence": "docs/research_program/observational_publication_20261015/R60_COVARIANCE_CALIBRATION_20261117/RESEARCH_DAG.json",
+      "evidence_sha256": "95ec186e3a4b70ea8e88c81ac7f5a5666ef286d78ed09c6c4b40177b423d793a",
+      "reported_scope_status": "COMPLETE_SCOPED_C0",
+      "last_matching_git_commit": "fb6ae9f21585e194ef29dabc91d79a529e0ac57e"
+    },
+    {
+      "id": "R61",
+      "evidence": "docs/research_program/observational_publication_20261015/R61_KINEMATIC_MEASUREMENT_20261117/RESEARCH_DAG.json",
+      "evidence_sha256": "e28a2fc762fe49ae261c771c1adb16ef762977b36a567959baa1a6ff9ebbd224",
+      "reported_scope_status": "COMPLETE_SCOPED_C0",
+      "last_matching_git_commit": "c118982e56ee50d68dd0446aa10f16ffe65bd02b"
+    },
+    {
+      "id": "R62",
+      "evidence": "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESEARCH_DAG.json",
+      "evidence_sha256": "6c559b46231581d2794ae7cd0edd8ddcaa0fe70dea1222509213ab24590d5c45",
+      "reported_scope_status": "COMPLETE_SCOPED_C0",
+      "last_matching_git_commit": "f29bbab420a33aecb1c398ddd961fd45097f536b"
+    },
+    {
+      "id": "R63",
+      "evidence": "docs/research_program/observational_publication_20261015/R63_LOCAL_BOOST_GLOBAL_TILT_20261117/RESEARCH_DAG.json",
+      "evidence_sha256": "5caac6ff1c6a86594f73a4640bca7d177e38b6e3e6f216ffbe83d75ed974f8a7",
+      "reported_scope_status": "COMPLETE_SCOPED_C0",
+      "last_matching_git_commit": "33d87dd3e4a787e477327d37ee00b40e790211c9"
+    },
+    {
+      "id": "R64",
+      "evidence": "docs/research_program/observational_publication_20261015/R64_DIRECTIONAL_HUBBLE_20261117/RESEARCH_DAG.json",
+      "evidence_sha256": "1ef6e04ad1fd38b0538406f955a37d29082af8bcd89eb92ce88e6e8e3c0696dc",
+      "reported_scope_status": "COMPLETE_SCOPED_C0",
+      "last_matching_git_commit": "d76ef3a4e9b33c4703a02647b3aa850004d04253"
+    },
+    {
+      "id": "R65",
+      "evidence": "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/RESEARCH_DAG.json",
+      "evidence_sha256": "6dcb795a68744381194183efcd4de3ae295d9d1a7aca6fce459bd1643dfa5a45",
+      "reported_scope_status": "COMPLETE_SCOPED_C0",
+      "last_matching_git_commit": "3dd1893a3f74af8e1387c844e07897efeabdd0bf"
+    },
+    {
+      "id": "R66",
+      "evidence": "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/RESEARCH_DAG.json",
+      "evidence_sha256": "5c1ccd866f029667a2221198f40500b62ce5058f0eaaa60a1f5df727fee8edf6",
+      "reported_scope_status": "COMPLETE_SCOPED_C0",
+      "last_matching_git_commit": "1d833bbe0e6c70a42f2d0af002c2e6a7cfcd0593"
+    },
+    {
+      "id": "R67",
+      "evidence": "docs/research_program/observational_publication_20261015/R67_SEVEN_AXIS_FUSION_20261118/FUSION_DAG.json",
+      "evidence_sha256": "812956a1cf1d959fc5522981ef2c5ef9e52252aac4384b45fd99d178abc59b0b",
+      "reported_scope_status": "SCOPED_COMPLETED",
+      "last_matching_git_commit": "8089721e9ba74d79dadbb53d3158a5f76e9f96bf"
+    },
+    {
+      "id": "R68",
+      "evidence": "docs/research_program/observational_publication_20261015/R68_FIVEVIEW_GEOMETRIC_RECONSTRUCTION_20261118/PROVENANCE.json",
+      "evidence_sha256": "4e539c37b536f3a0d2e277d81d6a4207e4617df2a9f3b53a8e1e3aa8ade44118",
+      "reported_scope_status": "DERIVED_CONDITIONAL",
+      "last_matching_git_commit": "d45bce72c655ecccd6165fd750e3f1bcfe69b46f"
+    },
+    {
+      "id": "R69",
+      "evidence": "docs/research_program/observational_publication_20261015/R69_PHYSICAL_OBSERVABLE_BRIDGES_20261118/PROVENANCE.json",
+      "evidence_sha256": "610799a29482442b8efb6ab0ca4aef967b63b8dc1272dbcd631806b33b65032c",
+      "reported_scope_status": "DERIVED_CONDITIONAL",
+      "last_matching_git_commit": "dd857ff8decbcfe90fd566a9dd87dcf5be60f609"
+    },
+    {
+      "id": "R70",
+      "evidence": "docs/research_program/observational_publication_20261015/R70_P2_KINETIC_LIE_LOWELL_20261119/PROVENANCE.json",
+      "evidence_sha256": "04eb1a489b72cbe696b795c228966b7f07072ad24b8991404307228ac7246b86",
+      "reported_scope_status": "DERIVED_CONDITIONAL",
+      "last_matching_git_commit": "b9cede3a957a47f6186c7751beae61520f243f4d"
+    },
+    {
+      "id": "R71",
+      "evidence": "docs/research_program/observational_publication_20261015/R71_P3_FINITEZ_PHYSICAL_HUBBLE_20261119/PROVENANCE.json",
+      "evidence_sha256": "7787e7ffabc6463280ede675f15404a61e469a5741cdcbf9224a1f5b3ee4d665",
+      "reported_scope_status": "DERIVED_CONDITIONAL",
+      "last_matching_git_commit": "34fb4fcac2d26bdfa5aea1ac890e15c4db770402"
+    },
+    {
+      "id": "R72",
+      "evidence": "docs/research_program/observational_publication_20261015/R72_P4_LORENTZ_COUNT_TILT_20261119/PROVENANCE.json",
+      "evidence_sha256": "7d2877c1a512b7bf8e764635fc9797db51f4ae19b0d735b56a994fbc1471302b",
+      "reported_scope_status": "DERIVED_CONDITIONAL",
+      "last_matching_git_commit": "06886d0d4038cabe75d2270c69c19b89722f698a"
+    },
+    {
+      "id": "R73",
+      "evidence": "docs/research_program/observational_publication_20261015/R73_P1_P4_TYPED_PHYSICAL_FIVEVIEW_20261119/PROVENANCE.json",
+      "evidence_sha256": "6c6c40862733293ad5c7e8b443e384481c133a4e22d4e4f2f6e54ce9d85e8c26",
+      "reported_scope_status": "DERIVED_CONDITIONAL",
+      "last_matching_git_commit": "be98cde64623415007b183e06edc946fd56400b0"
+    },
+    {
+      "id": "R74",
+      "evidence": "docs/research_program/observational_publication_20261015/R74_P4_SOURCE_SCORE_FIVEVIEW_20261119/PROVENANCE.json",
+      "evidence_sha256": "4dde48bba19638a1d4376083bfcf969e615852a069ad2d4646bbee3bcacb06fc",
+      "reported_scope_status": "DERIVED_CONDITIONAL",
+      "last_matching_git_commit": "580ecf5a75a96ddb92b267e42ccdd2dd35c65f1b"
+    },
+    {
+      "id": "R75",
+      "evidence": "docs/research_program/observational_publication_20261015/R75_P5_LIE_TILT_FIVEVIEW_20261119/PROVENANCE.json",
+      "evidence_sha256": "ce7e773cd7b7cbf70eb46686a08a6999006b59d5cb4f60b875a613883634fd1c",
+      "reported_scope_status": "DERIVED_CONDITIONAL",
+      "last_matching_git_commit": "829adadb73bce9ea2c26ea22833c64c4d3634add"
+    },
+    {
+      "id": "R76",
+      "evidence": "docs/research_program/observational_publication_20261015/R76_P6_COVARIANT_DRIFT_FIVEVIEW_20261119/PROVENANCE.json",
+      "evidence_sha256": "114c86d396fb4cdecbc01cf317ff54cb8e4c5c1ecd392a034a8160e45bb5994f",
+      "reported_scope_status": "DERIVED_CONDITIONAL",
+      "last_matching_git_commit": "117f0f79c2eee2de6b752b11c79d265de2071121"
+    },
+    {
+      "id": "R77",
+      "evidence": "docs/research_program/observational_publication_20261015/R77_SEVEN_PHY_CROSSVIEW_20261119/PROVENANCE.json",
+      "evidence_sha256": "24ac03cdbc8deea96fe868409d50e48baa3df040fb6f5515b38599694eb19276",
+      "reported_scope_status": "DERIVED_CONDITIONAL",
+      "last_matching_git_commit": "dd857ff8decbcfe90fd566a9dd87dcf5be60f609"
+    }
+  ],
+  "review_status": "REVISED_UNDER_LIMITED_ADVERSARIAL_AUDIT",
+  "no_native_boltzmann_solver_implementation": true
+}
