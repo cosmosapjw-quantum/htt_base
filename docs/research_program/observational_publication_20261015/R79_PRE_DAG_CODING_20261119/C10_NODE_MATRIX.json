@@ -1,0 +1,139 @@
+{
+  "schema": "htt.r79.c1_c10_ten_source_node_implementation_contract/1",
+  "date": "2026-11-19 KST",
+  "R78_original_42_science_node_payload_sha256": "e3264e105cabf78ddac37addc36cacc3cfa05ee942e33e54b431b22e3e87de0d",
+  "R78_current_source_qualification_science_next_id": "SQ-CF4",
+  "R78_original_60_node_DAG_modified": false,
+  "compilers": "g++ C++17/OpenMP and gfortran ISO_C_BINDING; no -ffast-math",
+  "lane_default": "auto",
+  "available_backends": [
+    "auto",
+    "numpy",
+    "native"
+  ],
+  "fallback": "source_sha_and_binary_manifest_checked_every_call; missing compiler or uncertified binary => recorded NumPy; execution failure => native_failed and raise",
+  "read_only_original_source_stored_receipt_before_disconnect": "e69cfff82f762c00d1d6a259c6d003fd20f805f3b1fcd4acc81d847c485120c0",
+  "real_Gaia_total_original": 1614173,
+  "real_Gaia_quality_count": 1580645,
+  "max_replay_error": 4.1777494858939505e-13,
+  "source_baseline_gaia_median_seconds": 0.07078306603943929,
+  "C8_matched_Gaia_cpp8_speedup_60k": 9.715688534665514,
+  "C8_matched_Gaia_cpp8_speedup_120k": 9.989401567465835,
+  "C8_matched_CF4_fortran_speedup": 2.608951063715735,
+  "C9_targeted_regressions_passed": 174,
+  "R78_strict_checks_passed": 32,
+  "current_raw_external_drive_path_present": false,
+  "nodes": [
+    {
+      "priority": 1,
+      "node_id": "SQ-CF4",
+      "R78_science_state_unchanged": "ready_scoped",
+      "code_preparation_state": "IMPLEMENTATION_VERIFIED_PRE_DAG",
+      "API_from_htt_obsstat_pre_dag_fast": "hemisphere_moments; radial_design",
+      "backend": "Fortran ISO_C_BINDING when certified and geometry N>=1024",
+      "source_based_or_synthetic_verification": "Original CF4 full table4 40-400 Mpc source, R77 and C8 reference moments",
+      "remaining_physical_or_runtime_blocker": "Original exact R61 selected 35970 group identity, PV and method covariance not yet source qualified; current external data path unavailable",
+      "no_scientific_gate_promotion": true
+    },
+    {
+      "priority": 2,
+      "node_id": "SQ-GAIA",
+      "R78_science_state_unchanged": "ready_scoped",
+      "code_preparation_state": "IMPLEMENTATION_VERIFIED_PRE_DAG",
+      "API_from_htt_obsstat_pre_dag_fast": "accumulate_gaia; last_backend_receipt",
+      "backend": "C++17/OpenMP certified 16D Gaussian 2x2 source covariance; 8 threads default",
+      "source_based_or_synthetic_verification": "Original R69 Gaia full 1614173 rows, 1580645 quality and 192-region patch replay C7",
+      "remaining_physical_or_runtime_blocker": "Actual observer-to-cosmic normal shear/omega transfer absent; external source path now unavailable",
+      "no_scientific_gate_promotion": true
+    },
+    {
+      "priority": 3,
+      "node_id": "SQ-RADIO",
+      "R78_science_state_unchanged": "ready_scoped",
+      "code_preparation_state": "IMPLEMENTATION_VERIFIED_PRE_DAG",
+      "API_from_htt_obsstat_pre_dag_fast": "ring_softmax_occupancy",
+      "backend": "Stable vectorized NumPy log-normalized ring score",
+      "source_based_or_synthetic_verification": "R65 33000 pixels and R74 three-bin occupancy/score derivatives to 6e-16",
+      "remaining_physical_or_runtime_blocker": "Real observer beta, SED/beam/size selected k,kappa and LSS null not calibrated",
+      "no_scientific_gate_promotion": true
+    },
+    {
+      "priority": 4,
+      "node_id": "SQ-FRAME",
+      "R78_science_state_unchanged": "ready_scoped",
+      "code_preparation_state": "IMPLEMENTATION_VERIFIED_PRE_DAG",
+      "API_from_htt_obsstat_pre_dag_fast": "rotate_stf; codazzi_map",
+      "backend": "Vectorized SO3 STF5 and invariant Lie constraints",
+      "source_based_or_synthetic_verification": "SO3 rotated exceptional VI_minus_1_9 Codazzi identity C7",
+      "remaining_physical_or_runtime_blocker": "Physical observer-to-normal transport and source 3D beta unknown",
+      "no_scientific_gate_promotion": true
+    },
+    {
+      "priority": 5,
+      "node_id": "SQ-P1-ANCHOR",
+      "R78_science_state_unchanged": "blocked_physical_anchor",
+      "code_preparation_state": "IMPLEMENTATION_VERIFIED_PRE_DAG",
+      "API_from_htt_obsstat_pre_dag_fast": "confidence_support",
+      "backend": "Stable joint Gaussian ellipsoid Cholesky support",
+      "source_based_or_synthetic_verification": "R61 same-source 11D 95% support cross-check C7",
+      "remaining_physical_or_runtime_blocker": "P1 physical positive scale/anchor and source-to-normal map missing; source original 274 rows exists",
+      "no_scientific_gate_promotion": true
+    },
+    {
+      "priority": 6,
+      "node_id": "SQ-CMB-NULL",
+      "R78_science_state_unchanged": "blocked_source",
+      "code_preparation_state": "IMPLEMENTATION_VERIFIED_PRE_DAG",
+      "API_from_htt_obsstat_pre_dag_fast": "OnlineCovariance",
+      "backend": "Welford Chan streaming covariance, no fake MC",
+      "source_based_or_synthetic_verification": "135 synthetic draws sample-cov exact C7",
+      "remaining_physical_or_runtime_blocker": "Matched Commander T/E/B null MC and foreground calibration unavailable",
+      "no_scientific_gate_promotion": true
+    },
+    {
+      "priority": 7,
+      "node_id": "SQ-PHOTON-FLUX",
+      "R78_science_state_unchanged": "blocked_source",
+      "code_preparation_state": "IMPLEMENTATION_VERIFIED_PRE_DAG",
+      "API_from_htt_obsstat_pre_dag_fast": "photon_feasibility",
+      "backend": "Eigen/PSD realizability, explicit unavailable flux state",
+      "source_based_or_synthetic_verification": "R66 PR3 PR4 positive pressure tensors C7",
+      "remaining_physical_or_runtime_blocker": "Independent same electron-frame photon f and total rho/j missing",
+      "no_scientific_gate_promotion": true
+    },
+    {
+      "priority": 8,
+      "node_id": "SQ-LIE-FLUX",
+      "R78_science_state_unchanged": "blocked_source",
+      "code_preparation_state": "IMPLEMENTATION_VERIFIED_PRE_DAG",
+      "API_from_htt_obsstat_pre_dag_fast": "codazzi_map",
+      "backend": "Full general Class A/B 3x5 Lie linear map, Jacobi Na=0",
+      "source_based_or_synthetic_verification": "R75 exceptional VI_minus_1_9 rank2 and SO3 covariance C7",
+      "remaining_physical_or_runtime_blocker": "Independently observed normal j_N and rho_N missing; native external Boltzmann forbidden",
+      "no_scientific_gate_promotion": true
+    },
+    {
+      "priority": 9,
+      "node_id": "SQ-OPTICAL",
+      "R78_science_state_unchanged": "pending_conditional",
+      "code_preparation_state": "IMPLEMENTATION_VERIFIED_PRE_DAG",
+      "API_from_htt_obsstat_pre_dag_fast": "sachs_rhs",
+      "backend": "Stable 2x2 fixed-affine Jacobi ODE RHS under solve_ivp",
+      "source_based_or_synthetic_verification": "Minkowski/positive isotropic Ricci constant tidal analytic agreement <8e-14 C7",
+      "remaining_physical_or_runtime_blocker": "Physical finite-z source/redshift observer Sachs transfer not implemented or qualified",
+      "no_scientific_gate_promotion": true
+    },
+    {
+      "priority": 10,
+      "node_id": "SQ-CROSS-COV",
+      "R78_science_state_unchanged": "pending_dependency",
+      "code_preparation_state": "IMPLEMENTATION_VERIFIED_PRE_DAG",
+      "API_from_htt_obsstat_pre_dag_fast": "schur_covariance",
+      "backend": "Cholesky stable correlated SPD block Schur complement",
+      "source_based_or_synthetic_verification": "R61 11D covariance positive Schur eigenvalue C7",
+      "remaining_physical_or_runtime_blocker": "True source-matched CF4/Gaia/radio/CMB cross covariance and joint null unavailable",
+      "no_scientific_gate_promotion": true
+    }
+  ],
+  "claim_ceiling": "CODE_PREPARED_NUMERICALLY_VERIFIED; NO R78 PHYSICAL SOURCE GATE EXECUTED_OR_COMPLETED"
+}
