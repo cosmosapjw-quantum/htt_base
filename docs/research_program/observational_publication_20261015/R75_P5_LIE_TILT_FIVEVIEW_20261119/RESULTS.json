@@ -1,0 +1,555 @@
+{
+  "schema": "htt.r75.p5_lie_tilt_physical_fiveview/1",
+  "source_hashes": {
+    "R49_atlas": "d8a3720b38bb85833132d31bed68f4837ecb25766ce2c02ae000608aad1f7864",
+    "R49_production_receipt": "cf0cc3fed8311808d6e376c71a06f44615b61c06d78c5f6e884da7ed6b2ac692",
+    "R49_historical_chain": "4063be94180c5c8a28b43115ba70539a043cd6cb160c3e3251f5fb52c74c2c70"
+  },
+  "convention": "Cartesian STF5 xx,yy,xy,xz,yz; n_z=-xx-yy; Lie a,N m^-1 and sigma s^-1, epsilon123 +1; dimensionless Σ and cA/H",
+  "symbolic": {
+    "symbolic_Class_B_lower_block_determinant": "9*a**2 + n2*n3",
+    "symbolic_exceptional_exact_rank": 2,
+    "symbolic_exceptional_zero_total_flux_shear": [
+      -2,
+      0,
+      0,
+      0,
+      1
+    ],
+    "symbolic_left_null_flux": [
+      0,
+      3,
+      3
+    ],
+    "direct_Lie_bracket_to_C_5D": "checked by symbolic Jacobian"
+  },
+  "SO3_covariance": {
+    "samples_SO3": 40,
+    "max_rotation_equivariance_error": 8.343678738167853e-15,
+    "Lie_rank_and_Q_Lie_invariant_under_proper_rotation": true
+  },
+  "source_all_Bianchi_atlas": {
+    "FLRW": {
+      "class_label": "A",
+      "source_h": null,
+      "a_a_ver2": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "Ndiag_ver2": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "Codazzi_signed_STF5_to_normal_flux_rank": 0,
+      "shear_kernel_dimension": 5,
+      "singular_values": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_jacobi_residual": 0.0,
+      "comment": "R49 convention source a,N are example geometric settings, not actual posterior matter density/tilt fit"
+    },
+    "I": {
+      "class_label": "A",
+      "source_h": null,
+      "a_a_ver2": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "Ndiag_ver2": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "Codazzi_signed_STF5_to_normal_flux_rank": 0,
+      "shear_kernel_dimension": 5,
+      "singular_values": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_jacobi_residual": 0.0,
+      "comment": "R49 convention source a,N are example geometric settings, not actual posterior matter density/tilt fit"
+    },
+    "II": {
+      "class_label": "A",
+      "source_h": null,
+      "a_a_ver2": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "Ndiag_ver2": [
+        0.0,
+        0.01,
+        0.0
+      ],
+      "Codazzi_signed_STF5_to_normal_flux_rank": 2,
+      "shear_kernel_dimension": 3,
+      "singular_values": [
+        0.01,
+        0.01,
+        0.0
+      ],
+      "source_jacobi_residual": 0.0,
+      "comment": "R49 convention source a,N are example geometric settings, not actual posterior matter density/tilt fit"
+    },
+    "III": {
+      "class_label": "B",
+      "source_h": -1.0,
+      "a_a_ver2": [
+        0.01,
+        0.0,
+        0.0
+      ],
+      "Ndiag_ver2": [
+        0.0,
+        0.01,
+        -0.01
+      ],
+      "Codazzi_signed_STF5_to_normal_flux_rank": 3,
+      "shear_kernel_dimension": 2,
+      "singular_values": [
+        0.04,
+        0.03605551275463989,
+        0.02
+      ],
+      "source_jacobi_residual": 0.0,
+      "comment": "R49 convention source a,N are example geometric settings, not actual posterior matter density/tilt fit"
+    },
+    "IV": {
+      "class_label": "B",
+      "source_h": null,
+      "a_a_ver2": [
+        0.01,
+        0.0,
+        0.0
+      ],
+      "Ndiag_ver2": [
+        0.0,
+        0.0,
+        0.01
+      ],
+      "Codazzi_signed_STF5_to_normal_flux_rank": 3,
+      "shear_kernel_dimension": 2,
+      "singular_values": [
+        0.0354138126514911,
+        0.03162277660168379,
+        0.025413812651491105
+      ],
+      "source_jacobi_residual": 0.0,
+      "comment": "R49 convention source a,N are example geometric settings, not actual posterior matter density/tilt fit"
+    },
+    "V": {
+      "class_label": "B",
+      "source_h": null,
+      "a_a_ver2": [
+        0.01,
+        0.0,
+        0.0
+      ],
+      "Ndiag_ver2": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "Codazzi_signed_STF5_to_normal_flux_rank": 3,
+      "shear_kernel_dimension": 2,
+      "singular_values": [
+        0.03,
+        0.03,
+        0.03
+      ],
+      "source_jacobi_residual": 0.0,
+      "comment": "R49 convention source a,N are example geometric settings, not actual posterior matter density/tilt fit"
+    },
+    "VI_0": {
+      "class_label": "A",
+      "source_h": null,
+      "a_a_ver2": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "Ndiag_ver2": [
+        0.0,
+        0.01,
+        -0.01
+      ],
+      "Codazzi_signed_STF5_to_normal_flux_rank": 3,
+      "shear_kernel_dimension": 2,
+      "singular_values": [
+        0.02,
+        0.01,
+        0.01
+      ],
+      "source_jacobi_residual": 0.0,
+      "comment": "R49 convention source a,N are example geometric settings, not actual posterior matter density/tilt fit"
+    },
+    "VI_h": {
+      "class_label": "B",
+      "source_h": -1.2499999999999998,
+      "a_a_ver2": [
+        0.005,
+        0.0,
+        0.0
+      ],
+      "Ndiag_ver2": [
+        0.0,
+        0.01,
+        -0.002
+      ],
+      "Codazzi_signed_STF5_to_normal_flux_rank": 3,
+      "shear_kernel_dimension": 2,
+      "singular_values": [
+        0.021524174696260022,
+        0.019209372712298545,
+        0.009524174696260022
+      ],
+      "source_jacobi_residual": 0.0,
+      "comment": "R49 convention source a,N are example geometric settings, not actual posterior matter density/tilt fit"
+    },
+    "VII_0": {
+      "class_label": "A",
+      "source_h": null,
+      "a_a_ver2": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "Ndiag_ver2": [
+        0.0,
+        0.01,
+        0.01
+      ],
+      "Codazzi_signed_STF5_to_normal_flux_rank": 2,
+      "shear_kernel_dimension": 3,
+      "singular_values": [
+        0.01,
+        0.01,
+        0.0
+      ],
+      "source_jacobi_residual": 0.0,
+      "comment": "R49 convention source a,N are example geometric settings, not actual posterior matter density/tilt fit"
+    },
+    "VII_h": {
+      "class_label": "B",
+      "source_h": 0.16805555555555557,
+      "a_a_ver2": [
+        0.0055,
+        0.0,
+        0.0
+      ],
+      "Ndiag_ver2": [
+        0.0,
+        0.018,
+        0.01
+      ],
+      "Codazzi_signed_STF5_to_normal_flux_rank": 3,
+      "shear_kernel_dimension": 2,
+      "singular_values": [
+        0.0256390850083824,
+        0.01833712082089225,
+        0.0176390850083824
+      ],
+      "source_jacobi_residual": 0.0,
+      "comment": "R49 convention source a,N are example geometric settings, not actual posterior matter density/tilt fit"
+    },
+    "VIII": {
+      "class_label": "A",
+      "source_h": null,
+      "a_a_ver2": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "Ndiag_ver2": [
+        0.01,
+        -0.01,
+        0.01
+      ],
+      "Codazzi_signed_STF5_to_normal_flux_rank": 2,
+      "shear_kernel_dimension": 3,
+      "singular_values": [
+        0.02,
+        0.02,
+        0.0
+      ],
+      "source_jacobi_residual": 0.0,
+      "comment": "R49 convention source a,N are example geometric settings, not actual posterior matter density/tilt fit"
+    },
+    "IX": {
+      "class_label": "A",
+      "source_h": null,
+      "a_a_ver2": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "Ndiag_ver2": [
+        0.01,
+        0.01,
+        0.01
+      ],
+      "Codazzi_signed_STF5_to_normal_flux_rank": 0,
+      "shear_kernel_dimension": 5,
+      "singular_values": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_jacobi_residual": 0.0,
+      "comment": "R49 convention source a,N are example geometric settings, not actual posterior matter density/tilt fit"
+    },
+    "VI_minus_1_equals_III": {
+      "class_label": "B",
+      "source_h": -0.9999999999999999,
+      "a_a_ver2": [
+        0.005,
+        0.0,
+        0.0
+      ],
+      "Ndiag_ver2": [
+        0.0,
+        0.01,
+        -0.0025
+      ],
+      "Codazzi_signed_STF5_to_normal_flux_rank": 3,
+      "shear_kernel_dimension": 2,
+      "singular_values": [
+        0.021711646096066222,
+        0.01952562418976664,
+        0.009211646096066228
+      ],
+      "source_jacobi_residual": 0.0,
+      "comment": "R49 convention source a,N are example geometric settings, not actual posterior matter density/tilt fit"
+    },
+    "VI_minus_1_over_9": {
+      "class_label": "B",
+      "source_h": -0.11111111111111109,
+      "a_a_ver2": [
+        0.005,
+        0.0,
+        0.0
+      ],
+      "Ndiag_ver2": [
+        0.0,
+        0.01,
+        -0.022500000000000003
+      ],
+      "Codazzi_signed_STF5_to_normal_flux_rank": 2,
+      "shear_kernel_dimension": 3,
+      "singular_values": [
+        0.035794552658190884,
+        0.0325,
+        1.4433771787812697e-18
+      ],
+      "source_jacobi_residual": 0.0,
+      "comment": "R49 convention source a,N are example geometric settings, not actual posterior matter density/tilt fit"
+    }
+  },
+  "synthetic_validations": {
+    "single_fluid_Q_beta_inverse_checks": [
+      {
+        "w": 0.0,
+        "beta": 0.0,
+        "Q_Lie": 0.0,
+        "reconstructed_beta": 0.0
+      },
+      {
+        "w": 0.0,
+        "beta": 0.001,
+        "Q_Lie": 0.001,
+        "reconstructed_beta": 0.001
+      },
+      {
+        "w": 0.0,
+        "beta": 0.15,
+        "Q_Lie": 0.15,
+        "reconstructed_beta": 0.15
+      },
+      {
+        "w": 0.0,
+        "beta": 0.6,
+        "Q_Lie": 0.6,
+        "reconstructed_beta": 0.6
+      },
+      {
+        "w": 0.0,
+        "beta": 0.9,
+        "Q_Lie": 0.9,
+        "reconstructed_beta": 0.9
+      },
+      {
+        "w": 0.3333333333333333,
+        "beta": 0.0,
+        "Q_Lie": 0.0,
+        "reconstructed_beta": 0.0
+      },
+      {
+        "w": 0.3333333333333333,
+        "beta": 0.001,
+        "Q_Lie": 0.001333332888889037,
+        "reconstructed_beta": 0.001
+      },
+      {
+        "w": 0.3333333333333333,
+        "beta": 0.15,
+        "Q_Lie": 0.1985111662531017,
+        "reconstructed_beta": 0.14999999999999997
+      },
+      {
+        "w": 0.3333333333333333,
+        "beta": 0.6,
+        "Q_Lie": 0.7142857142857142,
+        "reconstructed_beta": 0.6
+      },
+      {
+        "w": 0.3333333333333333,
+        "beta": 0.9,
+        "Q_Lie": 0.9448818897637795,
+        "reconstructed_beta": 0.9
+      },
+      {
+        "w": 1.0,
+        "beta": 0.0,
+        "Q_Lie": 0.0,
+        "reconstructed_beta": 0.0
+      },
+      {
+        "w": 1.0,
+        "beta": 0.001,
+        "Q_Lie": 0.0019999980000020004,
+        "reconstructed_beta": 0.0010000000000000002
+      },
+      {
+        "w": 1.0,
+        "beta": 0.15,
+        "Q_Lie": 0.293398533007335,
+        "reconstructed_beta": 0.15
+      },
+      {
+        "w": 1.0,
+        "beta": 0.6,
+        "Q_Lie": 0.8823529411764707,
+        "reconstructed_beta": 0.6000000000000001
+      },
+      {
+        "w": 1.0,
+        "beta": 0.9,
+        "Q_Lie": 0.994475138121547,
+        "reconstructed_beta": 0.9000000000000004
+      }
+    ],
+    "Type_V_no_total_flux": {
+      "x_stf5": [
+        0.0,
+        0.3,
+        0.0,
+        0.0,
+        0.09
+      ],
+      "chi": 0.0,
+      "F_Omega": 0.4999999870053464
+    },
+    "exceptional_VI_m1_9_no_total_flux": {
+      "x_stf5": [
+        -2.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "chi": 0.46475800154489,
+      "F_Omega": 0.44624630857334013
+    },
+    "Type_V_tilted_instantaneous_compatibility": {
+      "normal_flux_divergence_C": [
+        0.0,
+        0.0,
+        -0.1
+      ],
+      "normal_rho": 1.0,
+      "normal_dust_beta_z": 0.1,
+      "Hamiltonian_H_squared_in_c_8piG_1_units": 0.3711111111111111,
+      "signed_chi": 0.9999999999999999,
+      "not_a_global_solution": true
+    },
+    "Type_I_two_counter_streams": {
+      "total_normal_j": 0.0,
+      "individual_beta": [
+        0.2,
+        -0.2
+      ],
+      "total_anisotropic_stress": [
+        [
+          -0.013333333333333336,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.013333333333333336,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.026666666666666675
+        ]
+      ],
+      "physical_takeaway": "j=0 does not imply all beta_s=0"
+    }
+  },
+  "actual_R49_source_posterior_geometry": {
+    "R49_historical_production_claim_tier": "TRANSFER_CONDITIONAL_OBSERVATIONAL_FRAMEWORK",
+    "R49_family_adjudication_status": "MORPHO_COMPATIBILITY_EQUIVALENCE_SET_ONLY",
+    "source_chain_sha256": "4063be94180c5c8a28b43115ba70539a043cd6cb160c3e3251f5fb52c74c2c70",
+    "n_source_posterior_draws": 4000,
+    "parameter_names_5": [
+      "sigma_xx",
+      "sigma_yy",
+      "sigma_xy",
+      "sigma_xz",
+      "sigma_yz"
+    ],
+    "posterior_shear_frobenius_mean": 8.165293482689821e-07,
+    "posterior_shear_signed_chi_quantiles_05_16_50_84_95": [
+      -0.5897125883837563,
+      -0.21653726085337205,
+      0.35861084119957815,
+      0.7945544890110248,
+      0.9408317192812968
+    ],
+    "posterior_shear_intrinsic_fullsky_FOmega_quantiles_05_16_50_84_95": [
+      0.4246039800543938,
+      0.42998228470379596,
+      0.4534080088390925,
+      0.5344004567903412,
+      0.5607761227646395
+    ],
+    "source_shape_frac_chi_positive": 0.72925,
+    "source_shape_frac_FOmega_below_half": 0.72925,
+    "source_PP_bad_probes": {
+      "CMB": {
+        "ppc_p": 0.0,
+        "chi2_per_dof": 2.0150303265767913
+      },
+      "Gaia": {
+        "ppc_p": 0.0,
+        "chi2_per_dof": 47.03522657449412
+      },
+      "CF4": {
+        "ppc_p": 0.0,
+        "chi2_per_dof": 2.7489398901968976
+      }
+    },
+    "source_prior_Q_shear_anchor": "UNAVAILABLE",
+    "source_model_limit": "R49 transfer conditional posterior only; F is source-posterior pushforward of normal-tensor geometry, not physical observed sky/independent cosmological detection"
+  },
+  "scope": "exact algebra, 4000 source-conditional posterior shape pushforward and limited instantaneous Einstein constraints; no new calibrated Bianchi family likelihood or full solution"
+}
