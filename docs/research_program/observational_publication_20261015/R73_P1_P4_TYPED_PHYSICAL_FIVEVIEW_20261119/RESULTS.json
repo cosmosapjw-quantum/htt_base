@@ -1,0 +1,231 @@
+{
+  "schema": "htt.r73.p1_p4_typed_physical_fiveview/1",
+  "source_input_sha256": {
+    "R62_J2_15D": "7b2c690b1d6530cb40f6b10c94eefb001979daae1996aa05867fb20a03110b03",
+    "R66_PR3PR4": "6d9c3f11a23995565dca25fe8ae02ef1ad79b3bc3f8ddf99f3c8c0a497b39d01",
+    "R64_augmented_carrier": "c960201a48879d26e687393d11499474cba360394712e9cb72117a547b867836",
+    "R64_augmented_result": "c9a68a7e79de910185757acd43ca0e5a91e8d36a1c2a818a184804962de5160b",
+    "R65_interpretation": "203f6cf070661afb923aa095ce992278c720f3e7a7149107c14c7e8a28c761c7",
+    "R69_P1_geometry": "a130e2c4a0f454643041e5ba6584e70a19589908e4f8bfc495f2c7502366c453"
+  },
+  "source_scientific_scope": "one observed source per paper, no independent physical source-posterior or new CMB/radio anomaly",
+  "P1": {
+    "source": "R62 same CF4 15D apparent signed tensor, not P1 original selected 274-row law",
+    "actual_R62_STF5": [
+      -0.012703128010752934,
+      -0.019952470814724125,
+      -0.00020715995373952114,
+      0.006235564252596576,
+      0.0008323006667775552
+    ],
+    "full_covariance_rank5": 5,
+    "actual_R62_STF_shape_chi": -0.1227664664766674,
+    "actual_R62_STF_intrinsic_fullsky_FOmega": 0.5236421641269079,
+    "actual_R62_working_Gaussian_zero5_T": 9.111555029234323,
+    "actual_R62_working_Gaussian_zero5_tail": 0.10469648073132132,
+    "hypothetical_GR_Q_H_if_H_eq1_d_eq0_S_eqK0": 0.01770261283423775,
+    "hypothetical_GR_min_Hfrac_if_used_as_local_sigma_over_H": 0.9822973871657622,
+    "actual_CF4_sample_FOmega_40_400_Mpc_from_existing_result": 0.26300988972795347,
+    "nonclaims": [
+      "not P1 274-row confidence law",
+      "R62 apparent S != GR shear",
+      "fullsky F != masked sample fraction",
+      "Gaussian tail != cosmic anisotropy PTE"
+    ]
+  },
+  "P2": {
+    "source": "R66 actual PR3/PR4 finite-band retained T^4 moment bundle, not full cosmological photon solution",
+    "Commander_matched_T_MC_count": 0,
+    "release_results": {
+      "PR3": {
+        "actual_retained_pi_over_rho_STF5": [
+          -1.3488917876809042e-06,
+          -1.9255093308409354e-06,
+          4.158989056983618e-06,
+          7.771164743364344e-07,
+          8.71865424229173e-07
+        ],
+        "Q_stress_physical_moment_positive_gauge": 1.1637005109237419e-05,
+        "physical_stress_body_Q_le1": true,
+        "signed_shape_chi": -0.7074485821161334,
+        "intrinsic_fullsky_positive_quadrupole_area": 0.5663715289323422,
+        "P_eigenvalues": [
+          0.3333294543316302,
+          0.3333343732889586,
+          0.33333617237941093
+        ],
+        "allowed_flux_ellipsoid_principal_semiaxes": [
+          0.5773469098658364,
+          0.5773511698169136,
+          0.5773527278704162
+        ],
+        "cap_abs_mu_gt_0p9_Pzz": 0.3333349055051185,
+        "cap_energy_fraction_valid_lower_bound": 0.0,
+        "cap_energy_fraction_valid_upper_bound": 0.41152457469767717,
+        "actual_flux_measured": false,
+        "joint_Q_gamma_unavailable": true,
+        "physical_cap_F_unidentified_from_STF5": true
+      },
+      "PR4": {
+        "actual_retained_pi_over_rho_STF5": [
+          -1.881906573978555e-06,
+          -1.9432715628638585e-06,
+          4.375814467055548e-06,
+          7.086608442911998e-07,
+          9.814133052179442e-07
+        ],
+        "Q_stress_physical_moment_positive_gauge": 1.2485285996402345e-05,
+        "physical_stress_body_Q_le1": true,
+        "signed_shape_chi": -0.6950341118626684,
+        "intrinsic_fullsky_positive_quadrupole_area": 0.5658202829560339,
+        "P_eigenvalues": [
+          0.33332917157133457,
+          0.33333442663982005,
+          0.3333364017888455
+        ],
+        "allowed_flux_ellipsoid_principal_semiaxes": [
+          0.5773466649867605,
+          0.577351216020041,
+          0.5773529265439342
+        ],
+        "cap_abs_mu_gt_0p9_Pzz": 0.3333349200079202,
+        "cap_energy_fraction_valid_lower_bound": 0.0,
+        "cap_energy_fraction_valid_upper_bound": 0.41152459260237056,
+        "actual_flux_measured": false,
+        "joint_Q_gamma_unavailable": true,
+        "physical_cap_F_unidentified_from_STF5": true
+      }
+    },
+    "nonclosure_counterexample_from_R70": "smooth p_epsilon=(1+epsilon P4(cos theta))/(4pi), same first two moments, different photon cap F and Sdot",
+    "physical_Pi": null,
+    "physical_G_F": null
+  },
+  "P3": {
+    "source": "R64 actual same CF4 68D mono_method+24 Gaussian, no independent Hcal, same source-selected sample",
+    "actual_CF4_selected_groups": 35970,
+    "reference": "flat smooth Planck18 H0 and Omega_m from R64, no physical GR source qualification",
+    "models": {
+      "J1": {
+        "parent_model_key": "mono_method__J1__method_angular_nuisance",
+        "parameter_dimension": 21,
+        "gaussian_common_95pct_cutoff_chisquare": 32.670573340917315,
+        "z": 0.08,
+        "reference_B": 0.08161509739294157,
+        "point_D_min_over_54": 0.9594446321059401,
+        "positive_support_lower_count_54": 54,
+        "min_joint_ellipsoid_D_lower": 0.5779945293764763,
+        "explicit_counter_witness_direction_index": 12,
+        "explicit_counter_witness_D": 0.5779945293764763,
+        "explicit_counter_witness_ellipsoid_distance_squared": 32.670573340917315,
+        "uniform_ellipsoid_one_direction_Fmin_exact": 1.0,
+        "uniform_ellipsoid_one_direction_Fmean_exact": 1.0,
+        "uniform_ellipsoid_54direction_joint_positive_fraction_MC": 1.0,
+        "uniform_ellipsoid_54direction_MC_stderr": 0.0,
+        "uniform_ellipsoid_MC_sample_size": 16384,
+        "F54_semantics": "fraction of original 95% identified-parameter ellipsoid satisfying D>0 at all 54 fixed evaluation directions; NOT fullsky area or Bayesian posterior or cosmological probability",
+        "allsky_F_upper_bound_by_F54": "F_allsky_ellipsoid <= F54; R73 does not calculate exact uncountable sky intersection"
+      },
+      "J2": {
+        "parent_model_key": "mono_method__J2__method_angular_nuisance",
+        "parameter_dimension": 30,
+        "gaussian_common_95pct_cutoff_chisquare": 43.77297182574219,
+        "z": 0.08,
+        "reference_B": 0.08161509739294157,
+        "point_D_min_over_54": 1.017607527699158,
+        "positive_support_lower_count_54": 54,
+        "min_joint_ellipsoid_D_lower": 0.031049403742342996,
+        "explicit_counter_witness_direction_index": 12,
+        "explicit_counter_witness_D": 0.03104940374234222,
+        "explicit_counter_witness_ellipsoid_distance_squared": 43.772971825742204,
+        "uniform_ellipsoid_one_direction_Fmin_exact": 1.0,
+        "uniform_ellipsoid_one_direction_Fmean_exact": 1.0,
+        "uniform_ellipsoid_54direction_joint_positive_fraction_MC": 1.0,
+        "uniform_ellipsoid_54direction_MC_stderr": 0.0,
+        "uniform_ellipsoid_MC_sample_size": 16384,
+        "F54_semantics": "fraction of original 95% identified-parameter ellipsoid satisfying D>0 at all 54 fixed evaluation directions; NOT fullsky area or Bayesian posterior or cosmological probability",
+        "allsky_F_upper_bound_by_F54": "F_allsky_ellipsoid <= F54; R73 does not calculate exact uncountable sky intersection"
+      },
+      "J3": {
+        "parent_model_key": "mono_method__J3__method_angular_nuisance",
+        "parameter_dimension": 39,
+        "gaussian_common_95pct_cutoff_chisquare": 54.572227758941736,
+        "z": 0.08,
+        "reference_B": 0.08161509739294157,
+        "point_D_min_over_54": 1.1988209685282387,
+        "positive_support_lower_count_54": 0,
+        "min_joint_ellipsoid_D_lower": -2.8342153649386015,
+        "explicit_counter_witness_direction_index": 5,
+        "explicit_counter_witness_D": -2.834215364938603,
+        "explicit_counter_witness_ellipsoid_distance_squared": 54.57222775894175,
+        "uniform_ellipsoid_one_direction_Fmin_exact": 0.9938465409828918,
+        "uniform_ellipsoid_one_direction_Fmean_exact": 0.9990993999035653,
+        "uniform_ellipsoid_54direction_joint_positive_fraction_MC": 0.98822021484375,
+        "uniform_ellipsoid_54direction_MC_stderr": 0.0008429184928369791,
+        "uniform_ellipsoid_MC_sample_size": 16384,
+        "F54_semantics": "fraction of original 95% identified-parameter ellipsoid satisfying D>0 at all 54 fixed evaluation directions; NOT fullsky area or Bayesian posterior or cosmological probability",
+        "allsky_F_upper_bound_by_F54": "F_allsky_ellipsoid <= F54; R73 does not calculate exact uncountable sky intersection"
+      }
+    },
+    "actual_physical_null": null,
+    "actual_physical_G_F": null
+  },
+  "P4": {
+    "source": "R65 same-provider peak/integrated ICRS transverse log-count source definition contrast, full cross covariance",
+    "actual_paired_integrated_minus_peak_signed": [
+      -0.0016440241048542026,
+      0.005524671826759816
+    ],
+    "conditional_working_Q_stat": 5.566818567232398,
+    "conditional_working_chisquare2_T": 30.989468960483375,
+    "conditional_working_Pi_tail": 1.8651867287101537e-07,
+    "exact_fixed_gaussian_Pi_from_Q2": 1.865186728710156e-07,
+    "wrong_independent_paired_Wald": 1.315439672822672,
+    "registered_shared_components": 241892,
+    "R65_flux_bins_source_selected_actual_counts": [
+      115906,
+      65260,
+      55581
+    ],
+    "R65_raw_hemisphere_F": [
+      0.5119838489810709,
+      0.5127949739503525,
+      0.5113438045375218
+    ],
+    "R65_equal_pixel_mask_hemisphere_reference_F": 0.5090606060606061,
+    "R65_loglink_count_positive": true,
+    "physical_Q_beta": null,
+    "physical_Pi_LSS": null,
+    "physical_G_F": null,
+    "nonclaim": "peak/integrated selection difference is not cosmic evolution, beta posterior, or fullsky source fraction"
+  },
+  "P2_physical_GF_toy": {
+    "theorem": "dF/dt=-int_boundary p V.nu -Cov_p(1_A,sigma_nn-2c a.n), for specified fixed event and collisionless homogeneous normal",
+    "real_CMB_epoch_transfer_available": false,
+    "time_unit": "illustrative, s=.07 per source-defined unit",
+    "physical_toy_verified": [
+      {
+        "epsilon": 0.0,
+        "same_initial_flux_and_STF5_zero": true,
+        "physical_cap_F_at_initial_event": 0.09999999999999998,
+        "angular_boundary_flux_term": -0.01197,
+        "kinetic_covariance_source_term": -0.00399,
+        "GF_time_derivative_exact": -0.01596,
+        "direct_intensity_transport_integral": -0.015959999999999995,
+        "check_error": 3.469446951953614e-18
+      },
+      {
+        "epsilon": 1.0,
+        "same_initial_flux_and_STF5_zero": true,
+        "physical_cap_F_at_initial_event": 0.15707124999999994,
+        "angular_boundary_flux_term": -0.014459011874999999,
+        "kinetic_covariance_source_term": -0.006354823124999996,
+        "GF_time_derivative_exact": -0.020813834999999996,
+        "direct_intensity_transport_integral": -0.020813834999999985,
+        "check_error": 1.0408340855860843e-17
+      }
+    ]
+  },
+  "tested_analytic_halfspace_ball_cap": "dimension 1 and dimension 5 exact reference values",
+  "native_independent_reviewer": "NOT_RUN",
+  "physical_discovery": "NOT_CLAIMED"
+}
