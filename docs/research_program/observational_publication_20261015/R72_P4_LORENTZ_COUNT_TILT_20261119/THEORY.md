@@ -67,3 +67,56 @@ Metric/sign guard: \((-,+,+,+)\), \(c\) maintained; \(n\) sourceward in boosted 
 **G. General Bianchi bridge with R63/R70/R71.** Lie \(\mathcal N a=0\), normal Codazzi \(C_i=-(8\pi G/c^3)j^N_i\), and tilted \(T_{ab}\) govern source distributions and photon trajectories; a pure local observer Lorentz boost changes observed redshift/flux/solid angle without setting geometry \(C^k_{ij}\). Radiative stress/flux and Sachs \(D_L\) give extra physically distinct observables. Derive conditional predictions for all six paper tracks and seven PHY combinations in R9, not fictitious seven P4 likelihoods.
 
 **R4 first cheap discriminators:** R65 actual mask geometric contraction computed on base64 source footprint; full-sky parity difference zero by antipodal symmetry; α=.75, β_CMB=369.82/299792.458 and k=3.8254 give expected tied source quadrupole 1.40449e-5, whose mask leakage −2.82e-7 is far smaller than radio dipole coefficient O(10^-2). *The real k of each finite bin differs from this illustrative common value, and the actual observer boost signal is not measured by this injection.* Selecting convergence routes A–F depends on source and analytic counterexamples, not on claiming larger p-value.
+
+## R5 — constructive proofs and counterexamples
+
+**P4-T1 (finite-flux-bin Lorentz curvature and tied signed STF5).** Under R3's isotropic-rest, unresolved source, fixed SED spectral slope, sharp-bin contract, write \(s=1+\alpha\), \(\mathcal N_0=\int_L^U g(S)dS>0\), \(t=\ln\delta\), \(L_t=Le^{-st}, U_t=Ue^{-st}\), \(F(t)=\int_{L_t}^{U_t}g(S)dS\). Then \(\mathcal N(t)=e^{2t}F(t)\), \(F'=s[L_tg(L_t)-U_tg(U_t)]\). Thus
+\[
+k=2+s\frac{Lg(L)-Ug(U)}{\mathcal N_0},\quad
+\kappa=\frac{F''(0)}{\mathcal N_0}-\left[\frac{F'(0)}{\mathcal N_0}\right]^2,
+\]
+\[
+F''(0)=s^2[-Lg(L)-L^2g'(L)+Ug(U)+U^2g'(U)].
+\]
+An infinite upper boundary requires its flux-boundary terms to vanish. For a joint distribution \(g(S,\alpha)\), integrate the \(s^j\) terms over alpha; \(\kappa\) is the second selected-count log-response to Doppler, NOT optical convergence or spacetime curvature.
+With \(\delta=[\gamma(1-\beta\cdot n)]^{-1}\), \(t=\beta\cdot n+\tfrac12[(\beta\cdot n)^2-\beta^2]+O(\beta^3)\) and \(\log(\mathcal N/\mathcal N_0)=kt+\tfrac12\kappa t^2+O(t^3)\), obtain
+\[
+\boxed{\frac{\mathcal N'(n)}{\mathcal N_0}
+=1+k\,\beta\cdot n+\frac{k^2+k+\kappa}{2}(\beta\cdot n)^2-\frac{k}{2}\beta^2+O(\beta^3).}
+\]
+Consequently the *count-density* signed dipole and quadrupole are
+\[
+d_i=k\beta_i+O(\beta^3),\quad
+\boxed{Q^{\rm count}_{ij}=\frac{k^2+k+\kappa}{2}\,\beta_{\langle i}\beta_{j\rangle}
+=\frac{k^2+k+\kappa}{2k^2}d_{\langle i}d_{j\rangle}+O(\beta^4),}
+\]
+for nonzero k. The *log-count* field instead has \(Q^{\log\rm count}_{ij}=\tfrac12(k+\kappa)\beta_{\langle i}\beta_{j\rangle}+O(\beta^4)\). A source method that fits a log intensity must not adopt the count-density coefficient directly. For \(g(S)=CS^{-1-x}\), \(x>0\), the finite interval integrates to \(F(t)=F(0)e^{xs t}\) and therefore k=2+x(1+alpha), κ=0 exactly. This is a second-order derived application of established Lorentz/flux-count physics, not a claim of new special relativity.
+
+**P4-T2 (first-order response does not determine second-order signal).** For a positive mixture of two isotropic power-law populations with \(\mathcal N'(t)/\mathcal N_0=w_1e^{k_1t}+w_2e^{k_2t}\), \(w_1+w_2=1\):
+\(k=w_1k_1+w_2k_2\), \(\kappa=w_1w_2(k_1-k_2)^2\ge0\). Compare population A with pure k=4, κ=0 against population B an equal mix k1=3,k2=5, so k=4, κ=1. Both yield the SAME dipole d=4β at first order for the same velocity, yet the count quadrupoles are \(Q_A=10\,\mathrm{STF}(\beta\beta)\), \(Q_B=10.5\,\mathrm{STF}(\beta\beta)\). Therefore dipole+first-order k alone cannot calibrate the higher-ell boost tensor for heterogeneous flux-selected populations. The missing source response is κ; this is a constructive closure counterexample, not a universal unobservability theorem.
+
+**P4-T3 (signed STF morphology and hemisphere parity).** If \(A=(k^2+k+\kappa)/2>0\) and β≠0 then Q=A STF(ββ) has eigenvalues (-Aβ²/3,-Aβ²/3,2Aβ²/3), hence chi(Q)=+1 and intrinsic positive-lobe round-sky area FΩ,2=1−1/√3. If A<0, chi=-1 and FΩ,2=1/√3; if Aβ²=0, shape undefined. FΩ and chi remain constant under positive amplitude changes, so they do NOT independently measure speed or form a physical G_F.
+For a complete uniform celestial sphere, rest-normalized low-ell count density \(1+d\cdot n+Q:nn\) has
+\[
+F_{H_p}=\frac12+\frac{d\cdot p}{4},\qquad F_{H_p}-F_{H_{-p}}=\frac{d\cdot p}{2}
+\]
+through the displayed order; any even quadrupole cancels from opposite complete hemisphere mean *difference*. With weighted source selection \(w(n)\), M±=weighted mean of nnᵀ in the two hemispheres and \(\Delta_{\rm mask}^{(2)}=Q:(M_+-M_-)_{\rm STF}\), bounded by the product of Frobenius norms. For incomplete mask, even an isotropic density can have unequal *raw* hemisphere counts unless normalized to the actual exposure. This is a physical selection–hemisphere theorem, not an extra angular likelihood.
+
+**P4-T4 (transverse kinematic-intrinsic separation and ring gauge).** For B≥2 disjoint flux bins with fixed known \(k_b\), model source-conditional transverse signed dipoles as \(\widehat v=(K\otimes I_2)\beta_\perp+(\mathbf1_B\otimes I_2)a_\perp+\epsilon\), covariance C≻0. Let \(D=K\otimes I_2\), \(H=\mathbf1\otimes I_2\), \(W=C^{-1}\). Profiling a from Gaussian full covariance yields
+\[
+\boxed{\mathcal I_{\beta|a}=D^T[W-WH(H^TWH)^{-1}H^TW]D,}
+\]
+with rank2 iff K is not constant. For all equal k, velocity and shared residual are a two-dimensional exact fibre; different k yield formal transverse rank2 but precision depends on contrasts and C. The underlying R65 declination-ring log-link \(\lambda_{brp}=A_{br}E_{brp}\exp(v_{\perp,b}\cdot t_{rp}+v_{z,b}z_r)\) absorbs the constant v_z z_r exactly into each ring amplitude, hence no first-order longitudinal inference. **Do not extrapolate to an all-order physical no-go:** for \(1+d\cdot n\) the normalized transverse ring profile depends on \(d_\perp/(1+d_z z_r)\), so finite d_z affects two distinct rings beyond first order when d_\perp≠0.
+R65 at assumed α=.75 has k=(3.35802935,3.52179743,4.13330545), full conditional rank4 for (βx,βy,ax,ay), but SD β=(.0103671,.0117154), about 8–10 times the canonical β_CMB. It is a weak source-response inference, not a physical velocity/tilt detection.
+
+**P4-T5 (observer boost versus genuine matter–radiation tilt).** \(\Gamma_{MR}=-g(U_M,U_R)/c^2\) is locally invariant and distinct from radio-selected \(d_b=k_b\beta_{O|S}+u_b\). Construct two observationally identical dipole scenarios with different matter–radiation \(\Gamma_{MR}\): (A) rest-isotropic radio sources, nonzero observer boost \(\beta=d/k\), co-moving \(U_M=U_R\); (B) \(\beta_{O|S}=0\), intrinsic source count anisotropy \(u=d\) and separately tilted matter/radiation 4-velocities. A single flux-band dipole has no way to distinguish them without source/kinetic closure. This is a conditional *single-channel* nonidentification, not a cosmic all-observable no-go. Electron-frame photon flux and Thomson/kSZ response can supply a physically distinct channel.
+For radiation initially isotropic in its own rest-frame, exact local boost of \(T_{ab}\) into an electron frame gives
+\[
+m^\gamma_i:=q^\gamma_i/(\rho_\gamma c)=\frac{4\beta_i}{3+\beta^2},\quad
+S^\gamma_{ij}:=\pi^\gamma_{ij}/\rho_\gamma
+=\frac{4}{3+\beta^2}\beta_{\langle i}\beta_{j\rangle}
+=\beta_{\langle i}m^\gamma_{j\rangle}.
+\]
+These are photon energy flux and stress moments, NOT the radio count-dipole coefficient, and hold for an originally rest-isotropic radiation fluid with no intrinsic anisotropic stress. A general tilted Bianchi Lie frame is constrained by \(N^{ij}a_j=0\) and normal Einstein momentum \(C_i=-(8\pi G/c^3)j_i^N\); this does not determine the local observer boost without a separately qualified source/observer history. R63's compensated dust–radiation history is one constrained model, and its CF4 small power bound is not a general tilt exclusion.
+
+**R5 status:** exact algebraic derivations and physical counterexamples under declared selection/SR, plus source-qualified weak transverse Fisher and numerical contrast carried from R63/R65. Testing physical values/masks and infinitesimal β expansion using SymPy, independent quadrature and actual R65 source vectors is deferred ONLY to selected R7, not presumed PASS here.
