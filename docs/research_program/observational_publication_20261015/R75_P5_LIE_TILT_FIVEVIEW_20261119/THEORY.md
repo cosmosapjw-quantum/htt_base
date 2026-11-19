@@ -68,3 +68,59 @@ Route F **model-conditional real posterior x**: Read R49 4000 same-source 24D co
 Route G **optical/kinetic/source-identifiability bridge**: Use the general Bianchi family only through an actually produced Einstein–Boltzmann/Sachs transfer \(\mathcal O_\mathfrak g\). Linearized source map y=JΣ+Nuis γ+ε; for any source covariance C, project nuisance Fisher and check whether predicted \(Q_{\rm Lie}\), χ or F are invariant along its unidentifiable fibres. R49's original equivalence sets and poor probe PPC prevent family ID; code's all-family algebra registry is not a native global physical likelihood certificate.
 
 R4 divergence decision: pursue A+B+C+D+F as constructive source-valid routes, E as a bounded exact transport corollary, and G as a testable interface not an invented 8-probe posterior. Distinguish Class A/B source-dependent rank; F/Q do not create independent likelihood.
+
+## R5 — constructive derivations, exact theorems and physical meaning
+
+**P5-T1 (general Lie–Codazzi rank and flux image; established structure, project-specific full x map).** Assume R3 regular Bianchi 3-Lie algebra and Einstein momentum constraint, fixed oriented orthonormal normal triad. \(\mathscr L_{A,\mathsf N}:\mathrm{STF}(3)\to\mathbb R^3\) is a *linear* map on the five signed shear variables. Because \(\mathsf N\) symmetric, in a Class-A eigenframe \(\mathsf N=\mathrm{diag}(n_1,n_2,n_3)\), A=0:
+\[
+\mathscr L(\Sigma)=\big((n_3-n_2)\Sigma_{23},\ (n_1-n_3)\Sigma_{13},\ (n_2-n_1)\Sigma_{12}\big).
+\]
+Thus rank=0 when all eigenvalues coincide, rank=2 when two coincide, rank=3 when all are distinct (rank1 impossible in Class A). A zero-flux normal source need not force diagonal or vanishing shear. For Class B choose \(\mathbf A=(a,0,0),a\ne0\), \(\mathsf N=\mathrm{diag}(0,n_2,n_3)\) with \(N A=0\) (proper SO(3) eigenbasis):
+\[
+\mathscr L(\Sigma)=\begin{pmatrix}-3a\Sigma_{11}+(n_3-n_2)\Sigma_{23}\\
+-3a\Sigma_{12}-n_3\Sigma_{13}\\
+n_2\Sigma_{12}-3a\Sigma_{13}\end{pmatrix}.
+\]
+In Cartesian shear coordinate \(x=(\Sigma_{11},\Sigma_{22},\Sigma_{12},\Sigma_{13},\Sigma_{23})\), the matrix is
+\[
+M=\begin{pmatrix}-3a&0&0&0&n_3-n_2\\0&0&-3a&-n_3&0\\0&0&n_2&-3a&0\end{pmatrix}.
+\]
+Its first row is independent because of \(-3a\Sigma_{11}\), and the lower 2×2 determinant is \(\Delta=9a^2+n_2n_3\). Hence rank=3 for \(\Delta\ne0\) and rank=2 for \(\Delta=0\); the shear kernel is 2D or 3D respectively. If n2n3<0, define the conventional \(h=a^2/(n_2n_3)\); \(\Delta=0\iff h=-1/9\), precisely the **known** exceptional VI_-1/9 locus. At this locus,
+\[
+\boxed{n_2\,j^N_2+3a\,j^N_3=0}
+\]
+because \((n_2,3a)\) is a left-null vector of the lower block and j=-3Omega_N^-1? Precisely \(\mathscr L=-3\Omega_N(j/\rho)\), so the left-null constraint is unchanged. The extra shear kernel contains \(\Sigma_{12}=-n_3t,\Sigma_{13}=3at\). This is a **conditional instantaneous source restriction**, not full Einstein–Euler integration. For all cases, \(\dim\ker M=5-\mathrm{rank}M\ge2\). An observed flux vector without shear cannot determine all five STF eigen-directions; a single rank deficiency can be an actual physical prediction under a fixed Lie source.
+The physical utility is an exact **source-specific rank-adjusted likelihood**: if a future independently qualified normal-frame flux measurement \(\hat u=j_N/\rho_N\) and shear \(\hat x\) have a joint Gaussian C and a fixed (a,N,Omega), define residual \(r=\hat u+M\hat x/(3\Omega_N)\). With \(D=[(3\Omega_N)^{-1}M,\ I_3]\) acting on stacked \((\hat x,\hat u)\), its covariance is \(\Sigma_r=D\,C\,D^\top\); use its actual rank and a source/null-calibrated \(r^\top\Sigma_r^+r\), not an invented 3-DOF p-value. If only x is available and u is *defined from the same Codazzi equation*, r≡0 by construction and this supplies **no observational test**.
+
+**P5-T2 (physical dominant-energy feasibility from signed x and invertible single-fluid tilt).** Same normal-frame Codazzi and \(\Omega_N=8\pi G\rho_N/(3c^2H^2)>0\). Dimensional substitution σ=HΣ, N=H\mathsf N/c and a=H A/c gives
+\[
+\mathscr L=-3\Omega_N\,\frac{j_N}{\rho_N},\qquad
+\boxed{Q_{\rm Lie}=\frac{\|\mathscr L\|}{3\Omega_N}=\frac{\|j_N\|}{\rho_N}\le1\quad(\text{total DEC}).}
+\]
+It is dimensionless, SO(3)-invariant under proper rotations and an exact energy-flux cone gauge of the **actual total normal** matter state. Its missing \(\Omega_N\) cannot be absorbed into a statistical Q or free prior. The Hamiltonian
+\[
+{}^{(3)}R+\frac{6H^2-\mathrm{tr}\sigma^2}{c^2}=\frac{16\pi G\rho_N}{c^4}+2\Lambda
+\]
+can determine \(\Omega_N\) only if H, \(\sigma\), 3-Ricci, Λ and frame are independently source-qualified.
+For **one** positive-energy tilted perfect fluid \(p=w\epsilon\), \(0\le w\le1\), \(\beta=|\boldsymbol\beta_s|<1\), normal-frame \(\rho_N=(\epsilon+p)\Gamma^2-p\), \(j_N=(\epsilon+p)\Gamma^2\boldsymbol\beta_s\). Therefore
+\[
+\boxed{q:=Q_{\rm Lie}=\frac{(1+w)\beta}{1+w\beta^2},\quad
+\beta=\frac{2q}{(1+w)+\sqrt{(1+w)^2-4wq^2}}\quad(0\le q<1),}
+\]
+with dust β=q and radiation \(q=4\beta/(3+\beta^2)\). Proof: multiply numerator/denominator by \(1-\beta^2\), solve the quadratic, choose the small β root; derivative \(q'=(1+w)(1-w\beta^2)/(1+w\beta^2)^2>0\) for β<1, so the inverse is unique. This gives **concrete physical interpretation** for Q only with the single-fluid/source-normal assumptions; multi-species normal flux cancellations make it invalid. E.g. two oppositely tilted dust streams of equal normal energy have \(j_{N,+}+j_{N,-}=0\) but \(\pi_N\propto\beta_{\langle i}\beta_{j\rangle}\ne0\). In Bianchi I, \(\mathscr L\equiv0\) forces total j=0 but does NOT force each species β=0. Such instantaneous data require separate Hamiltonian/Euler evolution for a full spacetime; prior full two-fluid Bianchi I stability exists for selected non-dust equations of state.
+
+**P5-T3 (zero-flux morphology strata).** For Type V at a fixed homogeneous normal time, N=0, a!=0, j_total=0. Then \(\mathscr L=-3\Sigma A=0\) implies \(\Sigma A=0\); since Σ is nonzero STF(3), its eigenvalues must be \(0,\lambda,-\lambda\), hence
+\[
+\boxed{\chi(\Sigma)=0,\qquad F_\Omega(\Sigma)=\tfrac12,\quad(\Sigma\ne0,\ j^N=0,\ {\rm Type\ V}).}
+\]
+The sky area follows from f(n)=nΣn sign symmetry under exchanging the eigenvectors with ±λ or exact full-sphere quadratic-form integral. This is conditional on the *total normal flux being zero*, not a universal statement about tilted Type V. Conversely, general χ=0 does not prove Type V. For tilted Type V with j≠0, R69 already exhibited χ=+1 at instantaneous matched Hamiltonian/Codazzi. At exceptional VI_-1/9 with a=1,n2=3,n3=-3 and zero flux, choosing x=(-2,0,0,0,1) satisfies Mx=0 but \(\mathrm{tr}\Sigma^2=10\), \(\mathrm{tr}\Sigma^3=6\), so \(\chi=6\sqrt6/10^{3/2}\simeq0.46476\ne0\). Thus **zero total momentum does not universally imply χ=0** in Class B; the exceptional kernel preserves an additional shape degree. No observed CMB/CF4 STF can identify this stratum without an optical/normal frame map.
+
+**P5-T4 (signed-shear shape evolution and true angular G_F).** For geodesic homogeneous normal and total normal anisotropic stress π_N, define \(D=(8\pi G/c^2)\pi_N-c^2({}^{(3)}R)_{\rm STF}\), so \(D_t\sigma+3H\sigma=D\). For \(I_2=\mathrm{tr}\sigma^2>0\), \(I_3=\mathrm{tr}\sigma^3\), the signed shape \(\chi=\sqrt6 I_3/I_2^{3/2}\) obeys
+\[
+\boxed{D_t\chi=\frac{3\sqrt6}{I_2^{3/2}}\left[\mathrm{tr}(\sigma^2D)-\frac{I_3}{I_2}\mathrm{tr}(\sigma D)\right].}
+\]
+Isotropic \(3H\sigma\) dilution cancels from χ but NOT from amplitude or frame orientation. For a fixed transported round celestial sphere and regular nodal set \(f(t,n)=n\sigma(t)n=0\) with \(|\nabla_{S²}f|>0\),
+\[
+\boxed{\frac{dF_\Omega}{dt}=\frac1{4\pi}\oint_{\{f=0\}}\frac{D_t f}{|\nabla_{S²}f|}\,d\ell}
+\]
+in a fixed Fermi sky (moving sky/observer requires additional boundary speed). This gives a true physical GF after integrating an actual Einstein–matter solution, with cross-time covariance for inference. Near Σ=0 or χ=0 the nodal geometry can be singular and the derivative formula needs regulated set-image/Monte Carlo; do not apply an unqualified delta method. If Type V total j=0 for an interval and Σ≠0 throughout, χ=0,FΩ=.5 at every time even if shear amplitude and eigenframe evolve; the regular coarea condition fails at the χ=0 crossing but direct global area identity proves constancy.
