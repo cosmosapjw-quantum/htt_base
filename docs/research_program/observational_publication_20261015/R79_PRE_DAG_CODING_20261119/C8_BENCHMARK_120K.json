@@ -1,0 +1,133 @@
+{
+  "schema": "htt.r79.actual_source_precision_speed_comparison/1",
+  "scope": "Original selected Gaia 16D VSH and CF4 full table4 group mask only, not cross-probe inference",
+  "source_sha256": {
+    "Gaia_CRF3_raw": "e69cfff82f762c00d1d6a259c6d003fd20f805f3b1fcd4acc81d847c485120c0",
+    "CF4_table4_raw": "b6edfec68bdfddeada8f3b8f11938f3bbda98a8e2894ff136a369c2ad6594e94"
+  },
+  "Gaia_quality_selected_count": 117462,
+  "Gaia_source_rows_read": 120000,
+  "Gaia_sampling": "uniform_row_index_stride_across_full_original_Gaia_catalogue; no sky-reweighted source inference",
+  "Gaia_original_F_condition": 7.648803031796746,
+  "Gaia_original_numpy": {
+    "runs_seconds": [
+      0.14654194400645792,
+      0.1462195060448721,
+      0.15043641201918945
+    ],
+    "median_seconds": 0.14654194400645792,
+    "minimum_seconds": 0.1462195060448721
+  },
+  "Gaia_new_numpy": {
+    "runs_seconds": [
+      0.1448562919977121,
+      0.14589496603002772,
+      0.14439639600459486
+    ],
+    "median_seconds": 0.1448562919977121,
+    "minimum_seconds": 0.14439639600459486
+  },
+  "Gaia_native_cpp_1": {
+    "runs_seconds": [
+      0.07581688096979633,
+      0.07613780599785969,
+      0.07155344996135682
+    ],
+    "median_seconds": 0.07581688096979633,
+    "minimum_seconds": 0.07155344996135682
+  },
+  "Gaia_native_cpp_4": {
+    "runs_seconds": [
+      0.02110912703210488,
+      0.020629384962376207,
+      0.019929839007090777
+    ],
+    "median_seconds": 0.020629384962376207,
+    "minimum_seconds": 0.019929839007090777
+  },
+  "Gaia_native_cpp_8": {
+    "runs_seconds": [
+      0.014669742027763277,
+      0.011820620973594487,
+      0.017433380999136716
+    ],
+    "median_seconds": 0.014669742027763277,
+    "minimum_seconds": 0.011820620973594487
+  },
+  "Gaia_native_to_original_median_speedup_1": 1.9328405776127457,
+  "Gaia_native_to_original_median_speedup_4": 7.103553706216669,
+  "Gaia_native_to_original_median_speedup_8": 9.989401567465835,
+  "Gaia_all_parity_errors": {
+    "python": {
+      "F_relative_frobenius": 2.1014800489149157e-17,
+      "score_relative_2norm": 2.976516235555347e-16,
+      "chisq_relative": 0.0,
+      "solution_beta_relative": 5.398864746235901e-16,
+      "covariance_relative": 3.404616505591222e-17,
+      "F_min_eigen_relative": 1.0248663629054348e-15
+    },
+    "C++1": {
+      "F_relative_frobenius": 1.0841868792548452e-14,
+      "score_relative_2norm": 8.985918200744255e-15,
+      "chisq_relative": 0.0,
+      "solution_beta_relative": 2.0791161337369242e-14,
+      "covariance_relative": 1.0456326181856583e-14,
+      "F_min_eigen_relative": 4.953520754042934e-15
+    },
+    "C++4": {
+      "F_relative_frobenius": 1.0841497290632999e-14,
+      "score_relative_2norm": 8.975943912550851e-15,
+      "chisq_relative": 0.0,
+      "solution_beta_relative": 2.083001219896204e-14,
+      "covariance_relative": 1.04591759543894e-14,
+      "F_min_eigen_relative": 4.782709693558695e-15
+    },
+    "C++8": {
+      "F_relative_frobenius": 1.0841472621874035e-14,
+      "score_relative_2norm": 8.975943912550851e-15,
+      "chisq_relative": 0.0,
+      "solution_beta_relative": 2.0827990185091466e-14,
+      "covariance_relative": 1.0459062278415868e-14,
+      "F_min_eigen_relative": 5.465953935495652e-15
+    }
+  },
+  "CF4_full_group_count": 38053,
+  "CF4_mask_40_400_count": 31649,
+  "CF4_numpy_hemisphere": {
+    "runs_seconds": [
+      0.002434059977531433,
+      0.0024237899924628437,
+      0.002414111979305744
+    ],
+    "median_seconds": 0.0024237899924628437,
+    "minimum_seconds": 0.002414111979305744
+  },
+  "CF4_native_fortran_hemisphere": {
+    "runs_seconds": [
+      0.0009180470369756222,
+      0.0009122660267166793,
+      0.0009008150082081556
+    ],
+    "median_seconds": 0.0009122660267166793,
+    "minimum_seconds": 0.0009008150082081556
+  },
+  "CF4_native_to_numpy_median_speedup": 2.656889461494323,
+  "CF4_hemisphere_parity": {
+    "weights_maximum_abs": 0.0,
+    "weights_relative_l2": 0.0,
+    "means_maximum_abs": 4.9960036108132044e-15,
+    "means_relative_l2": 5.683790716415303e-15,
+    "second_maximum_abs": 4.440892098500626e-15,
+    "second_relative_l2": 5.236201610759938e-15
+  },
+  "CF4_hemisphere_counts": [
+    6614,
+    25035
+  ],
+  "repetitions": 3,
+  "peak_maxrss_kib": 408124,
+  "python": "3.12.3",
+  "numpy": "2.5.4",
+  "native_preflight_claim": "optional verified mathematical kernel, not source matched cosmological parameter estimate",
+  "changed_original_R60_R78_source_code": false
+}

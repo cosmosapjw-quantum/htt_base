@@ -1,0 +1,118 @@
+{
+  "schema": "htt.r79.c8_optimized_default_benchmark_final/1",
+  "default_policy": {
+    "mode": "auto",
+    "source": "htt/obsstat/analysis_lane.json",
+    "fallback": "numpy_reference_explicitly_recorded_if_native_compiler_unavailable_or_small_input",
+    "kernels": {
+      "gaia_correlated_vsh_2x2_to_normal_equations": {
+        "language": "C++17+OpenMP",
+        "certified_source_sha256": "f46dbb3ce2f2303eeb33d5cbb7829eaae5621722eba0c91206f797cc8fcedd23",
+        "minimum_rows": 4096,
+        "default_threads": 8,
+        "scope": "source-selected 2x2 astrometric working Gaussian normal equations (p<=32)"
+      },
+      "cf4_weighted_hemisphere_geometry": {
+        "language": "Fortran ISO_C_BINDING",
+        "certified_source_sha256": "d73858d5b1ed380ae9176301beb58f769f5e9cb41bc6afa38209f6f836d80606",
+        "minimum_rows": 1024,
+        "default_threads": 1,
+        "scope": "weighted unit-sphere source mask first/second angular moments"
+      }
+    },
+    "native_cache": "temporary_certified_by_source_sha"
+  },
+  "actual_gaia_auto_receipt": {
+    "kernel": "gaia_weighted_normal_equations",
+    "used": "cpp_native",
+    "source_certified": true,
+    "native_threads": 8,
+    "n_rows": 4889,
+    "binary_path": "/tmp/htt_r79_native_cache/gaia/11ee1b6592e073faf6710982/libhtt_r79_vsh.so",
+    "fallback_reason": null
+  },
+  "sample_60k": {
+    "quality_n": 58750,
+    "condition": 8.062248946727824,
+    "cpp_8_speedup": 9.715688534665514,
+    "cpp_4_speedup": 6.974038508735307,
+    "cf4_fortran_speedup": 2.608951063715735,
+    "errors": {
+      "python": {
+        "F_relative_frobenius": 1.514815226623241e-17,
+        "score_relative_2norm": 3.1128728583804123e-16,
+        "chisq_relative": 0.0,
+        "solution_beta_relative": 4.287958055656974e-16,
+        "covariance_relative": 1.0610781432614809e-16,
+        "F_min_eigen_relative": 2.122783572875368e-15
+      },
+      "C++1": {
+        "F_relative_frobenius": 6.8723782914445725e-15,
+        "score_relative_2norm": 5.565346527308951e-15,
+        "chisq_relative": 0.0,
+        "solution_beta_relative": 9.072215057910429e-15,
+        "covariance_relative": 8.661192708518683e-15,
+        "F_min_eigen_relative": 3.5379726214589464e-16
+      },
+      "C++4": {
+        "F_relative_frobenius": 6.878403169109044e-15,
+        "score_relative_2norm": 5.5652307656314585e-15,
+        "chisq_relative": 0.0,
+        "solution_beta_relative": 9.00666977773769e-15,
+        "covariance_relative": 8.700187402178624e-15,
+        "F_min_eigen_relative": 3.5379726214589464e-16
+      },
+      "C++8": {
+        "F_relative_frobenius": 6.875923241058166e-15,
+        "score_relative_2norm": 5.565220627962844e-15,
+        "chisq_relative": 0.0,
+        "solution_beta_relative": 9.026116800668289e-15,
+        "covariance_relative": 8.684215014322584e-15,
+        "F_min_eigen_relative": 3.5379726214589464e-16
+      }
+    }
+  },
+  "sample_120k": {
+    "quality_n": 117462,
+    "condition": 7.648803031796746,
+    "cpp_8_speedup": 9.989401567465835,
+    "cpp_4_speedup": 7.103553706216669,
+    "cf4_fortran_speedup": 2.656889461494323,
+    "errors": {
+      "python": {
+        "F_relative_frobenius": 2.1014800489149157e-17,
+        "score_relative_2norm": 2.976516235555347e-16,
+        "chisq_relative": 0.0,
+        "solution_beta_relative": 5.398864746235901e-16,
+        "covariance_relative": 3.404616505591222e-17,
+        "F_min_eigen_relative": 1.0248663629054348e-15
+      },
+      "C++1": {
+        "F_relative_frobenius": 1.0841868792548452e-14,
+        "score_relative_2norm": 8.985918200744255e-15,
+        "chisq_relative": 0.0,
+        "solution_beta_relative": 2.0791161337369242e-14,
+        "covariance_relative": 1.0456326181856583e-14,
+        "F_min_eigen_relative": 4.953520754042934e-15
+      },
+      "C++4": {
+        "F_relative_frobenius": 1.0841497290632999e-14,
+        "score_relative_2norm": 8.975943912550851e-15,
+        "chisq_relative": 0.0,
+        "solution_beta_relative": 2.083001219896204e-14,
+        "covariance_relative": 1.04591759543894e-14,
+        "F_min_eigen_relative": 4.782709693558695e-15
+      },
+      "C++8": {
+        "F_relative_frobenius": 1.0841472621874035e-14,
+        "score_relative_2norm": 8.975943912550851e-15,
+        "chisq_relative": 0.0,
+        "solution_beta_relative": 2.0827990185091466e-14,
+        "covariance_relative": 1.0459062278415868e-14,
+        "F_min_eigen_relative": 5.465953935495652e-15
+      }
+    }
+  },
+  "comparator": "original scripts.r67.gaia_frame.accumulate_numpy, exactly same in-memory input, source stratified across sky",
+  "scientific_limit": "kernel throughput and source conditional math only; not FITS loading/total pipeline or physical discovery"
+}

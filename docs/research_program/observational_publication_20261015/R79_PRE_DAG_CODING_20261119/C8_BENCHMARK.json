@@ -1,0 +1,147 @@
+{
+  "schema": "htt.r79.actual_source_precision_speed_comparison/1",
+  "scope": "Original selected Gaia 16D VSH and CF4 full table4 group mask only, not cross-probe inference",
+  "source_sha256": {
+    "Gaia_CRF3_raw": "e69cfff82f762c00d1d6a259c6d003fd20f805f3b1fcd4acc81d847c485120c0",
+    "CF4_table4_raw": "b6edfec68bdfddeada8f3b8f11938f3bbda98a8e2894ff136a369c2ad6594e94"
+  },
+  "Gaia_quality_selected_count": 58750,
+  "Gaia_source_rows_read": 60000,
+  "Gaia_sampling": "uniform_row_index_stride_across_full_original_Gaia_catalogue; no sky-reweighted source inference",
+  "Gaia_original_F_condition": 8.062248946727824,
+  "Gaia_original_numpy": {
+    "runs_seconds": [
+      0.06976351200137287,
+      0.06926327000837773,
+      0.0746606370084919,
+      0.06840304197976366,
+      0.06820872600656003
+    ],
+    "median_seconds": 0.06926327000837773,
+    "minimum_seconds": 0.06820872600656003
+  },
+  "Gaia_new_numpy": {
+    "runs_seconds": [
+      0.07365476305130869,
+      0.07682497799396515,
+      0.07269599899882451,
+      0.07269046897999942,
+      0.07333702500909567
+    ],
+    "median_seconds": 0.07333702500909567,
+    "minimum_seconds": 0.07269046897999942
+  },
+  "Gaia_native_cpp_1": {
+    "runs_seconds": [
+      0.03549256100086495,
+      0.03564299299614504,
+      0.03558313095709309,
+      0.0353837960283272,
+      0.03542378102429211
+    ],
+    "median_seconds": 0.03549256100086495,
+    "minimum_seconds": 0.0353837960283272
+  },
+  "Gaia_native_cpp_4": {
+    "runs_seconds": [
+      0.009931586973834783,
+      0.009362505981698632,
+      0.014200778969097883,
+      0.010383667016867548,
+      0.009838741971179843
+    ],
+    "median_seconds": 0.009931586973834783,
+    "minimum_seconds": 0.009362505981698632
+  },
+  "Gaia_native_cpp_8": {
+    "runs_seconds": [
+      0.005565771949477494,
+      0.0055975919822230935,
+      0.0071290130144916475,
+      0.007982097973581403,
+      0.007312679023016244
+    ],
+    "median_seconds": 0.0071290130144916475,
+    "minimum_seconds": 0.005565771949477494
+  },
+  "Gaia_native_to_original_median_speedup_1": 1.9514869610758656,
+  "Gaia_native_to_original_median_speedup_4": 6.974038508735307,
+  "Gaia_native_to_original_median_speedup_8": 9.715688534665514,
+  "Gaia_all_parity_errors": {
+    "python": {
+      "F_relative_frobenius": 1.514815226623241e-17,
+      "score_relative_2norm": 3.1128728583804123e-16,
+      "chisq_relative": 0.0,
+      "solution_beta_relative": 4.287958055656974e-16,
+      "covariance_relative": 1.0610781432614809e-16,
+      "F_min_eigen_relative": 2.122783572875368e-15
+    },
+    "C++1": {
+      "F_relative_frobenius": 6.8723782914445725e-15,
+      "score_relative_2norm": 5.565346527308951e-15,
+      "chisq_relative": 0.0,
+      "solution_beta_relative": 9.072215057910429e-15,
+      "covariance_relative": 8.661192708518683e-15,
+      "F_min_eigen_relative": 3.5379726214589464e-16
+    },
+    "C++4": {
+      "F_relative_frobenius": 6.878403169109044e-15,
+      "score_relative_2norm": 5.5652307656314585e-15,
+      "chisq_relative": 0.0,
+      "solution_beta_relative": 9.00666977773769e-15,
+      "covariance_relative": 8.700187402178624e-15,
+      "F_min_eigen_relative": 3.5379726214589464e-16
+    },
+    "C++8": {
+      "F_relative_frobenius": 6.875923241058166e-15,
+      "score_relative_2norm": 5.565220627962844e-15,
+      "chisq_relative": 0.0,
+      "solution_beta_relative": 9.026116800668289e-15,
+      "covariance_relative": 8.684215014322584e-15,
+      "F_min_eigen_relative": 3.5379726214589464e-16
+    }
+  },
+  "CF4_full_group_count": 38053,
+  "CF4_mask_40_400_count": 31649,
+  "CF4_numpy_hemisphere": {
+    "runs_seconds": [
+      0.0024147030198946595,
+      0.0024060970172286034,
+      0.002397452015429735,
+      0.0024052049848251045,
+      0.002398342010565102
+    ],
+    "median_seconds": 0.0024052049848251045,
+    "minimum_seconds": 0.002397452015429735
+  },
+  "CF4_native_fortran_hemisphere": {
+    "runs_seconds": [
+      0.0009403090225532651,
+      0.0009260330116376281,
+      0.0009219049825333059,
+      0.0009182780049741268,
+      0.0009153620339930058
+    ],
+    "median_seconds": 0.0009219049825333059,
+    "minimum_seconds": 0.0009153620339930058
+  },
+  "CF4_native_to_numpy_median_speedup": 2.608951063715735,
+  "CF4_hemisphere_parity": {
+    "weights_maximum_abs": 0.0,
+    "weights_relative_l2": 0.0,
+    "means_maximum_abs": 4.9960036108132044e-15,
+    "means_relative_l2": 5.683790716415303e-15,
+    "second_maximum_abs": 4.440892098500626e-15,
+    "second_relative_l2": 5.236201610759938e-15
+  },
+  "CF4_hemisphere_counts": [
+    6614,
+    25035
+  ],
+  "repetitions": 5,
+  "peak_maxrss_kib": 346748,
+  "python": "3.12.3",
+  "numpy": "2.5.4",
+  "native_preflight_claim": "optional verified mathematical kernel, not source matched cosmological parameter estimate",
+  "changed_original_R60_R78_source_code": false
+}
