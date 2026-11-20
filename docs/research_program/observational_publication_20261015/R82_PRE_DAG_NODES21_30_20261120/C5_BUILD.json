@@ -1,0 +1,41 @@
+{
+  "schema": "htt.r82.c5_cpp_fortran_native_source_build/1",
+  "TDD_RED": "test_r82_p1_fast.py first red with missing htt.obsstat.p1_fast module; actual source behavior failure",
+  "TDD_GREEN": "16 tests passed incl explicit compiled C++/Fortran parity, strict ties, missing known/unknown source mass, original 2048 P1 coupled tails and floors",
+  "C_Python_API": "htt/obsstat/p1_fast.py",
+  "native": {
+    "tails": {
+      "source_sha256": "f59fbf863fcff11464e656189d67a3c5d02841dab11438ace31bfbf8fa6edcdb",
+      "binary_sha256": "b6d2d322be72cd7f9e15fc032403480b9aaea81865f9c4589b8f4a5b193b05ed",
+      "compiler": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+      "flags": [
+        "-O3",
+        "-std=c++17",
+        "-fPIC",
+        "-shared",
+        "-fopenmp",
+        "-ffp-contract=off",
+        "-fno-fast-math"
+      ],
+      "compiled_binary_only_in_tmp": "/tmp/htt_r79_native_cache/r82/tails/9d130b07b7c47523c7a076e4/libhtt_r82_tails.so",
+      "size_bytes": 16048,
+      "scientific_source_completed": false
+    },
+    "floor": {
+      "source_sha256": "f716d6f4a6a855250bd3ea01a780fd6ea2f85f6e0d5c854085fa63fbc7ac0e74",
+      "binary_sha256": "e67be88f37bd8a809fab737e7404001d76002a07329d0fab17dddd9a21d6d4c8",
+      "compiler": "GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+      "flags": [
+        "-O3",
+        "-fPIC",
+        "-shared",
+        "-fopenmp",
+        "-fno-fast-math"
+      ],
+      "compiled_binary_only_in_tmp": "/tmp/htt_r79_native_cache/r82/floor/875576d557ceec9212864046/libhtt_r82_floor.so",
+      "size_bytes": 15984,
+      "scientific_source_completed": false
+    }
+  },
+  "physical_claim": "code preparation only, original R78 science states unchanged"
+}
