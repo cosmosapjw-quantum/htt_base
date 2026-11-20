@@ -166,7 +166,7 @@ def prepare_ring_source(directions,groups,counts,velocity_xy,k,*,beta=None):
             "source_role":"R65/R74 fixed ring counts, conditional first-order beta-score, not physical beta"}
 
 
-def batch_ring_occ(directions,axes,prepared,*,native_lib="auto",threads=8,block=32):
+def batch_ring_occ(directions,axes,prepared,*,native_lib="auto",threads=12,block=32):
     n=_unit_vectors(directions,"source directions")
     a=_unit_vectors(axes,"hemisphere axes")
     W=_as_float(prepared["weight"],"three band weights",2)

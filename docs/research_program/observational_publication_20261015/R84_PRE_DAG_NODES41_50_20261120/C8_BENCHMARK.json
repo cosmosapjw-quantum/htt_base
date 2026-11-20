@@ -1,0 +1,326 @@
+{
+  "schema": "htt.r84.c8_source_3band_mask_score_benchmark/1",
+  "original_source_SHA256": {
+    "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/RESULTS/NVSS_CONDITIONAL_CARRIERS.npz": "44e5d4ec3830e84112a328902adb2f3fdb822f7fc88324cff5da18800a9ff1ac",
+    "docs/research_program/observational_publication_20261015/R74_P4_SOURCE_SCORE_FIVEVIEW_20261119/RESULTS.json": "60eb29ed1c49caf35c0b90c9bd17d2fb357fd4e3ce2fde2517716d51b0cd4bad"
+  },
+  "source_N_pixels": 33000,
+  "rings": 185,
+  "flux_bins": 3,
+  "source_precomputation_benchmark": {
+    "median_seconds": 0.022280366999893886,
+    "min_seconds": 0.02150237300020308,
+    "series_seconds": [
+      0.022280366999893886,
+      0.023083666999809793,
+      0.02150237300020308
+    ],
+    "reps": 3
+  },
+  "same_source_axes": {
+    "32": {
+      "axes": 32,
+      "optimized_NumPy": {
+        "median_seconds": 0.004197773000214511,
+        "min_seconds": 0.004139340999699925,
+        "series_seconds": [
+          0.004197773000214511,
+          0.004203634000077727,
+          0.004139340999699925,
+          0.0041823029996521655,
+          0.004347558000063145
+        ],
+        "reps": 5
+      },
+      "certified_Fortran": {
+        "1": {
+          "time": {
+            "median_seconds": 0.00472405600021375,
+            "min_seconds": 0.0046833490000608435,
+            "series_seconds": [
+              0.0046833490000608435,
+              0.004712013999778719,
+              0.00472405600021375,
+              0.004745146000004752,
+              0.004764613999668654
+            ],
+            "reps": 5
+          },
+          "errors": {
+            "F_maxabs": 4.440892098500626e-16,
+            "score_maxabs": 6.661338147750939e-16
+          },
+          "speedup_vs_optimized_NumPy": 0.8885950970997325
+        },
+        "4": {
+          "time": {
+            "median_seconds": 0.0030409770001824654,
+            "min_seconds": 0.002972778000184917,
+            "series_seconds": [
+              0.0031659960000069987,
+              0.0030466779999187565,
+              0.0030409770001824654,
+              0.003030308000234072,
+              0.002972778000184917
+            ],
+            "reps": 5
+          },
+          "errors": {
+            "F_maxabs": 4.440892098500626e-16,
+            "score_maxabs": 6.661338147750939e-16
+          },
+          "speedup_vs_optimized_NumPy": 1.3804027455527073
+        },
+        "8": {
+          "time": {
+            "median_seconds": 0.002476081000168051,
+            "min_seconds": 0.0024410840001110046,
+            "series_seconds": [
+              0.002476081000168051,
+              0.002482031999988976,
+              0.00251923199994053,
+              0.0024566829997638706,
+              0.0024410840001110046
+            ],
+            "reps": 5
+          },
+          "errors": {
+            "F_maxabs": 4.440892098500626e-16,
+            "score_maxabs": 6.661338147750939e-16
+          },
+          "speedup_vs_optimized_NumPy": 1.6953294338632738
+        },
+        "12": {
+          "time": {
+            "median_seconds": 0.0022557809998033918,
+            "min_seconds": 0.002250610999908531,
+            "series_seconds": [
+              0.0022557809998033918,
+              0.002250610999908531,
+              0.0022655289999420347,
+              0.0022550990001946047,
+              0.0022762890002923086
+            ],
+            "reps": 5
+          },
+          "errors": {
+            "F_maxabs": 4.440892098500626e-16,
+            "score_maxabs": 6.661338147750939e-16
+          },
+          "speedup_vs_optimized_NumPy": 1.8608956279800115
+        }
+      },
+      "source_pixels": 33000,
+      "original_ring_count": 185
+    },
+    "96": {
+      "axes": 96,
+      "optimized_NumPy": {
+        "median_seconds": 0.013901141999667743,
+        "min_seconds": 0.013737408999986656,
+        "series_seconds": [
+          0.01402117099996758,
+          0.013901141999667743,
+          0.01383410400012508,
+          0.013737408999986656,
+          0.014124067000011564
+        ],
+        "reps": 5
+      },
+      "certified_Fortran": {
+        "1": {
+          "time": {
+            "median_seconds": 0.011319239999920683,
+            "min_seconds": 0.011315511999782757,
+            "series_seconds": [
+              0.011315511999782757,
+              0.011372039999969275,
+              0.011316804000216507,
+              0.011319239999920683,
+              0.012142878999839013
+            ],
+            "reps": 5
+          },
+          "errors": {
+            "F_maxabs": 5.551115123125783e-16,
+            "score_maxabs": 8.881784197001252e-16
+          },
+          "speedup_vs_optimized_NumPy": 1.2280985295625106
+        },
+        "4": {
+          "time": {
+            "median_seconds": 0.004996574999950099,
+            "min_seconds": 0.004652539999824512,
+            "series_seconds": [
+              0.006423014999654697,
+              0.0058449629996175645,
+              0.004982347999884951,
+              0.004652539999824512,
+              0.004996574999950099
+            ],
+            "reps": 5
+          },
+          "errors": {
+            "F_maxabs": 5.551115123125783e-16,
+            "score_maxabs": 8.881784197001252e-16
+          },
+          "speedup_vs_optimized_NumPy": 2.782134161862191
+        },
+        "8": {
+          "time": {
+            "median_seconds": 0.0043070310002804035,
+            "min_seconds": 0.004156294000040361,
+            "series_seconds": [
+              0.004657649000364472,
+              0.004617101999883744,
+              0.0043070310002804035,
+              0.004213652999624173,
+              0.004156294000040361
+            ],
+            "reps": 5
+          },
+          "errors": {
+            "F_maxabs": 5.551115123125783e-16,
+            "score_maxabs": 8.881784197001252e-16
+          },
+          "speedup_vs_optimized_NumPy": 3.227546307134248
+        },
+        "12": {
+          "time": {
+            "median_seconds": 0.003422524000143312,
+            "min_seconds": 0.003399901000193495,
+            "series_seconds": [
+              0.0034114630002477497,
+              0.0034584129998620483,
+              0.003422524000143312,
+              0.003399901000193495,
+              0.003479572999822267
+            ],
+            "reps": 5
+          },
+          "errors": {
+            "F_maxabs": 5.551115123125783e-16,
+            "score_maxabs": 8.881784197001252e-16
+          },
+          "speedup_vs_optimized_NumPy": 4.061663847816891
+        }
+      },
+      "source_pixels": 33000,
+      "original_ring_count": 185
+    },
+    "256": {
+      "axes": 256,
+      "optimized_NumPy": {
+        "median_seconds": 0.027562084999772196,
+        "min_seconds": 0.02745395900001313,
+        "series_seconds": [
+          0.027590578999934223,
+          0.027562084999772196,
+          0.02823479700009557,
+          0.02745395900001313,
+          0.027455120000013267
+        ],
+        "reps": 5
+      },
+      "certified_Fortran": {
+        "1": {
+          "time": {
+            "median_seconds": 0.027998736999961693,
+            "min_seconds": 0.027971114000138186,
+            "series_seconds": [
+              0.027998736999961693,
+              0.027971114000138186,
+              0.028102554999804852,
+              0.02797494199967332,
+              0.0280059709998568
+            ],
+            "reps": 5
+          },
+          "errors": {
+            "F_maxabs": 7.771561172376096e-16,
+            "score_maxabs": 8.881784197001252e-16
+          },
+          "speedup_vs_optimized_NumPy": 0.98440458224276
+        },
+        "4": {
+          "time": {
+            "median_seconds": 0.009068467999895802,
+            "min_seconds": 0.008964600000126666,
+            "series_seconds": [
+              0.00912696000023061,
+              0.009068467999895802,
+              0.008973487000275782,
+              0.009077786000034394,
+              0.008964600000126666
+            ],
+            "reps": 5
+          },
+          "errors": {
+            "F_maxabs": 7.771561172376096e-16,
+            "score_maxabs": 8.881784197001252e-16
+          },
+          "speedup_vs_optimized_NumPy": 3.039332001842967
+        },
+        "8": {
+          "time": {
+            "median_seconds": 0.00805763099970136,
+            "min_seconds": 0.007938793999983318,
+            "series_seconds": [
+              0.008006664000276942,
+              0.00807986300014818,
+              0.008216935000291414,
+              0.007938793999983318,
+              0.00805763099970136
+            ],
+            "reps": 5
+          },
+          "errors": {
+            "F_maxabs": 7.771561172376096e-16,
+            "score_maxabs": 8.881784197001252e-16
+          },
+          "speedup_vs_optimized_NumPy": 3.4206189140199807
+        },
+        "12": {
+          "time": {
+            "median_seconds": 0.0060655029997178644,
+            "min_seconds": 0.005777154000043083,
+            "series_seconds": [
+              0.006150486000024102,
+              0.00616731800027992,
+              0.005974390000119456,
+              0.0060655029997178644,
+              0.005777154000043083
+            ],
+            "reps": 5
+          },
+          "errors": {
+            "F_maxabs": 7.771561172376096e-16,
+            "score_maxabs": 8.881784197001252e-16
+          },
+          "speedup_vs_optimized_NumPy": 4.544072437364921
+        }
+      },
+      "source_pixels": 33000,
+      "original_ring_count": 185
+    }
+  },
+  "original_r74_single_C1_reference_32axes_3bands_seconds": 0.38434200099982263,
+  "best_at_96_axes_threads": 12,
+  "best_at_96_axes_Fortran_speedup_vs_optimized_numpy": 4.061663847816891,
+  "R84_auto_native_admit_if_speedup_atleast_1p15": true,
+  "default_backend_selection": "fortran",
+  "compiler_source_sha": "7e713f7d9e7f7a3c7828fa23c0c22b595cb39c29f74857fa5f63208521be67b6",
+  "system": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "max_rss_kib": 182268,
+    "OpenBLAS_threads": 1,
+    "OpenMP_threads_tested": [
+      1,
+      4,
+      8,
+      12
+    ]
+  },
+  "bench_scope": "Core in-memory n_pix × n_axes conditional source occupancy F and beta-score; original pixel/ring inputs unchanged; no fit, cosmological bootstrap, physical signal, PV/Planck null or global tilt"
+}

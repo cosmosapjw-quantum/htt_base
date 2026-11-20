@@ -137,3 +137,33 @@ def test_historical_H04_P4_hold_and_B01_scoped_states():
     assert x["next_actual_science_ID"]=="SQ-CF4"
     assert x["new_observational_physical_Pi"] is None
     assert x["H04_complete_PV_selection_covariance"] is None
+
+
+def test_actual_96axis_default_auto_uses_certified_fortran(actual,monkeypatch):
+    from scripts.r84.bench_baseline import axes
+    monkeypatch.delenv("HTT_ANALYSIS_BACKEND",raising=False)
+    n,c,g,k,V,_,axis=actual
+    src=new().prepare_ring_source(n,g,c,V,k)
+    out=new().batch_ring_occ(n,np.vstack([axis,axes(96)]),src)
+    receipt=new().last_p4_receipt()
+    assert receipt["used"]=="fortran_native_ring_score"
+    assert receipt["source_certified"] and receipt["threads"]==12
+    assert out["physical_Pi"] is None and out["actual_physical_GF"] is None
+
+
+def test_source_SHA_mutation_auto_numpy_fallback_without_reusing_native(actual,monkeypatch,tmp_path):
+    from scripts.r84.bench_baseline import axes
+    n,c,g,k,V,_,_=actual
+    src=new().prepare_ring_source(n,g,c,V,k)
+    library=new()
+    original=library.SOURCE
+    changed=tmp_path/"changed_p4.f90"
+    changed.write_bytes(original.read_bytes()+b"\n! intentionally uncertified change\n")
+    monkeypatch.setattr(library,"SOURCE",changed)
+    monkeypatch.setenv("HTT_ANALYSIS_BACKEND","auto")
+    out=library.batch_ring_occ(n,axes(20),src)
+    receipt=library.last_p4_receipt()
+    assert out["F"].shape==(20,3)
+    assert receipt["used"]=="numpy_block_blas_ring_score"
+    assert not receipt["source_certified"]
+    assert "uncertified_R84_Fortran_source_SHA_changed" in receipt["fallback_reason"]
