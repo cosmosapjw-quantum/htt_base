@@ -1,0 +1,121 @@
+{
+  "schema": "htt.r84.pre_DAG_nodes41_50_source_computation_contract/1",
+  "date": "2026-11-20 KST",
+  "original_branch": "research/r69-observable-physics-bridges-20261118",
+  "initial_HEAD": "bdb70b3682c80e4738f61a2b718c4819d1872245",
+  "science_SSOT": "docs/research_program/observational_publication_20261015/R78_UNIFIED_SCIENCE_DAG_20261119/INTEGRATED_DAG.json",
+  "next_science_id": "SQ-CF4",
+  "science_DAG_changes_permitted": false,
+  "original_42_nodes_SHA": "e3264e105cabf78ddac37addc36cacc3cfa05ee942e33e54b431b22e3e87de0d",
+  "targets": [
+    {
+      "ordinal": 41,
+      "id": "H04",
+      "paper": "P3",
+      "api": "conditional_PV_covariance_gate",
+      "scope": "prepare 36D source response, correlated method/PV covariance and SVD/Schur acceptance, no actual physical C yet",
+      "science_state": "pending",
+      "software_state": "PREPARATION_PENDING",
+      "physical_claim_admitted": false
+    },
+    {
+      "ordinal": 42,
+      "id": "H05",
+      "paper": "P3",
+      "api": "competitor_source_comparator",
+      "scope": "freeze original 2025/26 competitor source DOI/estimand, mask and sky-window; metadata only",
+      "science_state": "pending",
+      "software_state": "PREPARATION_PENDING",
+      "physical_claim_admitted": false
+    },
+    {
+      "ordinal": 43,
+      "id": "H06",
+      "paper": "P3",
+      "api": "H03_to_H06_manuscript_gate",
+      "scope": "read-only journal readiness: H02 source missing, hold",
+      "science_state": "pending",
+      "software_state": "PREPARATION_PENDING",
+      "physical_claim_admitted": false
+    },
+    {
+      "ordinal": 44,
+      "id": "V01",
+      "paper": "P4",
+      "api": "observer_normal_rapidity",
+      "scope": "replay original beta_RO/beta_RM/beta_MO and rapidity versus fractions, original source frame",
+      "science_state": "completed_scoped",
+      "software_state": "PREPARATION_PENDING",
+      "physical_claim_admitted": false
+    },
+    {
+      "ordinal": 45,
+      "id": "V02",
+      "paper": "P4",
+      "api": "local_boost_source_response",
+      "scope": "source-conditional Planck finite local boost and original mask/beams; not actual global transfer",
+      "science_state": "completed_scoped",
+      "software_state": "PREPARATION_PENDING",
+      "physical_claim_admitted": false
+    },
+    {
+      "ordinal": 46,
+      "id": "V03",
+      "paper": "P4",
+      "api": "global_tilt_transfer_contract",
+      "scope": "separate normal/matter congruence source history from endpoint boost, missing independent source",
+      "science_state": "completed_scoped",
+      "software_state": "PREPARATION_PENDING",
+      "physical_claim_admitted": false
+    },
+    {
+      "ordinal": 47,
+      "id": "V04",
+      "paper": "P4",
+      "api": "rank_projection_local_global",
+      "scope": "source Jacobian Schur and singular values/identified subspace for joint local/global response, not a physical null",
+      "science_state": "pending",
+      "software_state": "PREPARATION_PENDING",
+      "physical_claim_admitted": false
+    },
+    {
+      "ordinal": 48,
+      "id": "V05",
+      "paper": "P4",
+      "api": "NVSS_source_conditional_beta_score",
+      "scope": "real 33000 pixel 185 ring three-band multi-axis conditioned sky F and dF/dβ; no cosmic Pi",
+      "science_state": "pending",
+      "software_state": "PREPARATION_PENDING",
+      "physical_claim_admitted": false
+    },
+    {
+      "ordinal": 49,
+      "id": "V06",
+      "paper": "P4",
+      "api": "P4_readiness_and_competitor_null",
+      "scope": "source-ranked result and actual missing physical beta/rest-frame/null, HOLD",
+      "science_state": "pending",
+      "software_state": "PREPARATION_PENDING",
+      "physical_claim_admitted": false
+    },
+    {
+      "ordinal": 50,
+      "id": "B01",
+      "paper": "P5",
+      "api": "all_Bianchi_Lie_source_registry",
+      "scope": "original 11 canonical types, Class A/B Lie Jacobi N a=0, Codazzi rank and exceptional VI_-1/9 internal branch; not polarized solver",
+      "science_state": "completed_scoped",
+      "software_state": "PREPARATION_PENDING",
+      "physical_claim_admitted": false
+    }
+  ],
+  "computational_priority": {
+    "hotspot": "R65/R74 original 33k real selected NVSS pixels x 3 flux bins x 32/96/256 sky axes; exact within-ring normalized log-count conditional F and score gradient",
+    "reference": "htt.obsstat.pre_dag_fast.ring_softmax_occupancy and original R74 verify_p4.py exact CMB axis",
+    "native_candidate": "htt/obsstat/native/p4_conditional_axis_scan.f90: Fortran ISO_C_BINDING; source weights/centred 3D score, OpenMP across 96+ axes, no N*axes dense",
+    "numpy_candidate": "source weights and residual per pixel, NumPy block matrix operations (axis block 16), same baseline source identity",
+    "backend_choice": "use measured faster verified path; C++ not automatically chosen if slower; retain R79-R83 default lanes",
+    "physics_limits": "real CMB/RACS/CF4 combined transfer, correlated PV/selection and independent qualified null absent; no relative likelihood significance",
+    "tests": "source-exact R74 3 bands and dF/dbeta, finite difference 3 axes, all-sky gradient zero, ring reindex permutation, SO3 covariance, B01 Jacobi/rank and science gate HOLD"
+  }
+}
