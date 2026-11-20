@@ -1,0 +1,137 @@
+{
+  "schema": "htt.r81.pre_dag_11_20_physical_computational_contracts/1",
+  "date": "2026-11-20 KST",
+  "R78_science_DAG": "docs/research_program/observational_publication_20261015/R78_UNIFIED_SCIENCE_DAG_20261119/INTEGRATED_DAG.json",
+  "actual_science_next_id": "SQ-CF4",
+  "R79_1_10_mapping": "source qualifier priorities 1–10",
+  "R81_11_20_mapping": "11th source qualifier, seven PHY cross-combinations, then E0/E1 original immutable science evidence",
+  "no_scientific_node_state_change": true,
+  "original_42_payload_sha256": "e3264e105cabf78ddac37addc36cacc3cfa05ee942e33e54b431b22e3e87de0d",
+  "targets": [
+    {
+      "ordinal": 11,
+      "id": "SQ-NATIVE",
+      "api": "external_transfer_manifest",
+      "physical_or_source_contract": "No native Bianchi low-l solver; read-only external imported result validation with authentic digest, shape/finiteness/frame/release/observer metadata; input unavailable",
+      "source": "R78 SQ-NATIVE blocked_external",
+      "implementation_route": "external_manifest_validator",
+      "acceptance": "Validator rejects missing/untrusted solver provenance; no native model implementation",
+      "missing_input": "external solver is not supplied",
+      "provenance_and_limits": "source SHA and frame/basis/measure/units required; no physical Pi without independent source/null"
+    },
+    {
+      "ordinal": 12,
+      "id": "PHY-01",
+      "api": "batched_mask_moments",
+      "physical_or_source_contract": "R80 real selected 35970 unit ICRS source n, CMB-frame transformation; weighted hemisphere m±,M± and sharp TypeV STF bound; do not assert physical sigma",
+      "source": "R80 RESULT source hashes",
+      "implementation_route": "fortran_mask_batch",
+      "acceptance": "Exact/deterministic physical typing+source/independent reference and errors; conditional observational outputs only",
+      "missing_input": "full source-matched physical transfer/joint covariance remains unqualified",
+      "provenance_and_limits": "source SHA and frame/basis/measure/units required; no physical Pi without independent source/null"
+    },
+    {
+      "ordinal": 13,
+      "id": "PHY-02",
+      "api": "photon_flux_codazzi",
+      "physical_or_source_contract": "R66 Sgamma and theoretical same-normal P-ffT PSD; photon-only flux condition only if f,eta,Omega supplied; exceptional Lie nullspace",
+      "source": "R66 and R77",
+      "implementation_route": "numpy_photon_psd",
+      "acceptance": "Exact/deterministic physical typing+source/independent reference and errors; conditional observational outputs only",
+      "missing_input": "full source-matched physical transfer/joint covariance remains unqualified",
+      "provenance_and_limits": "source SHA and frame/basis/measure/units required; no physical Pi without independent source/null"
+    },
+    {
+      "ordinal": 14,
+      "id": "PHY-03",
+      "api": "radio_photon_boost",
+      "physical_or_source_contract": "Exact β<1 photon moments, radio k,κ selected source count-density STF closure and log-count separate; common β conditional",
+      "source": "R65 R72 R77",
+      "implementation_route": "numpy_boost_closure",
+      "acceptance": "Exact/deterministic physical typing+source/independent reference and errors; conditional observational outputs only",
+      "missing_input": "full source-matched physical transfer/joint covariance remains unqualified",
+      "provenance_and_limits": "source SHA and frame/basis/measure/units required; no physical Pi without independent source/null"
+    },
+    {
+      "ordinal": 15,
+      "id": "PHY-04",
+      "api": "lie_e2_b2_coupling",
+      "physical_or_source_contract": "Local V_E2=H PΣn, normal Lie V_B2=-c n×Nn; actual Gaia 16D Schur source Fisher E/B coupling no global physical equivalence",
+      "source": "R69 GAIA_E1B1E2B2.json R76",
+      "implementation_route": "numpy_vsh_mask",
+      "acceptance": "Exact/deterministic physical typing+source/independent reference and errors; conditional observational outputs only",
+      "missing_input": "full source-matched physical transfer/joint covariance remains unqualified",
+      "provenance_and_limits": "source SHA and frame/basis/measure/units required; no physical Pi without independent source/null"
+    },
+    {
+      "ordinal": 16,
+      "id": "PHY-05",
+      "api": "normal_flux_rank_aware",
+      "physical_or_source_contract": "MΣ=-3Ωu, cross covariance rank & Schur and Q_Lie with independent flux provenance; never construct u from same MΣ for p-value",
+      "source": "R75 R77",
+      "implementation_route": "numpy_codazzi_residual",
+      "acceptance": "Exact/deterministic physical typing+source/independent reference and errors; conditional observational outputs only",
+      "missing_input": "full source-matched physical transfer/joint covariance remains unqualified",
+      "provenance_and_limits": "source SHA and frame/basis/measure/units required; no physical Pi without independent source/null"
+    },
+    {
+      "ordinal": 17,
+      "id": "PHY-06",
+      "api": "shear_photon_higher_l",
+      "physical_or_source_contract": "Signed chi and derivative / eigenframe rotation; positive angular photon distributions differing higher l; photon F not function of STF5 alone",
+      "source": "R70 R73 R77",
+      "implementation_route": "numpy_shape_dynamics",
+      "acceptance": "Exact/deterministic physical typing+source/independent reference and errors; conditional observational outputs only",
+      "missing_input": "full source-matched physical transfer/joint covariance remains unqualified",
+      "provenance_and_limits": "source SHA and frame/basis/measure/units required; no physical Pi without independent source/null"
+    },
+    {
+      "ordinal": 18,
+      "id": "PHY-07",
+      "api": "radial_design_weighted_stats",
+      "physical_or_source_contract": "Real R80 selected radius/ICRS, R79 radial_design [1,n,STF5,rref/r n], build precision-weighted normal source geometry/score, no full PV/C",
+      "source": "R80 selected 35970, R77",
+      "implementation_route": "cpp_gram_optional",
+      "acceptance": "Exact/deterministic physical typing+source/independent reference and errors; conditional observational outputs only",
+      "missing_input": "full source-matched physical transfer/joint covariance remains unqualified",
+      "provenance_and_limits": "source SHA and frame/basis/measure/units required; no physical Pi without independent source/null"
+    },
+    {
+      "ordinal": 19,
+      "id": "E0",
+      "api": "original_dossier_evidence",
+      "physical_or_source_contract": "Recheck original PR533@13d8d85f dossier commit/paths and 42 original science-node hash; no new science claim",
+      "source": "R78 original E0 completed_scoped",
+      "implementation_route": "source_manifest_anchor",
+      "acceptance": "Historical source hash/status check without claim upgrade",
+      "missing_input": "no new source needed",
+      "provenance_and_limits": "source SHA and frame/basis/measure/units required; no physical Pi without independent source/null"
+    },
+    {
+      "ordinal": 20,
+      "id": "E1",
+      "api": "original_CF4_schur_evidence",
+      "physical_or_source_contract": "Recheck original E1 17-scenario/12-test evidence source identity and already scoped Schur output, no new physical shear",
+      "source": "R78 original E1 completed_scoped; docs/research_program/cf4_schur_loop8_20261015/results/result.json",
+      "implementation_route": "source_manifest_anchor",
+      "acceptance": "Historical source hash/status check without claim upgrade",
+      "missing_input": "no new source needed",
+      "provenance_and_limits": "source SHA and frame/basis/measure/units required; no physical Pi without independent source/null"
+    }
+  ],
+  "C1_baseline": {
+    "source": "real selected 35970 CF4 groups",
+    "num_axes": 96,
+    "NumPy_mask_seconds_median": 0.2673249749996103,
+    "NumPy_weighted_radial_gram_seconds_median": 0.0006208920003700769
+  },
+  "engineering": {
+    "Fortran": "one-pass angular mask per axis, optional OpenMP over axes, no fast math or N^2 memory",
+    "Cpp": "optional fused diagonal-weight Gram/score; not promoted if NumPy is faster or if tolerance fails",
+    "NumPy": "exact same-stf basis, stable SPD and nullspace treatment, actual source metadata",
+    "backend": "HTT_ANALYSIS_BACKEND=auto with source SHA-certified compiled cache and fallback; independent R79 remains primary",
+    "performance_gate": "max relative errors <2e-11 on well-conditioned matrix/score/inverse and exact source geometry; report ill-conditioning separately",
+    "stage": "C1–C10 one coding research loop covering 10 nodes, substantive validated stage commits only",
+    "safety": "no historical source or 42/60 science state mutations; no forbidden native Bianchi solver; original user untracked files untouched"
+  }
+}
