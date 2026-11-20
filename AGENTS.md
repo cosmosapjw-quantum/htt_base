@@ -36,6 +36,13 @@ Work in the canonical DAG defined by `docs/codex_handoff/pr_backlog.yaml`; `mach
 - Default next bounded science work is **SQ-CF4**, exact selected 35,970-group CF4 indicator/PV/selection covariance with provenance and heldout check. If missing, record precise blocked source and choose SQ-GAIA. No forced physical expansion/tilt detection, no new native low-ell Bianchi solver, no automatic next-loop or main merge.
 - R78/REGRESSION_RECEIPT.json distinguishes 8 inherited legacy regression failures (release-evidence SHA, PR-122 canonical venv and stale V03 fixture) from R78 strict source/DAG 32 checks and unaffected 42 scoped regressions. Never assert repo-wide PASS from the latter; repair legacy evidence/environment only as an explicitly scoped separate task.
 
+## R86 pre-execution code-readiness STOP (2026-11-20)
+
+- Before any local coding-agent *science DAG start*, inspect docs/research_program/observational_publication_20261015/R86_PRE_EXEC_READINESS_20261120/EXECUTION_READINESS_DAG.json and RESEARCH_PLAN_KO.md. R86 is a source+software readiness overlay only; **R78 INTEGRATED_DAG.json remains the scientific SSOT** (60 nodes, 129 edges, original 42 immutable, NEXT_ID=SQ-CF4).
+- The R79–R85 coding-ordinal inventory is **not** the R78 scientific DAG order or evidence of 60 complete scientific executables. As of R86, 5/6 coding-preparation packages have C10; R83 31–40 lacks C9/C10 final artifacts and has protected dirty local files. The 42-node legacy publication CLI does not dispatch R78's SQ source qualifiers. Source-level CF4 correlated PV/selection/method calibration and heldout are not qualified. **BLOCK_LOCAL_AGENT_START: do not publish a START handoff or launch a worker for the 60-node program.**
+- Follow R86/BLOCKER_LEDGER.json: first close R83 C9/C10 safely; construct a bounded SQ-CF4 method/PV/calibration/selection and true heldout source result or explicit block; implement/read-only-test a fail-closed R78 60-node SQ-CF4 adapter. This is actionable code work, not a new science gate. Preserve dirty R83 files and unrelated files, never auto-merge main, and never fabricate external Bianchi all-m transfer, Planck calibrated MC/null or normal-frame Gaia/CF4 covariance.
+- Re-audit read only: PYTHONPATH=. PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -B scripts/r86_audit_preexecution.py and tests/obsstat/test_r86_preexecution_readiness.py. A PASS means the **readiness decision is correctly BLOCK**, not that science is executable.
+
 ## Existing-checkout policy (owner reaffirmed 2026-10-14)
 
 Use the existing primary checkout for ongoing work. On the owner's machine this

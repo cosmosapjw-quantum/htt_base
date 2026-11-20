@@ -109,3 +109,16 @@ SQ-CF4에서 할 일:
 R78과 직접 관련된 구조/권한/출처 검사 **32/32 PASS**, 위 상속 실패 파일·fixture를 포함하지 않는 기존 과학 DAG 관련 테스트 **42/42 PASS**다. 이 성적을 과장하여 저장소 전체 regression PASS라고 주장하지 않는다. 이전 PR-122 release-evidence hash와 canonical Python 환경을 강제로 수정하거나 scientific claim freeze 상태를 올리는 일도 이번 과학계획 통합 범위에서 수행하지 않았다. 해당 8건은 원인별 별도 환경/증거 정합성 PR을 요청할 때만 재검토한다.
 
 이에 따라 수정 횟수는 Rev1 실제 source/ready 오류, Rev2 권한·도식화, Rev3 기존 회귀 실패의 정확한 provenance 및 검증 구분으로 **총 3회**다. 별도의 R4 검토 계층이나 새 과학 DAG gate를 더하지 않았으며, 60개 노드·129개 edge 및 원래 42 payload는 그대로다. R78 DAG revision 3은 이 상속 검증 제약을 기계 판독 정보로 보존하고, root PUBLICATION_DAG의 활성 science pointer SHA가 revision 3을 정확히 가리킨다. 향후 연구의 최우선 NEXT_ID는 여전히 SQ-CF4다.
+
+
+## 10. 2026-11-20 R86 최종 local 실행 준비도 감사 및 조건부 STOP
+
+**과학 DAG 정본 R78 revision3, 60 nodes / 129 edges / 원본 42 science payload와 SQ-CF4 NEXT_ID는 변경하지 않는다.** R79–R85 coding preparation 1–60 numbering은 이 DAG의 노드 배열/위상 정렬 순서가 아니라 독립 작업 목록이며, 각 node ID와 실제 source를 대조한 새 R86 execution-readiness overlay를 아래 경로에 게시한다.
+
+- docs/research_program/observational_publication_20261015/R86_PRE_EXEC_READINESS_20261120/EXECUTION_READINESS_DAG.json: 원본 R78 60 IDs/129 edges와 과학 states 그대로, 각 coding-stage source/코드 증거, 현재 full production physics source 부족, NO_START 판정
+- 같은 경로의 RESEARCH_PLAN_KO.md 및 BLOCKER_LEDGER.json: 최소 후속 코드 구현 P0-A=R83 C9/C10 봉인, P0-B=SQ-CF4 실제 method/PV/selection/heldout source, P0-C=60-node fail-closed dry-run adapter. 외부 B02 polarized all-m/T,E,B 및 Planck calibrated null은 가짜 data로 대체하지 않음.
+- scripts/r86_audit_preexecution.py와 tests/obsstat/test_r86_preexecution_readiness.py: read-only 60-ID coverage, 129 dependency edges, original source SHA and qualified code/readiness gate; 실행용 task packet 생성 또는 agent dispatch 없음.
+
+2026-11-20 감사에서 소스 관련 회귀 259/259 PASS, R78 strict 32/32 PASS가 확인되었지만 **전체 repository clean checkout PASS나 전체 science DAG executable은 아니다**. 기존 R83의 C1–C8 수치 구현만 Git에 게시되어 C9 review/C10 matrix·provenance·report/handoff가 5개 누락돼 있다. 현재 R83 test는 tracked dirty, R83 runner는 untracked이므로 자동 add/reset 금지. R78의 과거 8 inherited CI failures도 별도 유지한다.
+
+따라서 **R86 verdict = BLOCK_LOCAL_AGENT_START**, local coding agent 시작용 handoff/worker dispatch는 만들지 않는다. R78의 SQ-CF4 ready_scoped는 35,970-group source-bounded diagnostic 진입 가능성이지 correlated PV/calibration/selection C와 heldout validation을 통과한 과학 실행 패킷이라는 뜻이 아니다. 위 P0-A/B/C의 실제 검산과 owner task scope 확인 뒤에만 다시 한정된 local dispatch 여부를 결정한다. R78 original 42 acceptance, 11 SQ source status, 7 PHY conditional theorem states 및 original software PR backlog authority를 승격하지 않는다.

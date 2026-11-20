@@ -1,0 +1,148 @@
+{
+  "schema": "htt.r86.preexecution_blocker_and_repair_ledger/1",
+  "date": "2026-11-20 KST",
+  "program_verdict": "BLOCK_LOCAL_AGENT_START",
+  "scope": "R78 60-node physical science DAG preexecution software readiness, not mathematical proof or physics code release",
+  "not_a_new_science_gate": true,
+  "required_code_actions": [
+    {
+      "id": "R86-P0-01",
+      "priority": "P0",
+      "category": "SOFTWARE_VERIFICATION_AND_STAGE_CLOSE",
+      "owned_scope": "R83 C9/C10, code preparation ordinals 31-40",
+      "impact": "One ten-node preflight package never reached recorded C9 review/C10 report/provenance; current R83 test has unstaged edit and runner is untracked.",
+      "source_evidence": [
+        "git log --grep='R83 C' exposes C1-C8 only",
+        "R83_PRE_DAG_NODES31_40_20261120 lacks C9_REVIEW.json,C10_NODE_MATRIX.json,PROVENANCE.json,REPORT_KO.md,HANDOFF_KO.md",
+        "git status shows tests/obsstat/test_r83_p2p3_fast.py modified and scripts/r83/run_h03_fast.py untracked"
+      ],
+      "minimal_code_action": "Inspect exact diff, distinguish user edit vs previously interrupted R83 implementation, run clean/dirty explicit parity and original H03/L02/L03 source tests, complete missing C9/C10 only with truthful evidence, selectively commit owned changes.",
+      "positive_acceptance": "R83 C9/C10 original 10 ID mapping and hashes from exact current HEAD, zero unrelated stage changes, original H03 4×9 and C36 and 8 pilot FFP processing ID verified, source/doc/test clean-checkout reproducible.",
+      "stop_condition": "If dirty R83 has source conflict or clean test fails, preserve it and record blocker; do not silently git restore."
+    },
+    {
+      "id": "R86-P0-02",
+      "priority": "P0",
+      "category": "SOFTWARE_ORCHESTRATION_MISSING",
+      "owned_scope": "R78 60-node task packet adapter and bounded SQ-CF4 read-only dry-run",
+      "impact": "R78 validate_unified.py validates structure/authority, not source-level executability; scripts/htt_publication_dag.py handles original 42 science nodes only and reports 0 ready, whereas R78 has four scoped source-ready qualifiers. No actual 60-node task dispatcher/typed source packet adapter.",
+      "minimal_code_action": "Implement a minimal R78/R86 adapter with --dry-run --node SQ-CF4 only. Require R78 DAG SHA and source hashes, print correct source/units/covariance/heldout gate, prohibit any file mutation or async worker by default, reject stale/unknown/non-frontier/blocked nodes; preserve topological and source owner.",
+      "positive_acceptance": "Unit tests: all 60 IDs unique, R78 129 hard edges and source status, SQ-CF4 allowed only for bounded source diagnostic, B02/S02 blocked fail-closed, physics proof/gate statuses unchanged, real CF4 source/method probe and reproducible return artifact path. Explicit opt-in needed for actual execution.",
+      "stop_condition": "Do not generate 'START AGENT' or real run packet while broad program source/coding readiness blocked."
+    },
+    {
+      "id": "R86-P0-03",
+      "priority": "P0",
+      "category": "SCIENTIFIC_SOURCE_AND_CODE_NOT_READY",
+      "owned_scope": "SQ-CF4 -> H02/H04/K04 and PHY-01/07",
+      "impact": "R80 verifies selected 35970 group source lineage but not source method zero point, correlated PV and selection covariance or independent heldout coverage; H03/K02 diagonal working C is not physically calibrated C.",
+      "source_evidence": [
+        "R80 selected 35970 groups source hashes verified",
+        "R80 found 185 OTHER groups with zero table3 method indicators and 926 multimethod overlap groups",
+        "2026 CF4 forward-modeling papers require selection-matched mocks/PV corrections"
+      ],
+      "minimal_code_action": "Construct exact 35970 group by 7 method presence/genealogy, source zero-point nuisance design and physically justified covariance decomposition C=N+S_PV+J_cal Sigma_cal J_cal^T+C_sel; isolate mathematically unprovided blocks as unqualified. Prepare one registered spatial/source/method heldout test, document selection/velocity mock assumptions and source ownership, stable whitened rank/nullspace and speed under true C.",
+      "positive_acceptance": "One matched source covariance/coverage result with original group ID/method/zero-point and actually heldout source; or a reproducible partially identified sharp bound/no-go on full-data source with a genuine null/coverage. Both require cited source and identifiability evidence.",
+      "stop_condition": "If matched physical covariance is unavailable, record blocked_input for this outcome; stop before new H04/P3/PHY cosmological claim, move to separately scoped SQ-GAIA only by owner-approved next task."
+    }
+  ],
+  "external_or_science_dependent_gates": [
+    {
+      "id": "R86-EXT-01",
+      "priority": "P0_FOR_FULL_SIX_PAPER_DAG",
+      "category": "EXTERNAL_SOURCE",
+      "nodes": [
+        "SQ-CMB-NULL",
+        "L03",
+        "L04",
+        "L05",
+        "L06",
+        "SQ-PHOTON-FLUX",
+        "PHY-02",
+        "PHY-06"
+      ],
+      "missing": "Actual Commander/Planck matched T/E/B component separation MC, identical processing, foreground/null and physical photon f/angular moments normal-frame flux. Eight L03 processing pairs ≠ a real calibrated ensemble.",
+      "action": "Keep science dependent nodes blocked; use actual official release and source-hash-matched MC only; do not generate fake physical null."
+    },
+    {
+      "id": "R86-EXT-02",
+      "priority": "P0_FOR_FULL_SIX_PAPER_DAG",
+      "category": "EXTERNAL_POLARIZED_TRANSFER",
+      "nodes": [
+        "SQ-NATIVE",
+        "B02",
+        "B03",
+        "B04",
+        "B05",
+        "PHY-05"
+      ],
+      "missing": "True Bianchi all-m polarized T/E/B history/mode/IC/full transfer, independent source and Planck response; R85 B02 is an NPZ digest/coverage validator, not physical solver.",
+      "action": "External native result must be delivered with metadata/IC/history/hash, validated for exact supported domain; do not silently implement speculative full Boltzmann solver in htt_base."
+    },
+    {
+      "id": "R86-EXT-03",
+      "priority": "P0_FOR_FULL_SIX_PAPER_DAG",
+      "category": "COMMON_GR_CONGRUENCE_SOURCE",
+      "nodes": [
+        "SQ-GAIA",
+        "SQ-RADIO",
+        "SQ-FRAME",
+        "SQ-OPTICAL",
+        "SQ-CROSS-COV",
+        "K03",
+        "K04",
+        "K05",
+        "K06",
+        "V04",
+        "V05",
+        "V06",
+        "PHY-01",
+        "PHY-03",
+        "PHY-04",
+        "PHY-07"
+      ],
+      "missing": "Independent emission/observer/matter normal frame/source response; Gaia scan/AGN/selection, NVSS LSS/flux migration and actual common 4-probe cross covariance/null; no sampled true omega from six Gaia cross moments.",
+      "action": "Qualify each probe only on its exact source and mask/frame, then a single explicit joint covariance and null; geometric/source-ranked operators do not establish astrophysical inference."
+    },
+    {
+      "id": "R86-EXT-04",
+      "priority": "P1",
+      "category": "P1_PHYSICAL_ANCHOR",
+      "nodes": [
+        "SQ-P1-ANCHOR",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06"
+      ],
+      "missing": "274-row physical x anchor, valid source denominator and matched null; 2048 working coupled Sobol q_app can characterize sensitivity only.",
+      "action": "Retain unknown mass 1 and partial bounds until true same-congruence source available."
+    }
+  ],
+  "additional_implementation_hygiene": [
+    {
+      "id": "R86-P1-04",
+      "category": "STALE_DECLARED_CODE_PATH",
+      "action": "Correct only execution-readiness references in R86 overlay: source original H01 proposed htt/obsstat/htt_hubble_depth_window.py and H03 proposed scripts/run_htt_hubble_depth_tomography.py do not exist. Actual source H03_20261016/src/h03_tomography.py and htt/obsstat/p2p3_fast.py exist. Do not mutate original immutable 42 node payload."
+    },
+    {
+      "id": "R86-P1-05",
+      "category": "INHERITED_LEGACY_TEST_FAILURES",
+      "action": "Separate R78 recorded 8 inherited failures (stale evidence SHA, absent PR-122 canonical venv and stale V03 fixture). Do not claim repository-wide clean PASS or silently rebaseline old PR evidence."
+    },
+    {
+      "id": "R86-P1-06",
+      "category": "SOFTWARE_BACKLOG_AUTHORITY",
+      "action": "291 current software PR entries remain distinct from R78 60 scientific nodes and six source-specific code-preflight packages; only C10+real compiled/source tests validate a scoped kernel, not production completion of all backlog items."
+    }
+  ],
+  "handoff_policy": {
+    "local_agent_start_published": false,
+    "agent_delegated": false,
+    "blocker_status": "FAIL_CLOSED_NO_START",
+    "first_next_science_id_from_parent": "SQ-CF4",
+    "minimum_release_gate": "R86-P0-01 and R86-P0-02 plus a verified bounded/source-qualified SQ-CF4 task packet and owner acceptance. No global 60-node start until external missing data resolved.",
+    "source_mutations_from_this_audit": "R78 42 scientific payload and R78 integrated DAG immutable; only derived R86 overlay and R78 research-plan addendum plus AGENTS pointer."
+  }
+}

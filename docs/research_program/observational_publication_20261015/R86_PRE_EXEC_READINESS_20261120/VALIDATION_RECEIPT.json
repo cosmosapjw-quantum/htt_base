@@ -1,0 +1,84 @@
+{
+  "schema": "htt.r86.preexecution_60_science_node_source_and_software_audit_receipt/1",
+  "date": "2026-11-20 KST",
+  "parent_60node_DAG_sha256": "90aba8c1ca9c8e3a7744be0f071dcfe09b81e5353892aca13878191e20f58c11",
+  "original_42_payload_sha256": "e3264e105cabf78ddac37addc36cacc3cfa05ee942e33e54b431b22e3e87de0d",
+  "science_DAG_nodes": 60,
+  "science_DAG_edges": 129,
+  "R78_strict_source_and_authority_checks": {
+    "passed": 32,
+    "failed": 0
+  },
+  "R86_new_readiness_unit_tests": {
+    "passed": 8,
+    "failed": 0
+  },
+  "R79_R85_scoped_code_regressions": {
+    "passed": 259,
+    "failed": 0,
+    "seconds": 18.09,
+    "caveat": "includes existing locally modified R83 test; not a clean checkout or repository-wide suite"
+  },
+  "legacy_original_42_cli": {
+    "science_nodes": 42,
+    "ready_now": 0,
+    "interpretation": "original science gate executor, not R78 SQ-qualifier readiness"
+  },
+  "R78_source_frontier": {
+    "ready_scoped_source_qualifiers": 4,
+    "current_priority": "SQ-CF4",
+    "note": "ready_scoped means bounded diagnostic permission, not physics/source-accepted task packet"
+  },
+  "stage_packages_C10": {
+    "sealed": 5,
+    "total": 6,
+    "unsealed_group": "R83_PRE_DAG_NODES31_40_20261120",
+    "missing_files": [
+      "C9_REVIEW.json",
+      "C10_NODE_MATRIX.json",
+      "PROVENANCE.json",
+      "REPORT_KO.md",
+      "HANDOFF_KO.md"
+    ]
+  },
+  "real_source_files": [
+    {
+      "name": "CF4 35970 selected NPZ",
+      "sha256": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+      "exact_match": true
+    },
+    {
+      "name": "CF4 original group table4",
+      "sha256": "b6edfec68bdfddeada8f3b8f11938f3bbda98a8e2894ff136a369c2ad6594e94",
+      "exact_match": true
+    },
+    {
+      "name": "CF4 original method table3",
+      "sha256": "c2351c52de3e38a7fd80256b6f0818c550dd9f105b91e84fbcc1eb7234160b4d",
+      "exact_match": true
+    },
+    {
+      "name": "K03 external Gaia cross moments",
+      "sha256": "70fc2fee88803a7211c1c157ff87b4adb05b0807a00c03dc38d51f31b3842662",
+      "exact_match": true
+    }
+  ],
+  "source_B02_full_allm_polarized_numeric_transfer": "NOT_AVAILABLE_IN_QUALIFIED_LOCAL_SOURCE_INTAKE",
+  "R80_CF4_selected_35970_group_source": "EXACT_BYTE_IDENTITY_REPRODUCED_LINEAGE_ONLY",
+  "R83_dirty_source": "PREEXISTING_TEST_MODIFIED_AND_RUNNER_UNTRACKED_NOT_STAGED",
+  "R78_inherited_legacy_test_failures": 8,
+  "current_broad_physics_code_status": "NOT_READY_FOR_COMPLETE_60_NODE_SCIENCE_EXECUTION",
+  "local_agent_handoff_start": "NOT_PUBLISHED_NOT_DISPATCHED",
+  "whole_repository_clean_checkout_tests": "NOT_RUN",
+  "runtime": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "system": "Linux-7.0.0-43-generic-x86_64-with-glibc2.39"
+  },
+  "reproduce": [
+    "PYTHONPATH=. PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -B scripts/r86_audit_preexecution.py",
+    "PYTHONPATH=. PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python -B -m pytest -p no:cacheprovider -q tests/obsstat/test_r86_preexecution_readiness.py",
+    ".venv/bin/python -B docs/research_program/observational_publication_20261015/R78_UNIFIED_SCIENCE_DAG_20261119/validate_unified.py --strict-authority"
+  ]
+}
