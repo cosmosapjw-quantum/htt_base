@@ -1,0 +1,153 @@
+{
+  "schema": "htt.r85.c10_nodes51_60_exact_code_preparation_science_matrix/1",
+  "date": "2026-11-20 KST",
+  "R78_science_DAG_identity": "e3264e105cabf78ddac37addc36cacc3cfa05ee942e33e54b431b22e3e87de0d",
+  "R78_full_node_edge_counts": [
+    60,
+    129
+  ],
+  "science_dag_next_ID_unchanged": "SQ-CF4",
+  "science_states_mutated": false,
+  "pre_DAG_code_nodes_prepared": 10,
+  "source_real_CF4_N": 35970,
+  "K02_working_methods": [
+    "FP",
+    "OTHER",
+    "SN",
+    "TF"
+  ],
+  "K02_gauge_rank_of_13_augmented_columns": 12,
+  "K02_4x8_max_error_vs_original_QR": 3.2068792066297647e-13,
+  "K02_32cov_max_error_vs_original_QR": 1.609823385706477e-15,
+  "K03_real_Gaia_external_n": 755850,
+  "K03_whitened_6x102_working_rank": 6,
+  "B02_full_real_polarized_atlas": "NOT_QUALIFIED",
+  "fast_default": "htt.obsstat.p5p6_fast.k02_method_profiled; certified Fortran12 for exact selected source, independent optimized NumPy fallback",
+  "C8_fortran_fastest_speedup_over_optimized_NumPy": 1.5104517926022878,
+  "C9_source_fingerprint_corrected_speedup_over_NumPy": 1.4487168943746533,
+  "C9_source_and_numeric_tests_pass": 259,
+  "R78_strict_checks_pass": 32,
+  "scientific_claim_ceiling": "SOURCE_CONDITIONAL_CODE_PREP_NOT_SOURCE_QUALIFIED_PHYSICAL_OBSERVATION_OR_PAPER",
+  "nodes": [
+    {
+      "ordinal": 51,
+      "node_id": "B02",
+      "paper": "P5",
+      "original_R78_science_state_preserved": "pending",
+      "implementation_state": "EXTERNAL_ALLM_TEB_SCHEMA_SHA_AND_MODE_HISTORY_VALIDATOR_ONLY",
+      "code_interface": "external_polarized_atlas_manifest",
+      "physical_source_contract": "Require external real all-(ell,m) T/E/B, family/mode/history/units/frame, exact digest and not fabricated solver",
+      "unresolved_required_input": "NO_AUTHENTIC_EXTERNAL_ALLM_POLARIZED_TRANSFER",
+      "scientific_admission": false,
+      "original_source_evidence_not_modified": true
+    },
+    {
+      "ordinal": 52,
+      "node_id": "B03",
+      "paper": "P5",
+      "original_R78_science_state_preserved": "pending",
+      "implementation_state": "CONDITIONAL_PLANCK_RESPONSE_RECTANGULAR_NUMERICAL_PRODUCT",
+      "code_interface": "external_transfer_planck_response",
+      "physical_source_contract": "Only convolve source-qualified external transfer with truly matching Planck beam/mask response, no sky independence inferred",
+      "unresolved_required_input": "B02_NUMERIC_ATLAS_AND_ACTUAL_RESPONSE_REQUIRED",
+      "scientific_admission": false,
+      "original_source_evidence_not_modified": true
+    },
+    {
+      "ordinal": 53,
+      "node_id": "B04",
+      "paper": "P5",
+      "original_R78_science_state_preserved": "pending",
+      "implementation_state": "COVARIANCE_WHITENED_FAMILY_SUBSPACE_OVERLAP_API",
+      "code_interface": "conditional_family_subspace_confusion",
+      "physical_source_contract": "Whitened template principal angles/cosine overlap under supplied source covariance, not real Bayes factor",
+      "unresolved_required_input": "NO_B02_B03_SOURCE_OR_INJECTION_RECOVERY",
+      "scientific_admission": false,
+      "original_source_evidence_not_modified": true
+    },
+    {
+      "ordinal": 54,
+      "node_id": "B05",
+      "paper": "P5",
+      "original_R78_science_state_preserved": "pending",
+      "implementation_state": "ORIGINAL_P5_READY_GATE_SOURCE_HOLD",
+      "code_interface": "journal_source_gate",
+      "physical_source_contract": "Read-only paper readiness and physics claims; remains pending until B04 and X02",
+      "unresolved_required_input": "NO_FAMILY_IDENTIFICATION_PAPER_ADMISSION",
+      "scientific_admission": false,
+      "original_source_evidence_not_modified": true
+    },
+    {
+      "ordinal": 55,
+      "node_id": "K01",
+      "paper": "P6",
+      "original_R78_science_state_preserved": "completed_scoped",
+      "implementation_state": "LOCAL_1PLUS3_OPTICAL_RADIAL_VORTICITY_BLINDNESS_TESTED",
+      "code_interface": "normal_congruence_kinematics",
+      "physical_source_contract": "One-congruence signed sigma, omega, A and beta with metric (-,+,+,+) and c, radial antisymmetric blindness",
+      "unresolved_required_input": "PHYSICAL_OBSERVER_AND_EMITTER_TRANSFER_UNRESOLVED",
+      "scientific_admission": false,
+      "original_source_evidence_not_modified": true
+    },
+    {
+      "ordinal": 56,
+      "node_id": "K02",
+      "paper": "P6",
+      "original_R78_science_state_preserved": "completed_scoped",
+      "implementation_state": "ORIGINAL_35970_CF4_FOURWINDOW_12D_TO_4X8_32D_NATIVE_VERIFIED",
+      "code_interface": "fast_CF4_method_profiled_shape",
+      "physical_source_contract": "Original 35970-selected-group four-window 12D method intercept+shape8, full 32x32 correlated working joint covariance",
+      "unresolved_required_input": "PHYSICAL_OPTICAL_NORMAL_MAPPING_AND_SOURCE_CALIBRATION_UNRESOLVED",
+      "scientific_admission": false,
+      "original_source_evidence_not_modified": true
+    },
+    {
+      "ordinal": 57,
+      "node_id": "K03",
+      "paper": "P6",
+      "original_R78_science_state_preserved": "pending",
+      "implementation_state": "ACTUAL_755850_GAIA_NONRADIAL_A6_K6X102_QH6_SOURCE_RANK_VERIFIED",
+      "code_interface": "nonradial_Gaia_cross_moment_intake",
+      "physical_source_contract": "Actual external K03 755850 Gaia proper-motion cross moment A6,K6x102,qH6 exact SHA and conditioning/PSD, not global omega",
+      "unresolved_required_input": "SKY_SELECTION_AND_QUALIFIED_NONRADIAL_COVARIANCE_UNRESOLVED",
+      "scientific_admission": false,
+      "original_source_evidence_not_modified": true
+    },
+    {
+      "ordinal": 58,
+      "node_id": "K04",
+      "paper": "P6",
+      "original_R78_science_state_preserved": "pending",
+      "implementation_state": "CONDITIONAL_JACOBIAN_COVARIANCE_IDENTIFIABILITY_API",
+      "code_interface": "rank_projected_physical_identification",
+      "physical_source_contract": "Conditional GLS source operator/subspace and physically typed if true optical transfer C is supplied",
+      "unresolved_required_input": "H04_TRUE_SOURCE_PV_AND_PHYSICAL_OPTICAL_TRANSFER_MISSING",
+      "scientific_admission": false,
+      "original_source_evidence_not_modified": true
+    },
+    {
+      "ordinal": 59,
+      "node_id": "K05",
+      "paper": "P6",
+      "original_R78_science_state_preserved": "pending",
+      "implementation_state": "COMMON_CONGRUENCE_AND_INDEPENDENT_CROSS_SOURCE_GUARD",
+      "code_interface": "joint_same_congruence_gate",
+      "physical_source_contract": "Require independent CMB/CF4/Gaia normal/source frame and combined covariance, no deterministic-view multiplication",
+      "unresolved_required_input": "INDEPENDENT_SAME_CONGRUENCE_PHYSICAL_CROSS_COV_MISSING",
+      "scientific_admission": false,
+      "original_source_evidence_not_modified": true
+    },
+    {
+      "ordinal": 60,
+      "node_id": "K06",
+      "paper": "P6",
+      "original_R78_science_state_preserved": "pending",
+      "implementation_state": "ORIGINAL_P6_READY_GATE_SOURCE_HOLD",
+      "code_interface": "paper_readiness",
+      "physical_source_contract": "Hold publication until K03-K05 genuine source/transfer accepted",
+      "unresolved_required_input": "NOT_JOURNAL_READY",
+      "scientific_admission": false,
+      "original_source_evidence_not_modified": true
+    }
+  ]
+}
