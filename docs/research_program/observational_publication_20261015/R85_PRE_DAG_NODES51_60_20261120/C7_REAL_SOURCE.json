@@ -1,0 +1,88 @@
+{
+  "schema": "htt.r85.c7_original_CF4_K02_32D_and_Gaia_K03_source_replay/1",
+  "source_sha256": {
+    "docs/research_program/cf4_schur_loop8_20261015/inputs/selected_source_observables.npz": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+    "/mnt/extdrive/workdir/htt_open_data/k03_pm_20261023/cross_moments.npz": "70fc2fee88803a7211c1c157ff87b4adb05b0807a00c03dc38d51f31b3842662",
+    "docs/research_program/observational_publication_20261015/READY_20261016/B01_BIANCHI_ATLAS_REGISTRY.json": "3597afcc6fcb995339347ab21be1245effe5eb6428c1818e353fb042cc39021f",
+    "docs/research_program/observational_publication_20261015/R75_P5_LIE_TILT_FIVEVIEW_20261119/RESULTS.json": "ed6ae8e36f0e79b7afcdc27ea679a4658c690d66fde817acb0a64c3a2ab67b45",
+    "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-ATLAS/REPORT.md": "1778e4cd1fb774e8bcb2e4e6652ce65faa29910f3d350894f9cbe487c344cd05",
+    "docs/research_program/observational_publication_20261015/NEXT_20261016/K02/k02_source_identification.py": "acd9ee5565414788ec4f9e433ae420297398505babf870fe81c998d78c290429"
+  },
+  "original_selected_CF4_groups": 35970,
+  "source_four_windows": [
+    0.025,
+    0.04,
+    0.06,
+    0.08
+  ],
+  "source_diagnostic_modes_per_window": 8,
+  "working_source_12D_rank": 12,
+  "augmented_13D_method_monopole_gauge_rank": 12,
+  "numpy_4x8_original_QR_max_abs_error": 7.333023077649159e-12,
+  "fortran_4x8_original_QR_max_abs_error": 3.2068792066297647e-13,
+  "numpy_C32_original_QR_max_abs_error": 2.831068712794149e-15,
+  "fortran_C32_original_QR_max_abs_error": 1.609823385706477e-15,
+  "fortran_C32_smallest_eigen": 0.0031987567381872675,
+  "source_C32_cross_window_frobenius": 0.175177612727282,
+  "original_K02_condition_F": [
+    9.751817081898311,
+    16.153459403245346,
+    59.665479188776416,
+    713.5389833786522
+  ],
+  "native_backend_receipt": {
+    "used": "fortran_source_info_cross",
+    "source_certified": false,
+    "threads": 12,
+    "original_source_count": 35970,
+    "fallback_reason": null,
+    "binary": "/tmp/htt_r79_native_cache/r85/2843a7c72a1fc1f463cbfded/libhtt_r85_k02_source.so"
+  },
+  "K03_actual_Gaia_source_moments": {
+    "source_n": 755850,
+    "source_z_range": [
+      0.08634503930807114,
+      4.627459688728043
+    ],
+    "A_min_eigen": 6.8321961251457575,
+    "rank_whitened_K": 6,
+    "observed_raw_cross_moment_qH": [
+      -2.351006457270365,
+      -63.76799213028238,
+      -20.1703736074853,
+      8.786012896851584,
+      116.2940684323327,
+      48.342411871280305
+    ],
+    "actual_normal_vorticity": null,
+    "physical_congruence_identified": false,
+    "conditional_source_SHA256": "70fc2fee88803a7211c1c157ff87b4adb05b0807a00c03dc38d51f31b3842662"
+  },
+  "K01_omega_radial_maxabs": 2.8588022611998032e-34,
+  "B01_registry_canonical_count": 11,
+  "B02_full_physical_all_m_atlas": "MISSING_AUTHENTIC_NUMERIC_TRANSFER",
+  "B02_historical_source_report_SHA256": "1778e4cd1fb774e8bcb2e4e6652ce65faa29910f3d350894f9cbe487c344cd05",
+  "R78_science_status": {
+    "science_nodes": {
+      "B02": "pending",
+      "B03": "pending",
+      "B04": "pending",
+      "B05": "pending",
+      "K01": "completed_scoped",
+      "K02": "completed_scoped",
+      "K03": "pending",
+      "K04": "pending",
+      "K05": "pending",
+      "K06": "pending"
+    },
+    "original_42_science_SHA": "e3264e105cabf78ddac37addc36cacc3cfa05ee942e33e54b431b22e3e87de0d",
+    "next_actual_science_ID": "SQ-CF4",
+    "science_gates_modified": false
+  },
+  "scientific_nonclaims": [
+    "K02 apparent 32-dimensional source rank is not normal sigma/acceleration",
+    "K03 real moments are not observed independent total normal flux or vorticity",
+    "B02 has no qualified full-T/E/B all-m primordial mode/history family atlas",
+    "K04-K06 physical optical and cross-source congruence/null not qualified"
+  ]
+}
