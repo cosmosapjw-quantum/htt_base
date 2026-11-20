@@ -1,0 +1,350 @@
+{
+  "schema": "htt.r82.c8_source_comparable_native_and_algorithm_bench/1",
+  "input_sha256": {
+    "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/results/paired_functional_arrays.npz": "cd38f438a0bf07385b07478c7b5c122df5af1e9bb48a5575fe1cad40ef261f27",
+    "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/results/FUNCTIONAL_SENSITIVITY_RESULT.json": "80792f508bd2be07fae153f662c9726ce5dc0ddabf78ea15ef66a0d27219355b"
+  },
+  "original_joint_unit": "2048 original coupled draws x four original overlapping CF4 windows",
+  "source_errors": "Original w=1/2048; Q_app conditional not physical x_C; no source independent null",
+  "tail_thresholds": {
+    "1024": {
+      "old_per_threshold_NumPy": {
+        "runs_seconds": [
+          0.0654665699985344,
+          0.06546090900155832,
+          0.06570756399742095,
+          0.06521520699971006,
+          0.06528617900039535
+        ],
+        "median_seconds": 0.06546090900155832,
+        "minimum_seconds": 0.06521520699971006,
+        "repeats": 5
+      },
+      "new_sorted_NumPy": {
+        "runs_seconds": [
+          0.0018334939995838795,
+          0.0018665460011106916,
+          0.0018050200014840811,
+          0.0017904730011650827,
+          0.0017844920002971776
+        ],
+        "median_seconds": 0.0018050200014840811,
+        "minimum_seconds": 0.0017844920002971776,
+        "repeats": 5
+      },
+      "new_sorted_vs_old_rel_error": 0.0,
+      "native_CPP": {
+        "1": {
+          "time": {
+            "runs_seconds": [
+              0.017684462000033818,
+              0.017650297999352915,
+              0.017655637999268947,
+              0.017650617999606766,
+              0.0176800640001602
+            ],
+            "median_seconds": 0.017655637999268947,
+            "minimum_seconds": 0.017650297999352915,
+            "repeats": 5
+          },
+          "rel_error_against_sorted": 0.0,
+          "speedup_vs_original": 3.7076490243099007,
+          "speedup_vs_optimized_sorted": 0.10223476498322066
+        },
+        "4": {
+          "time": {
+            "runs_seconds": [
+              0.008895076000044355,
+              0.008960317998571554,
+              0.008927386999857845,
+              0.00865222900029039,
+              0.008642450000479585
+            ],
+            "median_seconds": 0.008895076000044355,
+            "minimum_seconds": 0.008642450000479585,
+            "repeats": 5
+          },
+          "rel_error_against_sorted": 0.0,
+          "speedup_vs_original": 7.359229870687097,
+          "speedup_vs_optimized_sorted": 0.20292350526011024
+        },
+        "8": {
+          "time": {
+            "runs_seconds": [
+              0.004659276997699635,
+              0.0046419840000453405,
+              0.004625863999535795,
+              0.004657903999031987,
+              0.004671398997743381
+            ],
+            "median_seconds": 0.004657903999031987,
+            "minimum_seconds": 0.004625863999535795,
+            "repeats": 5
+          },
+          "rel_error_against_sorted": 0.0,
+          "speedup_vs_original": 14.053726529177611,
+          "speedup_vs_optimized_sorted": 0.38751764782168185
+        }
+      },
+      "new_sorted_speedup_vs_original": 36.26602971032819
+    },
+    "4096": {
+      "old_per_threshold_NumPy": {
+        "runs_seconds": [
+          0.26226327599943033,
+          0.26421839899921906,
+          0.26743106199864997,
+          0.26182329800212756,
+          0.26309444299840834
+        ],
+        "median_seconds": 0.26309444299840834,
+        "minimum_seconds": 0.26182329800212756,
+        "repeats": 5
+      },
+      "new_sorted_NumPy": {
+        "runs_seconds": [
+          0.002388870001595933,
+          0.002562176996434573,
+          0.002372478997131111,
+          0.002383731000008993,
+          0.0023653549978917
+        ],
+        "median_seconds": 0.002383731000008993,
+        "minimum_seconds": 0.0023653549978917,
+        "repeats": 5
+      },
+      "new_sorted_vs_old_rel_error": 0.0,
+      "native_CPP": {
+        "1": {
+          "time": {
+            "runs_seconds": [
+              0.06793265499800327,
+              0.06810048099941923,
+              0.06775855700107059,
+              0.06824886100002914,
+              0.06781734800097183
+            ],
+            "median_seconds": 0.06793265499800327,
+            "minimum_seconds": 0.06775855700107059,
+            "repeats": 5
+          },
+          "rel_error_against_sorted": 0.0,
+          "speedup_vs_original": 3.872871493188974,
+          "speedup_vs_optimized_sorted": 0.035089619271895925
+        },
+        "4": {
+          "time": {
+            "runs_seconds": [
+              0.03534242499881657,
+              0.039017137001792435,
+              0.03405172299972037,
+              0.04040155500115361,
+              0.03346207199865603
+            ],
+            "median_seconds": 0.03534242499881657,
+            "minimum_seconds": 0.03346207199865603,
+            "repeats": 5
+          },
+          "rel_error_against_sorted": 0.0,
+          "speedup_vs_original": 7.444153676699264,
+          "speedup_vs_optimized_sorted": 0.06744673010097105
+        },
+        "8": {
+          "time": {
+            "runs_seconds": [
+              0.01806344599754084,
+              0.018003372999373823,
+              0.018037887999525992,
+              0.018089635002979776,
+              0.01810358199873008
+            ],
+            "median_seconds": 0.01806344599754084,
+            "minimum_seconds": 0.018003372999373823,
+            "repeats": 5
+          },
+          "rel_error_against_sorted": 0.0,
+          "speedup_vs_original": 14.565019489317047,
+          "speedup_vs_optimized_sorted": 0.1319643549925919
+        }
+      },
+      "new_sorted_speedup_vs_original": 110.3708610566443
+    }
+  },
+  "anchor_floor_grids": {
+    "32x24": {
+      "old_source_NumPy": {
+        "runs_seconds": [
+          0.029943353998532984,
+          0.029979371996887494,
+          0.030039877001399873,
+          0.03003232199989725,
+          0.030322048001835356
+        ],
+        "median_seconds": 0.03003232199989725,
+        "minimum_seconds": 0.029943353998532984,
+        "repeats": 5
+      },
+      "new_chunked_NumPy": {
+        "runs_seconds": [
+          0.025395737997314427,
+          0.025437337000767002,
+          0.0256554280022101,
+          0.02569668499927502,
+          0.02568774800238316
+        ],
+        "median_seconds": 0.0256554280022101,
+        "minimum_seconds": 0.025395737997314427,
+        "repeats": 5
+      },
+      "new_chunked_vs_old_rel_error": 1.0336093794835104e-15,
+      "native_Fortran": {
+        "1": {
+          "time": {
+            "runs_seconds": [
+              0.009949782001058338,
+              0.010275294996972661,
+              0.010504889000003459,
+              0.010318567001377232,
+              0.010687082001823
+            ],
+            "median_seconds": 0.010318567001377232,
+            "minimum_seconds": 0.009949782001058338,
+            "repeats": 5
+          },
+          "rel_error_vs_chunked_NumPy": 1.0808912557383482e-15,
+          "speedup_vs_original": 2.910512864420883,
+          "speedup_vs_chunked": 2.486336329335831
+        },
+        "4": {
+          "time": {
+            "runs_seconds": [
+              0.0035063659997831564,
+              0.00325240600068355,
+              0.003022593999048695,
+              0.0029433849995257333,
+              0.0029419620004773606
+            ],
+            "median_seconds": 0.003022593999048695,
+            "minimum_seconds": 0.0029419620004773606,
+            "repeats": 5
+          },
+          "rel_error_vs_chunked_NumPy": 1.0808912557383482e-15,
+          "speedup_vs_original": 9.935943103622042,
+          "speedup_vs_chunked": 8.487884251171234
+        },
+        "8": {
+          "time": {
+            "runs_seconds": [
+              0.002637396999489283,
+              0.0016845229984028265,
+              0.0016640739995636977,
+              0.0015838830004213378,
+              0.0015973990011843853
+            ],
+            "median_seconds": 0.0016640739995636977,
+            "minimum_seconds": 0.0015838830004213378,
+            "repeats": 5
+          },
+          "rel_error_vs_chunked_NumPy": 1.0808912557383482e-15,
+          "speedup_vs_original": 18.047467845643524,
+          "speedup_vs_chunked": 15.417239863693968
+        }
+      },
+      "chunked_speedup_vs_original": 1.1706030395326126
+    },
+    "64x64": {
+      "old_source_NumPy": {
+        "runs_seconds": [
+          0.15747430600094958,
+          0.1541234729993448,
+          0.15410869699917384,
+          0.15377275399805512,
+          0.1587270960008027
+        ],
+        "median_seconds": 0.1541234729993448,
+        "minimum_seconds": 0.15377275399805512,
+        "repeats": 5
+      },
+      "new_chunked_NumPy": {
+        "runs_seconds": [
+          0.13355693299672566,
+          0.13340045799850486,
+          0.13260507000086363,
+          0.13308498400147073,
+          0.13227380600073957
+        ],
+        "median_seconds": 0.13308498400147073,
+        "minimum_seconds": 0.13227380600073957,
+        "repeats": 5
+      },
+      "new_chunked_vs_old_rel_error": 1.0199365757787213e-15,
+      "native_Fortran": {
+        "1": {
+          "time": {
+            "runs_seconds": [
+              0.05165349099843297,
+              0.05173239899886539,
+              0.05160278499897686,
+              0.05158491099791718,
+              0.05161306400259491
+            ],
+            "median_seconds": 0.05161306400259491,
+            "minimum_seconds": 0.05158491099791718,
+            "repeats": 5
+          },
+          "rel_error_vs_chunked_NumPy": 1.0693015074147038e-15,
+          "speedup_vs_original": 2.986132987407918,
+          "speedup_vs_chunked": 2.578513532829202
+        },
+        "4": {
+          "time": {
+            "runs_seconds": [
+              0.01424639600008959,
+              0.014205529001628747,
+              0.014218823998817243,
+              0.01431978400069056,
+              0.014211410998541396
+            ],
+            "median_seconds": 0.014218823998817243,
+            "minimum_seconds": 0.014205529001628747,
+            "repeats": 5
+          },
+          "rel_error_vs_chunked_NumPy": 1.0693015074147038e-15,
+          "speedup_vs_original": 10.83939663450122,
+          "speedup_vs_chunked": 9.35977433946303
+        },
+        "8": {
+          "time": {
+            "runs_seconds": [
+              0.007722657999693183,
+              0.007762593002553331,
+              0.008020067998586455,
+              0.007738285999948857,
+              0.007715904001088347
+            ],
+            "median_seconds": 0.007738285999948857,
+            "minimum_seconds": 0.007715904001088347,
+            "repeats": 5
+          },
+          "rel_error_vs_chunked_NumPy": 1.0693015074147038e-15,
+          "speedup_vs_original": 19.917003972244427,
+          "speedup_vs_chunked": 17.198250879115903
+        }
+      },
+      "chunked_speedup_vs_original": 1.1580831162563132
+    }
+  },
+  "synthetic_partial_unknown_sorted_reference_error": 0.0,
+  "runtime": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "RSS_max_kib": 138032,
+    "openblas_threads": "1",
+    "native_worker_counts": [
+      1,
+      4,
+      8
+    ]
+  },
+  "speed_claim_scope": "in-memory original conditional q_app numerical functions, no P1 full source-to-observable cosmological likelihood"
+}
