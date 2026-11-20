@@ -195,3 +195,66 @@ def test_19_20_immutable_historical_evidence_anchors():
     assert x["R78_science_nodes_42_sha"]=="e3264e105cabf78ddac37addc36cacc3cfa05ee942e33e54b431b22e3e87de0d"
     assert x["R78_next_id"]=="SQ-CF4"
     assert x["physical_claim_upgrade"] is False
+
+def test_11_external_native_archive_resource_budget_precedes_npz_materialization(tmp_path):
+    payload=tmp_path/"intake.npz"
+    np.savez(payload,ell=np.array([2],dtype=int),m=np.array([0],dtype=int),
+             E=np.zeros(1),B=np.zeros(1))
+    h=hashlib.sha256(payload.read_bytes()).hexdigest()
+    manifest=tmp_path/"manifest.json"
+    manifest.write_text(json.dumps({
+      "schema":"htt.external_bianchi_polarized/1",
+      "source_kind":"external_native_result","solver_commit":"unqualified_fixture",
+      "model_family":"Bianchi_I","observer_frame":"normal",
+      "units":"dimensionless_photon_TEB","data_file":payload.name,
+      "data_sha256":h}))
+    with pytest.raises(ValueError,match="uncompressed"):
+        phy().inspect_external_native(manifest,max_uncompressed_bytes=64)
+
+
+def test_11_external_native_manifest_rejects_escape_paths(tmp_path):
+    source=tmp_path/"source.npz"
+    np.savez(source,ell=np.array([2]),m=np.array([0]),E=np.zeros(1),B=np.zeros(1))
+    manifest=tmp_path/"manifest.json"
+    h=hashlib.sha256(source.read_bytes()).hexdigest()
+    manifest.write_text(json.dumps({"schema":"htt.external_bianchi_polarized/1",
+       "source_kind":"external_native_result","solver_commit":"unqualified",
+       "model_family":"Bianchi_V","observer_frame":"normal",
+       "units":"dimensionless_photon_TEB","data_file":"../source.npz",
+       "data_sha256":h}))
+    with pytest.raises(ValueError,match="relative NPZ"):
+        phy().inspect_external_native(manifest)
+
+
+def test_12_native_source_mutation_never_reuses_valid_certificate(tmp_path,monkeypatch):
+    monkeypatch.setenv("HTT_ANALYSIS_BACKEND","auto")
+    p=phy()
+    rng=np.random.default_rng(812)
+    n=rng.normal(size=(5000,3));n/=np.linalg.norm(n,axis=1)[:,None]
+    arr=sample_axes(24)  # 120,000 source-axis pairs > auto-native threshold
+    p.multi_axis_hemisphere(n,arr)
+    assert p.last_phy_receipt()["used"]=="fortran_batch"
+    mutated=tmp_path/"multi_axis_mask_mutated.f90"
+    mutated.write_bytes(p._SOURCE["mask"].read_bytes()+b"\n! deliberately untrusted source change\n")
+    monkeypatch.setitem(p._SOURCE,"mask",mutated)
+    x=p.multi_axis_hemisphere(n,arr)
+    assert x["counts"].sum()==len(n)*len(arr)
+    receipt=p.last_phy_receipt()
+    assert receipt["used"]=="numpy_reference"
+    assert "uncertified_mask_source_changed" in receipt["fallback_reason"]
+
+
+def test_12_native_multiworker_bitwise_stability_on_source_finite():
+    import os
+    so=os.environ.get("HTT_R81_MASK_SO")
+    if not so:pytest.skip("optional Fortran shared library not provided")
+    p=phy()
+    n=np.random.default_rng(221).normal(size=(5019,3))
+    n/=np.linalg.norm(n,axis=1)[:,None]
+    arr=sample_axes(48)
+    w=np.random.default_rng(42).uniform(.1,1.1,len(n))
+    a=p.multi_axis_hemisphere(n,arr,weights=w,native_lib=so,threads=1)
+    b=p.multi_axis_hemisphere(n,arr,weights=w,native_lib=so,threads=8)
+    for k in ("weights","means","second"):
+        np.testing.assert_array_equal(a[k],b[k])
+    np.testing.assert_array_equal(a["counts"],b["counts"])

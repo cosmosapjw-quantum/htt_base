@@ -14,6 +14,7 @@ import platform
 import shutil
 import subprocess
 import tempfile
+import zipfile
 import threading
 from pathlib import Path
 from functools import lru_cache
@@ -189,8 +190,14 @@ def multi_axis_hemisphere(directions,axes,weights=None,*,native_lib="auto",threa
     return {"weights":sums,"counts":counts,"means":means,"second":mats}
 
 
-def inspect_external_native(manifest):
-    """Read-only schema+SHA validator, NEVER validates external physical transfer."""
+def inspect_external_native(manifest,*,max_uncompressed_bytes=128*1024*1024):
+    """Bounded read-only external source check, NEVER validates GR transfer.
+
+    Validate the NPZ ZIP metadata before allowing NumPy to materialize arrays.
+    This is an input-memory budget, NOT a physical completeness criterion.
+    """
+    if not isinstance(max_uncompressed_bytes,int) or max_uncompressed_bytes<=0:
+        raise ValueError("positive external uncompressed byte budget required")
     p=Path(manifest)
     if not p.is_file():raise FileNotFoundError(p)
     obj=json.loads(p.read_text())
@@ -205,8 +212,24 @@ def inspect_external_native(manifest):
     source=(p.parent/file).resolve()
     if not source.is_relative_to(p.parent.resolve()) or not source.is_file():
         raise FileNotFoundError("external source outside declared manifest folder or missing")
+    # The external provider controls this archive. Refuse oversized
+    # decompression before NumPy allocates any large scientific arrays.
+    if source.stat().st_size>256*1024*1024:
+        raise ValueError("external source file byte budget exceeded")
     if hashlib.sha256(source.read_bytes()).hexdigest()!=obj["data_sha256"]:
         raise ValueError("external source sha256 mismatch")
+    try:
+        with zipfile.ZipFile(source) as archive:
+            infos=archive.infolist()
+            expected={"ell.npy","m.npy","E.npy","B.npy"}
+            if len(infos)!=4 or {item.filename for item in infos}!=expected:
+                raise ValueError("external NPZ expected four unique arrays")
+            if any(item.flag_bits & 0x1 for item in infos):
+                raise ValueError("external encrypted NPZ not allowed")
+            if sum(item.file_size for item in infos)>max_uncompressed_bytes:
+                raise ValueError("external NPZ uncompressed source byte budget exceeded")
+    except zipfile.BadZipFile as exc:
+        raise ValueError("malformed external NPZ") from exc
     with np.load(source,allow_pickle=False) as z:
         if set(z.files)!={"ell","m","E","B"}:
             raise ValueError("polarized external output fields incomplete")

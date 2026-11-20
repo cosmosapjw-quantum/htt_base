@@ -1,0 +1,75 @@
+{
+  "schema": "htt.r81.c9_adversarial_numerics_and_phy_review/1",
+  "date": "2026-11-20 KST",
+  "stage_scope": "C9 one bounded fresh adversarial review of R81 11-20 original data and native code",
+  "reviewed_diff": "new source preflight htt/obsstat/phy_fast.py + C++ weighted Gram / Fortran multi-axis, scripts/r81, 10 target contracts and R80/R79 callers",
+  "spec_axis_verdict": "LOOKS_GOOD_SCOPED_CODE_PREPARATION_ONLY",
+  "physical_claim_verdict": "NOT_READY_FOR_CROSS_INSTRUMENT_OBSERVATIONAL_INFERENCE",
+  "findings": [
+    {
+      "id": "C9-P1",
+      "severity": "P1",
+      "classification": "UNTRUSTED_EXTERNAL_ARCHIVE_RESOURCE_GAP",
+      "before": "native-only external solver intake verified source SHA but could decompress unbounded NPZ arrays before checking resource usage",
+      "red": "test_11_external_native_archive_resource_budget_precedes_npz_materialization failed because there was no byte budget argument",
+      "fix": "verify ZIP entries, names, count, compression header byte sum, 128MiB default cap before np.load and reject malformed input; the budget is changeable only as explicit argument for qualified external provider",
+      "after": "19 new tests PASS; fake size-budget exceedance rejected, no solver output synthesized"
+    },
+    {
+      "id": "C9-P2",
+      "severity": "P2",
+      "classification": "TEST_THRESHOLD_INPUT_ERROR",
+      "before": "source mutation test had 1400x24<100000 and therefore selected small-input NumPy fallback instead of warming the native path",
+      "fix": "use 5000 sources and 24 axes to exceed native threshold, then mutate source and verify no stale certified native reuse",
+      "after": "native warm source mutation auto NumPy fallback verified, independently source-certified code unchanged"
+    },
+    {
+      "id": "C9-P2b",
+      "severity": "P2",
+      "classification": "TYPED_OBSERVATIONAL_NONIDENTIFIABILITY",
+      "finding": "R66 photon STF source lacks flux and η, R49 normal j_N not independently observed, R65 radio beta and selection curvature unqualified, Gaia proper motion not local Lie N; mathematical quantities are not physical source nulls",
+      "disposition": "code only, Pi remains None/working, original R78 node states untouched"
+    },
+    {
+      "id": "C9-P3",
+      "severity": "P3",
+      "classification": "NUMERICAL_PARALLEL_STABILITY",
+      "finding": "Fortran batch axes independent and compensated within each axis, 1/4/8-worker results agreeing with serial and R79 original NumPy at ~1e-13 relative; no fast math",
+      "disposition": "Fortran multi-mask auto default admitted"
+    },
+    {
+      "id": "C9-P3b",
+      "severity": "P3",
+      "classification": "PERFORMANCE_REGRESSION_AVOIDED",
+      "finding": "C++ weighted 12D Gram at 8 workers slower than NumPy despite math parity <1.2e-14",
+      "disposition": "C++ not made default; NumPy BLAS kept and native optional"
+    }
+  ],
+  "proof": {
+    "R81_new_and_existing_scoped_tests": {
+      "passed": 196,
+      "failed": 0,
+      "skipped": 0
+    },
+    "R78_strict_source_graph_authority_checks": {
+      "passed": 32,
+      "failed": 0
+    },
+    "full_original_CF4_source": 35970,
+    "PHY01_actual_weighted_96_axis_replay": [
+      0.010465026051667846,
+      0.020025986378094583
+    ],
+    "PHY01_R80_unweighted_selected_CMB_axis_max_abs_error": 5.0306980803327406e-17,
+    "Fortran_96_axis_8_worker_median_speedup": 49.176708406168416,
+    "Fortran_256_axis_8_worker_median_speedup": 54.04881989322638,
+    "C++_best_weighted_Gram_speedup": 0.4629699780159541,
+    "C++_auto_enabled": false,
+    "native_external_Bianchi_solver": "NOT_IMPLEMENTED",
+    "external_native_physical_solution": "NOT_PROVIDED",
+    "repository_wide_test_suite": "NOT_RUN"
+  },
+  "claim_limits": "Only source identity and conditional math/geometry verified; no new actual cross-probe physical Pi, Einstein-Boltzmann, Sachs full high-z, global tilt, or Bianchi-family detection",
+  "reviewer_provenance": "serial bounded adversarial review; no native delegation tool exposed",
+  "next": "C10 final scoped manifest, source-qualified handoff and per-target code/prep state"
+}
