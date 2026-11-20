@@ -1,0 +1,43 @@
+{
+  "schema": "htt.r81.c5_compiled_cpp_fortran_receipt/1",
+  "TDD_red": "ImportError before implementation, observed in this run",
+  "native": {
+    "mask": {
+      "source": "/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/obsstat/native/multi_axis_mask.f90",
+      "source_sha256": "a3d244a89b8b30f2ff5c92069e239855b7a18253aa8f2485d2e4147b2519f8dc",
+      "binary_sha256": "90448adb90068f0b4c0fe2f395b44bbbd02f781f0559a650765f1329f9215188",
+      "size_bytes": 15832,
+      "compiler": "GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+      "flags": [
+        "-O3",
+        "-fPIC",
+        "-shared",
+        "-fopenmp",
+        "-fno-fast-math"
+      ],
+      "verified_compile": true
+    },
+    "gram": {
+      "source": "/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/obsstat/native/weighted_gram.cpp",
+      "source_sha256": "1dcf82112852d660f7e2445b40de642e47f0efe59dd8d84a0a9f97bc51f22fb7",
+      "binary_sha256": "06d89734eda5e935baba68fad91579601a55026292a7b48e7f585de4d66c6ffa",
+      "size_bytes": 17216,
+      "compiler": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+      "flags": [
+        "-O3",
+        "-std=c++17",
+        "-fPIC",
+        "-shared",
+        "-fopenmp",
+        "-ffp-contract=off",
+        "-fno-fast-math"
+      ],
+      "verified_compile": true
+    }
+  },
+  "test_results": {
+    "phy_fast": 15,
+    "failed": 0
+  },
+  "native_binary_delivery": "disposable /tmp source-versioned only"
+}
