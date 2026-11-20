@@ -1,0 +1,95 @@
+{
+  "schema": "htt.r81.c1_physical_DAG_nodes11_20_baseline/1",
+  "source_sha256": {
+    "docs/research_program/cf4_schur_loop8_20261015/inputs/selected_source_observables.npz": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+    "docs/research_program/observational_publication_20261015/R80_SQ_CF4_SOURCE_BINDING_20261120/RESULT.json": "a0faf26516c9300a093979701a6b9401b79cca1cffbd36b31d549fb6cb3a5ca4",
+    "/mnt/extdrive/workdir/raw/cf4_full/table4.dat": "b6edfec68bdfddeada8f3b8f11938f3bbda98a8e2894ff136a369c2ad6594e94"
+  },
+  "original_science_42_SHA": "e3264e105cabf78ddac37addc36cacc3cfa05ee942e33e54b431b22e3e87de0d",
+  "ordinal_interpretation": "R79 1..10 = first ten of 11 source qualifiers. R81 11=SQ-NATIVE, 12..18=PHY01..07, 19..20=E0/E1 original immutable evidence nodes",
+  "n_source_groups": 35970,
+  "n_axes": 96,
+  "methods": "NumPy R79 explicitly native_lib=None for reference mask; BLAS single-thread weighted 12D Gram",
+  "weight_source": "actual selected e_dmzp inverse squared, NOT full 35970x35970 PV/calibration source covariance",
+  "response": "synthetic detrended log distance, NOT fitted physical velocity/Hubble",
+  "mask_baseline": {
+    "median_s": 0.2673249749996103,
+    "min_s": 0.2663093139999546,
+    "runs_s": [
+      0.2673249749996103,
+      0.2663093139999546,
+      0.268907677000243
+    ]
+  },
+  "radial12_baseline": {
+    "median_s": 0.0006208920003700769,
+    "min_s": 0.0006181870003274526,
+    "runs_s": [
+      0.0006706550002490985,
+      0.0006181870003274526,
+      0.0006208920003700769
+    ]
+  },
+  "mask_ref_case0": [
+    [
+      72890.55204035726,
+      197870.2413076599
+    ],
+    [
+      [
+        -0.33767510428628567,
+        -0.005345503840625629,
+        -0.276475248464734
+      ],
+      [
+        -0.3293023145111805,
+        -0.05842806560948122,
+        0.45201636727000927
+      ]
+    ],
+    [
+      [
+        [
+          0.5420383867283545,
+          0.05451854857899908,
+          -0.014836637025698807
+        ],
+        [
+          0.05451854857899908,
+          0.27451688272145897,
+          -0.0038028832700587735
+        ],
+        [
+          -0.014836637025698807,
+          -0.003802883270058782,
+          0.1834447305501617
+        ]
+      ],
+      [
+        [
+          0.4704816195562638,
+          0.05469216338473438,
+          -0.17875362609715537
+        ],
+        [
+          0.05469216338473438,
+          0.265762795927006,
+          -0.027304747101045922
+        ],
+        [
+          -0.17875362609715537,
+          -0.027304747101045922,
+          0.2637555845169044
+        ]
+      ]
+    ]
+  ],
+  "gram_norm": 459956.04599647044,
+  "gram_min_eigen": 6339.8613358925395,
+  "gram_condition": 62.630053651750785,
+  "score_norm": 22787.743055024494,
+  "chisq": 22483.378355181227,
+  "python": "3.12.3",
+  "numpy": "2.5.4",
+  "evidence": "real selected CF4 geometry and marginal group errors with intentionally synthetic response; independent full source C unavailable"
+}
