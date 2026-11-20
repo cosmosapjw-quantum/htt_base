@@ -1,0 +1,67 @@
+{
+  "schema": "htt.r85.c9_bounded_adversarial_K02_B02_K03_source_review/1",
+  "date": "2026-11-20 KST",
+  "verdict": "ACCEPT_SCOPED_SOFTWARE_PREPARATION_ONLY",
+  "science_verdict": "B02_B03_B04_B05_K03_K04_K05_K06_PENDING; NO_PHYSICAL_SOURCE_ADMISSION",
+  "findings": [
+    {
+      "id": "R85-C9-01",
+      "priority": "P1",
+      "classification": "SOURCE_IDENTITY_FAILURE",
+      "before": "K02 prepared CF4 X and w arrays were separately mutable: a 12D matrix row swap at fixed N left an apparently valid SPD model and was silently accepted with weights tied to different group IDs",
+      "evidence_red": "test_K02_prepared_source_does_not_silently_accept_rows_with_mismatched_groups failed to raise before change",
+      "repair": "Bind group_id, 12D X, four window weights, sigma and y to SHA256 of canonical C-order arrays at source preparation, verify at every call, preserve exact method order and 35970 original source SHA",
+      "evidence_green": "Test now rejects mismatched original rows; source-original Fortran/NumPy/QR cross 32 parity and 259 related regressions PASS."
+    },
+    {
+      "id": "R85-C9-02",
+      "priority": "P2",
+      "classification": "VALID_RECTANGULAR_MATRIX_REJECTED",
+      "before": "Conditional B03 projected source response used np.isfinite([M,T]); ragged arrays raised before doing a valid non-square operator product.",
+      "repair": "Independent ndim/shape and np.isfinite(M) / np.isfinite(T) checks, then M@T in original source axes",
+      "evidence_green": "test_B03_rectangular_response_is_a_valid_conditional_operator passes with 4x3 response and 3x2 template; this is mathematical conditional, not qualified Planck observation."
+    },
+    {
+      "id": "R85-C9-03",
+      "priority": "P2",
+      "classification": "PHYSICAL_SOURCE_LIMIT",
+      "finding": "K02 source 12D fixed method gauge and K03 Gaia preaggregated moment rank are actual source numerics but do not identify physical normal-frame shear/omega, global congruence or transfer; external B02 full physical all-m polarized atlas absent.",
+      "decision": "Retain B02-B05 and K03-K06 pending, K01/K02 completed_scoped historical; no real physical Pi, GF or paper admission."
+    },
+    {
+      "id": "R85-C9-04",
+      "priority": "P3",
+      "classification": "PERFORMANCE_AFTER_TRUST_REPAIR",
+      "finding": "Full hash of original K02 group IDs, X,W,sigma,y adds per-call overhead. Rebenchmark same original 35970 input and do not claim prior 1.59x auto unchanged.",
+      "result": "On exact source 7-run median native Fortran12 remains 1.448716894x optimized NumPy and 12.4947478x saved original QR, with shape8 maxabs 7.1876e-12 and C32 1.9984e-15 vs NumPy.",
+      "decision": "Keep source SHA-certified Fortran12 auto and NumPy fallback; end-to-end optical or true likelihood acceleration NOT tested."
+    }
+  ],
+  "verification": {
+    "targeted_regression_tests": {
+      "passed": 259,
+      "failed": 0,
+      "skipped": 0,
+      "source": "C9 repeat after high-risk fixes"
+    },
+    "R78_strict_checks": {
+      "passed": 32,
+      "failed": 0,
+      "original_42_nodes_unchanged": true
+    },
+    "actual_CF4_source_N": 35970,
+    "K03_original_source_N": 755850,
+    "original_K02_QR_shape8_max_absolute_error": 3.2068792066297647e-13,
+    "original_K02_QR_C32_max_absolute_error": 1.609823385706477e-15,
+    "Wolfram_K01_radial_omega_traceless_identity": "independent symbolic {0,0}",
+    "not_run": [
+      "full repository clean-checkout CI",
+      "new native polarized Einstein-Boltzmann solver",
+      "authentic external all-m T/E/B atlas",
+      "calibrated cross-survey physics null"
+    ]
+  },
+  "next": "C10 sealed original source/code/output hashes and per-node computational vs science gates, scoped remote Git push",
+  "reviewer": "one bounded serial adversarial review, no native delegated agent exposed",
+  "claim_ceiling": "IMPLEMENTATION_VERIFIED_SOURCE_CONDITIONAL_SOFTWARE_NOT_ASTROPHYSICAL_PUBLICATION"
+}

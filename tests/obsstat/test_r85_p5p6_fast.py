@@ -63,7 +63,7 @@ def test_K02_invalid_rank_and_noise_is_typed_failure(original):
     _,_,src=original
     cloned={k:(v.copy() if isinstance(v,np.ndarray) else v) for k,v in src.items()}
     cloned["X"][:,:4]=0
-    with pytest.raises(ValueError,match="SPD|rank|condition"):
+    with pytest.raises(ValueError,match="SPD|rank|condition|source fingerprint"):
         api().k02_method_profiled(cloned,native_lib=None)
     cloned={k:(v.copy() if isinstance(v,np.ndarray) else v) for k,v in src.items()}
     cloned["sigma_kms"][0]=0
@@ -160,3 +160,18 @@ def test_original_K02_35970_default_auto_selects_source_certified_Fortran(origin
     assert receipt["source_certified"] is True and receipt["threads"]==12
     np.testing.assert_allclose(res["shape8"],old["identified_working_shape8_kmsMpc"],rtol=2e-10,atol=1e-9)
     np.testing.assert_allclose(res["joint_cov32"],old["joint_shape_cov32"],rtol=2e-10,atol=1e-9)
+
+def test_K02_prepared_source_does_not_silently_accept_rows_with_mismatched_groups(original):
+    _,_,packet=original
+    altered={k:(v.copy() if isinstance(v,np.ndarray) else v) for k,v in packet.items()}
+    altered["X"][[0,30000]]=altered["X"][[30000,0]]
+    with pytest.raises(ValueError,match="source.*fingerprint|source.*identity"):
+        api().k02_method_profiled(altered,native_lib=None)
+
+
+def test_B03_rectangular_response_is_a_valid_conditional_operator():
+    M=np.arange(12,dtype=float).reshape(4,3)
+    T=np.arange(6,dtype=float).reshape(3,2)
+    obs=api().conditional_template_projection(M,T,source_qualified=False)
+    np.testing.assert_allclose(obs["working_observables"],M@T,rtol=0,atol=0)
+    assert obs["physical_planck_match"] is False

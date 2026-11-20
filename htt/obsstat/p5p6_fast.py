@@ -51,6 +51,11 @@ def _sha(path):
     return h.hexdigest()
 
 
+def _fingerprint_array(arr):
+    """SHA-256 exact canonical numeric byte order, no full data copy needed."""
+    return hashlib.sha256(memoryview(np.ascontiguousarray(arr))).hexdigest()
+
+
 def _rec(**kw):
     _LOCAL.receipt=dict(kw)
 
@@ -91,8 +96,15 @@ def prepare_cf4_method_source(path=SELECTED,*,expected_sha=SOURCE_SHA):
     y=C_KMS*zc
     if not np.allclose(X[:,:4].sum(axis=1),distance,rtol=0,atol=2e-11):
         raise ValueError("K02 monopole/method exact source gauge violated")
+    identity={
+       "group_id":_fingerprint_array(ids),
+       "X":_fingerprint_array(X),
+       "weights":_fingerprint_array(ww),
+       "sigma_kms":_fingerprint_array(sigma),
+       "y_cz_kms":_fingerprint_array(y)}
     return {
         "N":len(ids),"group_id":ids,"source_sha256":expected_sha,
+        "source_fingerprint":identity,
         "method_names":list(METHODS),
         "X":np.ascontiguousarray(X),"distance_Mpc":np.ascontiguousarray(distance),
         "weights":np.ascontiguousarray(ww),
@@ -184,6 +196,14 @@ def _validate_source_packet(packet):
 
 def k02_method_profiled(source,*,native_lib="auto",threads=12,cond_limit=1e10):
     X,w,s,y=_validate_source_packet(source)
+    if source.get("N")!=len(X) or source.get("source_sha256")!=SOURCE_SHA or source.get("method_names")!=list(METHODS):
+        raise ValueError("K02 source identity, method order or exact cohort changed")
+    locked=source.get("source_fingerprint")
+    if not isinstance(locked,dict) or set(locked)!={"group_id","X","weights","sigma_kms","y_cz_kms"}:
+        raise ValueError("K02 source fingerprint missing or incomplete")
+    for field in ("group_id","X","weights","sigma_kms","y_cz_kms"):
+        if _fingerprint_array(source[field])!=locked[field]:
+            raise ValueError(f"K02 source fingerprint mismatch for {field}")
     if not isinstance(threads,int) or not 1<=threads<=32:
         raise ValueError("threads 1..32 required")
     if not np.isfinite(cond_limit) or cond_limit<=1:
@@ -341,8 +361,9 @@ def inspect_external_Bianchi_atlas(manifest,max_uncompressed_bytes=80_000_000):
 
 def conditional_template_projection(response,template,*,source_qualified=False):
     M=np.asarray(response,float);T=np.asarray(template,float)
-    if M.ndim!=2 or T.ndim!=2 or M.shape[1]!=T.shape[0] or not np.isfinite([M,T]).all():
-        raise ValueError("source response/template dimensions")
+    if (M.ndim!=2 or T.ndim!=2 or M.shape[1]!=T.shape[0] or
+        not np.isfinite(M).all() or not np.isfinite(T).all()):
+        raise ValueError("source response/template dimensions and finite values")
     return {"working_observables":M@T,"physical_planck_match":False,
             "actual_physical_Pi":None,"source_qualified":bool(source_qualified and False)}
 
