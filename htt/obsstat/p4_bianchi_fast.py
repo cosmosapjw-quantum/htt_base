@@ -161,6 +161,7 @@ def prepare_ring_source(directions,groups,counts,velocity_xy,k,*,beta=None):
             raise RuntimeError("within-ring profiled source score does not cancel on full sky")
     return {"weight":np.ascontiguousarray(w),
             "score":np.ascontiguousarray(score),
+            "direction_sha256":hashlib.sha256(n.tobytes()).hexdigest(),
             "ring_count":nb,"fixed_source_k":k,"beta":b,
             "original_source_count":N,
             "source_role":"R65/R74 fixed ring counts, conditional first-order beta-score, not physical beta"}
@@ -169,6 +170,8 @@ def prepare_ring_source(directions,groups,counts,velocity_xy,k,*,beta=None):
 def batch_ring_occ(directions,axes,prepared,*,native_lib="auto",threads=12,block=32):
     n=_unit_vectors(directions,"source directions")
     a=_unit_vectors(axes,"hemisphere axes")
+    if prepared.get("direction_sha256")!=hashlib.sha256(n.tobytes()).hexdigest():
+        raise ValueError("source direction identity changed after ring score preparation")
     W=_as_float(prepared["weight"],"three band weights",2)
     S=_as_float(prepared["score"],"three band score",3)
     if W.shape!=(len(n),3) or S.shape!=(len(n),3,3):
@@ -271,7 +274,7 @@ def validate_bianchi_registry():
     for entry in b["canonical_types"]:
         a=np.asarray(entry["Lie_axis_representative_a"],float)
         N=np.diag(np.asarray(entry["Lie_sign_representative_n_diag"],float))
-        jac=abs(a@N@a) if False else float(np.linalg.norm(N@a))
+        jac=float(np.linalg.norm(N@a))
         valid &= jac<1e-13
         M=codazzi_map(a,N)
         rank=int(np.linalg.matrix_rank(M,tol=1e-11))

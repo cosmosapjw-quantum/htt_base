@@ -1,0 +1,77 @@
+{
+  "schema": "htt.r84.c9_one_bounded_adversarial_source_and_numerics_review/1",
+  "date": "2026-11-20 KST",
+  "verdict": "LOOKS_GOOD_SCOPED_COMPUTATIONAL_PREPARATION_ONLY",
+  "scientific_verdict": "NOT_READY_H04_V04_V05_V06_BIANCHI_POLARIZED_SOURCE_NULL",
+  "scope": "R84 conditional ring-weight/score, 33k source 185 ring 3 flux bins, C++/Fortran/NumPy prior contracts, source B01 Lie rank, H03 conditional covariance; no old R83 working files mutated",
+  "findings": [
+    {
+      "id": "C9-01",
+      "severity": "P1",
+      "category": "SOURCE_PROVENANCE_BINDING",
+      "symptom": "A precomputed within-ring score from 33k real source could be applied to a different or permuted direction array of identical length, altering mask meaning without failure.",
+      "red": "test_different_source_direction_with_same_nrows_cannot_reuse_prepared_score failed before patch (did not raise).",
+      "repair": "Bind prepared score to SHA256 of canonical float64 C-order directional input; check every batch before native/NumPy use and reject different byte identity.",
+      "green": "Source identity red-green and original 208 scoped tests PASS; original source arrays unchanged."
+    },
+    {
+      "id": "C9-02",
+      "severity": "P2",
+      "category": "SPATIAL_FRAME_COVARIANCE",
+      "finding": "A projected radio-count score is a proper sourceward ICRS vector derivative; changing observer/normal frame or shell without transporting n and k invalidates interpretation.",
+      "evidence": "Metamorphic test rotates source n, source fitted Vxy, axes and scores by common SO3, and verifies F invariant, gradient covariant with original source.",
+      "repair": "Preserve explicit frame and source matching; no observer-to-normal cosmological transfer manufactured."
+    },
+    {
+      "id": "C9-03",
+      "severity": "P2",
+      "category": "NULL_SOURCE_AND_MISSING_PHYSICS",
+      "finding": "Original R65 conditional multinomial ring counts and three flux-bin summaries are not an end-to-end galaxy clustering/systematic/Poisson null and cannot jointly identify beta_RO, beta_RM, tilt, Pi or time GF.",
+      "evidence": "R74 original three-bin F/grad within 6e-16, sum_i score_i zero; no matched source-null or H02 correlated PV source supplied.",
+      "repair": "Keep physical_Pi/actual_GF/beta as None; R78 gates unchanged."
+    },
+    {
+      "id": "C9-04",
+      "severity": "P2",
+      "category": "BIANCHI_ATLAS_SOURCE",
+      "finding": "Canonical B01 11 sign-pattern types and VI_h exceptional h=-1/9 branch are geometric registry examples; Codazzi rank does not qualify arbitrary all-m polarized Einstein-Boltzmann source.",
+      "evidence": "Original R75 source-specific exceptional rank 2; all eleven reps N.a=0; no transfer solver.",
+      "repair": "No extra twelfth type, no physical Q or matched Pi derived from sign-only registry."
+    },
+    {
+      "id": "C9-05",
+      "severity": "P3",
+      "category": "OPTIMIZATION_CLAIM",
+      "finding": "Adding source SHA binding adds per-call overhead, so speed must be remeasured after repair rather than trusting old 5.2x number.",
+      "evidence": "Fresh C9 original 96-axis 33k source kernel 5-run medians NumPy 0.014136932s, Fortran12 0.003060127s, 4.61972068x, errors F <=5.56e-16 and gradient <=8.89e-16. Source preprocessing separate ~0.02228s.",
+      "repair": "Keep fastest supported certified Fortran12 as default, preserve NumPy reference; claim only in-memory kernel throughput."
+    }
+  ],
+  "verification": {
+    "original_R65_NVSS_pixels": 33000,
+    "rings": 185,
+    "flux_bins": 3,
+    "source_NVSS_carrier_sha256": "44e5d4ec3830e84112a328902adb2f3fdb822f7fc88324cff5da18800a9ff1ac",
+    "new_R84_scoped_and_prior_tests": {
+      "passed": 208,
+      "failed": 0,
+      "skipped": 0
+    },
+    "R78_science_DAG_strict": {
+      "passed": 32,
+      "failed": 0,
+      "original_42_state_mutations": 0
+    },
+    "source_CMB_beta_gradient_reproduced_max_abs": 6e-16,
+    "source_SO3_covariance_test": "PASS",
+    "source_permutation_invariance": "PASS",
+    "source_false_binding_rejection": "TESTED_RED_GREEN",
+    "C9_post_fix_auto_numPy_median_s": 0.014136931999928493,
+    "C9_post_fix_auto_fortran_median_s": 0.003060127000026114,
+    "C9_post_fix_fast_ratio": 4.619720684732318,
+    "full_repository_test_suite": "NOT_RUN",
+    "native_delegated_readonly_peer": "NOT_RUN_NO_NATIVE_DELEGATION_TOOL_AVAILABLE"
+  },
+  "claim_ceiling": "SOURCE_CONDITIONAL_NUMERIC_PREPARATION_IMPLEMENTATION_VERIFIED; H04 H05 H06 V04 V05 V06 stay pending; actual R78 next SQ-CF4",
+  "decision": "FIXES_CLOSED_STOP_EXTRA_META_REVIEW_HAND_TO_C10"
+}

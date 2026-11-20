@@ -1,0 +1,42 @@
+{
+  "schema": "htt.r84.c9_source_bound_fast_lane_after_adversarial_patch/1",
+  "source_SHA256": "44e5d4ec3830e84112a328902adb2f3fdb822f7fc88324cff5da18800a9ff1ac",
+  "original_n": 33000,
+  "axes": 96,
+  "flux_bins": 3,
+  "source_ring_count": 185,
+  "NumPy_with_direction_hash": {
+    "runs_s": [
+      0.013220745999660721,
+      0.012868759999946633,
+      0.014842519000012544,
+      0.014136931999928493,
+      0.01418199799991271
+    ],
+    "median_s": 0.014136931999928493
+  },
+  "Fortran_auto_with_direction_hash": {
+    "runs_s": [
+      0.0031299789998229244,
+      0.0030344490000970836,
+      0.003064734999952634,
+      0.0029829009999957634,
+      0.003060127000026114
+    ],
+    "median_s": 0.003060127000026114
+  },
+  "speedup_native_vs_numpy": 4.619720684732318,
+  "backend": {
+    "used": "fortran_native_ring_score",
+    "n_pixels": 33000,
+    "n_axes": 96,
+    "source_certified": true,
+    "threads": 12,
+    "binary_path": "/tmp/htt_r79_native_cache/r84/8f62ce49e43b2e7eac530002/libhtt_r84_masked_score.so",
+    "fallback_reason": null
+  },
+  "F_maxabs": 5.551115123125783e-16,
+  "score_maxabs": 8.881784197001252e-16,
+  "source_binding": "precomputed conditional W and score locked to exact C-order float64 source direction bytes",
+  "only_conditional_source_not_physics": true
+}

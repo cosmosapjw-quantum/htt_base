@@ -167,3 +167,31 @@ def test_source_SHA_mutation_auto_numpy_fallback_without_reusing_native(actual,m
     assert receipt["used"]=="numpy_block_blas_ring_score"
     assert not receipt["source_certified"]
     assert "uncertified_R84_Fortran_source_SHA_changed" in receipt["fallback_reason"]
+
+
+def test_different_source_direction_with_same_nrows_cannot_reuse_prepared_score(actual):
+    from scripts.r84.bench_baseline import axes
+    n,c,g,k,V,_,_=actual
+    original=new().prepare_ring_source(n,g,c,V,k)
+    reindexed=np.roll(n,1,axis=0)
+    assert reindexed.shape==n.shape and not np.array_equal(reindexed,n)
+    with pytest.raises(ValueError,match="direction.*identity"):
+        new().batch_ring_occ(reindexed,axes(16),original,native_lib=None)
+
+
+def test_common_SO3_rotation_of_3band_source_gradient_covariant(actual):
+    from scripts.r84.bench_baseline import axes
+    n,c,g,k,V,_,_=actual
+    alpha=.37
+    co=np.cos(alpha);si=np.sin(alpha)
+    R=np.array([[co,-si,0.],[si,co,0.],[0.,0.,1.]])
+    nrot=n@R.T
+    vro=np.column_stack([V,np.zeros(3)])@R.T
+    a=axes(20)
+    b=a@R.T
+    orig=new().prepare_ring_source(n,g,c,V,k)
+    rotated=new().prepare_ring_source(nrot,g,c,vro[:,:2],k)
+    x=new().batch_ring_occ(n,a,orig,native_lib=None)
+    y=new().batch_ring_occ(nrot,b,rotated,native_lib=None)
+    np.testing.assert_allclose(x["F"],y["F"],atol=3e-12,rtol=0)
+    np.testing.assert_allclose(x["gradient"]@R.T,y["gradient"],atol=3e-12,rtol=0)
