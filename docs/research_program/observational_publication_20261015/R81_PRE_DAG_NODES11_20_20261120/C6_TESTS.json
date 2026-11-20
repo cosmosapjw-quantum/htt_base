@@ -1,0 +1,30 @@
+{
+  "schema": "htt.r81.c6_code_integration_regression/1",
+  "date": "2026-11-20 KST",
+  "tests": {
+    "original_new_and_relevant_regressions": {
+      "passed": 192,
+      "failed": 0,
+      "skipped": 0,
+      "command": "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -B -m pytest -p no:cacheprovider -q tests/obsstat/test_r81_phy_fast.py tests/obsstat/test_r80_cf4_source_lineage.py tests/obsstat/test_pre_dag_fast.py tests/r61/test_kinematic_images.py tests/r61/test_mixed_invariant.py tests/r61/test_box_comparison.py tests/test_r67_gaia_frame.py tests/test_r69_fiveview_response.py tests/test_r69_physical_bridges.py tests/r64/test_directional_hubble.py tests/r65/test_count_quotient.py tests/test_r66_radiation_quotient.py tests/r49/test_gbi02_tilted_state_and_constraints.py"
+    },
+    "R78_strict_authority_claim_and_source_checks": {
+      "passed": 32,
+      "failed": 0
+    }
+  },
+  "first_attempt_configuration_error": {
+    "observation": "191 PASS, one FAIL in R79 test because this agent set HTT_R79_GAIA_SO to a directory, not an exact shared library file.",
+    "classification": "TEST_ENVIRONMENT_ARGUMENT_ERROR_NOT_R81_NUMERICS",
+    "repair": "Find and set each exact source-SHA-certified .so through R79/R81 native builder, check all four paths exist, rerun unchanged tests",
+    "second_run": "192 PASS, 0 FAIL, R78 32/32 PASS"
+  },
+  "cpp_fortran_compiler": "g++13.3 / gfortran13.3; -O3 -fopenmp without fast-math",
+  "source_mathematical_contract": "R78 statuses, original 42 node SHA and R77/P1-P6 source laws unchanged",
+  "system": "Linux-7.0.0-43-generic-x86_64-with-glibc2.39",
+  "python": "3.12.3",
+  "numpy": "2.5.4",
+  "scipy": "1.18.1",
+  "no_native_bianchi_solver_implemented": true,
+  "science_gate_promoted": false
+}
