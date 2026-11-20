@@ -1,0 +1,122 @@
+{
+  "schema": "htt.r83.pre_DAG_31_40_source_math_code_contract/1",
+  "date": "2026-11-20 KST",
+  "base_HEAD": "36b049dd7c4bd8b540b9337d2b11a0ed22e2611c",
+  "science_SSOT": "docs/research_program/observational_publication_20261015/R78_UNIFIED_SCIENCE_DAG_20261119/INTEGRATED_DAG.json",
+  "original42_SHA": "e3264e105cabf78ddac37addc36cacc3cfa05ee942e33e54b431b22e3e87de0d",
+  "next_science_ID": "SQ-CF4",
+  "targets": [
+    {
+      "ordinal": 31,
+      "id": "S06",
+      "paper": "P1",
+      "api": "publication_readiness",
+      "source": "Read original P1 evidence and retain HOLD pending qualified source.",
+      "science_status": "pending",
+      "code_status": "C1_BASELINE_VERIFIED_C2_CONTRACT",
+      "source_null_gate": "NO_AUTOMATIC_SCIENCE_COMPLETION"
+    },
+    {
+      "ordinal": 32,
+      "id": "L01",
+      "paper": "P2",
+      "api": "spin_mask_manifest",
+      "source": "Original Planck T/P mask and beam source, source SHA and spin basis verified.",
+      "science_status": "completed_scoped",
+      "code_status": "C1_BASELINE_VERIFIED_C2_CONTRACT",
+      "source_null_gate": "NO_AUTOMATIC_SCIENCE_COMPLETION"
+    },
+    {
+      "ordinal": 33,
+      "id": "L02",
+      "paper": "P2",
+      "api": "signed_stf_source_feature",
+      "source": "25 actual same-sky T/E/B field rows and 24 same-product pairs, not independent.",
+      "science_status": "completed_scoped",
+      "code_status": "C1_BASELINE_VERIFIED_C2_CONTRACT",
+      "source_null_gate": "NO_AUTOMATIC_SCIENCE_COMPLETION"
+    },
+    {
+      "ordinal": 34,
+      "id": "L03",
+      "paper": "P2",
+      "api": "simulation_id_intake",
+      "source": "8 pilot FFP pairs ×5 processing variants; 40 rows are not 40 independent null draws.",
+      "science_status": "pending",
+      "code_status": "C1_BASELINE_VERIFIED_C2_CONTRACT",
+      "source_null_gate": "NO_AUTOMATIC_SCIENCE_COMPLETION"
+    },
+    {
+      "ordinal": 35,
+      "id": "L04",
+      "paper": "P2",
+      "api": "finite_mc_rank_ties",
+      "source": "Exact rank and tie interval; qualified matched MC missing.",
+      "science_status": "pending",
+      "code_status": "C1_BASELINE_VERIFIED_C2_CONTRACT",
+      "source_null_gate": "NO_AUTOMATIC_SCIENCE_COMPLETION"
+    },
+    {
+      "ordinal": 36,
+      "id": "L05",
+      "paper": "P2",
+      "api": "negative_control_source_comparison",
+      "source": "Processing variations tied to simulation ID; no new independence claim.",
+      "science_status": "pending",
+      "code_status": "C1_BASELINE_VERIFIED_C2_CONTRACT",
+      "source_null_gate": "NO_AUTOMATIC_SCIENCE_COMPLETION"
+    },
+    {
+      "ordinal": 37,
+      "id": "L06",
+      "paper": "P2",
+      "api": "publication_HOLD",
+      "source": "Scientific source/null/power gate checks without manuscript admission.",
+      "science_status": "pending",
+      "code_status": "C1_BASELINE_VERIFIED_C2_CONTRACT",
+      "source_null_gate": "NO_AUTOMATIC_SCIENCE_COMPLETION"
+    },
+    {
+      "ordinal": 38,
+      "id": "H01",
+      "paper": "P3",
+      "api": "window_moment_contract",
+      "source": "Original selected CF4 35970 ICRS unit vectors and fixed z windows, linear cz proxy not Theta/3.",
+      "science_status": "completed_scoped",
+      "code_status": "C1_BASELINE_VERIFIED_C2_CONTRACT",
+      "source_null_gate": "NO_AUTOMATIC_SCIENCE_COMPLETION"
+    },
+    {
+      "ordinal": 39,
+      "id": "H02",
+      "paper": "P3",
+      "api": "conditional_covariance_intake",
+      "source": "Method zero-point/PV/selection physical covariance not yet source-qualified.",
+      "science_status": "pending",
+      "code_status": "C1_BASELINE_VERIFIED_C2_CONTRACT",
+      "source_null_gate": "NO_AUTOMATIC_SCIENCE_COMPLETION"
+    },
+    {
+      "ordinal": 40,
+      "id": "H03",
+      "paper": "P3",
+      "api": "source_coherent_4x9_GLS",
+      "source": "Full same-source 36x36 joint covariance across four redshift windows with original QR oracle.",
+      "science_status": "completed_scoped",
+      "code_status": "C1_BASELINE_VERIFIED_C2_CONTRACT",
+      "source_null_gate": "NO_AUTOMATIC_SCIENCE_COMPLETION"
+    }
+  ],
+  "implementation": {
+    "python": "htt/obsstat/p2p3_fast.py",
+    "native": "htt/obsstat/native/p3_multiwindow_info.cpp source-hash certified optional C++17/OpenMP four-window Fisher/score",
+    "test": "tests/obsstat/test_r83_p2p3_fast.py independent original H03 QR/SVD, Planck same-sky and FFP8 pilot ID audits, rank/ties",
+    "runner": "scripts/r83/bench_real.py, scripts/r83/verify_source.py",
+    "acceptance": "H03 source exact 4x9 and 36x36 covariance reproduction at <=2e-10 coefficient relative and <=1e-9 source covariance absolute in well-conditioned case",
+    "critical_conditional": "H03 working cz_i ~ d_i (H_j + D_j.n_i + n_i.Q_j.n_i), c=299792.458 km/s; working diagonal sigma_i, not genuine PV/selection covariance",
+    "forbidden": "No native Bianchi Einstein-Boltzmann solver, physical Planck null or model posterior invented",
+    "performance": "Actual matched original 35970 source/cov and controlled threads, default fastest mathematically verified lane only",
+    "memory": "No N*N covariance or source history reread, temp native binary outside repository",
+    "mutation": "Keep R78 science gates and PR/software backlog intact"
+  }
+}
