@@ -1,0 +1,240 @@
+{
+  "schema": "htt.r81.c10_r78_nodes11_20_code_preparation_matrix/1",
+  "date": "2026-11-20 KST",
+  "original_R78_science_goal_42_sha256": "e3264e105cabf78ddac37addc36cacc3cfa05ee942e33e54b431b22e3e87de0d",
+  "R78_science_state_mutated": false,
+  "next_science_node_id": "SQ-CF4",
+  "programming_node_count": 10,
+  "new_source_data_verified": true,
+  "C9_196_scoped_regressions_pass": 196,
+  "R78_32_strict_science_DAG_checks_pass": 32,
+  "default_accelerated_lane": "R79 Gaia C++ / R81 PHY-01 Fortran certified auto; PHY-07 C++ slower so NumPy default",
+  "C8_Fortran_96_axis_speedup": 49.176708406168416,
+  "C8_Fortran_256_axis_speedup": 54.04881989322638,
+  "C8_Cpp_Gram_fastest_speedup": 0.4629699780159541,
+  "nodes": [
+    {
+      "ordinal": 11,
+      "node_id": "SQ-NATIVE",
+      "R78_science_state_unchanged": "blocked_external",
+      "code_preparation_status": "IMPLEMENTATION_VERIFIED_VALIDATOR_ONLY_EXTERNAL_SOURCE_BLOCKED",
+      "source_conditional_result": {
+        "input_status": "EXTERNAL_NATIVE_TRANSFER_NOT_SUPPLIED_NO_SOLVER_CREATED"
+      },
+      "programming_interface": "external_transfer_manifest",
+      "native_or_numpy_route": "external_manifest_validator",
+      "physical_source_remainder": "external solver is not supplied",
+      "scientific_acceptance_not_auto_promoted": true
+    },
+    {
+      "ordinal": 12,
+      "node_id": "PHY-01",
+      "R78_science_state_unchanged": "theory_verified_physical_data_pending",
+      "code_preparation_status": "IMPLEMENTATION_VERIFIED_CONDITIONAL_PHYSICS_KERNEL",
+      "source_conditional_result": {
+        "n_source": 35970,
+        "n_40_400": 31382,
+        "n_mask_axes": 96,
+        "weighted_source_A96_sharp_minmax": [
+          0.010465026051667846,
+          0.020025986378094583
+        ],
+        "original_R80_unweighted_CMB_axis_sharp": 0.010057367604190721,
+        "R80_unweighted_replay_error": 5.0306980803327406e-17,
+        "Fortran_backend_receipt": {
+          "used": "fortran_batch",
+          "source_certified": true,
+          "n_rows": 35970,
+          "n_axes": 96,
+          "threads": 8,
+          "binary_path": "/tmp/htt_r79_native_cache/r81/mask/7d7cccd851d34874bdb72f46/libhtt_r81_mask.so"
+        },
+        "source_covariance_PV_selection": "UNAVAILABLE"
+      },
+      "programming_interface": "batched_mask_moments",
+      "native_or_numpy_route": "fortran_mask_batch",
+      "physical_source_remainder": "full source-matched physical transfer/joint covariance remains unqualified",
+      "scientific_acceptance_not_auto_promoted": true
+    },
+    {
+      "ordinal": 13,
+      "node_id": "PHY-02",
+      "R78_science_state_unchanged": "theory_verified_physical_data_pending",
+      "code_preparation_status": "IMPLEMENTATION_VERIFIED_CONDITIONAL_PHYSICS_KERNEL",
+      "source_conditional_result": {
+        "PR3": {
+          "actual_R66_P_min_eigen": 0.3333294543316302,
+          "photon_flux_source": "UNAVAILABLE"
+        },
+        "PR4": {
+          "actual_R66_P_min_eigen": 0.33332917157133457,
+          "photon_flux_source": "UNAVAILABLE"
+        }
+      },
+      "programming_interface": "photon_flux_codazzi",
+      "native_or_numpy_route": "numpy_photon_psd",
+      "physical_source_remainder": "full source-matched physical transfer/joint covariance remains unqualified",
+      "scientific_acceptance_not_auto_promoted": true
+    },
+    {
+      "ordinal": 14,
+      "node_id": "PHY-03",
+      "R78_science_state_unchanged": "theory_verified_physical_data_pending",
+      "code_preparation_status": "IMPLEMENTATION_VERIFIED_CONDITIONAL_PHYSICS_KERNEL",
+      "source_conditional_result": {
+        "synthetic_assumed_common_beta": [
+          0.001233586736861806,
+          0.0,
+          0.0
+        ],
+        "source_k": 3.8254286125,
+        "photon_chi": 1.0,
+        "physical_common_rest_frame": "NOT_ESTABLISHED",
+        "R66_signed_chi_PR3": -0.7074485821161334
+      },
+      "programming_interface": "radio_photon_boost",
+      "native_or_numpy_route": "numpy_boost_closure",
+      "physical_source_remainder": "full source-matched physical transfer/joint covariance remains unqualified",
+      "scientific_acceptance_not_auto_promoted": true
+    },
+    {
+      "ordinal": 15,
+      "node_id": "PHY-04",
+      "R78_science_state_unchanged": "theory_verified_physical_data_pending",
+      "code_preparation_status": "IMPLEMENTATION_VERIFIED_CONDITIONAL_PHYSICS_KERNEL",
+      "source_conditional_result": {
+        "normal_Lie_B2_spherical_norm": 9.480000000000003e-05,
+        "exact_STF_prediction": 9.48e-05,
+        "E2_B2_full_sky_cross": -1.0821562343385631e-24,
+        "gaia_masked_design": {
+          "quality": {
+            "maxcanonical": 0.08042406258067819,
+            "source_working_fisher_not_coupling": true
+          },
+          "quality_north": {
+            "maxcanonical": 0.8810936317598231,
+            "source_working_fisher_not_coupling": true
+          },
+          "quality_south": {
+            "maxcanonical": 0.8788536147906743,
+            "source_working_fisher_not_coupling": true
+          }
+        },
+        "physical_Gaia_transfer": "UNAVAILABLE"
+      },
+      "programming_interface": "lie_e2_b2_coupling",
+      "native_or_numpy_route": "numpy_vsh_mask",
+      "physical_source_remainder": "full source-matched physical transfer/joint covariance remains unqualified",
+      "scientific_acceptance_not_auto_promoted": true
+    },
+    {
+      "ordinal": 16,
+      "node_id": "PHY-05",
+      "R78_science_state_unchanged": "theory_verified_physical_data_pending",
+      "code_preparation_status": "IMPLEMENTATION_VERIFIED_CONDITIONAL_PHYSICS_KERNEL",
+      "source_conditional_result": {
+        "Lie_rank": 2,
+        "independent_measurement_residual_cov_rank": 3,
+        "actual_independent_normal_flux": "UNAVAILABLE"
+      },
+      "programming_interface": "normal_flux_rank_aware",
+      "native_or_numpy_route": "numpy_codazzi_residual",
+      "physical_source_remainder": "full source-matched physical transfer/joint covariance remains unqualified",
+      "scientific_acceptance_not_auto_promoted": true
+    },
+    {
+      "ordinal": 17,
+      "node_id": "PHY-06",
+      "R78_science_state_unchanged": "theory_verified_physical_data_pending",
+      "code_preparation_status": "IMPLEMENTATION_VERIFIED_CONDITIONAL_PHYSICS_KERNEL",
+      "source_conditional_result": {
+        "chi_time_derivative_exact": 0.0,
+        "noncommutator_norm": 0.000282842712474619,
+        "same_first_two_photon_moments_but_cap_F": [
+          0.09999999999999998,
+          0.15707125
+        ],
+        "photon_actual_time_GF": "UNAVAILABLE"
+      },
+      "programming_interface": "shear_photon_higher_l",
+      "native_or_numpy_route": "numpy_shape_dynamics",
+      "physical_source_remainder": "full source-matched physical transfer/joint covariance remains unqualified",
+      "scientific_acceptance_not_auto_promoted": true
+    },
+    {
+      "ordinal": 18,
+      "node_id": "PHY-07",
+      "R78_science_state_unchanged": "theory_verified_physical_data_pending",
+      "code_preparation_status": "IMPLEMENTATION_VERIFIED_CONDITIONAL_PHYSICS_KERNEL",
+      "source_conditional_result": {
+        "n_selected": 35970,
+        "radial12_design_rank": 12,
+        "fixed_distance_design_rank": 9,
+        "weighted_Gram_condition": 62.630053651750785,
+        "working_weight_source": "marginal e_dmzp^-2; correlated PV/calibration/selection C still missing",
+        "response": "synthetic detrended log r; NOT new cosmological fit"
+      },
+      "programming_interface": "radial_design_weighted_stats",
+      "native_or_numpy_route": "cpp_gram_optional",
+      "physical_source_remainder": "full source-matched physical transfer/joint covariance remains unqualified",
+      "scientific_acceptance_not_auto_promoted": true
+    },
+    {
+      "ordinal": 19,
+      "node_id": "E0",
+      "R78_science_state_unchanged": "completed_scoped",
+      "code_preparation_status": "IMPLEMENTATION_VERIFIED_HISTORICAL_EVIDENCE_ONLY",
+      "source_conditional_result": {
+        "E0": {
+          "state": "completed_scoped",
+          "source_evidence": [
+            "commit:13d8d85fa470d645d008986e8f77d8d0f70fdf54",
+            "docs/solver_free_research_20261014/PLAN.json"
+          ]
+        },
+        "E1": {
+          "state": "completed_scoped",
+          "source_evidence": [
+            "commit:915d8bfd22b09f4d57fa5902110bc6fd8d3aa734",
+            "docs/research_program/cf4_schur_loop8_20261015/results/result.json"
+          ]
+        },
+        "R78_science_sha": "e3264e105cabf78ddac37addc36cacc3cfa05ee942e33e54b431b22e3e87de0d",
+        "unchanged": true
+      },
+      "programming_interface": "original_dossier_evidence",
+      "native_or_numpy_route": "source_manifest_anchor",
+      "physical_source_remainder": "no new source needed",
+      "scientific_acceptance_not_auto_promoted": true
+    },
+    {
+      "ordinal": 20,
+      "node_id": "E1",
+      "R78_science_state_unchanged": "completed_scoped",
+      "code_preparation_status": "IMPLEMENTATION_VERIFIED_HISTORICAL_EVIDENCE_ONLY",
+      "source_conditional_result": {
+        "E0": {
+          "state": "completed_scoped",
+          "source_evidence": [
+            "commit:13d8d85fa470d645d008986e8f77d8d0f70fdf54",
+            "docs/solver_free_research_20261014/PLAN.json"
+          ]
+        },
+        "E1": {
+          "state": "completed_scoped",
+          "source_evidence": [
+            "commit:915d8bfd22b09f4d57fa5902110bc6fd8d3aa734",
+            "docs/research_program/cf4_schur_loop8_20261015/results/result.json"
+          ]
+        },
+        "R78_science_sha": "e3264e105cabf78ddac37addc36cacc3cfa05ee942e33e54b431b22e3e87de0d",
+        "unchanged": true
+      },
+      "programming_interface": "original_CF4_schur_evidence",
+      "native_or_numpy_route": "source_manifest_anchor",
+      "physical_source_remainder": "no new source needed",
+      "scientific_acceptance_not_auto_promoted": true
+    }
+  ],
+  "scientific_claim_ceiling": "NUMERICAL_PREPARATION_IMPLEMENTATION_VERIFIED, NOT ASTROPHYSICAL SOURCE_QUALIFICATION_OR_PAPER_PUBLISHABLE"
+}
