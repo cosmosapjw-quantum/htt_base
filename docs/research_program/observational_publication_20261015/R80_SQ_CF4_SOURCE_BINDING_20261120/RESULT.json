@@ -1,0 +1,389 @@
+{
+  "schema": "htt.r80.sq_cf4_source_lineage_mask/1",
+  "state": "SOURCE_GROUP_ID_AND_GEOMETRY_QUALIFIED; PV_CALIBRATION_SELECTION_COVARIANCE_UNRESOLVED",
+  "source_sha256": {
+    "/mnt/extdrive/workdir/raw/cf4_full/table3.dat": "c2351c52de3e38a7fd80256b6f0818c550dd9f105b91e84fbcc1eb7234160b4d",
+    "/mnt/extdrive/workdir/raw/cf4_full/table4.dat": "b6edfec68bdfddeada8f3b8f11938f3bbda98a8e2894ff136a369c2ad6594e94",
+    "/mnt/extdrive/workdir/raw/cf4_full/ReadMe": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4",
+    "docs/research_program/cf4_schur_loop8_20261015/inputs/selected_source_observables.npz": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+    "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-01-CF4-OPERATOR/audit_backup/derived/A_RAW_36x35970.npz": "e835df014bf0eb96fd715994c823eec9c8449f98d3f132b1dc736b760fd2772e"
+  },
+  "source_frames": {
+    "group": "CDS CF4 table3 and table4 J2000 1PGC group identity",
+    "selected": "R54/R58 selected J2000 source vectors and redshift CMB V3k/c",
+    "cmb_axis": "(l,b)=(264.021,48.253) Galactic converted by astropy to ICRS J2000"
+  },
+  "original_all_group_count": 38053,
+  "exact_selected_group_count": 35970,
+  "excluded_group_count": 2083,
+  "excluded_group_ids_sha256": "53f7d38f6978ba918ff905e72bee8732fdf629dbdd5cca1d0297551a7218b93d",
+  "selected_group_ids_sha256": "f54706b8ff5c50c25a5a74c4b153f7f9e719a28582db044e00e5930dd30e3c88",
+  "original_R36_A_RAW_36x35970_bytes_sha256": "e835df014bf0eb96fd715994c823eec9c8449f98d3f132b1dc736b760fd2772e",
+  "operator_raw_matrix_sha256": "1adf82ca7e576a03aa5a82e8fbad5a8d0b05c14fbbb8cbc38a664f3dd35f831a",
+  "exact_selected_modulus_max_abs_error": 0.0,
+  "exact_selected_modulus_uncertainty_max_abs_error": 0.0,
+  "selected_v3k_c_to_z_CMB_max_abs_error": 0.0,
+  "selected_J2000_direction_p95_arcsec": 0.0,
+  "selected_J2000_direction_max_arcsec": 0.0,
+  "selected_method_family_count": {
+    "FP": 26916,
+    "OTHER": 740,
+    "SN": 700,
+    "TF": 7614
+  },
+  "table3_method_presence_metadata_names": [
+    "CAL",
+    "SNIA",
+    "FP",
+    "TF",
+    "SBFO",
+    "SBFI",
+    "SNII"
+  ],
+  "table3_method_presence_selected_counts": {
+    "CAL": 11,
+    "SNIA": 854,
+    "FP": 27509,
+    "TF": 8343,
+    "SBFO": 15,
+    "SBFI": 46,
+    "SNII": 60
+  },
+  "selected_methods_with_zero_table3_method_presence": {
+    "FP": 0,
+    "OTHER": 185,
+    "SN": 0,
+    "TF": 0
+  },
+  "selected_methods_with_multi_table3_method_presence": {
+    "FP": 158,
+    "OTHER": 549,
+    "SN": 143,
+    "TF": 76
+  },
+  "selected_group_zero_method_presence_count": 185,
+  "selected_group_multi_method_presence_count": 926,
+  "angular_mask_diagnostics": {
+    "full_table4_40_400": {
+      "n": 31649,
+      "hemisphere_minus_plus_counts": [
+        6614,
+        25035
+      ],
+      "weighted_direction_mean_difference": [
+        -1.2485478838598012,
+        -0.0066203476957355685,
+        0.3178650979628618
+      ],
+      "selection_second_moment_eigenvalues": [
+        -0.16066621203642062,
+        -0.01241326431906584,
+        0.17307947635548648
+      ],
+      "typeV_jtotal0_chi0_synthetic_eigen_amplitude": 0.03,
+      "sharp_even_shear_to_hemispherical_mean_bound": 0.010012370651757212,
+      "explicit_matched_bound_saturation": 0.010012370651757212,
+      "backend_actual": {
+        "used": "fortran_native",
+        "certified": true,
+        "n_rows": 31649
+      },
+      "interpretation": "exact unweighted source-sky response; synthetic Type V template not measured shear or velocity"
+    },
+    "selected_35970_all_radii": {
+      "n": 35970,
+      "hemisphere_minus_plus_counts": [
+        6742,
+        29228
+      ],
+      "weighted_direction_mean_difference": [
+        -1.246648631402475,
+        -0.0058254920089140586,
+        0.3237612031721702
+      ],
+      "selection_second_moment_eigenvalues": [
+        -0.1645656102398199,
+        -0.018404678909358273,
+        0.1829702891491781
+      ],
+      "typeV_jtotal0_chi0_synthetic_eigen_amplitude": 0.03,
+      "sharp_even_shear_to_hemispherical_mean_bound": 0.01042607698166994,
+      "explicit_matched_bound_saturation": 0.010426076981669932,
+      "backend_actual": {
+        "used": "fortran_native",
+        "certified": true,
+        "n_rows": 35970
+      },
+      "interpretation": "exact unweighted source-sky response; synthetic Type V template not measured shear or velocity"
+    },
+    "selected_40_400": {
+      "n": 31382,
+      "hemisphere_minus_plus_counts": [
+        6514,
+        24868
+      ],
+      "weighted_direction_mean_difference": [
+        -1.2492978074115206,
+        -0.009808490939444168,
+        0.31931133470256967
+      ],
+      "selection_second_moment_eigenvalues": [
+        -0.16147293353466483,
+        -0.012299719737029438,
+        0.17377265327169422
+      ],
+      "typeV_jtotal0_chi0_synthetic_eigen_amplitude": 0.03,
+      "sharp_even_shear_to_hemispherical_mean_bound": 0.010057367604190771,
+      "explicit_matched_bound_saturation": 0.01005736760419077,
+      "backend_actual": {
+        "used": "fortran_native",
+        "certified": true,
+        "n_rows": 31382
+      },
+      "interpretation": "exact unweighted source-sky response; synthetic Type V template not measured shear or velocity"
+    },
+    "selected_FP_40_400": {
+      "n": 22629,
+      "hemisphere_minus_plus_counts": [
+        2408,
+        20221
+      ],
+      "weighted_direction_mean_difference": [
+        -1.1285341799009179,
+        0.08759355850505332,
+        0.6401408522002712
+      ],
+      "selection_second_moment_eigenvalues": [
+        -0.08301500402703632,
+        -0.04348195949797276,
+        0.126496963525009
+      ],
+      "typeV_jtotal0_chi0_synthetic_eigen_amplitude": 0.03,
+      "sharp_even_shear_to_hemispherical_mean_bound": 0.006285359026561359,
+      "explicit_matched_bound_saturation": 0.006285359026561361,
+      "backend_actual": {
+        "used": "fortran_native",
+        "certified": true,
+        "n_rows": 22629
+      },
+      "interpretation": "exact unweighted source-sky response; synthetic Type V template not measured shear or velocity"
+    },
+    "selected_OTHER_40_400": {
+      "n": 715,
+      "hemisphere_minus_plus_counts": [
+        246,
+        469
+      ],
+      "weighted_direction_mean_difference": [
+        -1.2834151346341798,
+        -0.08389273250024995,
+        0.1610006471438589
+      ],
+      "selection_second_moment_eigenvalues": [
+        -0.1034837499535203,
+        0.02311452411389977,
+        0.08036922583962013
+      ],
+      "typeV_jtotal0_chi0_synthetic_eigen_amplitude": 0.03,
+      "sharp_even_shear_to_hemispherical_mean_bound": 0.0055155892737942126,
+      "explicit_matched_bound_saturation": 0.005515589273794212,
+      "backend_actual": {
+        "used": "numpy_reference",
+        "certified": false,
+        "n_rows": 715
+      },
+      "interpretation": "exact unweighted source-sky response; synthetic Type V template not measured shear or velocity"
+    },
+    "selected_SN_40_400": {
+      "n": 682,
+      "hemisphere_minus_plus_counts": [
+        355,
+        327
+      ],
+      "weighted_direction_mean_difference": [
+        -1.2520954124339747,
+        0.06163394979198201,
+        0.11648649780501465
+      ],
+      "selection_second_moment_eigenvalues": [
+        -0.14609409986124153,
+        -0.033860803180171685,
+        0.179954903041413
+      ],
+      "typeV_jtotal0_chi0_synthetic_eigen_amplitude": 0.03,
+      "sharp_even_shear_to_hemispherical_mean_bound": 0.009781470087079636,
+      "explicit_matched_bound_saturation": 0.009781470087079639,
+      "backend_actual": {
+        "used": "numpy_reference",
+        "certified": false,
+        "n_rows": 682
+      },
+      "interpretation": "exact unweighted source-sky response; synthetic Type V template not measured shear or velocity"
+    },
+    "selected_TF_40_400": {
+      "n": 7356,
+      "hemisphere_minus_plus_counts": [
+        3505,
+        3851
+      ],
+      "weighted_direction_mean_difference": [
+        -1.333806090263368,
+        -0.03958759517105051,
+        0.0014438864301834775
+      ],
+      "selection_second_moment_eigenvalues": [
+        -0.23051082102063514,
+        0.046422444163019105,
+        0.18408837685761598
+      ],
+      "typeV_jtotal0_chi0_synthetic_eigen_amplitude": 0.03,
+      "sharp_even_shear_to_hemispherical_mean_bound": 0.012437975936347533,
+      "explicit_matched_bound_saturation": 0.012437975936347528,
+      "backend_actual": {
+        "used": "fortran_native",
+        "certified": true,
+        "n_rows": 7356
+      },
+      "interpretation": "exact unweighted source-sky response; synthetic Type V template not measured shear or velocity"
+    }
+  },
+  "heldout_by_group_id_modulo_five_GEOMETRY_ONLY": {
+    "id_mod5_0": {
+      "n": 6223,
+      "hemisphere_minus_plus_counts": [
+        1262,
+        4961
+      ],
+      "weighted_direction_mean_difference": [
+        -1.2417456545158747,
+        -0.023255067057552585,
+        0.3392450430963548
+      ],
+      "selection_second_moment_eigenvalues": [
+        -0.16147992667149408,
+        -0.01351440938642937,
+        0.17499433605792358
+      ],
+      "typeV_jtotal0_chi0_synthetic_eigen_amplitude": 0.03,
+      "sharp_even_shear_to_hemispherical_mean_bound": 0.01009422788188253,
+      "explicit_matched_bound_saturation": 0.010094227881882538,
+      "backend_actual": {
+        "used": "fortran_native",
+        "certified": true,
+        "n_rows": 6223
+      },
+      "interpretation": "exact unweighted source-sky response; synthetic Type V template not measured shear or velocity"
+    },
+    "id_mod5_1": {
+      "n": 6226,
+      "hemisphere_minus_plus_counts": [
+        1283,
+        4943
+      ],
+      "weighted_direction_mean_difference": [
+        -1.2460264962629841,
+        0.001319980901199929,
+        0.2945367656187186
+      ],
+      "selection_second_moment_eigenvalues": [
+        -0.17246114078807487,
+        -0.010986374903784624,
+        0.18344751569185946
+      ],
+      "typeV_jtotal0_chi0_synthetic_eigen_amplitude": 0.03,
+      "sharp_even_shear_to_hemispherical_mean_bound": 0.010677259694398028,
+      "explicit_matched_bound_saturation": 0.010677259694398027,
+      "backend_actual": {
+        "used": "fortran_native",
+        "certified": true,
+        "n_rows": 6226
+      },
+      "interpretation": "exact unweighted source-sky response; synthetic Type V template not measured shear or velocity"
+    },
+    "id_mod5_2": {
+      "n": 6215,
+      "hemisphere_minus_plus_counts": [
+        1324,
+        4891
+      ],
+      "weighted_direction_mean_difference": [
+        -1.2615301063727604,
+        -0.007029817056883641,
+        0.3072149806096063
+      ],
+      "selection_second_moment_eigenvalues": [
+        -0.15261953260104527,
+        -0.013851348646449966,
+        0.16647088124749515
+      ],
+      "typeV_jtotal0_chi0_synthetic_eigen_amplitude": 0.03,
+      "sharp_even_shear_to_hemispherical_mean_bound": 0.009572712415456212,
+      "explicit_matched_bound_saturation": 0.009572712415456212,
+      "backend_actual": {
+        "used": "fortran_native",
+        "certified": true,
+        "n_rows": 6215
+      },
+      "interpretation": "exact unweighted source-sky response; synthetic Type V template not measured shear or velocity"
+    },
+    "id_mod5_3": {
+      "n": 6320,
+      "hemisphere_minus_plus_counts": [
+        1298,
+        5022
+      ],
+      "weighted_direction_mean_difference": [
+        -1.2483204672467678,
+        -0.0021293402452556495,
+        0.3155699933350569
+      ],
+      "selection_second_moment_eigenvalues": [
+        -0.16137699326484,
+        -0.011058823890506693,
+        0.17243581715534662
+      ],
+      "typeV_jtotal0_chi0_synthetic_eigen_amplitude": 0.03,
+      "sharp_even_shear_to_hemispherical_mean_bound": 0.010014384312605599,
+      "explicit_matched_bound_saturation": 0.010014384312605606,
+      "backend_actual": {
+        "used": "fortran_native",
+        "certified": true,
+        "n_rows": 6320
+      },
+      "interpretation": "exact unweighted source-sky response; synthetic Type V template not measured shear or velocity"
+    },
+    "id_mod5_4": {
+      "n": 6398,
+      "hemisphere_minus_plus_counts": [
+        1347,
+        5051
+      ],
+      "weighted_direction_mean_difference": [
+        -1.2486097030895045,
+        -0.017734368526106888,
+        0.33915224970349517
+      ],
+      "selection_second_moment_eigenvalues": [
+        -0.1608751485717109,
+        -0.012452569758954653,
+        0.17332771833066557
+      ],
+      "typeV_jtotal0_chi0_synthetic_eigen_amplitude": 0.03,
+      "sharp_even_shear_to_hemispherical_mean_bound": 0.010026086007071293,
+      "explicit_matched_bound_saturation": 0.010026086007071288,
+      "backend_actual": {
+        "used": "fortran_native",
+        "certified": true,
+        "n_rows": 6398
+      },
+      "interpretation": "exact unweighted source-sky response; synthetic Type V template not measured shear or velocity"
+    }
+  },
+  "scientific_nonclaims": [
+    "R77 full-raw-table4 40-400 mask is not the R61 35970-group same-source likelihood",
+    "The source-selected method_family is not a one-to-one translation of raw table3 positive method flags",
+    "The actual R54/R58 36x35970 and R61 32D covariance is not a measured full source-level PV/selection covariance",
+    "The synthetic Type V STF shear amplitude and hemisphere leakage bound are geometric responses, not cosmological shear or acceleration detection",
+    "SQ-CF4 full source qualification remains unresolved: cross-method zero-point and correlated PV/selection response must be physically modelled"
+  ]
+}

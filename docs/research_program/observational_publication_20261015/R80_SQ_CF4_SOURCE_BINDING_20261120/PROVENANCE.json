@@ -1,0 +1,53 @@
+{
+  "schema": "htt.r80.sq_cf4_restored_source_binding_provenance/1",
+  "date": "2026-11-20 KST",
+  "repo": "cosmosapjw-quantum/htt_base",
+  "branch": "research/r69-observable-physics-bridges-20261118",
+  "parent_HEAD": "e28c758b2ba36ec3764187a21884f93663001c51",
+  "source_original_hashes_recomputed": {
+    "/mnt/extdrive/workdir/raw/cf4_full/table3.dat": "c2351c52de3e38a7fd80256b6f0818c550dd9f105b91e84fbcc1eb7234160b4d",
+    "/mnt/extdrive/workdir/raw/cf4_full/table4.dat": "b6edfec68bdfddeada8f3b8f11938f3bbda98a8e2894ff136a369c2ad6594e94",
+    "/mnt/extdrive/workdir/raw/cf4_full/ReadMe": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4",
+    "docs/research_program/cf4_schur_loop8_20261015/inputs/selected_source_observables.npz": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+    "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-01-CF4-OPERATOR/audit_backup/derived/A_RAW_36x35970.npz": "e835df014bf0eb96fd715994c823eec9c8449f98d3f132b1dc736b760fd2772e"
+  },
+  "source_signature": {
+    "full_groups": 38053,
+    "selected_groups": 35970,
+    "excluded": 2083,
+    "operator_shape": [
+      36,
+      35970
+    ],
+    "selected_group_ids_sha256": "f54706b8ff5c50c25a5a74c4b153f7f9e719a28582db044e00e5930dd30e3c88",
+    "selected_40_400_n": 31382
+  },
+  "computed_source_code_hashes": {
+    "scripts/r80/audit_cf4_source_lineage.py": "5fd5539859835d40ec1a5c99e21e5af59d096a365fd89bb67ae72818d13dca9e",
+    "tests/obsstat/test_r80_cf4_source_lineage.py": "e3655dcbefa07e1cffb68f6c79947198d6f814662d5015de5c2a841138b315d1"
+  },
+  "computed_output_hashes_excluding_self": {
+    "docs/research_program/observational_publication_20261015/R80_SQ_CF4_SOURCE_BINDING_20261120/RESULT.json": "a0faf26516c9300a093979701a6b9401b79cca1cffbd36b31d549fb6cb3a5ca4",
+    "docs/research_program/observational_publication_20261015/R80_SQ_CF4_SOURCE_BINDING_20261120/REPORT_KO.md": "d4e77c246ce0a8fe441cbebab573cfb4b907918dc4e4bd021016160cbf60989f"
+  },
+  "tested": {
+    "source_ID_join": "PASS",
+    "selected_modulus_and_error_exact_parity": "PASS",
+    "selected_CMB_v3k_redshift": "PASS",
+    "selected_J2000_source_frame": "PASS",
+    "R79_default_native_Fortran_vs_Numpy_mask": "PASS",
+    "source_mask_typeV_synthetic_orientation_bound": "PASS",
+    "related_pytest_cases": 69,
+    "related_pytest_skipped_optional_native_test": 1,
+    "R78_strict_source_and_authority_checks_passed": 32,
+    "full_R78_SQ_CF4_science_qualification": "NOT_COMPLETED",
+    "actual_correlated_PV_calibration_selection_source_covariance": "UNRESOLVED",
+    "source_full_sample_likelihood_sufficiency": "NOT_CLAIMED"
+  },
+  "R78_original_science_SSQ_status": "ready_scoped",
+  "next_action_id": "SQ-CF4",
+  "native_lane_effective_mode": "auto",
+  "science_claim_tier": "SOURCE_IDENTITY_AND_GEOMETRY_NUMERICALLY_CHECKED_CONDITIONAL",
+  "prohibited_upgrades": "No Bianchi family, cosmological shear, anisotropy p-value, global tilt or H_D source likelihood claimed; no gate modified",
+  "final_remote_SHA": "VERIFY_FROM_ACTUAL_GIT_REMOTE_RECEIPT_AFTER_COMMIT"
+}
