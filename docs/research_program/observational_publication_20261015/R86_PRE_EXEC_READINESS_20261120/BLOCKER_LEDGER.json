@@ -18,7 +18,19 @@
       ],
       "minimal_code_action": "Inspect exact diff, distinguish user edit vs previously interrupted R83 implementation, run clean/dirty explicit parity and original H03/L02/L03 source tests, complete missing C9/C10 only with truthful evidence, selectively commit owned changes.",
       "positive_acceptance": "R83 C9/C10 original 10 ID mapping and hashes from exact current HEAD, zero unrelated stage changes, original H03 4×9 and C36 and 8 pilot FFP processing ID verified, source/doc/test clean-checkout reproducible.",
-      "stop_condition": "If dirty R83 has source conflict or clean test fails, preserve it and record blocker; do not silently git restore."
+      "stop_condition": "If dirty R83 has source conflict or clean test fails, preserve it and record blocker; do not silently git restore.",
+      "status": "CLOSED_SCOPED",
+      "closed_2026_11_20_KST": {
+        "C9_remote_commit": "ea1e5b11f8cde9a5cffdb23bd749e006415e3b4d",
+        "C10_remote_commit": "827c41269e2766aee749c903713441c24b5676cf",
+        "source_tests": {
+          "base": 12,
+          "extended": 15,
+          "integration": 50,
+          "R78_strict": 32
+        }
+      },
+      "remaining_physical_claims": "H02 correlated source C and Planck L03 independent null still pending; no scientific gate promotion"
     },
     {
       "id": "R86-P0-02",
@@ -142,7 +154,14 @@
     "agent_delegated": false,
     "blocker_status": "FAIL_CLOSED_NO_START",
     "first_next_science_id_from_parent": "SQ-CF4",
-    "minimum_release_gate": "R86-P0-01 and R86-P0-02 plus a verified bounded/source-qualified SQ-CF4 task packet and owner acceptance. No global 60-node start until external missing data resolved.",
+    "minimum_release_gate": "R86-P0-01 resolved. R86-P0-02 fail-closed adapter plus R86-P0-03 validated bounded SQ-CF4 source C/heldout or explicit physical block and owner acceptance still required. No global 60-node science start.",
     "source_mutations_from_this_audit": "R78 42 scientific payload and R78 integrated DAG immutable; only derived R86 overlay and R78 research-plan addendum plus AGENTS pointer."
-  }
+  },
+  "completed_code_actions": [
+    "R86-P0-01"
+  ],
+  "still_open_code_actions": [
+    "R86-P0-02",
+    "R86-P0-03"
+  ]
 }

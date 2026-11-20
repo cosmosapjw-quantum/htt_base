@@ -17,7 +17,7 @@
     "passed": 259,
     "failed": 0,
     "seconds": 18.09,
-    "caveat": "includes existing locally modified R83 test; not a clean checkout or repository-wide suite"
+    "caveat": "Historical 259/259 R86 pre-P0-A source-scoped local run included now-committed R83 extra tests; not whole-repo clean-checkout validation. New R83 six-file 50/50 post-closure run recorded separately."
   },
   "legacy_original_42_cli": {
     "science_nodes": 42,
@@ -30,16 +30,9 @@
     "note": "ready_scoped means bounded diagnostic permission, not physics/source-accepted task packet"
   },
   "stage_packages_C10": {
-    "sealed": 5,
+    "sealed": 6,
     "total": 6,
-    "unsealed_group": "R83_PRE_DAG_NODES31_40_20261120",
-    "missing_files": [
-      "C9_REVIEW.json",
-      "C10_NODE_MATRIX.json",
-      "PROVENANCE.json",
-      "REPORT_KO.md",
-      "HANDOFF_KO.md"
-    ]
+    "unsealed_group": null
   },
   "real_source_files": [
     {
@@ -65,7 +58,7 @@
   ],
   "source_B02_full_allm_polarized_numeric_transfer": "NOT_AVAILABLE_IN_QUALIFIED_LOCAL_SOURCE_INTAKE",
   "R80_CF4_selected_35970_group_source": "EXACT_BYTE_IDENTITY_REPRODUCED_LINEAGE_ONLY",
-  "R83_dirty_source": "PREEXISTING_TEST_MODIFIED_AND_RUNNER_UNTRACKED_NOT_STAGED",
+  "R83_dirty_source": "SCOPED_R83_TEST_AND_RUNNER_VALIDATED_COMMITTED_AT_C9",
   "R78_inherited_legacy_test_failures": 8,
   "current_broad_physics_code_status": "NOT_READY_FOR_COMPLETE_60_NODE_SCIENCE_EXECUTION",
   "local_agent_handoff_start": "NOT_PUBLISHED_NOT_DISPATCHED",
@@ -80,5 +73,14 @@
     "PYTHONPATH=. PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -B scripts/r86_audit_preexecution.py",
     "PYTHONPATH=. PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python -B -m pytest -p no:cacheprovider -q tests/obsstat/test_r86_preexecution_readiness.py",
     ".venv/bin/python -B docs/research_program/observational_publication_20261015/R78_UNIFIED_SCIENCE_DAG_20261119/validate_unified.py --strict-authority"
-  ]
+  ],
+  "P0_A_closure": {
+    "status": "CLOSED_SCOPED",
+    "C9_commit": "ea1e5b11f8cde9a5cffdb23bd749e006415e3b4d",
+    "C10_commit": "827c41269e2766aee749c903713441c24b5676cf",
+    "scoped_source_integration_tests": "50_PASS_0_FAILED",
+    "R78_strict": "32_PASS_0_FAILED",
+    "R86_6_package_readiness_tests": "8_PASS",
+    "local_agent_start": "BLOCKED_P0_B_P0_C"
+  }
 }

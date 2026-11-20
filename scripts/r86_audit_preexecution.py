@@ -183,24 +183,37 @@ def audit():
       "htt/obsstat/htt_hubble_depth_window.py",
       "scripts/run_htt_hubble_depth_tomography.py"]
     assert all(not (ROOT/f).exists() for f in legacy_missing)
+    # A sealed numerical package is NOT a source-qualified scientific task.
+    # Recompute this operational status from current R83 C10 evidence, instead
+    # of replaying the historical R86 pre-P0-A five-of-six checkpoint.
+    has_unsealed_stage=bool(unsealed)
+    reasons=[
+        "Original science graph has 18 scoped-completed historical nodes, 23 pending and 1 blocked; 7 physical-cross routes are theory-only.",
+        "The 60-node R78 graph has no 60-node production execution controller; the original 42-node CLI reports 0 ready.",
+    ]
+    if has_unsealed_stage:
+        reasons.append("At least one numerical preflight package lacks an actual C10 verified evidence/seal.")
+    reasons += [
+        "SQ-CF4 exact selected 35970 group source identity is valid but correlated PV, cross-method calibration, selection covariance and real heldout coverage remain unqualified.",
+        "B02 external full physical all-m polarization, full Planck matched CMB null and K03 common-congruence cross-source covariance are not qualified.",
+        "Original 42-node planned_code still has two proposed paths that do not exist; actual replacement functions live elsewhere."
+    ]
+    required=[]
+    if has_unsealed_stage:
+        required.append("Seal unverified coding preflight C9/C10 and source receipts without staging unrelated edits.")
+    required.extend([
+        "Provide a tested exact 60-node read-only task packet adapter for SQ-CF4; blocked/unknown node fail-closed and no automatic worker.",
+        "Implement source-matched 35970-ID method zero-point/PV/selection covariance and a preregistered real heldout coverage test, or an honest physically blocked result.",
+        "Verify source-bound R86 overlay and immutable R78 scientific states during dry run."
+    ])
     blocked={
        "status":"BLOCK_LOCAL_AGENT_START",
-       "reasons":[
-         "Original science graph has 18 scoped-completed historical nodes, 23 pending and 1 blocked; 7 physical-cross routes are theory-only.",
-         "The 60-node R78 graph has no 60-node production execution controller; legacy scripts/htt_publication_dag.py handles only original 42 and reports 0 ready.",
-         "R83 ten coding nodes (31–40) have original C1–C8 evidence but missing formal C9/C10 review/matrix/provenance/report/handoff and a locally dirty test plus untracked runner.",
-         "SQ-CF4's R80 exact source identity is valid but source-level physical correlated PV, cross-method calibration, selection covariance and heldout coverage are not qualified.",
-         "B02 external full physical all-m Bianchi polarization, full Planck matched CMB null, K03 common-congruence optical and cross-survey covariance are not source-qualified.",
-         "Original 42-node planned_code still has two proposed paths that do not exist; actual replacement functions live elsewhere."
-       ],
+       "reasons":reasons,
+       "R83_P0_A_scoped_code_closure":("C9_C10_SEALED; SCIENCE_DEPENDENCIES_REMAIN" if not has_unsealed_stage
+                                      else "NOT_YET_SEALED"),
        "missing_R83_checkpoint":unsealed,
        "stale_proposed_paths":legacy_missing,
-       "required_before_bounded_SQ_CF4_dispatch":[
-          "Seal original R83 C9/C10 source/test receipts without staging pre-existing unrelated edits.",
-          "Provide one tested exact 60-node-to-executable task packet adapter for SQ-CF4; dry-run and unknown-node fail-closed; never auto-execute all 60.",
-          "Implement source-matched 35970 ID method zero-point/selection/PV covariance and one predeclared heldout coverage test, or emit an honest physically blocked receipt instead.",
-          "Verify complete 60-node readiness overlay and exact source SHA on a controlled read-only dry-run, with all scientific states unchanged."
-       ],
+       "required_before_bounded_SQ_CF4_dispatch":required,
        "external_sources_required_for_full_60":[
            "Planck release-matched T/E/B MC/null with exchangeable processing, original full photon moments/normal-frame flux",
            "independent Bianchi all-m polarized T/E/B histories/initial conditions/beam/source response",
@@ -252,7 +265,7 @@ def main():
     print(json.dumps({"pass":True,"nodes":len(data["nodes"]),"edges":len(data["edges"]),
         "code_preparation_checkpoint_sealed":sum(x["C10_evidence_present"] for x in data["coding_stage_checkpoints"]),
         "coding_stage_count":len(data["coding_stage_checkpoints"]),
-        "R83_missing_outputs":data["R83_unsealed"][0]["missing"],
+        "R83_missing_outputs":data["R83_unsealed"][0]["missing"] if data["R83_unsealed"] else [],
         "actual_next_sci":data["original_next_action_id"],
         "all_science_code_ready":data["full_60_code_science_execution_ready"],
         "agent_start":"BLOCKED_NOT_DISPATCHED","write":args.write},ensure_ascii=False))

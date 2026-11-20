@@ -94,8 +94,8 @@
         "htt/obsstat/p2p3_fast.py"
       ],
       "test_file": "tests/obsstat/test_r83_p2p3_fast.py",
-      "C10_evidence_present": false,
-      "C10_SHA256": null
+      "C10_evidence_present": true,
+      "C10_SHA256": "2b6d63077124fac9a73b0a7da262da0c239109f7cd90e5019b6ddb0d7e5a6e0d"
     },
     {
       "group": "R84_PRE_DAG_NODES41_50_20261120",
@@ -140,30 +140,7 @@
       "C10_SHA256": "507f383f477a8eb01d9e526c0487a39c05644237a32d1e5a4babc0b7b5c0b47f"
     }
   ],
-  "R83_unsealed": [
-    {
-      "group": "R83_PRE_DAG_NODES31_40_20261120",
-      "node_ids": [
-        "S06",
-        "L01",
-        "L02",
-        "L03",
-        "L04",
-        "L05",
-        "L06",
-        "H01",
-        "H02",
-        "H03"
-      ],
-      "missing": [
-        "C9_REVIEW.json",
-        "C10_NODE_MATRIX.json",
-        "PROVENANCE.json",
-        "REPORT_KO.md",
-        "HANDOFF_KO.md"
-      ]
-    }
-  ],
+  "R83_unsealed": [],
   "real_source_hash_check": [
     {
       "name": "CF4 35970 selected NPZ",
@@ -216,45 +193,21 @@
     "status": "BLOCK_LOCAL_AGENT_START",
     "reasons": [
       "Original science graph has 18 scoped-completed historical nodes, 23 pending and 1 blocked; 7 physical-cross routes are theory-only.",
-      "The 60-node R78 graph has no 60-node production execution controller; legacy scripts/htt_publication_dag.py handles only original 42 and reports 0 ready.",
-      "R83 ten coding nodes (31–40) have original C1–C8 evidence but missing formal C9/C10 review/matrix/provenance/report/handoff and a locally dirty test plus untracked runner.",
-      "SQ-CF4's R80 exact source identity is valid but source-level physical correlated PV, cross-method calibration, selection covariance and heldout coverage are not qualified.",
-      "B02 external full physical all-m Bianchi polarization, full Planck matched CMB null, K03 common-congruence optical and cross-survey covariance are not source-qualified.",
+      "The 60-node R78 graph has no 60-node production execution controller; the original 42-node CLI reports 0 ready.",
+      "SQ-CF4 exact selected 35970 group source identity is valid but correlated PV, cross-method calibration, selection covariance and real heldout coverage remain unqualified.",
+      "B02 external full physical all-m polarization, full Planck matched CMB null and K03 common-congruence cross-source covariance are not qualified.",
       "Original 42-node planned_code still has two proposed paths that do not exist; actual replacement functions live elsewhere."
     ],
-    "missing_R83_checkpoint": [
-      {
-        "group": "R83_PRE_DAG_NODES31_40_20261120",
-        "node_ids": [
-          "S06",
-          "L01",
-          "L02",
-          "L03",
-          "L04",
-          "L05",
-          "L06",
-          "H01",
-          "H02",
-          "H03"
-        ],
-        "missing": [
-          "C9_REVIEW.json",
-          "C10_NODE_MATRIX.json",
-          "PROVENANCE.json",
-          "REPORT_KO.md",
-          "HANDOFF_KO.md"
-        ]
-      }
-    ],
+    "R83_P0_A_scoped_code_closure": "C9_C10_SEALED; SCIENCE_DEPENDENCIES_REMAIN",
+    "missing_R83_checkpoint": [],
     "stale_proposed_paths": [
       "htt/obsstat/htt_hubble_depth_window.py",
       "scripts/run_htt_hubble_depth_tomography.py"
     ],
     "required_before_bounded_SQ_CF4_dispatch": [
-      "Seal original R83 C9/C10 source/test receipts without staging pre-existing unrelated edits.",
-      "Provide one tested exact 60-node-to-executable task packet adapter for SQ-CF4; dry-run and unknown-node fail-closed; never auto-execute all 60.",
-      "Implement source-matched 35970 ID method zero-point/selection/PV covariance and one predeclared heldout coverage test, or emit an honest physically blocked receipt instead.",
-      "Verify complete 60-node readiness overlay and exact source SHA on a controlled read-only dry-run, with all scientific states unchanged."
+      "Provide a tested exact 60-node read-only task packet adapter for SQ-CF4; blocked/unknown node fail-closed and no automatic worker.",
+      "Implement source-matched 35970-ID method zero-point/PV/selection covariance and a preregistered real heldout coverage test, or an honest physically blocked result.",
+      "Verify source-bound R86 overlay and immutable R78 scientific states during dry run."
     ],
     "external_sources_required_for_full_60": [
       "Planck release-matched T/E/B MC/null with exchangeable processing, original full photon moments/normal-frame flux",
@@ -910,17 +863,17 @@
       "pre_execution": {
         "coding_ordinal_1_to_60": 31,
         "source_preflight_group": "R83_PRE_DAG_NODES31_40_20261120",
-        "code_preparation_checkpoint_complete": false,
+        "code_preparation_checkpoint_complete": true,
         "code_module_references": [
           "htt/obsstat/p2p3_fast.py"
         ],
         "associated_stage_code_or_test_exists": true,
-        "software_evidence_scope": "PARTIAL_NUMERICAL_KERNEL_OR_INPUT_VALIDATOR_NOT_FULL_SCIENCE_TASK; STAGE_C9_C10_NOT_SEALED",
+        "software_evidence_scope": "PARTIAL_NUMERICAL_KERNEL_OR_INPUT_VALIDATOR_NOT_FULL_SCIENCE_TASK",
         "science_state_from_R78_unchanged": "pending",
         "full_node_physics_execution_qualified": false,
         "unresolved_execution_requirement": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
         "preregistered_new_physical_null_proven": false,
-        "stage_source_matrix": null,
+        "stage_source_matrix": "docs/research_program/observational_publication_20261015/R83_PRE_DAG_NODES31_40_20261120/C10_NODE_MATRIX.json",
         "incoming_dependencies": [
           {
             "from": "S05",
@@ -971,17 +924,17 @@
       "pre_execution": {
         "coding_ordinal_1_to_60": 32,
         "source_preflight_group": "R83_PRE_DAG_NODES31_40_20261120",
-        "code_preparation_checkpoint_complete": false,
+        "code_preparation_checkpoint_complete": true,
         "code_module_references": [
           "htt/obsstat/p2p3_fast.py"
         ],
         "associated_stage_code_or_test_exists": true,
-        "software_evidence_scope": "EXISTING_SCOPED_SOURCE_RESULT_OR_VALIDATED_OPERATOR; STAGE_C9_C10_NOT_SEALED",
+        "software_evidence_scope": "EXISTING_SCOPED_SOURCE_RESULT_OR_VALIDATED_OPERATOR",
         "science_state_from_R78_unchanged": "completed_scoped",
         "full_node_physics_execution_qualified": false,
         "unresolved_execution_requirement": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
         "preregistered_new_physical_null_proven": false,
-        "stage_source_matrix": null,
+        "stage_source_matrix": "docs/research_program/observational_publication_20261015/R83_PRE_DAG_NODES31_40_20261120/C10_NODE_MATRIX.json",
         "incoming_dependencies": [
           {
             "from": "E2",
@@ -1022,17 +975,17 @@
       "pre_execution": {
         "coding_ordinal_1_to_60": 33,
         "source_preflight_group": "R83_PRE_DAG_NODES31_40_20261120",
-        "code_preparation_checkpoint_complete": false,
+        "code_preparation_checkpoint_complete": true,
         "code_module_references": [
           "htt/obsstat/p2p3_fast.py"
         ],
         "associated_stage_code_or_test_exists": true,
-        "software_evidence_scope": "EXISTING_SCOPED_SOURCE_RESULT_OR_VALIDATED_OPERATOR; STAGE_C9_C10_NOT_SEALED",
+        "software_evidence_scope": "EXISTING_SCOPED_SOURCE_RESULT_OR_VALIDATED_OPERATOR",
         "science_state_from_R78_unchanged": "completed_scoped",
         "full_node_physics_execution_qualified": false,
         "unresolved_execution_requirement": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
         "preregistered_new_physical_null_proven": false,
-        "stage_source_matrix": null,
+        "stage_source_matrix": "docs/research_program/observational_publication_20261015/R83_PRE_DAG_NODES31_40_20261120/C10_NODE_MATRIX.json",
         "incoming_dependencies": [
           {
             "from": "L01",
@@ -1084,17 +1037,17 @@
       "pre_execution": {
         "coding_ordinal_1_to_60": 34,
         "source_preflight_group": "R83_PRE_DAG_NODES31_40_20261120",
-        "code_preparation_checkpoint_complete": false,
+        "code_preparation_checkpoint_complete": true,
         "code_module_references": [
           "htt/obsstat/p2p3_fast.py"
         ],
         "associated_stage_code_or_test_exists": true,
-        "software_evidence_scope": "PARTIAL_NUMERICAL_KERNEL_OR_INPUT_VALIDATOR_NOT_FULL_SCIENCE_TASK; STAGE_C9_C10_NOT_SEALED",
+        "software_evidence_scope": "PARTIAL_NUMERICAL_KERNEL_OR_INPUT_VALIDATOR_NOT_FULL_SCIENCE_TASK",
         "science_state_from_R78_unchanged": "pending",
         "full_node_physics_execution_qualified": false,
         "unresolved_execution_requirement": "Actual same-release CMB T/E/B null ensemble and source exchangeability missing.",
         "preregistered_new_physical_null_proven": false,
-        "stage_source_matrix": null,
+        "stage_source_matrix": "docs/research_program/observational_publication_20261015/R83_PRE_DAG_NODES31_40_20261120/C10_NODE_MATRIX.json",
         "incoming_dependencies": [
           {
             "from": "L01",
@@ -1138,17 +1091,17 @@
       "pre_execution": {
         "coding_ordinal_1_to_60": 35,
         "source_preflight_group": "R83_PRE_DAG_NODES31_40_20261120",
-        "code_preparation_checkpoint_complete": false,
+        "code_preparation_checkpoint_complete": true,
         "code_module_references": [
           "htt/obsstat/p2p3_fast.py"
         ],
         "associated_stage_code_or_test_exists": true,
-        "software_evidence_scope": "PARTIAL_NUMERICAL_KERNEL_OR_INPUT_VALIDATOR_NOT_FULL_SCIENCE_TASK; STAGE_C9_C10_NOT_SEALED",
+        "software_evidence_scope": "PARTIAL_NUMERICAL_KERNEL_OR_INPUT_VALIDATOR_NOT_FULL_SCIENCE_TASK",
         "science_state_from_R78_unchanged": "pending",
         "full_node_physics_execution_qualified": false,
         "unresolved_execution_requirement": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
         "preregistered_new_physical_null_proven": false,
-        "stage_source_matrix": null,
+        "stage_source_matrix": "docs/research_program/observational_publication_20261015/R83_PRE_DAG_NODES31_40_20261120/C10_NODE_MATRIX.json",
         "incoming_dependencies": [
           {
             "from": "L02",
@@ -1187,17 +1140,17 @@
       "pre_execution": {
         "coding_ordinal_1_to_60": 36,
         "source_preflight_group": "R83_PRE_DAG_NODES31_40_20261120",
-        "code_preparation_checkpoint_complete": false,
+        "code_preparation_checkpoint_complete": true,
         "code_module_references": [
           "htt/obsstat/p2p3_fast.py"
         ],
         "associated_stage_code_or_test_exists": true,
-        "software_evidence_scope": "PARTIAL_NUMERICAL_KERNEL_OR_INPUT_VALIDATOR_NOT_FULL_SCIENCE_TASK; STAGE_C9_C10_NOT_SEALED",
+        "software_evidence_scope": "PARTIAL_NUMERICAL_KERNEL_OR_INPUT_VALIDATOR_NOT_FULL_SCIENCE_TASK",
         "science_state_from_R78_unchanged": "pending",
         "full_node_physics_execution_qualified": false,
         "unresolved_execution_requirement": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
         "preregistered_new_physical_null_proven": false,
-        "stage_source_matrix": null,
+        "stage_source_matrix": "docs/research_program/observational_publication_20261015/R83_PRE_DAG_NODES31_40_20261120/C10_NODE_MATRIX.json",
         "incoming_dependencies": [
           {
             "from": "L04",
@@ -1235,17 +1188,17 @@
       "pre_execution": {
         "coding_ordinal_1_to_60": 37,
         "source_preflight_group": "R83_PRE_DAG_NODES31_40_20261120",
-        "code_preparation_checkpoint_complete": false,
+        "code_preparation_checkpoint_complete": true,
         "code_module_references": [
           "htt/obsstat/p2p3_fast.py"
         ],
         "associated_stage_code_or_test_exists": true,
-        "software_evidence_scope": "PARTIAL_NUMERICAL_KERNEL_OR_INPUT_VALIDATOR_NOT_FULL_SCIENCE_TASK; STAGE_C9_C10_NOT_SEALED",
+        "software_evidence_scope": "PARTIAL_NUMERICAL_KERNEL_OR_INPUT_VALIDATOR_NOT_FULL_SCIENCE_TASK",
         "science_state_from_R78_unchanged": "pending",
         "full_node_physics_execution_qualified": false,
         "unresolved_execution_requirement": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
         "preregistered_new_physical_null_proven": false,
-        "stage_source_matrix": null,
+        "stage_source_matrix": "docs/research_program/observational_publication_20261015/R83_PRE_DAG_NODES31_40_20261120/C10_NODE_MATRIX.json",
         "incoming_dependencies": [
           {
             "from": "L05",
@@ -1289,18 +1242,18 @@
       "pre_execution": {
         "coding_ordinal_1_to_60": 38,
         "source_preflight_group": "R83_PRE_DAG_NODES31_40_20261120",
-        "code_preparation_checkpoint_complete": false,
+        "code_preparation_checkpoint_complete": true,
         "code_module_references": [
           "docs/research_program/observational_publication_20261015/H03_20261016/src/h03_tomography.py",
           "htt/obsstat/p2p3_fast.py"
         ],
         "associated_stage_code_or_test_exists": true,
-        "software_evidence_scope": "EXISTING_SCOPED_SOURCE_RESULT_OR_VALIDATED_OPERATOR; STAGE_C9_C10_NOT_SEALED",
+        "software_evidence_scope": "EXISTING_SCOPED_SOURCE_RESULT_OR_VALIDATED_OPERATOR",
         "science_state_from_R78_unchanged": "completed_scoped",
         "full_node_physics_execution_qualified": false,
         "unresolved_execution_requirement": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
         "preregistered_new_physical_null_proven": false,
-        "stage_source_matrix": null,
+        "stage_source_matrix": "docs/research_program/observational_publication_20261015/R83_PRE_DAG_NODES31_40_20261120/C10_NODE_MATRIX.json",
         "incoming_dependencies": [
           {
             "from": "E1",
@@ -1348,17 +1301,17 @@
       "pre_execution": {
         "coding_ordinal_1_to_60": 39,
         "source_preflight_group": "R83_PRE_DAG_NODES31_40_20261120",
-        "code_preparation_checkpoint_complete": false,
+        "code_preparation_checkpoint_complete": true,
         "code_module_references": [
           "htt/obsstat/p2p3_fast.py"
         ],
         "associated_stage_code_or_test_exists": true,
-        "software_evidence_scope": "PARTIAL_NUMERICAL_KERNEL_OR_INPUT_VALIDATOR_NOT_FULL_SCIENCE_TASK; STAGE_C9_C10_NOT_SEALED",
+        "software_evidence_scope": "PARTIAL_NUMERICAL_KERNEL_OR_INPUT_VALIDATOR_NOT_FULL_SCIENCE_TASK",
         "science_state_from_R78_unchanged": "pending",
         "full_node_physics_execution_qualified": false,
         "unresolved_execution_requirement": "Real method-family source overlap, zero-point, correlated peculiar velocity and selection covariance not implemented/source-qualified.",
         "preregistered_new_physical_null_proven": false,
-        "stage_source_matrix": null,
+        "stage_source_matrix": "docs/research_program/observational_publication_20261015/R83_PRE_DAG_NODES31_40_20261120/C10_NODE_MATRIX.json",
         "incoming_dependencies": [
           {
             "from": "H01",
@@ -1412,18 +1365,18 @@
       "pre_execution": {
         "coding_ordinal_1_to_60": 40,
         "source_preflight_group": "R83_PRE_DAG_NODES31_40_20261120",
-        "code_preparation_checkpoint_complete": false,
+        "code_preparation_checkpoint_complete": true,
         "code_module_references": [
           "docs/research_program/observational_publication_20261015/H03_20261016/src/h03_tomography.py",
           "htt/obsstat/p2p3_fast.py"
         ],
         "associated_stage_code_or_test_exists": true,
-        "software_evidence_scope": "EXISTING_SCOPED_SOURCE_RESULT_OR_VALIDATED_OPERATOR; STAGE_C9_C10_NOT_SEALED",
+        "software_evidence_scope": "EXISTING_SCOPED_SOURCE_RESULT_OR_VALIDATED_OPERATOR",
         "science_state_from_R78_unchanged": "completed_scoped",
         "full_node_physics_execution_qualified": false,
         "unresolved_execution_requirement": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
         "preregistered_new_physical_null_proven": false,
-        "stage_source_matrix": null,
+        "stage_source_matrix": "docs/research_program/observational_publication_20261015/R83_PRE_DAG_NODES31_40_20261120/C10_NODE_MATRIX.json",
         "incoming_dependencies": [
           {
             "from": "H01",

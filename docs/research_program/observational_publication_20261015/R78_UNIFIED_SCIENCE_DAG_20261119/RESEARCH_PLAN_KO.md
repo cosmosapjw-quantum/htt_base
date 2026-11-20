@@ -122,3 +122,8 @@ R78과 직접 관련된 구조/권한/출처 검사 **32/32 PASS**, 위 상속 �
 2026-11-20 감사에서 소스 관련 회귀 259/259 PASS, R78 strict 32/32 PASS가 확인되었지만 **전체 repository clean checkout PASS나 전체 science DAG executable은 아니다**. 기존 R83의 C1–C8 수치 구현만 Git에 게시되어 C9 review/C10 matrix·provenance·report/handoff가 5개 누락돼 있다. 현재 R83 test는 tracked dirty, R83 runner는 untracked이므로 자동 add/reset 금지. R78의 과거 8 inherited CI failures도 별도 유지한다.
 
 따라서 **R86 verdict = BLOCK_LOCAL_AGENT_START**, local coding agent 시작용 handoff/worker dispatch는 만들지 않는다. R78의 SQ-CF4 ready_scoped는 35,970-group source-bounded diagnostic 진입 가능성이지 correlated PV/calibration/selection C와 heldout validation을 통과한 과학 실행 패킷이라는 뜻이 아니다. 위 P0-A/B/C의 실제 검산과 owner task scope 확인 뒤에만 다시 한정된 local dispatch 여부를 결정한다. R78 original 42 acceptance, 11 SQ source status, 7 PHY conditional theorem states 및 original software PR backlog authority를 승격하지 않는다.
+
+
+## 11. R86 P0-A 종결 상태 갱신 (2026-11-20 KST)
+
+앞 절의 P0-A 미봉인 내용은 당시 **실제 감사 시점의 기록**이다. 이후 R83 31–40을 원본 12개 테스트, 신규 15개 테스트, H03/L02/L03 통합 50개 테스트로 재검증하고 C9 ea1e5b11f8cde9a5cffdb23bd749e006415e3b4d 및 C10 827c41269e2766aee749c903713441c24b5676cf를 scoped commit/push해 봉인했다. R86 파생 overlay의 coding preflight 상태는 **6/6 C10 packages sealed**, R83_unsealed=[]로 갱신한다. 원래 R78 42개 과학 node/11 SQ/7 PHY 및 129 edge는 그대로이며, physical source/null 미충족과 60-node adapter 부재로 local agent START는 여전히 BLOCKED다. 다음 순서는 P0-B SQ-CF4 실제 method/PV/selection covariance+heldout, 이후 P0-C 안전한 60-node dry-run adapter이다. 자동 agent 시작, 원래 과학 상태 승격 또는 main merge는 없다.
