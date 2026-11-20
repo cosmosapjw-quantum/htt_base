@@ -1,0 +1,73 @@
+{
+  "schema": "htt.r88.p0c.r78_readonly_adapter_scoped_record/1",
+  "date": "2026-11-21 KST",
+  "parent_git_head": "73906628b1fd9777af66c532cc00373d80f0460f",
+  "software_stage": "P0-C",
+  "software_verdict": "COMPLETED_SCOPED_READONLY_FAIL_CLOSED",
+  "science_node": "SQ-CF4",
+  "science_verdict": "BLOCKED_INPUT",
+  "original_science_state": "ready_scoped",
+  "original_next_action_id": "SQ-CF4",
+  "original_42_science_payload_sha256": "e3264e105cabf78ddac37addc36cacc3cfa05ee942e33e54b431b22e3e87de0d",
+  "R78_sha256": "90aba8c1ca9c8e3a7744be0f071dcfe09b81e5353892aca13878191e20f58c11",
+  "R86_sha256": "2f6cb20f541100d5db8d53a1745ad627e5729e83afff48e4585745a56b30a467",
+  "R87_source_result_sha256": "c357670dadaada250f75f3a41959d712add11b3d4c45f00bfbc46f4dc3fdc199",
+  "graph": {
+    "nodes": 60,
+    "hard_edges": 129,
+    "historical_science": 42,
+    "source_qualifications": 11,
+    "PHY_routes": 7
+  },
+  "four_real_cf4_source_checks": "4_VERIFIED_BYTES_ON_LOCAL_SOURCE",
+  "source_readout": {
+    "released_groups": 38053,
+    "selected_groups": 35970,
+    "method_indicators": 7,
+    "original_overlap_groups": 926,
+    "error_bearing_groups": 922,
+    "method_residual_rank": 5,
+    "upstream_globally_intercalibrated": true
+  },
+  "physical_C": {
+    "N_stat": "WORKING_DIAGONAL_ONLY",
+    "S_PV": null,
+    "J_cal_Sigma_cal_J_cal_T": null,
+    "C_selection": null,
+    "independent_upstream_heldout": null,
+    "cosmological_Pi": null
+  },
+  "scope": {
+    "CLI": "scripts/r88/run_p0c.py --node SQ-CF4 --dry-run",
+    "production_science_run": false,
+    "agent_dispatched": false,
+    "started_local_agent": false,
+    "source_files_mutated": false,
+    "R78_changed": false,
+    "R86_changed": false,
+    "R87_changed": false,
+    "main_merged": false
+  },
+  "verification": {
+    "p0c_plus_r86_unit": {
+      "passed": 32,
+      "failed": 0
+    },
+    "scoped_r79_r88": {
+      "passed": 146,
+      "skipped": 10,
+      "failed": 0
+    },
+    "r78_strict": {
+      "checks": 32,
+      "failed": 0
+    },
+    "r86_audit": {
+      "stage_seals": 6,
+      "next_id": "SQ-CF4",
+      "agent": "BLOCKED_NOT_DISPATCHED"
+    }
+  },
+  "independent_native_subagent_review": "NOT_RUN",
+  "next": "Obtain true CF4 upstream calibration/PV/selection/null inputs for SQ-CF4; otherwise explicitly select bounded SQ-GAIA source diagnostic, without 60-node dispatch"
+}
