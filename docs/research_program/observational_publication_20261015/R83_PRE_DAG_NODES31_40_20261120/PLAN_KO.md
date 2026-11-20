@@ -1,0 +1,17 @@
+# R83 · R78 31–40 코딩 연구 C1–C10
+
+**2026-11-20 KST**, 기존 research/r69-observable-physics-bridges-20261118 branch, 초기 HEAD 36b049dd7c4bd8b540b9337d2b11a0ed22e2611c. R78 revision3 60 nodes/129 edges, original science 42 SHA e3264e105cabf78ddac37addc36cacc3cfa05ee942e33e54b431b22e3e87de0d. NEXT_ID=SQ-CF4 (과학 DAG 실행 아님). 원본 42 science states, PR backlog, Planck/CF4 raw 자료, 기존 사용자 미추적 파일은 변경하지 않는다.
+
+## C1 원자료 기준과 명시된 코딩 범위
+
+R79 1–10 = 우선 source qualifier 10개, R81 11=SQ-NATIVE / 12–18=PHY-01..07 / 19–20=E0 E1, R82 21–30=E2 E3 X01 X02 X03 S01..S05를 잇는 실행용 ordinal. **31=S06, 32=L01, 33=L02, 34=L03, 35=L04, 36=L05, 37=L06, 38=H01, 39=H02, 40=H03.** 원래 60-node array/toposort 인덱스와 다르다.
+
+각 과학 상태: S06 pending (P1 publication gate, 코드만 readiness manifest 준비), L01·L02 completed_scoped, L03·L04·L05·L06 pending (실제 source-matched Planck FFP10/null 독립성 필요), H01 completed_scoped, H02 pending (CF4 selection/PV/calibration source covariance), H03 completed_scoped (실제 35,970 group 4×9 source-conditional WLS and 36×36 shared-source covariance). 31–40 모두 구현할 수 있는 **수치 사전 준비**에 한정하며 과학 state 변경 없음.
+
+C1 실제 source는 정확한 CF4 selected_source_observables.npz SHA256 86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c, 35,970 그룹, H03 실제 four Gaussian windows at z=(.025,.04,.06,.08), width .012, retained c=299792.458 km/s, synthetic working diagonal velocity scatter (250 km/s plus modulus noise). Original H03 source h03_tomography.fit uses weighted QR, no copy of 35,970 group file in R83. Same source fit reproduced against archived H03_SOURCE_TOMOGRAPHY.json and 36×36 covariance. **Original 4×9 QR fits with influence=False median 0.023398458s; 4 QR fits with full joint 36×36 covariance median 0.030328293s (3/2 repetitions)**, first read and design initialization excluded. Max source design condition approx13.979. No physical H(z,n) or tilted-Bianchi interpretation.
+
+Actual Planck L02 source L02_ACTUAL_STATISTICS.json has 25 T/E/B field rows and 24 same-sky pair rows, all **one physical sky**. Historical L03 source L02_ON_EIGHT_PAIR_PILOT.json has 8 recorded FFP10 pair IDs and 5 per-ID variants = 40 processing rows. Eight nominal simulation IDs plus variants do not establish independent full Planck null, and 40 rows are not 40 independent skies. The original L03 qualification is explicitly HOLD and L04 rarity must remain conditional without the actual matched MC ensemble. Only finite rank/reduction kernels and source-identity validators are implementable here.
+
+Core high-gain candidates: (1) H03 4-window weighted 9D normal equations and coefficients with original 36×36 cross-window covariance via linear operator, C++ fused/NumPy BLAS alternatives, measure on exact source; preserve original QR/SVD as stability oracle (2) Planck L02/L03 masked STF5/feature invariants source-array reduction and source-pair ID aware finite ranks, with ties and look-elsewhere selection, no fake physical p. Existing R79–R82 fast lanes remain default unless a source-matched speed win is measured. High-level output includes S06/L06 explicit HOLD without manuscript submission, H02 without fictional covariance.
+
+C1 source fingerprint, hardware, versions, baseline timings, original source/result identity, notebook-free CLI in scripts/r83/bench_baseline.py and C1_BASELINE.json. All optional compiled code lives under /tmp as source-SHA-certified object, no binary commit, no -ffast-math, no GPU requirement.
