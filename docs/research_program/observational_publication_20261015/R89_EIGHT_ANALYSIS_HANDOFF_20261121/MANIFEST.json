@@ -1,0 +1,2979 @@
+{
+  "schema": "htt.r89.eight_science_analysis_handoff_only/1",
+  "date": "2026-11-21 KST",
+  "purpose": "eight mutually exclusive bounded analysis work packets, not 60-node science executor",
+  "source_branch": "research/r69-observable-physics-bridges-20261118",
+  "parent_HEAD_at_preparation": "13820f70a0a5f4b1624faddd871a42805c4f46c8",
+  "science_SSOT": "docs/research_program/observational_publication_20261015/R78_UNIFIED_SCIENCE_DAG_20261119/INTEGRATED_DAG.json",
+  "science_R78_sha256": "90aba8c1ca9c8e3a7744be0f071dcfe09b81e5353892aca13878191e20f58c11",
+  "R86_overlay_sha256": "2f6cb20f541100d5db8d53a1745ad627e5729e83afff48e4585745a56b30a467",
+  "historical_42_node_sha256": "e3264e105cabf78ddac37addc36cacc3cfa05ee942e33e54b431b22e3e87de0d",
+  "R87_result_sha256": "c357670dadaada250f75f3a41959d712add11b3d4c45f00bfbc46f4dc3fdc199",
+  "nodes": 60,
+  "hard_edges": 129,
+  "stage_seals": 6,
+  "historical_scoped_completed": 18,
+  "source_ready_scoped": 4,
+  "PHY_theory_only": 7,
+  "original_science_NEXT_ID": "SQ-CF4",
+  "whole_program_eligibility": "BLOCK_LOCAL_AGENT_START",
+  "source_qualification_may_run_bounded_diagnostics": true,
+  "independent_physical_PV_calibration_selection_heldout": "BLOCKED_INPUT",
+  "external_native_Bianchi_solver": "UNAVAILABLE_NOT_REPLACED",
+  "source_checks_at_package_time": [
+    {
+      "path": "/mnt/extdrive/workdir/raw/cf4_full/table3.dat",
+      "expected_sha256": "c2351c52de3e38a7fd80256b6f0818c550dd9f105b91e84fbcc1eb7234160b4d",
+      "actual_sha256": "c2351c52de3e38a7fd80256b6f0818c550dd9f105b91e84fbcc1eb7234160b4d",
+      "status": "VERIFIED_BYTES",
+      "source_owner": "original CF4 CDS"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/raw/cf4_full/table4.dat",
+      "expected_sha256": "b6edfec68bdfddeada8f3b8f11938f3bbda98a8e2894ff136a369c2ad6594e94",
+      "actual_sha256": "b6edfec68bdfddeada8f3b8f11938f3bbda98a8e2894ff136a369c2ad6594e94",
+      "status": "VERIFIED_BYTES",
+      "source_owner": "original CF4 CDS"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/raw/cf4_full/ReadMe",
+      "expected_sha256": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4",
+      "actual_sha256": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4",
+      "status": "VERIFIED_BYTES",
+      "source_owner": "original CF4 CDS"
+    },
+    {
+      "path": "docs/research_program/cf4_schur_loop8_20261015/inputs/selected_source_observables.npz",
+      "expected_sha256": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+      "actual_sha256": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+      "status": "VERIFIED_BYTES",
+      "source_owner": "R54/R58 selected groups"
+    }
+  ],
+  "planning_total_minutes_sequential": {
+    "min": 180,
+    "max": 765
+  },
+  "planning_limit": "3-12.75 h only for source-bounded review/replay with explicit blocked results; not 60 science completions or external-source acquisition",
+  "agent_exec_performed": false,
+  "worker_started": false,
+  "science_states_edited": false,
+  "packages": [
+    {
+      "group_id": "G01_COMMON",
+      "name": "공통 증거·source authority",
+      "node_ids": [
+        "E0",
+        "E1",
+        "E2",
+        "E3",
+        "X01",
+        "X02",
+        "X03"
+      ],
+      "node_count": 7,
+      "estimate_minutes": {
+        "min": 15,
+        "max": 45,
+        "kind": "PLANNING_HEURISTIC_NOT_END_TO_END_MEASURED"
+      },
+      "objective": "Reconcile already scoped-complete foundations and exact source/claims without replaying an entire old science campaign.",
+      "required_sources_and_limitations": "R78/R86/R87 immutable authority, historical original 42-node science hash, prior evidence locations",
+      "science_stop": "Any citation, source identity or original-state conflict; no post-hoc science promotion",
+      "external_source_cannot_be_assumed": true,
+      "upstream_groups": [],
+      "dependencies_including_overlay": [
+        {
+          "from": "E0",
+          "to": "E1",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": false,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "E1",
+          "to": "E2",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": false,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "E0",
+          "to": "E3",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": false,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "E0",
+          "to": "X01",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": false,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "E0",
+          "to": "X02",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": false,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "E0",
+          "to": "X03",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": false,
+          "source_state": "completed_scoped"
+        }
+      ],
+      "nodes": [
+        {
+          "id": "E0",
+          "paper": "COMMON",
+          "node_class": "original_science",
+          "r78_state": "completed_scoped",
+          "eligibility": "REUSE_SCOPED_PRIOR_EVIDENCE",
+          "depends_on_original": [],
+          "goal": "Reused published solver-free dossier (NOT newly revalidated astrophysical claims)",
+          "acceptance": "PR533@13d8d85f source identity available",
+          "stop": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/phy_fast.py"
+          ]
+        },
+        {
+          "id": "E1",
+          "paper": "COMMON",
+          "node_class": "original_science",
+          "r78_state": "completed_scoped",
+          "eligibility": "REUSE_SCOPED_PRIOR_EVIDENCE",
+          "depends_on_original": [
+            "E0"
+          ],
+          "goal": "Reused real CF4 35,970-group Schur diagnostic only",
+          "acceptance": "17 scenarios/12 tests conditional; not physical shear",
+          "stop": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/phy_fast.py"
+          ]
+        },
+        {
+          "id": "E2",
+          "paper": "COMMON",
+          "node_class": "original_science",
+          "r78_state": "completed_scoped",
+          "eligibility": "REUSE_SCOPED_PRIOR_EVIDENCE",
+          "depends_on_original": [
+            "E1"
+          ],
+          "goal": "Reused Planck 9 same-sky + FFP10 999 signal / 300 noise MES conditioning",
+          "acceptance": "13 tests and 26,846 same-mask pixels conditional",
+          "stop": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/p1_fast.py",
+            "htt/obsstat/publication_functionals.py"
+          ]
+        },
+        {
+          "id": "E3",
+          "paper": "COMMON",
+          "node_class": "original_science",
+          "r78_state": "completed_scoped",
+          "eligibility": "REUSE_SCOPED_PRIOR_EVIDENCE",
+          "depends_on_original": [
+            "E0"
+          ],
+          "goal": "Frozen PR066/PR521 samplewise functional operators (not physical likelihood)",
+          "acceptance": "Original code/ledger present at ancestor",
+          "stop": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/p1_fast.py",
+            "htt/obsstat/publication_functionals.py"
+          ]
+        },
+        {
+          "id": "X01",
+          "paper": "COMMON",
+          "node_class": "original_science",
+          "r78_state": "completed_scoped",
+          "eligibility": "REUSE_SCOPED_PRIOR_EVIDENCE",
+          "depends_on_original": [
+            "E0"
+          ],
+          "goal": "Bind physical source identities and overlaps across all 6 papers",
+          "acceptance": "Each claim connected to immutable release/estimator/shared-sky or marked local-uncommitted",
+          "stop": "bind verified CF4 and Planck shared-source overlaps, mark physical provenance gaps",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/p1_fast.py",
+            "htt/obsstat/publication_functionals.py"
+          ]
+        },
+        {
+          "id": "X02",
+          "paper": "COMMON",
+          "node_class": "original_science",
+          "r78_state": "completed_scoped",
+          "eligibility": "REUSE_SCOPED_PRIOR_EVIDENCE",
+          "depends_on_original": [
+            "E0"
+          ],
+          "goal": "Complete precise six-paper primary literature novelty comparator",
+          "acceptance": "Six comparable estimands, releases and matched null/likelihoods with contrasts",
+          "stop": "Run source-matched model-specific likelihood/figure replication before any novelty or manuscript claim",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/p1_fast.py",
+            "htt/obsstat/publication_functionals.py"
+          ]
+        },
+        {
+          "id": "X03",
+          "paper": "COMMON",
+          "node_class": "original_science",
+          "r78_state": "completed_scoped",
+          "eligibility": "REUSE_SCOPED_PRIOR_EVIDENCE",
+          "depends_on_original": [
+            "E0"
+          ],
+          "goal": "Freeze prospective statistics versus known historical choices",
+          "acceptance": "Retrospective p=.039 and previous exploratory ranks never promoted to confirmatory",
+          "stop": "keep historical p=.039 and all prior chosen axes retrospective; pre-new-null protocol explicitly unregistered",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/p1_fast.py",
+            "htt/obsstat/publication_functionals.py"
+          ]
+        }
+      ],
+      "existing_test_files": [
+        "tests/obsstat/test_r86_preexecution_readiness.py",
+        "tests/obsstat/test_r88_p0c.py"
+      ],
+      "existing_module_paths": [
+        "htt/obsstat/p1_fast.py",
+        "htt/obsstat/phy_fast.py",
+        "htt/obsstat/publication_functionals.py"
+      ],
+      "source_ready_node_ids": [],
+      "historically_scoped_complete": [
+        "E0",
+        "E1",
+        "E2",
+        "E3",
+        "X01",
+        "X02",
+        "X03"
+      ],
+      "unqualified_node_ids": [],
+      "write_scope": "docs/research_program/observational_publication_20261015/R89_EIGHT_ANALYSIS_HANDOFF_20261121/runs/G01_COMMON/",
+      "allow_full_science_DAG_dispatch": false,
+      "allow_agent_launch_from_this_packet": false,
+      "packet_is_not_execution_authority": true
+    },
+    {
+      "group_id": "G02_CF4",
+      "name": "CF4 거리·PV·방향별 Hubble",
+      "node_ids": [
+        "H01",
+        "H03",
+        "SQ-CF4",
+        "H02",
+        "H04",
+        "H05",
+        "H06"
+      ],
+      "node_count": 7,
+      "estimate_minutes": {
+        "min": 30,
+        "max": 90,
+        "kind": "PLANNING_HEURISTIC_NOT_END_TO_END_MEASURED"
+      },
+      "objective": "Reuse R87 35,970-group exact method contrasts/heldout and H03/K02 source-conditioned windows; identify precisely which physical claims remain blocked.",
+      "required_sources_and_limitations": "CF4 original table3/table4/ReadMe, 35,970 selected NPZ; independent pre-intercalibration calibration response, physical PV and selection law still absent",
+      "science_stop": "Missing independent true S_PV, J_cal Sigma_cal J_cal^T, C_selection or upstream heldout means no physical H(z,n) / posterior / H04 promotion",
+      "external_source_cannot_be_assumed": true,
+      "upstream_groups": [
+        "G01_COMMON"
+      ],
+      "dependencies_including_overlay": [
+        {
+          "from": "E1",
+          "to": "H01",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "H01",
+          "to": "H02",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G02_CF4",
+          "cross_group": false,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "X01",
+          "to": "H02",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "H01",
+          "to": "H03",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G02_CF4",
+          "cross_group": false,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "H02",
+          "to": "H04",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G02_CF4",
+          "cross_group": false,
+          "source_state": "pending"
+        },
+        {
+          "from": "H03",
+          "to": "H04",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G02_CF4",
+          "cross_group": false,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "H04",
+          "to": "H05",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G02_CF4",
+          "cross_group": false,
+          "source_state": "pending"
+        },
+        {
+          "from": "X02",
+          "to": "H05",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "H05",
+          "to": "H06",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G02_CF4",
+          "cross_group": false,
+          "source_state": "pending"
+        },
+        {
+          "from": "E1",
+          "to": "SQ-CF4",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "X01",
+          "to": "SQ-CF4",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "H01",
+          "to": "SQ-CF4",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G02_CF4",
+          "cross_group": false,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "SQ-CF4",
+          "to": "H02",
+          "kind": "new_qualification_overlay",
+          "hard": true,
+          "from_group": "G02_CF4",
+          "cross_group": false,
+          "source_state": "ready_scoped"
+        }
+      ],
+      "nodes": [
+        {
+          "id": "H01",
+          "paper": "P3",
+          "node_class": "original_science",
+          "r78_state": "completed_scoped",
+          "eligibility": "REUSE_SCOPED_PRIOR_EVIDENCE",
+          "depends_on_original": [
+            "E1"
+          ],
+          "goal": "Define H_W(z,n) under survey radial/angular window and velocity law",
+          "acceptance": "Not Theta/3 unless independent physical mapping derived; isotropic window null returns zero spurious dipole",
+          "stop": "P3/H03 READY for preregistered direction/redshift tomography using shared-window selection and covariance; H02 waits for calibrated method/source velocity selection and X01",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "docs/research_program/observational_publication_20261015/H03_20261016/src/h03_tomography.py",
+            "htt/obsstat/p2p3_fast.py"
+          ]
+        },
+        {
+          "id": "H03",
+          "paper": "P3",
+          "node_class": "original_science",
+          "r78_state": "completed_scoped",
+          "eligibility": "REUSE_SCOPED_PRIOR_EVIDENCE",
+          "depends_on_original": [
+            "H01"
+          ],
+          "goal": "Fit observed depth windows monopole/dipole/STF2 with method and patch comparisons",
+          "acceptance": "No physical global tilt inferred; nested sky/redshift windows correlated",
+          "stop": "P3/H03 complete in source-conditional processing scope only. P3/H02 still blocked by actual selection, calibrated method and peculiar-velocity covariance plus X01; H04 waits H02. Independent READY: P2/L01 and COMMON/X01/X02/X03. No H(z,n) physical or publication admission.",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "docs/research_program/observational_publication_20261015/H03_20261016/src/h03_tomography.py",
+            "htt/obsstat/p2p3_fast.py"
+          ]
+        },
+        {
+          "id": "SQ-CF4",
+          "paper": "P3",
+          "node_class": "source_qualification",
+          "r78_state": "ready_scoped",
+          "eligibility": "BOUNDED_SOURCE_DIAGNOSTIC_ONLY",
+          "depends_on_original": [
+            "E1",
+            "X01",
+            "H01"
+          ],
+          "goal": "CF4 selected-group method/PV calibration",
+          "acceptance": "Match exact group/method IDs, form source-level C=N+S_PV+Jcal Sigma_cal Jcal^T+Csel, compare heldout contrast/coverage with an explicit missing-source remainder.",
+          "stop": "No physical H(z,n) claim if calibrated source law cannot be built; report identified subspace and limitations.",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "R80 exact 35970 selected source lineage plus R87 real seven-method table3 group overlap and four sky heldout product-residual diagnostics now available. Published method moduli were globally MCMC-intercalibrated, so true upstream zero-point posterior/J_cal, calibrated correlated S_PV, survey completeness C_selection and independently calibrated heldout remain unavailable.",
+          "actual_code_references": [
+            "htt/obsstat/analysis_lane.json",
+            "htt/obsstat/cf4_p0b.py",
+            "htt/obsstat/pre_dag_fast.py",
+            "scripts/r80/audit_cf4_source_lineage.py",
+            "scripts/r87/run_p0b.py"
+          ]
+        },
+        {
+          "id": "H02",
+          "paper": "P3",
+          "node_class": "original_science",
+          "r78_state": "pending",
+          "eligibility": "NO_FULL_SCIENCE_EXECUTION",
+          "depends_on_original": [
+            "H01",
+            "X01"
+          ],
+          "goal": "Build empirical CF4 method-selection/calibration/velocity covariance model",
+          "acceptance": "Use method-group overlap and correlated errors, reproduce source null simulations",
+          "stop": "Reuse measured centers/coupled intervals and actual upstream CDS membership joins. Obtain true targeting/detection/rejected-source and calibration/velocity law plus qualified source null simulations; released-table inclusion fractions and method/galaxy identity matches do not supply selection probabilities, unchanged-ingestion proof or independent calibration validation.",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Real method-family source overlap, zero-point, correlated peculiar velocity and selection covariance not implemented/source-qualified.",
+          "actual_code_references": [
+            "htt/obsstat/p2p3_fast.py"
+          ]
+        },
+        {
+          "id": "H04",
+          "paper": "P3",
+          "node_class": "original_science",
+          "r78_state": "pending",
+          "eligibility": "NO_FULL_SCIENCE_EXECUTION",
+          "depends_on_original": [
+            "H02",
+            "H03"
+          ],
+          "goal": "Infer physical H(z,n) alternatives with peculiar-velocity and survey covariance",
+          "acceptance": "False-positive calibration plus shared calibration posterior predictive checks",
+          "stop": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/p4_bianchi_fast.py"
+          ]
+        },
+        {
+          "id": "H05",
+          "paper": "P3",
+          "node_class": "original_science",
+          "r78_state": "pending",
+          "eligibility": "NO_FULL_SCIENCE_EXECUTION",
+          "depends_on_original": [
+            "H04",
+            "X02"
+          ],
+          "goal": "Compare 2025–26 CF4 conflicting null and anisotropic papers",
+          "acceptance": "Real novel difference is covariance/window/calibration robustness, not a recycled dipole",
+          "stop": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/p4_bianchi_fast.py"
+          ]
+        },
+        {
+          "id": "H06",
+          "paper": "P3",
+          "node_class": "original_science",
+          "r78_state": "pending",
+          "eligibility": "NO_FULL_SCIENCE_EXECUTION",
+          "depends_on_original": [
+            "H05"
+          ],
+          "goal": "Decide and draft P3 manuscript",
+          "acceptance": "Actual full law, competing models, independent data validation or scientifically informative null",
+          "stop": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/p4_bianchi_fast.py"
+          ]
+        }
+      ],
+      "existing_test_files": [
+        "tests/obsstat/test_r87_cf4_p0b.py",
+        "tests/obsstat/test_r83_p2p3_fast.py",
+        "tests/obsstat/test_r88_p0c.py"
+      ],
+      "existing_module_paths": [
+        "docs/research_program/observational_publication_20261015/H03_20261016/src/h03_tomography.py",
+        "htt/obsstat/analysis_lane.json",
+        "htt/obsstat/cf4_p0b.py",
+        "htt/obsstat/p2p3_fast.py",
+        "htt/obsstat/p4_bianchi_fast.py",
+        "htt/obsstat/pre_dag_fast.py",
+        "scripts/r80/audit_cf4_source_lineage.py",
+        "scripts/r87/run_p0b.py"
+      ],
+      "source_ready_node_ids": [
+        "SQ-CF4"
+      ],
+      "historically_scoped_complete": [
+        "H01",
+        "H03"
+      ],
+      "unqualified_node_ids": [
+        "H02",
+        "H04",
+        "H05",
+        "H06"
+      ],
+      "write_scope": "docs/research_program/observational_publication_20261015/R89_EIGHT_ANALYSIS_HANDOFF_20261121/runs/G02_CF4/",
+      "allow_full_science_DAG_dispatch": false,
+      "allow_agent_launch_from_this_packet": false,
+      "packet_is_not_execution_authority": true
+    },
+    {
+      "group_id": "G03_GAIA",
+      "name": "Gaia 비방사형 source·VSH",
+      "node_ids": [
+        "K01",
+        "K02",
+        "SQ-GAIA",
+        "K03",
+        "K04",
+        "K05",
+        "K06"
+      ],
+      "node_count": 7,
+      "estimate_minutes": {
+        "min": 30,
+        "max": 120,
+        "kind": "PLANNING_HEURISTIC_NOT_END_TO_END_MEASURED"
+      },
+      "objective": "Reuse Gaia CRF/VSH actual source moments, K01/K02 identification and bounded redshift/AGN/scan-alias source diagnostics.",
+      "required_sources_and_limitations": "Gaia selected catalog/normal-equation artifacts; independent AGN/scan/redshift null and common normal-frame optical response not established",
+      "science_stop": "Do not infer physical normal-frame shear/omega/beta or combined K04/K05 posterior without independent source response and covariance",
+      "external_source_cannot_be_assumed": true,
+      "upstream_groups": [
+        "G01_COMMON",
+        "G02_CF4",
+        "G04_RADIO_FRAME",
+        "G08_OPTICAL_PHY"
+      ],
+      "dependencies_including_overlay": [
+        {
+          "from": "E1",
+          "to": "K01",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "E2",
+          "to": "K01",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "K01",
+          "to": "K02",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G03_GAIA",
+          "cross_group": false,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "H01",
+          "to": "K02",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G02_CF4",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "K01",
+          "to": "K03",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G03_GAIA",
+          "cross_group": false,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "K02",
+          "to": "K04",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G03_GAIA",
+          "cross_group": false,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "H04",
+          "to": "K04",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G02_CF4",
+          "cross_group": true,
+          "source_state": "pending"
+        },
+        {
+          "from": "K03",
+          "to": "K05",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G03_GAIA",
+          "cross_group": false,
+          "source_state": "pending"
+        },
+        {
+          "from": "K04",
+          "to": "K05",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G03_GAIA",
+          "cross_group": false,
+          "source_state": "pending"
+        },
+        {
+          "from": "V03",
+          "to": "K05",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G04_RADIO_FRAME",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "K05",
+          "to": "K06",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G03_GAIA",
+          "cross_group": false,
+          "source_state": "pending"
+        },
+        {
+          "from": "X02",
+          "to": "K06",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "X01",
+          "to": "SQ-GAIA",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "K01",
+          "to": "SQ-GAIA",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G03_GAIA",
+          "cross_group": false,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "SQ-GAIA",
+          "to": "K03",
+          "kind": "new_qualification_overlay",
+          "hard": true,
+          "from_group": "G03_GAIA",
+          "cross_group": false,
+          "source_state": "ready_scoped"
+        },
+        {
+          "from": "SQ-OPTICAL",
+          "to": "K04",
+          "kind": "new_qualification_overlay",
+          "hard": true,
+          "from_group": "G08_OPTICAL_PHY",
+          "cross_group": true,
+          "source_state": "pending_conditional"
+        },
+        {
+          "from": "SQ-CROSS-COV",
+          "to": "K05",
+          "kind": "new_qualification_overlay",
+          "hard": true,
+          "from_group": "G08_OPTICAL_PHY",
+          "cross_group": true,
+          "source_state": "pending_dependency"
+        }
+      ],
+      "nodes": [
+        {
+          "id": "K01",
+          "paper": "P6",
+          "node_class": "original_science",
+          "r78_state": "completed_scoped",
+          "eligibility": "REUSE_SCOPED_PRIOR_EVIDENCE",
+          "depends_on_original": [
+            "E1",
+            "E2"
+          ],
+          "goal": "Freeze one-congruence sigma_ab, omega_a, A_a and beta_a; units and radial blindness",
+          "acceptance": "n^i Omega_ij n^j=0, apparent STF≠geometry sigma; 4accel dipole not assumed",
+          "stop": "1+3 same-congruence definitions, radial rank-six and three vorticity nulls; no optical transport",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/p5p6_fast.py",
+            "htt/obsstat/publication_frame_kinematics.py"
+          ]
+        },
+        {
+          "id": "K02",
+          "paper": "P6",
+          "node_class": "original_science",
+          "r78_state": "completed_scoped",
+          "eligibility": "REUSE_SCOPED_PRIOR_EVIDENCE",
+          "depends_on_original": [
+            "K01",
+            "H01"
+          ],
+          "goal": "Determine identified subspace from actual CF4 apparent STF and safe physics bridges",
+          "acceptance": "No measured omega from radial redshift and no manufactured A posterior",
+          "stop": "K04 still blocked on H02 selection+physical optical/Jacobi bridge; pursue common-frame source-matched tangential data",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/p5p6_fast.py"
+          ]
+        },
+        {
+          "id": "SQ-GAIA",
+          "paper": "P6",
+          "node_class": "source_qualification",
+          "r78_state": "ready_scoped",
+          "eligibility": "BOUNDED_SOURCE_DIAGNOSTIC_ONLY",
+          "depends_on_original": [
+            "X01",
+            "K01"
+          ],
+          "goal": "Gaia quasar redshift/scan/AGN source calibration",
+          "acceptance": "Reproduce 16D fit on registered subset with stable cross-hemisphere/patch forecast and a source-specific null; keep local cosmic shear unqualified.",
+          "stop": "If redshift/scanning-law source unavailable, publish source-conditional alias diagnostics without physical omega.",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Actual source moments and VSH numerical kernels exist; independent redshift/AGN/scan alias/selection covariance and qualified nonradial source null pending.",
+          "actual_code_references": [
+            "htt/obsstat/analysis_lane.json",
+            "htt/obsstat/pre_dag_fast.py"
+          ]
+        },
+        {
+          "id": "K03",
+          "paper": "P6",
+          "node_class": "original_science",
+          "r78_state": "pending",
+          "eligibility": "NO_FULL_SCIENCE_EXECUTION",
+          "depends_on_original": [
+            "K01"
+          ],
+          "goal": "Secure nonradial physical observables and matching covariance for omega/A/beta",
+          "acceptance": "Independent source qualification and nonradial response demonstrated",
+          "stop": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Original Gaia 755850 cross moments exist, but independent sky/AGN/scan and normal-frame nonradial transfer not source-qualified.",
+          "actual_code_references": [
+            "htt/obsstat/p5p6_fast.py"
+          ]
+        },
+        {
+          "id": "K04",
+          "paper": "P6",
+          "node_class": "original_science",
+          "r78_state": "pending",
+          "eligibility": "NO_FULL_SCIENCE_EXECUTION",
+          "depends_on_original": [
+            "K02",
+            "H04"
+          ],
+          "goal": "Fit physical partial-identification for available kinematic modes",
+          "acceptance": "Output unbounded or undefined for genuinely null sectors; no zero fill",
+          "stop": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Full CF4 selection and physical optical response to kinematic normal/matter frame unavailable",
+          "actual_code_references": [
+            "htt/obsstat/p5p6_fast.py"
+          ]
+        },
+        {
+          "id": "K05",
+          "paper": "P6",
+          "node_class": "original_science",
+          "r78_state": "pending",
+          "eligibility": "NO_FULL_SCIENCE_EXECUTION",
+          "depends_on_original": [
+            "K03",
+            "K04",
+            "V03"
+          ],
+          "goal": "Combine physically independent sector signals with common congruence",
+          "acceptance": "Calibration, source clock, observer frame and shared sky treatment exact",
+          "stop": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/p5p6_fast.py"
+          ]
+        },
+        {
+          "id": "K06",
+          "paper": "P6",
+          "node_class": "original_science",
+          "r78_state": "pending",
+          "eligibility": "NO_FULL_SCIENCE_EXECUTION",
+          "depends_on_original": [
+            "K05",
+            "X02"
+          ],
+          "goal": "Decide/draft P6 paper",
+          "acceptance": "Source-supported physical identified combinations with independent error budget",
+          "stop": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/p5p6_fast.py"
+          ]
+        }
+      ],
+      "existing_test_files": [
+        "tests/obsstat/test_pre_dag_fast.py",
+        "tests/obsstat/test_r85_p5p6_fast.py"
+      ],
+      "existing_module_paths": [
+        "htt/obsstat/analysis_lane.json",
+        "htt/obsstat/p5p6_fast.py",
+        "htt/obsstat/pre_dag_fast.py",
+        "htt/obsstat/publication_frame_kinematics.py"
+      ],
+      "source_ready_node_ids": [
+        "SQ-GAIA"
+      ],
+      "historically_scoped_complete": [
+        "K01",
+        "K02"
+      ],
+      "unqualified_node_ids": [
+        "K03",
+        "K04",
+        "K05",
+        "K06"
+      ],
+      "write_scope": "docs/research_program/observational_publication_20261015/R89_EIGHT_ANALYSIS_HANDOFF_20261121/runs/G03_GAIA/",
+      "allow_full_science_DAG_dispatch": false,
+      "allow_agent_launch_from_this_packet": false,
+      "packet_is_not_execution_authority": true
+    },
+    {
+      "group_id": "G04_RADIO_FRAME",
+      "name": "NVSS radio·observer/matter frame",
+      "node_ids": [
+        "V01",
+        "V02",
+        "V03",
+        "SQ-FRAME",
+        "SQ-RADIO",
+        "V04",
+        "V05",
+        "V06"
+      ],
+      "node_count": 8,
+      "estimate_minutes": {
+        "min": 20,
+        "max": 90,
+        "kind": "PLANNING_HEURISTIC_NOT_END_TO_END_MEASURED"
+      },
+      "objective": "Reuse actual NVSS 33k pixel/185 ring/3 flux bin source response and local-boost geometry, separating global matter tilt from endpoint copying.",
+      "required_sources_and_limitations": "R65/R74 NVSS conditional carriers, Planck processed local boost; independent radio selection/LSS null and physical global tilt transfer not established",
+      "science_stop": "No identified global tilt, cross-probe Bayes factor or cosmic detection from a conditional ring score/source-unmatched response",
+      "external_source_cannot_be_assumed": true,
+      "upstream_groups": [
+        "G01_COMMON",
+        "G02_CF4",
+        "G03_GAIA",
+        "G05_PLANCK"
+      ],
+      "dependencies_including_overlay": [
+        {
+          "from": "E1",
+          "to": "V01",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "E2",
+          "to": "V01",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "V01",
+          "to": "V02",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G04_RADIO_FRAME",
+          "cross_group": false,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "L01",
+          "to": "V02",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G05_PLANCK",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "V01",
+          "to": "V03",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G04_RADIO_FRAME",
+          "cross_group": false,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "V02",
+          "to": "V04",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G04_RADIO_FRAME",
+          "cross_group": false,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "V03",
+          "to": "V04",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G04_RADIO_FRAME",
+          "cross_group": false,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "H04",
+          "to": "V04",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G02_CF4",
+          "cross_group": true,
+          "source_state": "pending"
+        },
+        {
+          "from": "V04",
+          "to": "V05",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G04_RADIO_FRAME",
+          "cross_group": false,
+          "source_state": "pending"
+        },
+        {
+          "from": "X03",
+          "to": "V05",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "V05",
+          "to": "V06",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G04_RADIO_FRAME",
+          "cross_group": false,
+          "source_state": "pending"
+        },
+        {
+          "from": "X02",
+          "to": "V06",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "V01",
+          "to": "SQ-RADIO",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G04_RADIO_FRAME",
+          "cross_group": false,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "X01",
+          "to": "SQ-RADIO",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "X01",
+          "to": "SQ-FRAME",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "V01",
+          "to": "SQ-FRAME",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G04_RADIO_FRAME",
+          "cross_group": false,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "K01",
+          "to": "SQ-FRAME",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G03_GAIA",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "SQ-FRAME",
+          "to": "V04",
+          "kind": "new_qualification_overlay",
+          "hard": true,
+          "from_group": "G04_RADIO_FRAME",
+          "cross_group": false,
+          "source_state": "ready_scoped"
+        },
+        {
+          "from": "SQ-RADIO",
+          "to": "V04",
+          "kind": "new_qualification_overlay",
+          "hard": true,
+          "from_group": "G04_RADIO_FRAME",
+          "cross_group": false,
+          "source_state": "ready_scoped"
+        }
+      ],
+      "nodes": [
+        {
+          "id": "V01",
+          "paper": "P4",
+          "node_class": "original_science",
+          "r78_state": "completed_scoped",
+          "eligibility": "REUSE_SCOPED_PRIOR_EVIDENCE",
+          "depends_on_original": [
+            "E1",
+            "E2"
+          ],
+          "goal": "Fix beta_RO, beta_RM, beta_MO, windowed B and rapidity with congruence",
+          "acceptance": "Intrinsic radiation eps1 not raw solar CMB dipole; beta fraction != rapidity",
+          "stop": "finite local-frame relative beta/rapidity and distinct survey bulk; all observed transfer conditional",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/p4_bianchi_fast.py",
+            "htt/obsstat/publication_frame_kinematics.py"
+          ]
+        },
+        {
+          "id": "V02",
+          "paper": "P4",
+          "node_class": "original_science",
+          "r78_state": "completed_scoped",
+          "eligibility": "REUSE_SCOPED_PRIOR_EVIDENCE",
+          "depends_on_original": [
+            "V01",
+            "L01"
+          ],
+          "goal": "Inject finite local observer boost through the actual processed Planck source",
+          "acceptance": "Matched mask/beam/input and mode leakage",
+          "stop": "Reuse completed native finite response columns/error vectors for downstream work when independently qualified V03/H04 sources arrive. Do not repeat the completed source experiment or promote geometric rank to physical local/global identifiability.",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/p4_bianchi_fast.py"
+          ]
+        },
+        {
+          "id": "V03",
+          "paper": "P4",
+          "node_class": "original_science",
+          "r78_state": "completed_scoped",
+          "eligibility": "REUSE_SCOPED_PRIOR_EVIDENCE",
+          "depends_on_original": [
+            "V01"
+          ],
+          "goal": "Obtain physically distinct global tilt source-history response (not endpoint copy)",
+          "acceptance": "Same-frame, different radial/temporal transfer and exact source units",
+          "stop": "Reuse the validated restricted linear optical history. A V04 consumer must match source operator to V02 or derive a separate common operator; propagate source/IC/remainder restrictions. Do not claim external EB payload.",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/p4_bianchi_fast.py"
+          ]
+        },
+        {
+          "id": "SQ-FRAME",
+          "paper": "COMMON",
+          "node_class": "source_qualification",
+          "r78_state": "ready_scoped",
+          "eligibility": "BOUNDED_SOURCE_DIAGNOSTIC_ONLY",
+          "depends_on_original": [
+            "X01",
+            "V01",
+            "K01"
+          ],
+          "goal": "Observer/emitter normal and source frame matching",
+          "acceptance": "Produce a unit-tested local proper Lorentz/Fermi frame dictionary, source frame identity and redshift-dependent applicability; no unmeasured beta.",
+          "stop": "If global observer/source 3D beta absent, keep a model/source-indexed conditional map only.",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Finite local Lorentz kinematics exists; physical observed emitter/matter/normal common frame history and source transfer missing.",
+          "actual_code_references": [
+            "htt/obsstat/analysis_lane.json",
+            "htt/obsstat/pre_dag_fast.py"
+          ]
+        },
+        {
+          "id": "SQ-RADIO",
+          "paper": "P4",
+          "node_class": "source_qualification",
+          "r78_state": "ready_scoped",
+          "eligibility": "BOUNDED_SOURCE_DIAGNOSTIC_ONLY",
+          "depends_on_original": [
+            "V01",
+            "X01"
+          ],
+          "goal": "Radio same-source selection response k,kappa and LSS null",
+          "acceptance": "Estimate one physically selected k,kappa and paired covariance; source-preserving Lorentz aberration/reselection/heldout validation; distinguish log-count vs count-density.",
+          "stop": "Stop if morphology/SED source cannot support physical boost inference; keep conditional 6D count score.",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Actual NVSS conditional 33k×185-ring 3-bin score exists; LSS, kappa, flux migration and matched selection/null pending.",
+          "actual_code_references": [
+            "htt/obsstat/analysis_lane.json",
+            "htt/obsstat/pre_dag_fast.py"
+          ]
+        },
+        {
+          "id": "V04",
+          "paper": "P4",
+          "node_class": "original_science",
+          "r78_state": "pending",
+          "eligibility": "NO_FULL_SCIENCE_EXECUTION",
+          "depends_on_original": [
+            "V02",
+            "V03",
+            "H04"
+          ],
+          "goal": "Measure projected local-global information and stable singular values",
+          "acceptance": "Do not identify from a normalization of a null column",
+          "stop": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/p4_bianchi_fast.py"
+          ]
+        },
+        {
+          "id": "V05",
+          "paper": "P4",
+          "node_class": "original_science",
+          "r78_state": "pending",
+          "eligibility": "NO_FULL_SCIENCE_EXECUTION",
+          "depends_on_original": [
+            "V04",
+            "X03"
+          ],
+          "goal": "Calibrated local/global joint inference and independent injections",
+          "acceptance": "No unqualified Bayes evidence; calibrated null and prior family",
+          "stop": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/p4_bianchi_fast.py"
+          ]
+        },
+        {
+          "id": "V06",
+          "paper": "P4",
+          "node_class": "original_science",
+          "r78_state": "pending",
+          "eligibility": "NO_FULL_SCIENCE_EXECUTION",
+          "depends_on_original": [
+            "V05",
+            "X02"
+          ],
+          "goal": "Decide and draft P4 manuscript",
+          "acceptance": "Actual distinct transfer or physical non-identifiability statement and real-data significance",
+          "stop": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/p4_bianchi_fast.py"
+          ]
+        }
+      ],
+      "existing_test_files": [
+        "tests/obsstat/test_r84_p4_bianchi_fast.py",
+        "tests/obsstat/test_pre_dag_fast.py"
+      ],
+      "existing_module_paths": [
+        "htt/obsstat/analysis_lane.json",
+        "htt/obsstat/p4_bianchi_fast.py",
+        "htt/obsstat/pre_dag_fast.py",
+        "htt/obsstat/publication_frame_kinematics.py"
+      ],
+      "source_ready_node_ids": [
+        "SQ-FRAME",
+        "SQ-RADIO"
+      ],
+      "historically_scoped_complete": [
+        "V01",
+        "V02",
+        "V03"
+      ],
+      "unqualified_node_ids": [
+        "V04",
+        "V05",
+        "V06"
+      ],
+      "write_scope": "docs/research_program/observational_publication_20261015/R89_EIGHT_ANALYSIS_HANDOFF_20261121/runs/G04_RADIO_FRAME/",
+      "allow_full_science_DAG_dispatch": false,
+      "allow_agent_launch_from_this_packet": false,
+      "packet_is_not_execution_authority": true
+    },
+    {
+      "group_id": "G05_PLANCK",
+      "name": "Planck 저다중극·FFP null",
+      "node_ids": [
+        "L01",
+        "SQ-CMB-NULL",
+        "L03",
+        "L02",
+        "L04",
+        "L05",
+        "L06"
+      ],
+      "node_count": 7,
+      "estimate_minutes": {
+        "min": 30,
+        "max": 180,
+        "kind": "PLANNING_HEURISTIC_NOT_END_TO_END_MEASURED"
+      },
+      "objective": "Reuse L01/L02 signed-parity/processed-variant response and existing eight paired FFP pilot ID tests; classify what real release-matched null is missing.",
+      "required_sources_and_limitations": "Existing same-sky processing/pilot FFP products; full release-matched Commander T/E/B exchangeable signal+noise+foreground null unavailable",
+      "science_stop": "Do not count nine processing variants as independent skies or eight pilot FFP pairs as a calibrated release-matched null; no rarity/p-value promotion",
+      "external_source_cannot_be_assumed": true,
+      "upstream_groups": [
+        "G01_COMMON"
+      ],
+      "dependencies_including_overlay": [
+        {
+          "from": "E2",
+          "to": "L01",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "L01",
+          "to": "L02",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G05_PLANCK",
+          "cross_group": false,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "X03",
+          "to": "L02",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "L01",
+          "to": "L03",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G05_PLANCK",
+          "cross_group": false,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "X01",
+          "to": "L03",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "L02",
+          "to": "L04",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G05_PLANCK",
+          "cross_group": false,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "L03",
+          "to": "L04",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G05_PLANCK",
+          "cross_group": false,
+          "source_state": "pending"
+        },
+        {
+          "from": "L04",
+          "to": "L05",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G05_PLANCK",
+          "cross_group": false,
+          "source_state": "pending"
+        },
+        {
+          "from": "X02",
+          "to": "L05",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "L05",
+          "to": "L06",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G05_PLANCK",
+          "cross_group": false,
+          "source_state": "pending"
+        },
+        {
+          "from": "E2",
+          "to": "SQ-CMB-NULL",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "L01",
+          "to": "SQ-CMB-NULL",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G05_PLANCK",
+          "cross_group": false,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "SQ-CMB-NULL",
+          "to": "L03",
+          "kind": "new_qualification_overlay",
+          "hard": true,
+          "from_group": "G05_PLANCK",
+          "cross_group": false,
+          "source_state": "blocked_source"
+        }
+      ],
+      "nodes": [
+        {
+          "id": "L01",
+          "paper": "P2",
+          "node_class": "original_science",
+          "r78_state": "completed_scoped",
+          "eligibility": "REUSE_SCOPED_PRIOR_EVIDENCE",
+          "depends_on_original": [
+            "E2"
+          ],
+          "goal": "Map real Planck low-l harmonic/STF/beam/mask/transfer response",
+          "acceptance": "Match selected T/E/B source supports, corrected NESTED->RING and ell>5 remainder",
+          "stop": "Reuse completed finite response/support results; execute dependency-safe L02/L03/V02. Intrinsic high-ell tails and physical null qualification remain unadmitted; additional W-weighted residual RHS is an optional runnable processing follow-up, not missing external input.",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/p2p3_fast.py"
+          ]
+        },
+        {
+          "id": "SQ-CMB-NULL",
+          "paper": "P2",
+          "node_class": "source_qualification",
+          "r78_state": "blocked_source",
+          "eligibility": "NO_FULL_SCIENCE_EXECUTION",
+          "depends_on_original": [
+            "E2",
+            "L01"
+          ],
+          "goal": "Qualified release-matched CMB T/E/B Monte Carlo/null",
+          "acceptance": "Same-release source-qualified T/E/B null and actual matched cosmic/instrument simulation coverage, no invented PTE.",
+          "stop": "Unavailable matched MC remains blocked; PR4 vs PR3 not independent sky detections.",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Planck same-sky nine processes and eight FFP pilot pairs are not full matched exchangeable Commander T/E/B Monte Carlo.",
+          "actual_code_references": [
+            "htt/obsstat/analysis_lane.json",
+            "htt/obsstat/pre_dag_fast.py"
+          ]
+        },
+        {
+          "id": "L03",
+          "paper": "P2",
+          "node_class": "original_science",
+          "r78_state": "pending",
+          "eligibility": "NO_FULL_SCIENCE_EXECUTION",
+          "depends_on_original": [
+            "L01",
+            "X01"
+          ],
+          "goal": "Establish release-matched Planck signal+noise+foreground null adequacy",
+          "acceptance": "Simulation IDs independent units; actual and null same mask/beam/foreground law",
+          "stop": "Reuse the completed eight-row bank; obtain and qualify matched split CMB/noise response plus residual-foreground/weight-selection law and statistic-specific coverage. Split-product acquisition/integration may be runnable, but available noise or FFP9 inputs do not by themselves provide the absent joint law. Do not rerun completed pairs or expand to 300 merely to replace missing qualification.",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Actual same-release CMB T/E/B null ensemble and source exchangeability missing.",
+          "actual_code_references": [
+            "htt/obsstat/p2p3_fast.py"
+          ]
+        },
+        {
+          "id": "L02",
+          "paper": "P2",
+          "node_class": "original_science",
+          "r78_state": "completed_scoped",
+          "eligibility": "REUSE_SCOPED_PRIOR_EVIDENCE",
+          "depends_on_original": [
+            "L01",
+            "X03"
+          ],
+          "goal": "Predefine tensor invariant/orbit morphology and selection family",
+          "acceptance": "Conservation under SO3/O3 and no posthoc pre-registration",
+          "stop": "Reuse fixed statistic-family algorithm on the source-qualified L03 bank and eventual L04 selection experiment. Historical observed application remains retrospective; no null rank or significance is admitted.",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/p2p3_fast.py"
+          ]
+        },
+        {
+          "id": "L04",
+          "paper": "P2",
+          "node_class": "original_science",
+          "r78_state": "pending",
+          "eligibility": "NO_FULL_SCIENCE_EXECUTION",
+          "depends_on_original": [
+            "L02",
+            "L03"
+          ],
+          "goal": "Compute corrected joint large-angle morphology rarity",
+          "acceptance": "Correct finite MC ranks, nuisance sensitivity and look elsewhere",
+          "stop": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/p2p3_fast.py"
+          ]
+        },
+        {
+          "id": "L05",
+          "paper": "P2",
+          "node_class": "original_science",
+          "r78_state": "pending",
+          "eligibility": "NO_FULL_SCIENCE_EXECUTION",
+          "depends_on_original": [
+            "L04",
+            "X02"
+          ],
+          "goal": "Analyze anomaly versus robust negative null interpretation",
+          "acceptance": "No independent-sky multiplication or historical p reuse",
+          "stop": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/p2p3_fast.py"
+          ]
+        },
+        {
+          "id": "L06",
+          "paper": "P2",
+          "node_class": "original_science",
+          "r78_state": "pending",
+          "eligibility": "NO_FULL_SCIENCE_EXECUTION",
+          "depends_on_original": [
+            "L05"
+          ],
+          "goal": "Decide and draft P2 manuscript",
+          "acceptance": "Qualified simulations, method novelty over Planck VII and reporting of null results",
+          "stop": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/p2p3_fast.py"
+          ]
+        }
+      ],
+      "existing_test_files": [
+        "tests/obsstat/test_r83_p2p3_fast.py",
+        "tests/obsstat/test_pre_dag_fast.py"
+      ],
+      "existing_module_paths": [
+        "htt/obsstat/analysis_lane.json",
+        "htt/obsstat/p2p3_fast.py",
+        "htt/obsstat/pre_dag_fast.py"
+      ],
+      "source_ready_node_ids": [],
+      "historically_scoped_complete": [
+        "L01",
+        "L02"
+      ],
+      "unqualified_node_ids": [
+        "SQ-CMB-NULL",
+        "L03",
+        "L04",
+        "L05",
+        "L06"
+      ],
+      "write_scope": "docs/research_program/observational_publication_20261015/R89_EIGHT_ANALYSIS_HANDOFF_20261121/runs/G05_PLANCK/",
+      "allow_full_science_DAG_dispatch": false,
+      "allow_agent_launch_from_this_packet": false,
+      "packet_is_not_execution_authority": true
+    },
+    {
+      "group_id": "G06_P1",
+      "name": "P1 5-view 통계·identified-set",
+      "node_ids": [
+        "S01",
+        "SQ-P1-ANCHOR",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06"
+      ],
+      "node_count": 7,
+      "estimate_minutes": {
+        "min": 10,
+        "max": 60,
+        "kind": "PLANNING_HEURISTIC_NOT_END_TO_END_MEASURED"
+      },
+      "objective": "Rerun source-conditioned 2,048 coupled P1 functional draws and exact unknown-mass/anchor-floor checks; preserve conditional interpretation.",
+      "required_sources_and_limitations": "R82 source-conditioned finite-law arrays; true selected 274-row physical normal-frame anchor and matched observational law unavailable",
+      "science_stop": "Never turn apparent q_app, synthetic floors or unknown physical sectors into physical Pi, G_F or normalized likelihood",
+      "external_source_cannot_be_assumed": true,
+      "upstream_groups": [
+        "G01_COMMON"
+      ],
+      "dependencies_including_overlay": [
+        {
+          "from": "E3",
+          "to": "S01",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "S01",
+          "to": "S02",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G06_P1",
+          "cross_group": false,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "E2",
+          "to": "S02",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "S02",
+          "to": "S03",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G06_P1",
+          "cross_group": false,
+          "source_state": "blocked_input"
+        },
+        {
+          "from": "X01",
+          "to": "S03",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "S03",
+          "to": "S04",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G06_P1",
+          "cross_group": false,
+          "source_state": "pending"
+        },
+        {
+          "from": "X03",
+          "to": "S04",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "S04",
+          "to": "S05",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G06_P1",
+          "cross_group": false,
+          "source_state": "pending"
+        },
+        {
+          "from": "X02",
+          "to": "S05",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "S05",
+          "to": "S06",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G06_P1",
+          "cross_group": false,
+          "source_state": "pending"
+        },
+        {
+          "from": "S01",
+          "to": "SQ-P1-ANCHOR",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G06_P1",
+          "cross_group": false,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "X01",
+          "to": "SQ-P1-ANCHOR",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "SQ-P1-ANCHOR",
+          "to": "S02",
+          "kind": "new_qualification_overlay",
+          "hard": true,
+          "from_group": "G06_P1",
+          "cross_group": false,
+          "source_state": "blocked_physical_anchor"
+        }
+      ],
+      "nodes": [
+        {
+          "id": "S01",
+          "paper": "P1",
+          "node_class": "original_science",
+          "r78_state": "completed_scoped",
+          "eligibility": "REUSE_SCOPED_PRIOR_EVIDENCE",
+          "depends_on_original": [
+            "E3"
+          ],
+          "goal": "Define typed common x,F,Pi,Q,G_F and boundary domains",
+          "acceptance": "Signed x, Q source anchor, F sign-clean samplewise, strict Pi unknown mass, G_F fixed floor/depth; F4 separate",
+          "stop": "S02: actual-data coupled source samples with missing/domain-missing mass explicitly retained; release/calibration proof required for physical promotion",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/p1_fast.py",
+            "htt/obsstat/publication_functionals.py"
+          ]
+        },
+        {
+          "id": "SQ-P1-ANCHOR",
+          "paper": "P1",
+          "node_class": "source_qualification",
+          "r78_state": "blocked_physical_anchor",
+          "eligibility": "NO_FULL_SCIENCE_EXECUTION",
+          "depends_on_original": [
+            "S01",
+            "X01"
+          ],
+          "goal": "P1 selected 274-row source physical anchor and null",
+          "acceptance": "One identified physical x with actual source covariance and partial identified interval; original P1 F/common-scale null.",
+          "stop": "Stop at valid conditional partial identification when positive scale/reference unavailable.",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Source 274-row selected x needs real physical optical-to-normal scale/denominator and matched null; undefined mass cannot be filled by working-law MC.",
+          "actual_code_references": [
+            "htt/obsstat/analysis_lane.json",
+            "htt/obsstat/pre_dag_fast.py"
+          ]
+        },
+        {
+          "id": "S02",
+          "paper": "P1",
+          "node_class": "original_science",
+          "r78_state": "blocked_input",
+          "eligibility": "NO_FULL_SCIENCE_EXECUTION",
+          "depends_on_original": [
+            "S01",
+            "E2"
+          ],
+          "goal": "Run actual-data conditional finite draw pushforward, retaining unknown physical sectors",
+          "acceptance": "One joint source, exact normalized weights; posterior unknown mass not silently renormalized",
+          "stop": "Supply the explicitly missing common-congruence physical response and calibrated observational law; apply them to the retained 2048 IDs and calibration minimax without replacing physical unknowns with apparent coefficients.",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Original optical-to-kinematic source anchor missing; 2048 coupled P1 working draws not a physical posterior.",
+          "actual_code_references": [
+            "htt/obsstat/p1_fast.py",
+            "htt/obsstat/publication_functionals.py"
+          ]
+        },
+        {
+          "id": "S03",
+          "paper": "P1",
+          "node_class": "original_science",
+          "r78_state": "pending",
+          "eligibility": "NO_FULL_SCIENCE_EXECUTION",
+          "depends_on_original": [
+            "S02",
+            "X01"
+          ],
+          "goal": "Evaluate nontrivial anchor/floor, depth and selection sensitivity",
+          "acceptance": "Outputs change on declared denominator/selection, zero/missing distinct",
+          "stop": "Reuse paired actual-source sensitivity; apply to S02-admitted functional mapping before node completion.",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/p1_fast.py",
+            "htt/obsstat/publication_functionals.py"
+          ]
+        },
+        {
+          "id": "S04",
+          "paper": "P1",
+          "node_class": "original_science",
+          "r78_state": "pending",
+          "eligibility": "NO_FULL_SCIENCE_EXECUTION",
+          "depends_on_original": [
+            "S03",
+            "X03"
+          ],
+          "goal": "Qualify real observational law or rigorous externally calibrated identified interval",
+          "acceptance": "At least one actual selected likelihood or justified outer interval, not synthetic-only",
+          "stop": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Physical joint kinematic/tilt/curvature posterior unavailable for full x_C; a qualified narrower identifiable functional is allowed",
+          "actual_code_references": [
+            "htt/obsstat/p1_fast.py",
+            "htt/obsstat/publication_functionals.py"
+          ]
+        },
+        {
+          "id": "S05",
+          "paper": "P1",
+          "node_class": "original_science",
+          "r78_state": "pending",
+          "eligibility": "NO_FULL_SCIENCE_EXECUTION",
+          "depends_on_original": [
+            "S04",
+            "X02"
+          ],
+          "goal": "Write P1 real-data statistical-functional paper",
+          "acceptance": "Distinct from standard pushforward; model comparison and source-linked robustness",
+          "stop": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/p1_fast.py",
+            "htt/obsstat/publication_functionals.py"
+          ]
+        },
+        {
+          "id": "S06",
+          "paper": "P1",
+          "node_class": "original_science",
+          "r78_state": "pending",
+          "eligibility": "NO_FULL_SCIENCE_EXECUTION",
+          "depends_on_original": [
+            "S05"
+          ],
+          "goal": "Decide publication readiness without submitting",
+          "acceptance": "All P1 gates shown with actual evidence or HOLD",
+          "stop": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/p2p3_fast.py"
+          ]
+        }
+      ],
+      "existing_test_files": [
+        "tests/obsstat/test_r82_p1_fast.py"
+      ],
+      "existing_module_paths": [
+        "htt/obsstat/analysis_lane.json",
+        "htt/obsstat/p1_fast.py",
+        "htt/obsstat/p2p3_fast.py",
+        "htt/obsstat/pre_dag_fast.py",
+        "htt/obsstat/publication_functionals.py"
+      ],
+      "source_ready_node_ids": [],
+      "historically_scoped_complete": [
+        "S01"
+      ],
+      "unqualified_node_ids": [
+        "SQ-P1-ANCHOR",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06"
+      ],
+      "write_scope": "docs/research_program/observational_publication_20261015/R89_EIGHT_ANALYSIS_HANDOFF_20261121/runs/G06_P1/",
+      "allow_full_science_DAG_dispatch": false,
+      "allow_agent_launch_from_this_packet": false,
+      "packet_is_not_execution_authority": true
+    },
+    {
+      "group_id": "G07_BIANCHI",
+      "name": "Bianchi Lie/atlas 입력 적격성",
+      "node_ids": [
+        "B01",
+        "SQ-LIE-FLUX",
+        "SQ-NATIVE",
+        "B02",
+        "B03",
+        "B04",
+        "B05"
+      ],
+      "node_count": 7,
+      "estimate_minutes": {
+        "min": 15,
+        "max": 60,
+        "kind": "PLANNING_HEURISTIC_NOT_END_TO_END_MEASURED"
+      },
+      "objective": "Reuse arbitrary Bianchi Lie/Jacobi/Codazzi algebra and B02 external-payload validators without pretending to implement an all-m physical solver.",
+      "required_sources_and_limitations": "Actual external native polarized all-m transfer histories, IC/mode/Planck response and normal-frame rho,j,pi are unavailable",
+      "science_stop": "No solver substitution, fake native atlas, high-ell transfer evidence, family identification or B03/B04 promotion",
+      "external_source_cannot_be_assumed": true,
+      "upstream_groups": [
+        "G01_COMMON",
+        "G03_GAIA",
+        "G05_PLANCK",
+        "G08_OPTICAL_PHY"
+      ],
+      "dependencies_including_overlay": [
+        {
+          "from": "E2",
+          "to": "B01",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "B01",
+          "to": "B02",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G07_BIANCHI",
+          "cross_group": false,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "B02",
+          "to": "B03",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G07_BIANCHI",
+          "cross_group": false,
+          "source_state": "pending"
+        },
+        {
+          "from": "L03",
+          "to": "B03",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G05_PLANCK",
+          "cross_group": true,
+          "source_state": "pending"
+        },
+        {
+          "from": "B03",
+          "to": "B04",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G07_BIANCHI",
+          "cross_group": false,
+          "source_state": "pending"
+        },
+        {
+          "from": "B04",
+          "to": "B05",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G07_BIANCHI",
+          "cross_group": false,
+          "source_state": "pending"
+        },
+        {
+          "from": "X02",
+          "to": "B05",
+          "kind": "original_science",
+          "hard": true,
+          "from_group": "G01_COMMON",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "B01",
+          "to": "SQ-LIE-FLUX",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G07_BIANCHI",
+          "cross_group": false,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "K01",
+          "to": "SQ-LIE-FLUX",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G03_GAIA",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "B01",
+          "to": "SQ-NATIVE",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G07_BIANCHI",
+          "cross_group": false,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "L01",
+          "to": "SQ-NATIVE",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G05_PLANCK",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "SQ-NATIVE",
+          "to": "B02",
+          "kind": "new_qualification_overlay",
+          "hard": true,
+          "from_group": "G07_BIANCHI",
+          "cross_group": false,
+          "source_state": "blocked_external"
+        },
+        {
+          "from": "SQ-CMB-NULL",
+          "to": "B03",
+          "kind": "new_qualification_overlay",
+          "hard": true,
+          "from_group": "G05_PLANCK",
+          "cross_group": true,
+          "source_state": "blocked_source"
+        },
+        {
+          "from": "SQ-OPTICAL",
+          "to": "B03",
+          "kind": "new_qualification_overlay",
+          "hard": true,
+          "from_group": "G08_OPTICAL_PHY",
+          "cross_group": true,
+          "source_state": "pending_conditional"
+        }
+      ],
+      "nodes": [
+        {
+          "id": "B01",
+          "paper": "P5",
+          "node_class": "original_science",
+          "r78_state": "completed_scoped",
+          "eligibility": "REUSE_SCOPED_PRIOR_EVIDENCE",
+          "depends_on_original": [
+            "E2"
+          ],
+          "goal": "Inventory admissible Bianchi I–IX and exceptional VI_-1/9 source/mode templates",
+          "acceptance": "Do not count partial synthetic or scalar templates as physically verified T/E/B",
+          "stop": "11 Lie types plus VI_-1/9 exception inventoried; external AniCLASS five-nearly-FLRW subset only",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/p4_bianchi_fast.py"
+          ]
+        },
+        {
+          "id": "SQ-LIE-FLUX",
+          "paper": "P5",
+          "node_class": "source_qualification",
+          "r78_state": "blocked_source",
+          "eligibility": "NO_FULL_SCIENCE_EXECUTION",
+          "depends_on_original": [
+            "B01",
+            "K01"
+          ],
+          "goal": "Independent normal-frame rho,j,pi and Bianchi family source",
+          "acceptance": "Rank-aware normal Codazzi residual using independently sourced shear+u with covariance and Hamiltonian consistency.",
+          "stop": "A flux computed from the same shear via Codazzi yields a tautology, not astrophysical validation.",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Independent measured normal rho/j/pi and external matter covariance for arbitrary Class A/B missing.",
+          "actual_code_references": [
+            "htt/obsstat/analysis_lane.json",
+            "htt/obsstat/pre_dag_fast.py"
+          ]
+        },
+        {
+          "id": "SQ-NATIVE",
+          "paper": "P5",
+          "node_class": "source_qualification",
+          "r78_state": "blocked_external",
+          "eligibility": "NO_FULL_SCIENCE_EXECUTION",
+          "depends_on_original": [
+            "B01",
+            "L01"
+          ],
+          "goal": "External native polarized Bianchi transfer/atlas qualification",
+          "acceptance": "Qualify actual external solver provenance, CMB/Planck response family confusion and injection with heldout calibrated null.",
+          "stop": "Never implement or simulate future native low-ell solver in htt_base; stop pending real external data.",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "No qualified external true physical polarized all-m Bianchi T/E/B history/mode/IC transfer; the NPZ schema checker is not a solver.",
+          "actual_code_references": [
+            "htt/obsstat/phy_fast.py"
+          ]
+        },
+        {
+          "id": "B02",
+          "paper": "P5",
+          "node_class": "original_science",
+          "r78_state": "pending",
+          "eligibility": "NO_FULL_SCIENCE_EXECUTION",
+          "depends_on_original": [
+            "B01"
+          ],
+          "goal": "Qualify external native polarized all-m and high-ell Bianchi transfer atlas",
+          "acceptance": "Einstein/Boltzmann physics, recombination, constraints, IC and mode test actual",
+          "stop": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "External full polarized all-m physical Bianchi family/mode transfer absent.",
+          "actual_code_references": [
+            "htt/obsstat/p5p6_fast.py"
+          ]
+        },
+        {
+          "id": "B03",
+          "paper": "P5",
+          "node_class": "original_science",
+          "r78_state": "pending",
+          "eligibility": "NO_FULL_SCIENCE_EXECUTION",
+          "depends_on_original": [
+            "B02",
+            "L03"
+          ],
+          "goal": "Convolve physical Bianchi atlas with actual Planck response and null",
+          "acceptance": "No fake T/E/B source or forged full-sky score",
+          "stop": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/p5p6_fast.py"
+          ]
+        },
+        {
+          "id": "B04",
+          "paper": "P5",
+          "node_class": "original_science",
+          "r78_state": "pending",
+          "eligibility": "NO_FULL_SCIENCE_EXECUTION",
+          "depends_on_original": [
+            "B03"
+          ],
+          "goal": "Evaluate family equivalence, confusion/injection recovery and Bayes evidence",
+          "acceptance": "Degenerate families reported equivalence class and compared Saadeh 2016",
+          "stop": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/p5p6_fast.py"
+          ]
+        },
+        {
+          "id": "B05",
+          "paper": "P5",
+          "node_class": "original_science",
+          "r78_state": "pending",
+          "eligibility": "NO_FULL_SCIENCE_EXECUTION",
+          "depends_on_original": [
+            "B04",
+            "X02"
+          ],
+          "goal": "Decide/draft independent Bianchi identification paper or verified subset",
+          "acceptance": "Real Planck likelihood and family physical mode calibration, hold if unavailable",
+          "stop": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/p5p6_fast.py"
+          ]
+        }
+      ],
+      "existing_test_files": [
+        "tests/obsstat/test_r85_p5p6_fast.py",
+        "tests/obsstat/test_r81_phy_fast.py"
+      ],
+      "existing_module_paths": [
+        "htt/obsstat/analysis_lane.json",
+        "htt/obsstat/p4_bianchi_fast.py",
+        "htt/obsstat/p5p6_fast.py",
+        "htt/obsstat/phy_fast.py",
+        "htt/obsstat/pre_dag_fast.py"
+      ],
+      "source_ready_node_ids": [],
+      "historically_scoped_complete": [
+        "B01"
+      ],
+      "unqualified_node_ids": [
+        "SQ-LIE-FLUX",
+        "SQ-NATIVE",
+        "B02",
+        "B03",
+        "B04",
+        "B05"
+      ],
+      "write_scope": "docs/research_program/observational_publication_20261015/R89_EIGHT_ANALYSIS_HANDOFF_20261121/runs/G07_BIANCHI/",
+      "allow_full_science_DAG_dispatch": false,
+      "allow_agent_launch_from_this_packet": false,
+      "packet_is_not_execution_authority": true
+    },
+    {
+      "group_id": "G08_OPTICAL_PHY",
+      "name": "Optical 전달·cross-cov·PHY-01..07",
+      "node_ids": [
+        "SQ-PHOTON-FLUX",
+        "PHY-02",
+        "SQ-OPTICAL",
+        "PHY-01",
+        "PHY-05",
+        "PHY-06",
+        "PHY-03",
+        "PHY-04",
+        "PHY-07",
+        "SQ-CROSS-COV"
+      ],
+      "node_count": 10,
+      "estimate_minutes": {
+        "min": 30,
+        "max": 120,
+        "kind": "PLANNING_HEURISTIC_NOT_END_TO_END_MEASURED"
+      },
+      "objective": "Reuse R77 PHY theorem/geometry kernels and source-typed optical/cross-probe constraints; only advance independently supported partial cases.",
+      "required_sources_and_limitations": "Finite-z Sachs/Jacobi/common-congruence transfer, photon higher moments, independent normal-frame sources and joint cross-source covariance/null unavailable",
+      "science_stop": "No spontaneous construction of physical transfer, cosmic Pi/G_F, joint independent null, or physical cross-paper confirmation",
+      "external_source_cannot_be_assumed": true,
+      "upstream_groups": [
+        "G02_CF4",
+        "G03_GAIA",
+        "G04_RADIO_FRAME",
+        "G05_PLANCK",
+        "G07_BIANCHI"
+      ],
+      "dependencies_including_overlay": [
+        {
+          "from": "L01",
+          "to": "SQ-PHOTON-FLUX",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G05_PLANCK",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "B01",
+          "to": "SQ-PHOTON-FLUX",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G07_BIANCHI",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "H01",
+          "to": "SQ-OPTICAL",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G02_CF4",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "K01",
+          "to": "SQ-OPTICAL",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G03_GAIA",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "B01",
+          "to": "SQ-OPTICAL",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G07_BIANCHI",
+          "cross_group": true,
+          "source_state": "completed_scoped"
+        },
+        {
+          "from": "SQ-FRAME",
+          "to": "SQ-OPTICAL",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G04_RADIO_FRAME",
+          "cross_group": true,
+          "source_state": "ready_scoped"
+        },
+        {
+          "from": "SQ-CF4",
+          "to": "SQ-CROSS-COV",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G02_CF4",
+          "cross_group": true,
+          "source_state": "ready_scoped"
+        },
+        {
+          "from": "SQ-GAIA",
+          "to": "SQ-CROSS-COV",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G03_GAIA",
+          "cross_group": true,
+          "source_state": "ready_scoped"
+        },
+        {
+          "from": "SQ-RADIO",
+          "to": "SQ-CROSS-COV",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G04_RADIO_FRAME",
+          "cross_group": true,
+          "source_state": "ready_scoped"
+        },
+        {
+          "from": "SQ-FRAME",
+          "to": "SQ-CROSS-COV",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G04_RADIO_FRAME",
+          "cross_group": true,
+          "source_state": "ready_scoped"
+        },
+        {
+          "from": "SQ-OPTICAL",
+          "to": "SQ-CROSS-COV",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G08_OPTICAL_PHY",
+          "cross_group": false,
+          "source_state": "pending_conditional"
+        },
+        {
+          "from": "SQ-CF4",
+          "to": "PHY-01",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G02_CF4",
+          "cross_group": true,
+          "source_state": "ready_scoped"
+        },
+        {
+          "from": "SQ-OPTICAL",
+          "to": "PHY-01",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G08_OPTICAL_PHY",
+          "cross_group": false,
+          "source_state": "pending_conditional"
+        },
+        {
+          "from": "SQ-LIE-FLUX",
+          "to": "PHY-01",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G07_BIANCHI",
+          "cross_group": true,
+          "source_state": "blocked_source"
+        },
+        {
+          "from": "SQ-CMB-NULL",
+          "to": "PHY-02",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G05_PLANCK",
+          "cross_group": true,
+          "source_state": "blocked_source"
+        },
+        {
+          "from": "SQ-PHOTON-FLUX",
+          "to": "PHY-02",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G08_OPTICAL_PHY",
+          "cross_group": false,
+          "source_state": "blocked_source"
+        },
+        {
+          "from": "SQ-LIE-FLUX",
+          "to": "PHY-02",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G07_BIANCHI",
+          "cross_group": true,
+          "source_state": "blocked_source"
+        },
+        {
+          "from": "SQ-RADIO",
+          "to": "PHY-03",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G04_RADIO_FRAME",
+          "cross_group": true,
+          "source_state": "ready_scoped"
+        },
+        {
+          "from": "SQ-PHOTON-FLUX",
+          "to": "PHY-03",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G08_OPTICAL_PHY",
+          "cross_group": false,
+          "source_state": "blocked_source"
+        },
+        {
+          "from": "SQ-FRAME",
+          "to": "PHY-03",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G04_RADIO_FRAME",
+          "cross_group": true,
+          "source_state": "ready_scoped"
+        },
+        {
+          "from": "SQ-GAIA",
+          "to": "PHY-04",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G03_GAIA",
+          "cross_group": true,
+          "source_state": "ready_scoped"
+        },
+        {
+          "from": "SQ-RADIO",
+          "to": "PHY-04",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G04_RADIO_FRAME",
+          "cross_group": true,
+          "source_state": "ready_scoped"
+        },
+        {
+          "from": "SQ-OPTICAL",
+          "to": "PHY-04",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G08_OPTICAL_PHY",
+          "cross_group": false,
+          "source_state": "pending_conditional"
+        },
+        {
+          "from": "SQ-FRAME",
+          "to": "PHY-04",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G04_RADIO_FRAME",
+          "cross_group": true,
+          "source_state": "ready_scoped"
+        },
+        {
+          "from": "SQ-LIE-FLUX",
+          "to": "PHY-05",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G07_BIANCHI",
+          "cross_group": true,
+          "source_state": "blocked_source"
+        },
+        {
+          "from": "SQ-OPTICAL",
+          "to": "PHY-05",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G08_OPTICAL_PHY",
+          "cross_group": false,
+          "source_state": "pending_conditional"
+        },
+        {
+          "from": "SQ-CMB-NULL",
+          "to": "PHY-06",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G05_PLANCK",
+          "cross_group": true,
+          "source_state": "blocked_source"
+        },
+        {
+          "from": "SQ-PHOTON-FLUX",
+          "to": "PHY-06",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G08_OPTICAL_PHY",
+          "cross_group": false,
+          "source_state": "blocked_source"
+        },
+        {
+          "from": "SQ-LIE-FLUX",
+          "to": "PHY-06",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G07_BIANCHI",
+          "cross_group": true,
+          "source_state": "blocked_source"
+        },
+        {
+          "from": "SQ-OPTICAL",
+          "to": "PHY-06",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G08_OPTICAL_PHY",
+          "cross_group": false,
+          "source_state": "pending_conditional"
+        },
+        {
+          "from": "SQ-CF4",
+          "to": "PHY-07",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G02_CF4",
+          "cross_group": true,
+          "source_state": "ready_scoped"
+        },
+        {
+          "from": "SQ-RADIO",
+          "to": "PHY-07",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G04_RADIO_FRAME",
+          "cross_group": true,
+          "source_state": "ready_scoped"
+        },
+        {
+          "from": "SQ-OPTICAL",
+          "to": "PHY-07",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G08_OPTICAL_PHY",
+          "cross_group": false,
+          "source_state": "pending_conditional"
+        },
+        {
+          "from": "SQ-FRAME",
+          "to": "PHY-07",
+          "kind": "new_source_or_physical_route",
+          "hard": true,
+          "from_group": "G04_RADIO_FRAME",
+          "cross_group": true,
+          "source_state": "ready_scoped"
+        }
+      ],
+      "nodes": [
+        {
+          "id": "SQ-PHOTON-FLUX",
+          "paper": "P2",
+          "node_class": "source_qualification",
+          "r78_state": "blocked_source",
+          "eligibility": "NO_FULL_SCIENCE_EXECUTION",
+          "depends_on_original": [
+            "L01",
+            "B01"
+          ],
+          "goal": "Photon flux/kinetic higher moments and common normal source",
+          "acceptance": "Check P-ff^T PSD and Einstein-Codazzi joint photon-only vs multifluid constraints with independently defined frame.",
+          "stop": "Do not set photon-only total momentum if other species carry normal flux or f unobserved.",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Full energy-dependent photon angular distribution, physical higher moments, common frame/Thomson closure and flux source missing.",
+          "actual_code_references": [
+            "htt/obsstat/analysis_lane.json",
+            "htt/obsstat/pre_dag_fast.py"
+          ]
+        },
+        {
+          "id": "PHY-02",
+          "paper": "CROSS",
+          "node_class": "physical_cross_route",
+          "r78_state": "theory_verified_physical_data_pending",
+          "eligibility": "THEORY_ONLY_EXTERNAL_DATA_PENDING",
+          "depends_on_original": [
+            "SQ-CMB-NULL",
+            "SQ-PHOTON-FLUX",
+            "SQ-LIE-FLUX"
+          ],
+          "goal": "Photon moment covariance PSD plus Einstein normal-flux ellipsoid, exceptional Lie image",
+          "acceptance": "Physically matched source/null/frames and heldout independent predictive discriminator; preserve signed source data and joint covariance.",
+          "stop": "R66 finiteband source lacks photon flux, eta and normal matter density",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/phy_fast.py"
+          ]
+        },
+        {
+          "id": "SQ-OPTICAL",
+          "paper": "COMMON",
+          "node_class": "source_qualification",
+          "r78_state": "pending_conditional",
+          "eligibility": "NO_FULL_SCIENCE_EXECUTION",
+          "depends_on_original": [
+            "H01",
+            "K01",
+            "B01",
+            "SQ-FRAME"
+          ],
+          "goal": "Finite-redshift Sachs/Jacobi + position-drift transfer",
+          "acceptance": "Validate z->0 local H and same-tensor scalar/E2 consistency; compute T_C(z), T_G(z), and precise finite-z optical remainder with heldout prediction.",
+          "stop": "No arbitrary extrapolation of low-z STF identity to full Gaia redshift; no native all-family solver here.",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "No source-qualified finite-z Sachs/Jacobi/position-drift forward observable across actual sample with matching IC/BC and instrument selection.",
+          "actual_code_references": [
+            "htt/obsstat/analysis_lane.json",
+            "htt/obsstat/pre_dag_fast.py"
+          ]
+        },
+        {
+          "id": "PHY-01",
+          "paper": "CROSS",
+          "node_class": "physical_cross_route",
+          "r78_state": "theory_verified_physical_data_pending",
+          "eligibility": "THEORY_ONLY_EXTERNAL_DATA_PENDING",
+          "depends_on_original": [
+            "SQ-CF4",
+            "SQ-OPTICAL",
+            "SQ-LIE-FLUX"
+          ],
+          "goal": "Hemisphere shear leakage exact, Type V j0 chi0 still nonzero masked contrast",
+          "acceptance": "Physically matched source/null/frames and heldout independent predictive discriminator; preserve signed source data and joint covariance.",
+          "stop": "R61 selected 35970 groups differ from all CF4 table4 38053 source geometry; independent normal shear/flux missing",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/phy_fast.py"
+          ]
+        },
+        {
+          "id": "PHY-05",
+          "paper": "CROSS",
+          "node_class": "physical_cross_route",
+          "r78_state": "theory_verified_physical_data_pending",
+          "eligibility": "THEORY_ONLY_EXTERNAL_DATA_PENDING",
+          "depends_on_original": [
+            "SQ-LIE-FLUX",
+            "SQ-OPTICAL"
+          ],
+          "goal": "exceptional VI_-1/9 rank M2 left flux null; independent noisy residual covariance can rank3",
+          "acceptance": "Physically matched source/null/frames and heldout independent predictive discriminator; preserve signed source data and joint covariance.",
+          "stop": "R49 normal flux independent measurement unavailable and original CMB/Gaia/CF4 PPC poor",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/phy_fast.py"
+          ]
+        },
+        {
+          "id": "PHY-06",
+          "paper": "CROSS",
+          "node_class": "physical_cross_route",
+          "r78_state": "theory_verified_physical_data_pending",
+          "eligibility": "THEORY_ONLY_EXTERNAL_DATA_PENDING",
+          "depends_on_original": [
+            "SQ-CMB-NULL",
+            "SQ-PHOTON-FLUX",
+            "SQ-LIE-FLUX",
+            "SQ-OPTICAL"
+          ],
+          "goal": "commutator[D,sigma]!=0 can rotate eigenframe with dot chi=0; photon ell4 changes F and dot stress",
+          "acceptance": "Physically matched source/null/frames and heldout independent predictive discriminator; preserve signed source data and joint covariance.",
+          "stop": "single finite-band CMB sky and signed normal tensor insufficient for photon hierarchy or kinetic time transfer",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/phy_fast.py"
+          ]
+        },
+        {
+          "id": "PHY-03",
+          "paper": "CROSS",
+          "node_class": "physical_cross_route",
+          "r78_state": "theory_verified_physical_data_pending",
+          "eligibility": "THEORY_ONLY_EXTERNAL_DATA_PENDING",
+          "depends_on_original": [
+            "SQ-RADIO",
+            "SQ-PHOTON-FLUX",
+            "SQ-FRAME"
+          ],
+          "goal": "Same beta implies Q_count=A(3+beta²)Sgamma/4 and d=k(3+beta²)m/4",
+          "acceptance": "Physically matched source/null/frames and heldout independent predictive discriminator; preserve signed source data and joint covariance.",
+          "stop": "electron-frame photon/radio source share no observed 3D beta, selected kappa uncalibrated",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/phy_fast.py"
+          ]
+        },
+        {
+          "id": "PHY-04",
+          "paper": "CROSS",
+          "node_class": "physical_cross_route",
+          "r78_state": "theory_verified_physical_data_pending",
+          "eligibility": "THEORY_ONLY_EXTERNAL_DATA_PENDING",
+          "depends_on_original": [
+            "SQ-GAIA",
+            "SQ-RADIO",
+            "SQ-OPTICAL",
+            "SQ-FRAME"
+          ],
+          "goal": "V_B=-c n×Nn, allsky B2 norm c²||N_STF||²/5 orthogonal local shear E2",
+          "acceptance": "Physically matched source/null/frames and heldout independent predictive discriminator; preserve signed source data and joint covariance.",
+          "stop": "Gaia high-z proper motion not measured Bianchi normal Lie N without ray/observer transfer; AGN scanning law uncalibrated",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/phy_fast.py"
+          ]
+        },
+        {
+          "id": "PHY-07",
+          "paper": "CROSS",
+          "node_class": "physical_cross_route",
+          "r78_state": "theory_verified_physical_data_pending",
+          "eligibility": "THEORY_ONLY_EXTERNAL_DATA_PENDING",
+          "depends_on_original": [
+            "SQ-CF4",
+            "SQ-RADIO",
+            "SQ-OPTICAL",
+            "SQ-FRAME"
+          ],
+          "goal": "radius variation makes dipole n and (100Mpc/r)n design rank12 vs fixed r rank9",
+          "acceptance": "Physically matched source/null/frames and heldout independent predictive discriminator; preserve signed source data and joint covariance.",
+          "stop": "CF4 group source IDs and R65 radio selection/frame/cross-covariance do not provide a common physical beta",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "Requires source-verified physics acceptance or actual dependency outputs; a numerical preflight does not upgrade scientific readiness",
+          "actual_code_references": [
+            "htt/obsstat/phy_fast.py"
+          ]
+        },
+        {
+          "id": "SQ-CROSS-COV",
+          "paper": "COMMON",
+          "node_class": "source_qualification",
+          "r78_state": "pending_dependency",
+          "eligibility": "NO_FULL_SCIENCE_EXECUTION",
+          "depends_on_original": [
+            "SQ-CF4",
+            "SQ-GAIA",
+            "SQ-RADIO",
+            "SQ-FRAME",
+            "SQ-OPTICAL"
+          ],
+          "goal": "Actual cross-probe source covariance and null/heldout",
+          "acceptance": "Independent source-level cross-covariance and calibrated heldout predictive test; report identifiable target rank and nuisance profile.",
+          "stop": "If no justified physical cross-covariance, do not compute cross-instrument astrophysical Pi/Bayes factor.",
+          "numerical_preflight_sealed": true,
+          "full_physics_qualified": false,
+          "physical_null_proven": false,
+          "source_remainder": "No empirically calibrated shared C across CF4/Gaia/Planck/radio or independent heldout joint null.",
+          "actual_code_references": [
+            "htt/obsstat/analysis_lane.json",
+            "htt/obsstat/pre_dag_fast.py"
+          ]
+        }
+      ],
+      "existing_test_files": [
+        "tests/obsstat/test_r81_phy_fast.py",
+        "tests/obsstat/test_r85_p5p6_fast.py"
+      ],
+      "existing_module_paths": [
+        "htt/obsstat/analysis_lane.json",
+        "htt/obsstat/phy_fast.py",
+        "htt/obsstat/pre_dag_fast.py"
+      ],
+      "source_ready_node_ids": [],
+      "historically_scoped_complete": [],
+      "unqualified_node_ids": [
+        "SQ-PHOTON-FLUX",
+        "PHY-02",
+        "SQ-OPTICAL",
+        "PHY-01",
+        "PHY-05",
+        "PHY-06",
+        "PHY-03",
+        "PHY-04",
+        "PHY-07",
+        "SQ-CROSS-COV"
+      ],
+      "write_scope": "docs/research_program/observational_publication_20261015/R89_EIGHT_ANALYSIS_HANDOFF_20261121/runs/G08_OPTICAL_PHY/",
+      "allow_full_science_DAG_dispatch": false,
+      "allow_agent_launch_from_this_packet": false,
+      "packet_is_not_execution_authority": true
+    }
+  ]
+}
