@@ -1,0 +1,81 @@
+{
+  "schema": "htt.r83.c9_fresh_adversarial_review_and_dirty_source_reconciliation/1",
+  "date": "2026-11-20 KST",
+  "review_scope": "R83 original code and source-C1..C8, previously uncommitted exactly three new tests in test_r83_p2p3_fast.py, original untracked scripts/r83/run_h03_fast.py, original H03 and L02/L03 sources, original R78 scientific gate",
+  "baseline_HEAD": "7a98dbdefb7e28865ebe0c5750e3cd37053c9d07",
+  "review_verdict": {
+    "spec_axis": "ACCEPT_SCOPED_H03_AND_PLANCK_SOFTWARE_IMPLEMENTATION",
+    "standards_axis": "ACCEPT_WITH_SOURCE_LIMITS_AND_NO_PHYSICAL_CLAIM_PROMOTION",
+    "scientific_release": "NOT_READY_H03_PHYSICAL_H_Z_N_OR_L03_REAL_PLANCK_NULL"
+  },
+  "findings": [
+    {
+      "id": "R83-C9-01",
+      "priority": "P0_RESOLVED_IN_SCOPED_CHANGE",
+      "category": "STAGE_PUBLICATION_INCOMPLETE",
+      "observation": "Exact R83 C1-C8 commits existed, C9/C10 had no Git objects. Three extra tests plus H03 standalone source runner were present on disk but uncommitted, explaining dirty provenance and R86 readiness failure.",
+      "resolution": "Reconcile only identified 3-test diff and associated R83 standalone runner; independently test original committed HEAD test and dirty-current test; stage only the exact two files and original R83 review receipt in C9. No blanket git-add/restore. Previously unrelated user changes preserved.",
+      "evidence": "git show HEAD:tests/obsstat/test_r83_p2p3_fast.py passed 12/12; local modified file passed 15/15; original runner source 35970 archived working H03 4x9/C36 passed."
+    },
+    {
+      "id": "R83-C9-02",
+      "priority": "P1_CONDITIONAL_SCIENTIFIC_SEMANTICS",
+      "category": "STOCHASTIC_NULL_AND_SAME_SKY",
+      "observation": "Planck L02 original 25 T/E/B field rows and 24 same-product within-sky pairs are one observed physical sky; L03 eight FFP10 pilot source simulation IDs each carry five processing variants. Using a pilot pair as a pseudo observation yields a numerical rank 1/8 but not a physical Planck anomaly p-value.",
+      "resolution": "Treat working_rank_interval(...null_qualified=False) as arithmetic only, with physical_p_value=None and exact same simulation IDs; do not multiply variants as independent skies. No source-matched new null is admitted.",
+      "evidence": "test_real_Planck_8_pair_pilot_internal_rank_is_only_code_arithmetic PASS; C7 Planck_L03_pilot_independent_pair_ID_count=8, Planck_L03_pilot_variant_rows=40; no source-qualified full matched null."
+    },
+    {
+      "id": "R83-C9-03",
+      "priority": "P1_CONDITIONAL_MODEL_LAW",
+      "category": "CF4_WORKING_TO_PHYSICAL_TRANSFER",
+      "observation": "Original 35970 CF4 groups shared across four windows have nonzero 9x9 cross covariance, but H03 working diagonal-velocity uncertainty and selected Hubble proxy are not the physical correlated method/PV/selection covariance or genuine finite-z H(z,n).",
+      "resolution": "Require full C36 with offdiagonal blocks, and compare original archived 4x9 and C36; state physical_H_z_n/physical_Pi=None, H02 remains pending, no physical source-gate promotion.",
+      "evidence": "R83 runner certified Fortran original theta maxabs=4.203970505045618e-11, C36 maxabs=1.054989429150055e-13, cross block norm>0.1; original 35970 and SHA source verified."
+    },
+    {
+      "id": "R83-C9-04",
+      "priority": "P2_NATIVE_SOURCE_SECURITY",
+      "category": "UNCERTIFIED_FAST_LANE_FAILURE_MODE",
+      "observation": "A compromised or SHA-mismatched Fortran shared library cannot qualify the automatic numerical backend even if code returns numeric values.",
+      "resolution": "Verify source+binary manifest; test bad cached Fortran binary forces explicitly traced NumPy fallback and certified source means no mixed artifacts. Keep C++ as optional because original measured fastest Fortran12 source-only for full 4x9/C36.",
+      "evidence": "test_uncertified_cached_fortran_binary_integrity_falls_back_not_success PASS, test_fortran_fused_source_h03_actual_4x9_and_36_crosscov PASS; original C8 selected Fortran12."
+    },
+    {
+      "id": "R83-C9-05",
+      "priority": "P2_SOURCE_PARITY",
+      "category": "STF_PARITY_B_MODE",
+      "observation": "Original L02 axial B chirality is O(3)-even and can remain negative; generic |h| for B would erase signed source information.",
+      "resolution": "Keep existing field-specific parity validation and dedicated negative B-source regression; T/E chirality is O3-odd, B axial sign stays. No source changes.",
+      "evidence": "test_L02_shape_absolute_does_not_erase_signed_original PASS, original two negative axial B examples; six original H03/L02/L03 test files plus R83: 50 tests PASS."
+    },
+    {
+      "id": "R83-C9-06",
+      "priority": "P3_PERFORMANCE_CLAIM_SCOPE",
+      "category": "C8_SAVED_CORE_BENCHMARK_VS_STANDALONE_CLI",
+      "observation": "C8 original saved Fortran12 kernel benchmark 4.855944ms vs NumPy 7.728889ms and original QR 27.397ms. The fresh standalone source SHA/certificate default call took 9.872226ms; different measured boundaries must not be described as the same 5.64x end-to-end speedup.",
+      "resolution": "Retain core conditional source benchmarks and separate fresh CLI backend/timing; no new end-to-end speedup claim. Native Fortran preserved default because C8 matched core 1.59x faster than NumPy.",
+      "evidence": "scripts/r83/run_h03_fast.py --output /tmp/r83_C9_H03_fast_run_20261120_v1.json executed and passed original reference checks."
+    }
+  ],
+  "verification": {
+    "original_HEAD_test_passed": 12,
+    "current_preexisting_local_test_passed": 15,
+    "scoped_source_H03_L02_L03_tests_passed": 50,
+    "failed": 0,
+    "skipped": 0,
+    "R78_strict_original_graph_checks_passed": 32,
+    "H03_selected_group_count": 35970,
+    "Planck_L02_field_count": 25,
+    "Planck_L02_same_product_count": 24,
+    "L03_pilot_pair_ids": 8,
+    "L03_processing_rows": 40,
+    "H03_standalone_original_theta_maxabs": 4.203970505045618e-11,
+    "H03_standalone_original_C36_maxabs": 1.054989429150055e-13,
+    "H03_standalone_source_certified_backend": "fortran_source_info_cross",
+    "source_original_C7_result_unchanged": true,
+    "whole_repository_clean_checkout": "NOT_RUN",
+    "native_subagent": "NOT_RUN_HOST_NATIVE_DELEGATION_NOT_EXPOSED"
+  },
+  "disposition": "C9_SCOPE_PASS_FOR_SOFTWARE_ONLY; C10_SEAL_REQUIRED; no H02/L03 or R78 science state promotion"
+}

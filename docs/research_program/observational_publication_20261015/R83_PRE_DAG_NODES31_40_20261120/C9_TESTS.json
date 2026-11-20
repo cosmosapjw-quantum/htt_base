@@ -1,0 +1,30 @@
+{
+  "schema": "htt.r83.c9_source_and_native_clean_vs_local_targeted_test_receipt/1",
+  "date": "2026-11-20 KST",
+  "parent_HEAD": "7a98dbdefb7e28865ebe0c5750e3cd37053c9d07",
+  "provenance_scope": {
+    "tracked_modified": "tests/obsstat/test_r83_p2p3_fast.py: exact three appended tests, original Git HEAD 12 tests vs local file 15",
+    "untracked_scoped": "scripts/r83/run_h03_fast.py: standalone real CF4 source 4x9/C36 archive comparer, create-only outputs, physical_Pi=None",
+    "unrelated_untracked_files": "not inspected/staged/reverted"
+  },
+  "commands": {
+    "original_test": "git show HEAD:tests/obsstat/test_r83_p2p3_fast.py > /tmp/r83_preexisting_HEAD_tests.py; pytest -q /tmp/r83_preexisting_HEAD_tests.py",
+    "local_test": "pytest -q tests/obsstat/test_r83_p2p3_fast.py",
+    "source_integration": "pytest -q tests/obsstat/test_r83_p2p3_fast.py H03_20261016/tests/test_h03_source.py H03_20261016/tests/test_h03_tomography.py H03_20261016/tests/test_h03_method_gauge.py CONTINUATION_20261018/L02_EXECUTION_20261018/test_statistic_family.py CONTINUATION_20261018/L03_EXECUTION_20261018/test_apply_l02_family.py",
+    "source_CLI": "python -B scripts/r83/run_h03_fast.py --output /tmp/r83_C9_H03_fast_run_20261120_v1.json",
+    "science_DAG": "python -B R78_UNIFIED_SCIENCE_DAG_20261119/validate_unified.py --strict-authority"
+  },
+  "verified": {
+    "original_12": 12,
+    "local_15": 15,
+    "integration_50": 50,
+    "science_DAG_32": 32,
+    "actual_CLI": {
+      "n": 35970,
+      "theta_maxabs": 4.203970505045618e-11,
+      "C36_maxabs": 1.054989429150055e-13,
+      "backend": "fortran_source_info_cross"
+    }
+  },
+  "caution": "Original committed source snapshot was preserved and original R83 C7 result not overwritten by the current R83 C9 native lane. No independent Planck cosmic MC null or physical H03 correlated PV C was inferred."
+}

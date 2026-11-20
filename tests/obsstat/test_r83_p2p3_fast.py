@@ -201,3 +201,55 @@ def test_uncertified_Fortran_native_source_changes_fallback_to_NumPy(h03,monkeyp
     assert receipt["used"]=="numpy_blas_source"
     assert not receipt["source_certified"]
     assert "hash not certified" in receipt["fallback_reason"]
+
+
+def test_real_Planck_8_pair_pilot_internal_rank_is_only_code_arithmetic():
+    p=ROOT/"CONTINUATION_20261018/L03_EXECUTION_20261018/results/L02_ON_EIGHT_PAIR_PILOT.json"
+    source=json.loads(p.read_text())
+    exact_variant="sum_noise_1.00"
+    ranks=[]
+    for uid in source["independent_pair_ids"]:
+        match=[x for x in source["rows"] if
+               x["simulation_id"]==uid and x["variant"]==exact_variant]
+        assert len(match)==1
+        ranks.append(abs(match[0]["fields"]["T"]["SO3_signed"]["quadrupole_shape"]))
+    arr=np.asarray(ranks,float)
+    assert len(arr)==8 and np.isfinite(arr).all()
+    # First pilot pair is a numerical pseudo-observation, not observed CMB.
+    score=api().working_rank_interval(arr[0],arr[1:],
+               simulation_ids=source["independent_pair_ids"][1:],
+               null_qualified=False)
+    assert score["simulation_count"]==7
+    assert score["rank_resolution"]==1/8
+    assert score["physical_p_value"] is None
+    assert score["source_null_qualified"] is False
+
+
+def test_new_H03_fast_CLI_core_uses_original_source_and_retains_correlation(h03):
+    from scripts.r83.run_h03_fast import run
+    result=run()
+    assert result["source_group_count"]==35970
+    assert result["window_centers"]==[.025,.04,.06,.08]
+    assert result["offdiag_9x9_cov_Frobenius"]>.1
+    assert result["max_original_theta_absolute_error"]<1e-9
+    assert result["max_original_covariance_absolute_error"]<1e-9
+    assert result["actual_H_z_n"] is None and result["physical_Pi"] is None
+
+
+def test_uncertified_cached_fortran_binary_integrity_falls_back_not_success(h03,monkeypatch,tmp_path):
+    from htt.obsstat import p3_fortran_bridge as br
+    fake=tmp_path/"fake.so"
+    fake.write_bytes(b"not a shared library")
+    import hashlib
+    digest=hashlib.sha256(br.SOURCE.read_bytes()).hexdigest()
+    (tmp_path/"manifest.json").write_text(json.dumps({
+       "source_sha256":digest,"binary_sha256":"0"*64}))
+    monkeypatch.setattr(br,"_compile_fortran",lambda source_sha:str(fake))
+    monkeypatch.setenv("HTT_ANALYSIS_BACKEND","auto")
+    _,X,y,w,sig,_=h03
+    result=api().four_window_working_gls(X,y,w,sig)
+    assert result["joint_cov"].shape==(36,36)
+    receipt=api().last_p2p3_receipt()
+    assert receipt["used"]=="numpy_blas_source"
+    assert not receipt["source_certified"]
+    assert "binary hash invalid" in receipt["fallback_reason"]
