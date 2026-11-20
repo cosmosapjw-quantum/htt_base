@@ -1,0 +1,125 @@
+{
+  "schema": "htt.r82.pre_DAG_21_30_implementation_contract/1",
+  "date": "2026-11-20 KST",
+  "base_head": "74b1b61a8d71bad61cf0c56b1647c90c3e065aad",
+  "scientific_status": "PRE_IMPLEMENTATION_ONLY_NO_SCIENCE_GATE_PROMOTION",
+  "work_ordinals": "R79 1..10 SQ, R81 11 SQ-NATIVE 12..18 PHY, 19 E0 20 E1, R82 21..30 E2..S05",
+  "source_source_sha256": "cd38f438a0bf07385b07478c7b5c122df5af1e9bb48a5575fe1cad40ef261f27",
+  "original_joint_draw_count": 2048,
+  "windows_per_joint_draw": 4,
+  "working_law_is_physical_posterior": false,
+  "benchmark_acceptance": {
+    "tail": "Preserve strict > ties and original source-mass, compare double NumPy at 2e-11 and physical undefined mass=1; no false independent draws.",
+    "floor": "Preserve max(A_j,B delta)/max(A_0,B delta), floor=1 ties; compare original source arrays, no GF interpretation.",
+    "source": "No original data edits, SHA/SSOT; historical E2 same-sky must not imply 9 independent maps.",
+    "speed": "Only promote source-SHA-certified optional native when faster than best same-source NumPy, record in-memory vs end-to-end."
+  },
+  "targets": [
+    {
+      "ordinal": 21,
+      "id": "E2",
+      "api": "e2_same_sky_manifest",
+      "definition": "Planck PR3, 9 same-sky Map rows/FFP10 999/300 and selected common 26846 pixels; hash and conditional source-contract read-only",
+      "blocker": "same-sky processing not new independent null",
+      "code_preparation_status": "PLANNED",
+      "scientific_state": "completed_scoped",
+      "allowed_result": "IMPLEMENTATION_VERIFIED_CONDITIONAL_ONLY"
+    },
+    {
+      "ordinal": 22,
+      "id": "E3",
+      "api": "partial_draw_domain_contract",
+      "definition": "One source-coupled PartialMeasure, signed x, no MIO certificate and correct strict exceeding bounds",
+      "blocker": "unknown physical sector mass retained",
+      "code_preparation_status": "PLANNED",
+      "scientific_state": "completed_scoped",
+      "allowed_result": "IMPLEMENTATION_VERIFIED_CONDITIONAL_ONLY"
+    },
+    {
+      "ordinal": 23,
+      "id": "X01",
+      "api": "source_overlap_guard",
+      "definition": "Exact source pins and six-paper overlap graph; releases/same-sky not automatically independent",
+      "blocker": "no new cross-paper joint likelihood",
+      "code_preparation_status": "PLANNED",
+      "scientific_state": "completed_scoped",
+      "allowed_result": "IMPLEMENTATION_VERIFIED_CONDITIONAL_ONLY"
+    },
+    {
+      "ordinal": 24,
+      "id": "X02",
+      "api": "novelty_comparison_manifest",
+      "definition": "Original six-paper source DOI/estimand/release/null comparator file hash and schema, no unqualified claim novelty",
+      "blocker": "no fresh manuscript novelty admission",
+      "code_preparation_status": "PLANNED",
+      "scientific_state": "completed_scoped",
+      "allowed_result": "IMPLEMENTATION_VERIFIED_CONDITIONAL_ONLY"
+    },
+    {
+      "ordinal": 25,
+      "id": "X03",
+      "api": "prospective_claim_guard",
+      "definition": "Original preregistration/retrospective selection ledger machine-check and protected p-values",
+      "blocker": "no new calibrated null",
+      "code_preparation_status": "PLANNED",
+      "scientific_state": "completed_scoped",
+      "allowed_result": "IMPLEMENTATION_VERIFIED_CONDITIONAL_ONLY"
+    },
+    {
+      "ordinal": 26,
+      "id": "S01",
+      "api": "signed_functional_contract",
+      "definition": "original PartialDraw/PartialMeasure and signed x_C, source Q, F within identified sector, G_F same-congruence floor",
+      "blocker": "physical functions all currently unknown",
+      "code_preparation_status": "PLANNED",
+      "scientific_state": "completed_scoped",
+      "allowed_result": "IMPLEMENTATION_VERIFIED_CONDITIONAL_ONLY"
+    },
+    {
+      "ordinal": 27,
+      "id": "S02",
+      "api": "joint_weighted_tails",
+      "definition": "C++ optional source-coherent 2048x4 strict tail and partial missing mass; per-window/any/all are same draw",
+      "blocker": "unobserved real source optical transfer",
+      "code_preparation_status": "PLANNED",
+      "scientific_state": "blocked_input",
+      "allowed_result": "IMPLEMENTATION_VERIFIED_CONDITIONAL_ONLY"
+    },
+    {
+      "ordinal": 28,
+      "id": "S03",
+      "api": "floor_sensitivity_grid",
+      "definition": "Fortran batched apparent anchor×floor three adjacent ratios strict/tie/mean, including exact anchor×floor product identity",
+      "blocker": "apparent diagnostic not physical time GF",
+      "code_preparation_status": "PLANNED",
+      "scientific_state": "pending",
+      "allowed_result": "IMPLEMENTATION_VERIFIED_CONDITIONAL_ONLY"
+    },
+    {
+      "ordinal": 29,
+      "id": "S04",
+      "api": "outer_event_bound",
+      "definition": "joint event lower/upper under unknown sampled values, source-calibrated null not claimed; full physical source missing",
+      "blocker": "missing selection/PV/normal-frame physical posterior",
+      "code_preparation_status": "PLANNED",
+      "scientific_state": "pending",
+      "allowed_result": "IMPLEMENTATION_VERIFIED_CONDITIONAL_ONLY"
+    },
+    {
+      "ordinal": 30,
+      "id": "S05",
+      "api": "reproducible_table_export",
+      "definition": "Save scientifically labeled source-conditional figure/table data with SHA and tests, not journal-ready paper",
+      "blocker": "paper P1 not ready to submit",
+      "code_preparation_status": "PLANNED",
+      "scientific_state": "pending",
+      "allowed_result": "IMPLEMENTATION_VERIFIED_CONDITIONAL_ONLY"
+    }
+  ],
+  "native_candidates": {
+    "cpp": "htt/obsstat/native/p1_joint_tails.cpp optional C++17; source-verified and benchmarked",
+    "fortran": "htt/obsstat/native/p1_floor_grid.f90 optional ISO_C_BINDING/OpenMP over floor/anchor; source-verified and benchmarked"
+  },
+  "runtime": "root repository checkout, no worktree and no main merge, no edits to original 42 DAG, no raw-source mutation",
+  "handoff": "R78 NEXT_ID=SQ-CF4 unchanged, R82 coding preflight nodes 21..30 do not execute scientific acceptance."
+}
