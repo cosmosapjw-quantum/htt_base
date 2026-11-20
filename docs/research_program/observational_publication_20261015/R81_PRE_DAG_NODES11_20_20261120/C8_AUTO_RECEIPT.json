@@ -1,0 +1,31 @@
+{
+  "schema": "htt.r81.c8_actual_default_auto_lane_receipt/1",
+  "source": "R54/R58 selected 35970 group n and marginal inverse-error weights",
+  "mask_axes": 96,
+  "auto_mask_actual": {
+    "used": "fortran_batch",
+    "source_certified": true,
+    "n_rows": 35970,
+    "n_axes": 96,
+    "threads": 8,
+    "binary_path": "/tmp/htt_r79_native_cache/r81/mask/7d7cccd851d34874bdb72f46/libhtt_r81_mask.so"
+  },
+  "auto_mask_repeat_times_s": [
+    0.0047457740001846105,
+    0.005456767000396212,
+    0.005458822000036889,
+    0.004844742000386759,
+    0.004832949000046938
+  ],
+  "auto_mask_median_s": 0.004844742000386759,
+  "auto_cpp_gram_disabled_as_slower_than_numpy": true,
+  "auto_gram_actual": {
+    "used": "numpy_reference",
+    "kind": "gram",
+    "reason": "small_or_unproven_auto",
+    "n_rows": 35970,
+    "p": 9
+  },
+  "original_numPy_96_mask_median_s": 0.26487814400024945,
+  "no_full_source_level_cosmology_claim": true
+}
