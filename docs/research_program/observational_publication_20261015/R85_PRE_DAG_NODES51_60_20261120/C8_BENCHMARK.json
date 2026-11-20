@@ -1,0 +1,243 @@
+{
+  "schema": "htt.r85.c8_real_CF4_4x12_32D_source_accurate_benchmark/1",
+  "source_sha256": {
+    "docs/research_program/cf4_schur_loop8_20261015/inputs/selected_source_observables.npz": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+    "docs/research_program/observational_publication_20261015/NEXT_20261016/K02/k02_source_identification.py": "acd9ee5565414788ec4f9e433ae420297398505babf870fe81c998d78c290429"
+  },
+  "original_n": 35970,
+  "methods": [
+    "FP",
+    "OTHER",
+    "SN",
+    "TF"
+  ],
+  "working_law": "actual CF4 fixed 4 method intercepts +8 shape, 4 windows with same source diagonal noise; not real optical normal sigma",
+  "original_full_4window_QR_32cov": {
+    "median_s": 0.09509150300073088,
+    "min_s": 0.08946885199839016,
+    "repeats": 3,
+    "series_s": [
+      0.08946885199839016,
+      0.09527292300117551,
+      0.09509150300073088
+    ]
+  },
+  "optimized_NumPy_4window_Fscore_G48_then_32cov": {
+    "median_s": 0.008567922999645816,
+    "min_s": 0.008558313998946687,
+    "repeats": 5,
+    "series_s": [
+      0.008567922999645816,
+      0.008611023000412388,
+      0.008558313998946687,
+      0.008577489999879617,
+      0.008559746000173618
+    ]
+  },
+  "original_QR_vs_NumPy_precision": {
+    "shape8": {
+      "maxabs": 7.333023077649159e-12,
+      "relative_norm": 1.2948425617605929e-12
+    },
+    "cov32": {
+      "maxabs": 2.831068712794149e-15,
+      "relative_norm": 5.430046077664603e-15
+    }
+  },
+  "source_Fortran_compensated_workers": {
+    "1": {
+      "time": {
+        "median_s": 0.021765465000498807,
+        "min_s": 0.021453367999129114,
+        "repeats": 5,
+        "series_s": [
+          0.021453367999129114,
+          0.021686246000172105,
+          0.02207462699880125,
+          0.021765465000498807,
+          0.021826931999385124
+        ]
+      },
+      "errors": {
+        "shape8_vs_original_QR": {
+          "maxabs": 3.2068792066297647e-13,
+          "relative_norm": 5.6215019413954255e-14
+        },
+        "cov32_vs_original_QR": {
+          "maxabs": 1.609823385706477e-15,
+          "relative_norm": 3.1223491233230952e-15
+        },
+        "shape8_vs_optimized_NumPy": {
+          "maxabs": 7.1875838614232634e-12,
+          "relative_norm": 1.2741964444511298e-12
+        },
+        "cov32_vs_optimized_NumPy": {
+          "maxabs": 1.9984014443252818e-15,
+          "relative_norm": 4.9677372525626614e-15
+        },
+        "F_vs_NumPy": {
+          "maxabs": 4.973799150320701e-14,
+          "relative_norm": 3.9699346491154585e-16
+        },
+        "score_vs_NumPy": {
+          "maxabs": 1.4551915228366852e-11,
+          "relative_norm": 2.3093295090034834e-15
+        }
+      },
+      "speedup_vs_original_QR": 4.368916675961282,
+      "speedup_vs_optimized_NumPy": 0.39364759721188874
+    },
+    "4": {
+      "time": {
+        "median_s": 0.007584782000776613,
+        "min_s": 0.007350502000917913,
+        "repeats": 5,
+        "series_s": [
+          0.007417838000037591,
+          0.007641660000444972,
+          0.008291581998491893,
+          0.007350502000917913,
+          0.007584782000776613
+        ]
+      },
+      "errors": {
+        "shape8_vs_original_QR": {
+          "maxabs": 3.2068792066297647e-13,
+          "relative_norm": 5.6215019413954255e-14
+        },
+        "cov32_vs_original_QR": {
+          "maxabs": 1.609823385706477e-15,
+          "relative_norm": 3.1223491233230952e-15
+        },
+        "shape8_vs_optimized_NumPy": {
+          "maxabs": 7.1875838614232634e-12,
+          "relative_norm": 1.2741964444511298e-12
+        },
+        "cov32_vs_optimized_NumPy": {
+          "maxabs": 1.9984014443252818e-15,
+          "relative_norm": 4.9677372525626614e-15
+        },
+        "F_vs_NumPy": {
+          "maxabs": 4.973799150320701e-14,
+          "relative_norm": 3.9699346491154585e-16
+        },
+        "score_vs_NumPy": {
+          "maxabs": 1.4551915228366852e-11,
+          "relative_norm": 2.3093295090034834e-15
+        }
+      },
+      "speedup_vs_original_QR": 12.537143848167867,
+      "speedup_vs_optimized_NumPy": 1.1296202051382016
+    },
+    "8": {
+      "time": {
+        "median_s": 0.006289064000156941,
+        "min_s": 0.006200126999829081,
+        "repeats": 5,
+        "series_s": [
+          0.006926923999344581,
+          0.006289064000156941,
+          0.006200126999829081,
+          0.0064224950001516845,
+          0.006279857001572964
+        ]
+      },
+      "errors": {
+        "shape8_vs_original_QR": {
+          "maxabs": 3.2068792066297647e-13,
+          "relative_norm": 5.6215019413954255e-14
+        },
+        "cov32_vs_original_QR": {
+          "maxabs": 1.609823385706477e-15,
+          "relative_norm": 3.1223491233230952e-15
+        },
+        "shape8_vs_optimized_NumPy": {
+          "maxabs": 7.1875838614232634e-12,
+          "relative_norm": 1.2741964444511298e-12
+        },
+        "cov32_vs_optimized_NumPy": {
+          "maxabs": 1.9984014443252818e-15,
+          "relative_norm": 4.9677372525626614e-15
+        },
+        "F_vs_NumPy": {
+          "maxabs": 4.973799150320701e-14,
+          "relative_norm": 3.9699346491154585e-16
+        },
+        "score_vs_NumPy": {
+          "maxabs": 1.4551915228366852e-11,
+          "relative_norm": 2.3093295090034834e-15
+        }
+      },
+      "speedup_vs_original_QR": 15.120136000899008,
+      "speedup_vs_optimized_NumPy": 1.3623526488889297
+    },
+    "12": {
+      "time": {
+        "median_s": 0.0056724240002949955,
+        "min_s": 0.005590930999460397,
+        "repeats": 5,
+        "series_s": [
+          0.005590930999460397,
+          0.0057829420002235565,
+          0.005630875999486307,
+          0.0056724240002949955,
+          0.0057760780000535306
+        ]
+      },
+      "errors": {
+        "shape8_vs_original_QR": {
+          "maxabs": 3.2068792066297647e-13,
+          "relative_norm": 5.6215019413954255e-14
+        },
+        "cov32_vs_original_QR": {
+          "maxabs": 1.609823385706477e-15,
+          "relative_norm": 3.1223491233230952e-15
+        },
+        "shape8_vs_optimized_NumPy": {
+          "maxabs": 7.1875838614232634e-12,
+          "relative_norm": 1.2741964444511298e-12
+        },
+        "cov32_vs_optimized_NumPy": {
+          "maxabs": 1.9984014443252818e-15,
+          "relative_norm": 4.9677372525626614e-15
+        },
+        "F_vs_NumPy": {
+          "maxabs": 4.973799150320701e-14,
+          "relative_norm": 3.9699346491154585e-16
+        },
+        "score_vs_NumPy": {
+          "maxabs": 1.4551915228366852e-11,
+          "relative_norm": 2.3093295090034834e-15
+        }
+      },
+      "speedup_vs_original_QR": 16.76382142727441,
+      "speedup_vs_optimized_NumPy": 1.5104517926022878
+    }
+  },
+  "best_native_threads": 12,
+  "best_native_speedup_vs_optimized_NumPy": 1.5104517926022878,
+  "native_auto_default_admitted": true,
+  "source_recommended_default": "fortran_source_info_cross",
+  "numerical_condition_F": [
+    9.751817081898299,
+    16.153459403245357,
+    59.665479188776374,
+    713.5389833786749
+  ],
+  "source_C32_eigen_min": 0.00319875673818735,
+  "source_original_cross_cov_norm": 0.17517761272728188,
+  "backend_accuracy": "all original shape8/C32 >= good to 2e-10 relative and 1e-9 abs",
+  "resources": {
+    "maxrss_kib": 206500,
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "OpenBLAS_threads": 1,
+    "native_threads": [
+      1,
+      4,
+      8,
+      12
+    ]
+  },
+  "interpretation": "in-memory 35970-group core source numerical benchmark only, no raw source IO or full physical source/null"
+}

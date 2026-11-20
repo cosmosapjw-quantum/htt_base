@@ -150,3 +150,13 @@ def test_original_B01_and_R78_statuses_unchanged():
     assert x["science_nodes"]["K03"]=="pending"
     assert x["original_42_science_SHA"]=="e3264e105cabf78ddac37addc36cacc3cfa05ee942e33e54b431b22e3e87de0d"
     assert x["next_actual_science_ID"]=="SQ-CF4"
+
+def test_original_K02_35970_default_auto_selects_source_certified_Fortran(original,monkeypatch):
+    monkeypatch.delenv("HTT_ANALYSIS_BACKEND",raising=False)
+    _,old,src=original
+    res=api().k02_method_profiled(src)
+    receipt=api().last_p5p6_receipt()
+    assert receipt["used"]=="fortran_source_info_cross"
+    assert receipt["source_certified"] is True and receipt["threads"]==12
+    np.testing.assert_allclose(res["shape8"],old["identified_working_shape8_kmsMpc"],rtol=2e-10,atol=1e-9)
+    np.testing.assert_allclose(res["joint_cov32"],old["joint_shape_cov32"],rtol=2e-10,atol=1e-9)
