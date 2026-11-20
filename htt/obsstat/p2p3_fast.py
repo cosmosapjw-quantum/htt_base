@@ -105,7 +105,11 @@ def _choose_native(requested,n,threads):
     cfg=json.loads(_POLICY.read_text())
     if mode=="auto" and (not cfg["auto_enabled"] or n<cfg["min_sources"]):
         return None,False,"source_benchmark_numpy_selected_or_small"
-    try:return _certified_native(),True,None
+    try:
+        if cfg.get("auto_backend")=="fortran":
+            from htt.obsstat.p3_fortran_bridge import _certified_fortran
+            return _certified_fortran(),True,None
+        return _certified_native(),True,None
     except (RuntimeError,ValueError,OSError,subprocess.SubprocessError) as e:
         if mode=="native":raise RuntimeError(f"R83 required certified native unavailable: {e}") from e
         return None,False,str(e)[:200]
@@ -125,7 +129,7 @@ def _check_matrix(X,y,weights,sigma):
     return tuple(np.ascontiguousarray(x) for x in (X,y,w,s))
 
 
-def four_window_working_gls(X,y,weights,sigma,*,native_lib="auto",threads=4,cond_limit=1e10):
+def four_window_working_gls(X,y,weights,sigma,*,native_lib="auto",threads=12,cond_limit=1e10):
     """Exact conditional H03 shared-source 4x9 GLS and full 36x36 covariance.
 
     C_jk = F_j^{-1}(X^T diag(w_j w_k sigma^2) X)F_k^{-1}. The only
@@ -140,17 +144,28 @@ def four_window_working_gls(X,y,weights,sigma,*,native_lib="auto",threads=4,cond
     path,certified,fallback=_choose_native(native_lib,n,threads)
     F=np.empty((4,p,p),dtype=float)
     B=np.empty((4,p),dtype=float)
+    G_native=None
     if path is not None:
-        fn=ctypes.CDLL(str(Path(path).resolve())).htt_p3_multiwindow_info_v1
-        fp=np.ctypeslib.ndpointer(dtype=np.float64,flags="C_CONTIGUOUS")
-        fn.argtypes=[ctypes.c_int64,ctypes.c_int32,ctypes.c_int32,fp,fp,fp,
-                     ctypes.c_int32,fp,fp]
-        fn.restype=ctypes.c_int
-        status=fn(n,p,4,X,w,y,threads,F,B)
-        if status or not np.isfinite(F).all() or not np.isfinite(B).all():
-            _receipt(used="native_failed",status=status,source_certified=certified)
-            raise RuntimeError(f"R83 native multiwindow WLS source reduction failed {status}")
-        used="cpp_native_info"
+        library=ctypes.CDLL(str(Path(path).resolve()))
+        if hasattr(library,"htt_p3_multiwindow_source_v1"):
+            from htt.obsstat.p3_fortran_bridge import fortran_sufficient_statistics
+            try:
+                F,B,G_native=fortran_sufficient_statistics(X,y,w,s,path,threads=threads)
+            except Exception as err:
+                _receipt(used="native_failed",status=str(err),source_certified=certified)
+                raise
+            used="fortran_source_info_cross"
+        else:
+            fn=library.htt_p3_multiwindow_info_v1
+            fp=np.ctypeslib.ndpointer(dtype=np.float64,flags="C_CONTIGUOUS")
+            fn.argtypes=[ctypes.c_int64,ctypes.c_int32,ctypes.c_int32,fp,fp,fp,
+                         ctypes.c_int32,fp,fp]
+            fn.restype=ctypes.c_int
+            status=fn(n,p,4,X,w,y,threads,F,B)
+            if status or not np.isfinite(F).all() or not np.isfinite(B).all():
+                _receipt(used="native_failed",status=status,source_certified=certified)
+                raise RuntimeError(f"R83 native multiwindow WLS source reduction failed {status}")
+            used="cpp_native_info"
     else:
         for j in range(4):
             W=w[:,j]
@@ -175,8 +190,11 @@ def four_window_working_gls(X,y,weights,sigma,*,native_lib="auto",threads=4,cond
     sig2=s*s
     for j in range(4):
         for k in range(j,4):
-            source_w=w[:,j]*w[:,k]*sig2
-            G=X.T@(source_w[:,None]*X)
+            if G_native is None:
+                source_w=w[:,j]*w[:,k]*sig2
+                G=X.T@(source_w[:,None]*X)
+            else:
+                G=G_native[j*p:(j+1)*p,k*p:(k+1)*p]
             block=invs[j]@G@invs[k].T
             C[j*p:(j+1)*p,k*p:(k+1)*p]=block
             C[k*p:(k+1)*p,j*p:(j+1)*p]=block.T

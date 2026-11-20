@@ -142,3 +142,62 @@ def test_S06_L06_H02_claim_HOLD_and_H01_fixed_source():
     assert result["science_nodes"]["H03"]=="completed_scoped"
     assert result["actual_correlated_PV_calibration_selection_C"] is None
     assert result["real_physical_H_z_n"] is None
+
+
+def test_fortran_fused_source_h03_actual_4x9_and_36_crosscov(h03):
+    lib=os.environ.get("HTT_R83_H03_FORTRAN_SO")
+    if not lib:pytest.skip("optional fused source-signed Fortran library not supplied")
+    _,X,y,w,sig,archived=h03
+    reference=api().four_window_working_gls(X,y,w,sig,native_lib=None)
+    old_t=np.asarray([v["theta9"] for v in archived["monopole_dipole_STF2_windows"]])
+    old_c=np.asarray(archived["joint_covariance_36x36"])
+    results=[]
+    for nworker in (1,4,8):
+        result=api().four_window_working_gls(
+                 X,y,w,sig,native_lib=lib,threads=nworker)
+        assert api().last_p2p3_receipt()["used"]=="fortran_source_info_cross"
+        np.testing.assert_allclose(result["theta"],reference["theta"],atol=1e-9,rtol=2e-10)
+        np.testing.assert_allclose(result["joint_cov"],reference["joint_cov"],atol=1e-9,rtol=2e-10)
+        np.testing.assert_allclose(result["theta"],old_t,atol=1e-9,rtol=2e-10)
+        np.testing.assert_allclose(result["joint_cov"],old_c,atol=1e-9,rtol=2e-10)
+        results.append(result["joint_cov"])
+    np.testing.assert_array_equal(results[0],results[2])
+
+
+def test_native_fortran_certified_source_bound(tmp_path,monkeypatch):
+    from htt.obsstat import p3_fortran_bridge as bridge
+    original=bridge.SOURCE
+    mutated=tmp_path/"p3_mutated.f90"
+    mutated.write_bytes(original.read_bytes()+b"\n! intentionally uncertified source\n")
+    monkeypatch.setattr(bridge,"SOURCE",mutated)
+    with pytest.raises(RuntimeError,match="not certified"):
+        bridge._certified_fortran()
+
+
+def test_source_35970_default_auto_chooses_certified_fused_Fortran(h03,monkeypatch):
+    monkeypatch.delenv("HTT_ANALYSIS_BACKEND",raising=False)
+    _,X,y,w,sig,original=h03
+    got=api().four_window_working_gls(X,y,w,sig)
+    receipt=api().last_p2p3_receipt()
+    assert receipt["used"]=="fortran_source_info_cross"
+    assert receipt["source_certified"] and receipt["workers"]==12
+    np.testing.assert_allclose(got["theta"],
+       [v["theta9"] for v in original["monopole_dipole_STF2_windows"]],
+       rtol=2e-10,atol=1e-9)
+    np.testing.assert_allclose(got["joint_cov"],original["joint_covariance_36x36"],
+                              rtol=2e-9,atol=1e-9)
+
+
+def test_uncertified_Fortran_native_source_changes_fallback_to_NumPy(h03,monkeypatch,tmp_path):
+    from htt.obsstat import p3_fortran_bridge as bridge
+    monkeypatch.setenv("HTT_ANALYSIS_BACKEND","auto")
+    source=tmp_path/"intentionally_modified.f90"
+    source.write_bytes(bridge.SOURCE.read_bytes()+b"\n! unverified diff\n")
+    monkeypatch.setattr(bridge,"SOURCE",source)
+    _,X,y,w,sig,_=h03
+    out=api().four_window_working_gls(X,y,w,sig)
+    assert out["joint_cov"].shape==(36,36)
+    receipt=api().last_p2p3_receipt()
+    assert receipt["used"]=="numpy_blas_source"
+    assert not receipt["source_certified"]
+    assert "hash not certified" in receipt["fallback_reason"]
