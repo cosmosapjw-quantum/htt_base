@@ -123,6 +123,32 @@ def _common_weights(values,weights,*,allow_nan=False):
     return np.ascontiguousarray(q),np.ascontiguousarray(w)
 
 
+def _sorted_weighted_survival(q,w,t,code):
+    """O(6*N log N + 6*T log N) source-coupled pointwise event bounds.
+
+    Known q contributes its actual value. Missing q is -inf for guaranteed
+    events and +inf for possible events. The per-draw max/min for ANY/ALL
+    then preserves four-window coupling. searchsorted(side="right") excludes
+    exact threshold ties, and *reverse* suffix sums avoid 1-CDF cancellation.
+    """
+    known=(code==0)
+    guaranteed=np.where(known,q,-np.inf)
+    possible=np.where(known,q,np.inf)
+    lower_scores=np.column_stack([guaranteed,np.max(guaranteed,axis=1),
+                                   np.min(guaranteed,axis=1)])
+    upper_scores=np.column_stack([possible,np.max(possible,axis=1),
+                                   np.min(possible,axis=1)])
+    output=np.empty((len(t),2,6),dtype=np.float64)
+    for k,scores in enumerate((lower_scores,upper_scores)):
+        for j in range(6):
+            order=np.argsort(scores[:,j],kind="stable")
+            sorted_vals=scores[order,j]
+            suffix=np.r_[np.cumsum(w[order][::-1],dtype=np.float64)[::-1],0.0]
+            positions=np.searchsorted(sorted_vals,t,side="right")
+            output[:,k,j]=suffix[positions]
+    return output[:,0,:],output[:,1,:]
+
+
 def joint_tail_bounds(values,weights,thresholds,*,missing_codes=None,
                       sample_ids=None,native_lib="auto",threads=8):
     """Source-coupled strict finite-mass intervals [lower,upper], not physical Pi.
@@ -168,18 +194,8 @@ def joint_tail_bounds(values,weights,thresholds,*,missing_codes=None,
         low,up=out[:,0,:],out[:,1,:]
         used="cpp_native_tails"
     else:
-        low=np.empty((len(t),6));up=np.empty_like(low)
-        known=(code==0)
-        for k,thr in enumerate(t):
-            yes=known & (q>thr)
-            no=known & (q<=thr)
-            low[k,:4]=w@yes
-            up[k,:4]=w@(~no)
-            low[k,4]=w@np.any(yes,axis=1)
-            up[k,4]=w@(~np.all(no,axis=1))
-            low[k,5]=w@np.all(yes,axis=1)
-            up[k,5]=w@(~np.any(no,axis=1))
-        used="numpy_reference"
+        low,up=_sorted_weighted_survival(q,w,t,code)
+        used="numpy_sorted_reference"
     if np.any(low<-1e-12) or np.any(up>1+1e-12) or np.any(low>up+1e-12):
         raise RuntimeError("P1 event bounds violate finite probability mass")
     _receipt(used=used,kernel="joint_tails",source_certified=certified,
@@ -210,6 +226,10 @@ def floor_depth_grid(values,weights,anchors,floors,*,native_lib="auto",threads=8
     if not isinstance(threads,int) or not (1<=threads<=32):
         raise ValueError("native threads 1..32")
     a=np.ascontiguousarray(a);f=np.ascontiguousarray(f)
+    with np.errstate(over="ignore",under="ignore",invalid="ignore"):
+        products=np.multiply.outer(a,f)
+    if not np.isfinite(products).all() or np.any(products<=0):
+        raise ValueError("anchor times floor product must be finite positive, without overflow/underflow")
     native,certified,reason=_select("floor",native_lib,len(q)*len(a)*len(f))
     if native is not None:
         fn=ctypes.CDLL(str(Path(native).resolve())).htt_p1_floor_grid_v1

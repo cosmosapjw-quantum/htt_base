@@ -157,3 +157,32 @@ def test_finite_depth_invalid_inputs_and_sign_clean_not_clipped():
         prep().floor_depth_grid(q,w,[.1],[-.5])
     with pytest.raises(ValueError):
         prep().floor_depth_grid(np.full((5,4),-1.),w,[.1],[.1])
+
+
+def test_default_numpy_tail_is_monotone_sorted_survival_not_slow_threshold_loop():
+    q,w,ids=actual()
+    ts=np.linspace(-.005,.125,512)
+    out=prep().joint_tail_bounds(q,w,ts,sample_ids=ids,native_lib=None)
+    assert prep().last_p1_receipt()["used"]=="numpy_sorted_reference"
+    expected=np.array([[(w@(q[:,j]>t)) for j in range(4)]+[
+        w@np.any(q>t,axis=1),w@np.all(q>t,axis=1)] for t in ts])
+    np.testing.assert_allclose(out["lower"],expected,rtol=2e-11,atol=2e-12)
+    np.testing.assert_allclose(out["upper"],expected,rtol=2e-11,atol=2e-12)
+
+
+@pytest.mark.parametrize("anchor,floor",[(1e-308,1e-308),(1e308,1e308)])
+def test_floor_product_underflow_or_overflow_fails_before_native_or_numpy(anchor,floor):
+    q=np.array([[0.,.02,.02,.03],[0.,.01,.04,.03]])
+    w=np.array([.4,.6])
+    with pytest.raises(ValueError,match="anchor.*floor"):
+        prep().floor_depth_grid(q,w,[anchor],[floor],native_lib=None)
+
+
+def test_high_volume_floor_default_auto_uses_certified_fortran(monkeypatch):
+    monkeypatch.delenv("HTT_ANALYSIS_BACKEND",raising=False)
+    q,w,ids=actual()
+    got=prep().floor_depth_grid(q,w,np.linspace(.03,.1,32),
+                                 np.linspace(.1,1.5,24))
+    r=prep().last_p1_receipt()
+    assert r["used"]=="fortran_native_floor" and r["source_certified"]
+    assert got["physical_GF"] is None

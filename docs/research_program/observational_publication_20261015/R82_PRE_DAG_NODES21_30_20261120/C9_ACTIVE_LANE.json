@@ -1,0 +1,50 @@
+{
+  "schema": "htt.r82.c9_original_source_active_default_acceleration/1",
+  "actual_source_sha256": "cd38f438a0bf07385b07478c7b5c122df5af1e9bb48a5575fe1cad40ef261f27",
+  "joint_source_rows": 2048,
+  "same_source_four_windows": true,
+  "active_tails_backend": {
+    "used": "numpy_sorted_reference",
+    "kernel": "joint_tails",
+    "source_certified": false,
+    "n_rows": 2048,
+    "n_thresholds": 4096,
+    "threads": 0,
+    "fallback_reason": "not_admitted_or_small_input"
+  },
+  "tails_4096_threshold_times": {
+    "runs_seconds": [
+      0.003176254998834338,
+      0.0033568159997230396,
+      0.003176445999997668,
+      0.0032599730002402794,
+      0.0032209290002356283
+    ],
+    "median_seconds": 0.0032209290002356283
+  },
+  "active_floor_backend": {
+    "used": "fortran_native_floor",
+    "kernel": "floor",
+    "source_certified": true,
+    "n_rows": 2048,
+    "n_anchor": 32,
+    "n_floor": 24,
+    "threads": 8,
+    "fallback_reason": null
+  },
+  "floor_32x24_times": {
+    "runs_seconds": [
+      0.001876444999652449,
+      0.0017714479981805198,
+      0.0017487950026406907,
+      0.0017374239978380501,
+      0.0017810950012062676
+    ],
+    "median_seconds": 0.0017714479981805198
+  },
+  "tail_speedup_vs_original_slow_NumPy_loop": 81.68278250751928,
+  "floor_speedup_vs_original_NumPy_loop": 16.953544236547664,
+  "original_source_math_parity": "MATCH_WITHIN_2E-11",
+  "physical_QF_GF_unknown_mass": 1.0,
+  "R78_original_science_states_changed": false
+}

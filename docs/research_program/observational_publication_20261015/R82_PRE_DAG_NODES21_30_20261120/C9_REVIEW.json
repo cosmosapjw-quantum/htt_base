@@ -1,0 +1,72 @@
+{
+  "schema": "htt.r82.c9_adversarial_source_math_performance_review/1",
+  "date": "2026-11-20 KST",
+  "subject": "R82 E2-E3-X01-X03-S01-S05 optimized joint-tail and apparent floor sensitivity implementations",
+  "spec_axis_verdict": "LOOKS_GOOD_FOR_CODE_PREPARATION_ONLY",
+  "scientific_claim_verdict": "NOT_READY_FOR_PHYSICAL_P1_POSTERIOR_OR_PUBLISHABLE_ANOMALY",
+  "findings": [
+    {
+      "id": "R82-C9-01",
+      "severity": "P1",
+      "classification": "SCIENTIFIC_SEMANTICS",
+      "finding": "Working q_app source ratio from a 2048-row 4-window shared CF4 cohort must not be promoted to physical x_C/U_sigma or nine independent Planck maps. Original S02 unknown physical Q/F/GF mass is 1.",
+      "fix": "Typed 0/1/2 known/missing codes, conditional event bounds, shared sample IDs and physical_Pi=None. R78 science gates unchanged.",
+      "evidence": "C7_SOURCE_REPLAY.json and source P1 arrays, original X03 retrospective ledger"
+    },
+    {
+      "id": "R82-C9-02",
+      "severity": "P2",
+      "classification": "NUMERICAL_COMPLEXITY",
+      "finding": "Naive per-threshold source scan O(N*T) was slower than sorting 6 weighted one-dimensional event score arrays O(6NlogN+6TlogN). C++ OpenMP also slower than sorted NumPy on original 2048-row source.",
+      "fix": "Production NumPy reference changed to stable argsort+reverse weighted survival+searchsorted(side=right), handling unknowns through ±inf; C++ optional disabled by default.",
+      "red": "Observed test failure: expected numpy_sorted_reference, got original numpy_reference",
+      "green": "20 new R82 tests passed; 228 wide tests passed",
+      "evidence": "C8_BENCHMARK.json + C9_ACTIVE_LANE.json"
+    },
+    {
+      "id": "R82-C9-03",
+      "severity": "P2",
+      "classification": "NUMERICAL_DOMAIN",
+      "finding": "Anchor*floor may silently underflow to zero or overflow to infinity although both factors are finite positive, inducing invalid ratio.",
+      "fix": "Reject invalid product before either NumPy or Fortran execution; preserve exact strict ties and nonnegative amplitude domain.",
+      "red": "Existing pre-fix floor product cases did not raise",
+      "green": "Finite positive product test, floor original S03 6-grid parity, 228 wide tests passed"
+    },
+    {
+      "id": "R82-C9-04",
+      "severity": "P2",
+      "classification": "PROVENANCE_BINDING",
+      "finding": "Historical E2/X01/X02/X03 source hashes keyed by node ID are not filesystem paths. Original C7 result had mixed key semantics and the first replay script failed.",
+      "fix": "Separate source file path SHA dictionary from historical_sha_by_node_id; compare both with original existing files and source provenance.",
+      "evidence": "C7_SOURCE_REPLAY.json and verify_original.py, no physical data changed"
+    },
+    {
+      "id": "R82-C9-05",
+      "severity": "P3",
+      "classification": "PERFORMANCE_SELECTION",
+      "finding": "Fortran 8-worker floor-grid is faster than both original NumPy and chunked NumPy on actual 32x24 and 64x64 source grids, with <2e-11 errors.",
+      "fix": "Certify Fortran default auto above threshold; C++ optional source-SHA-checked, NumPy sorted default for tails; do not claim end-to-end speedup.",
+      "evidence": "C8_BENCHMARK.json + C9_ACTIVE_LANE.json"
+    }
+  ],
+  "observed_verification": {
+    "scoped_project_regressions": {
+      "passed": 228,
+      "failed": 0
+    },
+    "R78_science_graph_claim_authority": {
+      "passed": 32,
+      "failed": 0
+    },
+    "actual_CPP8_tail_speedup_vs_optimized_sorted": "LESS_THAN_ONE_ON_REAL_SOURCE",
+    "actual_auto_sorted_4096_threshold_speedup": 81.68278250751928,
+    "actual_auto_Fortran_32x24_grid_speedup": 16.953544236547664,
+    "original_real_2048_joint_source_data_sha256": "cd38f438a0bf07385b07478c7b5c122df5af1e9bb48a5575fe1cad40ef261f27",
+    "original_42_science_payload_unchanged": true,
+    "native_Bianchi_Boltzmann_implemented": false,
+    "native_subagent": "NOT_RUN_NOT_EXPOSED_BY_HOST",
+    "full_repository_tests": "NOT_RUN",
+    "R78_inherited_legacy_failures": "SEPARATE_8_CASES_IN_R78_REGRESSION_RECEIPT"
+  },
+  "disposition": "ACCEPT_SCOPED_IMPLEMENTATION, DISALLOW_SCIENTIFIC_GATE_PROMOTION"
+}
