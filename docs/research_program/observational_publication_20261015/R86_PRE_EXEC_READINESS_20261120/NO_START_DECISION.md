@@ -16,3 +16,8 @@
 **다음 사용자 의사결정에 필요한 핵심:** P0-A는 source-scoped Git 검증으로 완료됐으며, 남은 P0-B·P0-C는 외부 출처 입력이 충분한 범위에서 여기서 구현할 수 있다. 진짜 source C가 확보되지 않으면 B를 물리적 차단으로 기록하고 대체 순서인 SQ-GAIA를 한정 source 단계로 선택할 수 있으나, 이 결정 역시 자동 agent 위임은 아니다.
 
 기계 판독 blocked verdict는 EXECUTION_READINESS_DAG.json의 agent_dispatch_policy 및 BLOCKER_LEDGER.json에 있고, 새 START_LOCAL_AGENT* 파일은 존재하지 않는다.
+
+
+## R87 P0-B 실행 반영
+
+R87 실제 source 진단은 완료되었다. 그러나 new physical PV/selection/method calibration covariance와 independent upstream heldout은 소스 미확보로 blocked다. 따라서 기존 NO_START 결정의 필수 물리 요건은 해제되지 않았다. 다음 코딩 작업은 P0-C one-node SQ-CF4 read-only fail-closed adapter이며, 임의 science node 자동 실행이나 로컬 agent 시작은 여전히 금지한다.

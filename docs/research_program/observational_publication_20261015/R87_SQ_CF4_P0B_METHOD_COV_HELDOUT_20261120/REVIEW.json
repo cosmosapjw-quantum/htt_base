@@ -1,0 +1,112 @@
+{
+  "schema": "htt.r87.p0b_bounded_actual_CF4_method_PV_source_adversarial_review/1",
+  "date": "2026-11-20 KST",
+  "verdict": "ACCEPT_REAL_SOURCE_DIAGNOSTICS_AND_REPRODUCIBLE_WORKING_ALGEBRA; BLOCK_PHYSICAL_C_AND_INDEPENDENT_COVERAGE",
+  "science_target": "SQ-CF4 from R78, original 42 scientific nodes unchanged",
+  "code_scope": [
+    "htt/obsstat/cf4_p0b.py",
+    "scripts/r87/run_p0b.py",
+    "tests/obsstat/test_r87_cf4_p0b.py"
+  ],
+  "findings": [
+    {
+      "id": "P0B-R1",
+      "priority": "P0",
+      "category": "SOURCE_CALIBRATION_NONINVERTIBLE",
+      "observed": "Released table3 method moduli are already intercalibrated via full CF4 MCMC. Their residual differences cannot yield independent raw zero-point posterior, exact calibrated source J_cal or a new physical method variance.",
+      "resolution": "Report only source-product weighted group contrast with SNIA coordinate gauge, no physical calibration posterior; include e_DMcal absence. P0-B physical gate blocked until independent upstream source/posterior inputs."
+    },
+    {
+      "id": "P0B-R2",
+      "priority": "P1",
+      "category": "SAME_GROUP_CORRELATED_METHODS",
+      "observed": "926 groups have multiple method-positive flags; naive method-pair independence would double-count shared group distances and PV.",
+      "resolution": "Profile one group common scalar a_g with weighted Laplacian, one physical group per ID. Only 922 groups have >=2 released modulus/error pairs. Verify independent explicit two-method edge formula and gauge null."
+    },
+    {
+      "id": "P0B-R3",
+      "priority": "P1",
+      "category": "LARGE_NUMBER_CANCELLATION",
+      "observed": "An initial direct construction diag(sum(w))-sum(w w^T/W) lost absolute precision in F1 gauge by ~1.5e-8 due cancelling thousands of large one-method weights.",
+      "resolution": "Sum only positive pair-overlap edges and set graph diagonal as negative row sum; source F1 null ~1.14e-12. Test common group shift invariance and pairwise-edge numerical comparison."
+    },
+    {
+      "id": "P0B-R4",
+      "priority": "P1",
+      "category": "SKY_HELDOUT_UPSTREAM_LEAKAGE",
+      "observed": "Four source group-ID-disjoint RA sectors are NOT upstream calibration independent; the CF4 MCMC intercalibration used all group method measurements.",
+      "resolution": "Call the outputs spatial residual predictive consistency, never independent calibration or astronomical coverage; explicitly keep Pi null and physical heldout false."
+    },
+    {
+      "id": "P0B-R5",
+      "priority": "P1",
+      "category": "SELECTION_SAMPLE_ROLE",
+      "observed": "Source selected vs published table3 inclusion varies by method, optical SBF 8.57% and CAL 3.27%; this is analysis selection conditional on published groups.",
+      "resolution": "Do not interpret selected/released fraction as survey completeness or C_selection covariance. Keep actual source selection footprint and explicit missing selection law."
+    },
+    {
+      "id": "P0B-R6",
+      "priority": "P1",
+      "category": "APPARENT_HUBBLE_VS_PV_MODE",
+      "observed": "A coherent PV shear may be exactly in selected H03 STF mean-span, so invariant point estimates coexist with much larger conditional uncertainty; bulk velocity has different d dependence.",
+      "resolution": "Prove U=X A source-conditional mean invariance and covariance inflation, numerically check relative covariance theorem error ~1.41e-14. Adopt no actual fitted sigma_bulk/sigma_shear or Bianchi physical shear conclusion."
+    },
+    {
+      "id": "P0B-R7",
+      "priority": "P2",
+      "category": "SOURCE_BYTE_IDENTITY",
+      "observed": "The source dataclass frozen flag does not prevent mutation of NumPy arrays after source loading, risking data/weight misalignment.",
+      "resolution": "Added full canonical array source_fingerprint (group ID,directions,modulus,errors,z,7 presence,method moduli/sigmas,CAL and family). Source tamper red-green test; source file SHA checked at load."
+    },
+    {
+      "id": "P0B-R8",
+      "priority": "P2",
+      "category": "GAUGE_UNDEFINED_UNCERTAINTY_ENCODING",
+      "observed": "The SNIA gauge was assigned exactly 0 but its absolute source calibration uncertainty is undefined, which serializes as NaN under NumPy.",
+      "resolution": "Serialize that missing quantity explicitly as JSON null (never as zero uncertainty or invalid NaN); source result create-only and tested old/new data parity."
+    }
+  ],
+  "source_numerical_evidence": {
+    "selected_n": 35970,
+    "released_n": 38053,
+    "original_method_overlap_groups": 926,
+    "usable_error_bearing_method_contrast_groups": 922,
+    "method_overlap_network_rank": 5,
+    "group_method_flag_zero": 185,
+    "CAL_only_group_ids": [
+      20679,
+      59927
+    ],
+    "four_J2000_RA_heldout_disjoint_ID": true,
+    "heldout_upstream_independent_calibration": false,
+    "source_PV_shear_mode_in_H03_span": true,
+    "source_PV_shear_derived_covariance_relative_identity_error": 1.4129640276508254e-14,
+    "scoped_related_regression_tests": {
+      "passed": 281,
+      "failed": 0,
+      "scope": "R79-R87 related current local checkout; not full-repo clean CI"
+    },
+    "R78_original_strict_graph_checks": {
+      "passed": 32,
+      "failed": 0
+    },
+    "R87_new_source_tests": {
+      "passed": 13,
+      "failed": 0,
+      "added": "R87 RESULT exact source-array fingerprint and create-only CLI overwrite refusal"
+    },
+    "R86_current_readiness_tests": {
+      "passed": 9,
+      "failed": 0
+    }
+  },
+  "not_run": [
+    "original independent CF4 calibration MCMC chain",
+    "actual full source PV field covariance/ensemble",
+    "survey selection-matched independent mocks",
+    "independent cosmic parameter posterior/p value",
+    "whole repository clean CI"
+  ],
+  "release_ceiling": "SOURCE_REAL_DIAGNOSTIC_ONLY; R78 NEXT SQ-CF4 and P0-C still open; local-agent START not authorized",
+  "date_last_verified": "2026-11-21 KST"
+}

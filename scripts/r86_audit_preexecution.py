@@ -46,7 +46,7 @@ STAGE_TEST={
  "R85_PRE_DAG_NODES51_60_20261120":"tests/obsstat/test_r85_p5p6_fast.py"
 }
 SOURCE_REMAINDER={
- "SQ-CF4":"Selected 35970 group identity and source method-presence joined, but true correlated PV, calibration zero point and selection covariance and heldout coverage unavailable; R80 modulo-5 split is geometry only.",
+ "SQ-CF4":"R80 exact 35970 selected source lineage plus R87 real seven-method table3 group overlap and four sky heldout product-residual diagnostics now available. Published method moduli were globally MCMC-intercalibrated, so true upstream zero-point posterior/J_cal, calibrated correlated S_PV, survey completeness C_selection and independently calibrated heldout remain unavailable.",
  "SQ-GAIA":"Actual source moments and VSH numerical kernels exist; independent redshift/AGN/scan alias/selection covariance and qualified nonradial source null pending.",
  "SQ-RADIO":"Actual NVSS conditional 33k×185-ring 3-bin score exists; LSS, kappa, flux migration and matched selection/null pending.",
  "SQ-FRAME":"Finite local Lorentz kinematics exists; physical observed emitter/matter/normal common frame history and source transfer missing.",
@@ -74,7 +74,8 @@ NODE_MODULE={
  "S02":["htt/obsstat/p1_fast.py"],
  "L03":["htt/obsstat/p2p3_fast.py"],
  "B02":["htt/obsstat/p5p6_fast.py"],
- "SQ-CF4":["scripts/r80/audit_cf4_source_lineage.py"]
+ "SQ-CF4":["scripts/r80/audit_cf4_source_lineage.py",
+            "htt/obsstat/cf4_p0b.py","scripts/r87/run_p0b.py"]
 }
 TRUE_SOURCE=[
  ("CF4 35970 selected NPZ","docs/research_program/cf4_schur_loop8_20261015/inputs/selected_source_observables.npz",
@@ -194,7 +195,7 @@ def audit():
     if has_unsealed_stage:
         reasons.append("At least one numerical preflight package lacks an actual C10 verified evidence/seal.")
     reasons += [
-        "SQ-CF4 exact selected 35970 group source identity is valid but correlated PV, cross-method calibration, selection covariance and real heldout coverage remain unqualified.",
+        "R87 P0-B now verifies actual selected 35970 CF4 source, 926 multi-method presence groups, 922 usable contrast groups and post-intercalibration four-block residual prediction; however true correlated PV, upstream cross-method zero-point posterior, survey selection covariance and independent calibration heldout remain unqualified.",
         "B02 external full physical all-m polarization, full Planck matched CMB null and K03 common-congruence cross-source covariance are not qualified.",
         "Original 42-node planned_code still has two proposed paths that do not exist; actual replacement functions live elsewhere."
     ]
@@ -224,6 +225,22 @@ def audit():
        "start_packet_published":False,
        "allowed_output":"BLOCKED_READINESS_REPORT_ONLY"
     }
+    r87_path=BASE/"R87_SQ_CF4_P0B_METHOD_COV_HELDOUT_20261120/RESULT.json"
+    r87_return=BASE/"R87_SQ_CF4_P0B_METHOD_COV_HELDOUT_20261120/P0B_SCIENCE_RETURN.json"
+    r87_closure=BASE/"R87_SQ_CF4_P0B_METHOD_COV_HELDOUT_20261120/P0B_CLOSURE_RECEIPT.json"
+    if not all(x.is_file() for x in (r87_path,r87_return,r87_closure)):
+        raise AssertionError("R87 source diagnostic or physical-blocked closure receipt missing")
+    r87=json.loads(r87_path.read_text())
+    r87_status=json.loads(r87_return.read_text())
+    r87_done=json.loads(r87_closure.read_text())
+    if (r87["selected_original_group_count"]!=35970 or
+        r87["usable_six_methods_with_released_positive_error_multigroup_count"]!=922 or
+        r87_status["P0_B_true_physical_covariance_status"]!="BLOCKED_INPUT" or
+        r87_status["local_agent_START"] is not False or
+        r87_done["full_physical_C_status"]!="BLOCKED_INPUT" or
+        r87_done["R87_source_RESULT_sha256"]!=sha(r87_path) or
+        r87_done["R87_science_RETURN_sha256"]!=sha(r87_return)):
+        raise AssertionError("R87 P0-B source or blocked science contract drift")
     derived={
       "schema":"htt.r86.r78_60node_preexecution_readiness_overlay/1",
       "date":"2026-11-20 KST",
@@ -234,6 +251,17 @@ def audit():
       "original_edges_unchanged":True,
       "original_topological_order_unchanged":True,
       "original_next_action_id":"SQ-CF4",
+      "R87_SQ_CF4_real_source_diagnostic":{
+        "P0_B_source_result":"SOURCE_CONTRAST_SKY_DIAGNOSTIC_COMPLETED_SCOPED",
+        "P0_B_physical_C_and_independent_heldout":"BLOCKED_INPUT",
+        "selected_group_count":35970,"usable_sixmethod_multigroup_count":922,
+        "source_RESULT_SHA256":sha(r87_path),
+        "science_RETURN_SHA256":sha(r87_return),
+        "P0_B_closure_receipt_SHA256":sha(r87_closure),
+        "P0_B_new_source_test_count":r87_status["validated_new_tests"],
+        "P0_B_related_scoped_test_count":r87_status["validated_related_scoped_tests"],
+        "path":str(r87_path.relative_to(ROOT)),
+        "physical_Pi":None},
       "original_software_PR_backlog_authority":"docs/codex_handoff/pr_backlog.yaml",
       "coding_ordinal_is_NOT_original_R78_array_or_toposort":True,
       "coding_stage_checkpoints":program,

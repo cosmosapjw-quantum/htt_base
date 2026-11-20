@@ -127,3 +127,8 @@ R78과 직접 관련된 구조/권한/출처 검사 **32/32 PASS**, 위 상속 �
 ## 11. R86 P0-A 종결 상태 갱신 (2026-11-20 KST)
 
 앞 절의 P0-A 미봉인 내용은 당시 **실제 감사 시점의 기록**이다. 이후 R83 31–40을 원본 12개 테스트, 신규 15개 테스트, H03/L02/L03 통합 50개 테스트로 재검증하고 C9 ea1e5b11f8cde9a5cffdb23bd749e006415e3b4d 및 C10 827c41269e2766aee749c903713441c24b5676cf를 scoped commit/push해 봉인했다. R86 파생 overlay의 coding preflight 상태는 **6/6 C10 packages sealed**, R83_unsealed=[]로 갱신한다. 원래 R78 42개 과학 node/11 SQ/7 PHY 및 129 edge는 그대로이며, physical source/null 미충족과 60-node adapter 부재로 local agent START는 여전히 BLOCKED다. 다음 순서는 P0-B SQ-CF4 실제 method/PV/selection covariance+heldout, 이후 P0-C 안전한 60-node dry-run adapter이다. 자동 agent 시작, 원래 과학 상태 승격 또는 main merge는 없다.
+
+
+## 12. R87 SQ-CF4 P0-B 실제 원본 source 연구 결과 (2026-11-20)
+
+R87_SQ_CF4_P0B_METHOD_COV_HELDOUT_20261120 패키지에 original CF4 source groups 38,053/selected 35,970, original method presence 7개와 released per-method group distance moduli, group-profiled residual contrast 922 groups/rank5, source selected footprint, 4개의 disjoint ICRS RA-region product-predictive diagnostic 및 3개의 source-conditional coherent PV scenario를 수행하고 검증했다. Published table3 method moduli는 원래 글로벌 MCMC intercalibration을 이미 거친 산물이라 independent raw zero-point posterior와 정확한 J_cal Sigma_cal J_cal^T를 복원할 수 없고, actual source-matched S_PV·C_sel·independent upstream heldout도 제공되지 않는다. R87 물리 outcome은 SOURCE_DIAGNOSTIC_COMPLETE_BUT_FULL_PHYSICAL_C_BLOCKED이다. 기존 원래 R78 scientific node state/42-node payload, next SQ-CF4 및 60/129 edge 불변. 후속 P0-C 한정 SQ-CF4 dry-run adapter는 별도 실행하고 true physical C가 없는 한 BLOCKED_INPUT을 정확히 반환해야 하며 local agent를 자동 시작하지 않는다.

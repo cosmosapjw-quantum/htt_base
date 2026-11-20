@@ -14,19 +14,19 @@
     129
   ],
   "R86_source_path_SHA256": {
-    "AGENTS.md": "a166aebf5780e400e87fc3f84b19ded02266432d81091cf65fe1264eefdb6f17",
-    "docs/research_program/observational_publication_20261015/R78_UNIFIED_SCIENCE_DAG_20261119/RESEARCH_PLAN_KO.md": "cf0972e1e0bb62b60ed90a8a68f88d042f663919f523fa019ed4d176f32438b7",
-    "scripts/r86_audit_preexecution.py": "24f372bee820ccfa44c41c8dc45d535192d315b1ef08ff3c9f83f5ce23ddb6a6",
-    "tests/obsstat/test_r86_preexecution_readiness.py": "4f251c8bbae6a4f92ee1d285395889cdd660bdb66dd847a422b46aae1718ece9"
+    "AGENTS.md": "8b09c1667370bdfd1792a3049a6017256aae178050098eb4f99f5ecd694d7653",
+    "docs/research_program/observational_publication_20261015/R78_UNIFIED_SCIENCE_DAG_20261119/RESEARCH_PLAN_KO.md": "817cfe4a92ceb07623afb0821f09369fe4c68262c30cf4fdbf0b4f47a8164db4",
+    "scripts/r86_audit_preexecution.py": "18119ea812330f47473f3ce524c0e79d1283d8d403106d0e7ece1951cd56e51b",
+    "tests/obsstat/test_r86_preexecution_readiness.py": "d5e313fa1992775199e1969d9def8bbc6ff8ac71fb666653d1c14bd65a4a20b9"
   },
   "R86_output_SHA256_except_self": {
-    "docs/research_program/observational_publication_20261015/R86_PRE_EXEC_READINESS_20261120/AUDIT_REPORT_KO.md": "a6a83cc4d268dc00876faec79f5f9554aee3f8ca0fb76f288f1ad1e8d99b546c",
-    "docs/research_program/observational_publication_20261015/R86_PRE_EXEC_READINESS_20261120/BLOCKER_LEDGER.json": "3d9bfbcccd79976b3bb66fe1a81240f65eaa5a86a079ca6ba8c9121a5cf39a6d",
-    "docs/research_program/observational_publication_20261015/R86_PRE_EXEC_READINESS_20261120/EXECUTION_READINESS_DAG.json": "a564c4866dd1f0255ec76c9fa1a59b8b9d8bddc6c0594c3ade72558a8863f6e8",
-    "docs/research_program/observational_publication_20261015/R86_PRE_EXEC_READINESS_20261120/NO_START_DECISION.md": "edc356d46e6013fa720fddf29b1218eb47fc8aa91ebe88d3afc79fc95cfc3dab",
+    "docs/research_program/observational_publication_20261015/R86_PRE_EXEC_READINESS_20261120/AUDIT_REPORT_KO.md": "fa3f15e3e4162303ee0f12e778b843d26cbec764409dc010082f7dec72839ed7",
+    "docs/research_program/observational_publication_20261015/R86_PRE_EXEC_READINESS_20261120/BLOCKER_LEDGER.json": "db86c4acc9bead1d05eda20d00940dd0b365803f962c140f98f76d636b80c3c6",
+    "docs/research_program/observational_publication_20261015/R86_PRE_EXEC_READINESS_20261120/EXECUTION_READINESS_DAG.json": "2f6cb20f541100d5db8d53a1745ad627e5729e83afff48e4585745a56b30a467",
+    "docs/research_program/observational_publication_20261015/R86_PRE_EXEC_READINESS_20261120/NO_START_DECISION.md": "5e6d5a482af0e3b344ef7d12f440a2daef1693efc77a51f762646906f988822b",
     "docs/research_program/observational_publication_20261015/R86_PRE_EXEC_READINESS_20261120/P0_A_CLOSURE_RECEIPT.json": "63794047b8fc2be61af20d5b72d33dc7d57f233c6fdefd5df955acb280baf31e",
-    "docs/research_program/observational_publication_20261015/R86_PRE_EXEC_READINESS_20261120/RESEARCH_PLAN_KO.md": "7ba68bc6e69d757e1182bc9eb6989f8c68fd94305ad8d3f44834c47871e91b8d",
-    "docs/research_program/observational_publication_20261015/R86_PRE_EXEC_READINESS_20261120/VALIDATION_RECEIPT.json": "093956cee8c84d7a2c5db8e450b60e425a0be51efd4974d1588c1e1e6f49be5c"
+    "docs/research_program/observational_publication_20261015/R86_PRE_EXEC_READINESS_20261120/RESEARCH_PLAN_KO.md": "7a813463a2b8367b26d8dd82b42f5c36a730eb55a8b7f7908bf1b5ebe1441a0d",
+    "docs/research_program/observational_publication_20261015/R86_PRE_EXEC_READINESS_20261120/VALIDATION_RECEIPT.json": "cb333767248a8be71d9477c6c84a05d4c18e644ee23411e87773099f3b153a39"
   },
   "live_CF4_Gaia_input_hashes": {
     "CF4 35970 selected NPZ": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
@@ -48,8 +48,9 @@
       "failed": 0
     },
     "R86_new_readiness_unit_tests": {
-      "passed": 8,
-      "failed": 0
+      "passed": 9,
+      "failed": 0,
+      "scope": "R78/R87 P0-B original source+closure SHA, no-agent START"
     },
     "R79_R85_scoped_code_regressions": {
       "passed": 259,
@@ -120,6 +121,33 @@
       "R78_strict": "32_PASS_0_FAILED",
       "R86_6_package_readiness_tests": "8_PASS",
       "local_agent_start": "BLOCKED_P0_B_P0_C"
+    },
+    "P0_B_execution": {
+      "source_diagnostic": "COMPLETED_SCOPED_R87_ACTUAL_CDS_TABLE3_GROUP_METHOD",
+      "selected_CF4_groups": 35970,
+      "multiple_method_flags": 926,
+      "usable_sixmethod_overlap_groups": 922,
+      "method_residual_gauge_rank": 5,
+      "upstream_intercalibration_heldout": "NOT_INDEPENDENT",
+      "physical_S_PV_Jcal_C_selection": "BLOCKED_INPUT",
+      "original_R78_science_state_unchanged": true,
+      "local_agent_START": "BLOCKED_NOT_DISPATCHED",
+      "R87_scoped_code_tests": "11_PASS",
+      "R87_expanded_related_code_tests_prior_run": "278_PASS_0_FAIL",
+      "next_owner_selected_code_task": "P0-C",
+      "R87_result_kind": "SOURCE_DIAGNOSTIC_COMPLETED_SCOPED",
+      "original_CF4_released_groups": 38053,
+      "method_overlap_group_count": 926,
+      "usable_error_bearing_method_overlap_groups": 922,
+      "physical_covariance_and_upstream_calibration": "BLOCKED_INPUT",
+      "R87_new_source_tests": "13_PASS_0_FAIL",
+      "R87_expanded_related_tests": "281_PASS_0_FAIL_CURRENT_LOCAL_CHECKOUT",
+      "R86_readiness_tests": "9_PASS_0_FAIL",
+      "R78_authority_tests": "32_PASS_0_FAIL",
+      "scientific_next_ID": "SQ-CF4",
+      "P0_C_execution": "NOT_EXECUTED",
+      "P0_B_closure_sha256": "bf3cb2f69368366cd2b2d8d420b08f72e8cf275e74073b5d1b85b10f1c7c3581",
+      "local_agent_start": "NOT_DISPATCHED"
     }
   },
   "preexisting_R83_dirty_files": "PRESERVED_UNSTAGED",
@@ -134,5 +162,21 @@
   "R83_preexisting_dirty_files": "EXACTLY_SCOPED_VALIDATED_AND_COMMITTED_AT_R83_C9",
   "P0_B_status": "NOT_EXECUTED",
   "P0_C_status": "NOT_EXECUTED",
-  "full_60_science_code_and_inputs_ready": false
+  "full_60_science_code_and_inputs_ready": false,
+  "P0_B_R87_verified_scoped_closure_date": "2026-11-21 KST",
+  "P0_B_real_source_CDS_result_sha256": "c357670dadaada250f75f3a41959d712add11b3d4c45f00bfbc46f4dc3fdc199",
+  "P0_B_science_return_sha256": "d69ea54db416143e4fe63076f4532f52ce5ed4423d9d589286309a89e598e75d",
+  "P0_B_closure_receipt_sha256": "bf3cb2f69368366cd2b2d8d420b08f72e8cf275e74073b5d1b85b10f1c7c3581",
+  "P0_B_provenance_sha256": "defd712fb731505c295a367943a0f8d16522fff794e3736b8cc9dc95455c76f0",
+  "P0_B_source_diagnostic": "COMPLETED_SCOPED_35970_GROUP_922_USABLE_OVERLAP_RANK5",
+  "P0_B_physical_covariance_and_independent_upstream_heldout": "BLOCKED_INPUT",
+  "P0_B_tests": "R87_13_PASS_R79_R87_281_PASS_R86_9_PASS_R78_32_PASS",
+  "local_agent_START": "BLOCKED_NOT_DISPATCHED",
+  "original_science_DAG_byte_sha256_after_P0_B": "90aba8c1ca9c8e3a7744be0f071dcfe09b81e5353892aca13878191e20f58c11",
+  "runtime_current": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "platform": "Linux-7.0.0-43-generic-x86_64-with-glibc2.39"
+  }
 }

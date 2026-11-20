@@ -8,6 +8,19 @@
   "original_edges_unchanged": true,
   "original_topological_order_unchanged": true,
   "original_next_action_id": "SQ-CF4",
+  "R87_SQ_CF4_real_source_diagnostic": {
+    "P0_B_source_result": "SOURCE_CONTRAST_SKY_DIAGNOSTIC_COMPLETED_SCOPED",
+    "P0_B_physical_C_and_independent_heldout": "BLOCKED_INPUT",
+    "selected_group_count": 35970,
+    "usable_sixmethod_multigroup_count": 922,
+    "source_RESULT_SHA256": "c357670dadaada250f75f3a41959d712add11b3d4c45f00bfbc46f4dc3fdc199",
+    "science_RETURN_SHA256": "d69ea54db416143e4fe63076f4532f52ce5ed4423d9d589286309a89e598e75d",
+    "P0_B_closure_receipt_SHA256": "bf3cb2f69368366cd2b2d8d420b08f72e8cf275e74073b5d1b85b10f1c7c3581",
+    "P0_B_new_source_test_count": 13,
+    "P0_B_related_scoped_test_count": 281,
+    "path": "docs/research_program/observational_publication_20261015/R87_SQ_CF4_P0B_METHOD_COV_HELDOUT_20261120/RESULT.json",
+    "physical_Pi": null
+  },
   "original_software_PR_backlog_authority": "docs/codex_handoff/pr_backlog.yaml",
   "coding_ordinal_is_NOT_original_R78_array_or_toposort": true,
   "coding_stage_checkpoints": [
@@ -194,7 +207,7 @@
     "reasons": [
       "Original science graph has 18 scoped-completed historical nodes, 23 pending and 1 blocked; 7 physical-cross routes are theory-only.",
       "The 60-node R78 graph has no 60-node production execution controller; the original 42-node CLI reports 0 ready.",
-      "SQ-CF4 exact selected 35970 group source identity is valid but correlated PV, cross-method calibration, selection covariance and real heldout coverage remain unqualified.",
+      "R87 P0-B now verifies actual selected 35970 CF4 source, 926 multi-method presence groups, 922 usable contrast groups and post-intercalibration four-block residual prediction; however true correlated PV, upstream cross-method zero-point posterior, survey selection covariance and independent calibration heldout remain unqualified.",
       "B02 external full physical all-m polarization, full Planck matched CMB null and K03 common-congruence cross-source covariance are not qualified.",
       "Original 42-node planned_code still has two proposed paths that do not exist; actual replacement functions live elsewhere."
     ],
@@ -2477,14 +2490,16 @@
         "code_preparation_checkpoint_complete": true,
         "code_module_references": [
           "htt/obsstat/analysis_lane.json",
+          "htt/obsstat/cf4_p0b.py",
           "htt/obsstat/pre_dag_fast.py",
-          "scripts/r80/audit_cf4_source_lineage.py"
+          "scripts/r80/audit_cf4_source_lineage.py",
+          "scripts/r87/run_p0b.py"
         ],
         "associated_stage_code_or_test_exists": true,
         "software_evidence_scope": "BOUNDED_SOURCE_DIAGNOSTIC_AVAILABLE_ONLY",
         "science_state_from_R78_unchanged": "ready_scoped",
         "full_node_physics_execution_qualified": false,
-        "unresolved_execution_requirement": "Selected 35970 group identity and source method-presence joined, but true correlated PV, calibration zero point and selection covariance and heldout coverage unavailable; R80 modulo-5 split is geometry only.",
+        "unresolved_execution_requirement": "R80 exact 35970 selected source lineage plus R87 real seven-method table3 group overlap and four sky heldout product-residual diagnostics now available. Published method moduli were globally MCMC-intercalibrated, so true upstream zero-point posterior/J_cal, calibrated correlated S_PV, survey completeness C_selection and independently calibrated heldout remain unavailable.",
         "preregistered_new_physical_null_proven": false,
         "stage_source_matrix": "docs/research_program/observational_publication_20261015/R79_PRE_DAG_CODING_20261119/C10_NODE_MATRIX.json",
         "incoming_dependencies": [

@@ -149,3 +149,38 @@ def test_exact_source_array_identity_required_before_claim(actual):
     altered=replace(actual,method_modulus=mod)
     with pytest.raises(ValueError,match="source.*identity|fingerprint"):
         cf.validate_source_identity(altered)
+
+
+def test_original_R87_source_result_matches_live_codes_and_nulls(actual):
+    """Independent live report/source coherence, never a physical covariance."""
+    import json
+    from pathlib import Path
+    out=Path("docs/research_program/observational_publication_20261015/"
+             "R87_SQ_CF4_P0B_METHOD_COV_HELDOUT_20261120/RESULT.json")
+    record=json.loads(out.read_text())
+    assert record["source_sha256"]==actual.source_sha256
+    assert record["source_array_canonical_bytes_sha256"]==actual.source_array_fingerprint
+    assert record["selected_original_group_count"]==len(actual.group_id)==35970
+    assert record["original_multi_method_presence_group_count"]==926
+    assert record["usable_six_methods_with_released_positive_error_multigroup_count"]==922
+    x=cf.profile_source_method_offsets(actual)
+    np.testing.assert_allclose(
+        record["source_group_projected_method_fit"]["relative_method_residual_mag"],
+        x["delta_mag"],atol=1e-12,rtol=0)
+    assert record["source_group_projected_method_fit"]["working_conditional_sigma_mag"][0] is None
+    assert record["identification_obstruction"]["true_physics_Pi"] is None
+    assert record["claim_gate"]["physical_p_value"] is None
+    assert record["claim_gate"]["actual_full_C_qualified"] is False
+
+
+def test_create_only_R87_CLI_refuses_overwrite(tmp_path):
+    import subprocess
+    import sys
+    path=tmp_path/"already.json"
+    path.write_text("protected output")
+    cmd=[sys.executable,"-B","scripts/r87/run_p0b.py","--output",str(path)]
+    # Do not read actual data or overwrite anything on an existing-path refusal.
+    proc=subprocess.run(cmd,capture_output=True,text=True,timeout=25,check=False)
+    assert proc.returncode!=0
+    assert "FileExistsError" in proc.stderr
+    assert path.read_text()=="protected output"

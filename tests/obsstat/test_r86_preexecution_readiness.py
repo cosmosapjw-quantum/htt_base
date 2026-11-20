@@ -105,3 +105,21 @@ def test_tampered_60_dag_next_action_fails_closed(tmp_path,monkeypatch):
     monkeypatch.setattr(mod,"R78",p)
     with pytest.raises(AssertionError):
         mod.audit()
+
+
+def test_P0B_actual_method_source_diagnostic_does_not_qualify_physical_C():
+    z=mod.audit()
+    a=z["R87_SQ_CF4_real_source_diagnostic"]
+    assert a["selected_group_count"]==35970
+    assert a["usable_sixmethod_multigroup_count"]==922
+    assert a["P0_B_new_source_test_count"]==13
+    assert a["P0_B_related_scoped_test_count"]==281
+    assert len(a["P0_B_closure_receipt_SHA256"])==64
+    assert a["P0_B_physical_C_and_independent_heldout"]=="BLOCKED_INPUT"
+    assert a["physical_Pi"] is None
+    sq=next(x for x in z["nodes"] if x["id"]=="SQ-CF4")
+    assert "htt/obsstat/cf4_p0b.py" in sq["pre_execution"]["code_module_references"]
+    assert "scripts/r87/run_p0b.py" in sq["pre_execution"]["code_module_references"]
+    assert sq["state"]=="ready_scoped"
+    assert not sq["pre_execution"]["full_node_physics_execution_qualified"]
+    assert z["agent_dispatch_policy"]["status"]=="BLOCK_LOCAL_AGENT_START"

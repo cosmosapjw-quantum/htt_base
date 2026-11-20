@@ -37,3 +37,8 @@ R79–R85는 coding preflight 준비 서류와 출처가 있는 한정 함수의
 **최소 재검증:** R86 8/8, R78 32/32, source-specific R79–R85 259/259는 이번 감사에서 충족. 다음에는 R83 clean scoped artifacts와 bounded SQ-CF4 science packet의 실제 성공/실패를 따로 검증해야 한다. 291 software PR backlog를 일괄 실행하거나 전체 R78 물리 DAG 상태를 자동 승격하지 않는다.
 
 **R86 파생 정본과 향후 작업:** EXECUTION_READINESS_DAG.json, BLOCKER_LEDGER.json, RESEARCH_PLAN_KO.md, NO_START_DECISION.md, scripts/r86_audit_preexecution.py. 작업 시작용 handoff/agent dispatch는 **생성하지 않았다**.
+
+
+## P0-B 실행 후 source-specific 증거 추가
+
+기존 R86 첫 감사 당시에는 R80 source lineage만 있었으나 현재 R87 코드와 진짜 table3/4 분석 결과가 추가됐다. 35,970 selected /38,053 released groups, 926 original multiple method-presence, 922 usable error-bearing six-method group contrasts, group-profiled method gauge rank5 및 J2000 four-sector group-ID disjoint predictive residuals가 직접 재현됐다. 이 증거로 R86의 SQ-CF4 source-specific code mapping은 갱신됐다. 다만 이미 CF4 글로벌 MCMC로 intercalibrated된 결과에서는 새로운 독립 zero-point posterior나 PV/selection covariance 및 upstream heldout calibration을 추정할 수 없어 physical P0-B는 BLOCKED_INPUT이다. 차후 local agent 시작용 science-approved packet은 여전히 생성하지 않는다.

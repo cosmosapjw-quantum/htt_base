@@ -36,6 +36,11 @@ Work in the canonical DAG defined by `docs/codex_handoff/pr_backlog.yaml`; `mach
 - Default next bounded science work is **SQ-CF4**, exact selected 35,970-group CF4 indicator/PV/selection covariance with provenance and heldout check. If missing, record precise blocked source and choose SQ-GAIA. No forced physical expansion/tilt detection, no new native low-ell Bianchi solver, no automatic next-loop or main merge.
 - R78/REGRESSION_RECEIPT.json distinguishes 8 inherited legacy regression failures (release-evidence SHA, PR-122 canonical venv and stale V03 fixture) from R78 strict source/DAG 32 checks and unaffected 42 scoped regressions. Never assert repo-wide PASS from the latter; repair legacy evidence/environment only as an explicitly scoped separate task.
 
+## R87 CF4 P0-B source-conditional diagnostic and remaining physical block (2026-11-20)
+
+- SQ-CF4 exact selected 35,970 CF4 group method genealogy and released per-method moduli have been analyzed in htt.obsstat.cf4_p0b and scripts/r87/run_p0b.py. R87/RESULT.json and THEORY_KO.md are evidence for 922 unique error-bearing method overlap groups, SNIA-gauge rank5 *post-intercalibration residual* contrasts, four disjoint sky region *product-predictive* tests and assumed coherent PV scenarios. None of these are independent raw CF4 zero-point posterior, matched physical S_PV or selection covariance/null.
+- The source-qualified *physical* SQ-CF4 gate remains BLOCKED_INPUT: a globally intercalibrated group table cannot be re-used as independent upstream zero-point calibration/heldout. R78 science NEXT_ID remains SQ-CF4 and the 60-node local agent START is blocked. The next owner-selected coding item is P0-C read-only fail-closed SQ-CF4 adapter; do not start it automatically or invent missing source covariance.
+
 ## R86 pre-execution code-readiness STOP (2026-11-20)
 
 - Before any local coding-agent *science DAG start*, inspect docs/research_program/observational_publication_20261015/R86_PRE_EXEC_READINESS_20261120/EXECUTION_READINESS_DAG.json and RESEARCH_PLAN_KO.md. R86 is a source+software readiness overlay only; **R78 INTEGRATED_DAG.json remains the scientific SSOT** (60 nodes, 129 edges, original 42 immutable, NEXT_ID=SQ-CF4).
