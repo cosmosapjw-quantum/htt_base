@@ -1,0 +1,451 @@
+{
+  "schema": "htt.r89.g05_planck_result/1",
+  "group_id": "G05_PLANCK",
+  "node_ids": [
+    "L01",
+    "SQ-CMB-NULL",
+    "L03",
+    "L02",
+    "L04",
+    "L05",
+    "L06"
+  ],
+  "source_sha256": {
+    "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L02_EXECUTION_20261018/results/L02_ACTUAL_STATISTICS.json": "23074fd0099ca4f367afa3ccb95334262a4e65563a677548358ef22fe5f6e8b9",
+    "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L03_EXECUTION_20261018/results/L02_ON_EIGHT_PAIR_PILOT.json": "accf98acaad10c48093599ee2da19f8b153495273035c0b48ed08073a47e7803",
+    "docs/research_program/observational_publication_20261015/R70_P2_KINETIC_LIE_LOWELL_20261119/RESULTS.json": "0031aa4a290212da154c4755caf518a593fb081dba9fcd9845cd162bd36625d3",
+    "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-CMB/RESULT.json": "2f7138dac58f94f500c7a120aa8c1555a0085ab6a8c7708e3505215f35762f47",
+    "/mnt/extdrive/workdir/analysis/planck_mes_irrep/paired300_carrier/execution_manifest.json": "6e2acaa4b695ad422cca5099c4d91e9a7dfc741f6e41b461d10da4ec52c36831",
+    "/mnt/extdrive/workdir/analysis/planck_mes_irrep/paired300_carrier/observed.npz": "187e0dfb2a9d1f532adcaf8631c25a668855d8399f2cc2a034a06f1dba58e29f",
+    "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/analysis/observed_lowell_EB.npz": "56da085ee5cceb0d0227685e537d2f67d9a470874745f8b7eb0627f1e7ee7490",
+    "/mnt/extdrive/workdir/htt_open_data/provenance/D04_SPLIT_NOISE_SELECTED_IQU_00000_20261018.npz": "4ebd4bf73b68bac17fedc5d8129b5250882f1a67edc3b0d40efaa6e878590b3f",
+    "/mnt/extdrive/workdir/htt_open_data/provenance/L01_SMICA_WINDOWED_QU_L128/full.npz": "07a21828b3ea57d8b113f6a11146e4ae185de3ffc0a28ca59b93127f8f09c5bd",
+    "/mnt/extdrive/workdir/htt_open_data/provenance/L01_NATIVE_PR3_POL_K64x90_v2_common.npz": "a45acd13c079bd871b6704dc6d4952ee6294db0f3f50403978abbd7606f06969"
+  },
+  "runtime": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "elapsed_seconds": 1.5060216060010134,
+    "maxrss_kib": 140676
+  },
+  "reused_scoped_L01_L02": {
+    "historical_status": {
+      "L02_fields": 25,
+      "L02_same_sky_pairs": 24,
+      "one_physical_observed_sky": true,
+      "L02_signed_vs_absolute_parity_verified": true,
+      "L02_negative_signed_shapes_preserved": true,
+      "L03_pilot_pair_ids": 8,
+      "L03_variants_per_pair": 5,
+      "L03_complete_source_matched_null_qualified": false,
+      "L04_physical_p_value": null,
+      "R78_science_next_ID": "SQ-CF4",
+      "R78_original_science_states_changed": false,
+      "science_nodes": {
+        "S06": "pending",
+        "L01": "completed_scoped",
+        "L02": "completed_scoped",
+        "L03": "pending",
+        "L04": "pending",
+        "L05": "pending",
+        "L06": "pending",
+        "H01": "completed_scoped",
+        "H02": "pending",
+        "H03": "completed_scoped"
+      },
+      "actual_correlated_PV_calibration_selection_C": null,
+      "real_physical_H_z_n": null,
+      "source_sha256": {
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L02_EXECUTION_20261018/results/L02_ACTUAL_STATISTICS.json": "23074fd0099ca4f367afa3ccb95334262a4e65563a677548358ef22fe5f6e8b9",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L03_EXECUTION_20261018/results/L02_ON_EIGHT_PAIR_PILOT.json": "accf98acaad10c48093599ee2da19f8b153495273035c0b48ed08073a47e7803",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R78_UNIFIED_SCIENCE_DAG_20261119/INTEGRATED_DAG.json": "90aba8c1ca9c8e3a7744be0f071dcfe09b81e5353892aca13878191e20f58c11"
+      }
+    },
+    "l02_signed_field_rows": 25,
+    "r70_theory_keys": [
+      "schema",
+      "date",
+      "intent",
+      "symbolic",
+      "sky_velocity",
+      "initial_isotropic_kinetic",
+      "higher_multipole_nonautonomy",
+      "R66_actual_signed_source",
+      "tests"
+    ],
+    "pilot8_family_rank": {
+      "simulation_count": 7,
+      "higher_than_observed": 7,
+      "greater_or_equal": 7,
+      "rank_interval": [
+        1.0,
+        1.0
+      ],
+      "rank_resolution": 0.125,
+      "physical_p_value": null,
+      "source_null_qualified": false,
+      "rank_interpretation": "pilot arithmetic only; exchangeability and end-to-end null not established",
+      "processing_variants": 5,
+      "features": 12,
+      "family_statistic": "max_over_selected_family_within_simulation_ID",
+      "scalar_T_quad_sum_noise_1p00_rank": {
+        "simulation_count": 7,
+        "higher_than_observed": 6,
+        "greater_or_equal": 6,
+        "rank_interval": [
+          0.875,
+          0.875
+        ],
+        "rank_resolution": 0.125,
+        "physical_p_value": null,
+        "source_null_qualified": false,
+        "rank_interpretation": "pilot arithmetic only; exchangeability and end-to-end null not established"
+      },
+      "pseudo_observation_note": "pair_ids[0] used as pseudo-observation against remaining 7 pilot pairs (matching test_r83_p2p3_fast), purely code arithmetic."
+    }
+  },
+  "paired300_smica_cmbnoise_mc": {
+    "mc_count": 300,
+    "carrier_dim": 32,
+    "feature_dim": 12,
+    "raw_smica_cmb_mc_fits_count": 999,
+    "raw_smica_noise_mc_fits_count": 300,
+    "feature_l2_rank": {
+      "simulation_count": 300,
+      "higher_than_observed": 270,
+      "greater_or_equal": 270,
+      "rank_interval": [
+        0.9003322259136213,
+        0.9003322259136213
+      ],
+      "rank_resolution": 0.0033222591362126247,
+      "physical_p_value": null,
+      "source_null_qualified": false,
+      "rank_interpretation": "pilot arithmetic only; exchangeability and end-to-end null not established"
+    },
+    "carrier_l2_rank": {
+      "simulation_count": 300,
+      "higher_than_observed": 243,
+      "greater_or_equal": 243,
+      "rank_interval": [
+        0.8106312292358804,
+        0.8106312292358804
+      ],
+      "rank_resolution": 0.0033222591362126247,
+      "physical_p_value": null,
+      "source_null_qualified": false,
+      "rank_interpretation": "pilot arithmetic only; exchangeability and end-to-end null not established"
+    },
+    "carrier_mahalanobis_t2_obs": 37.77738612378553,
+    "carrier_cov_eig_minmax": [
+      115.20400096409068,
+      1285.5549297565956
+    ],
+    "carrier_t2_rank": {
+      "simulation_count": 300,
+      "higher_than_observed": 66,
+      "greater_or_equal": 66,
+      "rank_interval": [
+        0.22259136212624583,
+        0.22259136212624583
+      ],
+      "rank_resolution": 0.0033222591362126247,
+      "physical_p_value": null,
+      "source_null_qualified": false,
+      "rank_interpretation": "pilot arithmetic only; exchangeability and end-to-end null not established"
+    },
+    "per_feature_abs_ranks": [
+      {
+        "feature_index": 0,
+        "observed": 210.46184716646644,
+        "mc_mean": 1022.3340190501141,
+        "mc_std": 680.5169543302533,
+        "simulation_count": 300,
+        "higher_than_observed": 289,
+        "greater_or_equal": 289,
+        "rank_interval": [
+          0.9634551495016611,
+          0.9634551495016611
+        ],
+        "rank_resolution": 0.0033222591362126247,
+        "physical_p_value": null,
+        "source_null_qualified": false,
+        "rank_interpretation": "pilot arithmetic only; exchangeability and end-to-end null not established"
+      },
+      {
+        "feature_index": 1,
+        "observed": 482.02081141805786,
+        "mc_mean": 525.0022127925222,
+        "mc_std": 299.1120643439763,
+        "simulation_count": 300,
+        "higher_than_observed": 140,
+        "greater_or_equal": 140,
+        "rank_interval": [
+          0.4684385382059801,
+          0.4684385382059801
+        ],
+        "rank_resolution": 0.0033222591362126247,
+        "physical_p_value": null,
+        "source_null_qualified": false,
+        "rank_interpretation": "pilot arithmetic only; exchangeability and end-to-end null not established"
+      },
+      {
+        "feature_index": 2,
+        "observed": 225.31626901545962,
+        "mc_mean": 294.57096824387975,
+        "mc_std": 135.3817669203816,
+        "simulation_count": 300,
+        "higher_than_observed": 191,
+        "greater_or_equal": 191,
+        "rank_interval": [
+          0.6378737541528239,
+          0.6378737541528239
+        ],
+        "rank_resolution": 0.0033222591362126247,
+        "physical_p_value": null,
+        "source_null_qualified": false,
+        "rank_interpretation": "pilot arithmetic only; exchangeability and end-to-end null not established"
+      },
+      {
+        "feature_index": 3,
+        "observed": 305.4850488898174,
+        "mc_mean": 181.4263983699338,
+        "mc_std": 74.48411958160641,
+        "simulation_count": 300,
+        "higher_than_observed": 18,
+        "greater_or_equal": 18,
+        "rank_interval": [
+          0.06312292358803986,
+          0.06312292358803986
+        ],
+        "rank_resolution": 0.0033222591362126247,
+        "physical_p_value": null,
+        "source_null_qualified": false,
+        "rank_interpretation": "pilot arithmetic only; exchangeability and end-to-end null not established"
+      },
+      {
+        "feature_index": 4,
+        "observed": 0.5533649184674748,
+        "mc_mean": 2.315752168230571,
+        "mc_std": 1.871026640037485,
+        "simulation_count": 300,
+        "higher_than_observed": 286,
+        "greater_or_equal": 286,
+        "rank_interval": [
+          0.9534883720930233,
+          0.9534883720930233
+        ],
+        "rank_resolution": 0.0033222591362126247,
+        "physical_p_value": null,
+        "source_null_qualified": false,
+        "rank_interpretation": "pilot arithmetic only; exchangeability and end-to-end null not established"
+      },
+      {
+        "feature_index": 5,
+        "observed": 0.4499927615199697,
+        "mc_mean": 0.35757213744972766,
+        "mc_std": 0.1123571779428672,
+        "simulation_count": 300,
+        "higher_than_observed": 78,
+        "greater_or_equal": 78,
+        "rank_interval": [
+          0.26245847176079734,
+          0.26245847176079734
+        ],
+        "rank_resolution": 0.0033222591362126247,
+        "physical_p_value": null,
+        "source_null_qualified": false,
+        "rank_interpretation": "pilot arithmetic only; exchangeability and end-to-end null not established"
+      },
+      {
+        "feature_index": 6,
+        "observed": 0.5601372467878019,
+        "mc_mean": 0.3286704014488263,
+        "mc_std": 0.142444594296918,
+        "simulation_count": 300,
+        "higher_than_observed": 12,
+        "greater_or_equal": 12,
+        "rank_interval": [
+          0.04318936877076412,
+          0.04318936877076412
+        ],
+        "rank_resolution": 0.0033222591362126247,
+        "physical_p_value": null,
+        "source_null_qualified": false,
+        "rank_interpretation": "pilot arithmetic only; exchangeability and end-to-end null not established"
+      },
+      {
+        "feature_index": 7,
+        "observed": 0.13317343756618844,
+        "mc_mean": 0.3171195829036168,
+        "mc_std": 0.22507900058403274,
+        "simulation_count": 300,
+        "higher_than_observed": 222,
+        "greater_or_equal": 222,
+        "rank_interval": [
+          0.7408637873754153,
+          0.7408637873754153
+        ],
+        "rank_resolution": 0.0033222591362126247,
+        "physical_p_value": null,
+        "source_null_qualified": false,
+        "rank_interpretation": "pilot arithmetic only; exchangeability and end-to-end null not established"
+      },
+      {
+        "feature_index": 8,
+        "observed": 0.398744286835429,
+        "mc_mean": 0.15008783539386727,
+        "mc_std": 0.12332921972471945,
+        "simulation_count": 300,
+        "higher_than_observed": 15,
+        "greater_or_equal": 15,
+        "rank_interval": [
+          0.053156146179401995,
+          0.053156146179401995
+        ],
+        "rank_resolution": 0.0033222591362126247,
+        "physical_p_value": null,
+        "source_null_qualified": false,
+        "rank_interpretation": "pilot arithmetic only; exchangeability and end-to-end null not established"
+      },
+      {
+        "feature_index": 9,
+        "observed": 0.43385751928412986,
+        "mc_mean": 0.32261634320094706,
+        "mc_std": 0.1580907314717695,
+        "simulation_count": 300,
+        "higher_than_observed": 81,
+        "greater_or_equal": 81,
+        "rank_interval": [
+          0.2724252491694352,
+          0.2724252491694352
+        ],
+        "rank_resolution": 0.0033222591362126247,
+        "physical_p_value": null,
+        "source_null_qualified": false,
+        "rank_interpretation": "pilot arithmetic only; exchangeability and end-to-end null not established"
+      },
+      {
+        "feature_index": 10,
+        "observed": 0.4368284926099312,
+        "mc_mean": 0.5514257716260493,
+        "mc_std": 0.19816681488447466,
+        "simulation_count": 300,
+        "higher_than_observed": 218,
+        "greater_or_equal": 218,
+        "rank_interval": [
+          0.7275747508305648,
+          0.7275747508305648
+        ],
+        "rank_resolution": 0.0033222591362126247,
+        "physical_p_value": null,
+        "source_null_qualified": false,
+        "rank_interpretation": "pilot arithmetic only; exchangeability and end-to-end null not established"
+      },
+      {
+        "feature_index": 11,
+        "observed": 0.9402390888212062,
+        "mc_mean": 0.7659707338405762,
+        "mc_std": 0.18739015561416997,
+        "simulation_count": 300,
+        "higher_than_observed": 52,
+        "greater_or_equal": 52,
+        "rank_interval": [
+          0.1760797342192691,
+          0.1760797342192691
+        ],
+        "rank_resolution": 0.0033222591362126247,
+        "physical_p_value": null,
+        "source_null_qualified": false,
+        "rank_interpretation": "pilot arithmetic only; exchangeability and end-to-end null not established"
+      }
+    ],
+    "null_scope_note": "Single-pipeline SMICA FFP10 paired 300 MC diagnostic; NOT a joint multi-component (Commander/NILC/SEVEM/PR4) end-to-end calibrated null."
+  },
+  "pr4_commander_100mc_lowell_eb": {
+    "mc_count": 100,
+    "observed_E_power": 4.9296997341638795e-14,
+    "observed_B_power": 2.4045308378437293e-14,
+    "E_power_rank": {
+      "simulation_count": 100,
+      "higher_than_observed": 28,
+      "greater_or_equal": 28,
+      "rank_interval": [
+        0.2871287128712871,
+        0.2871287128712871
+      ],
+      "rank_resolution": 0.009900990099009901,
+      "physical_p_value": null,
+      "source_null_qualified": false,
+      "rank_interpretation": "pilot arithmetic only; exchangeability and end-to-end null not established"
+    },
+    "B_power_rank": {
+      "simulation_count": 100,
+      "higher_than_observed": 56,
+      "greater_or_equal": 56,
+      "rank_interval": [
+        0.5643564356435643,
+        0.5643564356435643
+      ],
+      "rank_resolution": 0.009900990099009901,
+      "physical_p_value": null,
+      "source_null_qualified": false,
+      "rank_interpretation": "pilot arithmetic only; exchangeability and end-to-end null not established"
+    }
+  },
+  "split_noise_and_windowed_polarization": {
+    "d04_t_mask_pixels": 26846,
+    "d04_p_mask_pixels": 30021,
+    "d04_hm_diff_T_rms_K_CMB": 2.086022969708654e-06,
+    "d04_oe_diff_T_rms_K_CMB": 2.087343097468334e-06,
+    "d04_hm_diff_Q_rms_K_CMB": 2.032996067596175e-06,
+    "d04_oe_diff_Q_rms_K_CMB": 2.0106901914743907e-06,
+    "l01_qu_l128_norms": {
+      "full": {
+        "E_l2": 2.176818373637982e-06,
+        "B_l2": 1.4659682212784524e-06
+      },
+      "hm1": {
+        "E_l2": 2.690630879578262e-06,
+        "B_l2": 2.0661280667920096e-06
+      },
+      "hm2": {
+        "E_l2": 2.627587578002054e-06,
+        "B_l2": 2.0082587688474787e-06
+      },
+      "oe1": {
+        "E_l2": 2.6153705601240585e-06,
+        "B_l2": 1.975577557015913e-06
+      },
+      "oe2": {
+        "E_l2": 2.6318704955743078e-06,
+        "B_l2": 2.0155638688732546e-06
+      }
+    },
+    "l01_qu_l128_hm_diff": {
+      "E_l2": 2.8311898418613457e-06,
+      "B_l2": 2.7041754856891797e-06
+    },
+    "l01_qu_l128_oe_diff": {
+      "E_l2": 2.7368724893710335e-06,
+      "B_l2": 2.63872670577868e-06
+    },
+    "r23_cmb_diagnostic_status": "DIAGNOSTIC_ONLY"
+  },
+  "node_verdicts": {
+    "L01": "REUSED_SCOPED",
+    "L02": "REUSED_SCOPED",
+    "SQ-CMB-NULL": "BLOCKED_INPUT",
+    "L03": "BLOCKED_DEPENDENCY",
+    "L04": "BLOCKED_DEPENDENCY",
+    "L05": "BLOCKED_DEPENDENCY",
+    "L06": "BLOCKED_DEPENDENCY"
+  },
+  "missing_physics_and_next_action": {
+    "missing": [
+      "Full release-matched multi-pipeline T+E+B exchangeable signal+noise+foreground MC ensemble across SMICA/Commander/NILC/SEVEM",
+      "Calibrated physical CMB rarity/p-value null for joint family statistics (cannot promote 9 processing variants or SMICA-only 300-pair carrier to SQ-CMB-NULL)"
+    ],
+    "next_action": "Obtain calibrated multi-component PR3/PR4 end-to-end simulation ensemble before promoting SQ-CMB-NULL / L03-L06."
+  }
+}

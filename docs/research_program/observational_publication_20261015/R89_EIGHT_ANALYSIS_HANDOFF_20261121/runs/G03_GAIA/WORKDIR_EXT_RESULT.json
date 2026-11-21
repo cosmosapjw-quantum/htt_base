@@ -1,0 +1,904 @@
+{
+  "schema": "htt.r89.g03_gaia_workdir_ext/1",
+  "group_id": "G03_GAIA",
+  "node_ids": [
+    "K01",
+    "K02",
+    "SQ-GAIA",
+    "K03",
+    "K04",
+    "K05",
+    "K06"
+  ],
+  "source_sha256": {
+    "/mnt/extdrive/workdir/htt_open_data/a22_20261023/quaia_join/quaia_crf3_join.npz": "2fbaa40a8afe58066064efa8a7784ac508c5b2c67b41c779676eab7df8cf9ef4",
+    "/mnt/extdrive/workdir/raw/new_acquisitions/transient_cmb/quaia_zsplit/selection_function_NSIDE64_G20.5_zsplit2bin0.fits": "7e57768b9c0496548aff1db52b83500158686a4c9a4d043b6937ccd54ed2f569",
+    "/mnt/extdrive/workdir/raw/new_acquisitions/transient_cmb/quaia_zsplit/selection_function_NSIDE64_G20.5_zsplit2bin1.fits": "50ec4b043d0adf20315d82db51750db68e4bdbe4c119d527bca7b6da87f40a8f",
+    "/mnt/extdrive/workdir/raw/new_acquisitions/transient_cmb/quaia_zsplit/cls_quaia_planckPR4_s8.fits": "0877e18f21ed58178ab73ee13920d87ad514704584ab49b36e43b12ba7faae94",
+    "/mnt/extdrive/workdir/htt_open_data/a22_20261023/r24_depth_moments/new_moments.npz": "4193c6adfddc7841fc470af64a4a20e0025e70171dd9b660eeea0ebadb02abd7",
+    "/mnt/extdrive/workdir/htt_open_data/a22_20261023/astrometry/full_stats.npz": "4d9406de69546e72dff79d4fc611703e8eb450944c4dcc254f8484c98a22d5da",
+    "/mnt/extdrive/workdir/htt_open_data/a22_20261023/astrometry/margin_stats.npz": "e0148768bfdef02c9e9291ec0bd2b79e7b1e859a5c343dc2031259c876a671e5",
+    "/mnt/extdrive/workdir/raw/new_acquisitions/optical/Gaia_CRF3_flags/frame_rotator_source.fits": "8b09b0cd6ac9464cbd5203a704f3cd507358077c063c11d605c7429bf232179c",
+    "/mnt/extdrive/workdir/raw/icrf3_iers_20261110/icrf3sx.txt": "83abfa7c8ece43066cff93cd256e8744ecd46cdb4c1f6cde6ed4c411b0bab3bb",
+    "/mnt/extdrive/workdir/htt_open_data/vlba/233_3/table6.dat": "5358da3b6233194cad556010259400b729b7472c5037e39facf1f413e2aa3bff"
+  },
+  "runtime": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "elapsed_seconds": 2.6853067580013885,
+    "maxrss_kib": 1189776,
+    "threads": 8
+  },
+  "quaia_crf3_selection": {
+    "raw_rows": 692154,
+    "clean_astrometric_rows": 634233,
+    "z_median": 1.4627619981765747,
+    "z_quartiles_edges": [
+      0.09312428177489887,
+      1.015979290008545,
+      1.4627619981765747,
+      1.9659596681594849,
+      4.456544876098633
+    ]
+  },
+  "quaia_full_vsh": {
+    "n_sources": 634233,
+    "rank": 16,
+    "F_condition": 8.016993647451473,
+    "coefs_microasyr": [
+      -0.5139870220713725,
+      -4.5679304107944265,
+      -2.1173851702236357,
+      1.1944631798011445,
+      1.0074969037949986,
+      -0.6814052859434834,
+      -2.5580271049497743,
+      2.2272901841781363,
+      -2.8500648228135086,
+      -3.5026122284346353,
+      3.03761597606423,
+      1.2839471083471317,
+      2.002834959472377,
+      1.2959175816566617,
+      0.736776524819555,
+      -1.9469402203397999
+    ],
+    "formal_errors_microasyr": [
+      0.36222871044537663,
+      0.34095732891126906,
+      0.3252302205578592,
+      0.33468811811293536,
+      0.3187464653912049,
+      0.35694734860268884,
+      0.6201776330191209,
+      0.5762574296088532,
+      0.6293981129454652,
+      0.5615874314386856,
+      0.6060933211061326,
+      0.5784194989671384,
+      0.6158027385881442,
+      0.5975861554226295,
+      0.6362308090077107,
+      0.6353367004958479
+    ],
+    "groups_amplitude_microasyr": {
+      "E1": 5.0609772629208,
+      "B1": 1.7047303196602357,
+      "E2": 6.41269030666954,
+      "B2": 3.4165313256966487
+    },
+    "E2_shape_chi": 0.5782526566245393,
+    "chi2_per_dof_working": 1.1088946775555826,
+    "chi2_per_dof_note": "Equal to (sum_w r^2)/(2N-16); scales linearly when precision weights include selection_relative < 1.",
+    "nominal_within_fixed_Gaussian": {
+      "E2_Wald5": 106.42962404764972,
+      "B2_Wald5": 27.63963518012183,
+      "E2_p_naive": 2.3264653690322554e-21,
+      "B2_p_naive": 4.280391144514114e-05,
+      "joint_E2B2_Wald10": 135.5448442316523
+    },
+    "E2_B2_mask_alias_maxcanonical": 0.08894941713946766,
+    "last_chunk_backend_receipt": {
+      "kernel": "gaia_weighted_normal_equations",
+      "used": "cpp_native",
+      "source_certified": true,
+      "native_threads": 8,
+      "n_rows": 44409,
+      "binary_path": "/tmp/htt_r79_native_cache/gaia/11ee1b6592e073faf6710982/libhtt_r79_vsh.so",
+      "fallback_reason": null
+    }
+  },
+  "quaia_full_selection_relative_weighted_vsh": {
+    "n_sources": 634233,
+    "rank": 16,
+    "F_condition": 9.632263630069493,
+    "coefs_microasyr": [
+      -0.5319279484154305,
+      -4.560098813558076,
+      -1.8901481571208922,
+      1.0614248314726522,
+      0.9086229741610191,
+      -0.5932561233809931,
+      -1.9013778273797937,
+      2.3217407945457107,
+      -3.4058014888239723,
+      -3.279606798279759,
+      2.7467284149241866,
+      1.4451427695375283,
+      2.0851389202217034,
+      0.9419061840083479,
+      0.7477853170325222,
+      -1.8899097929226158
+    ],
+    "formal_errors_microasyr": [
+      0.4862410099481688,
+      0.4645158851992573,
+      0.4350052367794835,
+      0.4508905645267548,
+      0.429539115367174,
+      0.47688016019432566,
+      0.818024190917196,
+      0.7620992101721218,
+      0.8284188837037205,
+      0.7394383698315915,
+      0.8059068206492005,
+      0.7634731358707025,
+      0.8244288036715749,
+      0.790690735993556,
+      0.8282171755413453,
+      0.8452602882250537
+    ],
+    "groups_amplitude_microasyr": {
+      "E1": 4.96488757048805,
+      "B1": 1.5179496730685798,
+      "E2": 6.237430518848253,
+      "B2": 3.3844306915930975
+    },
+    "E2_shape_chi": 0.7140566632481563,
+    "chi2_per_dof_working": 0.6760598712882453,
+    "chi2_per_dof_note": "Equal to (sum_w r^2)/(2N-16); scales linearly when precision weights include selection_relative < 1.",
+    "nominal_within_fixed_Gaussian": {
+      "E2_Wald5": 59.35331235134311,
+      "B2_Wald5": 15.327392616499228,
+      "E2_p_naive": 1.6532519853557493e-11,
+      "B2_p_naive": 0.00905131646884069,
+      "joint_E2B2_Wald10": 76.84950170903537
+    },
+    "E2_B2_mask_alias_maxcanonical": 0.11804341875489752,
+    "last_chunk_backend_receipt": {
+      "kernel": "gaia_weighted_normal_equations",
+      "used": "cpp_native",
+      "source_certified": true,
+      "native_threads": 8,
+      "n_rows": 44409,
+      "binary_path": "/tmp/htt_r79_native_cache/gaia/11ee1b6592e073faf6710982/libhtt_r79_vsh.so",
+      "fallback_reason": null
+    }
+  },
+  "quaia_redshift_quartiles_vsh": {
+    "Q1": {
+      "z_range": [
+        0.09312428177489887,
+        1.015979290008545
+      ],
+      "z_median": 0.7498075366020203,
+      "n_sources": 158555,
+      "rank": 16,
+      "F_condition": 7.593329883992624,
+      "coefs_microasyr": [
+        -0.33329778539141613,
+        -3.5775486707484005,
+        -2.417476241764069,
+        -6.397699226706107,
+        3.4758270898469132,
+        0.8810694338481821,
+        -1.1788031777776176,
+        0.43336113207807964,
+        -4.976427952702252,
+        -4.206634454688855,
+        0.9754515544008521,
+        -0.20903352604691633,
+        3.6735711175637396,
+        0.6127887154054404,
+        1.0857290133518247,
+        -2.7493254940866665
+      ],
+      "formal_errors_microasyr": [
+        0.6110004372240889,
+        0.5747835998830629,
+        0.5520178130656302,
+        0.5643582560459932,
+        0.5394277172134662,
+        0.604897542013609,
+        1.0578185985676045,
+        0.9798213352814078,
+        1.0694166608804523,
+        0.9541464922127262,
+        1.0292321448934703,
+        0.9863758501126151,
+        1.0416863958901532,
+        1.0164255570171923,
+        1.0837611025643497,
+        1.0783450694602321
+      ],
+      "groups_amplitude_microasyr": {
+        "E1": 4.33060426324251,
+        "B1": 7.334044770873105,
+        "E2": 6.707420751788974,
+        "B2": 4.75940415844328
+      },
+      "E2_shape_chi": 0.2539231179855468,
+      "chi2_per_dof_working": 1.1403228249764845,
+      "chi2_per_dof_note": "Equal to (sum_w r^2)/(2N-16); scales linearly when precision weights include selection_relative < 1.",
+      "nominal_within_fixed_Gaussian": {
+        "E2_Wald5": 37.726820669462604,
+        "B2_Wald5": 16.571318083080396,
+        "E2_p_naive": 4.281300218394912e-07,
+        "B2_p_naive": 0.005388823849043237,
+        "joint_E2B2_Wald10": 55.212615807564234
+      },
+      "E2_B2_mask_alias_maxcanonical": 0.08141634435209634,
+      "last_chunk_backend_receipt": {
+        "kernel": "gaia_weighted_normal_equations",
+        "used": "cpp_native",
+        "source_certified": true,
+        "native_threads": 8,
+        "n_rows": 27483,
+        "binary_path": "/tmp/htt_r79_native_cache/gaia/11ee1b6592e073faf6710982/libhtt_r79_vsh.so",
+        "fallback_reason": null
+      }
+    },
+    "Q2": {
+      "z_range": [
+        1.015979290008545,
+        1.4627619981765747
+      ],
+      "z_median": 1.2444812059402466,
+      "n_sources": 158561,
+      "rank": 16,
+      "F_condition": 7.990550122697853,
+      "coefs_microasyr": [
+        -1.7171286937258874,
+        -3.677922107065636,
+        -1.1014711812894347,
+        4.93096432000291,
+        -3.704016906925687,
+        0.3114696243921848,
+        -3.258108743672912,
+        1.4291353051541442,
+        -2.7098064765792795,
+        -2.6175793866336035,
+        5.011170856023259,
+        0.10406901726233928,
+        2.3807830819339224,
+        1.259306766434334,
+        0.3620022166189564,
+        -2.3467654060783136
+      ],
+      "formal_errors_microasyr": [
+        0.7478190494130935,
+        0.7056636207838235,
+        0.6717264330507564,
+        0.6922798155424815,
+        0.6584923447194905,
+        0.7369379499397947,
+        1.27936471621988,
+        1.1903351000443196,
+        1.300383278395493,
+        1.1638271118583932,
+        1.250886466564706,
+        1.1955310627094098,
+        1.2727031352122609,
+        1.2330915342852218,
+        1.3185049915822171,
+        1.3129276260361638
+      ],
+      "groups_amplitude_microasyr": {
+        "E1": 4.205815110019702,
+        "B1": 6.175043619186192,
+        "E2": 7.208627236869233,
+        "B2": 3.59209763948128
+      },
+      "E2_shape_chi": 0.9205246835830213,
+      "chi2_per_dof_working": 1.0994547160887134,
+      "chi2_per_dof_note": "Equal to (sum_w r^2)/(2N-16); scales linearly when precision weights include selection_relative < 1.",
+      "nominal_within_fixed_Gaussian": {
+        "E2_Wald5": 31.523788459930987,
+        "B2_Wald5": 6.291578119865489,
+        "E2_p_naive": 7.380971527686531e-06,
+        "B2_p_naive": 0.27887198034373967,
+        "joint_E2B2_Wald10": 37.555144697583096
+      },
+      "E2_B2_mask_alias_maxcanonical": 0.08973190198709251,
+      "last_chunk_backend_receipt": {
+        "kernel": "gaia_weighted_normal_equations",
+        "used": "cpp_native",
+        "source_certified": true,
+        "native_threads": 8,
+        "n_rows": 27489,
+        "binary_path": "/tmp/htt_r79_native_cache/gaia/11ee1b6592e073faf6710982/libhtt_r79_vsh.so",
+        "fallback_reason": null
+      }
+    },
+    "Q3": {
+      "z_range": [
+        1.4627619981765747,
+        1.9659596681594849
+      ],
+      "z_median": 1.6899043321609497,
+      "n_sources": 158558,
+      "rank": 16,
+      "F_condition": 8.217348443618459,
+      "coefs_microasyr": [
+        -1.2112804509338324,
+        -6.552935385986242,
+        -2.4129432841635925,
+        8.050279764389815,
+        -0.625854163472934,
+        -2.0669806086860776,
+        -2.17352886010961,
+        3.079764763889055,
+        -0.991952065892378,
+        -3.723062643407914,
+        4.399251915502738,
+        3.3101219426289443,
+        1.4044536977418887,
+        2.5820130678251245,
+        -0.07588900680470476,
+        -0.18147821616690527
+      ],
+      "formal_errors_microasyr": [
+        0.7807232827513794,
+        0.7355759725789806,
+        0.6989807550663145,
+        0.7205698764481725,
+        0.6860955884654288,
+        0.7682751878712658,
+        1.3292577235297474,
+        1.2354680739654955,
+        1.35130901091816,
+        1.203039921762415,
+        1.3033278886971889,
+        1.2377200128239345,
+        1.3234212375267833,
+        1.2845958385492833,
+        1.3634128948907498,
+        1.3659795559403398
+      ],
+      "groups_amplitude_microasyr": {
+        "E1": 7.087344904568656,
+        "B1": 8.3349329064825,
+        "E2": 6.95756857461313,
+        "B2": 4.431126541963242
+      },
+      "E2_shape_chi": -0.04298011247472408,
+      "chi2_per_dof_working": 1.0986929930471359,
+      "chi2_per_dof_note": "Equal to (sum_w r^2)/(2N-16); scales linearly when precision weights include selection_relative < 1.",
+      "nominal_within_fixed_Gaussian": {
+        "E2_Wald5": 29.098998591706895,
+        "B2_Wald5": 13.03661779975909,
+        "E2_p_naive": 2.2173341637191355e-05,
+        "B2_p_naive": 0.02303802550339197,
+        "joint_E2B2_Wald10": 43.692512450353604
+      },
+      "E2_B2_mask_alias_maxcanonical": 0.09430591272464484,
+      "last_chunk_backend_receipt": {
+        "kernel": "gaia_weighted_normal_equations",
+        "used": "cpp_native",
+        "source_certified": true,
+        "native_threads": 8,
+        "n_rows": 27486,
+        "binary_path": "/tmp/htt_r79_native_cache/gaia/11ee1b6592e073faf6710982/libhtt_r79_vsh.so",
+        "fallback_reason": null
+      }
+    },
+    "Q4": {
+      "z_range": [
+        1.9659596681594849,
+        4.456544876098633
+      ],
+      "z_median": 2.3672988414764404,
+      "n_sources": 158559,
+      "rank": 16,
+      "F_condition": 8.720175723418686,
+      "coefs_microasyr": [
+        1.0945234806661082,
+        -5.2409034214102945,
+        -2.732734711819223,
+        2.5586180291797413,
+        4.193960570864224,
+        -3.4024943373469,
+        -4.572331851263838,
+        4.9410960176033605,
+        -2.0427960668677665,
+        -3.4530847988823647,
+        2.671059635968877,
+        2.5556350681001354,
+        -0.6443615673048889,
+        1.2249729339366644,
+        1.5048136671428798,
+        -2.3000655123777243
+      ],
+      "formal_errors_microasyr": [
+        0.8142213206682389,
+        0.7664193657476072,
+        0.7260729502972275,
+        0.7519059745051522,
+        0.714535080382907,
+        0.7978471904137844,
+        1.3778332159704882,
+        1.2847129900398562,
+        1.4024232655420854,
+        1.2508335117684852,
+        1.349792254041963,
+        1.2848978311904873,
+        1.3816320642626085,
+        1.3301409926179053,
+        1.4095422909708961,
+        1.414682941409367
+      ],
+      "groups_amplitude_microasyr": {
+        "E1": 6.011063909780138,
+        "B1": 5.976018675078342,
+        "E2": 8.279614628184252,
+        "B2": 4.000224575401936
+      },
+      "E2_shape_chi": 0.26582786970303773,
+      "chi2_per_dof_working": 1.0955054908063089,
+      "chi2_per_dof_note": "Equal to (sum_w r^2)/(2N-16); scales linearly when precision weights include selection_relative < 1.",
+      "nominal_within_fixed_Gaussian": {
+        "E2_Wald5": 37.775147358948004,
+        "B2_Wald5": 8.925445523349323,
+        "E2_p_naive": 4.186708055056151e-07,
+        "B2_p_naive": 0.11207509179346715,
+        "joint_E2B2_Wald10": 46.61466336995839
+      },
+      "E2_B2_mask_alias_maxcanonical": 0.10326408381068387,
+      "last_chunk_backend_receipt": {
+        "kernel": "gaia_weighted_normal_equations",
+        "used": "cpp_native",
+        "source_certified": true,
+        "native_threads": 8,
+        "n_rows": 27487,
+        "binary_path": "/tmp/htt_r79_native_cache/gaia/11ee1b6592e073faf6710982/libhtt_r79_vsh.so",
+        "fallback_reason": null
+      }
+    }
+  },
+  "quaia_zsplit2_selection_comparison": {
+    "z_split_edge_used": 1.47,
+    "bin0_unweighted": {
+      "n_sources": 319852,
+      "rank": 16,
+      "F_condition": 7.745453033856435,
+      "coefs_microasyr": [
+        -0.8995748558281171,
+        -3.613112090584544,
+        -1.916817569916722,
+        -1.7425423301268137,
+        0.5389387346865959,
+        0.7524389360757594,
+        -1.9991299723960345,
+        0.9885885875218278,
+        -3.913246415363316,
+        -3.45331124213126,
+        2.5938924302274637,
+        0.017179021334272855,
+        3.052051947619866,
+        0.8833804741682609,
+        0.7955359033919059,
+        -2.4560605008739382
+      ],
+      "formal_errors_microasyr": [
+        0.47161150307189914,
+        0.4440433523209597,
+        0.42502054880352,
+        0.43598838985130867,
+        0.4158114128735928,
+        0.4659532996587348,
+        0.812435208480545,
+        0.7539288106267288,
+        0.8231000393606712,
+        0.7352144462421082,
+        0.7921492268120465,
+        0.7581841544119465,
+        0.8033021068224068,
+        0.7816169899664606,
+        0.8342334371341799,
+        0.8305527227252916
+      ],
+      "groups_amplitude_microasyr": {
+        "E1": 4.1878399559567505,
+        "B1": 1.9730871963884906,
+        "E2": 6.240269387124719,
+        "B2": 4.093994116925997
+      },
+      "E2_shape_chi": 0.7563276491928872,
+      "chi2_per_dof_working": 1.1202836232015714,
+      "chi2_per_dof_note": "Equal to (sum_w r^2)/(2N-16); scales linearly when precision weights include selection_relative < 1.",
+      "nominal_within_fixed_Gaussian": {
+        "E2_Wald5": 56.2798436867011,
+        "B2_Wald5": 20.572231335705933,
+        "E2_p_naive": 7.116611764365261e-11,
+        "B2_p_naive": 0.0009754859127177638,
+        "joint_E2B2_Wald10": 77.21338810394785
+      },
+      "E2_B2_mask_alias_maxcanonical": 0.08325468538722006,
+      "last_chunk_backend_receipt": {
+        "kernel": "gaia_weighted_normal_equations",
+        "used": "cpp_native",
+        "source_certified": true,
+        "native_threads": 8,
+        "n_rows": 57708,
+        "binary_path": "/tmp/htt_r79_native_cache/gaia/11ee1b6592e073faf6710982/libhtt_r79_vsh.so",
+        "fallback_reason": null
+      }
+    },
+    "bin0_zsplit_weighted": {
+      "n_sources": 319852,
+      "rank": 16,
+      "F_condition": 8.957062106819416,
+      "coefs_microasyr": [
+        -0.8806026994017848,
+        -3.633177027710518,
+        -1.6174417209883385,
+        -1.9854654032154482,
+        0.5006416524324415,
+        0.9286710314432007,
+        -1.4990313883532782,
+        1.1112946548991338,
+        -4.3374740797221705,
+        -3.288241358713041,
+        2.339341110304722,
+        0.13582540858450043,
+        3.1260311175297257,
+        0.34943039083370747,
+        0.7291436383131095,
+        -2.372967865973911
+      ],
+      "formal_errors_microasyr": [
+        0.5172336064183847,
+        0.49112904526120504,
+        0.4638518309218627,
+        0.4795683563103058,
+        0.45549051876209573,
+        0.5083583730954542,
+        0.878101054979473,
+        0.8171410398900585,
+        0.8885962959630014,
+        0.7916635178591985,
+        0.8623436389171952,
+        0.8186534113280756,
+        0.8794552118305365,
+        0.8471190746973554,
+        0.889949510138595,
+        0.9042967463681079
+      ],
+      "groups_amplitude_microasyr": {
+        "E1": 4.0732731494058765,
+        "B1": 2.2483649205939735,
+        "E2": 6.21134448964555,
+        "B2": 4.009394920141536
+      },
+      "E2_shape_chi": 0.8106753888781243,
+      "chi2_per_dof_working": 1.0043722566871072,
+      "chi2_per_dof_note": "Equal to (sum_w r^2)/(2N-16); scales linearly when precision weights include selection_relative < 1.",
+      "nominal_within_fixed_Gaussian": {
+        "E2_Wald5": 48.13980293034154,
+        "B2_Wald5": 16.889161373499412,
+        "E2_p_naive": 3.326007095392136e-09,
+        "B2_p_naive": 0.00471487385311393,
+        "joint_E2B2_Wald10": 66.5567465374238
+      },
+      "E2_B2_mask_alias_maxcanonical": 0.10665212027957015,
+      "last_chunk_backend_receipt": {
+        "kernel": "gaia_weighted_normal_equations",
+        "used": "cpp_native",
+        "source_certified": true,
+        "native_threads": 8,
+        "n_rows": 57708,
+        "binary_path": "/tmp/htt_r79_native_cache/gaia/11ee1b6592e073faf6710982/libhtt_r79_vsh.so",
+        "fallback_reason": null
+      }
+    },
+    "bin1_unweighted": {
+      "n_sources": 314381,
+      "rank": 16,
+      "F_condition": 8.439247650654302,
+      "coefs_microasyr": [
+        -0.04095287646243862,
+        -5.873442796594294,
+        -2.479380399917906,
+        5.336708857871996,
+        1.726820861252652,
+        -2.814224494341427,
+        -3.329955566874758,
+        3.952361298662389,
+        -1.5412001974253187,
+        -3.6253291401723637,
+        3.6201078430791913,
+        2.819871234823129,
+        0.48298304093494854,
+        1.9466048092145463,
+        0.705648288857148,
+        -1.3467794616542264
+      ],
+      "formal_errors_microasyr": [
+        0.5660320163698598,
+        0.5330468155247677,
+        0.5057486442579923,
+        0.5225792579663235,
+        0.49706311169978035,
+        0.5558345487669479,
+        0.9608012758582406,
+        0.8943951330180576,
+        0.9774509877002765,
+        0.8709455693749761,
+        0.9417421736635145,
+        0.8953875299555286,
+        0.9599615667466327,
+        0.9280076468247356,
+        0.984407938869544,
+        0.9869425691410041
+      ],
+      "groups_amplitude_microasyr": {
+        "E1": 6.375447795288816,
+        "B1": 6.275526370361138,
+        "E2": 7.438632544438167,
+        "B2": 3.7796787043307742
+      },
+      "E2_shape_chi": 0.11434076345865421,
+      "chi2_per_dof_working": 1.0970558847181746,
+      "chi2_per_dof_note": "Equal to (sum_w r^2)/(2N-16); scales linearly when precision weights include selection_relative < 1.",
+      "nominal_within_fixed_Gaussian": {
+        "E2_Wald5": 62.520064021730875,
+        "B2_Wald5": 16.937037407049132,
+        "E2_p_naive": 3.659792887444628e-12,
+        "B2_p_naive": 0.004620768201504937,
+        "joint_E2B2_Wald10": 81.09175538794969
+      },
+      "E2_B2_mask_alias_maxcanonical": 0.09824667207233266,
+      "last_chunk_backend_receipt": {
+        "kernel": "gaia_weighted_normal_equations",
+        "used": "cpp_native",
+        "source_certified": true,
+        "native_threads": 8,
+        "n_rows": 52237,
+        "binary_path": "/tmp/htt_r79_native_cache/gaia/11ee1b6592e073faf6710982/libhtt_r79_vsh.so",
+        "fallback_reason": null
+      }
+    },
+    "bin1_zsplit_weighted": {
+      "n_sources": 314381,
+      "rank": 16,
+      "F_condition": 10.432831840664434,
+      "coefs_microasyr": [
+        -0.07128663770341262,
+        -5.829454356286999,
+        -2.304751756623824,
+        5.247655078727066,
+        1.5114600530434186,
+        -2.6831853000619574,
+        -2.649482003759426,
+        3.963077876953223,
+        -2.2862287591025954,
+        -3.32240511839291,
+        3.338816243663292,
+        3.223383949605853,
+        0.5361848316769732,
+        1.8163126570616805,
+        0.6761435792264376,
+        -1.462360936074053
+      ],
+      "formal_errors_microasyr": [
+        0.6546535661836499,
+        0.6271149973002401,
+        0.5829948814763972,
+        0.6061398947492983,
+        0.5773754391419904,
+        0.6396251611581926,
+        1.0885734462439038,
+        1.0159570146817485,
+        1.1045585357418226,
+        0.983040056395521,
+        1.0718382245529818,
+        1.0150204172355173,
+        1.1062493140505838,
+        1.054647657135433,
+        1.0972648247238026,
+        1.125308107804018
+      ],
+      "groups_amplitude_microasyr": {
+        "E1": 6.2689313711675885,
+        "B1": 6.084560680254948,
+        "E2": 7.080865255437515,
+        "B2": 4.0709163066297585
+      },
+      "E2_shape_chi": 0.23661023539421683,
+      "chi2_per_dof_working": 0.9195665980856476,
+      "chi2_per_dof_note": "Equal to (sum_w r^2)/(2N-16); scales linearly when precision weights include selection_relative < 1.",
+      "nominal_within_fixed_Gaussian": {
+        "E2_Wald5": 45.94186449724647,
+        "B2_Wald5": 15.59723320268076,
+        "E2_p_naive": 9.333009725837898e-09,
+        "B2_p_naive": 0.008093207576186428,
+        "joint_E2B2_Wald10": 63.992902808672504
+      },
+      "E2_B2_mask_alias_maxcanonical": 0.13178640856601476,
+      "last_chunk_backend_receipt": {
+        "kernel": "gaia_weighted_normal_equations",
+        "used": "cpp_native",
+        "source_certified": true,
+        "native_threads": 8,
+        "n_rows": 52237,
+        "binary_path": "/tmp/htt_r79_native_cache/gaia/11ee1b6592e073faf6710982/libhtt_r79_vsh.so",
+        "fallback_reason": null
+      }
+    }
+  },
+  "redshift_tomographic_wald_contrasts": {
+    "Q1_vs_Q4": {
+      "subset_a": "z_Q1_lowest",
+      "subset_b": "z_Q4_highest",
+      "n_a": 158555,
+      "n_b": 158559,
+      "contrasts": {
+        "all_16D": {
+          "delta_norm_microasyr": 13.225356903069196,
+          "formal_wald_chi2": 145.4788609371339,
+          "dof": 16,
+          "formal_p_not_calibrated": 6.065812881161339e-23
+        },
+        "E1_3D": {
+          "delta_norm_microasyr": 2.2146806761465907,
+          "formal_wald_chi2": 4.934488493262809,
+          "dof": 3,
+          "formal_p_not_calibrated": 0.17665755355418344
+        },
+        "B1_3D": {
+          "delta_norm_microasyr": 9.953906422431933,
+          "formal_wald_chi2": 96.59427600095485,
+          "dof": 3,
+          "formal_p_not_calibrated": 8.388097643239934e-21
+        },
+        "E2_5D": {
+          "delta_norm_microasyr": 6.624562668401926,
+          "formal_wald_chi2": 15.660176797174437,
+          "dof": 5,
+          "formal_p_not_calibrated": 0.007884323211280485
+        },
+        "B2_5D": {
+          "delta_norm_microasyr": 5.200016452103475,
+          "formal_wald_chi2": 8.777020825892112,
+          "dof": 5,
+          "formal_p_not_calibrated": 0.11829545452978193
+        }
+      }
+    },
+    "zsplit0_vs_zsplit1": {
+      "subset_a": "z_split_bin0",
+      "subset_b": "z_split_bin1",
+      "n_a": 319852,
+      "n_b": 314381,
+      "contrasts": {
+        "all_16D": {
+          "delta_norm_microasyr": 10.22249180575501,
+          "formal_wald_chi2": 175.9640937984328,
+          "dof": 16,
+          "formal_p_not_calibrated": 5.417068744953852e-29
+        },
+        "E1_3D": {
+          "delta_norm_microasyr": 2.4824994545174253,
+          "formal_wald_chi2": 12.524147946123323,
+          "dof": 3,
+          "formal_p_not_calibrated": 0.005787275087257669
+        },
+        "B1_3D": {
+          "delta_norm_microasyr": 8.015481854216436,
+          "formal_wald_chi2": 118.04837176743965,
+          "dof": 3,
+          "formal_p_not_calibrated": 2.0310711740454557e-25
+        },
+        "E2_5D": {
+          "delta_norm_microasyr": 4.155039944101139,
+          "formal_wald_chi2": 11.246398132922918,
+          "dof": 5,
+          "formal_p_not_calibrated": 0.04670767029464072
+        },
+        "B2_5D": {
+          "delta_norm_microasyr": 4.1017348627989145,
+          "formal_wald_chi2": 10.240320886790848,
+          "dof": 5,
+          "formal_p_not_calibrated": 0.06870528621140874
+        }
+      }
+    }
+  },
+  "quaia_planck_pr4_sacc": {
+    "hdu_count": 18,
+    "cl_00_rows": 255,
+    "cov_shape": [
+      255,
+      255
+    ]
+  },
+  "r24_depth_moments": {
+    "source_n": 755850,
+    "zcounts": [
+      200785,
+      369335,
+      185730
+    ],
+    "A_eigenvalues": [
+      2.3441672647655394,
+      3.0687251523331365,
+      3.877217076985066,
+      4.0267035868389955,
+      4.089581292988374,
+      4.75491374444728
+    ],
+    "whitened_K_rank": 6,
+    "raw_q6_microasyr": [
+      -1.2215196567639952,
+      -35.281609594088756,
+      -11.516976207184278,
+      15.43470652503363,
+      6.3372640903596675,
+      -2.808644902254754
+    ]
+  },
+  "astrometry_102_mode_nuisance": {
+    "full_102": {
+      "n_sources": 755850,
+      "G_shape": [
+        102,
+        102
+      ],
+      "G_rank": 102,
+      "G_min_eig": 8.441713107942572e-05,
+      "G_max_eig": 74.23506764083916,
+      "cut_Q": 3729.2245688047433
+    },
+    "margin_102": {
+      "n_sources": 558407,
+      "G_shape": [
+        102,
+        102
+      ],
+      "G_rank": 102,
+      "G_min_eig": 5.211861451435391e-06,
+      "G_max_eig": 38.53932405329404,
+      "cut_Q": 0.0002565668569367864
+    }
+  },
+  "crf3_and_vlba_metadata": {
+    "frame_rotator_source": {
+      "n_rows": 427586,
+      "used_for_orientation": 1971,
+      "used_for_spin": 426381
+    },
+    "gaia_crf3_xm_icrf_flags": {
+      "n_rows": 1614173,
+      "icrf3sx_matches": 3142,
+      "icrf3k_matches": 660,
+      "icrf3xka_matches": 576
+    },
+    "icrf3_catalog_counts": {
+      "S_X": 4537,
+      "K": 825,
+      "X_Ka": 679
+    },
+    "vlba_table6_rows": 713,
+    "vlba_convention_note": "Truebenbach & Darling RA proper motions include cos(delta) factor per SOURCE_CORRECTIONS.md; physical NNR/session transfer remains uncalibrated."
+  },
+  "node_verdicts": {
+    "K01": "REUSED_SCOPED",
+    "K02": "REUSED_SCOPED",
+    "SQ-GAIA": "DIAGNOSTIC_COMPLETED_SCOPED",
+    "K03": "BLOCKED_INPUT",
+    "K04": "BLOCKED_DEPENDENCY",
+    "K05": "BLOCKED_DEPENDENCY",
+    "K06": "BLOCKED_DEPENDENCY"
+  },
+  "physical_gate_note": "Tomographic VSH fits across 634,233 clean Quaia-CRF3 QSOs quantify empirical E1/B1/E2/B2 stability across redshift quartiles and Quaia z-split selection weights, while K03-K06 physical shear/vorticity remain BLOCKED_INPUT pending Gaia epoch scanning-law transfer and optical congruence calibration."
+}

@@ -1,0 +1,309 @@
+{
+  "schema": "htt.r89.g02_cf4_workdir_ext/1",
+  "group_id": "G02_CF4",
+  "node_ids": [
+    "H01",
+    "H03",
+    "SQ-CF4",
+    "H02",
+    "H04",
+    "H05",
+    "H06"
+  ],
+  "source_sha256": {
+    "/mnt/extdrive/workdir/raw/cf4_full/table2.dat": "8e908928e68352b59292cf67020a4d70aaa6d30f278dfa6aa3e41a9df808332f",
+    "/mnt/extdrive/workdir/raw/cf4/CF4pp_mean_std_grids.npz": "78c0515c8330066a034f5e8afb3663e6c81ddf033db302a921c662344639bc91",
+    "/mnt/extdrive/workdir/htt_open_data/cf4/d06_flow_20261018/CF4gp_new_64-z008_velocity.fits": "f51e2687fb4cb25ef3dbbacb9209f105daca7e516faf0f76c7ffb63804c88c5f",
+    "/mnt/extdrive/workdir/htt_open_data/cf4/d06_flow_20261018/D03_HOST_FLOW_QUERIES.csv": "3447eaa5078244ec46b53fe72504baab36e86c28387706bac9557e570b15f9d3",
+    "/mnt/extdrive/workdir/raw/sdss_pv_zenodo_6824749/SDSS_PV_public.dat": "a48cfd9a9a3c27ff908f98972b2e26536e514b6635f9ed14c656dff3e5075485",
+    "/mnt/extdrive/workdir/htt_open_data/a22_20261023/6df/FP_table8.dat.gz": "25a98e0545efbf42aa83370620081a60c28e31690908e0f6f75c08a67495fafc",
+    "/mnt/extdrive/workdir/htt_open_data/a22_20261023/6df/PV_table1.dat.gz": "e9f10627c67fef4b8ef011965fca2a1267d99334aeee87533d1d5b24cb5af313",
+    "/mnt/extdrive/workdir/raw/new_acquisitions/optical/DESI_PV_Fuji_FP/DESI_FP_logdists_fiducial.csv": "94356f3deb166f012e48ade9d0372a7fe7b67550aeff95dfeb2b991de1e0f766",
+    "/mnt/extdrive/workdir/raw/pantheonplus_release_c447f0f_20261110/Pantheon+SH0ES.dat": "1cb0fc379ef066afdc2ffd1857681cc478024570d8a3eba284fb645775198cf8",
+    "/mnt/extdrive/workdir/raw/pantheonplus_release_c447f0f_20261110/Pantheon+SH0ES_STAT+SYS.cov": "abf806d966485e64afdb359c87bffc0ecc00d05eff0a31ced66f247385df0fdc",
+    "/mnt/extdrive/workdir/raw/shoes2022_calibration_reference_20261015/allc_shoes_ceph_topantheonwt6.0_112221.fits": "a42778672d25df7a559bd2949b1e412b99b2e35dd9a36895f6b38828be019172",
+    "/home/cosmosapjw/Downloads/htt_r89_downloads/Measuring_bulkflows/Measuring_bulkflows-main/example_surveymock.dat": "34451388a34d1ee10d5a5c6197db52196b02d73f8d539f2415ae765c0ca9fb41"
+  },
+  "source_bytes": {
+    "/mnt/extdrive/workdir/raw/cf4_full/table2.dat": 10672507,
+    "/mnt/extdrive/workdir/raw/cf4/CF4pp_mean_std_grids.npz": 167773716,
+    "/mnt/extdrive/workdir/htt_open_data/cf4/d06_flow_20261018/CF4gp_new_64-z008_velocity.fits": 3150720,
+    "/mnt/extdrive/workdir/htt_open_data/cf4/d06_flow_20261018/D03_HOST_FLOW_QUERIES.csv": 108789,
+    "/mnt/extdrive/workdir/raw/sdss_pv_zenodo_6824749/SDSS_PV_public.dat": 20231640,
+    "/mnt/extdrive/workdir/htt_open_data/a22_20261023/6df/FP_table8.dat.gz": 722372,
+    "/mnt/extdrive/workdir/htt_open_data/a22_20261023/6df/PV_table1.dat.gz": 243406,
+    "/mnt/extdrive/workdir/raw/new_acquisitions/optical/DESI_PV_Fuji_FP/DESI_FP_logdists_fiducial.csv": 6253134,
+    "/mnt/extdrive/workdir/raw/pantheonplus_release_c447f0f_20261110/Pantheon+SH0ES.dat": 579283,
+    "/mnt/extdrive/workdir/raw/pantheonplus_release_c447f0f_20261110/Pantheon+SH0ES_STAT+SYS.cov": 33284960,
+    "/mnt/extdrive/workdir/raw/shoes2022_calibration_reference_20261015/allc_shoes_ceph_topantheonwt6.0_112221.fits": 48781440,
+    "/home/cosmosapjw/Downloads/htt_r89_downloads/Measuring_bulkflows/Measuring_bulkflows-main/example_surveymock.dat": 791963
+  },
+  "runtime": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "elapsed_seconds": 9.239946857996983,
+    "maxrss_kib": 440832
+  },
+  "cf4_table2_galaxy_to_selected_group": {
+    "table2_rows": 55877,
+    "rows_in_selected_35970_groups": 52810,
+    "selected_groups_matched_in_table2": 35966,
+    "multiplicity_distribution_in_selected_groups": {
+      "singleton_1_gal": 30788,
+      "pairs_to_4_gal": 4251,
+      "rich_ge5_gal": 927,
+      "max_galaxies_in_group": 278,
+      "multi_galaxy_group_count": 5178,
+      "median_within_group_dm_std_mag": 0.36062445840513785,
+      "p90_within_group_dm_std_mag": 0.7071067811865476
+    },
+    "method_galaxy_counts_all_55877": {
+      "TF": 12222,
+      "TRGB": 446,
+      "FP": 42223,
+      "Ceph": 69,
+      "SBF": 469,
+      "SNIa": 1004,
+      "SNII": 94,
+      "MASER": 6
+    },
+    "method_galaxy_counts_selected_35970_groups": {
+      "TF": 10031,
+      "FP": 42031,
+      "SNIa": 905,
+      "SBF": 76,
+      "Ceph": 6,
+      "SNII": 60,
+      "MASER": 5
+    }
+  },
+  "cf4pp_and_gp_velocity_fields": {
+    "cf4pp_box_Mpc_h": 1000.0,
+    "cf4pp_grid_shape": [
+      3,
+      128,
+      128,
+      128
+    ],
+    "supergalactic_affine_shells": {
+      "R_75_Mpc_h": {
+        "n_cells": 3648,
+        "bulk_velocity_sg_kms": [
+          -150.91667195958965,
+          71.75098571371848,
+          -29.826549677764604
+        ],
+        "bulk_amplitude_kms": 169.7458950665046,
+        "affine_expansion_h_kms_Mpc": -2.746307559821917,
+        "affine_shear_amplitude_h_kms_Mpc": 5.077573707468823,
+        "wf_mean_vorticity_amplitude_h_kms_Mpc": 0.026628446452525694,
+        "curl_injection_recovery_rel_err": 1.027581233208698e-15,
+        "grid_vr_from_vmean_rms_kms": 351.0154624033625,
+        "grid_vr_std_from_vstd_rms_kms": 88.34985933370224
+      },
+      "R_100_Mpc_h": {
+        "n_cells": 8744,
+        "bulk_velocity_sg_kms": [
+          -227.73917581544933,
+          95.43085764197329,
+          -88.57765089876654
+        ],
+        "bulk_amplitude_kms": 262.3321959465259,
+        "affine_expansion_h_kms_Mpc": -6.775980239553469,
+        "affine_shear_amplitude_h_kms_Mpc": 3.1779107766674737,
+        "wf_mean_vorticity_amplitude_h_kms_Mpc": 0.017541408504379477,
+        "curl_injection_recovery_rel_err": 5.874748045952207e-16,
+        "grid_vr_from_vmean_rms_kms": 488.49098993120714,
+        "grid_vr_std_from_vstd_rms_kms": 130.6575954732036
+      },
+      "R_150_Mpc_h": {
+        "n_cells": 29464,
+        "bulk_velocity_sg_kms": [
+          -244.95508438885224,
+          179.00173032033578,
+          -86.5726067463497
+        ],
+        "bulk_amplitude_kms": 315.49869899015755,
+        "affine_expansion_h_kms_Mpc": -8.72590758774513,
+        "affine_shear_amplitude_h_kms_Mpc": 1.1537457205222112,
+        "wf_mean_vorticity_amplitude_h_kms_Mpc": 0.002037782278980661,
+        "curl_injection_recovery_rel_err": 5.32444257940492e-16,
+        "grid_vr_from_vmean_rms_kms": 586.2554038053632,
+        "grid_vr_std_from_vstd_rms_kms": 237.41493105784025
+      },
+      "R_200_Mpc_h": {
+        "n_cells": 70320,
+        "bulk_velocity_sg_kms": [
+          -51.91254768430894,
+          355.4757112505551,
+          2.9436592044870067
+        ],
+        "bulk_amplitude_kms": 359.25834579822333,
+        "affine_expansion_h_kms_Mpc": -8.246123098498273,
+        "affine_shear_amplitude_h_kms_Mpc": 1.2556493070853947,
+        "wf_mean_vorticity_amplitude_h_kms_Mpc": 0.0005008581405194655,
+        "curl_injection_recovery_rel_err": 9.06493303673679e-17,
+        "grid_vr_from_vmean_rms_kms": 781.1682242716856,
+        "grid_vr_std_from_vstd_rms_kms": 319.93746358279424
+      }
+    },
+    "cf4gp_velocity_shape": [
+      3,
+      64,
+      64,
+      64
+    ],
+    "d03_host_flow_queries": {
+      "row_count": 494,
+      "median_vr_rms_kms": 86.30265294962037,
+      "p90_vr_rms_kms": 303.41984293711744,
+      "verified_H0_grid_ratio_Vcmb_over_r_h": 100.0
+    },
+    "structural_note": "Box and cell coordinates are in Mpc/h (D03 Vcmb/r = 100.0 km/s/(Mpc/h)). Wiener-filter CF4++ velocity field is curl-suppressed by potential-flow prior; provides scale comparison (~150-220 km/s cell std vs R87 constant sigma_v), NOT upstream group-level S_PV."
+  },
+  "upstream_survey_and_sdss_mock_diagnostics": {
+    "sdss_pv": {
+      "n_galaxies": 34059,
+      "zcmb_range": [
+        0.004066,
+        0.099999
+      ],
+      "weighted_logdist_monopole_and_icrs_dipole": [
+        -0.018223090413017735,
+        -0.019673418135620385,
+        0.0009496157790631755,
+        0.004858373520766479
+      ],
+      "dipole_amp_logdist": 0.02028666913354895
+    },
+    "sdss_hamhod_mocks_sample24": {
+      "total_mock_files_in_dir": 63,
+      "evaluated_mock_count": 24,
+      "n_galaxies_range": [
+        30592,
+        38108
+      ],
+      "mean_monopole_dipole": [
+        -0.0021559416883412817,
+        -0.0012804042153195636,
+        0.00024089475365504987,
+        0.0018164702606549062
+      ],
+      "std_monopole_dipole": [
+        0.0055716397063577255,
+        0.006254373227509181,
+        0.0030524362082351778,
+        0.004664266406901228
+      ],
+      "cov_diag": [
+        3.1043169017461994e-05,
+        3.9117184468983605e-05,
+        9.31736680534515e-06,
+        2.1755381114547294e-05
+      ]
+    },
+    "sixdf_gs": {
+      "fp_table8_rows": 11102,
+      "pv_table1_rows": 8885
+    },
+    "desi_fuji_fp": {
+      "n_galaxies": 4191,
+      "zcmb_range": [
+        0.009221486530079037,
+        0.09999801036255573
+      ],
+      "median_logdist": 0.02335252992837118
+    }
+  },
+  "pantheon_shoes_r27_and_bulkflow_reference": {
+    "pantheon_plus": {
+      "n_rows": 1701,
+      "n_columns": 47,
+      "trace_stat_sys": 54.8239261,
+      "trace_stat_only": 48.53834994,
+      "trace_sys_diff_raw": 6.28557616,
+      "trace_stat_plus_vpec_file": 50.15233994,
+      "trace_stat_plus_calib_file": 49.179220060000006,
+      "trace_stat_plus_mwebv_file": 48.53259293,
+      "trace_stat_sys_minus_vpec": 4.67158616,
+      "trace_stat_sys_minus_calib": 5.64470604,
+      "min_diag_stat_sys_minus_vpec": 8.473999999999982e-05,
+      "min_diag_stat_sys_minus_calib": 6.178999999999907e-05,
+      "vpec_excess_over_mwebv_trace": 1.6197470099999975,
+      "calib_excess_over_mwebv_trace": 0.6466271300000059,
+      "vpec_excess_fraction_of_mwebv_gap": 0.257456880160743,
+      "calib_excess_fraction_of_mwebv_gap": 0.10278062097925833,
+      "baseline_caveat": "122221_*.cov files share the 122221 statistical baseline while STATONLY.cov differs at 1,409 diagonals; differences against STAT+SYS have strictly positive diagonals whereas differences against STATONLY are indefinite."
+    },
+    "shoes_2022": {
+      "allc_shape": [
+        3492,
+        3492
+      ],
+      "diag_min_mag2": 9.999999717180685e-10,
+      "diag_max_mag2": 100.0
+    },
+    "r27_cf4_calibration_factor": {
+      "status": "EXACT_FINITE_INPUT_FACTOR_AND_VALUE_PENDING_INDEPENDENT_REVIEW",
+      "factor_product_sha256": "d57bd92c1d07466996f067352efdfa40310830ac78d82779fab2ee9c9ed641a7",
+      "channel_row_counts": [
+        527,
+        26829,
+        7641,
+        1,
+        3,
+        23,
+        2
+      ]
+    },
+    "r27_cf4_m7_covariance_profiles": {
+      "status": "SCOPED_APPLICATION_CANDIDATE",
+      "physical_confidence_status": "HOLD_MISSING_TOTAL_MEAN_COVARIANCE_RESPONSE_ASSUMPTIONS",
+      "selected_rows": 35970
+    },
+    "r26_cf4_fp_pooling_closure": {
+      "scientific_admission": "HOLD",
+      "simultaneous_modulus_error_feasibility": "NOT_ESTABLISHED"
+    },
+    "downloaded_measuring_bulkflows_reference": {
+      "example_surveymock_shape": [
+        5000,
+        9
+      ],
+      "example_mock_ra_range_deg": [
+        0.06019897025589762,
+        359.96622150274555
+      ],
+      "example_mock_z_range": [
+        0.005402442781768713,
+        0.11695918457490206
+      ],
+      "bf_mle_vector_kms": [
+        262.877,
+        -313.563,
+        19.5189
+      ],
+      "bf_mve_vector_kms": [
+        270.373,
+        -305.862,
+        31.4019
+      ]
+    }
+  },
+  "p0c_fail_closed_gate": {
+    "node": "SQ-CF4",
+    "status": "BLOCKED_INPUT"
+  },
+  "sq_cf4_r87_diagnostic_status": "DIAGNOSTIC_COMPLETED_SCOPED",
+  "sq_cf4_r78_physical_gate": "BLOCKED_INPUT",
+  "node_verdicts": {
+    "H01": "REUSED_SCOPED",
+    "H03": "REUSED_SCOPED",
+    "SQ-CF4": "BLOCKED_INPUT",
+    "H02": "BLOCKED_INPUT",
+    "H04": "BLOCKED_DEPENDENCY",
+    "H05": "BLOCKED_DEPENDENCY",
+    "H06": "BLOCKED_DEPENDENCY"
+  },
+  "physical_gate_note": "Adding workdir constituent tables/grids/mocks and Measuring_bulkflows confirms constituent heterogeneity and scale (~150-220 km/s cell std), while preserving BLOCKED_INPUT on SQ-CF4/H02 until full unpooled 35,970-group S_PV + J_cal Sigma_cal J_cal^T + C_selection are supplied."
+}

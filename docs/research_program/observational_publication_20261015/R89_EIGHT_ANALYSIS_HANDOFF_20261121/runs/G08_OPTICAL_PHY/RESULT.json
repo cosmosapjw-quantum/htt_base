@@ -1,0 +1,167 @@
+{
+  "schema": "htt.r89.g08_optical_phy_result/1",
+  "group_id": "G08_OPTICAL_PHY",
+  "node_ids": [
+    "SQ-PHOTON-FLUX",
+    "PHY-02",
+    "SQ-OPTICAL",
+    "PHY-01",
+    "PHY-05",
+    "PHY-06",
+    "PHY-03",
+    "PHY-04",
+    "PHY-07",
+    "SQ-CROSS-COV"
+  ],
+  "source_sha256": {
+    "docs/research_program/cf4_schur_loop8_20261015/inputs/selected_source_observables.npz": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+    "/mnt/extdrive/workdir/raw/cf4_full/table4.dat": "b6edfec68bdfddeada8f3b8f11938f3bbda98a8e2894ff136a369c2ad6594e94",
+    "docs/research_program/observational_publication_20261015/R80_SQ_CF4_SOURCE_BINDING_20261120/RESULT.json": "a0faf26516c9300a093979701a6b9401b79cca1cffbd36b31d549fb6cb3a5ca4",
+    "docs/research_program/observational_publication_20261015/R77_SEVEN_PHY_CROSSVIEW_20261119/RESULTS.json": "d96b4361c7bd773b2050efc2490dfab64246a637d897e726eb3deddfb0432121",
+    "docs/research_program/observational_publication_20261015/R76_P6_COVARIANT_DRIFT_FIVEVIEW_20261119/RESULTS.json": "faaa1d3071c603dd4d852c9ab7c0fee54a1721fe4b6f04a51355ee63850d1f55",
+    "docs/research_program/observational_publication_20261015/R69_PHYSICAL_OBSERVABLE_BRIDGES_20261118/RESULTS/GAIA_E1B1E2B2.json": "070fdc7278837709a16195eb3fb3833a075b1ec460343bfb14e42d9a2082d6f6",
+    "docs/research_program/observational_publication_20261015/R66_LOWELL_PHYSICAL_OBSERVABLES_20261117/RESULTS/OBSERVABLES.json": "6d9c3f11a23995565dca25fe8ae02ef1ad79b3bc3f8ddf99f3c8c0a497b39d01"
+  },
+  "runtime": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "elapsed_seconds": 0.39620407199981855,
+    "maxrss_kib": 187824
+  },
+  "phy_real_source_replays": {
+    "PHY-01": {
+      "n_selected": 35970,
+      "n_40_400": 31382,
+      "n_axes": 96,
+      "backend_used": "fortran_batch",
+      "fortran_vs_numpy_maxabs": 4.42960299551487e-08,
+      "weighted_A96_sharp_minmax": [
+        0.010465026051667846,
+        0.020025986378094583
+      ],
+      "r80_unweighted_cmb_replay_abs_err": 5.0306980803327406e-17
+    },
+    "PHY-02": {
+      "PR3": {
+        "P_eigen": [
+          0.3333294543316302,
+          0.3333343732889586,
+          0.33333617237941093
+        ],
+        "P_min_eigen": 0.3333294543316302,
+        "photon_flux_missing": true,
+        "physical_Pi": null
+      },
+      "PR4": {
+        "P_eigen": [
+          0.33332917157133457,
+          0.33333442663982005,
+          0.3333364017888455
+        ],
+        "P_min_eigen": 0.33332917157133457,
+        "photon_flux_missing": true,
+        "physical_Pi": null
+      }
+    },
+    "PHY-03": {
+      "k_source": 3.8254286125,
+      "photon_flux_norm": 0.0016447814815078803,
+      "ratio": 6.922253266967061,
+      "photon_chi": 1.0,
+      "PR3_finiteband_chi": -0.7074485821161334,
+      "source_qualified": false,
+      "physical_Pi": null
+    },
+    "PHY-04": {
+      "fullsky_B2_norm": 9.480000000000003e-05,
+      "fullsky_E2_dot_B2": -1.0821562343385631e-24,
+      "gaia_masked_design_aliases": {
+        "quality": {
+          "maxcanonical": 0.08042406258067819,
+          "r76_diff": 0.0
+        },
+        "quality_north": {
+          "maxcanonical": 0.8810936317598231,
+          "r76_diff": 1.3877787807814457e-14
+        },
+        "quality_south": {
+          "maxcanonical": 0.8788536147906743,
+          "r76_diff": 5.551115123125783e-15
+        }
+      }
+    },
+    "PHY-05": {
+      "Lie_Codazzi_rank": 2,
+      "residual_cov_rank": 3,
+      "physical_Pi": null
+    },
+    "PHY-06": {
+      "chi": 0.6651477158057467,
+      "dchi": 0.0,
+      "commutator_norm": 0.000282842712474619,
+      "photon_l4_cap_F_eps0_eps1": [
+        0.09999999999999998,
+        0.15707125
+      ]
+    },
+    "PHY-07": {
+      "n_selected": 35970,
+      "radial12_rank": 12,
+      "single_radius_rank": 9,
+      "weighted_gram_condition": 62.630053651750785,
+      "numpy_receipt": {
+        "used": "numpy_reference",
+        "kind": "gram",
+        "reason": "explicit_numpy_reference",
+        "n_rows": 35970,
+        "p": 12
+      },
+      "auto_receipt": {
+        "used": "numpy_reference",
+        "kind": "gram",
+        "reason": "small_or_unproven_auto",
+        "n_rows": 35970,
+        "p": 12
+      },
+      "auto_vs_numpy_maxabs": 0.0
+    }
+  },
+  "workdir_cross_probe_bindings": {
+    "G02_CF4": {
+      "path": "docs/research_program/observational_publication_20261015/R89_EIGHT_ANALYSIS_HANDOFF_20261121/runs/G02_CF4/WORKDIR_EXT_RESULT.json",
+      "sha256": "befa11aea05c20f9af14560432809a841c5b80991c4a907cb6b2461a481d24fe"
+    },
+    "G03_GAIA": {
+      "path": "docs/research_program/observational_publication_20261015/R89_EIGHT_ANALYSIS_HANDOFF_20261121/runs/G03_GAIA/WORKDIR_EXT_RESULT.json",
+      "sha256": "54489d2aaa43cd8fafceefefdd7c3d081587c83cc2ad9004ebb76092098dd697"
+    },
+    "G04_RADIO_FRAME": {
+      "path": "docs/research_program/observational_publication_20261015/R89_EIGHT_ANALYSIS_HANDOFF_20261121/runs/G04_RADIO_FRAME/WORKDIR_EXT_RESULT.json",
+      "sha256": "444ba75937b74159e781eb54f9d4ea37434b0ec1655c7a53fade39c2cf414e6a"
+    },
+    "G05_PLANCK": {
+      "path": "docs/research_program/observational_publication_20261015/R89_EIGHT_ANALYSIS_HANDOFF_20261121/runs/G05_PLANCK/RESULT.json",
+      "sha256": "3c19d34e45af746bd1fd984d4297f2ba806a4ad69d81aad0ae2ebed5d6e89f02"
+    }
+  },
+  "node_verdicts": {
+    "SQ-PHOTON-FLUX": "BLOCKED_INPUT",
+    "PHY-02": "BLOCKED_DEPENDENCY",
+    "SQ-OPTICAL": "BLOCKED_INPUT",
+    "PHY-01": "BLOCKED_DEPENDENCY",
+    "PHY-05": "BLOCKED_DEPENDENCY",
+    "PHY-06": "BLOCKED_DEPENDENCY",
+    "PHY-03": "BLOCKED_DEPENDENCY",
+    "PHY-04": "BLOCKED_DEPENDENCY",
+    "PHY-07": "BLOCKED_DEPENDENCY",
+    "SQ-CROSS-COV": "BLOCKED_DEPENDENCY"
+  },
+  "missing_physics_and_next_action": {
+    "missing": [
+      "Finite-redshift Sachs/Jacobi common-congruence optical response across CF4/Gaia/CMB",
+      "Independent nonradial photon energy flux and higher-moment Boltzmann hierarchy",
+      "Joint calibrated cross-probe covariance and shared cosmological null (SQ-CROSS-COV)"
+    ],
+    "next_action": "All 7 conditional PHY kernels pass real-source parity; await upstream SQ-PHOTON-FLUX, SQ-OPTICAL, SQ-CF4, SQ-GAIA, SQ-RADIO, SQ-CMB-NULL physical closures."
+  }
+}

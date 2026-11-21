@@ -1,0 +1,183 @@
+{
+  "schema": "htt.r89.g04_radio_workdir_ext/1",
+  "group_id": "G04_RADIO_FRAME",
+  "node_ids": [
+    "V01",
+    "V02",
+    "V03",
+    "SQ-FRAME",
+    "SQ-RADIO",
+    "V04",
+    "V05",
+    "V06"
+  ],
+  "source_sha256": {
+    "/mnt/extdrive/workdir/raw/observational_bundles/RACS_low_DR1_compact/RACS_DR1_galcut.dat.gz": "1764a934a084b12e411c32c426f04d5029c223541096253468d8343a60df4173",
+    "/mnt/extdrive/workdir/raw/observational_bundles/RACS_low_DR1_RMS_footprint/RACS_DR1_RMS_Footprints.tsv": "33b476236382cc5a60c22c9bb986ba27458bef23eeb225ea2004d60570de4821",
+    "/mnt/extdrive/workdir/raw/new_acquisitions/radio_hi/SUMSS/sumss212.dat.gz": "4f33eda40c1291d897b441432b0cc66a6f5b87499e5e18b11d12f1c70671fe9a",
+    "/mnt/extdrive/workdir/raw/new_acquisitions/radio_hi/NVSS/nvss_processed_s20_b10.npz": "8ad8484834598e67e0cad6b9de4a9644c6cd9fcfa3b6479c0b753e50ed4d240b",
+    "/mnt/extdrive/workdir/raw/new_acquisitions/radio_hi/ALFALFA_a100/a100.code12.table2.190808.csv": "a029d2786d0c41098777f1c2a17d2a4c993d1654a5144618b7998a537d6bdcd6",
+    "/mnt/extdrive/workdir/raw/new_acquisitions/radio_hi/FAST_FASHI_DR1/table2.dat.gz": "6e6a7cf83de13a3fed945d7da45d562532376bcc5c2215c9bd9a26a63894b898",
+    "/mnt/extdrive/workdir/raw/new_acquisitions/radio_hi/WALLABY_Pilot_DR2/wallaby_dr2_source_30arcsec.csv": "1550dfc7a63b5e2c854770e85f09e31498c1b8a3122c83392b50330bc665780b",
+    "/mnt/extdrive/workdir/raw/observational_bundles/ZoA_crosscheck/hicat.dat.gz": "9af5c61e6a685d5e28272b09dcbdd87c89f449fd19ab1866ca99e0a26f4f3749",
+    "/mnt/extdrive/workdir/raw/observational_bundles/ZoA_crosscheck/tablea1a.dat.gz": "5f7ed73258e156b67ca10b2b8d4944d66cc29ca123695af0c520e67331e28f74"
+  },
+  "runtime": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "elapsed_seconds": 11.314455458996235,
+    "maxrss_kib": 2022420
+  },
+  "nvss_processed_reference": {
+    "n_sources": 329380,
+    "n_selected": 270387,
+    "D_obs": [
+      -0.012103725103980511,
+      0.010786410624025135,
+      -0.004822648065192728
+    ],
+    "amp_obs": 0.016914631237585923,
+    "C_EB": 3.75
+  },
+  "racs_low_dr1_dipole_diagnostics": {
+    "full_footprint_S20_b10_dec_m80_p30": {
+      "n_sources": 340296,
+      "nside": 16,
+      "masked_pixels": 1976,
+      "sky_fraction_covered": 0.6432291666666666,
+      "dipole_icrs_vec": [
+        -0.020878910987769683,
+        -0.0012247917037368381,
+        -0.038396848447318076
+      ],
+      "dipole_amplitude": 0.04372352924272084,
+      "dipole_ra_dec_deg": [
+        183.35721846762456,
+        -61.422822919818
+      ],
+      "dipole_gal_lb_deg": [
+        298.4018284672932,
+        1.1141616113572592
+      ],
+      "angle_to_cmb_dipole_deg": 55.6723182311092,
+      "poisson_overdispersion_scale": 2.2271890255349143,
+      "scaled_cov_3x3_conditional": [
+        [
+          1.5432690414094287e-05,
+          -9.4110749296999e-07,
+          1.9319003762628654e-06
+        ],
+        [
+          -9.411074929699901e-07,
+          1.9331310947369864e-05,
+          4.0921023407081343e-07
+        ],
+        [
+          1.9319003762628654e-06,
+          4.092102340708134e-07,
+          3.69643348272739e-05
+        ]
+      ],
+      "dipole_amp_sd_conditional": 0.005801374006133175
+    },
+    "nvss_overlap_band_S20_b10_dec_m37_p30": {
+      "n_sources": 260199,
+      "nside": 16,
+      "masked_pixels": 1514,
+      "sky_fraction_covered": 0.4928385416666667,
+      "dipole_icrs_vec": [
+        -0.018570179449444214,
+        -0.004845194417207741,
+        -0.08157478405047532
+      ],
+      "dipole_amplitude": 0.08380198605407144,
+      "dipole_ra_dec_deg": [
+        194.62318434386975,
+        -76.76094908560788
+      ],
+      "dipole_gal_lb_deg": [
+        303.3479530138517,
+        -13.894900587809023
+      ],
+      "angle_to_cmb_dipole_deg": 71.28760892341963,
+      "poisson_overdispersion_scale": 2.360916635408808,
+      "scaled_cov_3x3_conditional": [
+        [
+          1.8107431162395186e-05,
+          -1.2715915900829023e-06,
+          1.5308506426506201e-06
+        ],
+        [
+          -1.2715915900829023e-06,
+          2.337578392075616e-05,
+          3.1785786026043186e-07
+        ],
+        [
+          1.5308506426506201e-06,
+          3.1785786026043276e-07,
+          9.188613339538941e-05
+        ]
+      ],
+      "dipole_amp_sd_conditional": 0.009417953814399012
+    },
+    "rms_footprint_tile_rows": 799
+  },
+  "sumss_v21_dipole_diagnostic_S20_b10_dec_le_m30": {
+    "n_sources": 110602,
+    "nside": 16,
+    "masked_pixels": 648,
+    "sky_fraction_covered": 0.2109375,
+    "dipole_icrs_vec": [
+      -0.016835677404022257,
+      0.03420005022392949,
+      -0.0315975418987751
+    ],
+    "dipole_amplitude": 0.049512504713622126,
+    "dipole_ra_dec_deg": [
+      116.20966487961475,
+      -39.65571656439996
+    ],
+    "dipole_gal_lb_deg": [
+      253.83830326892584,
+      -7.630466961882133
+    ],
+    "angle_to_cmb_dipole_deg": 56.59983653604169,
+    "poisson_overdispersion_scale": 1.6165876322725872,
+    "scaled_cov_3x3_conditional": [
+      [
+        6.962882948670475e-05,
+        -1.3089710278783932e-06,
+        5.2917839759093795e-06
+      ],
+      [
+        -1.3089710278783928e-06,
+        7.480864496992617e-05,
+        1.5927523134769936e-06
+      ],
+      [
+        5.291783975909464e-06,
+        1.5927523134770476e-06,
+        0.0006481191275365867
+      ]
+    ],
+    "dipole_amp_sd_conditional": 0.017584259412899973
+  },
+  "hi_and_zoa_catalog_census": {
+    "ALFALFA_a100_rows": 31502,
+    "FASHI_DR1_table2_rows": 41741,
+    "WALLABY_PDR2_30arcsec_rows": 3454,
+    "HIPASS_HICAT_rows": 4315,
+    "2MZoA_tablea1a_rows": 10493
+  },
+  "node_verdicts": {
+    "V01": "REUSED_SCOPED",
+    "V02": "REUSED_SCOPED",
+    "V03": "REUSED_SCOPED",
+    "SQ-FRAME": "DIAGNOSTIC_COMPLETED_SCOPED",
+    "SQ-RADIO": "DIAGNOSTIC_COMPLETED_SCOPED",
+    "V04": "BLOCKED_DEPENDENCY",
+    "V05": "BLOCKED_DEPENDENCY",
+    "V06": "BLOCKED_DEPENDENCY"
+  },
+  "physical_gate_note": "Uniform-mask WLS dipole diagnostics across RACS-low DR1, SUMSS v2.1, and NVSS show large footprint/flux-completeness sensitivity (~10^-2 amplitude), confirming that without tile-level RMS/beam completeness simulations V04-V06 remain BLOCKED_DEPENDENCY."
+}

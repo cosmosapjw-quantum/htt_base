@@ -1,0 +1,210 @@
+{
+  "schema": "htt.r89.g07_bianchi_result/1",
+  "group_id": "G07_BIANCHI",
+  "node_ids": [
+    "B01",
+    "SQ-LIE-FLUX",
+    "SQ-NATIVE",
+    "B02",
+    "B03",
+    "B04",
+    "B05"
+  ],
+  "source_sha256": {
+    "docs/research_program/observational_publication_20261015/READY_20261016/B01_BIANCHI_ATLAS_REGISTRY.json": "3597afcc6fcb995339347ab21be1245effe5eb6428c1818e353fb042cc39021f",
+    "docs/research_program/observational_publication_20261015/R75_P5_LIE_TILT_FIVEVIEW_20261119/RESULTS.json": "ed6ae8e36f0e79b7afcdc27ea679a4658c690d66fde817acb0a64c3a2ab67b45",
+    "docs/research_program/cf4_schur_loop8_20261015/inputs/selected_source_observables.npz": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+    "/mnt/extdrive/workdir/htt_open_data/external_transfer/bianchi_v1_1_1c90b98/test/sky_bianchi_test.fits": "7c4e44abd61f1367571143a0d002b85b6db8bf9067e43d0a69c60a0da80d5c6d",
+    "/mnt/extdrive/workdir/htt_open_data/external_transfer/bianchi_v1_1_1c90b98/param.par": "ae565adcbdaafb2483784eb1ba4a6151aa59798c26f124dc3690f47e45409486"
+  },
+  "runtime": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "elapsed_seconds": 0.08698743800050579,
+    "maxrss_kib": 204080
+  },
+  "reused_B01_lie_algebra": {
+    "registry_summary": {
+      "canonical_count": 11,
+      "canonical": [
+        {
+          "type": "I",
+          "class": "A",
+          "Jacobi_N_dot_a_residual": 0.0,
+          "Lie_codazzi_rank": 0,
+          "polarized_all_m_source_qualified": false
+        },
+        {
+          "type": "II",
+          "class": "A",
+          "Jacobi_N_dot_a_residual": 0.0,
+          "Lie_codazzi_rank": 2,
+          "polarized_all_m_source_qualified": false
+        },
+        {
+          "type": "III",
+          "class": "B",
+          "Jacobi_N_dot_a_residual": 0.0,
+          "Lie_codazzi_rank": 3,
+          "polarized_all_m_source_qualified": false
+        },
+        {
+          "type": "IV",
+          "class": "B",
+          "Jacobi_N_dot_a_residual": 0.0,
+          "Lie_codazzi_rank": 3,
+          "polarized_all_m_source_qualified": false
+        },
+        {
+          "type": "V",
+          "class": "B",
+          "Jacobi_N_dot_a_residual": 0.0,
+          "Lie_codazzi_rank": 3,
+          "polarized_all_m_source_qualified": false
+        },
+        {
+          "type": "VI_0",
+          "class": "A",
+          "Jacobi_N_dot_a_residual": 0.0,
+          "Lie_codazzi_rank": 3,
+          "polarized_all_m_source_qualified": false
+        },
+        {
+          "type": "VI_h",
+          "class": "B",
+          "Jacobi_N_dot_a_residual": 0.0,
+          "Lie_codazzi_rank": 3,
+          "polarized_all_m_source_qualified": false
+        },
+        {
+          "type": "VII_0",
+          "class": "A",
+          "Jacobi_N_dot_a_residual": 0.0,
+          "Lie_codazzi_rank": 2,
+          "polarized_all_m_source_qualified": false
+        },
+        {
+          "type": "VII_h",
+          "class": "B",
+          "Jacobi_N_dot_a_residual": 0.0,
+          "Lie_codazzi_rank": 3,
+          "polarized_all_m_source_qualified": false
+        },
+        {
+          "type": "VIII",
+          "class": "A",
+          "Jacobi_N_dot_a_residual": 0.0,
+          "Lie_codazzi_rank": 2,
+          "polarized_all_m_source_qualified": false
+        },
+        {
+          "type": "IX",
+          "class": "A",
+          "Jacobi_N_dot_a_residual": 0.0,
+          "Lie_codazzi_rank": 0,
+          "polarized_all_m_source_qualified": false
+        }
+      ],
+      "all_Jacobi_N_a_zero": true,
+      "exceptional_VI_minus_1_over_9": {
+        "distinct_twelfth_type": false,
+        "h": "-1/9",
+        "source_specific_rank": 2
+      },
+      "external_all_m_polarization_verified": false,
+      "physical_Bianchi_family_identified": false
+    },
+    "r75_max_SO3_equivariance_err": 8.343678738167853e-15,
+    "historical_BK_science_nodes": {
+      "B02": "pending",
+      "B03": "pending",
+      "B04": "pending",
+      "B05": "pending",
+      "K01": "completed_scoped",
+      "K02": "completed_scoped",
+      "K03": "pending",
+      "K04": "pending",
+      "K05": "pending",
+      "K06": "pending"
+    }
+  },
+  "fail_closed_external_gates": {
+    "p5p6_inspect_external_Bianchi_atlas_missing": "FileNotFoundError (fail-closed)",
+    "phy_inspect_external_native_missing": "FileNotFoundError (fail-closed)"
+  },
+  "external_bianchi_v1_1_workdir_fixture": {
+    "nside": 64,
+    "npix": 49152,
+    "map_min_max_std": [
+      -4.336903202784015e-06,
+      4.336903202784015e-06,
+      1.932333816512255e-06
+    ],
+    "cl_TT_ell2_to_6": [
+      2.2790268611531743e-12,
+      1.8390138803918376e-12,
+      9.088235212899841e-13,
+      3.373459748592511e-13,
+      1.2071152206326297e-13
+    ],
+    "polarized_E_B_present": false,
+    "all_11_families_covered": false,
+    "param_par_summary": [
+      "omega0 = 0.50",
+      "x      = 0.50",
+      "zE     = 1000",
+      "s12H   = 1d-10",
+      "s13H   = 1d-10",
+      "rhand  = T",
+      "alpha  = 0e0",
+      "beta   = -90e0",
+      "gamma  = 0e0",
+      "apply_beam = F",
+      "fwhm       = 100",
+      "init_type = alm",
+      "quad_AB   = qsimp",
+      "quad_IAB  = direct",
+      "N         = 100",
+      "nside     = 64",
+      "lmax      = 64",
+      "filename_out = sky_bianchi.fits",
+      "filetype  = map"
+    ],
+    "scope_note": "Single McEwen Bianchi v1.1 Type VII_h temperature-only test fixture (Barrow et al. 1985, zero Lambda, omega0=0.50); does NOT supply SQ-NATIVE all-m E/B polarization or 11-family transfer."
+  },
+  "r85_k02_fortran_parity": {
+    "backend_used": "fortran_source_info_cross",
+    "source_certified": true,
+    "fortran_vs_numpy_maxabs": 7.1875838614232634e-12,
+    "condition_F": [
+      9.751817081898311,
+      16.153459403245346,
+      59.665479188776416,
+      713.5389833786522
+    ],
+    "working_subspace_overlap_singular_cosines": [
+      0.34865324605854814,
+      0.33929685874810683,
+      0.09711878192913828
+    ],
+    "physical_shear": null,
+    "physical_Pi": null
+  },
+  "node_verdicts": {
+    "B01": "REUSED_SCOPED",
+    "SQ-LIE-FLUX": "BLOCKED_INPUT",
+    "SQ-NATIVE": "BLOCKED_INPUT",
+    "B02": "BLOCKED_DEPENDENCY",
+    "B03": "BLOCKED_DEPENDENCY",
+    "B04": "BLOCKED_DEPENDENCY",
+    "B05": "BLOCKED_DEPENDENCY"
+  },
+  "missing_physics_and_next_action": {
+    "missing": [
+      "External native polarized all-m Bianchi transfer atlas across all 11 canonical types (T, E, B)",
+      "Physical initial-condition normalization, recombination history, and Planck likelihood interface",
+      "Independent normal-frame energy-flux and stress source closure (SQ-LIE-FLUX)"
+    ],
+    "next_action": "Await external native all-m polarized Bianchi solver handoff and independent normal-frame flux inputs; do not simulate solver or promote B02-B05."
+  }
+}
