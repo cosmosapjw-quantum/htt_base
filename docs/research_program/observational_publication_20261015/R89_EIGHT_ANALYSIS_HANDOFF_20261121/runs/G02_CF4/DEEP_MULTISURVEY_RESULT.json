@@ -1,0 +1,752 @@
+{
+  "artifact_id": "R89_G02_CF4_DEEP_MULTISURVEY_V1",
+  "group_id": "G02_CF4",
+  "create_only": true,
+  "runtime_sec": 32.21,
+  "max_rss_mb": 1975.02,
+  "platform": "Linux-7.0.0-43-generic-x86_64-with-glibc2.39",
+  "env": {
+    "OMP_NUM_THREADS": "4",
+    "OPENBLAS_NUM_THREADS": "1"
+  },
+  "sq_cf4_status": "BLOCKED_INPUT",
+  "r88_p0c_packet_sha_status": {
+    "node_id": "SQ-CF4",
+    "status": "BLOCKED_INPUT",
+    "reason": null
+  },
+  "des_dovekie_5yr": {
+    "sources": {
+      "hd_csv_sha256": "2f57019d783eaa976df80a41b0054171a2d994ee9808d715ce850c2df5720aaf",
+      "meta_csv_sha256": "45ad71f8470eaecfe2b386699ef66b26b0717c50f445d5f32941988d32c75388",
+      "stat_sys_npz_sha256": "ffd3124b32148b1372bd95fda9299269f0352a9f8eee02d416c610e38495463b"
+    },
+    "n_total": 1820,
+    "n_valid_host_coords_z_gt_0p01": 1623,
+    "n_lowz_lt_0p15": 21,
+    "n_highz_ge_0p15": 1602,
+    "sqrt_diag_cov_over_muerr_median": 1.0263104530268992,
+    "fits_mag": {
+      "valid_sky_all_z_9p_stat_sys": {
+        "n_obs": 1623,
+        "n_params": 9,
+        "F_condition": 200055005.53749898,
+        "chi2_working": 1401.9162549194928,
+        "dof": 1614,
+        "chi2_per_dof": 0.8685974317964639,
+        "monopole_offset": 18.403662208186397,
+        "monopole_err": 24.08076722526087,
+        "dipole_vec": [
+          -26.86084812841588,
+          -4.269221727083825,
+          16.108043909202785
+        ],
+        "dipole_err_vec": [
+          29.58906170776033,
+          17.689543675645773,
+          15.314633196558605
+        ],
+        "dipole_dir": {
+          "amp": 31.610132788611196,
+          "ra_deg": 189.03096330318397,
+          "dec_deg": 30.63617894118053,
+          "l_deg": 165.7222160443848,
+          "b_deg": 85.14863004570645
+        },
+        "dipole_wald_chi2_nominal": 11.947061567836016,
+        "dipole_p_nominal": 0.00756672283302739,
+        "quad_vec": [
+          10.509940441638848,
+          1.3926457741374196,
+          4.3732123683550785,
+          -11.615151859914981,
+          -3.007725006072255
+        ],
+        "quad_frobenius_norm": 16.597634144624084,
+        "quad_shape_chi": 0.9773250560248581,
+        "quad_wald_chi2_nominal": 12.69959287626535,
+        "quad_p_nominal": 0.02636257404786489
+      },
+      "valid_sky_all_z_4p_stat_sys": {
+        "n_obs": 1623,
+        "n_params": 4,
+        "F_condition": 7722.571790694087,
+        "chi2_working": 1414.6158477865408,
+        "dof": 1619,
+        "chi2_per_dof": 0.8737590165451148,
+        "monopole_offset": 0.22187603189560937,
+        "monopole_err": 0.2223768278320667,
+        "dipole_vec": [
+          -0.19316008906577373,
+          -0.12691828448380185,
+          0.11249492123280111
+        ],
+        "dipole_err_vec": [
+          0.19460823623146725,
+          0.10448077457600806,
+          0.1034837294500127
+        ],
+        "dipole_dir": {
+          "amp": 0.25704898024964623,
+          "ra_deg": 213.3074221007702,
+          "dec_deg": 25.95340190138316,
+          "l_deg": 33.90409149159651,
+          "b_deg": 71.68934740980701
+        },
+        "dipole_wald_chi2_nominal": 2.311271883498614,
+        "dipole_p_nominal": 0.5103649533825165
+      },
+      "valid_sky_all_z_9p_diag_only": {
+        "n_obs": 1623,
+        "n_params": 9,
+        "F_condition": 320335964.50007665,
+        "chi2_working": 1302.384441180065,
+        "dof": 1614,
+        "chi2_per_dof": 0.806929641375505,
+        "monopole_offset": 23.062773412923836,
+        "monopole_err": 24.982571429297092,
+        "dipole_vec": [
+          -33.67077794054802,
+          -6.301835878328453,
+          18.764347132738514
+        ],
+        "dipole_err_vec": [
+          30.685956239343287,
+          18.370971754540765,
+          15.884932319278926
+        ],
+        "dipole_dir": {
+          "amp": 39.05809961937466,
+          "ra_deg": 190.60085665944484,
+          "dec_deg": 28.712928315691364,
+          "l_deg": 173.95653180564574,
+          "b_deg": 87.45176871136206
+        },
+        "dipole_wald_chi2_nominal": 13.55310712470108,
+        "dipole_p_nominal": 0.0035810963657351507,
+        "quad_vec": [
+          12.738929602488595,
+          2.466663660873543,
+          6.019103388726327,
+          -13.668434505805461,
+          -3.506631802114903
+        ],
+        "quad_frobenius_norm": 20.092708405595996,
+        "quad_shape_chi": 0.9853143554939315,
+        "quad_wald_chi2_nominal": 14.083172503543963,
+        "quad_p_nominal": 0.015089636143587585
+      },
+      "valid_sky_z_lt_0p15_9p_stat_sys": {
+        "n_obs": 21,
+        "n_params": 9,
+        "F_condition": 928711845.05659,
+        "chi2_working": 6.842185925167618,
+        "dof": 12,
+        "chi2_per_dof": 0.5701821604306349,
+        "monopole_offset": 70.80387570274848,
+        "monopole_err": 325.23764028631643,
+        "dipole_vec": [
+          -109.12000422292849,
+          -45.390845503612205,
+          7.968067656807111
+        ],
+        "dipole_err_vec": [
+          402.5179672419173,
+          241.9382608213719,
+          200.6066578674091
+        ],
+        "dipole_dir": {
+          "amp": 118.45249798686467,
+          "ra_deg": 202.5859335567857,
+          "dec_deg": 3.857087543791339,
+          "l_deg": 326.3845686629796,
+          "b_deg": 64.94223303720946
+        },
+        "dipole_wald_chi2_nominal": 0.6109857589352868,
+        "dipole_p_nominal": 0.8939128940336933,
+        "quad_vec": [
+          33.288419269797174,
+          23.623906617313068,
+          40.448039870063035,
+          -8.195032561056227,
+          -0.40897137012913604
+        ],
+        "quad_frobenius_norm": 58.04806255969184,
+        "quad_shape_chi": 0.9479252032062851,
+        "quad_wald_chi2_nominal": 1.447003659888205,
+        "quad_p_nominal": 0.9191033570503306
+      },
+      "valid_sky_z_lt_0p15_4p_stat_sys": {
+        "n_obs": 21,
+        "n_params": 4,
+        "F_condition": 16730.777328700882,
+        "chi2_working": 8.289189582474982,
+        "dof": 17,
+        "chi2_per_dof": 0.4875993872044107,
+        "monopole_offset": -2.6138733095183455,
+        "monopole_err": 2.02694883154836,
+        "dipole_vec": [
+          2.5904811749831618,
+          0.8558888977378207,
+          -1.0528393332365995
+        ],
+        "dipole_err_vec": [
+          1.7585810610556558,
+          0.9530171371615498,
+          0.9627536077328264
+        ],
+        "dipole_dir": {
+          "amp": 2.9243134552956342,
+          "ra_deg": 18.283433799958093,
+          "dec_deg": -21.102012394672194,
+          "l_deg": 163.47942404333378,
+          "b_deg": -82.20355038776401
+        },
+        "dipole_wald_chi2_nominal": 12.585351871225136,
+        "dipole_p_nominal": 0.005624765791115162
+      },
+      "valid_sky_z_ge_0p15_9p_stat_sys": {
+        "n_obs": 1602,
+        "n_params": 9,
+        "F_condition": 199161910.6890437,
+        "chi2_working": 1380.5368060333974,
+        "dof": 1593,
+        "chi2_per_dof": 0.8666269968822331,
+        "monopole_offset": 21.407272327214997,
+        "monopole_err": 24.23279436321906,
+        "dipole_vec": [
+          -30.96525363670616,
+          -6.085815326667894,
+          17.518104593787086
+        ],
+        "dipole_err_vec": [
+          29.764821202053202,
+          17.821711520604808,
+          15.407510370475077
+        ],
+        "dipole_dir": {
+          "amp": 36.09387856042509,
+          "ra_deg": 191.1190172549851,
+          "dec_deg": 29.03529821577512,
+          "l_deg": 161.36692530531178,
+          "b_deg": 87.5516641869441
+        },
+        "dipole_wald_chi2_nominal": 11.895781850397253,
+        "dipole_p_nominal": 0.007748829438488881,
+        "quad_vec": [
+          11.566568291817651,
+          2.2075571676906316,
+          5.585053881956964,
+          -12.613847892573798,
+          -3.3789205914328733
+        ],
+        "quad_frobenius_norm": 18.44933333707383,
+        "quad_shape_chi": 0.9860811225181325,
+        "quad_wald_chi2_nominal": 12.33480082145699,
+        "quad_p_nominal": 0.030477338063645058
+      },
+      "valid_sky_z_ge_0p15_4p_stat_sys": {
+        "n_obs": 1602,
+        "n_params": 4,
+        "F_condition": 7684.150924964375,
+        "chi2_working": 1392.8716068629674,
+        "dof": 1598,
+        "chi2_per_dof": 0.8716342971608056,
+        "monopole_offset": 0.26142707785393154,
+        "monopole_err": 0.22376453165362956,
+        "dipole_vec": [
+          -0.23398416651275797,
+          -0.13881064591848302,
+          0.12973548941958765
+        ],
+        "dipole_err_vec": [
+          0.19583848881150998,
+          0.10515964252975046,
+          0.10410089726452015
+        ],
+        "dipole_dir": {
+          "amp": 0.30141048889167155,
+          "ra_deg": 210.67845360521432,
+          "dec_deg": 25.494720002972002,
+          "l_deg": 31.114947187957103,
+          "b_deg": 73.95741289053285
+        },
+        "dipole_wald_chi2_nominal": 1.9391129114721004,
+        "dipole_p_nominal": 0.5851397167106618
+      }
+    }
+  },
+  "pantheon_plus_shoes": {
+    "sources": {
+      "dat_sha256": "1cb0fc379ef066afdc2ffd1857681cc478024570d8a3eba284fb645775198cf8",
+      "stat_sys_cov_sha256": "abf806d966485e64afdb359c87bffc0ecc00d05eff0a31ced66f247385df0fdc",
+      "statonly_cov_sha256": "9f177129a332735d3637affd20054080d5260815f3ca0809120c05b2c902297f"
+    },
+    "n_total": 1701,
+    "n_all_sky_z_gt_0p01_noncal": 1580,
+    "n_lowz_0p01_0p15_noncal": 705,
+    "base_fits_mag": {
+      "all_sky_z_gt_0p01_stat_sys": {
+        "n_obs": 1580,
+        "n_params": 9,
+        "F_condition": 56.9694866149403,
+        "chi2_working": 1369.6032600596386,
+        "dof": 1571,
+        "chi2_per_dof": 0.8718034755312786,
+        "monopole_offset": -0.11475981918660164,
+        "monopole_err": 0.008537886290583977,
+        "dipole_vec": [
+          0.010068833394437395,
+          0.02378612057053434,
+          0.02769623338523049
+        ],
+        "dipole_err_vec": [
+          0.006941851757190114,
+          0.009582931515526798,
+          0.013109511730343484
+        ],
+        "dipole_dir": {
+          "amp": 0.03787139133237767,
+          "ra_deg": 67.05671520156707,
+          "dec_deg": 46.997451518673365,
+          "l_deg": 156.52429876545494,
+          "b_deg": -1.2388915296154202
+        },
+        "dipole_wald_chi2_nominal": 8.78766081576602,
+        "dipole_p_nominal": 0.03225141614513159,
+        "quad_vec": [
+          0.017452869370604904,
+          -0.0042158358475366635,
+          -0.0315343196472903,
+          0.02578925347218213,
+          -0.022358628559231295
+        ],
+        "quad_frobenius_norm": 0.04981749795483897,
+        "quad_shape_chi": 0.7520819645242042,
+        "quad_wald_chi2_nominal": 16.717670437631014,
+        "quad_p_nominal": 0.005067567706883469
+      },
+      "all_sky_z_gt_0p01_statonly": {
+        "n_obs": 1580,
+        "n_params": 9,
+        "F_condition": 52.80303926440392,
+        "chi2_working": 1462.2483959493409,
+        "dof": 1571,
+        "chi2_per_dof": 0.9307755543916874,
+        "monopole_offset": -0.10444049485290492,
+        "monopole_err": 0.007538680255409333,
+        "dipole_vec": [
+          0.003246732672467333,
+          0.019298567160759793,
+          0.020753914361574272
+        ],
+        "dipole_err_vec": [
+          0.006328523930921745,
+          0.009101230036577826,
+          0.012219235254031761
+        ],
+        "dipole_dir": {
+          "amp": 0.028525443534367385,
+          "ra_deg": 80.45015946082668,
+          "dec_deg": 46.682060502082315,
+          "l_deg": 162.52786171445547,
+          "b_deg": 5.681105750226359
+        },
+        "dipole_wald_chi2_nominal": 5.853433339387674,
+        "dipole_p_nominal": 0.11896287327409277,
+        "quad_vec": [
+          0.0032029442978049024,
+          -0.01169970864549971,
+          -0.029070743952714726,
+          0.04036146215894096,
+          -0.012527877914197119
+        ],
+        "quad_frobenius_norm": 0.05270906507584225,
+        "quad_shape_chi": 0.625195658009845,
+        "quad_wald_chi2_nominal": 18.379062469015572,
+        "quad_p_nominal": 0.002506997827306259
+      },
+      "lowz_0p01_0p15_stat_sys": {
+        "n_obs": 705,
+        "n_params": 9,
+        "F_condition": 23.495640658282177,
+        "chi2_working": 596.8484794723195,
+        "dof": 696,
+        "chi2_per_dof": 0.8575409187820682,
+        "monopole_offset": -0.10492712791863382,
+        "monopole_err": 0.010776034728355028,
+        "dipole_vec": [
+          0.013237885295812721,
+          0.02824605735188093,
+          0.029363667403615436
+        ],
+        "dipole_err_vec": [
+          0.008842875431114545,
+          0.012301566463337198,
+          0.018209551002908005
+        ],
+        "dipole_dir": {
+          "amp": 0.042840475329073896,
+          "ra_deg": 64.88924649285357,
+          "dec_deg": 43.26855269042673,
+          "l_deg": 158.1132002011647,
+          "b_deg": -4.943334091182487
+        },
+        "dipole_wald_chi2_nominal": 9.40758261799076,
+        "dipole_p_nominal": 0.024335125470002248,
+        "quad_vec": [
+          -0.0025712638389692225,
+          0.013133060869572694,
+          -0.02284131269644526,
+          0.0230776566663991,
+          -0.03069585773442997
+        ],
+        "quad_frobenius_norm": 0.04664362947386109,
+        "quad_shape_chi": 0.751984390834025,
+        "quad_wald_chi2_nominal": 5.289677355402354,
+        "quad_p_nominal": 0.38155970744898027
+      },
+      "lowz_0p01_0p15_statonly": {
+        "n_obs": 705,
+        "n_params": 9,
+        "F_condition": 27.114111532852593,
+        "chi2_working": 665.1750712730347,
+        "dof": 696,
+        "chi2_per_dof": 0.9557113093003373,
+        "monopole_offset": -0.0956781537850216,
+        "monopole_err": 0.008966271138148506,
+        "dipole_vec": [
+          0.01119538707813355,
+          0.026928384684082544,
+          0.019896073705442118
+        ],
+        "dipole_err_vec": [
+          0.008308607746690197,
+          0.011984392724347287,
+          0.016660440645597248
+        ],
+        "dipole_dir": {
+          "amp": 0.03530337579347839,
+          "ra_deg": 67.42506253907341,
+          "dec_deg": 34.30334348661492,
+          "l_deg": 166.0037626685331,
+          "b_deg": -9.744791946823895
+        },
+        "dipole_wald_chi2_nominal": 8.064182925188673,
+        "dipole_p_nominal": 0.04470369557744115,
+        "quad_vec": [
+          -0.016487631991379252,
+          0.013412766653238548,
+          -0.021468624581839246,
+          0.02757633799940774,
+          -0.02197570975483922
+        ],
+        "quad_frobenius_norm": 0.046433095913366015,
+        "quad_shape_chi": 0.5770625275197204,
+        "quad_wald_chi2_nominal": 6.71518094300336,
+        "quad_p_nominal": 0.24269889007281503
+      }
+    },
+    "systematic_grouping_ablations": {
+      "BS21": {
+        "matrix_mode": "direct_pd_grouping_matrix",
+        "raw_eigmin": 0.006014233609100987,
+        "dipole_amp_mag": 0.02384774429583102,
+        "dipole_l_deg": 162.59413800163932,
+        "dipole_b_deg": 7.167468260956227,
+        "delta_dipole_vs_full_stat_sys_mag": 0.01503709982033276,
+        "quad_frobenius_norm_mag": 0.0491911001075391,
+        "chi2_working": 1492.128551083012,
+        "dipole_wald_chi2_nominal": 4.280361268496837,
+        "quad_wald_chi2_nominal": 15.856773383400467
+      },
+      "C11": {
+        "matrix_mode": "direct_pd_grouping_matrix",
+        "raw_eigmin": 0.006007590268939812,
+        "dipole_amp_mag": 0.025247812671432945,
+        "dipole_l_deg": 160.33236933569052,
+        "dipole_b_deg": 6.384771913808805,
+        "delta_dipole_vs_full_stat_sys_mag": 0.013433289546018945,
+        "quad_frobenius_norm_mag": 0.048969598424844274,
+        "chi2_working": 1486.5730961886536,
+        "dipole_wald_chi2_nominal": 4.662149523135757,
+        "quad_wald_chi2_nominal": 16.767598536599877
+      },
+      "CALIB": {
+        "matrix_mode": "direct_pd_grouping_matrix",
+        "raw_eigmin": 0.006017626758375061,
+        "dipole_amp_mag": 0.024403805474321732,
+        "dipole_l_deg": 148.8874883937429,
+        "dipole_b_deg": -1.2909346026245858,
+        "delta_dipole_vs_full_stat_sys_mag": 0.014062836763507995,
+        "quad_frobenius_norm_mag": 0.04707751810184785,
+        "chi2_working": 1469.1962644639623,
+        "dipole_wald_chi2_nominal": 4.025851022033019,
+        "quad_wald_chi2_nominal": 15.94427518081214
+      },
+      "CSP_RECAL": {
+        "matrix_mode": "direct_pd_grouping_matrix",
+        "raw_eigmin": 0.006006315530384122,
+        "dipole_amp_mag": 0.025577542141035983,
+        "dipole_l_deg": 156.6896025201966,
+        "dipole_b_deg": 6.505656079344572,
+        "delta_dipole_vs_full_stat_sys_mag": 0.012992979318274455,
+        "quad_frobenius_norm_mag": 0.04806784359930905,
+        "chi2_working": 1492.3304624756465,
+        "dipole_wald_chi2_nominal": 4.558272149186504,
+        "quad_wald_chi2_nominal": 15.290867650446886
+      },
+      "G10": {
+        "matrix_mode": "direct_pd_grouping_matrix",
+        "raw_eigmin": 0.00600854386003433,
+        "dipole_amp_mag": 0.02333623302726364,
+        "dipole_l_deg": 164.5945308023128,
+        "dipole_b_deg": 9.392771364048416,
+        "delta_dipole_vs_full_stat_sys_mag": 0.0160897244223979,
+        "quad_frobenius_norm_mag": 0.05066919269577902,
+        "chi2_working": 1489.4383476403507,
+        "dipole_wald_chi2_nominal": 4.302079122159693,
+        "quad_wald_chi2_nominal": 17.105092261626346
+      },
+      "HSTCALSPEC": {
+        "matrix_mode": "direct_pd_grouping_matrix",
+        "raw_eigmin": 0.006008708916924598,
+        "dipole_amp_mag": 0.023486685791066348,
+        "dipole_l_deg": 160.62065727470863,
+        "dipole_b_deg": 9.429111158684009,
+        "delta_dipole_vs_full_stat_sys_mag": 0.015561126744941006,
+        "quad_frobenius_norm_mag": 0.048435340707786094,
+        "chi2_working": 1494.9480180323192,
+        "dipole_wald_chi2_nominal": 4.089543883187758,
+        "quad_wald_chi2_nominal": 16.360014288931843
+      },
+      "JLA_SALT2": {
+        "matrix_mode": "direct_pd_grouping_matrix",
+        "raw_eigmin": 0.006006373187725258,
+        "dipole_amp_mag": 0.02431109456470682,
+        "dipole_l_deg": 161.35764799599423,
+        "dipole_b_deg": 5.95233479688639,
+        "delta_dipole_vs_full_stat_sys_mag": 0.01431353984138778,
+        "quad_frobenius_norm_mag": 0.048143775646398206,
+        "chi2_working": 1495.5710464167657,
+        "dipole_wald_chi2_nominal": 4.383362382469985,
+        "quad_wald_chi2_nominal": 15.415326401660417
+      },
+      "MASSSTEP": {
+        "matrix_mode": "direct_pd_grouping_matrix",
+        "raw_eigmin": 0.006008335527246136,
+        "dipole_amp_mag": 0.023929390303583938,
+        "dipole_l_deg": 161.20936514454593,
+        "dipole_b_deg": 7.596627610446747,
+        "delta_dipole_vs_full_stat_sys_mag": 0.014895935739961863,
+        "quad_frobenius_norm_mag": 0.049340423677269755,
+        "chi2_working": 1496.4950958312888,
+        "dipole_wald_chi2_nominal": 4.252277528565931,
+        "quad_wald_chi2_nominal": 16.11896671967054
+      },
+      "MWCOLORLAW": {
+        "matrix_mode": "direct_pd_grouping_matrix",
+        "raw_eigmin": 0.006006790355039231,
+        "dipole_amp_mag": 0.025400242248338065,
+        "dipole_l_deg": 163.97397759530244,
+        "dipole_b_deg": 6.7816234235365505,
+        "delta_dipole_vs_full_stat_sys_mag": 0.01380110754265041,
+        "quad_frobenius_norm_mag": 0.04580021280524335,
+        "chi2_working": 1494.1233034408651,
+        "dipole_wald_chi2_nominal": 4.923846559489924,
+        "quad_wald_chi2_nominal": 13.168328729181354
+      },
+      "MWEBV": {
+        "matrix_mode": "direct_pd_grouping_matrix",
+        "raw_eigmin": 0.006008737235200296,
+        "dipole_amp_mag": 0.02733902904178808,
+        "dipole_l_deg": 164.3903552459031,
+        "dipole_b_deg": 6.785595569063889,
+        "delta_dipole_vs_full_stat_sys_mag": 0.012269856353524391,
+        "quad_frobenius_norm_mag": 0.04442046866841085,
+        "chi2_working": 1492.5082344296898,
+        "dipole_wald_chi2_nominal": 5.638424227719316,
+        "quad_wald_chi2_nominal": 12.16567760263791
+      },
+      "SCATTERMOD": {
+        "matrix_mode": "direct_pd_grouping_matrix",
+        "raw_eigmin": 0.006019426853766007,
+        "dipole_amp_mag": 0.025329205157537928,
+        "dipole_l_deg": 158.80333401634348,
+        "dipole_b_deg": 5.6368771519485215,
+        "delta_dipole_vs_full_stat_sys_mag": 0.01313826560218355,
+        "quad_frobenius_norm_mag": 0.04892936588999419,
+        "chi2_working": 1482.222291370198,
+        "dipole_wald_chi2_nominal": 4.555913818641248,
+        "quad_wald_chi2_nominal": 17.69351973230088
+      },
+      "SPECEFF": {
+        "matrix_mode": "direct_pd_grouping_matrix",
+        "raw_eigmin": 0.006008308567096578,
+        "dipole_amp_mag": 0.024376494804788144,
+        "dipole_l_deg": 160.51233242655496,
+        "dipole_b_deg": 6.549710976810024,
+        "delta_dipole_vs_full_stat_sys_mag": 0.014268342978858017,
+        "quad_frobenius_norm_mag": 0.04853423776903791,
+        "chi2_working": 1495.6328423027571,
+        "dipole_wald_chi2_nominal": 4.357312292793782,
+        "quad_wald_chi2_nominal": 15.934215104957849
+      },
+      "VPEC": {
+        "matrix_mode": "direct_pd_grouping_matrix",
+        "raw_eigmin": 0.005991320020705113,
+        "dipole_amp_mag": 0.027761862217534013,
+        "dipole_l_deg": 159.0599967059377,
+        "dipole_b_deg": 8.333946419826566,
+        "delta_dipole_vs_full_stat_sys_mag": 0.011555096264266589,
+        "quad_frobenius_norm_mag": 0.05303478424701577,
+        "chi2_working": 1440.2449859427024,
+        "dipole_wald_chi2_nominal": 5.338234909730033,
+        "quad_wald_chi2_nominal": 17.300666879799024
+      },
+      "ZSHIFT": {
+        "matrix_mode": "direct_pd_grouping_matrix",
+        "raw_eigmin": 0.00601228042186698,
+        "dipole_amp_mag": 0.024428393642963616,
+        "dipole_l_deg": 161.34552384852523,
+        "dipole_b_deg": 5.69467934475398,
+        "delta_dipole_vs_full_stat_sys_mag": 0.014168926324327273,
+        "quad_frobenius_norm_mag": 0.04755614749823726,
+        "chi2_working": 1496.0130658553214,
+        "dipole_wald_chi2_nominal": 4.411671383964518,
+        "quad_wald_chi2_nominal": 14.999197490727203
+      }
+    }
+  },
+  "sdss_hamhod_63_mocks": {
+    "n_mock_files": 63,
+    "n_fitted_mocks": 63,
+    "mean_rows_per_mock": 33648.19047619047,
+    "first_mock_sha256": "43324152a9f833d997c26dbd6fb0789250468419c3c56799c10182bff5b0126d",
+    "apparent_expansion_dipole_km_s_per_mpc": {
+      "obs_mean_vec": [
+        -0.24719461743103374,
+        0.27334502412668304,
+        -0.46938399155166133
+      ],
+      "obs_std_vec": [
+        9.196425938610005,
+        1.6388452625956886,
+        6.524600935239957
+      ],
+      "obs_amp_mean": 9.562862399067788,
+      "obs_amp_median": 7.320602939730675,
+      "obs_amp_p05_p95": [
+        3.07764984262053,
+        20.686274661975634
+      ],
+      "true_amp_mean": 3.9698298350094774,
+      "obs_minus_true_rms_per_axis": [
+        7.4030604628212,
+        1.2192242305701881,
+        5.212139282388601
+      ],
+      "obs_true_cosine_median": 0.7997111019992056,
+      "obs_quad_norm_median": 5.227462425548699,
+      "true_quad_norm_median": 2.737019773502574,
+      "nominal_diag_wald_chi2_median": 5.283511969191531,
+      "nominal_diag_wald_chi2_p95": 14.658316279114134
+    },
+    "z_shell_summary": {
+      "z_0.025": {
+        "n_valid_mocks": 63,
+        "median_dipole_km_s_per_mpc": 19.155783581401135,
+        "mean_dipole_km_s_per_mpc": 19.724273842591014,
+        "std_dipole_km_s_per_mpc": 9.892064331512323,
+        "p05_p95": [
+          6.115296426601622,
+          33.57052337056502
+        ]
+      },
+      "z_0.040": {
+        "n_valid_mocks": 63,
+        "median_dipole_km_s_per_mpc": 13.62121740380527,
+        "mean_dipole_km_s_per_mpc": 14.748910896663903,
+        "std_dipole_km_s_per_mpc": 7.763944784920253,
+        "p05_p95": [
+          3.757878685184372,
+          27.673768378103247
+        ]
+      },
+      "z_0.060": {
+        "n_valid_mocks": 63,
+        "median_dipole_km_s_per_mpc": 10.282881810592851,
+        "mean_dipole_km_s_per_mpc": 11.867524054088623,
+        "std_dipole_km_s_per_mpc": 8.205703940171324,
+        "p05_p95": [
+          3.6120494527587153,
+          28.6312008120106
+        ]
+      },
+      "z_0.080": {
+        "n_valid_mocks": 63,
+        "median_dipole_km_s_per_mpc": 10.546174388709892,
+        "mean_dipole_km_s_per_mpc": 12.648075042724802,
+        "std_dipole_km_s_per_mpc": 8.007557715072712,
+        "p05_p95": [
+          2.893833572985257,
+          30.890319806444463
+        ]
+      }
+    },
+    "note": "SDSS HAMHOD mock cosmic-variance ensemble on SDSS footprint only; NOT a matched CF4 empirical selection/method covariance."
+  },
+  "measuring_bulkflows_ref": {
+    "file_sha256": {
+      "BF_MVE_result.txt": "cad89eefd4f644cee67c4929740ce17d0bb81ec72ec53a6dfba7dbace3bb9d8e",
+      "BF_MLE_result.txt": "f6e3b9fa4fbf2913addd97130822f2d93ec055b7fd3f1b8627714624beff62c7",
+      "BF_MVE_cov.txt": "718162746314507c4db6284526ff1a1f6ec3143e7b07e134d7606ad548d7229f",
+      "BF_MLE_cov.txt": "b5ff0bb2f9c3cdfcfb7cc7e2f49e4d68e74c8e880d8e8d3cecd85e1b4d5bcc44",
+      "MVE_result_peery_MLE_result_nusser.txt": "0e5ce77d8869b3436a57b946c1fe1cecf400b818de16a05653001c40de5d6230",
+      "powerspectrum.csv": "e71e38e8b65e48bec510454f06832b16ea774aadeb3ea0669b04de7286bb7c5f"
+    },
+    "BF_MVE": {
+      "vec_kms": [
+        270.373,
+        -305.862,
+        31.4019
+      ],
+      "err_kms": [
+        83.9537,
+        85.3091,
+        291.549
+      ],
+      "amp_kms": 409.43766497063996
+    },
+    "BF_MLE": {
+      "vec_kms": [
+        262.877,
+        -313.563,
+        19.5189
+      ],
+      "err_kms": [
+        78.2325,
+        77.6389,
+        77.8368
+      ],
+      "amp_kms": 409.6425997808455
+    },
+    "MVE_cov_diag_sqrt": [
+      83.95373726046982,
+      85.309085096489,
+      291.54913822544563
+    ],
+    "MLE_cov_diag_sqrt": [
+      78.23247407566758,
+      77.63890777181246,
+      77.83681648166245
+    ]
+  },
+  "claim_hygiene": {
+    "physical_Pi": null,
+    "physical_GF": null,
+    "cf4_raw_cal_posterior_absent": true,
+    "bianchi_family_identified": false,
+    "statement": "Working-frame Hubble-diagram multipole & SDSS-mock cosmic-variance diagnostics only; DES/Pantheon+ SN systematic ablations and SDSS mocks do not supply CF4-matched physical S_PV, J_cal Sigma_cal J_cal^T, selection covariance, or upstream-independent CF4 heldout."
+  }
+}

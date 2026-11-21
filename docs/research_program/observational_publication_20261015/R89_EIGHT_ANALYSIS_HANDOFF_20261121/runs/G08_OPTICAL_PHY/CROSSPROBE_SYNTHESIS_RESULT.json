@@ -1,0 +1,619 @@
+{
+  "artifact_id": "R89_G08_OPTICAL_PHY_CROSSPROBE_SYNTHESIS_V1",
+  "group_id": "G08_OPTICAL_PHY",
+  "create_only": true,
+  "runtime_sec": 0.011,
+  "max_rss_mb": 122.14,
+  "platform": "Linux-7.0.0-43-generic-x86_64-with-glibc2.39",
+  "input_sha256": {
+    "G02_CF4": "025a23e68e172e84d629d5594ac9c3b10444a94482ff70745d4a85b882eef3c2",
+    "G03_GAIA": "e105c8f6cbff9761b84d5aed9856e66d518df26a1cefa2ba185faa288f00824a",
+    "G04_RADIO_FRAME": "28ae39e9ff15df5c073a99e2b1c37dfff0b82f141560ab07f4ff807ef209e84e",
+    "G05_PLANCK": "c18785c7aca58a0d13a3900feaca6659cb22bc13e5981fc1c4918df44659b1f1",
+    "R78_INTEGRATED_DAG": "90aba8c1ca9c8e3a7744be0f071dcfe09b81e5353892aca13878191e20f58c11"
+  },
+  "r78_r89_60_node_accounting": {
+    "total_unique_nodes_covered": 60,
+    "expected_dag_nodes": 60,
+    "missing_nodes": [],
+    "extra_nodes": [],
+    "duplicate_nodes": [],
+    "status_totals": {
+      "REUSED_SCOPED": 18,
+      "DIAGNOSTIC_COMPLETED_SCOPED": 4,
+      "BLOCKED_INPUT": 9,
+      "BLOCKED_DEPENDENCY": 29
+    },
+    "status_totals_note": "Aggregates Phase-1 R89 RESULT.json node_verdicts (where G02 SQ-CF4 method-contrast exploratory diagnostic was DIAGNOSTIC_COMPLETED_SCOPED); R87/R88/R89-Phase3 physical SQ-CF4 remains BLOCKED_INPUT.",
+    "group_status_counts": {
+      "G01_COMMON": {
+        "REUSED_SCOPED": 7
+      },
+      "G02_CF4": {
+        "REUSED_SCOPED": 2,
+        "DIAGNOSTIC_COMPLETED_SCOPED": 1,
+        "BLOCKED_INPUT": 1,
+        "BLOCKED_DEPENDENCY": 3
+      },
+      "G03_GAIA": {
+        "REUSED_SCOPED": 2,
+        "DIAGNOSTIC_COMPLETED_SCOPED": 1,
+        "BLOCKED_INPUT": 1,
+        "BLOCKED_DEPENDENCY": 3
+      },
+      "G04_RADIO_FRAME": {
+        "REUSED_SCOPED": 3,
+        "DIAGNOSTIC_COMPLETED_SCOPED": 2,
+        "BLOCKED_DEPENDENCY": 3
+      },
+      "G05_PLANCK": {
+        "REUSED_SCOPED": 2,
+        "BLOCKED_INPUT": 1,
+        "BLOCKED_DEPENDENCY": 4
+      },
+      "G06_P1": {
+        "REUSED_SCOPED": 1,
+        "BLOCKED_INPUT": 2,
+        "BLOCKED_DEPENDENCY": 4
+      },
+      "G07_BIANCHI": {
+        "REUSED_SCOPED": 1,
+        "BLOCKED_INPUT": 2,
+        "BLOCKED_DEPENDENCY": 4
+      },
+      "G08_OPTICAL_PHY": {
+        "BLOCKED_INPUT": 2,
+        "BLOCKED_DEPENDENCY": 8
+      }
+    },
+    "r78_next_action_id": "SQ-CF4",
+    "g02_phase3_sq_cf4_status": "BLOCKED_INPUT",
+    "g03_phase3_sq_gaia_status": "DIAGNOSTIC_COMPLETED_SCOPED",
+    "sixty_of_sixty_science_pass": false
+  },
+  "cross_probe_dipole_alignment_galactic": {
+    "probes": {
+      "CMB_kinematic_ref": {
+        "gal_l_deg": 264.02099999999996,
+        "gal_b_deg": 48.253,
+        "amp_native_units": 1.0,
+        "sep_from_cmb_deg": 0.0,
+        "antipodal_sep_from_cmb_deg": 180.0,
+        "acute_axis_sep_from_cmb_deg": 0.0,
+        "sep_from_gal_center_deg": 93.97704432965494
+      },
+      "Galactic_Center_ref": {
+        "gal_l_deg": 0.0,
+        "gal_b_deg": 0.0,
+        "amp_native_units": 1.0,
+        "sep_from_cmb_deg": 93.97704432965494,
+        "antipodal_sep_from_cmb_deg": 86.02295567034506,
+        "acute_axis_sep_from_cmb_deg": 86.02295567034506,
+        "sep_from_gal_center_deg": 0.0
+      },
+      "DES_Dovekie_4p_stat_sys": {
+        "gal_l_deg": 33.90409149159644,
+        "gal_b_deg": 71.689347409807,
+        "amp_native_units": 0.25704898024964623,
+        "sep_from_cmb_deg": 54.95778670179935,
+        "antipodal_sep_from_cmb_deg": 125.04221329820065,
+        "acute_axis_sep_from_cmb_deg": 54.95778670179935,
+        "sep_from_gal_center_deg": 74.8853364154951
+      },
+      "PantheonPlus_allz_9p_stat_sys": {
+        "gal_l_deg": 156.52429876545494,
+        "gal_b_deg": -1.2388915296154541,
+        "amp_native_units": 0.037871391332377664,
+        "sep_from_cmb_deg": 102.49008557442374,
+        "antipodal_sep_from_cmb_deg": 77.50991442557626,
+        "acute_axis_sep_from_cmb_deg": 77.50991442557626,
+        "sep_from_gal_center_deg": 156.49347894151512
+      },
+      "PantheonPlus_lowz_9p_stat_sys": {
+        "gal_l_deg": 158.1132002011647,
+        "gal_b_deg": -4.943334091182507,
+        "amp_native_units": 0.04284047532907389,
+        "sep_from_cmb_deg": 104.24762829875243,
+        "antipodal_sep_from_cmb_deg": 75.75237170124757,
+        "acute_axis_sep_from_cmb_deg": 75.75237170124757,
+        "sep_from_gal_center_deg": 157.58867134273387
+      },
+      "Gaia_CRF3_quality_all_E1": {
+        "gal_l_deg": 359.6216496838388,
+        "gal_b_deg": 5.125271107344764,
+        "amp_native_units": 4.8363486392325425,
+        "sep_from_cmb_deg": 89.88950161641081,
+        "antipodal_sep_from_cmb_deg": 90.11049838358919,
+        "acute_axis_sep_from_cmb_deg": 89.88950161641081,
+        "sep_from_gal_center_deg": 5.1391799796739575
+      },
+      "VLBA_233_3_clean5sig_E1": {
+        "gal_l_deg": 347.93192356113485,
+        "gal_b_deg": -1.3958583769888557,
+        "amp_native_units": 1.3340273636862194,
+        "sep_from_cmb_deg": 86.99441972564416,
+        "antipodal_sep_from_cmb_deg": 93.00558027435584,
+        "acute_axis_sep_from_cmb_deg": 86.99441972564416,
+        "sep_from_gal_center_deg": 12.147344960083611
+      },
+      "NVSS_S20": {
+        "gal_l_deg": 194.5478275179877,
+        "gal_b_deg": 50.066411219114656,
+        "amp_native_units": 0.020028962808182338,
+        "sep_from_cmb_deg": 43.78323416603837,
+        "antipodal_sep_from_cmb_deg": 136.21676583396163,
+        "acute_axis_sep_from_cmb_deg": 43.78323416603837,
+        "sep_from_gal_center_deg": 128.4125100315803
+      },
+      "NVSS_S50": {
+        "gal_l_deg": 263.5448740012557,
+        "gal_b_deg": 34.86052842846841,
+        "amp_native_units": 0.01977834574061279,
+        "sep_from_cmb_deg": 13.397137226499712,
+        "antipodal_sep_from_cmb_deg": 166.60286277350028,
+        "acute_axis_sep_from_cmb_deg": 13.397137226499712,
+        "sep_from_gal_center_deg": 95.29305418730817
+      },
+      "RACS_DR1_raw_S20": {
+        "gal_l_deg": 287.30345042603324,
+        "gal_b_deg": 50.3578466168848,
+        "amp_native_units": 0.019444909823812577,
+        "sep_from_cmb_deg": 15.261905258406422,
+        "antipodal_sep_from_cmb_deg": 164.73809474159359,
+        "acute_axis_sep_from_cmb_deg": 15.261905258406422,
+        "sep_from_gal_center_deg": 79.06127499138053
+      },
+      "SPICE_RACS_S20": {
+        "gal_l_deg": 234.173981280913,
+        "gal_b_deg": 52.82461151266528,
+        "amp_native_units": 0.045519064641528835,
+        "sep_from_cmb_deg": 19.360566735479914,
+        "antipodal_sep_from_cmb_deg": 160.63943326452008,
+        "acute_axis_sep_from_cmb_deg": 19.360566735479914,
+        "sep_from_gal_center_deg": 110.7130095401983
+      },
+      "SPICE_RACS_S50": {
+        "gal_l_deg": 249.35054839061996,
+        "gal_b_deg": 49.520475535729624,
+        "amp_native_units": 0.04933772128100601,
+        "sep_from_cmb_deg": 9.713633076468268,
+        "antipodal_sep_from_cmb_deg": 170.28636692353174,
+        "acute_axis_sep_from_cmb_deg": 9.713633076468268,
+        "sep_from_gal_center_deg": 103.2341808377306
+      },
+      "SUMSS_S20": {
+        "gal_l_deg": 233.56849956929773,
+        "gal_b_deg": 2.65724475886072,
+        "amp_native_units": 0.04239809316983583,
+        "sep_from_cmb_deg": 52.55772673597395,
+        "antipodal_sep_from_cmb_deg": 127.44227326402606,
+        "acute_axis_sep_from_cmb_deg": 52.55772673597395,
+        "sep_from_gal_center_deg": 126.38604056655957
+      },
+      "LoTSS_DR3_S50": {
+        "gal_l_deg": 286.2220891135458,
+        "gal_b_deg": 49.01812952055276,
+        "amp_native_units": 0.011370282333533916,
+        "sep_from_cmb_deg": 14.638996371582516,
+        "antipodal_sep_from_cmb_deg": 165.36100362841748,
+        "acute_axis_sep_from_cmb_deg": 14.638996371582516,
+        "sep_from_gal_center_deg": 79.4431649179045
+      }
+    },
+    "pairwise_separation_deg": {
+      "CMB_kinematic_ref": {
+        "CMB_kinematic_ref": 0.0,
+        "Galactic_Center_ref": 93.977,
+        "DES_Dovekie_4p_stat_sys": 54.958,
+        "PantheonPlus_allz_9p_stat_sys": 102.49,
+        "PantheonPlus_lowz_9p_stat_sys": 104.248,
+        "Gaia_CRF3_quality_all_E1": 89.89,
+        "VLBA_233_3_clean5sig_E1": 86.994,
+        "NVSS_S20": 43.783,
+        "NVSS_S50": 13.397,
+        "RACS_DR1_raw_S20": 15.262,
+        "SPICE_RACS_S20": 19.361,
+        "SPICE_RACS_S50": 9.714,
+        "SUMSS_S20": 52.558,
+        "LoTSS_DR3_S50": 14.639
+      },
+      "Galactic_Center_ref": {
+        "CMB_kinematic_ref": 93.977,
+        "Galactic_Center_ref": 0.0,
+        "DES_Dovekie_4p_stat_sys": 74.885,
+        "PantheonPlus_allz_9p_stat_sys": 156.493,
+        "PantheonPlus_lowz_9p_stat_sys": 157.589,
+        "Gaia_CRF3_quality_all_E1": 5.139,
+        "VLBA_233_3_clean5sig_E1": 12.147,
+        "NVSS_S20": 128.413,
+        "NVSS_S50": 95.293,
+        "RACS_DR1_raw_S20": 79.061,
+        "SPICE_RACS_S20": 110.713,
+        "SPICE_RACS_S50": 103.234,
+        "SUMSS_S20": 126.386,
+        "LoTSS_DR3_S50": 79.443
+      },
+      "DES_Dovekie_4p_stat_sys": {
+        "CMB_kinematic_ref": 54.958,
+        "Galactic_Center_ref": 74.885,
+        "DES_Dovekie_4p_stat_sys": 0.0,
+        "PantheonPlus_allz_9p_stat_sys": 100.944,
+        "PantheonPlus_lowz_9p_stat_sys": 104.938,
+        "Gaia_CRF3_quality_all_E1": 69.918,
+        "VLBA_233_3_clean5sig_E1": 78.746,
+        "NVSS_S20": 57.473,
+        "NVSS_S50": 67.932,
+        "RACS_DR1_raw_S20": 47.64,
+        "SPICE_RACS_S20": 54.664,
+        "SPICE_RACS_S50": 56.222,
+        "SUMSS_S20": 104.567,
+        "LoTSS_DR3_S50": 49.148
+      },
+      "PantheonPlus_allz_9p_stat_sys": {
+        "CMB_kinematic_ref": 102.49,
+        "Galactic_Center_ref": 156.493,
+        "DES_Dovekie_4p_stat_sys": 100.944,
+        "PantheonPlus_allz_9p_stat_sys": 0.0,
+        "PantheonPlus_lowz_9p_stat_sys": 4.03,
+        "Gaia_CRF3_quality_all_E1": 156.618,
+        "VLBA_233_3_clean5sig_E1": 168.293,
+        "NVSS_S20": 60.727,
+        "NVSS_S50": 104.625,
+        "RACS_DR1_raw_S20": 115.674,
+        "SPICE_RACS_S20": 83.57,
+        "SPICE_RACS_S50": 92.777,
+        "SUMSS_S20": 77.12,
+        "LoTSS_DR3_S50": 115.793
+      },
+      "PantheonPlus_lowz_9p_stat_sys": {
+        "CMB_kinematic_ref": 104.248,
+        "Galactic_Center_ref": 157.589,
+        "DES_Dovekie_4p_stat_sys": 104.938,
+        "PantheonPlus_allz_9p_stat_sys": 4.03,
+        "PantheonPlus_lowz_9p_stat_sys": 0.0,
+        "Gaia_CRF3_quality_all_E1": 158.575,
+        "VLBA_233_3_clean5sig_E1": 168.321,
+        "NVSS_S20": 63.357,
+        "NVSS_S50": 105.473,
+        "RACS_DR1_raw_S20": 117.905,
+        "SPICE_RACS_S20": 85.621,
+        "SPICE_RACS_S50": 94.56,
+        "SUMSS_S20": 75.763,
+        "LoTSS_DR3_S50": 117.923
+      },
+      "Gaia_CRF3_quality_all_E1": {
+        "CMB_kinematic_ref": 89.89,
+        "Galactic_Center_ref": 5.139,
+        "DES_Dovekie_4p_stat_sys": 69.918,
+        "PantheonPlus_allz_9p_stat_sys": 156.618,
+        "PantheonPlus_lowz_9p_stat_sys": 158.575,
+        "Gaia_CRF3_quality_all_E1": 0.0,
+        "VLBA_233_3_clean5sig_E1": 13.375,
+        "NVSS_S20": 123.316,
+        "NVSS_S50": 92.032,
+        "RACS_DR1_raw_S20": 74.824,
+        "SPICE_RACS_S20": 106.133,
+        "SPICE_RACS_S50": 98.979,
+        "SUMSS_S20": 125.55,
+        "LoTSS_DR3_S50": 75.282
+      },
+      "VLBA_233_3_clean5sig_E1": {
+        "CMB_kinematic_ref": 86.994,
+        "Galactic_Center_ref": 12.147,
+        "DES_Dovekie_4p_stat_sys": 78.746,
+        "PantheonPlus_allz_9p_stat_sys": 168.293,
+        "PantheonPlus_lowz_9p_stat_sys": 168.321,
+        "Gaia_CRF3_quality_all_E1": 13.375,
+        "VLBA_233_3_clean5sig_E1": 0.0,
+        "NVSS_S20": 126.326,
+        "NVSS_S50": 86.198,
+        "RACS_DR1_raw_S20": 72.899,
+        "SPICE_RACS_S20": 105.235,
+        "SPICE_RACS_S50": 96.625,
+        "SUMSS_S20": 114.399,
+        "LoTSS_DR3_S50": 73.002
+      },
+      "NVSS_S20": {
+        "CMB_kinematic_ref": 43.783,
+        "Galactic_Center_ref": 128.413,
+        "DES_Dovekie_4p_stat_sys": 57.473,
+        "PantheonPlus_allz_9p_stat_sys": 60.727,
+        "PantheonPlus_lowz_9p_stat_sys": 63.357,
+        "Gaia_CRF3_quality_all_E1": 123.316,
+        "VLBA_233_3_clean5sig_E1": 126.326,
+        "NVSS_S20": 0.0,
+        "NVSS_S50": 51.166,
+        "RACS_DR1_raw_S20": 55.196,
+        "SPICE_RACS_S20": 24.534,
+        "SPICE_RACS_S50": 34.57,
+        "SUMSS_S20": 57.743,
+        "LoTSS_DR3_S50": 55.489
+      },
+      "NVSS_S50": {
+        "CMB_kinematic_ref": 13.397,
+        "Galactic_Center_ref": 95.293,
+        "DES_Dovekie_4p_stat_sys": 67.932,
+        "PantheonPlus_allz_9p_stat_sys": 104.625,
+        "PantheonPlus_lowz_9p_stat_sys": 105.473,
+        "Gaia_CRF3_quality_all_E1": 92.032,
+        "VLBA_233_3_clean5sig_E1": 86.198,
+        "NVSS_S20": 51.166,
+        "NVSS_S50": 0.0,
+        "RACS_DR1_raw_S20": 23.179,
+        "SPICE_RACS_S20": 27.437,
+        "SPICE_RACS_S50": 17.977,
+        "SUMSS_S20": 42.564,
+        "LoTSS_DR3_S50": 21.871
+      },
+      "RACS_DR1_raw_S20": {
+        "CMB_kinematic_ref": 15.262,
+        "Galactic_Center_ref": 79.061,
+        "DES_Dovekie_4p_stat_sys": 47.64,
+        "PantheonPlus_allz_9p_stat_sys": 115.674,
+        "PantheonPlus_lowz_9p_stat_sys": 117.905,
+        "Gaia_CRF3_quality_all_E1": 74.824,
+        "VLBA_233_3_clean5sig_E1": 72.899,
+        "NVSS_S20": 55.196,
+        "NVSS_S50": 23.179,
+        "RACS_DR1_raw_S20": 0.0,
+        "SPICE_RACS_S20": 32.342,
+        "SPICE_RACS_S50": 24.174,
+        "SUMSS_S20": 65.627,
+        "LoTSS_DR3_S50": 1.511
+      },
+      "SPICE_RACS_S20": {
+        "CMB_kinematic_ref": 19.361,
+        "Galactic_Center_ref": 110.713,
+        "DES_Dovekie_4p_stat_sys": 54.664,
+        "PantheonPlus_allz_9p_stat_sys": 83.57,
+        "PantheonPlus_lowz_9p_stat_sys": 85.621,
+        "Gaia_CRF3_quality_all_E1": 106.133,
+        "VLBA_233_3_clean5sig_E1": 105.235,
+        "NVSS_S20": 24.534,
+        "NVSS_S50": 27.437,
+        "RACS_DR1_raw_S20": 32.342,
+        "SPICE_RACS_S20": 0.0,
+        "SPICE_RACS_S50": 10.05,
+        "SUMSS_S20": 50.17,
+        "LoTSS_DR3_S50": 32.304
+      },
+      "SPICE_RACS_S50": {
+        "CMB_kinematic_ref": 9.714,
+        "Galactic_Center_ref": 103.234,
+        "DES_Dovekie_4p_stat_sys": 56.222,
+        "PantheonPlus_allz_9p_stat_sys": 92.777,
+        "PantheonPlus_lowz_9p_stat_sys": 94.56,
+        "Gaia_CRF3_quality_all_E1": 98.979,
+        "VLBA_233_3_clean5sig_E1": 96.625,
+        "NVSS_S20": 34.57,
+        "NVSS_S50": 17.977,
+        "RACS_DR1_raw_S20": 24.174,
+        "SPICE_RACS_S20": 10.05,
+        "SPICE_RACS_S50": 0.0,
+        "SUMSS_S20": 48.754,
+        "LoTSS_DR3_S50": 23.822
+      },
+      "SUMSS_S20": {
+        "CMB_kinematic_ref": 52.558,
+        "Galactic_Center_ref": 126.386,
+        "DES_Dovekie_4p_stat_sys": 104.567,
+        "PantheonPlus_allz_9p_stat_sys": 77.12,
+        "PantheonPlus_lowz_9p_stat_sys": 75.763,
+        "Gaia_CRF3_quality_all_E1": 125.55,
+        "VLBA_233_3_clean5sig_E1": 114.399,
+        "NVSS_S20": 57.743,
+        "NVSS_S50": 42.564,
+        "RACS_DR1_raw_S20": 65.627,
+        "SPICE_RACS_S20": 50.17,
+        "SPICE_RACS_S50": 48.754,
+        "SUMSS_S20": 0.0,
+        "LoTSS_DR3_S50": 64.379
+      },
+      "LoTSS_DR3_S50": {
+        "CMB_kinematic_ref": 14.639,
+        "Galactic_Center_ref": 79.443,
+        "DES_Dovekie_4p_stat_sys": 49.148,
+        "PantheonPlus_allz_9p_stat_sys": 115.793,
+        "PantheonPlus_lowz_9p_stat_sys": 117.923,
+        "Gaia_CRF3_quality_all_E1": 75.282,
+        "VLBA_233_3_clean5sig_E1": 73.002,
+        "NVSS_S20": 55.489,
+        "NVSS_S50": 21.871,
+        "RACS_DR1_raw_S20": 1.511,
+        "SPICE_RACS_S20": 32.304,
+        "SPICE_RACS_S50": 23.822,
+        "SUMSS_S20": 64.379,
+        "LoTSS_DR3_S50": 0.0
+      }
+    },
+    "des_9p_collinearity_warning": {
+      "F_condition_9p": 200055005.53749898,
+      "F_condition_4p": 7722.571790694087,
+      "note": "DES-Dovekie ~30 sq deg footprint makes 9p [monopole, dipole, quadrupole] near-collinear (F_cond ~ 2e8); only 4p dipole is well-conditioned."
+    }
+  },
+  "cross_probe_quadrupole_alignment_galactic": {
+    "principal_axes_gal": {
+      "CMB_PR3_SMICA_T_n2": [
+        0.347748,
+        0.584458,
+        0.73313
+      ],
+      "CMB_PR3_Commander_T_n2": [
+        0.356503,
+        0.549596,
+        0.755546
+      ],
+      "PantheonPlus_allz_stat_sys_Q": [
+        -0.090886,
+        -0.960028,
+        0.264738
+      ],
+      "Gaia_CRF3_quality_all_E2": [
+        -0.869065,
+        -0.258324,
+        0.421894
+      ],
+      "Gaia_ScanLaw_deltaN_Q": [
+        -0.107921,
+        0.850801,
+        0.514286
+      ],
+      "VLBA_233_3_clean5sig_E2": [
+        0.629994,
+        -0.316371,
+        0.709237
+      ]
+    },
+    "acute_axis_separation_deg": {
+      "CMB_PR3_SMICA_T_n2": {
+        "CMB_PR3_SMICA_T_n2": 0.0,
+        "CMB_PR3_Commander_T_n2": 2.427,
+        "PantheonPlus_allz_stat_sys_Q": 66.508,
+        "Gaia_CRF3_quality_all_E2": 81.727,
+        "Gaia_ScanLaw_deltaN_Q": 33.2,
+        "VLBA_233_3_clean5sig_E2": 56.349
+      },
+      "CMB_PR3_Commander_T_n2": {
+        "CMB_PR3_SMICA_T_n2": 2.427,
+        "CMB_PR3_Commander_T_n2": 0.0,
+        "PantheonPlus_allz_stat_sys_Q": 68.899,
+        "Gaia_CRF3_quality_all_E2": 82.355,
+        "Gaia_ScanLaw_deltaN_Q": 35.146,
+        "VLBA_233_3_clean5sig_E2": 54.085
+      },
+      "PantheonPlus_allz_stat_sys_Q": {
+        "CMB_PR3_SMICA_T_n2": 66.508,
+        "CMB_PR3_Commander_T_n2": 68.899,
+        "PantheonPlus_allz_stat_sys_Q": 0.0,
+        "Gaia_CRF3_quality_all_E2": 63.981,
+        "Gaia_ScanLaw_deltaN_Q": 47.869,
+        "VLBA_233_3_clean5sig_E2": 64.264
+      },
+      "Gaia_CRF3_quality_all_E2": {
+        "CMB_PR3_SMICA_T_n2": 81.727,
+        "CMB_PR3_Commander_T_n2": 82.355,
+        "PantheonPlus_allz_stat_sys_Q": 63.981,
+        "Gaia_CRF3_quality_all_E2": 0.0,
+        "Gaia_ScanLaw_deltaN_Q": 84.78,
+        "VLBA_233_3_clean5sig_E2": 80.412
+      },
+      "Gaia_ScanLaw_deltaN_Q": {
+        "CMB_PR3_SMICA_T_n2": 33.2,
+        "CMB_PR3_Commander_T_n2": 35.146,
+        "PantheonPlus_allz_stat_sys_Q": 47.869,
+        "Gaia_CRF3_quality_all_E2": 84.78,
+        "Gaia_ScanLaw_deltaN_Q": 0.0,
+        "VLBA_233_3_clean5sig_E2": 88.419
+      },
+      "VLBA_233_3_clean5sig_E2": {
+        "CMB_PR3_SMICA_T_n2": 56.349,
+        "CMB_PR3_Commander_T_n2": 54.085,
+        "PantheonPlus_allz_stat_sys_Q": 64.264,
+        "Gaia_CRF3_quality_all_E2": 80.412,
+        "Gaia_ScanLaw_deltaN_Q": 88.419,
+        "VLBA_233_3_clean5sig_E2": 0.0
+      }
+    },
+    "stf_frobenius_cosine": {
+      "PantheonPlus_allz_stat_sys_Q": {
+        "PantheonPlus_allz_stat_sys_Q": 1.0,
+        "Gaia_CRF3_quality_all_E2": -0.4039,
+        "Gaia_ScanLaw_deltaN_Q": 0.2673,
+        "VLBA_233_3_clean5sig_E2": 0.1872
+      },
+      "Gaia_CRF3_quality_all_E2": {
+        "PantheonPlus_allz_stat_sys_Q": -0.4039,
+        "Gaia_CRF3_quality_all_E2": 1.0,
+        "Gaia_ScanLaw_deltaN_Q": -0.5504,
+        "VLBA_233_3_clean5sig_E2": 0.3471
+      },
+      "Gaia_ScanLaw_deltaN_Q": {
+        "PantheonPlus_allz_stat_sys_Q": 0.2673,
+        "Gaia_CRF3_quality_all_E2": -0.5504,
+        "Gaia_ScanLaw_deltaN_Q": 1.0,
+        "VLBA_233_3_clean5sig_E2": 0.4991
+      },
+      "VLBA_233_3_clean5sig_E2": {
+        "PantheonPlus_allz_stat_sys_Q": 0.1872,
+        "Gaia_CRF3_quality_all_E2": 0.3471,
+        "Gaia_ScanLaw_deltaN_Q": 0.4991,
+        "VLBA_233_3_clean5sig_E2": 1.0
+      }
+    },
+    "gaia_scanlaw_reported_stf_cosine": -0.5504420190507364
+  },
+  "systematic_floor_synthesis": {
+    "supernovae_and_pv_mocks": {
+      "pantheon_statonly_to_statsys_dip_mag": [
+        0.028525443534367385,
+        0.03787139133237767
+      ],
+      "pantheon_grouping_delta_dip_range_mag": [
+        0.011555096264266589,
+        0.0160897244223979
+      ],
+      "sdss_63mock_obs_dipole_median_km_s_per_mpc": 7.320602939730675,
+      "sdss_63mock_diag_wald_p95": 14.658316279114134
+    },
+    "astrometry_gaia_and_vlba": {
+      "gaia_ecliptic_E2_gradient_microasyr": {
+        "abs_beta_lt_20": 15.02816986964017,
+        "abs_beta_20_to_45": 7.990558088956791,
+        "abs_beta_ge_45": 4.768312925764755
+      },
+      "gaia_scan_half_contrast_E2_wald": 62.4006983018469,
+      "gaia_gal_cut_contrast_E2_wald": 19.544823398676062,
+      "vlba_chi2_dof_all_vs_clean5sig": [
+        7.714138169500674,
+        2.2964238847409857
+      ]
+    },
+    "radio_surveys": {
+      "racs_raw_vs_rms_unif_pixel_S20_amp": [
+        0.019444909823812577,
+        0.02526148882858945
+      ],
+      "racs_source_level_rms_cut_0p45_biased_S20_amp": 0.11853599549749526,
+      "lotss_interior_S20_to_S100_overdispersion": [
+        2.8611101754471164,
+        1.8815955522601675,
+        1.43833351172043
+      ],
+      "lotss_edge500_vs_interior1500_S50_overdispersion": [
+        2.8970599338106857,
+        1.8815955522601675
+      ]
+    },
+    "cmb_pipelines_and_pilot_mc": {
+      "pr3_smica_vs_commander_T_corr": 0.9996736557082159,
+      "pr3_smica_vs_cosmoglobe_QU_corr": 0.24634690589246064,
+      "cosmoglobe_vs_beyondplanck_QU_corr": 0.8435940936131235,
+      "smica_50mc_pilot_c2_TT_rank": [
+        1.0,
+        1.0
+      ],
+      "smica_50mc_pilot_c2_EE_rank": [
+        0.49019607843137253,
+        0.49019607843137253
+      ],
+      "commander_ffp10_raw_census": {
+        "complete_fits_in_cmb_mc": 2,
+        "incomplete_or_candidate_files": 10
+      }
+    }
+  },
+  "claim_hygiene": {
+    "physical_Pi": null,
+    "physical_GF": null,
+    "bianchi_family_identified": false,
+    "release_matched_null_pass": false,
+    "remaining_primary_blockers": {
+      "SQ-CF4": "Absent upstream raw zero-point calibration posterior, physical S_PV, J_cal Sigma_cal J_cal^T, selection covariance, and upstream-independent heldout",
+      "SQ-CMB-NULL": "FFP10 raw Commander simulations only 2 complete FITS (with incomplete partial files); end-to-end release-matched null blocked",
+      "SQ-NATIVE_B02": "External native polarized all-m Bianchi Boltzmann solver intentionally absent/prohibited in htt_base",
+      "SQ-PHOTON-FLUX_SQ-OPTICAL": "Physical photon-flux calibration and finite-redshift common-congruence optical response absent"
+    },
+    "statement": "Cross-probe directional/systematic synthesis over R89 Phase-3 observational bundles; all science gates remain fail-closed (NEXT_ID=SQ-CF4, physical_Pi=None, physical_GF=None)."
+  }
+}

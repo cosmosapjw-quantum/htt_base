@@ -1,0 +1,767 @@
+{
+  "schema": "htt.r89.g04_radio_five_survey_deep/1",
+  "group_id": "G04_RADIO_FRAME",
+  "node_ids": [
+    "V01",
+    "V02",
+    "V03",
+    "SQ-FRAME",
+    "SQ-RADIO",
+    "V04",
+    "V05",
+    "V06"
+  ],
+  "mask_policy": {
+    "nside": 16,
+    "abs_b_min_deg": 15.0,
+    "nhi_max_cm2": 1e+21,
+    "base_valid_pixels": 2114
+  },
+  "runtime": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "elapsed_seconds": 363.97489746099745,
+    "maxrss_kib": 3109976
+  },
+  "surveys": {
+    "NVSS_1400MHz": {
+      "total_parsed_rows": 1773484,
+      "flux_ladder_mJy": {
+        "15": {
+          "n_sources": 282144,
+          "masked_pixels": 1731,
+          "sky_fraction": 0.5634765625,
+          "mean_count_per_pixel": 162.9948006932409,
+          "dipole_icrs_vec": [
+            -0.011564074751335016,
+            0.009522092233716604,
+            0.015531950881758745
+          ],
+          "dipole_amplitude": 0.02157868308204271,
+          "dipole_amp_sd_cond": 0.004246867218703423,
+          "dipole_ra_dec_deg": [
+            140.53127048014963,
+            46.036497186197316
+          ],
+          "dipole_gal_lb_deg": [
+            173.7943689475809,
+            44.89323137233251
+          ],
+          "angle_to_cmb_deg": 58.350800398725646,
+          "poisson_overdispersion": 1.377709573939177
+        },
+        "20": {
+          "n_sources": 219886,
+          "masked_pixels": 1731,
+          "sky_fraction": 0.5634765625,
+          "mean_count_per_pixel": 127.02830733679954,
+          "dipole_icrs_vec": [
+            -0.01423839920800823,
+            0.00926386361727575,
+            0.010611699677500145
+          ],
+          "dipole_amplitude": 0.020028962808182338,
+          "dipole_amp_sd_cond": 0.004198015238098374,
+          "dipole_ra_dec_deg": [
+            146.95095122963076,
+            31.993140636293628
+          ],
+          "dipole_gal_lb_deg": [
+            194.54782751798768,
+            50.06641121911465
+          ],
+          "angle_to_cmb_deg": 43.78323416603838,
+          "poisson_overdispersion": 1.269157992133607
+        },
+        "30": {
+          "n_sources": 150986,
+          "masked_pixels": 1731,
+          "sky_fraction": 0.5634765625,
+          "mean_count_per_pixel": 87.22472559214327,
+          "dipole_icrs_vec": [
+            -0.01603950419372027,
+            0.009606062853105743,
+            0.00939249894681174
+          ],
+          "dipole_amplitude": 0.020922743003345613,
+          "dipole_amp_sd_cond": 0.00480194509191628,
+          "dipole_ra_dec_deg": [
+            149.08259816455876,
+            26.673987865990014
+          ],
+          "dipole_gal_lb_deg": [
+            203.26310747235314,
+            51.16129735870912
+          ],
+          "angle_to_cmb_deg": 38.26771906590484,
+          "poisson_overdispersion": 1.2226162447412299
+        },
+        "50": {
+          "n_sources": 90261,
+          "masked_pixels": 1731,
+          "sky_fraction": 0.5634765625,
+          "mean_count_per_pixel": 52.143847487001736,
+          "dipole_icrs_vec": [
+            -0.017676857174769724,
+            0.0065277832322234094,
+            -0.006008304813432077
+          ],
+          "dipole_amplitude": 0.01977834574061279,
+          "dipole_amp_sd_cond": 0.00618502056138048,
+          "dipole_ra_dec_deg": [
+            159.73161086657703,
+            -17.684899252505026
+          ],
+          "dipole_gal_lb_deg": [
+            263.54487400125566,
+            34.860528428468385
+          ],
+          "angle_to_cmb_deg": 13.397137226499732,
+          "poisson_overdispersion": 1.2061537017784911
+        }
+      }
+    },
+    "RACS_low_DR1_888MHz": {
+      "total_parsed_rows": 2123638,
+      "raw_footprint_ladder_mJy": {
+        "15": {
+          "n_sources": 360550,
+          "masked_pixels": 1582,
+          "sky_fraction": 0.5149739583333334,
+          "mean_count_per_pixel": 227.90771175726928,
+          "dipole_icrs_vec": [
+            -0.015633304286807245,
+            -0.0008401921139281429,
+            -0.005211338082360493
+          ],
+          "dipole_amplitude": 0.01650042939807548,
+          "dipole_amp_sd_cond": 0.003518589403011638,
+          "dipole_ra_dec_deg": [
+            183.0763294113021,
+            -18.410954722186432
+          ],
+          "dipole_gal_lb_deg": [
+            290.09370157083544,
+            43.48314741985461
+          ],
+          "angle_to_cmb_deg": 18.67088883926552,
+          "poisson_overdispersion": 1.5647691878572496
+        },
+        "20": {
+          "n_sources": 283918,
+          "masked_pixels": 1582,
+          "sky_fraction": 0.5149739583333334,
+          "mean_count_per_pixel": 179.4677623261694,
+          "dipole_icrs_vec": [
+            -0.019046771750138497,
+            -0.0009200698205949717,
+            -0.003805059195276631
+          ],
+          "dipole_amplitude": 0.019444909823812577,
+          "dipole_amp_sd_cond": 0.0035619428525142066,
+          "dipole_ra_dec_deg": [
+            182.76556951886647,
+            -11.284688121882793
+          ],
+          "dipole_gal_lb_deg": [
+            287.3034504260332,
+            50.357846616884785
+          ],
+          "angle_to_cmb_deg": 15.26190525840641,
+          "poisson_overdispersion": 1.4456474356186226
+        },
+        "30": {
+          "n_sources": 199494,
+          "masked_pixels": 1582,
+          "sky_fraction": 0.5149739583333334,
+          "mean_count_per_pixel": 126.10240202275601,
+          "dipole_icrs_vec": [
+            -0.020647459384595526,
+            -0.00412187978278587,
+            -0.00504736527004396
+          ],
+          "dipole_amplitude": 0.021651405685347697,
+          "dipole_amp_sd_cond": 0.004193207939966236,
+          "dipole_ra_dec_deg": [
+            191.28962024444647,
+            -13.480800713953478
+          ],
+          "dipole_gal_lb_deg": [
+            300.58753141906595,
+            49.36236078812022
+          ],
+          "angle_to_cmb_deg": 23.87137179737017,
+          "poisson_overdispersion": 1.3366271980836655
+        },
+        "50": {
+          "n_sources": 123370,
+          "masked_pixels": 1582,
+          "sky_fraction": 0.5149739583333334,
+          "mean_count_per_pixel": 77.98356510745892,
+          "dipole_icrs_vec": [
+            -0.02054044073084174,
+            -0.0037061264213109424,
+            -0.00536279029997102
+          ],
+          "dipole_amplitude": 0.02155004868369036,
+          "dipole_amp_sd_cond": 0.005175705859343209,
+          "dipole_ra_dec_deg": [
+            190.22787563545884,
+            -14.40963813629374
+          ],
+          "dipole_gal_lb_deg": [
+            299.0926330822604,
+            48.38362395805842
+          ],
+          "angle_to_cmb_deg": 23.116751376823043,
+          "poisson_overdispersion": 1.240443450546479
+        },
+        "100": {
+          "n_sources": 59681,
+          "masked_pixels": 1582,
+          "sky_fraction": 0.5149739583333334,
+          "mean_count_per_pixel": 37.72503160556258,
+          "dipole_icrs_vec": [
+            -0.023732065403340878,
+            -0.004656419888208005,
+            -0.008176792328448729
+          ],
+          "dipole_amplitude": 0.025529455679005893,
+          "dipole_amp_sd_cond": 0.007363836161893319,
+          "dipole_ra_dec_deg": [
+            191.1008689299853,
+            -18.680376026971487
+          ],
+          "dipole_gal_lb_deg": [
+            300.60943173686485,
+            44.159647604725954
+          ],
+          "angle_to_cmb_deg": 25.402427221368434,
+          "poisson_overdispersion": 1.115266336341423
+        }
+      },
+      "rms_uniform_footprint_ladder_mJy": {
+        "15": {
+          "n_sources": 274195,
+          "masked_pixels": 1202,
+          "sky_fraction": 0.3912760416666667,
+          "mean_count_per_pixel": 228.11564059900167,
+          "dipole_icrs_vec": [
+            -0.018244896505199545,
+            -0.0013931553093859627,
+            -0.005824737462684364
+          ],
+          "dipole_amplitude": 0.01920272628328362,
+          "dipole_amp_sd_cond": 0.003995828295687906,
+          "dipole_ra_dec_deg": [
+            184.36655380616315,
+            -17.657641034843184
+          ],
+          "dipole_gal_lb_deg": [
+            291.55979051173273,
+            44.462677058527674
+          ],
+          "angle_to_cmb_deg": 19.27072873050052,
+          "poisson_overdispersion": 1.3839291511029104
+        },
+        "20": {
+          "n_sources": 215882,
+          "masked_pixels": 1202,
+          "sky_fraction": 0.3912760416666667,
+          "mean_count_per_pixel": 179.60232945091514,
+          "dipole_icrs_vec": [
+            -0.023828756504802533,
+            -0.0010808841875481786,
+            -0.00831654198840413
+          ],
+          "dipole_amplitude": 0.02526148882858945,
+          "dipole_amp_sd_cond": 0.0044545444398684485,
+          "dipole_ra_dec_deg": [
+            182.5971845895917,
+            -19.221330549534244
+          ],
+          "dipole_gal_lb_deg": [
+            289.7222096486417,
+            42.59506839299631
+          ],
+          "angle_to_cmb_deg": 18.80248265709539,
+          "poisson_overdispersion": 1.3129047035612214
+        },
+        "30": {
+          "n_sources": 151510,
+          "masked_pixels": 1202,
+          "sky_fraction": 0.3912760416666667,
+          "mean_count_per_pixel": 126.04825291181365,
+          "dipole_icrs_vec": [
+            -0.02686533033214208,
+            -0.004931226260295823,
+            -0.01348008623233012
+          ],
+          "dipole_amplitude": 0.03045941055103333,
+          "dipole_amp_sd_cond": 0.005672674745274891,
+          "dipole_ra_dec_deg": [
+            190.40106350749573,
+            -26.267269654615507
+          ],
+          "dipole_gal_lb_deg": [
+            300.1873966291128,
+            36.552069362602154
+          ],
+          "angle_to_cmb_deg": 28.81847844166447,
+          "poisson_overdispersion": 1.2628254921447923
+        },
+        "50": {
+          "n_sources": 93594,
+          "masked_pixels": 1202,
+          "sky_fraction": 0.3912760416666667,
+          "mean_count_per_pixel": 77.86522462562397,
+          "dipole_icrs_vec": [
+            -0.029177793595158628,
+            -0.011338586978899043,
+            -0.02033104152623401
+          ],
+          "dipole_amplitude": 0.03732637731284929,
+          "dipole_amp_sd_cond": 0.007629438954344399,
+          "dipole_ra_dec_deg": [
+            201.23629083855553,
+            -33.00300060813619
+          ],
+          "dipole_gal_lb_deg": [
+            310.98896942321187,
+            29.343995115443573
+          ],
+          "angle_to_cmb_deg": 40.38568682660353,
+          "poisson_overdispersion": 1.2010037234778137
+        },
+        "100": {
+          "n_sources": 45175,
+          "masked_pixels": 1202,
+          "sky_fraction": 0.3912760416666667,
+          "mean_count_per_pixel": 37.58319467554077,
+          "dipole_icrs_vec": [
+            -0.03233946025582153,
+            -0.015892248877644448,
+            -0.02799719047590427
+          ],
+          "dipole_amplitude": 0.045631644048520936,
+          "dipole_amp_sd_cond": 0.011001266846292986,
+          "dipole_ra_dec_deg": [
+            206.1704124188195,
+            -37.846469572260425
+          ],
+          "dipole_gal_lb_deg": [
+            314.3964959498477,
+            23.837101802656978
+          ],
+          "angle_to_cmb_deg": 46.37427990715677,
+          "poisson_overdispersion": 1.0961491580552616
+        }
+      },
+      "rms_uniform_nvss_overlap_S20_S30": {
+        "20": {
+          "n_sources": 160635,
+          "masked_pixels": 893,
+          "sky_fraction": 0.2906901041666667,
+          "mean_count_per_pixel": 179.88241881298993,
+          "dipole_icrs_vec": [
+            -0.023048071576535923,
+            -0.005051881163720829,
+            -0.01579732395149361
+          ],
+          "dipole_amplitude": 0.028395255778349913,
+          "dipole_amp_sd_cond": 0.0064144593865036945,
+          "dipole_ra_dec_deg": [
+            192.36308312540834,
+            -33.802835358017944
+          ],
+          "dipole_gal_lb_deg": [
+            302.4600054325471,
+            29.06709282524852
+          ],
+          "angle_to_cmb_deg": 35.08254978423203,
+          "poisson_overdispersion": 1.3181990711868938
+        },
+        "30": {
+          "n_sources": 112744,
+          "masked_pixels": 893,
+          "sky_fraction": 0.2906901041666667,
+          "mean_count_per_pixel": 126.25307950727884,
+          "dipole_icrs_vec": [
+            -0.02557840857963731,
+            -0.007161145924569681,
+            -0.024274969792649523
+          ],
+          "dipole_amplitude": 0.03598348447348994,
+          "dipole_amp_sd_cond": 0.008381100426515761,
+          "dipole_ra_dec_deg": [
+            195.64056710860402,
+            -42.42419821652457
+          ],
+          "dipole_gal_lb_deg": [
+            305.12189044323367,
+            20.400241873633277
+          ],
+          "angle_to_cmb_deg": 43.084399114236525,
+          "poisson_overdispersion": 1.2547515622015892
+        }
+      },
+      "source_level_rms_cut_0p45_biased_selection_contrast_S20": {
+        "n_sources": 182240,
+        "masked_pixels": 1202,
+        "sky_fraction": 0.3912760416666667,
+        "mean_count_per_pixel": 151.61397670549084,
+        "dipole_icrs_vec": [
+          -0.023019449075256507,
+          -0.010532011212074916,
+          -0.11580139866462157
+        ],
+        "dipole_amplitude": 0.11853599549749526,
+        "dipole_amp_sd_cond": 0.013846365709557364,
+        "dipole_ra_dec_deg": [
+          204.5853569058947,
+          -77.66901884328925
+        ],
+        "dipole_gal_lb_deg": [
+          305.5076249057386,
+          -15.032455027673103
+        ],
+        "angle_to_cmb_deg": 73.24920904060887,
+        "poisson_overdispersion": 5.114537695296955
+      }
+    },
+    "SPICE_RACS_DR2_944MHz": {
+      "total_parsed_rows": 3980923,
+      "full_footprint_ladder_mJy": {
+        "20": {
+          "n_sources": 328502,
+          "masked_pixels": 1866,
+          "sky_fraction": 0.607421875,
+          "mean_count_per_pixel": 176.04608788853162,
+          "dipole_icrs_vec": [
+            -0.041605230922082355,
+            0.016798080809554274,
+            0.007669060364579683
+          ],
+          "dipole_amplitude": 0.045519064641528835,
+          "dipole_amp_sd_cond": 0.003099399931668625,
+          "dipole_ra_dec_deg": [
+            158.01364384969372,
+            9.699465463988862
+          ],
+          "dipole_gal_lb_deg": [
+            234.17398128091298,
+            52.82461151266528
+          ],
+          "angle_to_cmb_deg": 19.36056673547993,
+          "poisson_overdispersion": 1.3044140575753103
+        },
+        "30": {
+          "n_sources": 231358,
+          "masked_pixels": 1866,
+          "sky_fraction": 0.607421875,
+          "mean_count_per_pixel": 123.9860664523044,
+          "dipole_icrs_vec": [
+            -0.04373266921993809,
+            0.016028094336930872,
+            0.006977630559192934
+          ],
+          "dipole_amplitude": 0.04709706459424684,
+          "dipole_amp_sd_cond": 0.003616489772296181,
+          "dipole_ra_dec_deg": [
+            159.872032539588,
+            8.51997810638002
+          ],
+          "dipole_gal_lb_deg": [
+            237.52119350839925,
+            53.69054877136036
+          ],
+          "angle_to_cmb_deg": 17.43149578045003,
+          "poisson_overdispersion": 1.2684580129607947
+        },
+        "50": {
+          "n_sources": 143051,
+          "masked_pixels": 1866,
+          "sky_fraction": 0.607421875,
+          "mean_count_per_pixel": 76.66184351554126,
+          "dipole_icrs_vec": [
+            -0.046751135031679866,
+            0.015764083447069893,
+            0.00018917591201213712
+          ],
+          "dipole_amplitude": 0.049337721281006004,
+          "dipole_amp_sd_cond": 0.004511187360850891,
+          "dipole_ra_dec_deg": [
+            161.36633307539998,
+            0.2196900793454537
+          ],
+          "dipole_gal_lb_deg": [
+            249.35054839061988,
+            49.520475535729595
+          ],
+          "angle_to_cmb_deg": 9.71363307646824,
+          "poisson_overdispersion": 1.1944386131104006
+        }
+      },
+      "nvss_overlap_band_S20_S30": {
+        "20": {
+          "n_sources": 262163,
+          "masked_pixels": 1483,
+          "sky_fraction": 0.4827473958333333,
+          "mean_count_per_pixel": 176.7788267026298,
+          "dipole_icrs_vec": [
+            -0.037576256804032204,
+            0.014858278197285128,
+            0.003912976606933657
+          ],
+          "dipole_amplitude": 0.040596242342326526,
+          "dipole_amp_sd_cond": 0.0032455676316606626,
+          "dipole_ra_dec_deg": [
+            158.4253318921762,
+            5.531193155581318
+          ],
+          "dipole_gal_lb_deg": [
+            240.07525763946052,
+            50.766498333039934
+          ],
+          "angle_to_cmb_deg": 15.678963539077264,
+          "poisson_overdispersion": 1.2870117585128111
+        },
+        "30": {
+          "n_sources": 184715,
+          "masked_pixels": 1483,
+          "sky_fraction": 0.4827473958333333,
+          "mean_count_per_pixel": 124.55495616992583,
+          "dipole_icrs_vec": [
+            -0.03962545603898414,
+            0.015466312410622749,
+            0.0014425114732202298
+          ],
+          "dipole_amplitude": 0.04256130196822954,
+          "dipole_amp_sd_cond": 0.0037803592207119835,
+          "dipole_ra_dec_deg": [
+            158.6786748923902,
+            1.9422726059135489
+          ],
+          "dipole_gal_lb_deg": [
+            244.63644994949686,
+            48.702321449228286
+          ],
+          "angle_to_cmb_deg": 12.823466744704474,
+          "poisson_overdispersion": 1.2353636633884526
+        }
+      }
+    },
+    "SUMSS_v21_843MHz": {
+      "total_parsed_rows": 211050,
+      "flux_ladder_mJy": {
+        "15": {
+          "n_sources": 110562,
+          "masked_pixels": 477,
+          "sky_fraction": 0.1552734375,
+          "mean_count_per_pixel": 231.78616352201257,
+          "dipole_icrs_vec": [
+            -0.008527631301118343,
+            0.030163312150056222,
+            -0.08607813463511386
+          ],
+          "dipole_amplitude": 0.09160781166325463,
+          "dipole_amp_sd_cond": 0.0234020820176752,
+          "dipole_ra_dec_deg": [
+            105.78641194487729,
+            -69.99076721051742
+          ],
+          "dipole_gal_lb_deg": [
+            280.89501212017694,
+            -24.387737846638025
+          ],
+          "angle_to_cmb_deg": 74.20164804702924,
+          "poisson_overdispersion": 1.387988413055565
+        },
+        "20": {
+          "n_sources": 87297,
+          "masked_pixels": 477,
+          "sky_fraction": 0.1552734375,
+          "mean_count_per_pixel": 183.01257861635222,
+          "dipole_icrs_vec": [
+            -0.017162295158420732,
+            0.03673669242214219,
+            -0.012388275070172108
+          ],
+          "dipole_amplitude": 0.04239809316983582,
+          "dipole_amp_sd_cond": 0.012603271998986967,
+          "dipole_ra_dec_deg": [
+            115.04058910790941,
+            -16.98908011706363
+          ],
+          "dipole_gal_lb_deg": [
+            233.56849956929773,
+            2.6572447588607133
+          ],
+          "angle_to_cmb_deg": 52.55772673597392,
+          "poisson_overdispersion": 1.4736054427526073
+        },
+        "30": {
+          "n_sources": 61426,
+          "masked_pixels": 477,
+          "sky_fraction": 0.1552734375,
+          "mean_count_per_pixel": 128.77568134171906,
+          "dipole_icrs_vec": [
+            -0.01944474549072842,
+            0.030339280581258683,
+            0.006510826593113576
+          ],
+          "dipole_amplitude": 0.03661913347299658,
+          "dipole_amp_sd_cond": 0.012899316391010258,
+          "dipole_ra_dec_deg": [
+            122.65621262653272,
+            10.24155418695508
+          ],
+          "dipole_gal_lb_deg": [
+            212.5442743607396,
+            22.191014985677597
+          ],
+          "angle_to_cmb_deg": 48.25729812545139,
+          "poisson_overdispersion": 1.537032754920744
+        },
+        "50": {
+          "n_sources": 38268,
+          "masked_pixels": 477,
+          "sky_fraction": 0.1552734375,
+          "mean_count_per_pixel": 80.22641509433963,
+          "dipole_icrs_vec": [
+            -0.007449264784770437,
+            0.024733931415830447,
+            0.041016089454346066
+          ],
+          "dipole_amplitude": 0.04847245097210934,
+          "dipole_amp_sd_cond": 0.03569711228801554,
+          "dipole_ra_dec_deg": [
+            106.76103686983461,
+            57.79785438791904
+          ],
+          "dipole_gal_lb_deg": [
+            158.75527070032112,
+            24.715483507804063
+          ],
+          "angle_to_cmb_deg": 81.21678155676268,
+          "poisson_overdispersion": 1.3659541815639407
+        }
+      }
+    },
+    "LoTSS_DR3_144MHz": {
+      "total_rows": 13667877,
+      "interior_cut_min_raw_per_pix": 1500,
+      "flux_ladder_mJy": {
+        "20": {
+          "n_sources": 438806,
+          "masked_pixels": 966,
+          "sky_fraction": 0.314453125,
+          "mean_count_per_pixel": 454.25051759834366,
+          "dipole_icrs_vec": [
+            -0.015253271834860437,
+            0.003985067134867709,
+            0.018690227902595027
+          ],
+          "dipole_amplitude": 0.02445133290412797,
+          "dipole_amp_sd_cond": 0.00683458027438402,
+          "dipole_ra_dec_deg": [
+            165.35819247615953,
+            49.852294622408884
+          ],
+          "dipole_gal_lb_deg": [
+            158.2952656438223,
+            59.040781684048305
+          ],
+          "angle_to_cmb_deg": 56.84109619587591,
+          "poisson_overdispersion": 2.8611101754471164
+        },
+        "50": {
+          "n_sources": 226788,
+          "masked_pixels": 966,
+          "sky_fraction": 0.314453125,
+          "mean_count_per_pixel": 234.77018633540374,
+          "dipole_icrs_vec": [
+            -0.01109984247938362,
+            -0.000334750778583306,
+            -0.0024422856494239627
+          ],
+          "dipole_amplitude": 0.011370282333533915,
+          "dipole_amp_sd_cond": 0.0051888639349565715,
+          "dipole_ra_dec_deg": [
+            181.72741146897923,
+            -12.403530899492408
+          ],
+          "dipole_gal_lb_deg": [
+            286.22208911354574,
+            49.01812952055275
+          ],
+          "angle_to_cmb_deg": 14.638996371582522,
+          "poisson_overdispersion": 1.8815955522601675
+        },
+        "100": {
+          "n_sources": 130576,
+          "masked_pixels": 966,
+          "sky_fraction": 0.314453125,
+          "mean_count_per_pixel": 135.1718426501035,
+          "dipole_icrs_vec": [
+            -0.010278445602906718,
+            -0.008722311169027077,
+            0.0006391025823142607
+          ],
+          "dipole_amplitude": 0.013495688506036574,
+          "dipole_amp_sd_cond": 0.005707554176202451,
+          "dipole_ra_dec_deg": [
+            220.31800801759655,
+            2.7143173151700104
+          ],
+          "dipole_gal_lb_deg": [
+            354.76523065735216,
+            54.13834347111753
+          ],
+          "angle_to_cmb_deg": 53.15932985086077,
+          "poisson_overdispersion": 1.43833351172043
+        }
+      },
+      "edge500_sensitivity_S50": {
+        "n_sources": 232146,
+        "masked_pixels": 1000,
+        "sky_fraction": 0.3255208333333333,
+        "mean_count_per_pixel": 232.146,
+        "dipole_icrs_vec": [
+          -0.005857509379007462,
+          -0.007154920507912669,
+          0.05291148770316906
+        ],
+        "dipole_amplitude": 0.053713395299146004,
+        "dipole_amp_sd_cond": 0.01158042753768594,
+        "dipole_ra_dec_deg": [
+          230.6938874206701,
+          80.08710997041236
+        ],
+        "dipole_gal_lb_deg": [
+          115.54697318732201,
+          34.76285812592596
+        ],
+        "angle_to_cmb_deg": 92.34169091579486,
+        "poisson_overdispersion": 2.8970599338106857
+      }
+    }
+  },
+  "node_verdicts": {
+    "V01": "REUSED_SCOPED",
+    "V02": "REUSED_SCOPED",
+    "V03": "REUSED_SCOPED",
+    "SQ-FRAME": "DIAGNOSTIC_COMPLETED_SCOPED",
+    "SQ-RADIO": "DIAGNOSTIC_COMPLETED_SCOPED",
+    "V04": "BLOCKED_DEPENDENCY",
+    "V05": "BLOCKED_DEPENDENCY",
+    "V06": "BLOCKED_DEPENDENCY"
+  },
+  "claim_hygiene": {
+    "physical_Pi": null,
+    "physical_GF": null,
+    "bianchi_family_identified": false,
+    "statement": "Empirical radio number-count dipole flux-ladder and pixel-RMS uniformity diagnostics only; not a tile/beam-calibrated physical velocity measurement or Bianchi family claim."
+  },
+  "physical_gate_note": "Uniform RMS cuts on RACS-low DR1 and 5-frequency flux ladders quantify empirical survey selection/noise sensitivity; V04-V06 remain BLOCKED_DEPENDENCY pending tile/beam completeness transfer and common-congruence anchor."
+}
