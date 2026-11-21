@@ -1,0 +1,161 @@
+{
+  "schema": "htt.r90.non_solver_blocker_triage/1",
+  "asof": "2026-11-21",
+  "classification_law": "data/model/additional_analysis/solver; a workaround enables conditional diagnostics, NOT historical physics PASS",
+  "entries": [
+    {
+      "id": "SQ-CF4",
+      "category": "DATA",
+      "blocking_input": "CF4 pre-intercalibration MCMC zero-point posterior and source-matched PV/selection covariance",
+      "solverfree_route": "R87 method overlap and R90/R89 full CF4/SDSS/DESI diagnostics",
+      "exact_missing_to_promote": "Request upstream posterior and independent CF4 mock/calibration; never substitute SDSS-footprint mocks",
+      "physical_claim_status": "OPEN_NOT_CLOSED"
+    },
+    {
+      "id": "H02",
+      "category": "MODEL",
+      "blocking_input": "Cross-method zero-point, PV and survey selection covariance/source overlap model",
+      "solverfree_route": "Use R89 empirical method/profile and partial-ID scenario bounds",
+      "exact_missing_to_promote": "Fit true upstream Jcal and source-matched PV before physical H04",
+      "physical_claim_status": "OPEN_NOT_CLOSED"
+    },
+    {
+      "id": "SQ-GAIA",
+      "category": "MODEL",
+      "blocking_input": "AGN/scan/reddening joint error and normal-frame VSH transfer",
+      "solverfree_route": "R89 48-patch jackknife and R90 actual Quaia selection map contrast",
+      "exact_missing_to_promote": "Source-specific Gaia scan/time/AGN null and position-drift data required",
+      "physical_claim_status": "OPEN_NOT_CLOSED"
+    },
+    {
+      "id": "K03",
+      "category": "DATA",
+      "blocking_input": "Independent nonradial normal-frame proper-motion source/null and source-redshift transport",
+      "solverfree_route": "R89 Gaia/VLBA VSH source-conditioned inference",
+      "exact_missing_to_promote": "Matched radio/optical reference-frame and optical finite-z transfer",
+      "physical_claim_status": "OPEN_NOT_CLOSED"
+    },
+    {
+      "id": "SQ-RADIO",
+      "category": "MODEL",
+      "blocking_input": "Radio clustering, tile/RMS selection, source multiplicity and random catalog joint covariance",
+      "solverfree_route": "R89 five-survey full catalog/overlap masks, radio jackknife, Ellis-Baldwin flux slopes",
+      "exact_missing_to_promote": "Build matched survey-specific LSS and selection mocks",
+      "physical_claim_status": "OPEN_NOT_CLOSED"
+    },
+    {
+      "id": "SQ-FRAME",
+      "category": "MODEL",
+      "blocking_input": "Observer/matter/source congruence response across CF4/Gaia/CMB/radio",
+      "solverfree_route": "Use local-boost Lorentz map R72, R89 VSH/RACS source diagnostics",
+      "exact_missing_to_promote": "Solve covariant mapping with explicit source history; not spin=omega",
+      "physical_claim_status": "OPEN_NOT_CLOSED"
+    },
+    {
+      "id": "SQ-P1-ANCHOR",
+      "category": "DATA",
+      "blocking_input": "Physical normal-frame anchor and 274-row nonselected HI-CF4 release distances",
+      "solverfree_route": "R89 G06 sharp Manski unknown mass bounds",
+      "exact_missing_to_promote": "Obtain calibration anchor; remain partially identified otherwise",
+      "physical_claim_status": "OPEN_NOT_CLOSED"
+    },
+    {
+      "id": "S02",
+      "category": "MODEL",
+      "blocking_input": "Actual physical x and calibrated finite law/measure",
+      "solverfree_route": "Use R82 existing coupled 2048 window draws, R90 typed Q/F conditional",
+      "exact_missing_to_promote": "No physical Pi or transported G_F without null/geometry",
+      "physical_claim_status": "OPEN_NOT_CLOSED"
+    },
+    {
+      "id": "SQ-CMB-NULL",
+      "category": "DATA",
+      "blocking_input": "Release-matched full Commander T/E/B simulations and foreground/beam/processing null",
+      "solverfree_route": "R89 PR3/PR4 selected maps, 75 SMICA pilot, 200 synthetic MASTER checks",
+      "exact_missing_to_promote": "Only qualified accessible Commander MC; do not download whole PR4",
+      "physical_claim_status": "OPEN_NOT_CLOSED"
+    },
+    {
+      "id": "L03",
+      "category": "ADDITIONAL_ANALYSIS",
+      "blocking_input": "Mode-coupling, MC tail, pixel-window and null adequacy",
+      "solverfree_route": "R89 G05 MASTER conditional real map and split analysis",
+      "exact_missing_to_promote": "Full-spectrum leakage and independent source-calibrated simulations",
+      "physical_claim_status": "OPEN_NOT_CLOSED"
+    },
+    {
+      "id": "SQ-PHOTON-FLUX",
+      "category": "MODEL",
+      "blocking_input": "Physical photon higher moment distribution/normal flux",
+      "solverfree_route": "PHY02 Gram positivity and existing analytic moment inequalities",
+      "exact_missing_to_promote": "External photon source or explicitly derived closure, not pseudo TEB transfer",
+      "physical_claim_status": "OPEN_NOT_CLOSED"
+    },
+    {
+      "id": "SQ-LIE-FLUX",
+      "category": "MODEL",
+      "blocking_input": "Independent normal-frame rho,j,pi source in tilted fluids",
+      "solverfree_route": "R49 full Class A/B background + G07 q=0, pi !=0 counterexample",
+      "exact_missing_to_promote": "Physical species EOS/source histories and positive matter bounds",
+      "physical_claim_status": "OPEN_NOT_CLOSED"
+    },
+    {
+      "id": "SQ-OPTICAL",
+      "category": "MODEL",
+      "blocking_input": "General finite-z Sachs/Jacobi/position-drift mapping for tilted non-I Bianchi",
+      "solverfree_route": "R89 exact-axisymmetric-Type-I optical and R49 background tetrad ODE",
+      "exact_missing_to_promote": "Independent Sachs/Jacobi check then extend R49 non-I families",
+      "physical_claim_status": "OPEN_NOT_CLOSED"
+    },
+    {
+      "id": "SQ-CROSS-COV",
+      "category": "DATA",
+      "blocking_input": "Source-overlap and shared calibration/LSS null across different probes",
+      "solverfree_route": "R89 14-axis comparisons retained only descriptively",
+      "exact_missing_to_promote": "Request source IDs/selection randoms and joint covariance when available",
+      "physical_claim_status": "OPEN_NOT_CLOSED"
+    },
+    {
+      "id": "K04",
+      "category": "MODEL",
+      "blocking_input": "Physical kinematics and shear observable transport",
+      "solverfree_route": "R90 canonical Codazzi+R62 conditional compatibility",
+      "exact_missing_to_promote": "Do not infer physical sigma from CF4 without optical coupling",
+      "physical_claim_status": "OPEN_NOT_CLOSED"
+    },
+    {
+      "id": "V04",
+      "category": "ADDITIONAL_ANALYSIS",
+      "blocking_input": "Local versus global tilt degeneracy under different source windows",
+      "solverfree_route": "R89 boost and radio five-survey directional/source tests",
+      "exact_missing_to_promote": "Model and empirically calibrate independent source history before Bayesian claims",
+      "physical_claim_status": "OPEN_NOT_CLOSED"
+    },
+    {
+      "id": "PHY-01..07",
+      "category": "ADDITIONAL_ANALYSIS",
+      "blocking_input": "Full non-solver analytic/observational conditional route execution",
+      "solverfree_route": "R90 seven real/constructed checks with physical limit flags",
+      "exact_missing_to_promote": "Upgrade only physical source qualified routes; theory-only remains valid",
+      "physical_claim_status": "OPEN_NOT_CLOSED"
+    },
+    {
+      "id": "SQ-NATIVE",
+      "category": "SOLVER_DEPENDENT",
+      "blocking_input": "Native polarized all-m Bianchi Einstein–Boltzmann transfer atlas",
+      "solverfree_route": "External transport lane only, not an admissible shortcut for morphological geometry",
+      "exact_missing_to_promote": "Wait for independently verified external native transfer",
+      "physical_claim_status": "OPEN_NOT_CLOSED"
+    },
+    {
+      "id": "B02..B05",
+      "category": "SOLVER_DEPENDENT",
+      "blocking_input": "Polarized high-ell family atlas and cross-family evidence under physical CMB null",
+      "solverfree_route": "SF-P5 canonical algebra/CF4 conditional morphology attribution now executable",
+      "exact_missing_to_promote": "Separate transfer lane for native family probabilities and full E/B power",
+      "physical_claim_status": "OPEN_NOT_CLOSED"
+    }
+  ],
+  "unresolved_non_solver_blocks": 17,
+  "external_transfer_blocks": 2
+}

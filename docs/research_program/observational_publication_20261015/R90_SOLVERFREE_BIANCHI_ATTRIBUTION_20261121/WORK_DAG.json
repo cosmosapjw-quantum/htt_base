@@ -1,0 +1,594 @@
+{
+  "schema": "htt.r90.solverfree_plus_external_transfer_overlay/1",
+  "science_SSOT_path": "docs/research_program/observational_publication_20261015/R78_UNIFIED_SCIENCE_DAG_20261119/INTEGRATED_DAG.json",
+  "science_SSOT_SHA256": "90aba8c1ca9c8e3a7744be0f071dcfe09b81e5353892aca13878191e20f58c11",
+  "original_60_nodes_unchanged": true,
+  "original_129_hard_edges_unchanged": true,
+  "original_next_science_id": "SQ-CF4",
+  "no_global_agent_START": true,
+  "solver_free_nodes": 17,
+  "external_transfer_nodes": 5,
+  "all_six_papers": [
+    "P1",
+    "P2",
+    "P3",
+    "P4",
+    "P5",
+    "P6"
+  ],
+  "all_seven_cross_phy": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "nodes": [
+    {
+      "id": "SF-SQ-CF4",
+      "lane": "solver_free",
+      "depends": [],
+      "status": "OBSERVATIONAL_DIAGNOSTIC_OR_CONDITIONAL_MODEL_COMPUTED"
+    },
+    {
+      "id": "SF-ATTR",
+      "lane": "solver_free",
+      "depends": [
+        "SF-SQ-CF4"
+      ],
+      "status": "OBSERVATIONAL_DIAGNOSTIC_OR_CONDITIONAL_MODEL_COMPUTED"
+    },
+    {
+      "id": "SF-QUAIA",
+      "lane": "solver_free",
+      "depends": [],
+      "status": "OBSERVATIONAL_DIAGNOSTIC_OR_CONDITIONAL_MODEL_COMPUTED"
+    },
+    {
+      "id": "SF-P1",
+      "lane": "solver_free",
+      "depends": [
+        "SF-P3"
+      ],
+      "source_group": "G06_P1",
+      "status": "SOURCE_CONDITIONAL_EXECUTED_OR_REUSED",
+      "scope": "Signed x, Q statistical body, F working Gaussian, Pi and GF missing physical transfer"
+    },
+    {
+      "id": "SF-P2",
+      "lane": "solver_free",
+      "depends": [],
+      "source_group": "G05_PLANCK",
+      "status": "SOURCE_CONDITIONAL_EXECUTED_OR_REUSED",
+      "scope": "Observed low-ell morphology/MASTER conditional, not source-matched significance"
+    },
+    {
+      "id": "SF-P3",
+      "lane": "solver_free",
+      "depends": [
+        "SF-SQ-CF4"
+      ],
+      "source_group": "G02_CF4",
+      "status": "SOURCE_CONDITIONAL_EXECUTED_OR_REUSED",
+      "scope": "Full CF4 apparent Hubble tensor, PV/source partial-ID without full physical calibration"
+    },
+    {
+      "id": "SF-P4",
+      "lane": "solver_free",
+      "depends": [
+        "SF-P3"
+      ],
+      "source_group": "G04_RADIO_FRAME",
+      "status": "SOURCE_CONDITIONAL_EXECUTED_OR_REUSED",
+      "scope": "Local boost/radio/global-tilt source diagnostics, physical joint likelihood blocked"
+    },
+    {
+      "id": "SF-P5",
+      "lane": "solver_free",
+      "depends": [
+        "SF-ATTR"
+      ],
+      "source_group": "G07_BIANCHI",
+      "status": "SOURCE_CONDITIONAL_EXECUTED_OR_REUSED",
+      "scope": "Lie algebra/Codazzi/tilted shear family conditional compatibility, not native CMB attribution"
+    },
+    {
+      "id": "SF-P6",
+      "lane": "solver_free",
+      "depends": [
+        "SF-QUAIA"
+      ],
+      "source_group": "G03_GAIA",
+      "status": "SOURCE_CONDITIONAL_EXECUTED_OR_REUSED",
+      "scope": "Gaia/VLBA nonradial VSH with selection/source covariance"
+    },
+    {
+      "id": "SF-PHY-01",
+      "lane": "solver_free",
+      "depends": [
+        "SF-P3",
+        "SF-P5"
+      ],
+      "status": "NUMERIC_OR_CONSTRUCTED_THEORY_DIAGNOSTIC",
+      "physical_source_qualified": false
+    },
+    {
+      "id": "SF-PHY-02",
+      "lane": "solver_free",
+      "depends": [
+        "SF-P2",
+        "SF-P5"
+      ],
+      "status": "NUMERIC_OR_CONSTRUCTED_THEORY_DIAGNOSTIC",
+      "physical_source_qualified": false
+    },
+    {
+      "id": "SF-PHY-03",
+      "lane": "solver_free",
+      "depends": [
+        "SF-P4"
+      ],
+      "status": "NUMERIC_OR_CONSTRUCTED_THEORY_DIAGNOSTIC",
+      "physical_source_qualified": false
+    },
+    {
+      "id": "SF-PHY-04",
+      "lane": "solver_free",
+      "depends": [
+        "SF-P6",
+        "SF-P4"
+      ],
+      "status": "NUMERIC_OR_CONSTRUCTED_THEORY_DIAGNOSTIC",
+      "physical_source_qualified": false
+    },
+    {
+      "id": "SF-PHY-05",
+      "lane": "solver_free",
+      "depends": [
+        "SF-P5"
+      ],
+      "status": "NUMERIC_OR_CONSTRUCTED_THEORY_DIAGNOSTIC",
+      "physical_source_qualified": false
+    },
+    {
+      "id": "SF-PHY-06",
+      "lane": "solver_free",
+      "depends": [
+        "SF-P2",
+        "SF-P5"
+      ],
+      "status": "NUMERIC_OR_CONSTRUCTED_THEORY_DIAGNOSTIC",
+      "physical_source_qualified": false
+    },
+    {
+      "id": "SF-PHY-07",
+      "lane": "solver_free",
+      "depends": [
+        "SF-P3",
+        "SF-P4"
+      ],
+      "status": "NUMERIC_OR_CONSTRUCTED_THEORY_DIAGNOSTIC",
+      "physical_source_qualified": false
+    },
+    {
+      "id": "SF-ATTRIBUTION-SYNTHESIS",
+      "lane": "solver_free",
+      "depends": [
+        "SF-P1",
+        "SF-P2",
+        "SF-P3",
+        "SF-P4",
+        "SF-P5",
+        "SF-P6",
+        "SF-PHY-01",
+        "SF-PHY-02",
+        "SF-PHY-03",
+        "SF-PHY-04",
+        "SF-PHY-05",
+        "SF-PHY-06",
+        "SF-PHY-07"
+      ],
+      "status": "SOURCE_CONDITIONAL_NOT_FAMILY_ID"
+    },
+    {
+      "id": "TRANSFER-SQ-NATIVE",
+      "lane": "external_native_transfer",
+      "depends": [],
+      "status": "BLOCKED_EXTERNAL_SOLVER",
+      "cannot_be_claimed_by_solver_free_lane": true
+    },
+    {
+      "id": "TRANSFER-B02",
+      "lane": "external_native_transfer",
+      "depends": [],
+      "status": "BLOCKED_EXTERNAL_SOLVER",
+      "cannot_be_claimed_by_solver_free_lane": true
+    },
+    {
+      "id": "TRANSFER-B03",
+      "lane": "external_native_transfer",
+      "depends": [],
+      "status": "BLOCKED_EXTERNAL_SOLVER",
+      "cannot_be_claimed_by_solver_free_lane": true
+    },
+    {
+      "id": "TRANSFER-B04",
+      "lane": "external_native_transfer",
+      "depends": [],
+      "status": "BLOCKED_EXTERNAL_SOLVER",
+      "cannot_be_claimed_by_solver_free_lane": true
+    },
+    {
+      "id": "TRANSFER-B05",
+      "lane": "external_native_transfer",
+      "depends": [],
+      "status": "BLOCKED_EXTERNAL_SOLVER",
+      "cannot_be_claimed_by_solver_free_lane": true
+    }
+  ],
+  "original_node_lane_mappings": [
+    {
+      "id": "E0",
+      "r78_state": "completed_scoped",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "E1",
+      "r78_state": "completed_scoped",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "E2",
+      "r78_state": "completed_scoped",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "E3",
+      "r78_state": "completed_scoped",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "X01",
+      "r78_state": "completed_scoped",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "X02",
+      "r78_state": "completed_scoped",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "X03",
+      "r78_state": "completed_scoped",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "S01",
+      "r78_state": "completed_scoped",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "S02",
+      "r78_state": "blocked_input",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "S03",
+      "r78_state": "pending",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "S04",
+      "r78_state": "pending",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "S05",
+      "r78_state": "pending",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "S06",
+      "r78_state": "pending",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "L01",
+      "r78_state": "completed_scoped",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "L02",
+      "r78_state": "completed_scoped",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "L03",
+      "r78_state": "pending",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "L04",
+      "r78_state": "pending",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "L05",
+      "r78_state": "pending",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "L06",
+      "r78_state": "pending",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "H01",
+      "r78_state": "completed_scoped",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "H02",
+      "r78_state": "pending",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "H03",
+      "r78_state": "completed_scoped",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "H04",
+      "r78_state": "pending",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "H05",
+      "r78_state": "pending",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "H06",
+      "r78_state": "pending",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "V01",
+      "r78_state": "completed_scoped",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "V02",
+      "r78_state": "completed_scoped",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "V03",
+      "r78_state": "completed_scoped",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "V04",
+      "r78_state": "pending",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "V05",
+      "r78_state": "pending",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "V06",
+      "r78_state": "pending",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "B01",
+      "r78_state": "completed_scoped",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "B02",
+      "r78_state": "pending",
+      "r90_lane": "EXTERNAL_TRANSFER",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "B03",
+      "r78_state": "pending",
+      "r90_lane": "EXTERNAL_TRANSFER",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "B04",
+      "r78_state": "pending",
+      "r90_lane": "EXTERNAL_TRANSFER",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "B05",
+      "r78_state": "pending",
+      "r90_lane": "EXTERNAL_TRANSFER",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "K01",
+      "r78_state": "completed_scoped",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "K02",
+      "r78_state": "completed_scoped",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "K03",
+      "r78_state": "pending",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "K04",
+      "r78_state": "pending",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "K05",
+      "r78_state": "pending",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "K06",
+      "r78_state": "pending",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "SQ-CF4",
+      "r78_state": "ready_scoped",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "SQ-GAIA",
+      "r78_state": "ready_scoped",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "SQ-RADIO",
+      "r78_state": "ready_scoped",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "SQ-FRAME",
+      "r78_state": "ready_scoped",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "SQ-P1-ANCHOR",
+      "r78_state": "blocked_physical_anchor",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "SQ-CMB-NULL",
+      "r78_state": "blocked_source",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "SQ-PHOTON-FLUX",
+      "r78_state": "blocked_source",
+      "r90_lane": "HYBRID_THEORETICAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "SQ-LIE-FLUX",
+      "r78_state": "blocked_source",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "SQ-OPTICAL",
+      "r78_state": "pending_conditional",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "SQ-CROSS-COV",
+      "r78_state": "pending_dependency",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "SQ-NATIVE",
+      "r78_state": "blocked_external",
+      "r90_lane": "EXTERNAL_TRANSFER",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "PHY-01",
+      "r78_state": "theory_verified_physical_data_pending",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "PHY-02",
+      "r78_state": "theory_verified_physical_data_pending",
+      "r90_lane": "HYBRID_THEORETICAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "PHY-03",
+      "r78_state": "theory_verified_physical_data_pending",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "PHY-04",
+      "r78_state": "theory_verified_physical_data_pending",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "PHY-05",
+      "r78_state": "theory_verified_physical_data_pending",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "PHY-06",
+      "r78_state": "theory_verified_physical_data_pending",
+      "r90_lane": "HYBRID_THEORETICAL",
+      "scientific_state_changed": false
+    },
+    {
+      "id": "PHY-07",
+      "r78_state": "theory_verified_physical_data_pending",
+      "r90_lane": "SOLVER_FREE_SOURCE_CONDITIONAL",
+      "scientific_state_changed": false
+    }
+  ],
+  "claims": "conditional canonical Lie/Codazzi attribution yes; native family posterior/Planck Bianchi full CMB no"
+}

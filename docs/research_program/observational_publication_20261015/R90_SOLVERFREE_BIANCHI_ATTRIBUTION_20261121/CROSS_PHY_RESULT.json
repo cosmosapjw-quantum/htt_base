@@ -1,0 +1,90 @@
+{
+  "schema": "htt.r90.seven_solverfree_phy_cases/1",
+  "sources": {
+    "CF4_selected_sha256": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+    "G04_radio_sha256": "587e0d107f9fa4a2068a2538c2c48890db326f8fdc038851cd00499303d7e7a1",
+    "G03_gaia_sha256": "4b60b8038021075fad3d6a778968f9743ebf4985b0267b85d98a5170201f8297"
+  },
+  "physics_status": "SOURCE_CONDITIONAL_AND_CONSTRUCTED_NOT_JOINT_PHYSICAL",
+  "physical_Pi": null,
+  "physical_GF": null,
+  "PHY-01": {
+    "carrier": "actual CF4 sky directions/weights; injected STF basis amplitude 1",
+    "masked_monopole": 0.14732866566685413,
+    "masked_leakage_dipole_norm": 0.11450355221888563,
+    "uniform_sphere_dipole_exact": 0.0,
+    "science_status": "DIAGNOSTIC_CONDITIONAL"
+  },
+  "PHY-02": {
+    "moment_matrix_min_eigen": 0.18294175743551863,
+    "sum_eig": 1.0000000000000004,
+    "w_nonnegative": true,
+    "identity": "v^T <n n^T> v = <(v.n)^2> >=0",
+    "photon_hierarchy": "NOT_MEASURED",
+    "science_status": "GEOMETRIC_EXAMPLE_ONLY"
+  },
+  "PHY-03": {
+    "NVSS": {
+      "d_obs": 0.020028962808182338,
+      "dkin_assumed_alpha075": 0.004337992437029571,
+      "ratio": 4.617104132596671,
+      "source_null": "UNQUALIFIED"
+    },
+    "RACS_DR1_unif": {
+      "d_obs": 0.02526148882858945,
+      "dkin_assumed_alpha075": 0.004261445420794566,
+      "ratio": 5.927915609412951,
+      "source_null": "UNQUALIFIED"
+    },
+    "SPICE_RACS": {
+      "d_obs": 0.04533455149304481,
+      "dkin_assumed_alpha075": 0.004333848563314542,
+      "ratio": 10.46057582094488,
+      "source_null": "UNQUALIFIED"
+    },
+    "SUMSS": {
+      "d_obs": 0.04239809316983582,
+      "dkin_assumed_alpha075": 0.004240079789852258,
+      "ratio": 9.99936210429501,
+      "source_null": "UNQUALIFIED"
+    },
+    "LoTSS_DR3_int1500": {
+      "d_obs": 0.011370282333533918,
+      "dkin_assumed_alpha075": 0.004022228809573645,
+      "ratio": 2.8268611438689297,
+      "source_null": "UNQUALIFIED"
+    }
+  },
+  "PHY-04": {
+    "E2_jackknife_chisq_nominal": 11.917597617333678,
+    "B2_jackknife_chisq_nominal": 3.9426470276758163,
+    "pure_homogeneous_scalar_shear_B2_theory": 0.0,
+    "cosmological_B2_rejection": "NOT_AVAILABLE_WITHOUT_SOURCE_SPECIFIC_NULL"
+  },
+  "PHY-05": {
+    "VI_exception_rank": 2,
+    "VI_generic_rank": 3,
+    "VI_exception_right_nullity": 3,
+    "background_convention": "orthonormal Class B N.a=0, a^2=|n2*n3|/9"
+  },
+  "PHY-06": {
+    "commutator_norm": 0.29698484809834996,
+    "rotation_preserves_chi_abs_error": 2.220446049250313e-16,
+    "rotated_tensor_change_frob": 0.05900178102797211,
+    "interpretation": "eigenframe rotates despite unchanged conjugacy-invariant shape; no physical derivative inferred"
+  },
+  "PHY-07": {
+    "n_real_selected_groups": 35970,
+    "z_range": [
+      0.01000358721499258,
+      0.09999918009945401
+    ],
+    "rank9": 9,
+    "rank12": 12,
+    "min_eigen9": 0.3206035677586301,
+    "min_eigen12": 0.08262971435119405,
+    "F12_condition": 41.22787206306791,
+    "fixed_r_limit_rank9": 9,
+    "radial_transport_assumption": "observer-frame 100 Mpc/r response, model-dependent"
+  }
+}
