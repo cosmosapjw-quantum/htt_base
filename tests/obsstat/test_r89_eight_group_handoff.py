@@ -130,9 +130,16 @@ def test_generator_artifacts_present_and_byte_consistent(manifest):
 
 
 def test_no_start_artifacts_present_in_output_directory():
-    assert not list(h.DEST.glob("START_LOCAL_AGENT*"))
-    assert not list(h.DEST.glob("*DISPATCH*"))
-    assert not (h.DEST / "runs").exists()
+    assert not list(h.DEST.rglob("START_LOCAL_AGENT*"))
+    assert not list(h.DEST.rglob("*DISPATCH*"))
+    runs_dir = h.DEST / "runs"
+    if runs_dir.exists():
+        expected_groups = {spec["id"] for spec in h.SPECS}
+        present = {p.name for p in runs_dir.iterdir() if p.is_dir()}
+        assert present.issubset(expected_groups)
+        for p in runs_dir.iterdir():
+            assert p.is_dir() and p.name in expected_groups
+    assert h.main(["--check"]) == 0
 
 
 def test_missing_group_fails_closed(capsys):

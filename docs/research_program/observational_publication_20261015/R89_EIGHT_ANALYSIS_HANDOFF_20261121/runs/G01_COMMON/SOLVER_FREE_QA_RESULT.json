@@ -1,0 +1,115 @@
+{
+  "artifact_id": "R89_G01_COMMON_SOLVER_FREE_QA_V1",
+  "group_id": "G01_COMMON",
+  "create_only": true,
+  "runtime_sec": 2.667,
+  "max_rss_mb": 779.98,
+  "platform": "Linux-7.0.0-43-generic-x86_64-with-glibc2.39",
+  "epistemic_status": "numerically_checked",
+  "qa_checks": {
+    "1_gls_whitening": {
+      "pass": true,
+      "des_n": 1623,
+      "des_whitening_max_abs_err": 1.5543122344752192e-15,
+      "des_4p_projection_identity_err": 6.614708780716683e-13,
+      "pantheon_n": 1580,
+      "pantheon_whitening_max_abs_err": 1.1102230246251565e-15
+    },
+    "2_rank_deficient_svd": {
+      "pass": true,
+      "des_9p_singular_values": [
+        298.10123947378423,
+        116.07570243002353,
+        82.16066325933514,
+        11.341762854082635,
+        1.925360495710236,
+        1.7267470132607639,
+        0.30820628140011885,
+        0.19822076539660535,
+        0.021076042890410044
+      ],
+      "des_9p_F_cond_from_svd": 200055002.73527992,
+      "des_4p_singular_values": [
+        267.0222533586502,
+        71.8032909765839,
+        48.150057791295716,
+        3.0385506452924576
+      ],
+      "des_4p_F_cond_from_svd": 7722.571790686647,
+      "pantheon_9p_singular_values": [
+        298.0709713331577,
+        191.50643637755815,
+        151.75995083626913,
+        118.77115535542005,
+        88.96153073477066,
+        79.7590312424339,
+        64.62044884663868,
+        49.55546452602032,
+        39.49103625927128
+      ],
+      "pantheon_9p_F_cond_from_svd": 56.96948661494029
+    },
+    "3_stf_basis_convention": {
+      "pass": true,
+      "max_abs_h03_minus_fiveview_E": 0.0,
+      "frobenius_gram_max_err": 2.220446049250313e-16,
+      "sphere_integral_2_over_15_I5_max_err": 1.304512053934559e-15
+    },
+    "4_vsh_frames_and_cosmo_stokes": {
+      "pass": true,
+      "vsh_16mode_fullsky_gram_max_err": 2.886579864025407e-15,
+      "icrs_to_gal_orthogonality_err": 4.272782888810726e-16,
+      "icrs_to_gal_det_minus_1": 0.0,
+      "cosmo_pure_E_residual_max_cl_B": 9.08571441087335e-27,
+      "unflipped_iau_spurious_max_cl_B": 0.010165902735063707
+    },
+    "5_healpix_master_coupling": {
+      "pass": true,
+      "fullsky_master_TT_identity_err": 5.883271647633137e-11,
+      "planck_common_mask_fsky": 0.75146484375,
+      "planck_master_TT_2_to_8_cond": 1.2000660907883576
+    },
+    "6_radio_wls_recovery": {
+      "pass": true,
+      "masks": {
+        "nvss_like": {
+          "n_pix": 1920,
+          "dipole_recovery_max_abs_err": 1.734723475976807e-17,
+          "monopole_recovery_err": 6.938893903907228e-18
+        },
+        "lotss_like": {
+          "n_pix": 514,
+          "dipole_recovery_max_abs_err": 6.071532165918825e-17,
+          "monopole_recovery_err": 1.3877787807814457e-17
+        }
+      }
+    },
+    "7_sdss_63_mocks_uniqueness": {
+      "pass": true,
+      "n_mock_files": 63,
+      "n_unique_sha256": 63,
+      "min_rows": 30408,
+      "median_rows": 33173,
+      "max_rows": 38263,
+      "sampling_unit": "Independent SDSS-footprint HAMHOD mock realization per file; does NOT match CF4 35,970-group sky/selection"
+    },
+    "8_crossprobe_claim_hygiene": {
+      "pass": true,
+      "checks": {
+        "g2_sq_cf4_blocked": true,
+        "g5_sq_cmb_null_blocked": true,
+        "g8_60_nodes_unique": true,
+        "g8_next_action_is_sq_cf4": true,
+        "g8_not_60_pass": true,
+        "all_physical_Pi_null": true,
+        "all_physical_GF_null": true
+      }
+    }
+  },
+  "claim_hygiene": {
+    "physical_Pi": null,
+    "physical_GF": null,
+    "bianchi_family_identified": false,
+    "sixty_of_sixty_science_pass": false
+  }
+}

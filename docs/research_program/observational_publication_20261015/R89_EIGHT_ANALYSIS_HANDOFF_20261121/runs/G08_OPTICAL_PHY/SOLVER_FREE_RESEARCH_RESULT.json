@@ -1,0 +1,770 @@
+{
+  "artifact_id": "R89_G08_OPTICAL_PHY_SOLVER_FREE_RESEARCH_V1",
+  "group_id": "G08_OPTICAL_PHY",
+  "create_only": true,
+  "epistemic_status": "derived_and_conditional",
+  "runtime_sec": 0.006,
+  "max_rss_mb": 80.6,
+  "platform": "Linux-7.0.0-43-generic-x86_64-with-glibc2.39",
+  "input_sha256": {
+    "G01_QA": "2a34915b8751e68170e590e5889eee14cdb6064f60be27f57e30b26d398eb34f",
+    "G02_RESEARCH": "6c8513bbf8809003337c51730930611763f7606681f412f62bad74c492e1301b",
+    "G03_RESEARCH": "4b60b8038021075fad3d6a778968f9743ebf4985b0267b85d98a5170201f8297",
+    "G04_RESEARCH": "587e0d107f9fa4a2068a2538c2c48890db326f8fdc038851cd00499303d7e7a1",
+    "G05_RESEARCH": "80424053aa598aefbff8906ce898ea7d7e63e0f7c41aa6a6d3f0e235bbe96d92",
+    "G06_RESEARCH": "c720653b1642c40b8910a8222be351d5b4db0409cb45b147df3f1fd40c1bf245",
+    "G07_RESEARCH": "83094670151416592889629aa61c46185a6f3c3edea37ff70ad786ade5a9a447",
+    "R78_INTEGRATED_DAG": "90aba8c1ca9c8e3a7744be0f071dcfe09b81e5353892aca13878191e20f58c11"
+  },
+  "part_a_exact_sachs_bianchi_type_i": {
+    "epistemic_status": "derived_and_numerically_checked",
+    "isotropic_limit_max_abs_dL_frac_z1": 1.8788201754255171e-16,
+    "kristian_sachs_z1e3_rel_agreement": 0.0002739298272946833,
+    "sigma0_grid": {
+      "Sigma0_1e-04": {
+        "rows_by_mu": {
+          "mu_0.00": {
+            "ks_z0_limit_H_app_shift": -5e-05,
+            "H_app_over_H0_minus_1_by_z": {
+              "z_0.001": -0.0008241390882268193,
+              "z_0.03": -0.022537016331186956,
+              "z_0.08": -0.05688138394683065,
+              "z_0.15": -0.09927022225669718,
+              "z_0.3": -0.17258267183384124,
+              "z_0.5": -0.24416622358191917,
+              "z_1.0": -0.35189175528064215,
+              "z_1.5": -0.41117504926501164
+            },
+            "dL_frac_anom_by_z": {
+              "z_0.001": 5.005409683194501e-05,
+              "z_0.03": 5.155320636171969e-05,
+              "z_0.08": 5.402621645090514e-05,
+              "z_0.15": 5.7221995226947816e-05,
+              "z_0.3": 6.28562128215429e-05,
+              "z_0.5": 6.743957110339738e-05,
+              "z_1.0": 6.352092314520004e-05,
+              "z_1.5": 3.9884989632106236e-05
+            },
+            "drift_anom_over_H0_by_z": {
+              "z_0.001": 7.75758673270304e-08,
+              "z_0.03": 2.3919318149324498e-06,
+              "z_0.08": 6.666638728525261e-06,
+              "z_0.15": 1.3219095830317851e-05,
+              "z_0.3": 2.9227502706615525e-05,
+              "z_0.5": 5.3953902481679655e-05,
+              "z_1.0": 0.0001271905318636791,
+              "z_1.5": 0.0002115969645439529
+            }
+          },
+          "mu_0.50": {
+            "ks_z0_limit_H_app_shift": -1.25e-05,
+            "H_app_over_H0_minus_1_by_z": {
+              "z_0.001": -0.0007866287846776111,
+              "z_0.03": -0.022499221995971572,
+              "z_0.08": -0.05684316799538238,
+              "z_0.15": -0.09923156450043141,
+              "z_0.3": -0.17254366274588548,
+              "z_0.5": -0.24412798937477131,
+              "z_1.0": -0.35186087171317687,
+              "z_1.5": -0.41115743137221095
+            },
+            "dL_frac_anom_by_z": {
+              "z_0.001": 1.2512109872073379e-05,
+              "z_0.03": 1.288664431619768e-05,
+              "z_0.08": 1.3504442187581137e-05,
+              "z_0.15": 1.430267929407749e-05,
+              "z_0.3": 1.5709492366296346e-05,
+              "z_0.5": 1.685278339874555e-05,
+              "z_1.0": 1.586837248172881e-05,
+              "z_1.5": 9.964162110989073e-06
+            },
+            "drift_anom_over_H0_by_z": {
+              "z_0.001": 1.9396944976894603e-08,
+              "z_0.03": 5.980736170891134e-07,
+              "z_0.08": 1.6669056945695718e-06,
+              "z_0.15": 3.305238494993905e-06,
+              "z_0.3": 7.307746494958635e-06,
+              "z_0.5": 1.3489471451464869e-05,
+              "z_1.0": 3.179185491007142e-05,
+              "z_1.5": 5.2856856753062494e-05
+            }
+          },
+          "mu_1.00": {
+            "ks_z0_limit_H_app_shift": 0.0001,
+            "H_app_over_H0_minus_1_by_z": {
+              "z_0.001": -0.0006740979126532339,
+              "z_0.03": -0.02238584018487117,
+              "z_0.08": -0.05672852320437709,
+              "z_0.15": -0.0991155974206336,
+              "z_0.3": -0.1724266490406292,
+              "z_0.5": -0.24401330842807226,
+              "z_1.0": -0.3517682485256137,
+              "z_1.5": -0.411104555901391
+            },
+            "dL_frac_anom_by_z": {
+              "z_0.001": -0.00010009543704095794,
+              "z_0.03": -0.00010309234926347985,
+              "z_0.08": -0.00010803606134297041,
+              "z_0.15": -0.00011442436268953527,
+              "z_0.3": -0.0001256864401688877,
+              "z_0.5": -0.0001348462461420664,
+              "z_1.0": -0.0001270196331345238,
+              "z_1.5": -7.982448065435817e-05
+            },
+            "drift_anom_over_H0_by_z": {
+              "z_0.001": -1.5513047352236144e-07,
+              "z_0.03": -4.783157774893354e-06,
+              "z_0.08": -1.333106123062169e-05,
+              "z_0.15": -2.6433076070435652e-05,
+              "z_0.3": -5.8440027470041374e-05,
+              "z_0.5": -0.00010787011502506552,
+              "z_1.0": -0.00025421756956499136,
+              "z_1.5": -0.00042274515450794136
+            }
+          }
+        },
+        "finite_z_stf_breakdown": {
+          "z_0.001": {
+            "pole_minus_eq_H_app_exact": 0.00015004117557358536,
+            "pole_minus_eq_ks_z0": 0.00015000000000000001,
+            "ratio_exact_over_ks": 1.0002745038239023
+          },
+          "z_0.03": {
+            "pole_minus_eq_H_app_exact": 0.00015117614631578527,
+            "pole_minus_eq_ks_z0": 0.00015000000000000001,
+            "ratio_exact_over_ks": 1.0078409754385684
+          },
+          "z_0.08": {
+            "pole_minus_eq_H_app_exact": 0.00015286074245356163,
+            "pole_minus_eq_ks_z0": 0.00015000000000000001,
+            "ratio_exact_over_ks": 1.0190716163570774
+          },
+          "z_0.15": {
+            "pole_minus_eq_H_app_exact": 0.00015462483606358546,
+            "pole_minus_eq_ks_z0": 0.00015000000000000001,
+            "ratio_exact_over_ks": 1.030832240423903
+          },
+          "z_0.3": {
+            "pole_minus_eq_H_app_exact": 0.0001560227932120295,
+            "pole_minus_eq_ks_z0": 0.00015000000000000001,
+            "ratio_exact_over_ks": 1.0401519547468632
+          },
+          "z_0.5": {
+            "pole_minus_eq_H_app_exact": 0.0001529151538469109,
+            "pole_minus_eq_ks_z0": 0.00015000000000000001,
+            "ratio_exact_over_ks": 1.019434358979406
+          },
+          "z_1.0": {
+            "pole_minus_eq_H_app_exact": 0.00012350675502842412,
+            "pole_minus_eq_ks_z0": 0.00015000000000000001,
+            "ratio_exact_over_ks": 0.8233783668561607
+          },
+          "z_1.5": {
+            "pole_minus_eq_H_app_exact": 7.04933636206384e-05,
+            "pole_minus_eq_ks_z0": 0.00015000000000000001,
+            "ratio_exact_over_ks": 0.46995575747092266
+          }
+        }
+      },
+      "Sigma0_1e-03": {
+        "rows_by_mu": {
+          "mu_0.00": {
+            "ks_z0_limit_H_app_shift": -0.0005,
+            "H_app_over_H0_minus_1_by_z": {
+              "z_0.001": -0.0012741389898409195,
+              "z_0.03": -0.022990425135996247,
+              "z_0.08": -0.05733985350748468,
+              "z_0.15": -0.09973399499921803,
+              "z_0.3": -0.17305066129502167,
+              "z_0.5": -0.24462490796233616,
+              "z_1.0": -0.35226206478986616,
+              "z_1.5": -0.4113856608850346
+            },
+            "dL_frac_anom_by_z": {
+              "z_0.001": 0.0005006538924924626,
+              "z_0.03": 0.0005156572418830067,
+              "z_0.08": 0.0005404100080089555,
+              "z_0.15": 0.0005724022912666684,
+              "z_0.3": 0.000628814545152042,
+              "z_0.5": 0.0006747070549705677,
+              "z_1.0": 0.0006352530360132219,
+              "z_1.5": 0.0003977080629553999
+            },
+            "drift_anom_over_H0_by_z": {
+              "z_0.001": 7.758210016409584e-07,
+              "z_0.03": 2.392159432409905e-05,
+              "z_0.08": 6.667441145640747e-05,
+              "z_0.15": 0.00013221140020094814,
+              "z_0.3": 0.0002923400178288825,
+              "z_0.5": 0.000539699453691673,
+              "z_1.0": 0.00127242782779126,
+              "z_1.5": 0.0021169341642820953
+            }
+          },
+          "mu_0.50": {
+            "ks_z0_limit_H_app_shift": -0.000125,
+            "H_app_over_H0_minus_1_by_z": {
+              "z_0.001": -0.0008990353053942828,
+              "z_0.03": -0.022612461653617418,
+              "z_0.08": -0.056957638059095796,
+              "z_0.15": -0.09934730840145661,
+              "z_0.3": -0.17266033952029367,
+              "z_0.5": -0.24424217275761284,
+              "z_1.0": -0.35195269756823766,
+              "z_1.5": -0.41120963420994994
+            },
+            "dL_frac_anom_by_z": {
+              "z_0.001": 0.00012502200832440122,
+              "z_0.03": 0.00012874854644546953,
+              "z_0.08": 0.00013489079927674785,
+              "z_0.15": 0.00014281626289709213,
+              "z_0.3": 0.0001567381057117241,
+              "z_0.5": 0.00016794032604874548,
+              "z_1.0": 0.00015756653870948603,
+              "z_1.5": 9.86262709573432e-05
+            },
+            "drift_anom_over_H0_by_z": {
+              "z_0.001": 1.9425310629512012e-07,
+              "z_0.03": 5.989466210586416e-06,
+              "z_0.08": 1.6693209736620877e-05,
+              "z_0.15": 3.309932133966478e-05,
+              "z_0.3": 7.317216583229569e-05,
+              "z_0.5": 0.0001350247415900746,
+              "z_1.0": 0.0003175310400335407,
+              "z_1.5": 0.0005249969766725376
+            }
+          },
+          "mu_1.00": {
+            "ks_z0_limit_H_app_shift": 0.001,
+            "H_app_over_H0_minus_1_by_z": {
+              "z_0.001": 0.0002262719049000226,
+              "z_0.03": -0.021478689180142067,
+              "z_0.08": -0.05581131873852065,
+              "z_0.15": -0.09818788840673112,
+              "z_0.3": -0.17149072828242967,
+              "z_0.5": -0.24309622416495905,
+              "z_1.0": -0.3510273484343252,
+              "z_1.5": -0.41067947084638173
+            },
+            "dL_frac_anom_by_z": {
+              "z_0.001": -0.0010001650828157802,
+              "z_0.03": -0.0010300598170225952,
+              "z_0.08": -0.0010793514998503832,
+              "z_0.15": -0.0011430231510605598,
+              "z_0.3": -0.0012551884635107337,
+              "z_0.5": -0.0013463096051723196,
+              "z_1.0": -0.001268526197849703,
+              "z_1.5": -0.0008010809503114847
+            },
+            "drift_anom_over_H0_by_z": {
+              "z_0.001": -1.5495176005495281e-06,
+              "z_0.03": -4.777266812060006e-05,
+              "z_0.08": -0.0001331274328782778,
+              "z_0.15": -0.000263911892362428,
+              "z_0.3": -0.0005831849607187778,
+              "z_0.5": -0.0010756400520279341,
+              "z_1.0": -0.0025285988390668953,
+              "z_1.5": -0.004189425352242218
+            }
+          }
+        },
+        "finite_z_stf_breakdown": {
+          "z_0.001": {
+            "pole_minus_eq_H_app_exact": 0.0015004108947409421,
+            "pole_minus_eq_ks_z0": 0.0015,
+            "ratio_exact_over_ks": 1.0002739298272947
+          },
+          "z_0.03": {
+            "pole_minus_eq_H_app_exact": 0.0015117359558541807,
+            "pole_minus_eq_ks_z0": 0.0015,
+            "ratio_exact_over_ks": 1.0078239705694538
+          },
+          "z_0.08": {
+            "pole_minus_eq_H_app_exact": 0.0015285347689640294,
+            "pole_minus_eq_ks_z0": 0.0015,
+            "ratio_exact_over_ks": 1.019023179309353
+          },
+          "z_0.15": {
+            "pole_minus_eq_H_app_exact": 0.0015461065924869122,
+            "pole_minus_eq_ks_z0": 0.0015,
+            "ratio_exact_over_ks": 1.0307377283246082
+          },
+          "z_0.3": {
+            "pole_minus_eq_H_app_exact": 0.0015599330125919963,
+            "pole_minus_eq_ks_z0": 0.0015,
+            "ratio_exact_over_ks": 1.0399553417279976
+          },
+          "z_0.5": {
+            "pole_minus_eq_H_app_exact": 0.0015286837973771117,
+            "pole_minus_eq_ks_z0": 0.0015,
+            "ratio_exact_over_ks": 1.0191225315847412
+          },
+          "z_1.0": {
+            "pole_minus_eq_H_app_exact": 0.0012347163555409546,
+            "pole_minus_eq_ks_z0": 0.0015,
+            "ratio_exact_over_ks": 0.8231442370273031
+          },
+          "z_1.5": {
+            "pole_minus_eq_H_app_exact": 0.0007061900386528541,
+            "pole_minus_eq_ks_z0": 0.0015,
+            "ratio_exact_over_ks": 0.47079335910190273
+          }
+        }
+      },
+      "Sigma0_1e-02": {
+        "rows_by_mu": {
+          "mu_0.00": {
+            "ks_z0_limit_H_app_shift": -0.005,
+            "H_app_over_H0_minus_1_by_z": {
+              "z_0.001": -0.0057630092514821905,
+              "z_0.03": -0.02751364836446405,
+              "z_0.08": -0.06191418556805624,
+              "z_0.15": -0.10436212745360124,
+              "z_0.3": -0.17772258222779402,
+              "z_0.5": -0.24920483306598173,
+              "z_1.0": -0.35594470770452286,
+              "z_1.5": -0.41341419796910306
+            },
+            "dL_frac_anom_by_z": {
+              "z_0.001": 0.005017831549378021,
+              "z_0.03": 0.0051692500761635375,
+              "z_0.08": 0.005419285573290826,
+              "z_0.15": 0.005742775153351239,
+              "z_0.3": 0.006314071213988018,
+              "z_0.5": 0.006778922340142485,
+              "z_1.0": 0.006356785095547441,
+              "z_1.5": 0.003857294263636321
+            },
+            "drift_anom_over_H0_by_z": {
+              "z_0.001": 7.764442754063402e-06,
+              "z_0.03": 0.00023944379174549034,
+              "z_0.08": 0.0006675484538821725,
+              "z_0.15": 0.0013241660587616187,
+              "z_0.3": 0.0029299394327768824,
+              "z_0.5": 0.005413174194095007,
+              "z_1.0": 0.012777170715329545,
+              "z_1.5": 0.02126717038774504
+            }
+          },
+          "mu_0.50": {
+            "ks_z0_limit_H_app_shift": -0.00125,
+            "H_app_over_H0_minus_1_by_z": {
+              "z_0.001": -0.002011907378687276,
+              "z_0.03": -0.023732013865853475,
+              "z_0.08": -0.0580864900678183,
+              "z_0.15": -0.10048438657265914,
+              "z_0.3": -0.1737961645575625,
+              "z_0.5": -0.2453381617844212,
+              "z_1.0": -0.35279761129465476,
+              "z_1.5": -0.41167284766209405
+            },
+            "dL_frac_anom_by_z": {
+              "z_0.001": 0.0012402849234728415,
+              "z_0.03": 0.0012756637302656143,
+              "z_0.08": 0.0013335182285455205,
+              "z_0.15": 0.001407097321403303,
+              "z_0.3": 0.0015317051238286589,
+              "z_0.5": 0.001620475553341546,
+              "z_1.0": 0.001463258747421926,
+              "z_1.5": 0.0008860438395545505
+            },
+            "drift_anom_over_H0_by_z": {
+              "z_0.001": 1.970924160572995e-06,
+              "z_0.03": 6.0768943962339574e-05,
+              "z_0.08": 0.00016935324086768204,
+              "z_0.15": 0.0003357059864185958,
+              "z_0.3": 0.0007412805682296611,
+              "z_0.5": 0.0013635777142606592,
+              "z_1.0": 0.0031387208980206437,
+              "z_1.5": 0.004896619997046899
+            }
+          },
+          "mu_1.00": {
+            "ks_z0_limit_H_app_shift": 0.01,
+            "H_app_over_H0_minus_1_by_z": {
+              "z_0.001": 0.009241014444660819,
+              "z_0.03": -0.01239890269164655,
+              "z_0.08": -0.0466360466597672,
+              "z_0.15": -0.08891506040609859,
+              "z_0.3": -0.16215211426226978,
+              "z_0.5": -0.23396350615222364,
+              "z_1.0": -0.34363345166975084,
+              "z_1.5": -0.40625169481084067
+            },
+            "dL_frac_anom_by_z": {
+              "z_0.001": -0.0099233882807302,
+              "z_0.03": -0.010214369124589555,
+              "z_0.08": -0.01069306666910973,
+              "z_0.15": -0.011309176750433188,
+              "z_0.3": -0.012387152266177781,
+              "z_0.5": -0.013252298538223876,
+              "z_1.0": -0.01251912607096386,
+              "z_1.5": -0.008252435062699905
+            },
+            "drift_anom_over_H0_by_z": {
+              "z_0.001": -1.531816106051941e-05,
+              "z_0.03": -0.0004718982215173125,
+              "z_0.08": -0.0013131868432707816,
+              "z_0.15": -0.0025978805361355573,
+              "z_0.3": -0.00571302227366225,
+              "z_0.5": -0.010460222806888965,
+              "z_1.0": -0.024014690620234345,
+              "z_1.5": -0.03847745892490235
+            }
+          }
+        },
+        "finite_z_stf_breakdown": {
+          "z_0.001": {
+            "pole_minus_eq_H_app_exact": 0.01500402369614301,
+            "pole_minus_eq_ks_z0": 0.015,
+            "ratio_exact_over_ks": 1.000268246409534
+          },
+          "z_0.03": {
+            "pole_minus_eq_H_app_exact": 0.0151147456728175,
+            "pole_minus_eq_ks_z0": 0.015,
+            "ratio_exact_over_ks": 1.0076497115211667
+          },
+          "z_0.08": {
+            "pole_minus_eq_H_app_exact": 0.015278138908289038,
+            "pole_minus_eq_ks_z0": 0.015,
+            "ratio_exact_over_ks": 1.0185425938859358
+          },
+          "z_0.15": {
+            "pole_minus_eq_H_app_exact": 0.01544706704750265,
+            "pole_minus_eq_ks_z0": 0.015,
+            "ratio_exact_over_ks": 1.02980446983351
+          },
+          "z_0.3": {
+            "pole_minus_eq_H_app_exact": 0.015570467965524248,
+            "pole_minus_eq_ks_z0": 0.015,
+            "ratio_exact_over_ks": 1.0380311977016166
+          },
+          "z_0.5": {
+            "pole_minus_eq_H_app_exact": 0.015241326913758096,
+            "pole_minus_eq_ks_z0": 0.015,
+            "ratio_exact_over_ks": 1.0160884609172065
+          },
+          "z_1.0": {
+            "pole_minus_eq_H_app_exact": 0.012311256034772011,
+            "pole_minus_eq_ks_z0": 0.015,
+            "ratio_exact_over_ks": 0.8207504023181341
+          },
+          "z_1.5": {
+            "pole_minus_eq_H_app_exact": 0.00716250315826239,
+            "pole_minus_eq_ks_z0": 0.015,
+            "ratio_exact_over_ks": 0.47750021055082603
+          }
+        }
+      }
+    }
+  },
+  "part_b_cross_probe_synthesis": {
+    "probe_registry": [
+      {
+        "probe": "CF4_35970_groups_4windows",
+        "frame": "ICRS (J2000)",
+        "units": "km/s/Mpc",
+        "estimand": "Windowed apparent Hubble dipole D(z) and STF quadrupole Q(z)",
+        "formal_precision": "conditional diagonal working_sigma only",
+        "empirical_sys_floor": "Method zero-point +-0.02..0.05 mag shifts dipole norm; CF4++ flow subtraction shifts windowed slopes",
+        "cov_null_eligibility": "BLOCKED (missing physical S_PV, J_cal Sigma_cal J_cal^T, C_selection, independent heldout)",
+        "epistemic_tier": "conditional"
+      },
+      {
+        "probe": "DES_Dovekie_5YR_SN",
+        "frame": "ICRS host coords",
+        "units": "mag",
+        "estimand": "Reduced-rank dipole 4p (9p collinear F_cond = 2.00e+08)",
+        "formal_precision": "4p F_cond=7722.6; dip=0.2570 mag",
+        "empirical_sys_floor": "Narrow sky footprint creates rank-5 near-nullspace in 9p fit; well-conditioned only up to rank<=4",
+        "cov_null_eligibility": "STAT+SYS covariance reconstructed cleanly; external PV null not matched",
+        "epistemic_tier": "conditional"
+      },
+      {
+        "probe": "PantheonPlus_SH0ES_SN",
+        "frame": "ICRS",
+        "units": "mag",
+        "estimand": "Full-sky STAT+SYS 9p dipole & STF quadrupole",
+        "formal_precision": "dip=0.03787 mag (9p F_cond=56.97)",
+        "empirical_sys_floor": "Single systematic groupings shift dipole vector by 0.0116..0.0161 mag (vs STATONLY->STAT+SYS vec diff 0.0107, amp diff 0.0093 mag)",
+        "cov_null_eligibility": "STAT+SYS SNANA cov included; depth/N-S stability tested; physical cosmology requires S_PV",
+        "epistemic_tier": "conditional"
+      },
+      {
+        "probe": "DESI_EDR_Fuji_FP_4190",
+        "frame": "ICRS",
+        "units": "km/s/Mpc",
+        "estimand": "Northern sky 4p & 9p peculiar velocity expansion proxy",
+        "formal_precision": "N=4190, 4p dip=1.069",
+        "empirical_sys_floor": "Northern footprint creates 9p F_cond=776.0 >> 4p F_cond=23.4",
+        "cov_null_eligibility": "Independent PV comparator; lacks matched selection/mock covariance",
+        "epistemic_tier": "conditional"
+      },
+      {
+        "probe": "Gaia_CRF3_1203489_VSH",
+        "frame": "ICRS -> Galactic tangent",
+        "units": "uas/yr",
+        "estimand": "16-mode E1, B1, E2, B2 proper-motion VSH + 20-mode scanlaw deprojection",
+        "formal_precision": "48-patch Sandwich std inflates formal Gaussian std by 2.39x..3.52x (Jackknife 2.83x..4.20x)",
+        "empirical_sys_floor": "20p scanlaw deprojection shifts VSH by delta_E2=0.43 uas/yr; E2 correlated with scanning law (-0.550 STF cosine)",
+        "cov_null_eligibility": "DIAGNOSTIC_COMPLETED_SCOPED; normal-frame projection leaves B1=Omega-omega degenerate",
+        "epistemic_tier": "conditional_and_numerically_checked"
+      },
+      {
+        "probe": "VLBA_233_3_clean651_VSH",
+        "frame": "ICRS (corrected ReadMe Dec)",
+        "units": "uas/yr",
+        "estimand": "16-mode radio ICRF VSH",
+        "formal_precision": "E1=1.33, E2=1.53, B2=1.61 uas/yr",
+        "empirical_sys_floor": "chi2/dof = 2.30 (after 5-sigma clipping; 7.71 on unclipped raw catalog)",
+        "cov_null_eligibility": "Clean radio ICRF frame consistency check; no large cosmic shear",
+        "epistemic_tier": "conditional"
+      },
+      {
+        "probe": "Radio_5Surveys_NVSS_RACS_SPICE_SUMSS_LoTSS",
+        "frame": "ICRS",
+        "units": "dimensionless delta_N/N",
+        "estimand": "Flux-ladder WLS dipole, common-sky intersections, 48-patch JK, Ellis-Baldwin slope",
+        "formal_precision": "48-patch spatial Jackknife sigma is up to ~2.2x-4.7x larger than Poisson shot-noise sigma across surveys",
+        "empirical_sys_floor": "Selection effects dominate: LoTSS edge pixels shift S50 0.0114->0.0537; source-level RMS cut shifts RACS 0.0253->0.1185",
+        "cov_null_eligibility": "V04-V06 BLOCKED_DEPENDENCY (no survey-matched LSS/selection null)",
+        "epistemic_tier": "conditional"
+      },
+      {
+        "probe": "CMB_8Pipelines_and_75_SMICA_FFP10",
+        "frame": "Galactic",
+        "units": "K_CMB / uK^2",
+        "estimand": "Master-deconvolved TT/EE/BB l=2..12, parity R_T, hm/oe noise-debiased splits, SMICA 75-pair pilot",
+        "formal_precision": "Master M_TT cond=1.233, 200-MC max |TT bias|=0.0879",
+        "empirical_sys_floor": "QU correlation drops to r=0.116..0.262 between PR3 and CG/BP; Commander FFP10 only 2 complete raw files",
+        "cov_null_eligibility": "SQ-CMB-NULL BLOCKED_INPUT; SMICA 75-pair pilot rank non-extreme (null_qualified=False)",
+        "epistemic_tier": "conditional_and_numerically_checked"
+      }
+    ],
+    "directional_comparison_re_evaluation": {
+      "14_probe_gal_directions_from_p3": {
+        "CMB_kinematic_ref": {
+          "gal_l_deg": 264.02099999999996,
+          "gal_b_deg": 48.253,
+          "amp_native_units": 1.0,
+          "sep_from_cmb_deg": 0.0,
+          "antipodal_sep_from_cmb_deg": 180.0,
+          "acute_axis_sep_from_cmb_deg": 0.0,
+          "sep_from_gal_center_deg": 93.97704432965494
+        },
+        "Galactic_Center_ref": {
+          "gal_l_deg": 0.0,
+          "gal_b_deg": 0.0,
+          "amp_native_units": 1.0,
+          "sep_from_cmb_deg": 93.97704432965494,
+          "antipodal_sep_from_cmb_deg": 86.02295567034506,
+          "acute_axis_sep_from_cmb_deg": 86.02295567034506,
+          "sep_from_gal_center_deg": 0.0
+        },
+        "DES_Dovekie_4p_stat_sys": {
+          "gal_l_deg": 33.90409149159644,
+          "gal_b_deg": 71.689347409807,
+          "amp_native_units": 0.25704898024964623,
+          "sep_from_cmb_deg": 54.95778670179935,
+          "antipodal_sep_from_cmb_deg": 125.04221329820065,
+          "acute_axis_sep_from_cmb_deg": 54.95778670179935,
+          "sep_from_gal_center_deg": 74.8853364154951
+        },
+        "PantheonPlus_allz_9p_stat_sys": {
+          "gal_l_deg": 156.52429876545494,
+          "gal_b_deg": -1.2388915296154541,
+          "amp_native_units": 0.037871391332377664,
+          "sep_from_cmb_deg": 102.49008557442374,
+          "antipodal_sep_from_cmb_deg": 77.50991442557626,
+          "acute_axis_sep_from_cmb_deg": 77.50991442557626,
+          "sep_from_gal_center_deg": 156.49347894151512
+        },
+        "PantheonPlus_lowz_9p_stat_sys": {
+          "gal_l_deg": 158.1132002011647,
+          "gal_b_deg": -4.943334091182507,
+          "amp_native_units": 0.04284047532907389,
+          "sep_from_cmb_deg": 104.24762829875243,
+          "antipodal_sep_from_cmb_deg": 75.75237170124757,
+          "acute_axis_sep_from_cmb_deg": 75.75237170124757,
+          "sep_from_gal_center_deg": 157.58867134273387
+        },
+        "Gaia_CRF3_quality_all_E1": {
+          "gal_l_deg": 359.6216496838388,
+          "gal_b_deg": 5.125271107344764,
+          "amp_native_units": 4.8363486392325425,
+          "sep_from_cmb_deg": 89.88950161641081,
+          "antipodal_sep_from_cmb_deg": 90.11049838358919,
+          "acute_axis_sep_from_cmb_deg": 89.88950161641081,
+          "sep_from_gal_center_deg": 5.1391799796739575
+        },
+        "VLBA_233_3_clean5sig_E1": {
+          "gal_l_deg": 347.93192356113485,
+          "gal_b_deg": -1.3958583769888557,
+          "amp_native_units": 1.3340273636862194,
+          "sep_from_cmb_deg": 86.99441972564416,
+          "antipodal_sep_from_cmb_deg": 93.00558027435584,
+          "acute_axis_sep_from_cmb_deg": 86.99441972564416,
+          "sep_from_gal_center_deg": 12.147344960083611
+        },
+        "NVSS_S20": {
+          "gal_l_deg": 194.5478275179877,
+          "gal_b_deg": 50.066411219114656,
+          "amp_native_units": 0.020028962808182338,
+          "sep_from_cmb_deg": 43.78323416603837,
+          "antipodal_sep_from_cmb_deg": 136.21676583396163,
+          "acute_axis_sep_from_cmb_deg": 43.78323416603837,
+          "sep_from_gal_center_deg": 128.4125100315803
+        },
+        "NVSS_S50": {
+          "gal_l_deg": 263.5448740012557,
+          "gal_b_deg": 34.86052842846841,
+          "amp_native_units": 0.01977834574061279,
+          "sep_from_cmb_deg": 13.397137226499712,
+          "antipodal_sep_from_cmb_deg": 166.60286277350028,
+          "acute_axis_sep_from_cmb_deg": 13.397137226499712,
+          "sep_from_gal_center_deg": 95.29305418730817
+        },
+        "RACS_DR1_raw_S20": {
+          "gal_l_deg": 287.30345042603324,
+          "gal_b_deg": 50.3578466168848,
+          "amp_native_units": 0.019444909823812577,
+          "sep_from_cmb_deg": 15.261905258406422,
+          "antipodal_sep_from_cmb_deg": 164.73809474159359,
+          "acute_axis_sep_from_cmb_deg": 15.261905258406422,
+          "sep_from_gal_center_deg": 79.06127499138053
+        },
+        "SPICE_RACS_S20": {
+          "gal_l_deg": 234.173981280913,
+          "gal_b_deg": 52.82461151266528,
+          "amp_native_units": 0.045519064641528835,
+          "sep_from_cmb_deg": 19.360566735479914,
+          "antipodal_sep_from_cmb_deg": 160.63943326452008,
+          "acute_axis_sep_from_cmb_deg": 19.360566735479914,
+          "sep_from_gal_center_deg": 110.7130095401983
+        },
+        "SPICE_RACS_S50": {
+          "gal_l_deg": 249.35054839061996,
+          "gal_b_deg": 49.520475535729624,
+          "amp_native_units": 0.04933772128100601,
+          "sep_from_cmb_deg": 9.713633076468268,
+          "antipodal_sep_from_cmb_deg": 170.28636692353174,
+          "acute_axis_sep_from_cmb_deg": 9.713633076468268,
+          "sep_from_gal_center_deg": 103.2341808377306
+        },
+        "SUMSS_S20": {
+          "gal_l_deg": 233.56849956929773,
+          "gal_b_deg": 2.65724475886072,
+          "amp_native_units": 0.04239809316983583,
+          "sep_from_cmb_deg": 52.55772673597395,
+          "antipodal_sep_from_cmb_deg": 127.44227326402606,
+          "acute_axis_sep_from_cmb_deg": 52.55772673597395,
+          "sep_from_gal_center_deg": 126.38604056655957
+        },
+        "LoTSS_DR3_S50": {
+          "gal_l_deg": 286.2220891135458,
+          "gal_b_deg": 49.01812952055276,
+          "amp_native_units": 0.011370282333533916,
+          "sep_from_cmb_deg": 14.638996371582516,
+          "antipodal_sep_from_cmb_deg": 165.36100362841748,
+          "acute_axis_sep_from_cmb_deg": 14.638996371582516,
+          "sep_from_gal_center_deg": 79.4431649179045
+        }
+      },
+      "joint_cross_probe_likelihood_constructed": false,
+      "reason": "Cross-probe directions share neither common galaxies/sources nor an externally calibrated inter-survey systematic/selection covariance; coincidence in angle does not license a physical joint Bayes factor."
+    },
+    "falsifiable_model_discriminators": [
+      {
+        "model": "M1_pure_kinematic_boost_beta_CMB",
+        "testable_prediction": "Ellis-Baldwin d_kin ~ 0.0040-0.0047 along (264.0, +48.3) deg; zero E2 shear; zero intrinsic SN/Gaia cosmological quadrupole; identical direction across radio frequencies",
+        "current_status_from_solver_free_runs": "Radio directions align within ~10-19 deg at clean bright cuts (SPICE S50 11.2, NVSS S50 13.4, LoTSS int50 14.6, RACS unif20 18.8 deg), YET amplitudes exceed d_kin by 2.83x..11.03x with large JK variance/clustering."
+      },
+      {
+        "model": "M2_local_bulk_flow_and_method_nuisance",
+        "testable_prediction": "Flow correlates radially up to R ~ 100-200 Mpc and decays at high z; method-dependent offsets mimic dipole/quadrupole across inhomogeneous catalogs",
+        "current_status_from_solver_free_runs": "CF4++ flow subtraction shifts 4-window CF4 slopes, and uncalibrated +-0.02..0.05 mag method offsets create substantial partial-ID intervals; SDSS 63 mocks inflate diagonal Wald p95 to 14.66."
+      },
+      {
+        "model": "M3_homogeneous_local_1p3_shear",
+        "testable_prediction": "G07 parity theorem proves c*B2 = 0 identically for pure homogeneous shear; E2_VSH = sigma_ab = Q_rad; finite-z Sachs ODE deviates cleanly from KS z->0 identity at z >= 0.3",
+        "current_status_from_solver_free_runs": "Gaia shows nonzero B2 (3.85 uas/yr) strongly modulated by ecliptic scan hits, rejecting pure homogeneous local shear attribution; VLBA shows E2=1.53, B2=1.61 uas/yr."
+      },
+      {
+        "model": "M4_multifluid_tilted_Bianchi",
+        "testable_prediction": "G07 proves q_norm = 0 counterexample can still carry pi_norm != 0 (anisotropic stress sourcing shear evolution); Codazzi rank drops to 2 in VI_{-1/9}^*",
+        "current_status_from_solver_free_runs": "Theoretically established; cosmological identification blocked pending external native polarized all-m Boltzmann transfer (SQ-NATIVE)."
+      },
+      {
+        "model": "M5_survey_geometry_and_selection_systematics",
+        "testable_prediction": "Directional/quadrupole amplitudes collapse or flip when footprint edges, ecliptic scan templates, or selection-gradient cuts are modeled",
+        "current_status_from_solver_free_runs": "STRONGLY SUPPORTED IN WORKING DATA: Gaia E2 tracks scan caustic (-0.550 STF cos, 2.83x-4.20x JK inflation), LoTSS interior cut drops 0.0537->0.0114, RACS pixel-uniform drops 0.1185->0.0253, PR3 vs CG/BP QU drops to r=0.116..0.262."
+      }
+    ],
+    "r78_60node_reconciliation": {
+      "total_unique_nodes_covered": 60,
+      "expected_dag_nodes": 60,
+      "missing_nodes": [],
+      "extra_nodes": [],
+      "duplicate_nodes": [],
+      "status_totals": {
+        "REUSED_SCOPED": 18,
+        "DIAGNOSTIC_COMPLETED_SCOPED": 4,
+        "BLOCKED_INPUT": 9,
+        "BLOCKED_DEPENDENCY": 29
+      },
+      "status_totals_note": "Aggregates Phase-1 R89 RESULT.json node_verdicts (where G02 SQ-CF4 method-contrast exploratory diagnostic was DIAGNOSTIC_COMPLETED_SCOPED); R87/R88/R89-Phase3 physical SQ-CF4 remains BLOCKED_INPUT.",
+      "group_status_counts": {
+        "G01_COMMON": {
+          "REUSED_SCOPED": 7
+        },
+        "G02_CF4": {
+          "REUSED_SCOPED": 2,
+          "DIAGNOSTIC_COMPLETED_SCOPED": 1,
+          "BLOCKED_INPUT": 1,
+          "BLOCKED_DEPENDENCY": 3
+        },
+        "G03_GAIA": {
+          "REUSED_SCOPED": 2,
+          "DIAGNOSTIC_COMPLETED_SCOPED": 1,
+          "BLOCKED_INPUT": 1,
+          "BLOCKED_DEPENDENCY": 3
+        },
+        "G04_RADIO_FRAME": {
+          "REUSED_SCOPED": 3,
+          "DIAGNOSTIC_COMPLETED_SCOPED": 2,
+          "BLOCKED_DEPENDENCY": 3
+        },
+        "G05_PLANCK": {
+          "REUSED_SCOPED": 2,
+          "BLOCKED_INPUT": 1,
+          "BLOCKED_DEPENDENCY": 4
+        },
+        "G06_P1": {
+          "REUSED_SCOPED": 1,
+          "BLOCKED_INPUT": 2,
+          "BLOCKED_DEPENDENCY": 4
+        },
+        "G07_BIANCHI": {
+          "REUSED_SCOPED": 1,
+          "BLOCKED_INPUT": 2,
+          "BLOCKED_DEPENDENCY": 4
+        },
+        "G08_OPTICAL_PHY": {
+          "BLOCKED_INPUT": 2,
+          "BLOCKED_DEPENDENCY": 8
+        }
+      },
+      "r78_next_action_id": "SQ-CF4",
+      "g02_phase3_sq_cf4_status": "BLOCKED_INPUT",
+      "g03_phase3_sq_gaia_status": "DIAGNOSTIC_COMPLETED_SCOPED",
+      "sixty_of_sixty_science_pass": false
+    }
+  },
+  "claim_hygiene": {
+    "physical_Pi": null,
+    "physical_GF": null,
+    "bianchi_family_identified": false,
+    "sixty_of_sixty_science_pass": false,
+    "next_science_id_preserved": "SQ-CF4"
+  }
+}

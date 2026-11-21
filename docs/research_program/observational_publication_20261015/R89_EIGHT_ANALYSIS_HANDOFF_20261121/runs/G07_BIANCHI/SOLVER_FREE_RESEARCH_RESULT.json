@@ -1,0 +1,529 @@
+{
+  "artifact_id": "R89_G07_BIANCHI_SOLVER_FREE_RESEARCH_V1",
+  "group_id": "G07_BIANCHI",
+  "create_only": true,
+  "epistemic_status": "derived_and_numerically_checked",
+  "runtime_sec": 0.394,
+  "max_rss_mb": 142.19,
+  "platform": "Linux-7.0.0-43-generic-x86_64-with-glibc2.39",
+  "part_a_lie_curvature_and_codazzi": {
+    "epistemic_status": "derived_and_numerically_checked",
+    "jacobi_identity_exact_with_Na_zero": true,
+    "codazzi_matrix_3x5_symbolic": [
+      [
+        "3*a_val",
+        "0",
+        "0",
+        "0",
+        "-n2 + n3"
+      ],
+      [
+        "0",
+        "0",
+        "3*a_val",
+        "n1 - n3",
+        "0"
+      ],
+      [
+        "0",
+        "0",
+        "-n1 + n2",
+        "3*a_val",
+        "0"
+      ]
+    ],
+    "class_B_lower_block_det_symbolic": "9*a_val**2 + n2*n3",
+    "wald_nonpositive_curvature_max_r3_excluding_type_IX_3000draws": -0.0,
+    "type_IX_positive_curvature_draws_of_250": 187,
+    "canonical_families": [
+      {
+        "type": "I",
+        "class": "A",
+        "codazzi_rank": 0,
+        "shear_kernel_dim": 5,
+        "symbolic_ricci_scalar": "0",
+        "right_nullspace_sample": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "left_nullspace": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "type": "II",
+        "class": "A",
+        "codazzi_rank": 2,
+        "shear_kernel_dim": 3,
+        "symbolic_ricci_scalar": "-1/2",
+        "right_nullspace_sample": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "left_nullspace": [
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "type": "III",
+        "class": "B",
+        "codazzi_rank": 3,
+        "shear_kernel_dim": 2,
+        "symbolic_ricci_scalar": "-8",
+        "right_nullspace_sample": [
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.6666666666666666,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "left_nullspace": []
+      },
+      {
+        "type": "IV",
+        "class": "B",
+        "codazzi_rank": 3,
+        "shear_kernel_dim": 2,
+        "symbolic_ricci_scalar": "-13/2",
+        "right_nullspace_sample": [
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            -0.3333333333333333,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "left_nullspace": []
+      },
+      {
+        "type": "V",
+        "class": "B",
+        "codazzi_rank": 3,
+        "shear_kernel_dim": 2,
+        "symbolic_ricci_scalar": "-6",
+        "right_nullspace_sample": [
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "left_nullspace": []
+      },
+      {
+        "type": "VI_0",
+        "class": "A",
+        "codazzi_rank": 3,
+        "shear_kernel_dim": 2,
+        "symbolic_ricci_scalar": "-9/2",
+        "right_nullspace_sample": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "left_nullspace": []
+      },
+      {
+        "type": "VI_h",
+        "class": "B",
+        "codazzi_rank": 3,
+        "shear_kernel_dim": 2,
+        "symbolic_ricci_scalar": "12*h_p - 9/2",
+        "right_nullspace_sample": [
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            1.4142135623730951,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "left_nullspace": []
+      },
+      {
+        "type": "VI_-1/9*",
+        "class": "B",
+        "codazzi_rank": 2,
+        "shear_kernel_dim": 3,
+        "symbolic_ricci_scalar": "-91/6",
+        "right_nullspace_sample": [
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -2.0,
+            1.0,
+            0.0
+          ],
+          [
+            2.5,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "left_nullspace": [
+          [
+            0.0,
+            -0.5,
+            1.0
+          ]
+        ]
+      },
+      {
+        "type": "VII_0",
+        "class": "A",
+        "codazzi_rank": 3,
+        "shear_kernel_dim": 2,
+        "symbolic_ricci_scalar": "-1/2",
+        "right_nullspace_sample": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "left_nullspace": []
+      },
+      {
+        "type": "VII_h",
+        "class": "B",
+        "codazzi_rank": 3,
+        "shear_kernel_dim": 2,
+        "symbolic_ricci_scalar": "-12*h_p - 1/2",
+        "right_nullspace_sample": [
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            -0.4714045207910317,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "left_nullspace": []
+      },
+      {
+        "type": "VIII",
+        "class": "A",
+        "codazzi_rank": 3,
+        "shear_kernel_dim": 2,
+        "symbolic_ricci_scalar": "-14",
+        "right_nullspace_sample": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "left_nullspace": []
+      },
+      {
+        "type": "IX",
+        "class": "A",
+        "codazzi_rank": 3,
+        "shear_kernel_dim": 2,
+        "symbolic_ricci_scalar": "4",
+        "right_nullspace_sample": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "left_nullspace": []
+      }
+    ],
+    "lrs_and_isotropic_special_subcases": [
+      {
+        "subcase": "VII_0_LRS",
+        "n_eigenvalues": [
+          "0",
+          "1",
+          "1"
+        ],
+        "a_val": "0",
+        "codazzi_rank": 2,
+        "shear_kernel_dim": 3
+      },
+      {
+        "subcase": "VIII_LRS",
+        "n_eigenvalues": [
+          "1",
+          "1",
+          "-1"
+        ],
+        "a_val": "0",
+        "codazzi_rank": 2,
+        "shear_kernel_dim": 3
+      },
+      {
+        "subcase": "IX_LRS",
+        "n_eigenvalues": [
+          "1",
+          "1",
+          "2"
+        ],
+        "a_val": "0",
+        "codazzi_rank": 2,
+        "shear_kernel_dim": 3
+      },
+      {
+        "subcase": "IX_isotropic_S3",
+        "n_eigenvalues": [
+          "1",
+          "1",
+          "1"
+        ],
+        "a_val": "0",
+        "codazzi_rank": 0,
+        "shear_kernel_dim": 5
+      },
+      {
+        "subcase": "VI_-1/9*_distinct_n",
+        "n_eigenvalues": [
+          "0",
+          "1",
+          "-4"
+        ],
+        "a_val": "2/3",
+        "codazzi_rank": 2,
+        "shear_kernel_dim": 3
+      }
+    ],
+    "r84_registry_canonical_count": 11
+  },
+  "part_b_multifluid_tilt_counterexample": {
+    "epistemic_status": "derived_and_numerically_checked",
+    "symbolic_zero_total_flux_verified": true,
+    "symbolic_trace_pi_sq_formula": "2*w1**2*(w1 + w2)**2*(vx1**2 + vy1**2 + vz1**2)**2/(3*w2**2)",
+    "symbolic_positivity_identity_holds": true,
+    "numerical_type_I_counterexample": {
+      "h1": 1.0,
+      "v1": [
+        0.3,
+        0.0,
+        0.0
+      ],
+      "h2_matched": 2.148351648351648,
+      "v2": [
+        -0.15,
+        0.0,
+        0.0
+      ],
+      "q_norm_vector": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max_abs_q_norm": 0.0,
+      "pi_norm_matrix": [
+        [
+          0.09890109890109888,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.04945054945054944,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          -0.04945054945054944
+        ]
+      ],
+      "tr_pi_sq_direct": 0.014672141045767414,
+      "tr_pi_sq_theorem": 0.014672141045767414,
+      "formula_diff": 0.0
+    },
+    "physical_implication": "Zero total normal energy flux q_a=0 does NOT force zero anisotropic stress in Class A Type I multifluid Bianchi models; pi_{ab} sources tracefree shear evolution directly."
+  },
+  "part_c_25d_observability_theorem": {
+    "epistemic_status": "derived_and_numerically_checked",
+    "state_dim": 18,
+    "observable_dim": 25,
+    "radial_9d_rank": 9,
+    "vsh_16d_rank": 11,
+    "joint_25d_rank": 15,
+    "joint_right_null_dim": 3,
+    "joint_right_null_meaning": "Exact 3D irreducible spin-vorticity degeneracy Omega_frame = omega_cosmic (B1 = 0)",
+    "joint_left_null_dim": 10,
+    "joint_left_null_meaning": "5 exact parity constraints B2 = 0 + 5 E2_VSH - Q_rad kinematic shear link (c*B2=0 is an exact parity falsifier against pure homogeneous shear)",
+    "cf4_normalized_angular_design_condition": 26.75208811709538,
+    "gaia_quality_all_e2_b2_formal_error_range_uasyr": [
+      0.5227856576558705,
+      0.5937544438207141
+    ]
+  },
+  "node_verdicts_preserved": {
+    "B01": "REUSED_SCOPED",
+    "SQ-LIE-FLUX": "BLOCKED_INPUT",
+    "SQ-NATIVE": "BLOCKED_INPUT",
+    "B02": "BLOCKED_DEPENDENCY",
+    "B03": "BLOCKED_DEPENDENCY",
+    "B04": "BLOCKED_DEPENDENCY",
+    "B05": "BLOCKED_DEPENDENCY"
+  },
+  "claim_hygiene": {
+    "physical_Pi": null,
+    "physical_GF": null,
+    "native_boltzmann_solver_implemented": false,
+    "bianchi_family_identified": false
+  }
+}
