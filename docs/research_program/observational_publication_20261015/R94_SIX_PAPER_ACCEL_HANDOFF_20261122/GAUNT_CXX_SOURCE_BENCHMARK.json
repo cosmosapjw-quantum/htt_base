@@ -1,0 +1,45 @@
+{
+  "schema": "htt.r94.gaunt_cpp_openmp_full_999_benchmark/1",
+  "source_identity": {
+    "R93_private_alm_sha256": "3e7cc869bb198748bb1c2a9ff18e1a9619b9923655eb4f4de2ae9faccd64c231",
+    "R93_statistic_sha256": "bee8a7a8a09c0eb31330fd60bd11161fb66fbee54ad67c82c658cdc8557f896f",
+    "R94_code_source_sha256": "621db6de8754358772cb60d1c17c172585b35eefd58311ef76910dcb015acfc0",
+    "R94_CPP_source_sha256": "f6c4cba2b0a94871890e322e30012ba063262846d86090552209822a1977eb5a",
+    "native_binary_path": "/home/cosmosapjw/Downloads/htt_r94_native_cache/gaunt_f6c4cba2b0a94871890e.so",
+    "native_binary_sha256": "c1fc350b01a0c714791f3fe5b7415ab565a8ef6b1ed299919ed555762cf62d88"
+  },
+  "fixed_params": {
+    "n_cmb": 999,
+    "n_unique_noise": 300,
+    "lmax": 48,
+    "band_count": 4,
+    "M_components": 5,
+    "estimate": "same exact original R93 Gaunt and LOO"
+  },
+  "n_exact_sympy_gaunt_reference_cases": 54,
+  "max_gaunt_abs_error": 5.551115123125783e-17,
+  "projector_max_abs_error_vs_R93_native": 5.551115123125783e-16,
+  "projector_max_abs_error_vs_R93_numpy": 1.7763568394002505e-15,
+  "timings_s": {
+    "sympy_wigner_coeff_build_s": 3.838559413998155,
+    "closedform_coeff_build_s": 0.009124762000283226,
+    "original_R93_python_project_s": 0.04984957000124268,
+    "R94_numpy_project_s": 0.12700360600138083,
+    "R94_Cxx17_project_s": 0.014852093008812517,
+    "original_R93_LOO_300_s": 0.012143476997152902,
+    "R94_LOO_300_s": 0.00017323299834970385,
+    "original_R93_LOO_999_s": 0.08392304200970102,
+    "R94_LOO_999_s": 0.00027277899789623916
+  },
+  "kernel_speedup_sympy_gaunt_generation": 420.67501748308706,
+  "kernel_speedup_R93_projection_Cxx17": 3.3564003384347476,
+  "kernel_speedup_R93_LOO_999": 307.65947032925175,
+  "mc_rank_no_change": {
+    "300": 0.3222591362126246,
+    "999": 0.249,
+    "300_tail": 96,
+    "999_tail": 248
+  },
+  "science_status": "IMPLEMENTATION_PARITY_ONLY_NO_UPGRADE_OF_PVALUE",
+  "end_to_end_speedup_not_claimed": true
+}

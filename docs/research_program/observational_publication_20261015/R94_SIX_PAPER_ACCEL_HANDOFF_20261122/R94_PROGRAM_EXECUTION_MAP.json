@@ -1,0 +1,1061 @@
+{
+  "schema": "htt.r94.local_agent_60_science_node_program_preflight/1",
+  "R78_original_dag_SHA256": "90aba8c1ca9c8e3a7744be0f071dcfe09b81e5353892aca13878191e20f58c11",
+  "R93_previous_overlay_SHA256": "42141cda292f143e77b62b8f93c2187b3d8bc3251797c04664032f34d6fce51a",
+  "r78_nodes": 60,
+  "r78_hard_edges": 129,
+  "scientific_next_id": "SQ-CF4",
+  "six_paper_routes": {
+    "P1": {
+      "owner": "G06_P1",
+      "code": [
+        "htt/obsstat/p1_fast.py",
+        "htt/obsstat/p1_lane.json"
+      ],
+      "focus": "correct source-typed x,Q,Pi,F,GF, partial-ID and 2048 coupled draws"
+    },
+    "P2": {
+      "owner": "G05_PLANCK",
+      "code": [
+        "scripts/r94/gaunt_fast.py",
+        "scripts/r94/gaunt_core.cpp",
+        "scripts/r94/stream_fullres.py",
+        "scripts/r94/solver_source_bridge.py"
+      ],
+      "focus": "same estimator actual SMICA PR3 masked T/EB + 999/300 null; source-qualified physical Bianchi transfer separate"
+    },
+    "P3": {
+      "owner": "G02_CF4",
+      "code": [
+        "htt/obsstat/cf4_p0b.py",
+        "htt/obsstat/phy_fast.py",
+        "scripts/r93/legacy_cf4_doppler.py"
+      ],
+      "focus": "35,970 source selection, missing upstream MCMC, R36 finite low-k PV, independent heldout"
+    },
+    "P4": {
+      "owner": "G04_RADIO_FRAME",
+      "code": [
+        "htt/obsstat/p4_bianchi_fast.py",
+        "scripts/r89/prepare_eight_groups.py"
+      ],
+      "focus": "actual 5 radio surveys and selection/LSS matched null, local/global boost"
+    },
+    "P5": {
+      "owner": "G07_BIANCHI",
+      "code": [
+        "htt/bass/background/general_tilted_evolution.py",
+        "htt/bass/transport/general_bianchi_transfer.py",
+        "scripts/r94/solver_source_bridge.py"
+      ],
+      "focus": "12 Bianchi Class A/B full EOS Einstein-Euler background and source-conditioned Sachs/Thomson, not native all-m"
+    },
+    "P6": {
+      "owner": "G03_GAIA",
+      "code": [
+        "htt/obsstat/pre_dag_fast.py",
+        "scripts/r91/gaia_quaia_full.py"
+      ],
+      "focus": "Gaia/Quaia/VLBA 634233 clean full QSO and 48-patch jackknife, frame/scan systematic null"
+    }
+  },
+  "seven_PHY_nodes": [
+    "PHY-01",
+    "PHY-02",
+    "PHY-03",
+    "PHY-04",
+    "PHY-05",
+    "PHY-06",
+    "PHY-07"
+  ],
+  "external_native_boltzmann_required_ids": [
+    "B02",
+    "B03",
+    "B04",
+    "B05",
+    "SQ-NATIVE"
+  ],
+  "other_routes": {
+    "COMMON": {
+      "owner": "G01_COMMON",
+      "code": [
+        "scripts/r94/deep_reuse_index.py"
+      ],
+      "focus": "provenance/source/node/conditional/transfer tags"
+    },
+    "QUALIFICATION": {
+      "owner": "G08_OPTICAL_PHY",
+      "code": [
+        "scripts/r94/solver_source_bridge.py"
+      ],
+      "focus": "7 cross PHY, Sachs/Jacobi/source matching, honest missing physics"
+    }
+  },
+  "r89_verdict_totals": {
+    "REUSED_SCOPED": 18,
+    "BLOCKED_INPUT": 9,
+    "BLOCKED_DEPENDENCY": 29,
+    "DIAGNOSTIC_COMPLETED_SCOPED": 4
+  },
+  "solver_progress": {
+    "12_Bianchi_R49_Einstein_Euler_dynamic": 12,
+    "12_Bianchi_geodesic_screen": 12,
+    "6_near_FLRW_linearized": 6,
+    "BASS_exact_Thomson_energetic_error": 5.654319433712919e-16,
+    "REC_positive_clock": "RUN_WITH_CONSTRUCTED_ELECTRON_FRACTION",
+    "REI_physical_CMB_source": "NOT_QUALIFIED_OWNER_ELECTRON_HISTORY",
+    "native_all_m_EB_CMB_LSS": "NOT_IMPLEMENTATION_VERIFIED",
+    "solver_source_bridge_sha256": "0d586824d957a6d0b91f82ebdeab0ff6017d791ab146576ffa8e9af71c8069be"
+  },
+  "optimized_numeric_lane": {
+    "Wigner_Gaunt_precompute_speedup_measured": 420.67501748308706,
+    "CXX_projection_speedup_measured": 3.3564003384347476,
+    "LOO_speedup_measured": 307.65947032925175,
+    "MC_999_300_rank_parity": {
+      "300": 0.3222591362126246,
+      "999": 0.249,
+      "300_tail": 96,
+      "999_tail": 248
+    },
+    "benchmark_receipt_sha256": "ba36b80c266d547b9b857dffb637bb6b146bf244e1752bf12ada2f6e354dfff9",
+    "backend_select": "g++ C++17/OpenMP only when source hashed and matching tests pass; otherwise NumPy"
+  },
+  "streaming_implementation": {
+    "pilot_fullres_nside2048_pairs": 3,
+    "pilot_cmb_ids": [
+      0,
+      818,
+      999
+    ],
+    "pilot_actual_raw_SHA_verified": true,
+    "pilot_time_s": 65.23974349800847,
+    "pilot_private_harmonics_SHA256": "3adcaa0ee204503359d0b2a8b6105a6012a468f1c348c87eb98bfc89933240ec",
+    "requested_full_999_TEB": "DEFERRED_FOR_LOCAL_AGENT_FULL_LONG_RUN",
+    "runtime_budget_from_pilot": "about 65s/3 ~22s per pair with actual SHA, 999 pairs order 6 hours if same sustained throughput",
+    "RAM_source": "3-pair run peak RSS ~4.9 GB on 31 GiB RAM, 17 GiB currently available"
+  },
+  "reused_source_inventory": {
+    "scan_physical_files": 15712,
+    "zip_members": 4320,
+    "curated_source_hashes": 19,
+    "private_fts": "/home/cosmosapjw/Downloads/htt_r94_source_index/search.sqlite"
+  },
+  "local_agent_native_subagent": "NOT_RUN_NATIVE_AGENT_CALL_TOOL_ABSENT",
+  "R78_original_scientific_states_unchanged": true,
+  "all_60_node_original_science_PASSED": false,
+  "rows": [
+    {
+      "id": "E0",
+      "paper": "COMMON",
+      "r78_science_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "work_group": "G01_COMMON",
+      "code_paths": [
+        "scripts/r94/deep_reuse_index.py"
+      ],
+      "next_science_question": "provenance/source/node/conditional/transfer tags",
+      "r94_claim_scope": "REUSED_SCOPED_OR_SOURCE_DIAGNOSTIC; NO_AUTO_PROMOTION",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "E1",
+      "paper": "COMMON",
+      "r78_science_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "work_group": "G01_COMMON",
+      "code_paths": [
+        "scripts/r94/deep_reuse_index.py"
+      ],
+      "next_science_question": "provenance/source/node/conditional/transfer tags",
+      "r94_claim_scope": "REUSED_SCOPED_OR_SOURCE_DIAGNOSTIC; NO_AUTO_PROMOTION",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "E2",
+      "paper": "COMMON",
+      "r78_science_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "work_group": "G01_COMMON",
+      "code_paths": [
+        "scripts/r94/deep_reuse_index.py"
+      ],
+      "next_science_question": "provenance/source/node/conditional/transfer tags",
+      "r94_claim_scope": "REUSED_SCOPED_OR_SOURCE_DIAGNOSTIC; NO_AUTO_PROMOTION",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "E3",
+      "paper": "COMMON",
+      "r78_science_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "work_group": "G01_COMMON",
+      "code_paths": [
+        "scripts/r94/deep_reuse_index.py"
+      ],
+      "next_science_question": "provenance/source/node/conditional/transfer tags",
+      "r94_claim_scope": "REUSED_SCOPED_OR_SOURCE_DIAGNOSTIC; NO_AUTO_PROMOTION",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "X01",
+      "paper": "COMMON",
+      "r78_science_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "work_group": "G01_COMMON",
+      "code_paths": [
+        "scripts/r94/deep_reuse_index.py"
+      ],
+      "next_science_question": "provenance/source/node/conditional/transfer tags",
+      "r94_claim_scope": "REUSED_SCOPED_OR_SOURCE_DIAGNOSTIC; NO_AUTO_PROMOTION",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "X02",
+      "paper": "COMMON",
+      "r78_science_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "work_group": "G01_COMMON",
+      "code_paths": [
+        "scripts/r94/deep_reuse_index.py"
+      ],
+      "next_science_question": "provenance/source/node/conditional/transfer tags",
+      "r94_claim_scope": "REUSED_SCOPED_OR_SOURCE_DIAGNOSTIC; NO_AUTO_PROMOTION",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "X03",
+      "paper": "COMMON",
+      "r78_science_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "work_group": "G01_COMMON",
+      "code_paths": [
+        "scripts/r94/deep_reuse_index.py"
+      ],
+      "next_science_question": "provenance/source/node/conditional/transfer tags",
+      "r94_claim_scope": "REUSED_SCOPED_OR_SOURCE_DIAGNOSTIC; NO_AUTO_PROMOTION",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "S01",
+      "paper": "P1",
+      "r78_science_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "work_group": "G06_P1",
+      "code_paths": [
+        "htt/obsstat/p1_fast.py",
+        "htt/obsstat/p1_lane.json"
+      ],
+      "next_science_question": "correct source-typed x,Q,Pi,F,GF, partial-ID and 2048 coupled draws",
+      "r94_claim_scope": "REUSED_SCOPED_OR_SOURCE_DIAGNOSTIC; NO_AUTO_PROMOTION",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "S02",
+      "paper": "P1",
+      "r78_science_state": "blocked_input",
+      "r89_original_verdict": "BLOCKED_INPUT",
+      "work_group": "G06_P1",
+      "code_paths": [
+        "htt/obsstat/p1_fast.py",
+        "htt/obsstat/p1_lane.json"
+      ],
+      "next_science_question": "correct source-typed x,Q,Pi,F,GF, partial-ID and 2048 coupled draws",
+      "r94_claim_scope": "SOURCE_CONDITIONAL_RUN_ALLOWED; OLD_PUBLICATION_BLOCKERS_REMAIN",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "S03",
+      "paper": "P1",
+      "r78_science_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "work_group": "G06_P1",
+      "code_paths": [
+        "htt/obsstat/p1_fast.py",
+        "htt/obsstat/p1_lane.json"
+      ],
+      "next_science_question": "correct source-typed x,Q,Pi,F,GF, partial-ID and 2048 coupled draws",
+      "r94_claim_scope": "SOURCE_CONDITIONAL_RUN_ALLOWED; OLD_PUBLICATION_BLOCKERS_REMAIN",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "S04",
+      "paper": "P1",
+      "r78_science_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "work_group": "G06_P1",
+      "code_paths": [
+        "htt/obsstat/p1_fast.py",
+        "htt/obsstat/p1_lane.json"
+      ],
+      "next_science_question": "correct source-typed x,Q,Pi,F,GF, partial-ID and 2048 coupled draws",
+      "r94_claim_scope": "SOURCE_CONDITIONAL_RUN_ALLOWED; OLD_PUBLICATION_BLOCKERS_REMAIN",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "S05",
+      "paper": "P1",
+      "r78_science_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "work_group": "G06_P1",
+      "code_paths": [
+        "htt/obsstat/p1_fast.py",
+        "htt/obsstat/p1_lane.json"
+      ],
+      "next_science_question": "correct source-typed x,Q,Pi,F,GF, partial-ID and 2048 coupled draws",
+      "r94_claim_scope": "SOURCE_CONDITIONAL_RUN_ALLOWED; OLD_PUBLICATION_BLOCKERS_REMAIN",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "S06",
+      "paper": "P1",
+      "r78_science_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "work_group": "G06_P1",
+      "code_paths": [
+        "htt/obsstat/p1_fast.py",
+        "htt/obsstat/p1_lane.json"
+      ],
+      "next_science_question": "correct source-typed x,Q,Pi,F,GF, partial-ID and 2048 coupled draws",
+      "r94_claim_scope": "SOURCE_CONDITIONAL_RUN_ALLOWED; OLD_PUBLICATION_BLOCKERS_REMAIN",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "L01",
+      "paper": "P2",
+      "r78_science_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "work_group": "G05_PLANCK",
+      "code_paths": [
+        "scripts/r94/gaunt_fast.py",
+        "scripts/r94/gaunt_core.cpp",
+        "scripts/r94/stream_fullres.py",
+        "scripts/r94/solver_source_bridge.py"
+      ],
+      "next_science_question": "same estimator actual SMICA PR3 masked T/EB + 999/300 null; source-qualified physical Bianchi transfer separate",
+      "r94_claim_scope": "REUSED_SCOPED_OR_SOURCE_DIAGNOSTIC; NO_AUTO_PROMOTION",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "L02",
+      "paper": "P2",
+      "r78_science_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "work_group": "G05_PLANCK",
+      "code_paths": [
+        "scripts/r94/gaunt_fast.py",
+        "scripts/r94/gaunt_core.cpp",
+        "scripts/r94/stream_fullres.py",
+        "scripts/r94/solver_source_bridge.py"
+      ],
+      "next_science_question": "same estimator actual SMICA PR3 masked T/EB + 999/300 null; source-qualified physical Bianchi transfer separate",
+      "r94_claim_scope": "REUSED_SCOPED_OR_SOURCE_DIAGNOSTIC; NO_AUTO_PROMOTION",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "L03",
+      "paper": "P2",
+      "r78_science_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "work_group": "G05_PLANCK",
+      "code_paths": [
+        "scripts/r94/gaunt_fast.py",
+        "scripts/r94/gaunt_core.cpp",
+        "scripts/r94/stream_fullres.py",
+        "scripts/r94/solver_source_bridge.py"
+      ],
+      "next_science_question": "same estimator actual SMICA PR3 masked T/EB + 999/300 null; source-qualified physical Bianchi transfer separate",
+      "r94_claim_scope": "SOURCE_CONDITIONAL_RUN_ALLOWED; OLD_PUBLICATION_BLOCKERS_REMAIN",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "L04",
+      "paper": "P2",
+      "r78_science_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "work_group": "G05_PLANCK",
+      "code_paths": [
+        "scripts/r94/gaunt_fast.py",
+        "scripts/r94/gaunt_core.cpp",
+        "scripts/r94/stream_fullres.py",
+        "scripts/r94/solver_source_bridge.py"
+      ],
+      "next_science_question": "same estimator actual SMICA PR3 masked T/EB + 999/300 null; source-qualified physical Bianchi transfer separate",
+      "r94_claim_scope": "SOURCE_CONDITIONAL_RUN_ALLOWED; OLD_PUBLICATION_BLOCKERS_REMAIN",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "L05",
+      "paper": "P2",
+      "r78_science_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "work_group": "G05_PLANCK",
+      "code_paths": [
+        "scripts/r94/gaunt_fast.py",
+        "scripts/r94/gaunt_core.cpp",
+        "scripts/r94/stream_fullres.py",
+        "scripts/r94/solver_source_bridge.py"
+      ],
+      "next_science_question": "same estimator actual SMICA PR3 masked T/EB + 999/300 null; source-qualified physical Bianchi transfer separate",
+      "r94_claim_scope": "SOURCE_CONDITIONAL_RUN_ALLOWED; OLD_PUBLICATION_BLOCKERS_REMAIN",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "L06",
+      "paper": "P2",
+      "r78_science_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "work_group": "G05_PLANCK",
+      "code_paths": [
+        "scripts/r94/gaunt_fast.py",
+        "scripts/r94/gaunt_core.cpp",
+        "scripts/r94/stream_fullres.py",
+        "scripts/r94/solver_source_bridge.py"
+      ],
+      "next_science_question": "same estimator actual SMICA PR3 masked T/EB + 999/300 null; source-qualified physical Bianchi transfer separate",
+      "r94_claim_scope": "SOURCE_CONDITIONAL_RUN_ALLOWED; OLD_PUBLICATION_BLOCKERS_REMAIN",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "H01",
+      "paper": "P3",
+      "r78_science_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "work_group": "G02_CF4",
+      "code_paths": [
+        "htt/obsstat/cf4_p0b.py",
+        "htt/obsstat/phy_fast.py",
+        "scripts/r93/legacy_cf4_doppler.py"
+      ],
+      "next_science_question": "35,970 source selection, missing upstream MCMC, R36 finite low-k PV, independent heldout",
+      "r94_claim_scope": "REUSED_SCOPED_OR_SOURCE_DIAGNOSTIC; NO_AUTO_PROMOTION",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "H02",
+      "paper": "P3",
+      "r78_science_state": "pending",
+      "r89_original_verdict": "BLOCKED_INPUT",
+      "work_group": "G02_CF4",
+      "code_paths": [
+        "htt/obsstat/cf4_p0b.py",
+        "htt/obsstat/phy_fast.py",
+        "scripts/r93/legacy_cf4_doppler.py"
+      ],
+      "next_science_question": "35,970 source selection, missing upstream MCMC, R36 finite low-k PV, independent heldout",
+      "r94_claim_scope": "SOURCE_CONDITIONAL_RUN_ALLOWED; OLD_PUBLICATION_BLOCKERS_REMAIN",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "H03",
+      "paper": "P3",
+      "r78_science_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "work_group": "G02_CF4",
+      "code_paths": [
+        "htt/obsstat/cf4_p0b.py",
+        "htt/obsstat/phy_fast.py",
+        "scripts/r93/legacy_cf4_doppler.py"
+      ],
+      "next_science_question": "35,970 source selection, missing upstream MCMC, R36 finite low-k PV, independent heldout",
+      "r94_claim_scope": "REUSED_SCOPED_OR_SOURCE_DIAGNOSTIC; NO_AUTO_PROMOTION",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "H04",
+      "paper": "P3",
+      "r78_science_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "work_group": "G02_CF4",
+      "code_paths": [
+        "htt/obsstat/cf4_p0b.py",
+        "htt/obsstat/phy_fast.py",
+        "scripts/r93/legacy_cf4_doppler.py"
+      ],
+      "next_science_question": "35,970 source selection, missing upstream MCMC, R36 finite low-k PV, independent heldout",
+      "r94_claim_scope": "SOURCE_CONDITIONAL_RUN_ALLOWED; OLD_PUBLICATION_BLOCKERS_REMAIN",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "H05",
+      "paper": "P3",
+      "r78_science_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "work_group": "G02_CF4",
+      "code_paths": [
+        "htt/obsstat/cf4_p0b.py",
+        "htt/obsstat/phy_fast.py",
+        "scripts/r93/legacy_cf4_doppler.py"
+      ],
+      "next_science_question": "35,970 source selection, missing upstream MCMC, R36 finite low-k PV, independent heldout",
+      "r94_claim_scope": "SOURCE_CONDITIONAL_RUN_ALLOWED; OLD_PUBLICATION_BLOCKERS_REMAIN",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "H06",
+      "paper": "P3",
+      "r78_science_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "work_group": "G02_CF4",
+      "code_paths": [
+        "htt/obsstat/cf4_p0b.py",
+        "htt/obsstat/phy_fast.py",
+        "scripts/r93/legacy_cf4_doppler.py"
+      ],
+      "next_science_question": "35,970 source selection, missing upstream MCMC, R36 finite low-k PV, independent heldout",
+      "r94_claim_scope": "SOURCE_CONDITIONAL_RUN_ALLOWED; OLD_PUBLICATION_BLOCKERS_REMAIN",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "V01",
+      "paper": "P4",
+      "r78_science_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "work_group": "G04_RADIO_FRAME",
+      "code_paths": [
+        "htt/obsstat/p4_bianchi_fast.py",
+        "scripts/r89/prepare_eight_groups.py"
+      ],
+      "next_science_question": "actual 5 radio surveys and selection/LSS matched null, local/global boost",
+      "r94_claim_scope": "REUSED_SCOPED_OR_SOURCE_DIAGNOSTIC; NO_AUTO_PROMOTION",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "V02",
+      "paper": "P4",
+      "r78_science_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "work_group": "G04_RADIO_FRAME",
+      "code_paths": [
+        "htt/obsstat/p4_bianchi_fast.py",
+        "scripts/r89/prepare_eight_groups.py"
+      ],
+      "next_science_question": "actual 5 radio surveys and selection/LSS matched null, local/global boost",
+      "r94_claim_scope": "REUSED_SCOPED_OR_SOURCE_DIAGNOSTIC; NO_AUTO_PROMOTION",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "V03",
+      "paper": "P4",
+      "r78_science_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "work_group": "G04_RADIO_FRAME",
+      "code_paths": [
+        "htt/obsstat/p4_bianchi_fast.py",
+        "scripts/r89/prepare_eight_groups.py"
+      ],
+      "next_science_question": "actual 5 radio surveys and selection/LSS matched null, local/global boost",
+      "r94_claim_scope": "REUSED_SCOPED_OR_SOURCE_DIAGNOSTIC; NO_AUTO_PROMOTION",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "V04",
+      "paper": "P4",
+      "r78_science_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "work_group": "G04_RADIO_FRAME",
+      "code_paths": [
+        "htt/obsstat/p4_bianchi_fast.py",
+        "scripts/r89/prepare_eight_groups.py"
+      ],
+      "next_science_question": "actual 5 radio surveys and selection/LSS matched null, local/global boost",
+      "r94_claim_scope": "SOURCE_CONDITIONAL_RUN_ALLOWED; OLD_PUBLICATION_BLOCKERS_REMAIN",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "V05",
+      "paper": "P4",
+      "r78_science_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "work_group": "G04_RADIO_FRAME",
+      "code_paths": [
+        "htt/obsstat/p4_bianchi_fast.py",
+        "scripts/r89/prepare_eight_groups.py"
+      ],
+      "next_science_question": "actual 5 radio surveys and selection/LSS matched null, local/global boost",
+      "r94_claim_scope": "SOURCE_CONDITIONAL_RUN_ALLOWED; OLD_PUBLICATION_BLOCKERS_REMAIN",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "V06",
+      "paper": "P4",
+      "r78_science_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "work_group": "G04_RADIO_FRAME",
+      "code_paths": [
+        "htt/obsstat/p4_bianchi_fast.py",
+        "scripts/r89/prepare_eight_groups.py"
+      ],
+      "next_science_question": "actual 5 radio surveys and selection/LSS matched null, local/global boost",
+      "r94_claim_scope": "SOURCE_CONDITIONAL_RUN_ALLOWED; OLD_PUBLICATION_BLOCKERS_REMAIN",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "B01",
+      "paper": "P5",
+      "r78_science_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "work_group": "G07_BIANCHI",
+      "code_paths": [
+        "htt/bass/background/general_tilted_evolution.py",
+        "htt/bass/transport/general_bianchi_transfer.py",
+        "scripts/r94/solver_source_bridge.py"
+      ],
+      "next_science_question": "12 Bianchi Class A/B full EOS Einstein-Euler background and source-conditioned Sachs/Thomson, not native all-m",
+      "r94_claim_scope": "REUSED_SCOPED_OR_SOURCE_DIAGNOSTIC; NO_AUTO_PROMOTION",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "B02",
+      "paper": "P5",
+      "r78_science_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "work_group": "G07_BIANCHI",
+      "code_paths": [
+        "htt/bass/background/general_tilted_evolution.py",
+        "htt/bass/transport/general_bianchi_transfer.py",
+        "scripts/r94/solver_source_bridge.py"
+      ],
+      "next_science_question": "12 Bianchi Class A/B full EOS Einstein-Euler background and source-conditioned Sachs/Thomson, not native all-m",
+      "r94_claim_scope": "PHYSICAL_ALL_M_NATIVE_BIANCHI_TRANSFER_NOT_COMPLETED; CONDITIONAL_R49_EINSTEIN_EULER_REUSED",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "B03",
+      "paper": "P5",
+      "r78_science_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "work_group": "G07_BIANCHI",
+      "code_paths": [
+        "htt/bass/background/general_tilted_evolution.py",
+        "htt/bass/transport/general_bianchi_transfer.py",
+        "scripts/r94/solver_source_bridge.py"
+      ],
+      "next_science_question": "12 Bianchi Class A/B full EOS Einstein-Euler background and source-conditioned Sachs/Thomson, not native all-m",
+      "r94_claim_scope": "PHYSICAL_ALL_M_NATIVE_BIANCHI_TRANSFER_NOT_COMPLETED; CONDITIONAL_R49_EINSTEIN_EULER_REUSED",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "B04",
+      "paper": "P5",
+      "r78_science_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "work_group": "G07_BIANCHI",
+      "code_paths": [
+        "htt/bass/background/general_tilted_evolution.py",
+        "htt/bass/transport/general_bianchi_transfer.py",
+        "scripts/r94/solver_source_bridge.py"
+      ],
+      "next_science_question": "12 Bianchi Class A/B full EOS Einstein-Euler background and source-conditioned Sachs/Thomson, not native all-m",
+      "r94_claim_scope": "PHYSICAL_ALL_M_NATIVE_BIANCHI_TRANSFER_NOT_COMPLETED; CONDITIONAL_R49_EINSTEIN_EULER_REUSED",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "B05",
+      "paper": "P5",
+      "r78_science_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "work_group": "G07_BIANCHI",
+      "code_paths": [
+        "htt/bass/background/general_tilted_evolution.py",
+        "htt/bass/transport/general_bianchi_transfer.py",
+        "scripts/r94/solver_source_bridge.py"
+      ],
+      "next_science_question": "12 Bianchi Class A/B full EOS Einstein-Euler background and source-conditioned Sachs/Thomson, not native all-m",
+      "r94_claim_scope": "PHYSICAL_ALL_M_NATIVE_BIANCHI_TRANSFER_NOT_COMPLETED; CONDITIONAL_R49_EINSTEIN_EULER_REUSED",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "K01",
+      "paper": "P6",
+      "r78_science_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "work_group": "G03_GAIA",
+      "code_paths": [
+        "htt/obsstat/pre_dag_fast.py",
+        "scripts/r91/gaia_quaia_full.py"
+      ],
+      "next_science_question": "Gaia/Quaia/VLBA 634233 clean full QSO and 48-patch jackknife, frame/scan systematic null",
+      "r94_claim_scope": "REUSED_SCOPED_OR_SOURCE_DIAGNOSTIC; NO_AUTO_PROMOTION",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "K02",
+      "paper": "P6",
+      "r78_science_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "work_group": "G03_GAIA",
+      "code_paths": [
+        "htt/obsstat/pre_dag_fast.py",
+        "scripts/r91/gaia_quaia_full.py"
+      ],
+      "next_science_question": "Gaia/Quaia/VLBA 634233 clean full QSO and 48-patch jackknife, frame/scan systematic null",
+      "r94_claim_scope": "REUSED_SCOPED_OR_SOURCE_DIAGNOSTIC; NO_AUTO_PROMOTION",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "K03",
+      "paper": "P6",
+      "r78_science_state": "pending",
+      "r89_original_verdict": "BLOCKED_INPUT",
+      "work_group": "G03_GAIA",
+      "code_paths": [
+        "htt/obsstat/pre_dag_fast.py",
+        "scripts/r91/gaia_quaia_full.py"
+      ],
+      "next_science_question": "Gaia/Quaia/VLBA 634233 clean full QSO and 48-patch jackknife, frame/scan systematic null",
+      "r94_claim_scope": "SOURCE_CONDITIONAL_RUN_ALLOWED; OLD_PUBLICATION_BLOCKERS_REMAIN",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "K04",
+      "paper": "P6",
+      "r78_science_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "work_group": "G03_GAIA",
+      "code_paths": [
+        "htt/obsstat/pre_dag_fast.py",
+        "scripts/r91/gaia_quaia_full.py"
+      ],
+      "next_science_question": "Gaia/Quaia/VLBA 634233 clean full QSO and 48-patch jackknife, frame/scan systematic null",
+      "r94_claim_scope": "SOURCE_CONDITIONAL_RUN_ALLOWED; OLD_PUBLICATION_BLOCKERS_REMAIN",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "K05",
+      "paper": "P6",
+      "r78_science_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "work_group": "G03_GAIA",
+      "code_paths": [
+        "htt/obsstat/pre_dag_fast.py",
+        "scripts/r91/gaia_quaia_full.py"
+      ],
+      "next_science_question": "Gaia/Quaia/VLBA 634233 clean full QSO and 48-patch jackknife, frame/scan systematic null",
+      "r94_claim_scope": "SOURCE_CONDITIONAL_RUN_ALLOWED; OLD_PUBLICATION_BLOCKERS_REMAIN",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "K06",
+      "paper": "P6",
+      "r78_science_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "work_group": "G03_GAIA",
+      "code_paths": [
+        "htt/obsstat/pre_dag_fast.py",
+        "scripts/r91/gaia_quaia_full.py"
+      ],
+      "next_science_question": "Gaia/Quaia/VLBA 634233 clean full QSO and 48-patch jackknife, frame/scan systematic null",
+      "r94_claim_scope": "SOURCE_CONDITIONAL_RUN_ALLOWED; OLD_PUBLICATION_BLOCKERS_REMAIN",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "SQ-CF4",
+      "paper": "P3",
+      "r78_science_state": "ready_scoped",
+      "r89_original_verdict": "DIAGNOSTIC_COMPLETED_SCOPED",
+      "work_group": "G02_CF4",
+      "code_paths": [
+        "htt/obsstat/cf4_p0b.py",
+        "htt/obsstat/phy_fast.py",
+        "scripts/r93/legacy_cf4_doppler.py"
+      ],
+      "next_science_question": "35,970 source selection, missing upstream MCMC, R36 finite low-k PV, independent heldout",
+      "r94_claim_scope": "REUSED_SCOPED_OR_SOURCE_DIAGNOSTIC; NO_AUTO_PROMOTION",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "SQ-GAIA",
+      "paper": "P6",
+      "r78_science_state": "ready_scoped",
+      "r89_original_verdict": "DIAGNOSTIC_COMPLETED_SCOPED",
+      "work_group": "G03_GAIA",
+      "code_paths": [
+        "htt/obsstat/pre_dag_fast.py",
+        "scripts/r91/gaia_quaia_full.py"
+      ],
+      "next_science_question": "Gaia/Quaia/VLBA 634233 clean full QSO and 48-patch jackknife, frame/scan systematic null",
+      "r94_claim_scope": "REUSED_SCOPED_OR_SOURCE_DIAGNOSTIC; NO_AUTO_PROMOTION",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "SQ-RADIO",
+      "paper": "P4",
+      "r78_science_state": "ready_scoped",
+      "r89_original_verdict": "DIAGNOSTIC_COMPLETED_SCOPED",
+      "work_group": "G04_RADIO_FRAME",
+      "code_paths": [
+        "htt/obsstat/p4_bianchi_fast.py",
+        "scripts/r89/prepare_eight_groups.py"
+      ],
+      "next_science_question": "actual 5 radio surveys and selection/LSS matched null, local/global boost",
+      "r94_claim_scope": "REUSED_SCOPED_OR_SOURCE_DIAGNOSTIC; NO_AUTO_PROMOTION",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "SQ-FRAME",
+      "paper": "COMMON",
+      "r78_science_state": "ready_scoped",
+      "r89_original_verdict": "DIAGNOSTIC_COMPLETED_SCOPED",
+      "work_group": "G01_COMMON",
+      "code_paths": [
+        "scripts/r94/deep_reuse_index.py"
+      ],
+      "next_science_question": "provenance/source/node/conditional/transfer tags",
+      "r94_claim_scope": "REUSED_SCOPED_OR_SOURCE_DIAGNOSTIC; NO_AUTO_PROMOTION",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "SQ-P1-ANCHOR",
+      "paper": "P1",
+      "r78_science_state": "blocked_physical_anchor",
+      "r89_original_verdict": "BLOCKED_INPUT",
+      "work_group": "G06_P1",
+      "code_paths": [
+        "htt/obsstat/p1_fast.py",
+        "htt/obsstat/p1_lane.json"
+      ],
+      "next_science_question": "correct source-typed x,Q,Pi,F,GF, partial-ID and 2048 coupled draws",
+      "r94_claim_scope": "SOURCE_CONDITIONAL_RUN_ALLOWED; OLD_PUBLICATION_BLOCKERS_REMAIN",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "SQ-CMB-NULL",
+      "paper": "P2",
+      "r78_science_state": "blocked_source",
+      "r89_original_verdict": "BLOCKED_INPUT",
+      "work_group": "G05_PLANCK",
+      "code_paths": [
+        "scripts/r94/gaunt_fast.py",
+        "scripts/r94/gaunt_core.cpp",
+        "scripts/r94/stream_fullres.py",
+        "scripts/r94/solver_source_bridge.py"
+      ],
+      "next_science_question": "same estimator actual SMICA PR3 masked T/EB + 999/300 null; source-qualified physical Bianchi transfer separate",
+      "r94_claim_scope": "SOURCE_CONDITIONAL_RUN_ALLOWED; OLD_PUBLICATION_BLOCKERS_REMAIN",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "SQ-PHOTON-FLUX",
+      "paper": "P2",
+      "r78_science_state": "blocked_source",
+      "r89_original_verdict": "BLOCKED_INPUT",
+      "work_group": "G05_PLANCK",
+      "code_paths": [
+        "scripts/r94/gaunt_fast.py",
+        "scripts/r94/gaunt_core.cpp",
+        "scripts/r94/stream_fullres.py",
+        "scripts/r94/solver_source_bridge.py"
+      ],
+      "next_science_question": "same estimator actual SMICA PR3 masked T/EB + 999/300 null; source-qualified physical Bianchi transfer separate",
+      "r94_claim_scope": "SOURCE_CONDITIONAL_RUN_ALLOWED; OLD_PUBLICATION_BLOCKERS_REMAIN",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "SQ-LIE-FLUX",
+      "paper": "P5",
+      "r78_science_state": "blocked_source",
+      "r89_original_verdict": "BLOCKED_INPUT",
+      "work_group": "G07_BIANCHI",
+      "code_paths": [
+        "htt/bass/background/general_tilted_evolution.py",
+        "htt/bass/transport/general_bianchi_transfer.py",
+        "scripts/r94/solver_source_bridge.py"
+      ],
+      "next_science_question": "12 Bianchi Class A/B full EOS Einstein-Euler background and source-conditioned Sachs/Thomson, not native all-m",
+      "r94_claim_scope": "SOURCE_CONDITIONAL_RUN_ALLOWED; OLD_PUBLICATION_BLOCKERS_REMAIN",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "SQ-OPTICAL",
+      "paper": "COMMON",
+      "r78_science_state": "pending_conditional",
+      "r89_original_verdict": "BLOCKED_INPUT",
+      "work_group": "G01_COMMON",
+      "code_paths": [
+        "scripts/r94/deep_reuse_index.py"
+      ],
+      "next_science_question": "provenance/source/node/conditional/transfer tags",
+      "r94_claim_scope": "SOURCE_CONDITIONAL_RUN_ALLOWED; OLD_PUBLICATION_BLOCKERS_REMAIN",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "SQ-CROSS-COV",
+      "paper": "COMMON",
+      "r78_science_state": "pending_dependency",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "work_group": "G01_COMMON",
+      "code_paths": [
+        "scripts/r94/deep_reuse_index.py"
+      ],
+      "next_science_question": "provenance/source/node/conditional/transfer tags",
+      "r94_claim_scope": "SOURCE_CONDITIONAL_RUN_ALLOWED; OLD_PUBLICATION_BLOCKERS_REMAIN",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "SQ-NATIVE",
+      "paper": "P5",
+      "r78_science_state": "blocked_external",
+      "r89_original_verdict": "BLOCKED_INPUT",
+      "work_group": "G07_BIANCHI",
+      "code_paths": [
+        "htt/bass/background/general_tilted_evolution.py",
+        "htt/bass/transport/general_bianchi_transfer.py",
+        "scripts/r94/solver_source_bridge.py"
+      ],
+      "next_science_question": "12 Bianchi Class A/B full EOS Einstein-Euler background and source-conditioned Sachs/Thomson, not native all-m",
+      "r94_claim_scope": "PHYSICAL_ALL_M_NATIVE_BIANCHI_TRANSFER_NOT_COMPLETED; CONDITIONAL_R49_EINSTEIN_EULER_REUSED",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "PHY-01",
+      "paper": "CROSS",
+      "r78_science_state": "theory_verified_physical_data_pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "work_group": "G08_OPTICAL_PHY",
+      "code_paths": [
+        "scripts/r94/solver_source_bridge.py"
+      ],
+      "next_science_question": "7 cross PHY, Sachs/Jacobi/source matching, honest missing physics",
+      "r94_claim_scope": "SOURCE_CONDITIONAL_RUN_ALLOWED; OLD_PUBLICATION_BLOCKERS_REMAIN",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "PHY-02",
+      "paper": "CROSS",
+      "r78_science_state": "theory_verified_physical_data_pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "work_group": "G08_OPTICAL_PHY",
+      "code_paths": [
+        "scripts/r94/solver_source_bridge.py"
+      ],
+      "next_science_question": "7 cross PHY, Sachs/Jacobi/source matching, honest missing physics",
+      "r94_claim_scope": "SOURCE_CONDITIONAL_RUN_ALLOWED; OLD_PUBLICATION_BLOCKERS_REMAIN",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "PHY-03",
+      "paper": "CROSS",
+      "r78_science_state": "theory_verified_physical_data_pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "work_group": "G08_OPTICAL_PHY",
+      "code_paths": [
+        "scripts/r94/solver_source_bridge.py"
+      ],
+      "next_science_question": "7 cross PHY, Sachs/Jacobi/source matching, honest missing physics",
+      "r94_claim_scope": "SOURCE_CONDITIONAL_RUN_ALLOWED; OLD_PUBLICATION_BLOCKERS_REMAIN",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "PHY-04",
+      "paper": "CROSS",
+      "r78_science_state": "theory_verified_physical_data_pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "work_group": "G08_OPTICAL_PHY",
+      "code_paths": [
+        "scripts/r94/solver_source_bridge.py"
+      ],
+      "next_science_question": "7 cross PHY, Sachs/Jacobi/source matching, honest missing physics",
+      "r94_claim_scope": "SOURCE_CONDITIONAL_RUN_ALLOWED; OLD_PUBLICATION_BLOCKERS_REMAIN",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "PHY-05",
+      "paper": "CROSS",
+      "r78_science_state": "theory_verified_physical_data_pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "work_group": "G08_OPTICAL_PHY",
+      "code_paths": [
+        "scripts/r94/solver_source_bridge.py"
+      ],
+      "next_science_question": "7 cross PHY, Sachs/Jacobi/source matching, honest missing physics",
+      "r94_claim_scope": "SOURCE_CONDITIONAL_RUN_ALLOWED; OLD_PUBLICATION_BLOCKERS_REMAIN",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "PHY-06",
+      "paper": "CROSS",
+      "r78_science_state": "theory_verified_physical_data_pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "work_group": "G08_OPTICAL_PHY",
+      "code_paths": [
+        "scripts/r94/solver_source_bridge.py"
+      ],
+      "next_science_question": "7 cross PHY, Sachs/Jacobi/source matching, honest missing physics",
+      "r94_claim_scope": "SOURCE_CONDITIONAL_RUN_ALLOWED; OLD_PUBLICATION_BLOCKERS_REMAIN",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    },
+    {
+      "id": "PHY-07",
+      "paper": "CROSS",
+      "r78_science_state": "theory_verified_physical_data_pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "work_group": "G08_OPTICAL_PHY",
+      "code_paths": [
+        "scripts/r94/solver_source_bridge.py"
+      ],
+      "next_science_question": "7 cross PHY, Sachs/Jacobi/source matching, honest missing physics",
+      "r94_claim_scope": "SOURCE_CONDITIONAL_RUN_ALLOWED; OLD_PUBLICATION_BLOCKERS_REMAIN",
+      "original_science_status_changed": false,
+      "actual_r94_physical_science_acceptance": false
+    }
+  ]
+}

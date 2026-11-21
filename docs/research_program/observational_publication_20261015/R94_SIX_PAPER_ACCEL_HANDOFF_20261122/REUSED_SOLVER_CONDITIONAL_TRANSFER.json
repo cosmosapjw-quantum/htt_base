@@ -1,0 +1,820 @@
+{
+  "schema": "htt.r94.rec_rei_bass_htt_conditional_polarized_transfer_bridge/1",
+  "sources_sha256": {
+    "BASS_polarization": "44a2eb306d8870e70d6cb46c8f481bb30e58f64ffee4b9a055a0157a23e79e95",
+    "HTT_R49_transfer": "9bcb541d35cabc05b8c325a58bbef57f253627203ff1ac1c354e4bd789f60410",
+    "REC_background": "5296880dbf2d1b00e2810c969e6a0406b46f10acff04c794e8f718aff5813955",
+    "REI_conditional_envelope": "4c7001b2e0e009393a5c1ade6bb55fdfbfdd9c853c5aa04b5e17404834678754"
+  },
+  "optical_history_FLRW_constructed": {
+    "q_ref": 0.0,
+    "a_interval": [
+      0.047619047619047616,
+      0.2
+    ],
+    "z_interval": [
+      20.0,
+      4.0
+    ],
+    "delta_t_s": 4.2794891441557064e+16,
+    "delta_b": 0.0,
+    "tau_with_fixed_xe": 0.1839319823692971,
+    "quad_abs_err_estimate": 2.04205521791342e-15,
+    "electron_density0_cm-3_ASSUMED": 2e-07,
+    "electron_fraction_ASSUMED": 1.0,
+    "rec_method": "rec_lrs_bianchi_i_positive_rate_hermite_1",
+    "rec_source_sha": "4f6dbbc10da773bbc6ef2d40aa1c71749b7c9827e68127cc5783e09e24d3026e",
+    "rei_constant_sha": "4c7001b2e0e009393a5c1ade6bb55fdfbfdd9c853c5aa04b5e17404834678754",
+    "units": {
+      "c": "cm/s",
+      "sigma_T": "cm2",
+      "n_e": "cm-3",
+      "H": "s-1",
+      "tau": "dimensionless"
+    },
+    "REI_electron_history_qualified": false,
+    "physical_Bianchi_ionization_accepted": false
+  },
+  "optical_history_BianchiI_constructed": {
+    "q_ref": 1e-06,
+    "a_interval": [
+      0.047619047619047616,
+      0.2
+    ],
+    "z_interval": [
+      20.0,
+      4.0
+    ],
+    "delta_t_s": 4.279489144155458e+16,
+    "delta_b": 5.893027746558597e-07,
+    "tau_with_fixed_xe": 0.18393198236926245,
+    "quad_abs_err_estimate": 2.0420552179130353e-15,
+    "electron_density0_cm-3_ASSUMED": 2e-07,
+    "electron_fraction_ASSUMED": 1.0,
+    "rec_method": "rec_lrs_bianchi_i_positive_rate_hermite_1",
+    "rec_source_sha": "6cdc4f113549b7d351b75771b0e3dab6efcd03382a2a041e414ccf4c39b7f7ff",
+    "rei_constant_sha": "4c7001b2e0e009393a5c1ade6bb55fdfbfdd9c853c5aa04b5e17404834678754",
+    "units": {
+      "c": "cm/s",
+      "sigma_T": "cm2",
+      "n_e": "cm-3",
+      "H": "s-1",
+      "tau": "dimensionless"
+    },
+    "REI_electron_history_qualified": false,
+    "physical_Bianchi_ionization_accepted": false
+  },
+  "source": [
+    {
+      "source_pi_STF": [
+        [
+          0.006334154167265349,
+          0.00162878250015386,
+          3.640934449809037e-18
+        ],
+        [
+          0.001628782500153853,
+          -0.0031670770836323414,
+          0.0007239033334017101
+        ],
+        [
+          7.316380126630482e-18,
+          0.0007239033334017046,
+          -0.0031670770836332296
+        ]
+      ],
+      "tau": 0.18393198236926245,
+      "massless_photon_source_model": "constructed anisotropic unpolarized I(n)=1+0.08 n_i S_ij n_j",
+      "input_energy": 12.566370614359172,
+      "output_energy": 12.56637061435918,
+      "fractional_energy_error": 5.654319433712919e-16,
+      "screen_leak": 1.0408340855860843e-16,
+      "lowest_polarized_J_eigenvalue": -2.441742073505367e-16,
+      "source_pi_frobenius": 0.008156972505768547,
+      "stokes_basis_note": "BASS unpolarized J, exact rank-9 collision; pi is *intensity quadrupole normal moment*, conditional interpretation when supplied to HTT"
+    }
+  ],
+  "full_12_bianchi_families_geodesic": {
+    "FLRW": {
+      "family_class": "isotropic",
+      "equivalence_class": "FLAT_K0_FLRW_LIMIT",
+      "TT_l2": 9.853998997107346e-07,
+      "EE_l2": 3.340745648860223e-05,
+      "BB_l2": 1.9137227477699014e-36,
+      "TE_l2": 5.456505612037014e-06,
+      "max_BB": 1.719441409559171e-19,
+      "max_null_err": 3.3084646133829665e-14,
+      "max_screen_ortho_err": 1.1102230246251565e-15,
+      "rms_screen_twist": 3.391065374827898e-20,
+      "claim_tier": "EXACT_SYNTHETIC_GEODESIC_ORACLE",
+      "source_provenance": {
+        "temperature": "NUMERICAL_GEODESIC_CONDITIONAL_ON_TRAJECTORY",
+        "polarization": "EXPLICIT_PI_GAMMA_EMIT_INPUT",
+        "sigma_N_semantics": "integrated_shear_Sigma_in_linearized_mode"
+      },
+      "elapsed_s": 0.06051
+    },
+    "I": {
+      "family_class": "A",
+      "equivalence_class": "FLAT_K0_FLRW_LIMIT",
+      "TT_l2": 9.853998997107346e-07,
+      "EE_l2": 3.340745648860223e-05,
+      "BB_l2": 1.9137227477699014e-36,
+      "TE_l2": 5.456505612037014e-06,
+      "max_BB": 1.719441409559171e-19,
+      "max_null_err": 3.3084646133829665e-14,
+      "max_screen_ortho_err": 1.1102230246251565e-15,
+      "rms_screen_twist": 3.391065374827898e-20,
+      "claim_tier": "EXACT_SYNTHETIC_GEODESIC_ORACLE",
+      "source_provenance": {
+        "temperature": "NUMERICAL_GEODESIC_CONDITIONAL_ON_TRAJECTORY",
+        "polarization": "EXPLICIT_PI_GAMMA_EMIT_INPUT",
+        "sigma_N_semantics": "integrated_shear_Sigma_in_linearized_mode"
+      },
+      "elapsed_s": 0.04508
+    },
+    "II": {
+      "family_class": "A",
+      "equivalence_class": "MARGINAL_CLASS_A_II",
+      "TT_l2": 9.85399899712682e-07,
+      "EE_l2": 3.3407425164675256e-05,
+      "BB_l2": 3.082813410511118e-11,
+      "TE_l2": 5.4565029383548565e-06,
+      "max_BB": 3.082813410511118e-11,
+      "max_null_err": 4.0967229608668276e-14,
+      "max_screen_ortho_err": 1.5543122344752192e-15,
+      "rms_screen_twist": 0.000365679901021111,
+      "claim_tier": "EXACT_SYNTHETIC_GEODESIC_ORACLE",
+      "source_provenance": {
+        "temperature": "NUMERICAL_GEODESIC_CONDITIONAL_ON_TRAJECTORY",
+        "polarization": "EXPLICIT_PI_GAMMA_EMIT_INPUT",
+        "sigma_N_semantics": "integrated_shear_Sigma_in_linearized_mode"
+      },
+      "elapsed_s": 0.04569
+    },
+    "III": {
+      "family_class": "B",
+      "equivalence_class": "TYPE_III_VI_MINUS_ONE",
+      "TT_l2": 9.853984278347823e-07,
+      "EE_l2": 3.340733747385728e-05,
+      "BB_l2": 4.861578085675679e-11,
+      "TE_l2": 5.456491204549551e-06,
+      "max_BB": 4.861578085675679e-11,
+      "max_null_err": 2.0228263508670352e-13,
+      "max_screen_ortho_err": 7.396860901565105e-15,
+      "rms_screen_twist": 0.0006000807065261513,
+      "claim_tier": "EXACT_SYNTHETIC_GEODESIC_ORACLE",
+      "source_provenance": {
+        "temperature": "NUMERICAL_GEODESIC_CONDITIONAL_ON_TRAJECTORY",
+        "polarization": "EXPLICIT_PI_GAMMA_EMIT_INPUT",
+        "sigma_N_semantics": "integrated_shear_Sigma_in_linearized_mode"
+      },
+      "elapsed_s": 0.0448
+    },
+    "IV": {
+      "family_class": "B",
+      "equivalence_class": "MARGINAL_CLASS_B_IV",
+      "TT_l2": 9.85398841664725e-07,
+      "EE_l2": 3.340740700209662e-05,
+      "BB_l2": 7.896825502059488e-12,
+      "TE_l2": 5.45649868068669e-06,
+      "max_BB": 7.896825502059488e-12,
+      "max_null_err": 1.4432899320127035e-13,
+      "max_screen_ortho_err": 4.524158825347513e-15,
+      "rms_screen_twist": 0.0003431829093143714,
+      "claim_tier": "EXACT_SYNTHETIC_GEODESIC_ORACLE",
+      "source_provenance": {
+        "temperature": "NUMERICAL_GEODESIC_CONDITIONAL_ON_TRAJECTORY",
+        "polarization": "EXPLICIT_PI_GAMMA_EMIT_INPUT",
+        "sigma_N_semantics": "integrated_shear_Sigma_in_linearized_mode"
+      },
+      "elapsed_s": 0.04486
+    },
+    "V": {
+      "family_class": "B",
+      "equivalence_class": "OPEN_KNEG_FLRW_LIMIT",
+      "TT_l2": 9.853989796074828e-07,
+      "EE_l2": 3.340742017260212e-05,
+      "BB_l2": 5.189266316374334e-13,
+      "TE_l2": 5.456500007811266e-06,
+      "max_BB": 5.189266316374334e-13,
+      "max_null_err": 9.758860386455126e-14,
+      "max_screen_ortho_err": 1.7763568394002505e-15,
+      "rms_screen_twist": 7.790381506119411e-20,
+      "claim_tier": "EXACT_SYNTHETIC_GEODESIC_ORACLE",
+      "source_provenance": {
+        "temperature": "NUMERICAL_GEODESIC_CONDITIONAL_ON_TRAJECTORY",
+        "polarization": "EXPLICIT_PI_GAMMA_EMIT_INPUT",
+        "sigma_N_semantics": "integrated_shear_Sigma_in_linearized_mode"
+      },
+      "elapsed_s": 0.04463
+    },
+    "VI_0": {
+      "family_class": "A",
+      "equivalence_class": "MARGINAL_CLASS_A_VI0",
+      "TT_l2": 9.853997617716498e-07,
+      "EE_l2": 3.340740444785418e-05,
+      "BB_l2": 4.260483543593224e-11,
+      "TE_l2": 5.456501028773559e-06,
+      "max_BB": 4.260483543593224e-11,
+      "max_null_err": 7.638334409421077e-14,
+      "max_screen_ortho_err": 4.052314039881821e-15,
+      "rms_screen_twist": 0.0006001915690974342,
+      "claim_tier": "EXACT_SYNTHETIC_GEODESIC_ORACLE",
+      "source_provenance": {
+        "temperature": "NUMERICAL_GEODESIC_CONDITIONAL_ON_TRAJECTORY",
+        "polarization": "EXPLICIT_PI_GAMMA_EMIT_INPUT",
+        "sigma_N_semantics": "integrated_shear_Sigma_in_linearized_mode"
+      },
+      "elapsed_s": 0.04876
+    },
+    "VI_h": {
+      "family_class": "B",
+      "equivalence_class": "MARGINAL_CLASS_B_VIH",
+      "TT_l2": 9.853988878856939e-07,
+      "EE_l2": 3.340735865606835e-05,
+      "BB_l2": 4.6593754928748633e-11,
+      "TE_l2": 5.456494347852698e-06,
+      "max_BB": 4.6593754928748633e-11,
+      "max_null_err": 1.6564527527407336e-13,
+      "max_screen_ortho_err": 6.3976601794024646e-15,
+      "rms_screen_twist": 0.0006000807607171393,
+      "claim_tier": "EXACT_SYNTHETIC_GEODESIC_ORACLE",
+      "source_provenance": {
+        "temperature": "NUMERICAL_GEODESIC_CONDITIONAL_ON_TRAJECTORY",
+        "polarization": "EXPLICIT_PI_GAMMA_EMIT_INPUT",
+        "sigma_N_semantics": "integrated_shear_Sigma_in_linearized_mode"
+      },
+      "elapsed_s": 0.04614
+    },
+    "VII_0": {
+      "family_class": "A",
+      "equivalence_class": "FLAT_K0_FLRW_LIMIT",
+      "TT_l2": 9.853930025960774e-07,
+      "EE_l2": 3.340509289025377e-05,
+      "BB_l2": 1.9911720743835892e-09,
+      "TE_l2": 5.4562764516859374e-06,
+      "max_BB": 1.9911720743835892e-09,
+      "max_null_err": 5.52891066263328e-13,
+      "max_screen_ortho_err": 8.032463583163008e-14,
+      "rms_screen_twist": 0.0026717293862310483,
+      "claim_tier": "EXACT_SYNTHETIC_GEODESIC_ORACLE",
+      "source_provenance": {
+        "temperature": "NUMERICAL_GEODESIC_CONDITIONAL_ON_TRAJECTORY",
+        "polarization": "EXPLICIT_PI_GAMMA_EMIT_INPUT",
+        "sigma_N_semantics": "integrated_shear_Sigma_in_linearized_mode"
+      },
+      "elapsed_s": 0.04564
+    },
+    "VII_h": {
+      "family_class": "B",
+      "equivalence_class": "OPEN_KNEG_FLRW_LIMIT",
+      "TT_l2": 9.853996696867702e-07,
+      "EE_l2": 3.3407445703598344e-05,
+      "BB_l2": 1.3399387539364404e-12,
+      "TE_l2": 5.4565042109853255e-06,
+      "max_BB": 1.3399387539364404e-12,
+      "max_null_err": 6.7390537594747e-14,
+      "max_screen_ortho_err": 4.497975342881988e-15,
+      "rms_screen_twist": 0.00037819244634393275,
+      "claim_tier": "EXACT_SYNTHETIC_GEODESIC_ORACLE",
+      "source_provenance": {
+        "temperature": "NUMERICAL_GEODESIC_CONDITIONAL_ON_TRAJECTORY",
+        "polarization": "EXPLICIT_PI_GAMMA_EMIT_INPUT",
+        "sigma_N_semantics": "integrated_shear_Sigma_in_linearized_mode"
+      },
+      "elapsed_s": 0.04442
+    },
+    "VIII": {
+      "family_class": "A",
+      "equivalence_class": "MARGINAL_CLASS_A_VIII",
+      "TT_l2": 9.853998997185856e-07,
+      "EE_l2": 3.340742316804703e-05,
+      "BB_l2": 3.1337384474432775e-11,
+      "TE_l2": 5.456502938371199e-06,
+      "max_BB": 3.1337384474432775e-11,
+      "max_null_err": 6.283862319378386e-14,
+      "max_screen_ortho_err": 6.08795782883198e-15,
+      "rms_screen_twist": 0.0005554301092805092,
+      "claim_tier": "EXACT_SYNTHETIC_GEODESIC_ORACLE",
+      "source_provenance": {
+        "temperature": "NUMERICAL_GEODESIC_CONDITIONAL_ON_TRAJECTORY",
+        "polarization": "EXPLICIT_PI_GAMMA_EMIT_INPUT",
+        "sigma_N_semantics": "integrated_shear_Sigma_in_linearized_mode"
+      },
+      "elapsed_s": 0.04429
+    },
+    "IX": {
+      "family_class": "A",
+      "equivalence_class": "CLOSED_KPOS_FLRW_LIMIT",
+      "TT_l2": 9.853998997107346e-07,
+      "EE_l2": 3.340742374930553e-05,
+      "BB_l2": 3.273929666389739e-11,
+      "TE_l2": 5.456502938349479e-06,
+      "max_BB": 3.273929666389739e-11,
+      "max_null_err": 3.3084646133829665e-14,
+      "max_screen_ortho_err": 2.609024107869118e-15,
+      "rms_screen_twist": 0.0004949747468305867,
+      "claim_tier": "EXACT_SYNTHETIC_GEODESIC_ORACLE",
+      "source_provenance": {
+        "temperature": "NUMERICAL_GEODESIC_CONDITIONAL_ON_TRAJECTORY",
+        "polarization": "EXPLICIT_PI_GAMMA_EMIT_INPUT",
+        "sigma_N_semantics": "integrated_shear_Sigma_in_linearized_mode"
+      },
+      "elapsed_s": 0.0444
+    }
+  },
+  "near_FLRW_linearized_six_out_of_twelve": {
+    "FLRW": {
+      "status": "SOURCE_CONDITIONAL_LINEARIZED_EXECUTED",
+      "cl_TT_l2": 2.0106192982974697e-06,
+      "cl_EE_l2": 3.344474216999785e-05,
+      "cl_BB_l2": 1.4777068902559254e-37,
+      "claim_tier": "TRANSFER_CONDITIONAL_BASS_PRE_SOLVER"
+    },
+    "I": {
+      "status": "SOURCE_CONDITIONAL_LINEARIZED_EXECUTED",
+      "cl_TT_l2": 2.0106192982974697e-06,
+      "cl_EE_l2": 3.344474216999785e-05,
+      "cl_BB_l2": 1.4777068902559254e-37,
+      "claim_tier": "TRANSFER_CONDITIONAL_BASS_PRE_SOLVER"
+    },
+    "II": {
+      "status": "OUT_OF_SCOPE_NO_NEAR_FLRW_LIMIT"
+    },
+    "III": {
+      "status": "OUT_OF_SCOPE_NO_NEAR_FLRW_LIMIT"
+    },
+    "IV": {
+      "status": "OUT_OF_SCOPE_NO_NEAR_FLRW_LIMIT"
+    },
+    "V": {
+      "status": "SOURCE_CONDITIONAL_LINEARIZED_EXECUTED",
+      "cl_TT_l2": 1.995536624606697e-06,
+      "cl_EE_l2": 3.344474216999785e-05,
+      "cl_BB_l2": 1.4777068902559254e-37,
+      "claim_tier": "TRANSFER_CONDITIONAL_BASS_PRE_SOLVER"
+    },
+    "VI_0": {
+      "status": "OUT_OF_SCOPE_NO_NEAR_FLRW_LIMIT"
+    },
+    "VI_h": {
+      "status": "OUT_OF_SCOPE_NO_NEAR_FLRW_LIMIT"
+    },
+    "VII_0": {
+      "status": "SOURCE_CONDITIONAL_LINEARIZED_EXECUTED",
+      "cl_TT_l2": 2.010618795642713e-06,
+      "cl_EE_l2": 3.3444724146426505e-05,
+      "cl_BB_l2": 1.739000885184445e-11,
+      "claim_tier": "TRANSFER_CONDITIONAL_BASS_PRE_SOLVER"
+    },
+    "VII_h": {
+      "status": "SOURCE_CONDITIONAL_LINEARIZED_EXECUTED",
+      "cl_TT_l2": 1.8757150338447528e-06,
+      "cl_EE_l2": 3.0408838317019197e-05,
+      "cl_BB_l2": 2.9097887547742768e-06,
+      "claim_tier": "TRANSFER_CONDITIONAL_BASS_PRE_SOLVER"
+    },
+    "VIII": {
+      "status": "OUT_OF_SCOPE_NO_NEAR_FLRW_LIMIT"
+    },
+    "IX": {
+      "status": "SOURCE_CONDITIONAL_LINEARIZED_EXECUTED",
+      "cl_TT_l2": 1.9929503527012583e-06,
+      "cl_EE_l2": 3.2887168750534066e-05,
+      "cl_BB_l2": 5.507689057888924e-07,
+      "claim_tier": "TRANSFER_CONDITIONAL_BASS_PRE_SOLVER"
+    }
+  },
+  "cutoff_studies_4_representatives": {
+    "I": [
+      {
+        "lmax": 8,
+        "n_gl_theta": 14,
+        "l2_TT": 9.853998997107346e-07,
+        "l2_EE": 3.340745648860223e-05,
+        "l2_BB": 1.9137227477699014e-36,
+        "max_null_error": 3.3084646133829665e-14
+      },
+      {
+        "lmax": 16,
+        "n_gl_theta": 20,
+        "l2_TT": 9.853998997108121e-07,
+        "l2_EE": 3.3407456488602093e-05,
+        "l2_BB": 1.2899260008241374e-36,
+        "max_null_error": 3.3306690738754696e-14
+      },
+      {
+        "lmax": 24,
+        "n_gl_theta": 28,
+        "l2_TT": 9.85399899710786e-07,
+        "l2_EE": 3.340745648860229e-05,
+        "l2_BB": 1.5242855652303385e-37,
+        "max_null_error": 3.352873534367973e-14
+      }
+    ],
+    "V": [
+      {
+        "lmax": 8,
+        "n_gl_theta": 14,
+        "l2_TT": 9.853989796074828e-07,
+        "l2_EE": 3.340742017260212e-05,
+        "l2_BB": 5.189266316374334e-13,
+        "max_null_error": 9.758860386455126e-14
+      },
+      {
+        "lmax": 16,
+        "n_gl_theta": 20,
+        "l2_TT": 9.85398979607491e-07,
+        "l2_EE": 3.340742017260199e-05,
+        "l2_BB": 5.189266316375444e-13,
+        "max_null_error": 9.769962616701378e-14
+      },
+      {
+        "lmax": 24,
+        "n_gl_theta": 28,
+        "l2_TT": 9.85398979607435e-07,
+        "l2_EE": 3.3407420172602204e-05,
+        "l2_BB": 5.189266316375114e-13,
+        "max_null_error": 9.736655925962623e-14
+      }
+    ],
+    "VII_h": [
+      {
+        "lmax": 8,
+        "n_gl_theta": 14,
+        "l2_TT": 9.853996696867702e-07,
+        "l2_EE": 3.3407445703598344e-05,
+        "l2_BB": 1.3399387539364404e-12,
+        "max_null_error": 6.7390537594747e-14
+      },
+      {
+        "lmax": 16,
+        "n_gl_theta": 20,
+        "l2_TT": 9.853996696868667e-07,
+        "l2_EE": 3.340744570359821e-05,
+        "l2_BB": 1.3399387539339207e-12,
+        "max_null_error": 6.761258219967203e-14
+      },
+      {
+        "lmax": 24,
+        "n_gl_theta": 28,
+        "l2_TT": 9.853996696867846e-07,
+        "l2_EE": 3.3407445703598446e-05,
+        "l2_BB": 1.339938753938163e-12,
+        "max_null_error": 6.794564910705958e-14
+      }
+    ],
+    "IX": [
+      {
+        "lmax": 8,
+        "n_gl_theta": 14,
+        "l2_TT": 9.853998997107346e-07,
+        "l2_EE": 3.340742374930553e-05,
+        "l2_BB": 3.273929666389739e-11,
+        "max_null_error": 3.3084646133829665e-14
+      },
+      {
+        "lmax": 16,
+        "n_gl_theta": 20,
+        "l2_TT": 9.853998997108121e-07,
+        "l2_EE": 3.340742374930541e-05,
+        "l2_BB": 3.27392966639096e-11,
+        "max_null_error": 3.3306690738754696e-14
+      },
+      {
+        "lmax": 24,
+        "n_gl_theta": 28,
+        "l2_TT": 9.85399899710786e-07,
+        "l2_EE": 3.3407423749305644e-05,
+        "l2_BB": 3.2739296663897954e-11,
+        "max_null_error": 3.352873534367973e-14
+      }
+    ]
+  },
+  "dynamic_12_family_Einstein_Euler_and_geodesic": {
+    "FLRW": {
+      "class": "A",
+      "two_fluid_eos": {
+        "photon": 0.3333333333333333,
+        "cdm": 0.0
+      },
+      "N_span": [
+        0.0,
+        0.5
+      ],
+      "N_eval": 17,
+      "max_jacobi": 0.0,
+      "max_hamiltonian": 2.6550932941402516e-10,
+      "max_codazzi": 1.5512337233473018e-12,
+      "max_shear_trace_error": 3.3881317890172014e-21,
+      "max_speed": 0.0458257569495584,
+      "final_H": 0.7653092323357814,
+      "TT_ell2": 6.323875453674523e-10,
+      "EE_ell2": 3.3444246016332225e-05,
+      "BB_ell2": 1.3062327615892877e-36,
+      "max_null_err": 6.661338147750939e-16,
+      "max_screen_ortho_err": 1.1102230246251565e-15,
+      "runtime_s": 0.15034,
+      "source_claim": "physical Einstein-Euler two-fluid on R49 chosen initial state, *constructed* emission pi; neither Planck-likelihood nor free high-ell photon hierarchy"
+    },
+    "I": {
+      "class": "A",
+      "two_fluid_eos": {
+        "photon": 0.3333333333333333,
+        "cdm": 0.0
+      },
+      "N_span": [
+        0.0,
+        0.5
+      ],
+      "N_eval": 17,
+      "max_jacobi": 0.0,
+      "max_hamiltonian": 8.979353729491152e-11,
+      "max_codazzi": 1.4124334883463926e-12,
+      "max_shear_trace_error": 1.734723475976807e-18,
+      "max_speed": 0.04609218799139522,
+      "final_H": 0.7653166093702185,
+      "TT_ell2": 4.081672269600284e-05,
+      "EE_ell2": 3.3684201730962973e-05,
+      "BB_ell2": 4.898060099646106e-37,
+      "max_null_err": 1.8971491044794675e-12,
+      "max_screen_ortho_err": 2.020605904817785e-14,
+      "runtime_s": 0.13352,
+      "source_claim": "physical Einstein-Euler two-fluid on R49 chosen initial state, *constructed* emission pi; neither Planck-likelihood nor free high-ell photon hierarchy"
+    },
+    "II": {
+      "class": "A",
+      "two_fluid_eos": {
+        "photon": 0.3333333333333333,
+        "cdm": 0.0
+      },
+      "N_span": [
+        0.0,
+        0.5
+      ],
+      "N_eval": 17,
+      "max_jacobi": 3.862613773261463e-26,
+      "max_hamiltonian": 6.253767700232242e-11,
+      "max_codazzi": 1.115756136064249e-11,
+      "max_shear_trace_error": 1.734723475976807e-18,
+      "max_speed": 0.03329280531000706,
+      "final_H": 0.7653081001363128,
+      "TT_ell2": 5.8571093346143395e-05,
+      "EE_ell2": 3.367753391660944e-05,
+      "BB_ell2": 6.755287139270177e-10,
+      "max_null_err": 3.631095424339037e-12,
+      "max_screen_ortho_err": 7.122080702970379e-14,
+      "runtime_s": 0.13478,
+      "source_claim": "physical Einstein-Euler two-fluid on R49 chosen initial state, *constructed* emission pi; neither Planck-likelihood nor free high-ell photon hierarchy"
+    },
+    "III": {
+      "class": "B",
+      "two_fluid_eos": {
+        "photon": 0.3333333333333333,
+        "cdm": 0.0
+      },
+      "N_span": [
+        0.0,
+        0.5
+      ],
+      "N_eval": 17,
+      "max_jacobi": 7.990892904392084e-18,
+      "max_hamiltonian": 6.061919957838472e-11,
+      "max_codazzi": 7.0363195250609e-11,
+      "max_shear_trace_error": 1.734723475976807e-18,
+      "max_speed": 0.03328915156805723,
+      "final_H": 0.7653378857626552,
+      "TT_ell2": 5.835368495736371e-05,
+      "EE_ell2": 3.367496055752289e-05,
+      "BB_ell2": 1.0991367015992964e-09,
+      "max_null_err": 5.0739412671418904e-12,
+      "max_screen_ortho_err": 1.701139229481896e-13,
+      "runtime_s": 0.13402,
+      "source_claim": "physical Einstein-Euler two-fluid on R49 chosen initial state, *constructed* emission pi; neither Planck-likelihood nor free high-ell photon hierarchy"
+    },
+    "IV": {
+      "class": "B",
+      "two_fluid_eos": {
+        "photon": 0.3333333333333333,
+        "cdm": 0.0
+      },
+      "N_span": [
+        0.0,
+        0.5
+      ],
+      "N_eval": 17,
+      "max_jacobi": 1.4134492064022927e-17,
+      "max_hamiltonian": 6.193365783056577e-11,
+      "max_codazzi": 8.237847591573321e-11,
+      "max_shear_trace_error": 1.734723475976807e-18,
+      "max_speed": 0.033289503703762297,
+      "final_H": 0.7653320058034744,
+      "TT_ell2": 5.8514642097444146e-05,
+      "EE_ell2": 3.36769199249026e-05,
+      "BB_ell2": 1.7869352819000277e-10,
+      "max_null_err": 5.344835685150429e-12,
+      "max_screen_ortho_err": 1.2788381464901022e-13,
+      "runtime_s": 0.13173,
+      "source_claim": "physical Einstein-Euler two-fluid on R49 chosen initial state, *constructed* emission pi; neither Planck-likelihood nor free high-ell photon hierarchy"
+    },
+    "V": {
+      "class": "B",
+      "two_fluid_eos": {
+        "photon": 0.3333333333333333,
+        "cdm": 0.0
+      },
+      "N_span": [
+        0.0,
+        0.5
+      ],
+      "N_eval": 17,
+      "max_jacobi": 6.142230764598194e-23,
+      "max_hamiltonian": 6.241394793231317e-11,
+      "max_codazzi": 7.840862565404538e-11,
+      "max_shear_trace_error": 1.734723475976807e-18,
+      "max_speed": 0.033289517909801114,
+      "final_H": 0.765329915038375,
+      "TT_ell2": 5.851096202452611e-05,
+      "EE_ell2": 3.367723741903426e-05,
+      "BB_ell2": 1.2070174464664053e-11,
+      "max_null_err": 4.614753024156926e-12,
+      "max_screen_ortho_err": 5.284661597215745e-14,
+      "runtime_s": 0.13063,
+      "source_claim": "physical Einstein-Euler two-fluid on R49 chosen initial state, *constructed* emission pi; neither Planck-likelihood nor free high-ell photon hierarchy"
+    },
+    "VI_0": {
+      "class": "A",
+      "two_fluid_eos": {
+        "photon": 0.3333333333333333,
+        "cdm": 0.0
+      },
+      "N_span": [
+        0.0,
+        0.5
+      ],
+      "N_eval": 17,
+      "max_jacobi": 1.5447340125377896e-22,
+      "max_hamiltonian": 6.209855005335178e-11,
+      "max_codazzi": 1.692131964107234e-11,
+      "max_shear_trace_error": 1.734723475976807e-18,
+      "max_speed": 0.03329279888557736,
+      "final_H": 0.7653140323588747,
+      "TT_ell2": 5.856932814653434e-05,
+      "EE_ell2": 3.3677047225538024e-05,
+      "BB_ell2": 9.41042958330996e-10,
+      "max_null_err": 4.506506279255973e-12,
+      "max_screen_ortho_err": 1.372790769949006e-13,
+      "runtime_s": 0.13591,
+      "source_claim": "physical Einstein-Euler two-fluid on R49 chosen initial state, *constructed* emission pi; neither Planck-likelihood nor free high-ell photon hierarchy"
+    },
+    "VI_h": {
+      "class": "B",
+      "two_fluid_eos": {
+        "photon": 0.3333333333333333,
+        "cdm": 0.0
+      },
+      "N_span": [
+        0.0,
+        0.5
+      ],
+      "N_eval": 17,
+      "max_jacobi": 8.643854266013772e-18,
+      "max_hamiltonian": 6.226632490308018e-11,
+      "max_codazzi": 3.6809476565770874e-11,
+      "max_shear_trace_error": 1.734723475976807e-18,
+      "max_speed": 0.0332909722548425,
+      "final_H": 0.765314805202945,
+      "TT_ell2": 5.8466202513664637e-05,
+      "EE_ell2": 3.367706727808052e-05,
+      "BB_ell2": 4.0006064147095256e-10,
+      "max_null_err": 3.482103494434341e-12,
+      "max_screen_ortho_err": 9.54460035312854e-14,
+      "runtime_s": 0.13742,
+      "source_claim": "physical Einstein-Euler two-fluid on R49 chosen initial state, *constructed* emission pi; neither Planck-likelihood nor free high-ell photon hierarchy"
+    },
+    "VII_0": {
+      "class": "A",
+      "two_fluid_eos": {
+        "photon": 0.3333333333333333,
+        "cdm": 0.0
+      },
+      "N_span": [
+        0.0,
+        0.5
+      ],
+      "N_eval": 17,
+      "max_jacobi": 7.540541127478626e-23,
+      "max_hamiltonian": 6.204296283729201e-11,
+      "max_codazzi": 1.1709636554268537e-11,
+      "max_shear_trace_error": 1.734723475976807e-18,
+      "max_speed": 0.03329267951718781,
+      "final_H": 0.7653062219262372,
+      "TT_ell2": 5.852275075935785e-05,
+      "EE_ell2": 3.3677030571815956e-05,
+      "BB_ell2": 8.789064157864769e-10,
+      "max_null_err": 4.00457444982294e-12,
+      "max_screen_ortho_err": 1.496580637194711e-13,
+      "runtime_s": 0.13229,
+      "source_claim": "physical Einstein-Euler two-fluid on R49 chosen initial state, *constructed* emission pi; neither Planck-likelihood nor free high-ell photon hierarchy"
+    },
+    "VII_h": {
+      "class": "B",
+      "two_fluid_eos": {
+        "photon": 0.3333333333333333,
+        "cdm": 0.0
+      },
+      "N_span": [
+        0.0,
+        0.5
+      ],
+      "N_eval": 17,
+      "max_jacobi": 2.6153058620733528e-17,
+      "max_hamiltonian": 6.055547677519945e-11,
+      "max_codazzi": 4.328227542574708e-11,
+      "max_shear_trace_error": 1.734723475976807e-18,
+      "max_speed": 0.03329087720344856,
+      "final_H": 0.7653144565173898,
+      "TT_ell2": 5.8489697746788585e-05,
+      "EE_ell2": 3.367737226397803e-05,
+      "BB_ell2": 2.597978365529143e-10,
+      "max_null_err": 3.978373186441786e-12,
+      "max_screen_ortho_err": 2.0211610163300975e-13,
+      "runtime_s": 0.12869,
+      "source_claim": "physical Einstein-Euler two-fluid on R49 chosen initial state, *constructed* emission pi; neither Planck-likelihood nor free high-ell photon hierarchy"
+    },
+    "VIII": {
+      "class": "A",
+      "two_fluid_eos": {
+        "photon": 0.3333333333333333,
+        "cdm": 0.0
+      },
+      "N_span": [
+        0.0,
+        0.5
+      ],
+      "N_eval": 17,
+      "max_jacobi": 6.549990691386814e-23,
+      "max_hamiltonian": 6.094017125816339e-11,
+      "max_codazzi": 2.1839174877224817e-11,
+      "max_shear_trace_error": 1.734723475976807e-18,
+      "max_speed": 0.03329293738346306,
+      "final_H": 0.7653160405022523,
+      "TT_ell2": 5.861702919303873e-05,
+      "EE_ell2": 3.3677623932769704e-05,
+      "BB_ell2": 6.861215367357288e-10,
+      "max_null_err": 4.207967307934268e-12,
+      "max_screen_ortho_err": 2.138844656940364e-13,
+      "runtime_s": 0.12969,
+      "source_claim": "physical Einstein-Euler two-fluid on R49 chosen initial state, *constructed* emission pi; neither Planck-likelihood nor free high-ell photon hierarchy"
+    },
+    "IX": {
+      "class": "A",
+      "two_fluid_eos": {
+        "photon": 0.3333333333333333,
+        "cdm": 0.0
+      },
+      "N_span": [
+        0.0,
+        0.5
+      ],
+      "N_eval": 17,
+      "max_jacobi": 1.5906636455561636e-24,
+      "max_hamiltonian": 8.3901048194493e-11,
+      "max_codazzi": 1.6577192980378643e-12,
+      "max_shear_trace_error": 1.734723475976807e-18,
+      "max_speed": 0.04609218919580244,
+      "final_H": 0.7653106012482751,
+      "TT_ell2": 4.0817092746270285e-05,
+      "EE_ell2": 3.3683485494364975e-05,
+      "BB_ell2": 7.173184947617756e-10,
+      "max_null_err": 1.8971491044794675e-12,
+      "max_screen_ortho_err": 7.192572817719955e-14,
+      "runtime_s": 0.13073,
+      "source_claim": "physical Einstein-Euler two-fluid on R49 chosen initial state, *constructed* emission pi; neither Planck-likelihood nor free high-ell photon hierarchy"
+    }
+  },
+  "REI_pair_bound_construction": {
+    "source_Ne_difference_envelope": 8.749468460587409e-08,
+    "constructed_emission_pi_two_sided_change_frobenius": 1.2681570334567114e-09,
+    "status": "SENSITIVITY_ONLY; REI pair envelope is NOT a physical Bianchi electron-history error bound"
+  },
+  "counts": {
+    "exact_geodesic_family_count": 12,
+    "linearized_executed": 6,
+    "linearized_rejected_correctly": 6,
+    "cutoff_case_count": 12,
+    "dynamic_Einstein_Euler_families": 12
+  },
+  "physics_claim_ceiling": {
+    "source_closure": "CONSTRUCTED_XE_AND_DENSITY",
+    "BASS_Thomson": "EXACT_BASIS_FREE_CONDITIONAL_COLLISION",
+    "REC_clock": "REAL_PRESCRIBED_POSITIVE_BIANCHI_I_INTERVAL",
+    "REI": "REAL_PAIR_DIFFERENCE_ENVELOPE_REUSED, NOT PHYSICAL ELECTRON_SOURCE",
+    "HTT_transfer": "GEODESIC_AND_SCREEN_CONDITIONAL_WITH_R49_12_FAMILY_EINSTEIN_EULER_BACKGROUND_IN_SEPARATE_DYNAMIC_LANE",
+    "native_all_m_CMB_EB_likelihood": false,
+    "release_matched_Planck_MC_and_Bianchi_family_posterior": false,
+    "source_congruence_and_transfer_calibration": null
+  },
+  "elapsed_s": 4.052798403004999
+}

@@ -1,0 +1,83 @@
+{
+  "schema": "htt.r94.ffp10_smica_fullres_pilot/1",
+  "nside": 2048,
+  "lmax": 48,
+  "methods": "FFP10 exact raw T/Q/U RING, masked T/I & Q/U separately, spin2 map2alm_spin",
+  "source_case_count": 3,
+  "selected_cmb_ids": [
+    0,
+    818,
+    999
+  ],
+  "matched_noise_id_rule": "id mod 300",
+  "cases": [
+    {
+      "id": 0,
+      "noise_id": 0,
+      "raw_cmb": "dx12_v3_smica_cmb_mc_00000_raw.fits",
+      "raw_noise": "dx12_v3_smica_noise_mc_00000_raw.fits",
+      "registered_raw_hashes": {
+        "cmb": "6f34ed4442b3bef0be983eda1311b04748b8322721eef02e814f54d9dfc1dc46",
+        "noise": "021f08d989ce0a90c449f7d81a8c130966f424437ffa2e6bd4e320b4576158ad"
+      },
+      "actual_hashed": true,
+      "observed_reader_warnings": [],
+      "lowres_mono_dipole_beta_uK": [
+        -7.518360123744898,
+        2.096607386539089,
+        4.1529320577999185,
+        0.5177888922478644
+      ]
+    },
+    {
+      "id": 818,
+      "noise_id": 218,
+      "raw_cmb": "dx12_v3_smica_cmb_mc_00818_raw.fits",
+      "raw_noise": "dx12_v3_smica_noise_mc_00218_raw.fits",
+      "registered_raw_hashes": {
+        "cmb": "d37b4c13115dfdefd932e2f7e5b43edfe5249c6f97f2bbaf66583baa875859d1",
+        "noise": "19d0d0a07e0ffffb93314f3738748192c5f2df8ba743b564175b5ede53eb0539"
+      },
+      "actual_hashed": true,
+      "observed_reader_warnings": [
+        "File may have been truncated: actual file length (603986622) is smaller than the expected size (603987840)"
+      ],
+      "lowres_mono_dipole_beta_uK": [
+        2.384265019489644,
+        3.5822246696455573,
+        1.879084476163479,
+        1.9553571017003388
+      ]
+    },
+    {
+      "id": 999,
+      "noise_id": 99,
+      "raw_cmb": "dx12_v3_smica_cmb_mc_00999_raw.fits",
+      "raw_noise": "dx12_v3_smica_noise_mc_00099_raw.fits",
+      "registered_raw_hashes": {
+        "cmb": "7f0aef54b3d683fb3b3293dd74f699e8e664f88bbdb42b43f48bf765c6bdb51c",
+        "noise": "41bde0e4f0537a998b730337f239db616b57d3f9feb0b32a7bedf6b428e69204"
+      },
+      "actual_hashed": true,
+      "observed_reader_warnings": [],
+      "lowres_mono_dipole_beta_uK": [
+        -2.969690598064366,
+        -3.6944537074252146,
+        -2.673796971368451,
+        -0.8164911116441909
+      ]
+    }
+  ],
+  "cache_identity": "86b792c821b3e641c76c83d96523148c65e9d30a439d7c850acc808c1bc5fadb",
+  "maskI_source_sha256": "23f49a3479073408b83a7f1bb2cca490d9be7f934b2e0e891524b6a1d06a5fc4",
+  "maskP_source_sha256": "c967e45449596c561c940d7ca0d494f1a26d947e6b5a9ef44185fdbf93b036d4",
+  "private_harmonic_path": "/home/cosmosapjw/Downloads/htt_r94_fullres_stream/pilot_00000_00818_00999.npz",
+  "private_harmonic_sha256": "3adcaa0ee204503359d0b2a8b6105a6012a468f1c348c87eb98bfc89933240ec",
+  "raw_file_sha_actual": true,
+  "source_original_data_changed": false,
+  "elapsed_wall_seconds": 65.23974349800847,
+  "physical_significance": "STREAMED_RAW_SOURCE_PILOT_NOT_FULL_999",
+  "high_l_model_source": "NONE",
+  "full_resolution_entire_999_done": false,
+  "full_EB_null_calibrated": false
+}
