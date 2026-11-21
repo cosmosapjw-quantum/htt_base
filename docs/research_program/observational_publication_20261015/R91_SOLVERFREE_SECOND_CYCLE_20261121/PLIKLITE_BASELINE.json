@@ -1,0 +1,68 @@
+{
+  "schema": "htt.r91.native_pliklite_fixed_theory_baseline/1",
+  "official_likelihood": "Planck 2018 nuisance-marginalized Plik-lite v22, source Cobaya class planck_pliklite.py",
+  "published_bestfit_theory": "Planck R3.01 CMB base plikHM+lowE+lensing minimum theory D_l file",
+  "links": [
+    "https://github.com/CobayaSampler/planck_native_data",
+    "https://github.com/CobayaSampler/cobaya",
+    "https://github.com/benabed/clik"
+  ],
+  "file_sha256": {
+    "plik_lite_v22.dataset": "0dc7318de1b1b8fe0ad79e6bdb13135eae0190c9678e52a0a4f5120ceafa64ca",
+    "blmin.dat": "325b351cbf8f694556bb13e98f285344e8d66811bb8eef18bcdcf1626518719d",
+    "blmax.dat": "c28ade0fa5270c7e87ba07bdcb68aef8783b132b352bfaa36c04d17694ab4014",
+    "bweight.dat": "8afcbd8bad769e2de96bacd80177e6543f96b2b406e6c2da1fd0d26718c9e415",
+    "cl_cmb_plik_v22.dat": "dac0d9d493213e77c940a10a968cf0da3c5730bae60e1356c4cd8bcff96377ff",
+    "c_matrix_plik_v22.dat": "ad90378c50bd67841764179c90ae6711fa4317c649966ab2b0712143b31e0a32"
+  },
+  "theory_file_sha256": "50eecd4422e22026070bdacf9fa8a7e7ef3badf4fa50fffea040df669715cf51",
+  "input_types": {
+    "theory": "D_l=l(l+1) C_l/(2pi) in microK^2",
+    "likelihood_data": "C_l, not D_l, in microK^2",
+    "covariance": "Fortran record binary lower triangular 613x613",
+    "calibration_param": "A_planck, divides predicted C_l by A_planck^2"
+  },
+  "A_planck": 1.0,
+  "bands": {
+    "tt": {
+      "n_bins": 215,
+      "ell_min": 30,
+      "ell_max": 2508,
+      "max_bin_width": 33,
+      "marginal_block_chi2": 208.0383446099447
+    },
+    "te": {
+      "n_bins": 199,
+      "ell_min": 30,
+      "ell_max": 1996,
+      "max_bin_width": 17,
+      "marginal_block_chi2": 187.0605633759639
+    },
+    "ee": {
+      "n_bins": 199,
+      "ell_min": 30,
+      "ell_max": 1996,
+      "max_bin_width": 17,
+      "marginal_block_chi2": 196.80517373245286
+    },
+    "total": {
+      "chi2": 585.4745658870222,
+      "n_bins": 613
+    },
+    "conditional_fixed_theory_calibration_profile": {
+      "u_equals_A_inverse2_MLE": 0.9983363373757768,
+      "A_planck_MLE": 1.0008328706681575,
+      "sigma_u_fixed_theory": 0.001547160170266766,
+      "sigma_A_delta_method": 0.0007755145719035779,
+      "chi2_profile_min": 584.3182940000552,
+      "chi2_improvement_A1_to_MLE": 1.1562718869670334,
+      "interpretation": "fixed published CMB background, Plik-lite likelihood only; not physical Bianchi evidence"
+    }
+  },
+  "log_likelihood_up_to_constant": -292.7372829435111,
+  "cmb_morphology_information": "ABSENT_C_ELL_MARGINAL_ONLY",
+  "source_null_qualified": "NO_FOR_BIANCHI_ATTRIBUTION",
+  "CAMB_boltzmann_executed": false,
+  "clik_executable_loaded": false,
+  "claim": "Observed high-l power baseline only; not Planck low-l morphology likelihood"
+}

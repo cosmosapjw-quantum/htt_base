@@ -1,0 +1,41 @@
+{
+  "schema": "htt.r91.planck_clik_loses_angular_morphology/1",
+  "source": "R89 PR3 Commander TT source-conditional MASTER C2, not release-matched full-likelihood C2",
+  "source_path": "docs/research_program/observational_publication_20261015/R89_EIGHT_ANALYSIS_HANDOFF_20261121/runs/G05_PLANCK/SOLVER_FREE_RESEARCH_RESULT.json",
+  "source_sha256": "80424053aa598aefbff8906ce898ea7d7e63e0f7c41aa6a6d3f0e235bbe96d92",
+  "source_observed_PR3_Commander_master_C2_K2": 1.2613053759593615e-10,
+  "input_claim": "TT C_ell-only likelihood uses rotational scalar power; does not store phases or STF shape",
+  "mathematical_identity": "C2=8*pi/75*Tr(Q^2), T2(n)=n_i Q_ij n_j, trace(Q)=0",
+  "proof": "normalizing TrQ²=1 gives fixed C2; Q_axis and Q_cross have distinct spectra and chi=1 vs chi=0, not SO(3)-conjugate",
+  "examples": {
+    "axisymmetric_eigenvalue": {
+      "C2_analytical_K2": 1.2613053759593617e-10,
+      "C2_HEALPix_K2": 1.2613053759593622e-10,
+      "relative_C2_HEALPix_vs_analytic": 6.661338147750939e-16,
+      "STF_eigenvalues_Frobenius_unit": [
+        -0.4082482904638631,
+        -0.4082482904638631,
+        0.8164965809277261
+      ],
+      "signed_shape_chi": 0.9999999999999998,
+      "SO3_equivalence_to_other": "NO_BOTH_SHAPES_HAVE_DISTINCT_EIGENSPECTRA"
+    },
+    "zero_eigenvalue_biaxial": {
+      "C2_analytical_K2": 1.2613053759593612e-10,
+      "C2_HEALPix_K2": 1.261305375959361e-10,
+      "relative_C2_HEALPix_vs_analytic": -4.440892098500626e-16,
+      "STF_eigenvalues_Frobenius_unit": [
+        -0.7071067811865475,
+        0.0,
+        0.7071067811865475
+      ],
+      "signed_shape_chi": 0.0,
+      "SO3_equivalence_to_other": "NO_BOTH_SHAPES_HAVE_DISTINCT_EIGENSPECTRA"
+    }
+  },
+  "max_rel_c2_numerical_error": 6.661338147750939e-16,
+  "clik_plik_useful_for": "fixed FLRW C_ell nuisance/background likelihood, or benchmark conditional Bianchi C_l power only",
+  "clik_plik_not_sufficient_for": "morphology/phase/eigenframe or unique Bianchi family attribution",
+  "observed_family_identification": false,
+  "release_matched_null": false
+}

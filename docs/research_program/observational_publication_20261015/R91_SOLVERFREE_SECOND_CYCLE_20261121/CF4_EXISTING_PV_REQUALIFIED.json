@@ -1,0 +1,78 @@
+{
+  "schema": "htt.r91.cf4_existing_physical_pv_conditional_requalification/1",
+  "historical_R36_product_status": "FORMALLY_QUALIFIED_SCOPED_CONDITIONAL_PRODUCT",
+  "historical_R36_scope": "VALIDATED_FINITE_GAUSSIAN_PV_SUBBANDS_NOT_ACTUAL_CF4_EMPIRICAL_COVERAGE",
+  "sources": {
+    "R36_result_sha256": "a7458dbd0d8fad934b968733562125acf2a50881bddbf483dfb9fa8084137523",
+    "R36_status_sha256": "fa3169a268fa1fcb273d4edaa63a166e3b3043477c5141517eac58f8452f4634",
+    "R36_matrix_sha256": "7b100fa378ae28fafd9f82f7a76a494e07300fa1cf144a4da5b166fb0acf7e94",
+    "R36_factors_sha256": "b936967c449ab889acb7d1ae48a18a72cb091eb7b929f2bf33d2ea392cb705d0",
+    "R27_factor_sha256": "b152c216d287d278014b3f94cbe0d3d1d74a1312cb42b2555d2bf59d47209a80",
+    "R89_G02_sha256": "6c8513bbf8809003337c51730930611763f7606681f412f62bad74c492e1301b",
+    "R89_DEEP_sha256": "025a23e68e172e84d629d5594ac9c3b10444a94482ff70745d4a85b882eef3c2"
+  },
+  "n_same_CF4_selected_groups": 35970,
+  "PV_modes": {
+    "k_h_per_Mpc": [
+      0.005,
+      0.05
+    ],
+    "k_split": 0.02,
+    "four_H03_windows_times_nine_moments": 36,
+    "R_hinv_Mpc": [
+      5,
+      10,
+      20
+    ],
+    "pv_source_all_radii_shape": [
+      108,
+      108
+    ],
+    "R5_PV_trace_units_km_s_Mpc_squared": 17.058350322565886,
+    "R5_PV_min_eigen": 0.0016813189952400087,
+    "all_radii_min_eigen": 2.1499688280135232e-10,
+    "full_four_window_cross_block_frob_norm": 2.7343437493854075,
+    "diagonal_frob_norm_R5": 3.581455659212693,
+    "cross_over_diagonal_frob_norm": 0.7634727355486777,
+    "PV_factor_checks": {
+      "band1_R5": {
+        "relative_frobenius_error": 0.0,
+        "number_k_angular_modes": 32142
+      },
+      "band2_R5": {
+        "relative_frobenius_error": 0.0,
+        "number_k_angular_modes": 32142
+      }
+    },
+    "R36_C_total_R5_min_eigen": 0.0018927130676361767,
+    "R36_C_total_R5_trace": 17.68057385749905,
+    "R36_original_working_trace": 4.769655456137695,
+    "uncertainty_model": "EH98 Gaussian k in 0.005..0.05 h/Mpc plus stipulated independent noise and mean-design calibration; omitted k, source response, calibration prior unresolved"
+  },
+  "R89_H03_raw_theta_max_abs_diff": 4.211164750245189e-11,
+  "R36_refitted_shared_nine_chi2": 80.13769023941586,
+  "R36_historical_shared_nine_chi2": 80.13769023941508,
+  "R27_source_conditional_calibration_factor": {
+    "channels": [
+      "SNIa",
+      "FP",
+      "TFR",
+      "SBFm",
+      "SBFir",
+      "SNII",
+      "DirectCal"
+    ],
+    "n_group_ids": 35970,
+    "support_7_count": 37038,
+    "factor_rows": 35019,
+    "identified": "fixed seven-channel source quotient additive calibration only, NOT upstream MCMC"
+  },
+  "physics_scope": {
+    "partial_S_PV": "KNOWN_CONDITIONAL_SOURCE_MODELED",
+    "full_S_PV": "BLOCKED_OUTSIDE_BANDS_AND_NONLINEAR",
+    "upstream_JcalSigmaJ": "NOT_IDENTIFIED_FROM_POST_MCMC_MODULI",
+    "C_selection": "NOT_CALIBRATED",
+    "true_CF4_heldout": "NOT_AVAILABLE",
+    "original_SQ_CF4": "BLOCKED_INPUT"
+  }
+}
