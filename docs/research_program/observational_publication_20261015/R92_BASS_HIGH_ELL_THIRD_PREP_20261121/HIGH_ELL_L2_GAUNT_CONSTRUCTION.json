@@ -1,0 +1,180 @@
+{
+  "schema": "htt.r92.gaunt_high_ell_toy_construction/1",
+  "model": "T'(n)=[1+g*Y20(n)]s(n), s Gaussian isotropic with C_l; first order in g",
+  "coupling_formula": "G=(-1)^m sqrt[(2l+1)*5*(2lp+1)/(4pi)] (l 2 lp;0 0 0)(l 2 lp;-m M mp)",
+  "linear_covariance": "Cov[a_lm,a_l'm'*]=C_l delta_l l' delta_m m' + g(C_l+C_l') G + O(g²)",
+  "Gaunt_L2_selection": "abs(l-l')<=2, l+l'+2 even; for scalar M0, m=m'. Thus l'=l,l+-2",
+  "exact_checks": [
+    {
+      "l": 4,
+      "cells": [
+        {
+          "lp": 1,
+          "threej_000": "0",
+          "numerical": 0.0
+        },
+        {
+          "lp": 2,
+          "threej_000": "sqrt(70)/35",
+          "numerical": 0.2390457218668871
+        },
+        {
+          "lp": 3,
+          "threej_000": "0",
+          "numerical": 0.0
+        },
+        {
+          "lp": 4,
+          "threej_000": "-2*sqrt(385)/231",
+          "numerical": -0.1698823971458694
+        },
+        {
+          "lp": 5,
+          "threej_000": "0",
+          "numerical": 0.0
+        },
+        {
+          "lp": 6,
+          "threej_000": "sqrt(715)/143",
+          "numerical": 0.18698939800168546
+        },
+        {
+          "lp": 7,
+          "threej_000": "0",
+          "numerical": 0.0
+        }
+      ]
+    },
+    {
+      "l": 16,
+      "cells": [
+        {
+          "lp": 13,
+          "threej_000": "0",
+          "numerical": 0.0
+        },
+        {
+          "lp": 14,
+          "threej_000": "2*sqrt(296670)/9889",
+          "numerical": 0.11015759218403787
+        },
+        {
+          "lp": 15,
+          "threej_000": "0",
+          "numerical": 0.0
+        },
+        {
+          "lp": 16,
+          "threej_000": "-4*sqrt(608685)/35805",
+          "numerical": -0.08715907509203191
+        },
+        {
+          "lp": 17,
+          "threej_000": "0",
+          "numerical": 0.0
+        },
+        {
+          "lp": 18,
+          "threej_000": "3*sqrt(242165)/14245",
+          "numerical": 0.10363691784596085
+        },
+        {
+          "lp": 19,
+          "threej_000": "0",
+          "numerical": 0.0
+        }
+      ]
+    },
+    {
+      "l": 40,
+      "cells": [
+        {
+          "lp": 37,
+          "threej_000": "0",
+          "numerical": 0.0
+        },
+        {
+          "lp": 38,
+          "threej_000": "2*sqrt(395395)/18249",
+          "numerical": 0.06891384964700364
+        },
+        {
+          "lp": 39,
+          "threej_000": "0",
+          "numerical": 0.0
+        },
+        {
+          "lp": 40,
+          "threej_000": "-2*sqrt(2688370)/59013",
+          "numerical": -0.055568263166307474
+        },
+        {
+          "lp": 41,
+          "threej_000": "0",
+          "numerical": 0.0
+        },
+        {
+          "lp": 42,
+          "threej_000": "sqrt(2024785)/21165",
+          "numerical": 0.06723124978836381
+        },
+        {
+          "lp": 43,
+          "threej_000": "0",
+          "numerical": 0.0
+        }
+      ]
+    },
+    {
+      "l": 80,
+      "cells": [
+        {
+          "lp": 77,
+          "threej_000": "0",
+          "numerical": 0.0
+        },
+        {
+          "lp": 78,
+          "threej_000": "2*sqrt(1058347990)/1339681",
+          "numerical": 0.04856717495820817
+        },
+        {
+          "lp": 79,
+          "threej_000": "0",
+          "numerical": 0.0
+        },
+        {
+          "lp": 80,
+          "threej_000": "-12*sqrt(20863185)/1390879",
+          "numerical": -0.039407800921978264
+        },
+        {
+          "lp": 81,
+          "threej_000": "0",
+          "numerical": 0.0
+        },
+        {
+          "lp": 82,
+          "threej_000": "9*sqrt(59177965)/1443365",
+          "numerical": 0.04796741921840919
+        },
+        {
+          "lp": 83,
+          "threej_000": "0",
+          "numerical": 0.0
+        }
+      ]
+    }
+  ],
+  "offdiagonal_l_to_lplus2_M0_mode_count": {
+    "ell_le_16": 221,
+    "ell_le_64": 3965,
+    "ell_le_128": 16125
+  },
+  "mode_count_ratio_64_vs_16": 17.941176470588236,
+  "mode_count_is_not_Fisher_information": true,
+  "bandpower_only_plik_sufficient": false,
+  "physical_Bianchi_polarized_all_m_transfer_replaced": false,
+  "cosmological_significance": "UNQUALIFIED_TOY_SOURCE_SHAPE",
+  "foreground_mask_noise_covariance": "REQUIRED_FOR_REAL_HIGH_ELL_ANALYSIS"
+}
