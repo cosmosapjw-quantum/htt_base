@@ -1,0 +1,83 @@
+{
+  "schema": "htt.r93.legacy_mayukh_exact_doppler_source_check/1",
+  "source_zip": "/home/cosmosapjw/Dropbox/Mayukh_cowork/ver3/HTT.zip",
+  "source_zip_sha256": "3696f806b2639be1f9ea0fc17e96e89124a8ec5802e58dd7a31b710667e6d8c3",
+  "source_member": "HTT/htt/catalog_likelihood.py",
+  "source_member_sha256": "17d14d7441b67c7c77c147a370880f0ac5e8afc209b3861023e8164aad683960",
+  "cf4_group_sha256": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+  "cf4_all_selected_groups": 35970,
+  "fixed_solar_apex": {
+    "galactic_l_deg": 264.021,
+    "galactic_b_deg": 48.253,
+    "ICRS_vector": [
+      -0.9707623762555103,
+      0.20737093935443687,
+      -0.1209036904234669
+    ]
+  },
+  "metric_signature": "(-,+,+,+)",
+  "convention": "legacy zobs=(1+zc)*D-1 with D=gamma(1+beta*mu), chosen solely to match quoted legacy orientation",
+  "legacy_formula": "zc_old=(1+zobs)/(1+beta*mu)-1 (gamma factor omitted)",
+  "SR_corrected_formula": "zc_SR=(1+zobs)/(gamma*(1+beta*mu))-1",
+  "amplitude_grid": {
+    "0.0": {
+      "beta": 0.0,
+      "speed_km_s": 0.0,
+      "gamma": 1.0,
+      "all_selected_35970_delta_z_p50_abs": 0.0,
+      "all_selected_delta_z_p95_abs": 0.0,
+      "positive_distance_zobs_gt0p01_count": 35970,
+      "lowz_dmu_median_abs_mag": 0.0,
+      "lowz_dmu_p95_abs_mag": 0.0,
+      "old_minus_gamma_corrected_minmax_delta_z": [
+        0.0,
+        0.0
+      ]
+    },
+    "0.001": {
+      "beta": 0.001,
+      "speed_km_s": 299.792458,
+      "gamma": 1.0000005000003749,
+      "all_selected_35970_delta_z_p50_abs": 5.267710814216287e-07,
+      "all_selected_delta_z_p95_abs": 5.464456620418722e-07,
+      "positive_distance_zobs_gt0p01_count": 35970,
+      "lowz_dmu_median_abs_mag": 2.1364100420202224e-05,
+      "lowz_dmu_p95_abs_mag": 7.217101660410898e-05,
+      "old_minus_gamma_corrected_minmax_delta_z": [
+        5.045626287891736e-07,
+        5.503935163186924e-07
+      ]
+    },
+    "0.003": {
+      "beta": 0.003,
+      "speed_km_s": 899.3773739999999,
+      "gamma": 1.0000045000303752,
+      "all_selected_35970_delta_z_p50_abs": 4.737978508195795e-06,
+      "all_selected_delta_z_p95_abs": 4.912646676236143e-06,
+      "positive_distance_zobs_gt0p01_count": 35970,
+      "lowz_dmu_median_abs_mag": 0.00019456337449129705,
+      "lowz_dmu_p95_abs_mag": 0.0006571369048358801,
+      "old_minus_gamma_corrected_minmax_delta_z": [
+        4.532368638621165e-06,
+        4.960655016317261e-06
+      ]
+    },
+    "0.01": {
+      "beta": 0.01,
+      "speed_km_s": 2997.92458,
+      "gamma": 1.0000500037503126,
+      "all_selected_35970_delta_z_p50_abs": 5.254765556272911e-05,
+      "all_selected_delta_z_p95_abs": 5.4372440772343375e-05,
+      "positive_distance_zobs_gt0p01_count": 35970,
+      "lowz_dmu_median_abs_mag": 0.0022417393437490166,
+      "lowz_dmu_p95_abs_mag": 0.008634969012814468,
+      "old_minus_gamma_corrected_minmax_delta_z": [
+        5.0022669333404934e-05,
+        5.539768673923362e-05
+      ]
+    }
+  },
+  "physics_boundary": "source-conditioned forward redshift conversion, not upstream calibration or physical peculiar velocity covariance",
+  "legacy_code_not_executed": true,
+  "physical_SQ_CF4_acceptance": "BLOCKED_INPUT"
+}

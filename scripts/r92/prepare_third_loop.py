@@ -158,7 +158,9 @@ def remote():
                "branches":[{"branch":b.get("branch"),"head_sha":b.get("head_sha"),"paths_returned":b.get("blob_paths"),
                             "api_tree_truncated":b.get("truncated",None),"status":b.get("status")} for b in item["branches"]]})
  # HTT live active branch tree is complete locally; cannot elevate GitHub API partial to full
- n=subprocess.run(["git","ls-tree","-r","--name-only","HEAD"],cwd=HTT,capture_output=True,text=True,timeout=20,check=True)
+ # Historical R92 response measured the parent tree before the R92 commit.
+ # Compare to that immutable commit, never to changing HEAD after publication.
+ n=subprocess.run(["git","ls-tree","-r","--name-only","13cf6b7dbf12144d51410395bd2962f281d884b3"],cwd=HTT,capture_output=True,text=True,timeout=20,check=True)
  return {"schema":"htt.r92.related_github_branch_tree_audit/1","public_related":rows,
          "htt_active_branch_local_full_tree_count":len(n.stdout.splitlines()),
          "htt_api_truncation_recovered_by_local_git_tree":True,

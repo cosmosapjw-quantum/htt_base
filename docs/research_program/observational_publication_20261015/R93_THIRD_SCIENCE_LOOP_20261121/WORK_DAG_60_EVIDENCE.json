@@ -1,0 +1,922 @@
+{
+  "schema": "htt.r93.full_60_node_third_science_overlay/1",
+  "r78_source_SHA256": "90aba8c1ca9c8e3a7744be0f071dcfe09b81e5353892aca13878191e20f58c11",
+  "r91_source_SHA256": "510e8a4070698877dfef2a772eb40e83de4cde132133e14226a416722fdf5f9d",
+  "r92_prior_gaunt_SHA256": "874516048e38f81f117dfa5ca6dc24ac900b96293f33bb771341641b1eca130e",
+  "frozen_original_nodes": 60,
+  "frozen_original_edges": 129,
+  "original_next_action_id": "SQ-CF4",
+  "no_unconditional_science_60_pass": true,
+  "new_actual_science_sources": {
+    "SMICA_999_NSIDE64_BIPOSH_RESULT.json": {
+      "sha256": "bee8a7a8a09c0eb31330fd60bd11161fb66fbee54ad67c82c658cdc8557f896f",
+      "size_bytes": 17989
+    },
+    "NSIDE2048_VS_N64_ALM_TRANSFER_QA.json": {
+      "sha256": "8b4be48b953fb7288c6ccecd6b0fe415e5dd81582f788c826b68795814061171",
+      "size_bytes": 1874
+    },
+    "SMICA_FULLRES_EB_FIRSTPAIR_PILOT.json": {
+      "sha256": "df69581b27689208d649168e3f65fb4ef890707131bb02d4e654b51cd7af58dc",
+      "size_bytes": 2777
+    },
+    "LEGACY_BIPOSH_INVALID_ESTIMAND.json": {
+      "sha256": "109046c91cfb083065188d2f1fc0fb66dd7a2f385154a2a9f1e2a23d48125412",
+      "size_bytes": 1162
+    },
+    "CF4_LEGACY_TILT_DOPPLER_COMPARISON.json": {
+      "sha256": "005539f70a492a5bc31fcbb45e1ca98c3672b092e6eb9c41c213c56b165b95e8",
+      "size_bytes": 3197
+    },
+    "BASS_HTT_CODAZZI_SAME_STATE_RESULT.json": {
+      "sha256": "7609493639d5506c672d20254808b01375bbf78354da864d4e3dc394c9fed083",
+      "size_bytes": 4021
+    },
+    "LEGACY_SECOND_DEEP_SCAN.json": {
+      "sha256": "80036b35683925263ee5ced0e599710c3c33d857da57ef4b21a55d3e8f820d2d",
+      "size_bytes": 8822
+    }
+  },
+  "new_papers_scoped": {
+    "P1": {
+      "reuse": "R91/P1 five-view partial identification and 2048 coupled draws",
+      "new": [],
+      "science_status": "REUSED_NOT_PROMOTED"
+    },
+    "P2": {
+      "reuse": "R89/91 Planck PR3 maps / Plik-lite",
+      "new": [
+        "SMICA_999_NSIDE64_BIPOSH_RESULT.json",
+        "NSIDE2048_VS_N64_ALM_TRANSFER_QA.json",
+        "SMICA_FULLRES_EB_FIRSTPAIR_PILOT.json",
+        "LEGACY_BIPOSH_INVALID_ESTIMAND.json"
+      ],
+      "science_status": "NEW_SOURCE_CONDITIONAL_FFP10_T_ALM_BIPOSH_AND_1PAIRED_FULLRES_EB"
+    },
+    "P3": {
+      "reuse": "R91 source-conditioned R36 CF4 PV/R27 calibration quotient",
+      "new": [
+        "CF4_LEGACY_TILT_DOPPLER_COMPARISON.json"
+      ],
+      "science_status": "NEW_FULL_35970_CF4_LEGACY_SR_DOPPLER_RELATIVE_SOURCE_TEST"
+    },
+    "P4": {
+      "reuse": "R89/91 NVSS/RACS/SPICE/SUMSS/LoTSS source-conditioned radio",
+      "new": [],
+      "science_status": "REUSED_NOT_PROMOTED"
+    },
+    "P5": {
+      "reuse": "R49/R90 general tilted Lie algebra 84 canonical witness",
+      "new": [
+        "BASS_HTT_CODAZZI_SAME_STATE_RESULT.json"
+      ],
+      "science_status": "NEW_BASS_HTT_12_STRATA_60_CASE_GEOMETRIC_SOURCE_CONVENTION_EQUIVALENCE"
+    },
+    "P6": {
+      "reuse": "R91 all 634233 Gaia-Quaia clean source fits and 48-patch covariance",
+      "new": [],
+      "science_status": "REUSED_NOT_PROMOTED"
+    }
+  },
+  "old_seven_PHY": [
+    "PHY-01",
+    "PHY-02",
+    "PHY-03",
+    "PHY-04",
+    "PHY-05",
+    "PHY-06",
+    "PHY-07"
+  ],
+  "external_native_boltzmann_lane": [
+    "B02",
+    "B03",
+    "B04",
+    "B05",
+    "SQ-NATIVE"
+  ],
+  "r89_verdict_totals": {
+    "REUSED_SCOPED": 18,
+    "BLOCKED_INPUT": 9,
+    "BLOCKED_DEPENDENCY": 29,
+    "DIAGNOSTIC_COMPLETED_SCOPED": 4
+  },
+  "r93_science_coverage": {
+    "actual_new_P2_T_NSID64_999": 999,
+    "actual_new_P3_CF4_redshift_source_groups": 35970,
+    "actual_new_P5_BASS_HTT_strata": 12,
+    "actual_new_P5_Codazzi_cases": 60,
+    "actual_new_EB_fullres_pilot_MC_pairs": 1,
+    "original_60_scientific_nodes_all_executed": false,
+    "seven_cross_PHY_reused_with_original_status": true
+  },
+  "items": [
+    {
+      "id": "E0",
+      "paper": "COMMON",
+      "r78_scientific_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "r91_old_evidence": [],
+      "r93_new_result_files": [],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "E1",
+      "paper": "COMMON",
+      "r78_scientific_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "r91_old_evidence": [],
+      "r93_new_result_files": [],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "E2",
+      "paper": "COMMON",
+      "r78_scientific_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "r91_old_evidence": [],
+      "r93_new_result_files": [],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "E3",
+      "paper": "COMMON",
+      "r78_scientific_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "r91_old_evidence": [],
+      "r93_new_result_files": [],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "X01",
+      "paper": "COMMON",
+      "r78_scientific_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "r91_old_evidence": [],
+      "r93_new_result_files": [],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "X02",
+      "paper": "COMMON",
+      "r78_scientific_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "r91_old_evidence": [],
+      "r93_new_result_files": [],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "X03",
+      "paper": "COMMON",
+      "r78_scientific_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "r91_old_evidence": [],
+      "r93_new_result_files": [],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "S01",
+      "paper": "P1",
+      "r78_scientific_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "r91_old_evidence": [
+        "R90_REUSED_PROVENANCE.json#P1"
+      ],
+      "r93_new_result_files": [],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "S02",
+      "paper": "P1",
+      "r78_scientific_state": "blocked_input",
+      "r89_original_verdict": "BLOCKED_INPUT",
+      "r91_old_evidence": [
+        "R90_REUSED_PROVENANCE.json#P1"
+      ],
+      "r93_new_result_files": [],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "S03",
+      "paper": "P1",
+      "r78_scientific_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "r91_old_evidence": [
+        "R90_REUSED_PROVENANCE.json#P1"
+      ],
+      "r93_new_result_files": [],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "S04",
+      "paper": "P1",
+      "r78_scientific_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "r91_old_evidence": [
+        "R90_REUSED_PROVENANCE.json#P1"
+      ],
+      "r93_new_result_files": [],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "S05",
+      "paper": "P1",
+      "r78_scientific_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "r91_old_evidence": [
+        "R90_REUSED_PROVENANCE.json#P1"
+      ],
+      "r93_new_result_files": [],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "S06",
+      "paper": "P1",
+      "r78_scientific_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "r91_old_evidence": [
+        "R90_REUSED_PROVENANCE.json#P1"
+      ],
+      "r93_new_result_files": [],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "L01",
+      "paper": "P2",
+      "r78_scientific_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "r91_old_evidence": [
+        "PLIKLITE_BASELINE.json",
+        "PLANCK_C2_MORPHOLOGY.json"
+      ],
+      "r93_new_result_files": [
+        "SMICA_999_NSIDE64_BIPOSH_RESULT.json",
+        "NSIDE2048_VS_N64_ALM_TRANSFER_QA.json",
+        "SMICA_FULLRES_EB_FIRSTPAIR_PILOT.json",
+        "LEGACY_BIPOSH_INVALID_ESTIMAND.json"
+      ],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "L02",
+      "paper": "P2",
+      "r78_scientific_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "r91_old_evidence": [
+        "PLIKLITE_BASELINE.json",
+        "PLANCK_C2_MORPHOLOGY.json"
+      ],
+      "r93_new_result_files": [
+        "SMICA_999_NSIDE64_BIPOSH_RESULT.json",
+        "NSIDE2048_VS_N64_ALM_TRANSFER_QA.json",
+        "SMICA_FULLRES_EB_FIRSTPAIR_PILOT.json",
+        "LEGACY_BIPOSH_INVALID_ESTIMAND.json"
+      ],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "L03",
+      "paper": "P2",
+      "r78_scientific_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "r91_old_evidence": [
+        "PLIKLITE_BASELINE.json",
+        "PLANCK_C2_MORPHOLOGY.json"
+      ],
+      "r93_new_result_files": [
+        "SMICA_999_NSIDE64_BIPOSH_RESULT.json",
+        "NSIDE2048_VS_N64_ALM_TRANSFER_QA.json",
+        "SMICA_FULLRES_EB_FIRSTPAIR_PILOT.json",
+        "LEGACY_BIPOSH_INVALID_ESTIMAND.json"
+      ],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "L04",
+      "paper": "P2",
+      "r78_scientific_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "r91_old_evidence": [
+        "PLIKLITE_BASELINE.json",
+        "PLANCK_C2_MORPHOLOGY.json"
+      ],
+      "r93_new_result_files": [
+        "SMICA_999_NSIDE64_BIPOSH_RESULT.json",
+        "NSIDE2048_VS_N64_ALM_TRANSFER_QA.json",
+        "SMICA_FULLRES_EB_FIRSTPAIR_PILOT.json",
+        "LEGACY_BIPOSH_INVALID_ESTIMAND.json"
+      ],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "L05",
+      "paper": "P2",
+      "r78_scientific_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "r91_old_evidence": [],
+      "r93_new_result_files": [
+        "SMICA_999_NSIDE64_BIPOSH_RESULT.json",
+        "NSIDE2048_VS_N64_ALM_TRANSFER_QA.json",
+        "SMICA_FULLRES_EB_FIRSTPAIR_PILOT.json",
+        "LEGACY_BIPOSH_INVALID_ESTIMAND.json"
+      ],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "L06",
+      "paper": "P2",
+      "r78_scientific_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "r91_old_evidence": [],
+      "r93_new_result_files": [
+        "SMICA_999_NSIDE64_BIPOSH_RESULT.json",
+        "NSIDE2048_VS_N64_ALM_TRANSFER_QA.json",
+        "SMICA_FULLRES_EB_FIRSTPAIR_PILOT.json",
+        "LEGACY_BIPOSH_INVALID_ESTIMAND.json"
+      ],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "H01",
+      "paper": "P3",
+      "r78_scientific_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "r91_old_evidence": [],
+      "r93_new_result_files": [
+        "CF4_LEGACY_TILT_DOPPLER_COMPARISON.json"
+      ],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "H02",
+      "paper": "P3",
+      "r78_scientific_state": "pending",
+      "r89_original_verdict": "BLOCKED_INPUT",
+      "r91_old_evidence": [
+        "CF4_EXISTING_PV_REQUALIFIED.json"
+      ],
+      "r93_new_result_files": [
+        "CF4_LEGACY_TILT_DOPPLER_COMPARISON.json"
+      ],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "H03",
+      "paper": "P3",
+      "r78_scientific_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "r91_old_evidence": [
+        "CF4_EXISTING_PV_REQUALIFIED.json"
+      ],
+      "r93_new_result_files": [
+        "CF4_LEGACY_TILT_DOPPLER_COMPARISON.json"
+      ],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "H04",
+      "paper": "P3",
+      "r78_scientific_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "r91_old_evidence": [
+        "CF4_EXISTING_PV_REQUALIFIED.json"
+      ],
+      "r93_new_result_files": [
+        "CF4_LEGACY_TILT_DOPPLER_COMPARISON.json"
+      ],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "H05",
+      "paper": "P3",
+      "r78_scientific_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "r91_old_evidence": [],
+      "r93_new_result_files": [
+        "CF4_LEGACY_TILT_DOPPLER_COMPARISON.json"
+      ],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "H06",
+      "paper": "P3",
+      "r78_scientific_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "r91_old_evidence": [],
+      "r93_new_result_files": [
+        "CF4_LEGACY_TILT_DOPPLER_COMPARISON.json"
+      ],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "V01",
+      "paper": "P4",
+      "r78_scientific_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "r91_old_evidence": [
+        "R90_REUSED_PROVENANCE.json#P4"
+      ],
+      "r93_new_result_files": [],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "V02",
+      "paper": "P4",
+      "r78_scientific_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "r91_old_evidence": [
+        "R90_REUSED_PROVENANCE.json#P4"
+      ],
+      "r93_new_result_files": [],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "V03",
+      "paper": "P4",
+      "r78_scientific_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "r91_old_evidence": [
+        "R90_REUSED_PROVENANCE.json#P4"
+      ],
+      "r93_new_result_files": [],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "V04",
+      "paper": "P4",
+      "r78_scientific_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "r91_old_evidence": [
+        "R90_REUSED_PROVENANCE.json#P4"
+      ],
+      "r93_new_result_files": [],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "V05",
+      "paper": "P4",
+      "r78_scientific_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "r91_old_evidence": [
+        "R90_REUSED_PROVENANCE.json#P4"
+      ],
+      "r93_new_result_files": [],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "V06",
+      "paper": "P4",
+      "r78_scientific_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "r91_old_evidence": [
+        "R90_REUSED_PROVENANCE.json#P4"
+      ],
+      "r93_new_result_files": [],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "B01",
+      "paper": "P5",
+      "r78_scientific_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "r91_old_evidence": [
+        "R90_REUSED_PROVENANCE.json#P5"
+      ],
+      "r93_new_result_files": [
+        "BASS_HTT_CODAZZI_SAME_STATE_RESULT.json"
+      ],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "B02",
+      "paper": "P5",
+      "r78_scientific_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "r91_old_evidence": [
+        "R90_REUSED_PROVENANCE.json#P5"
+      ],
+      "r93_new_result_files": [
+        "BASS_HTT_CODAZZI_SAME_STATE_RESULT.json"
+      ],
+      "current_lane": "EXTERNAL_NATIVE_BIANCHI_TRANSFER",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "B03",
+      "paper": "P5",
+      "r78_scientific_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "r91_old_evidence": [
+        "R90_REUSED_PROVENANCE.json#P5"
+      ],
+      "r93_new_result_files": [
+        "BASS_HTT_CODAZZI_SAME_STATE_RESULT.json"
+      ],
+      "current_lane": "EXTERNAL_NATIVE_BIANCHI_TRANSFER",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "B04",
+      "paper": "P5",
+      "r78_scientific_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "r91_old_evidence": [
+        "R90_REUSED_PROVENANCE.json#P5"
+      ],
+      "r93_new_result_files": [
+        "BASS_HTT_CODAZZI_SAME_STATE_RESULT.json"
+      ],
+      "current_lane": "EXTERNAL_NATIVE_BIANCHI_TRANSFER",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "B05",
+      "paper": "P5",
+      "r78_scientific_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "r91_old_evidence": [
+        "R90_REUSED_PROVENANCE.json#P5"
+      ],
+      "r93_new_result_files": [
+        "BASS_HTT_CODAZZI_SAME_STATE_RESULT.json"
+      ],
+      "current_lane": "EXTERNAL_NATIVE_BIANCHI_TRANSFER",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "K01",
+      "paper": "P6",
+      "r78_scientific_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "r91_old_evidence": [],
+      "r93_new_result_files": [],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "K02",
+      "paper": "P6",
+      "r78_scientific_state": "completed_scoped",
+      "r89_original_verdict": "REUSED_SCOPED",
+      "r91_old_evidence": [
+        "GAIA_QUAIA_FULL_SELECTION.json"
+      ],
+      "r93_new_result_files": [],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "K03",
+      "paper": "P6",
+      "r78_scientific_state": "pending",
+      "r89_original_verdict": "BLOCKED_INPUT",
+      "r91_old_evidence": [
+        "GAIA_QUAIA_FULL_SELECTION.json"
+      ],
+      "r93_new_result_files": [],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "K04",
+      "paper": "P6",
+      "r78_scientific_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "r91_old_evidence": [
+        "GAIA_QUAIA_FULL_SELECTION.json"
+      ],
+      "r93_new_result_files": [],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "K05",
+      "paper": "P6",
+      "r78_scientific_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "r91_old_evidence": [],
+      "r93_new_result_files": [],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "K06",
+      "paper": "P6",
+      "r78_scientific_state": "pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "r91_old_evidence": [],
+      "r93_new_result_files": [],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "SQ-CF4",
+      "paper": "P3",
+      "r78_scientific_state": "ready_scoped",
+      "r89_original_verdict": "DIAGNOSTIC_COMPLETED_SCOPED",
+      "r91_old_evidence": [
+        "CF4_EXISTING_PV_REQUALIFIED.json"
+      ],
+      "r93_new_result_files": [
+        "CF4_LEGACY_TILT_DOPPLER_COMPARISON.json"
+      ],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "SQ-GAIA",
+      "paper": "P6",
+      "r78_scientific_state": "ready_scoped",
+      "r89_original_verdict": "DIAGNOSTIC_COMPLETED_SCOPED",
+      "r91_old_evidence": [
+        "GAIA_QUAIA_FULL_SELECTION.json"
+      ],
+      "r93_new_result_files": [],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "SQ-RADIO",
+      "paper": "P4",
+      "r78_scientific_state": "ready_scoped",
+      "r89_original_verdict": "DIAGNOSTIC_COMPLETED_SCOPED",
+      "r91_old_evidence": [
+        "R90_REUSED_PROVENANCE.json#P4"
+      ],
+      "r93_new_result_files": [],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "SQ-FRAME",
+      "paper": "COMMON",
+      "r78_scientific_state": "ready_scoped",
+      "r89_original_verdict": "DIAGNOSTIC_COMPLETED_SCOPED",
+      "r91_old_evidence": [],
+      "r93_new_result_files": [],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "SQ-P1-ANCHOR",
+      "paper": "P1",
+      "r78_scientific_state": "blocked_physical_anchor",
+      "r89_original_verdict": "BLOCKED_INPUT",
+      "r91_old_evidence": [
+        "R90_REUSED_PROVENANCE.json#P1"
+      ],
+      "r93_new_result_files": [],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "SQ-CMB-NULL",
+      "paper": "P2",
+      "r78_scientific_state": "blocked_source",
+      "r89_original_verdict": "BLOCKED_INPUT",
+      "r91_old_evidence": [],
+      "r93_new_result_files": [
+        "SMICA_999_NSIDE64_BIPOSH_RESULT.json",
+        "NSIDE2048_VS_N64_ALM_TRANSFER_QA.json",
+        "SMICA_FULLRES_EB_FIRSTPAIR_PILOT.json",
+        "LEGACY_BIPOSH_INVALID_ESTIMAND.json"
+      ],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "SQ-PHOTON-FLUX",
+      "paper": "P2",
+      "r78_scientific_state": "blocked_source",
+      "r89_original_verdict": "BLOCKED_INPUT",
+      "r91_old_evidence": [],
+      "r93_new_result_files": [
+        "SMICA_999_NSIDE64_BIPOSH_RESULT.json",
+        "NSIDE2048_VS_N64_ALM_TRANSFER_QA.json",
+        "SMICA_FULLRES_EB_FIRSTPAIR_PILOT.json",
+        "LEGACY_BIPOSH_INVALID_ESTIMAND.json"
+      ],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "SQ-LIE-FLUX",
+      "paper": "P5",
+      "r78_scientific_state": "blocked_source",
+      "r89_original_verdict": "BLOCKED_INPUT",
+      "r91_old_evidence": [],
+      "r93_new_result_files": [
+        "BASS_HTT_CODAZZI_SAME_STATE_RESULT.json"
+      ],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "SQ-OPTICAL",
+      "paper": "COMMON",
+      "r78_scientific_state": "pending_conditional",
+      "r89_original_verdict": "BLOCKED_INPUT",
+      "r91_old_evidence": [],
+      "r93_new_result_files": [],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "SQ-CROSS-COV",
+      "paper": "COMMON",
+      "r78_scientific_state": "pending_dependency",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "r91_old_evidence": [],
+      "r93_new_result_files": [],
+      "current_lane": "SOURCE_CONDITIONAL_SCIENCE_PARTIAL_OR_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "SQ-NATIVE",
+      "paper": "P5",
+      "r78_scientific_state": "blocked_external",
+      "r89_original_verdict": "BLOCKED_INPUT",
+      "r91_old_evidence": [],
+      "r93_new_result_files": [
+        "BASS_HTT_CODAZZI_SAME_STATE_RESULT.json"
+      ],
+      "current_lane": "EXTERNAL_NATIVE_BIANCHI_TRANSFER",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "PHY-01",
+      "paper": "CROSS",
+      "r78_scientific_state": "theory_verified_physical_data_pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "r91_old_evidence": [
+        "R90_REUSED_PROVENANCE.json#PHY"
+      ],
+      "r93_new_result_files": [],
+      "current_lane": "CONDITIONAL_CROSS_PHY_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "PHY-02",
+      "paper": "CROSS",
+      "r78_scientific_state": "theory_verified_physical_data_pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "r91_old_evidence": [
+        "R90_REUSED_PROVENANCE.json#PHY"
+      ],
+      "r93_new_result_files": [],
+      "current_lane": "CONDITIONAL_CROSS_PHY_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "PHY-03",
+      "paper": "CROSS",
+      "r78_scientific_state": "theory_verified_physical_data_pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "r91_old_evidence": [
+        "R90_REUSED_PROVENANCE.json#PHY"
+      ],
+      "r93_new_result_files": [],
+      "current_lane": "CONDITIONAL_CROSS_PHY_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "PHY-04",
+      "paper": "CROSS",
+      "r78_scientific_state": "theory_verified_physical_data_pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "r91_old_evidence": [
+        "R90_REUSED_PROVENANCE.json#PHY"
+      ],
+      "r93_new_result_files": [],
+      "current_lane": "CONDITIONAL_CROSS_PHY_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "PHY-05",
+      "paper": "CROSS",
+      "r78_scientific_state": "theory_verified_physical_data_pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "r91_old_evidence": [
+        "R90_REUSED_PROVENANCE.json#PHY"
+      ],
+      "r93_new_result_files": [],
+      "current_lane": "CONDITIONAL_CROSS_PHY_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "PHY-06",
+      "paper": "CROSS",
+      "r78_scientific_state": "theory_verified_physical_data_pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "r91_old_evidence": [
+        "R90_REUSED_PROVENANCE.json#PHY"
+      ],
+      "r93_new_result_files": [],
+      "current_lane": "CONDITIONAL_CROSS_PHY_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    },
+    {
+      "id": "PHY-07",
+      "paper": "CROSS",
+      "r78_scientific_state": "theory_verified_physical_data_pending",
+      "r89_original_verdict": "BLOCKED_DEPENDENCY",
+      "r91_old_evidence": [
+        "R90_REUSED_PROVENANCE.json#PHY"
+      ],
+      "r93_new_result_files": [],
+      "current_lane": "CONDITIONAL_CROSS_PHY_REUSED",
+      "physics_publication_pass_promoted": false,
+      "original_R78_science_state_changed": false
+    }
+  ]
+}

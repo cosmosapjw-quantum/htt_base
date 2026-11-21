@@ -1,0 +1,46 @@
+{
+  "schema": "htt.r93.smica_one_pair_full_resolution_mask_alm_comparison/1",
+  "source_map": "SMICA_FFP10_00000_CMB_PLUS_NOISE_BOTH_N2048",
+  "raw_cmb_sha256": "6f34ed4442b3bef0be983eda1311b04748b8322721eef02e814f54d9dfc1dc46",
+  "raw_noise_sha256": "021f08d989ce0a90c449f7d81a8c130966f424437ffa2e6bd4e320b4576158ad",
+  "common_mask_sha256": "23f49a3479073408b83a7f1bb2cca490d9be7f934b2e0e891524b6a1d06a5fc4",
+  "cache_sha256": "86b792c821b3e641c76c83d96523148c65e9d30a439d7c850acc808c1bc5fadb",
+  "R93_masked_alm_npz_sha256": "3e7cc869bb198748bb1c2a9ff18e1a9619b9923655eb4f4de2ae9faccd64c231",
+  "lmax": 48,
+  "nside_raw": 2048,
+  "nside_cache": 64,
+  "weighted_original_NSIDE64_fit_beta_uK": [
+    -7.518360123744904,
+    2.096607386539091,
+    4.152932057799918,
+    0.5177888922478664
+  ],
+  "bands": {
+    "2-8": {
+      "relative_alm_L2_difference": 0.004601963430794882,
+      "complex_alm_direction_correlation": 0.9999895566369595,
+      "nside64_over_nside2048_rms": 0.9994496951721458,
+      "n_alm": 42
+    },
+    "9-16": {
+      "relative_alm_L2_difference": 0.01299662863098169,
+      "complex_alm_direction_correlation": 0.9999174008090939,
+      "nside64_over_nside2048_rms": 0.9979884641627095,
+      "n_alm": 108
+    },
+    "17-32": {
+      "relative_alm_L2_difference": 0.022257351702443556,
+      "complex_alm_direction_correlation": 0.9997681666494512,
+      "nside64_over_nside2048_rms": 0.9941310795993175,
+      "n_alm": 408
+    },
+    "33-46": {
+      "relative_alm_L2_difference": 0.04086499431151946,
+      "complex_alm_direction_correlation": 0.9993274999434287,
+      "nside64_over_nside2048_rms": 0.9812886556549512,
+      "n_alm": 567
+    }
+  },
+  "no_high_l_detection": true,
+  "scope": "single CMB+noise raw pair, fixed common mask, same cache-regr fit; resolution/aliasing and mask response quantified, not all 999 full-resolution pass"
+}
