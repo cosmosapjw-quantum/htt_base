@@ -42,3 +42,11 @@ export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONDONTWRIT
 PHY06의 각도와 commutator는 같은 geodesic normal을 따라 Fermi–Walker 수송한 R49 삼각틀에서 두 시각의 전단을 비교한다. 시간 의존 프레임 회전을 가하면 두 시각 사이의 수송 사상을 함께 삽입해야 한다. 실제 VIIh 성분을 순간 고유틀로 회전한 뒤 단순 비교하면 80.57°를 거의 0°로 만들 수 있지만, 그 수송을 포함한 비교에서는 원래 각도가 복원된다. 한 시각의 고유값·정규화 gap은 회전 불변이다. 이 고유선 회전으로 물리적 vorticity 또는 G_F를 추론하지 않는다.
 
 원래 표의 최대각은 161개 시점에서의 표본 최대값이다. 독립 검산에서 VIh를 641개 시점으로 세분하면 89.787233°에서 89.970396°로 바뀌며, 최소 정규화 gap은 0.045389에서 0.042607로 바뀐다. 따라서 IVP 허용오차 안정성과 연속시간 최대각의 수렴을 구분한다. 상세한 독립 접속 유도, frame-rotation witness 및 양의 강도 모멘트 재구성은 review/cross_phy_independent.py와 review/CROSS_PHY_C9.json에 있다.
+
+## 후속 확장 반영 (`CROSS_PHY_RESULTS.json` SHA-256 `22498551b8999750b2bc33416d5e4d005a740d603667738a9ce8cee8d6a5ba63`)
+
+- **PHY01/07**: 확장된 `CF4_P1_RESULTS.json`의 행렬-비할당 로그-공간 $S_{\mathrm{PV}}(R)$ 및 rank-9 선택·경계 $C_{\mathrm{sel}}$ 요약과 $q_{\mathrm{WF}}/q_{\mathrm{cosmo}}$ Jacobian 비교를 직접 결합했다.
+- **PHY02 (Bianchi + P2 CMB 전경·보정 이득 민감도, M04)**: Bianchi 5모형의 1-loop 복사 역반응 및 AniLoS 근등방 일치 요약에 더해, `CMB_GROUPED_FULL_CACHE.json`과 `CMB_OBSERVED_SPLITS.json`을 이용한 `cmb_foreground_and_calibration_nuisance_sensitivity`를 추가했다(`scripts/r98/cmb_full.py`는 수정하지 않아 638s 2048 변환 재실행 없음). SMICA vs Commander/SEVEM/NILC 전경 반차/반합 비(`2–8` 및 `2–48` 다중극에서 E/B `0.043–0.217`)와 300개 noise 그룹에 대한 $\pm 0.5\%$ 곱셈 보정 이득 이동의 group-balanced raw 초과율 민감도(`0.1614 / 0.1472 / 0.1325`)를 산출했다(`commander_null_qualified = False`).
+- **PHY03/04**: 5개 전파 서베이·19개 컷의 $\alpha \in \{0.50, 0.75, 1.00\}$ SED 변화와 LSS 과산포 비, Gaia rank-47 부분공간 사영 및 4-shell $z$-기울기 분해 요약을 연결했다.
+- **PHY05**: $n\to -n$($\sigma_{ab}\to -\sigma_{ab}$) 반전 시 Codazzi 정상계 플럭스 부호 반전 오차 `normal_flip_flux_sign_reversal_max_err = 0.0`을 코드로 검증했다.
+- **PHY06**: 시간에 따라 회전하는 삼각틀 $R(N)$ 위에서 두 시각 Fermi–Walker 수송자 $U(N_0, N_k) = R(N_0) R(N_k)^T$를 직접 구성해 직교성 오차 `<= 6.66e-16`, 수송된 교환자와 원 R49 교환자 일치 `<= 3.89e-16`, 미수송 회전좌표의 가짜 교환자(`0.365–0.521`), 161-vs-641 표본 연속 극값 차(`0.00024` VII$_h$, `0.00055` VI$_h$)를 한 함수에서 함께 검증했다.

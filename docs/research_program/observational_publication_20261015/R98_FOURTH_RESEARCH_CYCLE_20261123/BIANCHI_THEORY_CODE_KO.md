@@ -72,3 +72,9 @@ export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONDONTWRIT
 ```
 
 재실행 비교에서는 `families`의 수치와 `inputs_sha256`를 대조한다. 시간과 peak RSS는 실측 메타데이터다. C9 독립 검토와 C10 통합 release는 상위 연구 사이클의 공통 기록을 따른다.
+
+## 후속 확장: 1-Loop 복사 역반응, AniLoS 근등방 대조·IC 아틀라스, 방향성 탈출 응답
+
+- **광자–중입자 운동량 교환 및 1-loop 전단 역반응 (`radiation_feedback_audit`, M08)**: `timeline`의 모든 중간 시점 $N_k$에서 $T_{1m}, T_{2m}$으로부터 정상계 광자 운동량 플럭스 $q_\gamma$와 비등방 응력 $\pi_\gamma$를 정밀 구적(`radiation_moment_operators`)으로 추출하고, Thomson 충돌 교환량 $\delta \dot q_b = -\delta \dot q_\gamma = \dot\tau_N(q_\gamma - \frac{4}{3}\rho_\gamma v_b)$에서 총 운동량 보존 오차 `0.0`, `FLRW` 완전 영 응답(`0.0`)을 확인했다. `VII_h`에서 $\max|\Delta\sigma_{\rm rad}/H| = 4.037\times10^{-7}$, 1-loop 하늘 교란 $\|\Delta T_{2..5}\| = 1.297\times10^{-6}$, `VI_h`에서는 `1.485e-6`를 산출했다.
+- **고정 AniLoS 근등방 연산자 대조 및 3-모드 원시 IC 아틀라스 (`anilos_and_ic_atlas_audit`, M08/A03)**: 로컬 아카이브 `anilos-0.1.0.tar.gz`(SHA-256 `399eee772ecc8efed11edf295c681f4db256a6ec2d7a1802cbcd1982a2aaca4c`, 커밋 pin `9b7a2611...faca7`)의 `kappa_array`와 R98 `c_spin`의 최대차는 `1.11e-16`, $h=0.25$에서의 `zeta_factor_array` $m=0$ 및 $m\leftrightarrow -m$ 공액 대칭 오차는 `0.0`이다. 재결합 이후($z=15\to 0$) 구간에서 `zero_ic`, $T_{20}=10^{-5}$, $E_{2,\pm1}=\pm 10^{-5}$ 3종 IC를 `I, V, VII_h`에 전파한 결과(예외 `VI_{-1/9}`는 별도 분리), $E_{2,\pm1}$이 생성한 helical $B$-모드 norm이 평탄 `I`에서는 `1.92e-22`(수치 0)인 반면 곡률·나선형 `V`/`VII_h`에서는 각각 `8.75e-8`, `9.79e-8`으로 나타난다.
+- **방향성 Sobolev 탈출율 반응 (`hydrogen_window`, M09)**: 전단 $\Sigma_{ab}/H$에 의한 구면 RMS 탈출율 교란 크기 `directional_escape_rate_rms_frac = 3.225e-6` (`VII_h`) 및 섭동 광학깊이 변화 $\Delta\tau = -7.041\times10^{-6}$ (`fed_into_harmonic_sky = False` 보존)를 추가로 산출했다(`BIANCHI_HISTORY_RESULTS.json` SHA-256 `59d16208a93da7b096add94d6dcf429c277dc9314dbf591ab130a56e47aaf9c7`).

@@ -82,6 +82,75 @@ def exact_log_dipole(b):
     b=np.asarray(b,float);r=float(np.linalg.norm(b))
     factor=1-r*r/15+2*r**4/315 if r<1e-4 else 3*(1/np.tanh(r)-1/r)/r
     return factor*b
+BETA_CMB = 369.82 / 299792.458
+
+
+def radio_selection_and_sed_audit(rows, maps, masks, mask_name, X4, leaves):
+    """M06/D05: Spectral-index alpha sweep, unmasked zero-cell shift, and jackknife-vs-GLM LSS overdispersion."""
+    audit = {}
+    for survey, dd in maps.items():
+        m = masks[mask_name[survey]]
+        cuts = sorted(dd)
+        counts = np.array([rows[survey][str(c)]["n_sources"] for c in cuts], dtype=float)
+        x_slopes = -np.gradient(np.log(counts), np.log(np.array(cuts, dtype=float)))
+        per_cut = {}
+        for cut, x_emp in zip(cuts, x_slopes):
+            cts = dd[cut]
+            full_fit = rows[survey][str(cut)]["models"]["NB1_4"]
+            d_vec = np.asarray(full_fit["exact_fullsky_model_dipole"], dtype=float)
+            d_amp = float(np.linalg.norm(d_vec))
+            # Unmasked zero-cell sensitivity: refit excluding zero-count pixels inside m
+            nz = m & (cts > 0)
+            zero_frac = float(1.0 - np.sum(nz) / np.sum(m))
+            if int(np.sum(m & (cts == 0))) > 0 and int(np.sum(nz)) > X4.shape[1]:
+                fit_nz = fit_count_model(cts[nz], X4[nz], "nb1", np.asarray(full_fit["beta_log_intensity"], dtype=float))
+                d_nz = exact_log_dipole(fit_nz["beta"][1:4])
+                zero_shift_norm = float(np.linalg.norm(d_nz - d_vec))
+                cos_ang = np.clip(float(np.dot(d_nz, d_vec) / max(np.linalg.norm(d_nz) * d_amp, 1e-30)), -1.0, 1.0)
+                zero_shift_deg = float(np.degrees(np.arccos(cos_ang)))
+            else:
+                zero_shift_norm = 0.0
+                zero_shift_deg = 0.0
+            # Spectral index sweep alpha in {0.50, 0.75, 1.00}
+            alpha_sweep = {}
+            for alpha in (0.50, 0.75, 1.00):
+                eb_factor = 2.0 + float(x_emp) * (1.0 + alpha)
+                beta_eb = d_vec / eb_factor
+                ratio_cmb = float(np.linalg.norm(beta_eb) / BETA_CMB)
+                alpha_sweep[f"{alpha:.2f}"] = {"ellis_baldwin_factor": eb_factor, "implied_beta_over_beta_cmb": ratio_cmb}
+            # Dispersion / variance inflation: Fisher GLM var vs sample variance
+            mean_c = float(np.mean(cts[m]))
+            var_c = float(np.var(cts[m], ddof=1))
+            p_nb1 = float(full_fit["p"])
+            per_cut[str(cut)] = {
+                "empirical_x_slope": float(x_emp),
+                "zero_cell_fraction": zero_frac,
+                "zero_cell_exclusion_dipole_shift_norm": zero_shift_norm,
+                "zero_cell_exclusion_dipole_shift_deg": zero_shift_deg,
+                "lss_var_to_poisson_mean_ratio": float(var_c / max(mean_c, 1e-15)),
+                "nb1_variance_inflation_1_over_1mp": float(1.0 / max(1.0 - p_nb1, 1e-6)),
+                "alpha_sweep": alpha_sweep,
+            }
+        # Compare 48-patch jackknife trace at reference cut against Poisson and NB1 Fisher inverse trace
+        ref_cut = 50.0 if survey == "LoTSS_DR3" else 20.0
+        beta_ref = np.asarray(rows[survey][str(ref_cut)]["models"]["NB1_4"]["beta_log_intensity"], dtype=float)
+        p_ref = float(rows[survey][str(ref_cut)]["models"]["NB1_4"]["p"])
+        mu_ref = np.exp(X4[m] @ beta_ref)
+        F_poiss = X4[m].T @ (mu_ref[:, None] * X4[m])
+        F_nb1 = X4[m].T @ ((mu_ref * (1.0 - p_ref))[:, None] * X4[m])
+        cov_poiss_d = np.linalg.inv(F_poiss)[1:4, 1:4]
+        cov_nb1_d = np.linalg.inv(F_nb1)[1:4, 1:4]
+        cov_jk_d = jackknife_cov(leaves[survey])
+        audit[survey] = {
+            "reference_cut_mJy": ref_cut,
+            "jackknife_dipole_trace": float(np.trace(cov_jk_d)),
+            "poisson_glm_dipole_trace": float(np.trace(cov_poiss_d)),
+            "nb1_glm_dipole_trace": float(np.trace(cov_nb1_d)),
+            "jackknife_to_poisson_trace_ratio": float(np.trace(cov_jk_d) / np.trace(cov_poiss_d)),
+            "jackknife_to_nb1_trace_ratio": float(np.trace(cov_jk_d) / np.trace(cov_nb1_d)),
+            "cuts": per_cut,
+        }
+    return audit
 def radio_run(rebuild=False,audit_inputs=False):
     t=time.monotonic();CACHE.mkdir(parents=True,exist_ok=True);src=load_radio()
     cp=CACHE/"radio_full_maps.npz";receipt=CACHE/"radio_full_maps_sources.json"
@@ -176,13 +245,14 @@ def radio_run(rebuild=False,audit_inputs=False):
                 "calibrated_p":None})
     np.savez_compressed(CACHE/"radio_joint_patch_statistics.npz",leave=joint,cov=C,names=np.asarray(names))
     prior=json.loads((R89/"G04_RADIO_FRAME/DEEP_FIVE_SURVEY_RESULT.json").read_text())
+    radio_audit = radio_selection_and_sed_audit(rows, maps, masks, mask_name, X4, leaves)
     out={"schema":"htt.r98.radio_full_models/1","sources":identities,
          "complete_raw_stream_this_run":full_stream,"source_identity_check":identity_mode,"all_existing_five_surveys":True,
          "all_flux_thresholds_analyzed":sum(len(v) for v in rows.values()),
          "scope":"All stored catalog rows visited by inherited readers; all eligible sources on declared R89 masks. Zero-count pixels retained on those masks; LoTSS density-defined footprint remains conditional.",
          "full_row_counts_prior_verified_reader_census":{k:{a:v for a,v in r.items() if a in ("total_rows","total_parsed_rows")} for k,r in prior["surveys"].items()},
          "maps_sha256":sha(cp),"mask_sha256":{k:hashlib.sha256(v.tobytes()).hexdigest() for k,v in masks.items()},
-         "surveys":rows,"pairwise_shared_patch_comparisons":comparison,
+         "surveys":rows,"selection_sed_and_overdispersion_audit":radio_audit,"pairwise_shared_patch_comparisons":comparison,
          "joint_15d_patch_covariance":{"order":names,"matrix":C.tolist(),"rank":int(np.linalg.matrix_rank(C)),
             "nonempty_global_patches":{name:int(np.unique(src.PIX_PATCH[masks[mask_name[name]]]).size) for name in names},
             "delete_one_interpretation":"48 synchronized global patches; inactive patches retained; unequal survey footprint information, finite spatial diagnostic not calibrated covariance estimator",
@@ -215,6 +285,74 @@ def summarize_gaia(a):
         "patch_prediction_chi2_per_component":float(sum(pred)/(2*a["n"].sum())),
         "prediction_minus_insample_chi2":float(sum(pred)-sum(ins)),
         "F_condition":float(np.linalg.cond(F))},leave*1000
+
+
+def subspace_mahalanobis(theta, cov, rel_tol=1e-10):
+    """Project parameter vector onto the exact positive eigenspace of rank-deficient patch covariance (no 160x160 inversion)."""
+    sym = 0.5 * (cov + cov.T)
+    ev, U = np.linalg.eigh(sym)
+    keep = ev > rel_tol * max(float(ev[-1]), 1e-30)
+    proj = U[:, keep].T @ theta
+    chi2_sub = float(np.sum((proj ** 2) / ev[keep]))
+    return {
+        "dimension": int(len(theta)),
+        "numerical_rank": int(np.count_nonzero(keep)),
+        "min_retained_eigenvalue": float(ev[keep][0]) if np.any(keep) else None,
+        "max_eigenvalue": float(ev[-1]),
+        "subspace_chi2": chi2_sub,
+        "reduced_chi2_per_dof": float(chi2_sub / max(1, int(np.count_nonzero(keep)))),
+    }
+
+
+def gaia_subspace_and_optical_audit(names, fits_out, leaves, C_160, z_medians_4):
+    """M05/M02: Rank-47 subspace projection (no 160D inversion) and 4-shell scan+optical z-slope fit."""
+    theta_160 = np.concatenate([np.asarray(fits_out[n]["coefs_microasyr"], dtype=float) for n in names])
+    full_sub = subspace_mahalanobis(theta_160, C_160)
+    # Per-harmonic-sector positive subspace checks (E2 indices 6:11, B2 indices 11:16, dipole glide 0:3, spin 3:6)
+    sectors = {}
+    for sname, sslice in (("glide_30D", slice(0, 3)), ("spin_30D", slice(3, 6)), ("E2_50D", slice(6, 11)), ("B2_50D", slice(11, 16))):
+        idx = np.concatenate([16 * i + np.arange(sslice.start, sslice.stop) for i in range(len(names))])
+        sectors[sname] = subspace_mahalanobis(theta_160[idx], C_160[np.ix_(idx, idx)])
+    # Joint scan/frame floor + linear finite-z optical transfer slope across Quaia z0..z3
+    z_names = ["quaia_z0", "quaia_z1", "quaia_z2", "quaia_z3"]
+    z_idx_list = [names.index(zn) for zn in z_names]
+    z_vals = np.asarray(z_medians_4, dtype=float)
+    z_centered = z_vals - float(np.mean(z_vals))
+    shell_models = {}
+    for sec_label, comp_slice in (("E2_5", slice(6, 11)), ("B2_5", slice(11, 16)), ("glide_3", slice(0, 3))):
+        c_dim = comp_slice.stop - comp_slice.start
+        y_z = np.concatenate([np.asarray(fits_out[zn]["coefs_microasyr"][comp_slice], dtype=float) for zn in z_names])
+        l_z = np.concatenate([leaves[zn][:, comp_slice] for zn in z_names], axis=1)
+        C_z = jackknife_cov(l_z)
+        sym = 0.5 * (C_z + C_z.T)
+        ev, U = np.linalg.eigh(sym)
+        keep = ev > 1e-10 * ev[-1]
+        # Whiten on exact rank-k eigenspace (k <= 47): W = U_k / sqrt(ev_k) @ U_k^T
+        inv_half = (U[:, keep] / np.sqrt(ev[keep])) @ U[:, keep].T
+        X_const = np.kron(np.ones((4, 1)), np.eye(c_dim))
+        X_slope = np.column_stack((X_const, np.kron(z_centered[:, None], np.eye(c_dim))))
+        w_y = inv_half @ y_z
+        b_c, *_ = np.linalg.lstsq(inv_half @ X_const, w_y, rcond=None)
+        b_s, *_ = np.linalg.lstsq(inv_half @ X_slope, w_y, rcond=None)
+        chi2_c = float(np.sum((w_y - (inv_half @ X_const) @ b_c) ** 2))
+        chi2_s = float(np.sum((w_y - (inv_half @ X_slope) @ b_s) ** 2))
+        shell_models[sec_label] = {
+            "subspace_rank": int(np.count_nonzero(keep)),
+            "z_medians": z_vals.tolist(),
+            "constant_scan_floor_microasyr": b_c.tolist(),
+            "joint_scan_plus_z_slope_constant": b_s[:c_dim].tolist(),
+            "joint_scan_plus_z_slope_per_unit_z": b_s[c_dim:].tolist(),
+            "z_slope_norm_microasyr_per_z": float(np.linalg.norm(b_s[c_dim:])),
+            "subspace_chi2_const_only": chi2_c,
+            "subspace_chi2_const_plus_z_slope": chi2_s,
+            "delta_chi2_for_z_slope": float(max(0.0, chi2_c - chi2_s)),
+        }
+    return {
+        "full_160D_subspace_projection": full_sub,
+        "harmonic_sector_subspace_projections": sectors,
+        "quaia_4shell_scan_and_finite_z_transfer": shell_models,
+        "full_160d_inversion_avoided": True,
+    }
 def gaia_run():
     t=time.monotonic();CACHE.mkdir(parents=True,exist_ok=True);BACKEND_COUNTS.clear();BACKEND_ROW_COUNTS.clear()
     sets={k:empty_gaia() for k in ("crf3_all","crf3_quality","quaia_inverse_noise","quaia_multiply_selection","quaia_ipw_0p20","quaia_ipw_0p35","quaia_z0","quaia_z1","quaia_z2","quaia_z3")}
@@ -249,6 +387,10 @@ def gaia_run():
             b=leaves[name][k]/1000;score+=ref["yy"][k]-2*b@ref["s"][k]+b@ref["F"][k]@b
         common_score[name]=float(score)
     names=list(sets);joint=np.concatenate([leaves[n] for n in names],axis=1);C=jackknife_cov(joint)
+    z_all_valid = zq[ii]
+    z_bins_valid = np.digitize(z_all_valid, [.8, 1.5, 2.1])
+    z_medians_4 = [float(np.median(z_all_valid[z_bins_valid == k])) for k in range(4)]
+    gaia_audit = gaia_subspace_and_optical_audit(names, fits_out, leaves, C, z_medians_4)
     comparisons=[]
     for a,b in (("crf3_all","crf3_quality"),("crf3_quality","quaia_inverse_noise"),("quaia_inverse_noise","quaia_multiply_selection"),("quaia_inverse_noise","quaia_ipw_0p20"),("quaia_ipw_0p20","quaia_ipw_0p35"),("quaia_z0","quaia_z3")):
         delta=np.asarray(fits_out[a]["coefs_microasyr"])-np.asarray(fits_out[b]["coefs_microasyr"]);cv=jackknife_cov(leaves[a]-leaves[b]);naive=jackknife_cov(leaves[a])+jackknife_cov(leaves[b])
@@ -261,7 +403,8 @@ def gaia_run():
     out={"schema":"htt.r98.gaia_full_shared_patch/1",
         "sources":{str(p):{"bytes":p.stat().st_size,"sha256":sha(p)} for p in (GAIA,JOIN)},
         "source_row_census":{"gaia_crf3_total":total,"quaia_join_total":len(zq),"quaia_qualified":len(ii),"all_source_rows_visited":True},
-        "fits":fits_out,"redshift_bin_edges":[.8,1.5,2.1],"comparisons":comparisons,
+        "fits":fits_out,"redshift_bin_edges":[.8,1.5,2.1],"redshift_bin_medians":z_medians_4,"comparisons":comparisons,
+        "subspace_and_optical_transfer_audit":gaia_audit,
         "joint_160d_patch_covariance":{"order":names,"rank":int(np.linalg.matrix_rank(C)),"max_rank_from_48_patches":47,
             "cache_path":str(CACHE/"gaia_joint_patch_statistics.npz"),"sha256":sha(CACHE/"gaia_joint_patch_statistics.npz"),
             "full_160d_inverse_or_chi_square_used":False},

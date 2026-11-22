@@ -36,6 +36,31 @@ def test_signed_codazzi_and_rank_stratum():
         assert item["R90_same_n_difference"]>1e-3
         assert item["R90_flipped_n_difference"]<1e-18
     assert v["compensated_Codazzi_initial_norm"]<1e-18
+    assert v["normal_flip_flux_sign_reversal_max_err"]<1e-18
+
+
+def test_cmb_foreground_and_calibration_sensitivity_unit():
+    fake_cache = {
+        "folds": [
+            {
+                "fold": 0,
+                "standardized_covariance_budget_signal_noise_cross_3x3": np.eye(3).tolist(),
+                "models": {"raw": {"smica_score": 10.0}},
+            }
+        ],
+        "oof_by_cmb_id": {"0": [0, 0, 10.02, 10.0, 10.0, 5.0, 0.0, 0.0], "1": [1, 0, 9.95, 10.0, 10.0, 5.0, 0.0, 0.0]},
+    }
+    fake_splits = {
+        "split_and_method_comparisons": {
+            "smica_full__commander_full": {
+                ch: {band: {"half_difference_over_coadd": 0.01} for band in ("2-8", "2-48")} for ch in ("T", "E", "B")
+            }
+        }
+    }
+    out = x.cmb_foreground_and_calibration_nuisance_sensitivity(fake_cache, fake_splits)
+    assert out["n_noise_groups"] == 2
+    assert out["multiplicative_gain_0p5pct_group_balanced_raw_tail"]["gain_-0.005"] >= out["multiplicative_gain_0p5pct_group_balanced_raw_tail"]["gain_+0.005"]
+    assert out["commander_null_qualified"] is False
 
 
 @pytest.fixture(scope="module")
@@ -81,3 +106,6 @@ def test_eigenframes_are_source_histories(full):
     for v in d.values():
         assert v["common_rotation_chi_error"]<1e-12
         assert v["minimum_top_spectral_gap"]>.04
+        assert v["two_time_transporter_orthogonality_err"]<1e-14
+        assert v["transported_vs_original_commutator_err"]<1e-13
+        assert v["discrete_161_vs_641_chi_bound_gap"]>=0.0

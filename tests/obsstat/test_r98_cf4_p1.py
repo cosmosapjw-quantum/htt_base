@@ -125,3 +125,38 @@ def test_exact_fallback_algebraic_crossings_and_shared_draw():
     np.testing.assert_array_equal(result["nominal"],np.full(6,.4))
     np.testing.assert_array_equal(result["min_mass"],np.zeros(6))
     np.testing.assert_array_equal(result["max_mass"],np.ones(6))
+
+
+def test_log_pv_jacobian_low_z_limit_and_finufft_parity():
+    r30_sci, _, transport_covariance, finufft = r._load_r30_and_bridge()
+    z_grid = np.array([1e-4, 0.005, 0.01, 0.05, 0.10])
+    chi, g, j, _, _ = r30_sci.background(z_grid, 64)
+    v = r.C * z_grid
+    q_wf = (1.0 + v / r.C) / v
+    q_cos = -r.MAG * j
+    assert np.all(q_wf > 0) and np.all(q_cos > 0)
+    # As z -> 0, both log-distance velocity Jacobians converge to 1/(cz)
+    assert abs(q_cos[0] / q_wf[0] - 1.0) < 1e-3
+
+    # Independent small-mock verification of _finufft_log_modes vs _direct_fourier_modes + transport_covariance
+    rng = np.random.default_rng(9811)
+    N = 120
+    pos = rng.normal(0.0, 80.0, size=(N, 3))
+    nh = rng.normal(size=(N, 3)); nh /= np.linalg.norm(nh, axis=1, keepdims=True)
+    A_mock = rng.normal(0.0, 0.05, size=(6, N))
+    gq = rng.uniform(0.01, 0.1, size=N)
+    targets = np.array([[0.008, 1.0, 0.0, 0.0], [0.025, 0.0, 1.0, 0.0], [0.041, 0.0, 0.0, 1.0]])
+    nu = r._finufft_log_modes(finufft, targets, pos, nh, [gq], A_mock, eps=1e-12)[0]
+    ex = r._direct_fourier_modes(targets, pos, nh, gq, A_mock)
+    np.testing.assert_allclose(nu, ex, rtol=1e-9, atol=1e-12)
+
+    V_mock = rng.normal(size=(N, 4)) * 0.01
+    D_mock = rng.uniform(1e-4, 1e-3, size=N)
+    K_mock = rng.normal(size=(6, 3))
+    Sig_mock = np.diag([0.05**2, 0.03**2, 0.02**2])
+    out = transport_covariance(
+        A_mock, D_mock, correlated_factor=V_mock, calibration_response=K_mock, calibration_covariance=Sig_mock,
+        ownership={"independent": ["meas"], "correlated": ["pv"], "calibration": ["cal"]},
+    )
+    direct = A_mock @ (np.diag(D_mock) + V_mock @ V_mock.T) @ A_mock.T + K_mock @ Sig_mock @ K_mock.T
+    np.testing.assert_allclose(out["total"], direct, rtol=1e-12, atol=1e-14)

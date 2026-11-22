@@ -76,3 +76,35 @@ def test_raw_audit_does_not_reseal_a_changed_map(tmp_path,monkeypatch):
     np.savez(cp,map__NVSS__20=np.array([99.]))
     with pytest.raises(RuntimeError,match="map/receipt digest changed"):m.radio_run(audit_inputs=True)
     assert finger.read_bytes()==before
+
+
+def test_subspace_mahalanobis_and_4shell_z_slope_no_inversion():
+    rng = np.random.default_rng(9847)
+    names = ["a", "b", "c", "d", "e", "f", "quaia_z0", "quaia_z1", "quaia_z2", "quaia_z3"]
+    # Rank-deficient 48-patch jackknife covariance (48 < 160 -> exact singular in 160D)
+    patches = rng.normal(scale=0.5, size=(48, 160))
+    C = m.jackknife_cov(patches)
+    assert np.linalg.matrix_rank(C) == 47
+    theta = np.zeros(160)
+    # Inject a known linear-in-z E2 signal across quaia_z0..z3 at z=[0.5, 1.1, 1.8, 2.4]
+    z_med = [0.5, 1.1, 1.8, 2.4]
+    zc = np.array(z_med) - np.mean(z_med)
+    slope_true = np.array([2.0, -1.0, 0.5, 0.0, 1.5])
+    const_true = np.array([1.0, 0.5, -0.2, 0.3, -0.4])
+    fits_out = {}
+    leaves = {}
+    for i, name in enumerate(names):
+        vec = np.zeros(16)
+        if name.startswith("quaia_z"):
+            zi = int(name[-1])
+            vec[6:11] = const_true + zc[zi] * slope_true
+        theta[16 * i : 16 * (i + 1)] = vec
+        fits_out[name] = {"coefs_microasyr": vec.tolist()}
+        leaves[name] = patches[:, 16 * i : 16 * (i + 1)]
+    out = m.gaia_subspace_and_optical_audit(names, fits_out, leaves, C, z_med)
+    assert out["full_160D_subspace_projection"]["numerical_rank"] == 47
+    assert out["full_160d_inversion_avoided"] is True
+    e2_fit = out["quaia_4shell_scan_and_finite_z_transfer"]["E2_5"]
+    assert e2_fit["subspace_rank"] == 20
+    assert e2_fit["delta_chi2_for_z_slope"] > 0.0
+    assert e2_fit["z_slope_norm_microasyr_per_z"] > 1.0

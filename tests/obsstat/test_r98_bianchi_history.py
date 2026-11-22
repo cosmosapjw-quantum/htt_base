@@ -55,7 +55,7 @@ def test_projection_linearity_separate_source_and_quadrature(projection):
 def test_midpoint_rates_and_domain(projection):
     state,traj = h.background("VII_h",samples=161)
     geom,_ = h.background_checks(state,traj)
-    dN,_,rate = h.timeline(traj,geom,2)
+    dN,_,rate,_ = h.timeline(traj,geom,2)
     assert np.all(dN>0) and np.all(rate>=0)
     np.testing.assert_allclose(dN.sum(),np.log1p(1600.),rtol=1e-14)
     with pytest.raises(ValueError, match="extrapolate"):
@@ -83,4 +83,33 @@ def test_one_way_hydrogen_same_physics_expansion_clock():
     assert abs(ref["model_minus_same_chemistry_reference_tau"]) < 1e-8
     delta = abs(row["model_minus_same_chemistry_reference_tau"])
     assert delta > 10 * row["max_abs_tau_rtol_refinement"]
+    assert row["directional_shear_over_H_rms"] > 0.0
+    assert row["perturbative_escape_delta_tau"] != 0.0
     assert not row["fed_into_harmonic_sky"]
+
+
+def test_radiation_feedback_conservation_and_flrw_null(projection):
+    st_f, tr_f = h.background("FLRW", samples=161)
+    g_f, _ = h.background_checks(st_f, tr_f)
+    _, _, yf, gf, df, rf = h.evolve(projection, tr_f, g_f, 1, return_history=True)
+    fb_f = h.radiation_feedback_audit(projection, tr_f, g_f, yf, gf, df, rf)
+    assert fb_f["momentum_exchange_conservation_defect_max"] == 0.0
+    assert fb_f["max_1loop_delta_sigma_over_H"] == 0.0
+    assert fb_f["feedback_sky_delta_norm_T2_to_5"] == 0.0
+
+    st_v, tr_v = h.background("VII_h", samples=161)
+    g_v, _ = h.background_checks(st_v, tr_v)
+    _, _, yv, gv, dv, rv = h.evolve(projection, tr_v, g_v, 1, return_history=True)
+    fb_v = h.radiation_feedback_audit(projection, tr_v, g_v, yv, gv, dv, rv)
+    assert fb_v["momentum_exchange_conservation_defect_max"] <= 1e-15
+    assert fb_v["max_1loop_delta_sigma_over_H"] > 0.0
+    assert fb_v["feedback_sky_delta_norm_T2_to_5"] > 0.0
+
+
+@pytest.mark.skipif(not h.ANILOS_ARCHIVE.exists(), reason="pinned AniLoS archive required")
+def test_anilos_near_isotropic_kappa_zeta_parity(projection):
+    atlas = h.anilos_and_ic_atlas_audit(projection)
+    assert atlas["kappa_vs_r98_cspin_max_abs_diff"] < 1e-14
+    assert atlas["zeta_factor_m0_exact_max_err"] < 1e-15
+    assert atlas["zeta_factor_m_parity_max_err"] < 1e-15
+    assert set(atlas["primordial_ic_atlas_near_isotropic_I_V_VIIh"]) == {"I", "V", "VII_h"}

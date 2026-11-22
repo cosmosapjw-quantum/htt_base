@@ -1,12 +1,12 @@
 {
   "schema": "r98_evolved_bianchi_test_radiation_v1",
   "run_status": "completed",
-  "scope": "conditional k=0 test radiation; prescribed xe(volume a); passive photon moments",
+  "scope": "conditional k=0 test radiation; prescribed xe(volume a); 1-loop radiation momentum/shear audit and near-isotropic AniLoS comparison",
   "physical_calibration": false,
   "full_einstein_boltzmann": false,
   "SQ_NATIVE": false,
   "inputs_sha256": {
-    "scripts/r98/bianchi_history.py": "b5e8fc8e7365112b7796feaf9e1145a29d5b273fa3141015029f0c610a56e167",
+    "scripts/r98/bianchi_history.py": "034eed5ae0429153f24949aca2e5d8e820ba36200198a1610e8c8551ac137404",
     "scripts/r97/bianchi_coupled_m_transport.py": "5aaea44364cb8a9569b76b34db77b6f0f9cb138e099dfbd27e5faf21423a840e",
     "htt/bass/recombination/fixtures/recombination_ref_planck2018.csv": "ca5ef46dd70518a83cd0ccca265144dd4f66366a97e9e79f8800066a02a83c96",
     "htt/bass/background/general_tilted_evolution.py": "9679d7651a0f29adae712afc8fff9a67731f88970925ce1ef9bdb5f42d207ddd",
@@ -23,10 +23,62 @@
   "threads": {
     "OMP_NUM_THREADS": "1",
     "OPENBLAS_NUM_THREADS": "1",
-    "MKL_NUM_THREADS": "1"
+    "MKL_NUM_THREADS": null
   },
-  "elapsed_seconds": 17.700236429984216,
-  "max_RSS_KiB": 238996,
+  "elapsed_seconds": 21.803790293022757,
+  "max_RSS_KiB": 1678956,
+  "anilos_near_isotropic_and_ic_atlas": {
+    "anilos_tarball_sha256": "399eee772ecc8efed11edf295c681f4db256a6ec2d7a1802cbcd1982a2aaca4c",
+    "anilos_git_commit_pin": "9b7a2611882dcca80a1491bcad2b8f05635faca7",
+    "kappa_vs_r98_cspin_max_abs_diff": 1.1102230246251565e-16,
+    "zeta_factor_m0_exact_max_err": 0.0,
+    "zeta_factor_m_parity_max_err": 0.0,
+    "zeta_factor_m1_sqrth_0p5_values": [
+      [
+        0.5903798564776407,
+        -0.5211768394810755
+      ],
+      [
+        0.465002974202142,
+        -0.645157163811143
+      ],
+      [
+        0.38093550542342464,
+        -0.7241700105084345
+      ],
+      [
+        0.32179712645279124,
+        -0.7768869870150187
+      ]
+    ],
+    "linearized_vs_finite_geometry_note": "AniLoS evolves linearized perturbations around near-FLRW Bianchi (I,V,VII_0,VII_h,IX); R98 evolves full non-axisymmetric M_geo(sigma,a,n) advection along evolved R49 trajectories and excludes exceptional VI_{-1/9} from linear extrapolation.",
+    "primordial_ic_atlas_near_isotropic_I_V_VIIh": {
+      "I": {
+        "window": "post_recombination_z15_to_z0",
+        "shear_driven_T_l2_to_5_norm": 1.4337544288817803e-08,
+        "T20_ic_1e5_residual_T_norm": 9.52451744395126e-06,
+        "T20_ic_generated_E_norm": 1.2823726354113088e-07,
+        "E21_ic_1e5_residual_E_norm": 1.3839890819155589e-05,
+        "E21_ic_1e5_helical_B_norm": 1.9166980837681336e-22
+      },
+      "V": {
+        "window": "post_recombination_z15_to_z0",
+        "shear_driven_T_l2_to_5_norm": 1.4333301536235504e-08,
+        "T20_ic_1e5_residual_T_norm": 9.522978123417539e-06,
+        "T20_ic_generated_E_norm": 1.2822874256191847e-07,
+        "E21_ic_1e5_residual_E_norm": 1.383888851340037e-05,
+        "E21_ic_1e5_helical_B_norm": 8.754225559994551e-08
+      },
+      "VII_h": {
+        "window": "post_recombination_z15_to_z0",
+        "shear_driven_T_l2_to_5_norm": 1.4124562766756157e-08,
+        "T20_ic_1e5_residual_T_norm": 9.524131425204438e-06,
+        "T20_ic_generated_E_norm": 1.2821807481396766e-07,
+        "E21_ic_1e5_residual_E_norm": 1.3839358084220022e-05,
+        "E21_ic_1e5_helical_B_norm": 9.788339816912777e-08
+      }
+    }
+  },
   "families": {
     "FLRW": {
       "background": {
@@ -2225,8 +2277,22 @@
         "model_minus_same_chemistry_reference_tau": -6.679101716144942e-13,
         "max_abs_x_H_rtol_refinement": 5.477701625622444e-13,
         "max_abs_tau_rtol_refinement": 2.660538456211725e-12,
+        "directional_shear_over_H_rms": 0.0,
+        "directional_escape_rate_rms_frac": 0.0,
+        "perturbative_escape_delta_x_H_end": 0.0,
+        "perturbative_escape_delta_tau": 0.0,
         "HyRec_fixture_x_e_end": 0.04865097,
         "fed_into_harmonic_sky": false
+      },
+      "radiation_feedback_1loop": {
+        "momentum_exchange_conservation_defect_max": 0.0,
+        "max_radiation_pi_over_rho_rad": 0.0,
+        "max_1loop_delta_sigma_over_H": 0.0,
+        "final_1loop_delta_sigma_over_H": 0.0,
+        "max_baryon_coll_force_norm_per_dN": 0.0,
+        "feedback_sky_delta_norm_T2_to_5": 0.0,
+        "feedback_sky_delta_norm_E2_to_5": 0.0,
+        "feedback_sky_delta_norm_B2_to_5": 0.0
       }
     },
     "I": {
@@ -4426,8 +4492,22 @@
         "model_minus_same_chemistry_reference_tau": -1.6151968651456627e-11,
         "max_abs_x_H_rtol_refinement": 6.535050278699828e-13,
         "max_abs_tau_rtol_refinement": 3.3528735343679728e-12,
+        "directional_shear_over_H_rms": 8.831945088619512e-06,
+        "directional_escape_rate_rms_frac": 3.2249703677892465e-06,
+        "perturbative_escape_delta_x_H_end": 8.948230056926576e-08,
+        "perturbative_escape_delta_tau": -7.040799173019252e-06,
         "HyRec_fixture_x_e_end": 0.04865097,
         "fed_into_harmonic_sky": false
+      },
+      "radiation_feedback_1loop": {
+        "momentum_exchange_conservation_defect_max": 0.0,
+        "max_radiation_pi_over_rho_rad": 3.138840215164888e-06,
+        "max_1loop_delta_sigma_over_H": 4.036943729212934e-07,
+        "final_1loop_delta_sigma_over_H": 2.5146562665278244e-09,
+        "max_baryon_coll_force_norm_per_dN": 1.968358249427843e-50,
+        "feedback_sky_delta_norm_T2_to_5": 1.297400989670837e-06,
+        "feedback_sky_delta_norm_E2_to_5": 1.9790927321248546e-08,
+        "feedback_sky_delta_norm_B2_to_5": 2.4614920793060236e-21
       }
     },
     "V": {
@@ -6627,8 +6707,22 @@
         "model_minus_same_chemistry_reference_tau": -1.489838101775831e-07,
         "max_abs_x_H_rtol_refinement": 6.250555628639631e-13,
         "max_abs_tau_rtol_refinement": 3.256284131225584e-12,
+        "directional_shear_over_H_rms": 8.831944445577003e-06,
+        "directional_escape_rate_rms_frac": 3.224970132983321e-06,
+        "perturbative_escape_delta_x_H_end": 8.948229520550077e-08,
+        "perturbative_escape_delta_tau": -7.040798394086778e-06,
         "HyRec_fixture_x_e_end": 0.04865097,
         "fed_into_harmonic_sky": false
+      },
+      "radiation_feedback_1loop": {
+        "momentum_exchange_conservation_defect_max": 0.0,
+        "max_radiation_pi_over_rho_rad": 3.1385860082937197e-06,
+        "max_1loop_delta_sigma_over_H": 4.0369406348329636e-07,
+        "final_1loop_delta_sigma_over_H": 2.5138317075219002e-09,
+        "max_baryon_coll_force_norm_per_dN": 3.361276351314177e-11,
+        "feedback_sky_delta_norm_T2_to_5": 1.2967915640763728e-06,
+        "feedback_sky_delta_norm_E2_to_5": 1.9786325877624482e-08,
+        "feedback_sky_delta_norm_B2_to_5": 6.960715514228334e-11
       }
     },
     "VII_h": {
@@ -8831,8 +8925,22 @@
         "model_minus_same_chemistry_reference_tau": -3.725409891686127e-08,
         "max_abs_x_H_rtol_refinement": 6.510625372158074e-13,
         "max_abs_tau_rtol_refinement": 3.1161739855178894e-12,
+        "directional_shear_over_H_rms": 8.831944899104475e-06,
+        "directional_escape_rate_rms_frac": 3.2249702985881395e-06,
+        "perturbative_escape_delta_x_H_end": 8.94822990427091e-08,
+        "perturbative_escape_delta_tau": -7.040798952751004e-06,
         "HyRec_fixture_x_e_end": 0.04865097,
         "fed_into_harmonic_sky": false
+      },
+      "radiation_feedback_1loop": {
+        "momentum_exchange_conservation_defect_max": 0.0,
+        "max_radiation_pi_over_rho_rad": 3.138749714105254e-06,
+        "max_1loop_delta_sigma_over_H": 4.036942790822356e-07,
+        "final_1loop_delta_sigma_over_H": 2.514381943481359e-09,
+        "max_baryon_coll_force_norm_per_dN": 1.7537431361447353e-11,
+        "feedback_sky_delta_norm_T2_to_5": 1.297230771952739e-06,
+        "feedback_sky_delta_norm_E2_to_5": 1.9789229343180778e-08,
+        "feedback_sky_delta_norm_B2_to_5": 1.192377655733227e-10
       },
       "frozen_geometry_minus_evolving_same_source": {
         "T": {
@@ -11142,8 +11250,22 @@
         "model_minus_same_chemistry_reference_tau": -3.766036562602437e-07,
         "max_abs_x_H_rtol_refinement": 5.711542350184118e-13,
         "max_abs_tau_rtol_refinement": 2.6978419498391304e-12,
+        "directional_shear_over_H_rms": 8.444255146178886e-06,
+        "directional_escape_rate_rms_frac": 3.083406016594173e-06,
+        "perturbative_escape_delta_x_H_end": 8.489387724741615e-08,
+        "perturbative_escape_delta_tau": -6.760853838105874e-06,
         "HyRec_fixture_x_e_end": 0.04865097,
         "fed_into_harmonic_sky": false
+      },
+      "radiation_feedback_1loop": {
+        "momentum_exchange_conservation_defect_max": 0.0,
+        "max_radiation_pi_over_rho_rad": 0.0005145546435043009,
+        "max_1loop_delta_sigma_over_H": 3.612338081987676e-07,
+        "final_1loop_delta_sigma_over_H": 1.5784109033151644e-07,
+        "max_baryon_coll_force_norm_per_dN": 2.4547279237086114e-11,
+        "feedback_sky_delta_norm_T2_to_5": 1.48517025400246e-06,
+        "feedback_sky_delta_norm_E2_to_5": 1.4737030197580614e-08,
+        "feedback_sky_delta_norm_B2_to_5": 5.333293186411638e-10
       },
       "frozen_geometry_minus_evolving_same_source": {
         "T": {

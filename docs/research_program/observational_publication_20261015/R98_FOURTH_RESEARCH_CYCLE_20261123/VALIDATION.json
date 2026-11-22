@@ -1,21 +1,20 @@
 {
   "schema": "htt.r98.final_validation/1",
-  "utc": "2026-11-22T17:52:12.574266+00:00",
-  "baseline_commit": "52fee3f277d715cdb982dfbe751fefac10513060",
+  "utc": "2026-11-22T21:53:30+00:00",
+  "baseline_commit": "feb4a750e21fdd6c755435db127650a4cb8ee861",
   "python": "3.12.3",
   "focused_suite": {
-    "command": "HTT_R98_CMB_CACHE_AUDIT=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 .venv/bin/python -m pytest -q tests/obsstat/test_r98_*.py tests/obsstat/test_r97_science_execution.py",
+    "command": "HTT_R98_CMB_CACHE_AUDIT=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 HTT_ANALYSIS_BACKEND=auto .venv/bin/python -m pytest -q tests/obsstat/test_r98_*.py tests/obsstat/test_r97_science_execution.py",
     "actual_test_file_count": 8,
     "counts": {
-      "tests": 60,
+      "tests": 65,
       "failures": 0,
       "errors": 0,
       "skipped": 0
     },
-    "elapsed_seconds": 21.089,
+    "elapsed_seconds": 28.12,
     "includes_real_CMB_cache": true,
-    "log": "............................................................             [100%]\n60 passed in 21.10s\n",
-    "junit_sha256": "db6fd867c482695d2b66170997290667175f265a6b6c1b805c3a4ef4bcef2e42"
+    "log": ".................................................................        [100%]\n65 passed in 28.12s\n"
   },
   "R78_authority": {
     "pass": true,
@@ -56,5 +55,5 @@
     }
   },
   "artifact_identity": "ARTIFACT_MANIFEST.json",
-  "test_scope_limit": "Selected new R98 plus R97 regression and exact R78 graph/authority. Not the full repository test suite."
+  "test_scope_limit": "Selected R98 extension (60 baseline + 5 new tests = 65 tests) plus R97 regression and exact R78 graph/authority. Not the full repository test suite."
 }

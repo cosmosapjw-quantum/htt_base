@@ -61,3 +61,13 @@ Run status completed in 2.264 s in the repaired calculation, tests 9 passed in 1
 | RUNTIME | No execution blocker for this bounded lane. No root changes, native solver or 60 independent admissions follow from these CF4 calculations. |
 
 Skill context used: physmath-research-loop 1.3.0, THEORY_LOOP, CODING_LOOP, POLICY_INTEGRATION, SUBAGENT_MODE; computation-audit; repository htt-observable-statistics and htt-xqpi-fg-formalism. Sources: Tully et al. (2023), https://arxiv.org/abs/2209.11238; Watkins & Feldman (2015), https://doi.org/10.1093/mnras/stv651; archived original CDS ReadMe, tables and predecessor identities in the result.
+
+## Continuation Extension Run Receipt (`cf4_p1.py`, 2026-11-23)
+
+- Added `upstream_anchor_genealogy` and `log_pv_and_selection_covariance` in `scripts/r98/cf4_p1.py` (`test_log_pv_jacobian_low_z_limit_and_finufft_parity` in `tests/obsstat/test_r98_cf4_p1.py`, 10/10 tests pass).
+- Re-executed `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 HTT_ANALYSIS_BACKEND=auto .venv/bin/python -m scripts.r98.cf4_p1` (`exit 0`, `16.37s`, `CF4_P1_RESULTS.json` SHA-256 `436630f094950d1d21d82ab61a9b587df788cc4f28c3976f5ff2b677a5350591`).
+- Key covariance & GLS comparison (`transport_covariance_models_36d`):
+  - `working_diag_250_no_PV`: trace `0.000968`, `shared_monopole` $\chi^2_{35}=553.58$ ($H_0=74.936$), `shared_9D_mean` $\chi^2_{27}=248.26$, inner-to-outer `schur_chi2=154.356` (loglik `6.514`).
+  - `correlated_WF_R5_nl150_cal087_sel`: traces `N(150)=0.000936`, `S_PV(R5)=0.003146`, `cal=0.006559`, `sel=0.006632`; `shared_monopole` $\chi^2_{35}=50.29$ ($H_0=75.720 \pm 3.10$), `shared_9D_mean` $\chi^2_{27}=18.82$ (BIC selected), `schur_chi2=11.995` (loglik `64.570`).
+  - `correlated_Cosmo_R5_nl150_cal087_sel`: `S_PV(R5)=0.003476`, `shared_monopole` $\chi^2_{35}=45.74$ (BIC selected, $H_0=75.742$), `shared_9D_mean` $\chi^2_{27}=17.49$, `schur_chi2=11.032` (loglik `64.365`).
+  - `SQ-CF4` remains `BLOCKED_INPUT` / `physical_Pi = null` pending upstream pre-intercalibration anchor covariances (`D01`) and group-level selection denominators (`D02`).

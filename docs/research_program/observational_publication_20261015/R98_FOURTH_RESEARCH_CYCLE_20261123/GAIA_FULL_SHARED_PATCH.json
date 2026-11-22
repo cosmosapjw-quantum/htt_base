@@ -3173,6 +3173,12 @@
     1.5,
     2.1
   ],
+  "redshift_bin_medians": [
+    0.5958884954452515,
+    1.1713351011276245,
+    1.7612881064414978,
+    2.4607839584350586
+  ],
   "comparisons": [
     {
       "a": "crf3_all",
@@ -5071,6 +5077,149 @@
       "calibrated_p": null
     }
   ],
+  "subspace_and_optical_transfer_audit": {
+    "full_160D_subspace_projection": {
+      "dimension": 160,
+      "numerical_rank": 47,
+      "min_retained_eigenvalue": 0.03359410139345257,
+      "max_eigenvalue": 99.5284150044789,
+      "subspace_chi2": 524.5928366832661,
+      "reduced_chi2_per_dof": 11.161549716665236
+    },
+    "harmonic_sector_subspace_projections": {
+      "glide_30D": {
+        "dimension": 30,
+        "numerical_rank": 30,
+        "min_retained_eigenvalue": 1.5414375205553935e-05,
+        "max_eigenvalue": 18.441313129159802,
+        "subspace_chi2": 182.90240989394928,
+        "reduced_chi2_per_dof": 6.096746996464976
+      },
+      "spin_30D": {
+        "dimension": 30,
+        "numerical_rank": 30,
+        "min_retained_eigenvalue": 2.562090858926369e-05,
+        "max_eigenvalue": 19.18981916364107,
+        "subspace_chi2": 584.6754611841903,
+        "reduced_chi2_per_dof": 19.48918203947301
+      },
+      "E2_50D": {
+        "dimension": 50,
+        "numerical_rank": 47,
+        "min_retained_eigenvalue": 5.510316832668063e-06,
+        "max_eigenvalue": 70.17628163712942,
+        "subspace_chi2": 937.4974018763032,
+        "reduced_chi2_per_dof": 19.946753231410707
+      },
+      "B2_50D": {
+        "dimension": 50,
+        "numerical_rank": 47,
+        "min_retained_eigenvalue": 6.17843848595082e-06,
+        "max_eigenvalue": 71.67817399820088,
+        "subspace_chi2": 1449.7873691925442,
+        "reduced_chi2_per_dof": 30.846539770054132
+      }
+    },
+    "quaia_4shell_scan_and_finite_z_transfer": {
+      "E2_5": {
+        "subspace_rank": 20,
+        "z_medians": [
+          0.5958884954452515,
+          1.1713351011276245,
+          1.7612881064414978,
+          2.4607839584350586
+        ],
+        "constant_scan_floor_microasyr": [
+          -4.272916548852769,
+          1.0322552365839726,
+          -7.708182588018401,
+          -3.391732930080866,
+          4.118444142637678
+        ],
+        "joint_scan_plus_z_slope_constant": [
+          -3.252150969742739,
+          1.8229946827583907,
+          -4.034573997923189,
+          -3.5045709046051274,
+          4.398481735442298
+        ],
+        "joint_scan_plus_z_slope_per_unit_z": [
+          -1.334191388841206,
+          3.1081640484533164,
+          2.1265673098855666,
+          -0.5133926718077364,
+          0.6377640512307475
+        ],
+        "z_slope_norm_microasyr_per_z": 4.078400906990118,
+        "subspace_chi2_const_only": 21.02946793894922,
+        "subspace_chi2_const_plus_z_slope": 5.377160412371003,
+        "delta_chi2_for_z_slope": 15.652307526578218
+      },
+      "B2_5": {
+        "subspace_rank": 20,
+        "z_medians": [
+          0.5958884954452515,
+          1.1713351011276245,
+          1.7612881064414978,
+          2.4607839584350586
+        ],
+        "constant_scan_floor_microasyr": [
+          1.108436522926168,
+          4.600734924193304,
+          0.9892972448417923,
+          -1.1088663382674806,
+          -2.0834855230732368
+        ],
+        "joint_scan_plus_z_slope_constant": [
+          2.016345235674428,
+          2.699447864151181,
+          1.075855744749787,
+          0.3356895564859868,
+          -1.4186555188896663
+        ],
+        "joint_scan_plus_z_slope_per_unit_z": [
+          2.247371420288184,
+          -1.6502084381452606,
+          -0.5815803069838394,
+          1.9788392827346535,
+          0.46302914213136215
+        ],
+        "z_slope_norm_microasyr_per_z": 3.4989002181945787,
+        "subspace_chi2_const_only": 25.12099943516311,
+        "subspace_chi2_const_plus_z_slope": 6.639231142377479,
+        "delta_chi2_for_z_slope": 18.48176829278563
+      },
+      "glide_3": {
+        "subspace_rank": 12,
+        "z_medians": [
+          0.5958884954452515,
+          1.1713351011276245,
+          1.7612881064414978,
+          2.4607839584350586
+        ],
+        "constant_scan_floor_microasyr": [
+          -0.21488984485821983,
+          -4.161611563095634,
+          -2.6328721419454437
+        ],
+        "joint_scan_plus_z_slope_constant": [
+          -0.6043749209860555,
+          -4.984336108564662,
+          -2.006952558316982
+        ],
+        "joint_scan_plus_z_slope_per_unit_z": [
+          0.08506404124984179,
+          -1.4832398363477437,
+          -0.8382619589284257
+        ],
+        "z_slope_norm_microasyr_per_z": 1.7058485908864123,
+        "subspace_chi2_const_only": 21.866142522827765,
+        "subspace_chi2_const_plus_z_slope": 8.284622666347927,
+        "delta_chi2_for_z_slope": 13.581519856479838
+      }
+    },
+    "full_160d_inversion_avoided": true
+  },
   "joint_160d_patch_covariance": {
     "order": [
       "crf3_all",
@@ -5131,5 +5280,5 @@
     "shared_patch_covariance_is_spatial_diagnostic": true,
     "coefficient_comparisons_are_correlated": true
   },
-  "runtime_seconds": 10.047624860017095
+  "runtime_seconds": 7.753507271001581
 }

@@ -148,3 +148,8 @@ norm 단위는 μas yr⁻¹이다. 특히 서로 거의 같은 source set의 대
 - LoTSS DR3 v1.0 catalogue and RMS/coverage products: https://lofar-surveys.org/dr3.html .
 - 완료한 계산: RADIO_FULL_MODELS.json, GAIA_FULL_SHARED_PATCH.json, CROSS_PHY_RESULTS.json.
 - 원본 구현과 재사용 한계: LEGACY_REUSE_DECISIONS.md, LEGACY_CONTENT_AUDIT.json.
+
+## 8. 후속 확장: 전파 SED·과산포 대조 및 Gaia rank-47 부분공간·적색편이 기울기 (M05/M06/M02)
+
+- **전파 (`radio_selection_and_sed_audit`, `RADIO_FULL_MODELS.json` SHA-256 `b7d178a37b9c06f0a1879e70cb8c2f509edec36b7ed49a1fd40ba4b87b36ea76`)**: 5개 전파 서베이·19개 플럭스 컷 전부에서 선언된 `NSIDE=16` 마스크 내 비어 있는 셀 분율 `zero_cell_fraction = 0.0`임을 확인했고, $\alpha \in \{0.50, 0.75, 1.00\}$ SED 범위에서 Ellis–Baldwin 추론 비 $\hat\beta_{\rm EB}/\beta_{\rm CMB}$가 예컨대 NVSS 20 mJy 기준 `4.92 / 4.61 / 4.34`, LoTSS 50 mJy 기준 `2.83 / 2.67 / 2.52`로 변함을 정량화했다. 기준 컷에서 48-패치 jackknife 쌍극자 trace는 `NB1` Fisher 역행렬 trace 대비 `NVSS 1.997x`, `RACS_DR1 1.275x`, `SPICE_RACS 3.689x`, `SUMSS 1.623x`, `LoTSS_DR3 2.799x`로 나타나 NB1 과산포(`Poisson` 대비 `2.47x–6.05x`) 이상의 대척도 상관/footprint 분산이 존재함을 보였다.
+- **Gaia·Quaia (`gaia_subspace_and_optical_audit`, `GAIA_FULL_SHARED_PATCH.json` SHA-256 `0a56bc358b6048f4b018d93d2b55be2f2ac5526e22191a44ca6a9f1148a9d800`)**: 160×160 역행렬 없이 rank-47 양의 고유공간(`eigvalsh`, $\lambda_{\min}=0.03359$)에만 사영해 $\chi^2_{47} = 524.59$ (DOF당 `11.16`, `E2` 50D `937.50`, `B2` 50D `1449.79`, `glide` 30D `182.90`, `spin` 30D `584.68`)를 구했다. Quaia 4개 적색편이 구간(중앙값 `z = [0.596, 1.171, 1.761, 2.461]`)에서 `z`-독립 scan/frame 상수 바닥 모형 대비 선형 $z$-광학 기울기를 함께 적합할 때 `E2_5` $\Delta\chi^2 = 15.65$ (norm `4.08 uas/yr/z`), `B2_5` $\Delta\chi^2 = 18.48$ (`3.50 uas/yr/z`), `glide_3` $\Delta\chi^2 = 13.58$ (`1.71 uas/yr/z`)를 얻었다.

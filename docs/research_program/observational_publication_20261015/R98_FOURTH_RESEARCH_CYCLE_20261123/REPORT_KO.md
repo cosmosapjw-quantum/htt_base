@@ -208,3 +208,17 @@ ESA가 Range를 무시하면 header 뒤 stream을 닫았다. 부분 파일 재�
 - Quaia: https://zenodo.org/records/10403370 .
 - LoTSS DR3: https://lofar-surveys.org/dr3.html .
 - Planck PR3: https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/matrix_cmb.html .
+
+## 11. 후속 Source-Law 및 Solver 확장 결과 (2026-11-23 Continuation)
+
+기존 `R78 INTEGRATED_DAG.json` (SHA-256 `90aba8c1ca9c8e3a7744be0f071dcfe09b81e5353892aca13878191e20f58c11`)와 `scripts/r98/cmb_full.py`(638s 10-map 분할 변환 보존)를 변경하지 않고, R98 모듈과 회귀 테스트를 다음과 같이 실질적으로 확장·재실행·검증했다.
+
+| 모듈 / 산출물 | 추가된 Source-Law·Solver 확장 | 핵심 수치 및 판정 |
+|---|---|---|
+| **SQ-CF4 / P3 / P1** (`scripts/r98/cf4_p1.py`, `CF4_P1_RESULTS.json`) | D01 `table2→table3` 전체 계보 교차표; D02/M01 행렬-비할당 `finufft` 로그-거리 $S_{\mathrm{PV}}(R\in\{5,10,20\})$ ($q_{\mathrm{WF}}$ vs $q_{\mathrm{cosmo}}$) + rank-9 경계/Malmquist $C_{\mathrm{sel}}$ + `transport_covariance` + 상관 P1 유한 slice | `table2` 55,877행 중 13개 행(12개 `1PGC`, Cepheid 4개 `PGC 3085, 17223` 등 포함)이 `table3` 그룹에 미포함 확인; `finufft` vs 직접 6-mode 오차 `2.09e-13`; 18-DOF inner→outer Schur 예측 $\chi^2_{18}$: 대각 `154.36` $\to$ 4항 상관 `11.03–15.56` ($\Delta\ln\mathcal{L}\approx+58$ nats); `SQ-CF4`는 상류 원자료(D01/D02) 미확보로 `BLOCKED_INPUT` 유지 |
+| **P5 Bianchi** (`scripts/r98/bianchi_history.py`, `BIANCHI_HISTORY_RESULTS.json`) | M08 광자–중입자 운동량 교환 + 1-loop 복사 전단 역반응; 고정 `anilos-0.1.0` ($\kappa_\ell, \zeta_\ell$) 근등방 비교 + `I, V, VII_h` 3종 IC 아틀라스; M09 방향성 탈출율 반응 | 운동량 교환 보존 오차 `0.0`, FLRW 역반응 `0.0`, `VII_h` $\max|\Delta\sigma/H|=4.04\times10^{-7}$; AniLoS $\kappa_\ell$ 대비 `c_spin` 오차 `1.11e-16`; 재결합 후 `E21` IC에서 평탄 `I` B-모드 `1.9e-22` vs `VII_h` `9.79e-8` |
+| **P4 Radio** (`scripts/r98/cross_survey.py`, `RADIO_FULL_MODELS.json`) | M06 5개 서베이·19개 컷 $\alpha\in\{0.50,0.75,1.00\}$ SED 스윕, 0-셀 마스크 감도 및 jackknife 대 NB1/Poisson 분산 비 | 선언된 `NSIDE=16` 마스크 내 `zero_cell_fraction=0.0`; jackknife/NB1 쌍극자 분산 비 `1.28x–3.69x`(Poisson 대비 `1.73x–6.05x`), 단일 SED 기울기로 초과 쌍극자 설명 불가 |
+| **P6 Gaia·Quaia** (`scripts/r98/cross_survey.py`, `GAIA_FULL_SHARED_PATCH.json`) | M05/M02 160D 역행렬 없는 rank-47 부분공간 Mahalanobis 사영 + Quaia 4-적색편이 구간(`z=0.596..2.461`) 상수 floor + $z$-기울기 분해 | Rank-47 $\chi^2_{47}=524.59$; 4구간 $z$-기울기 추가 시 `E2_5` $\Delta\chi^2=15.65$, `B2_5` $\Delta\chi^2=18.48$, `glide_3` $\Delta\chi^2=13.58$ |
+| **CROSS + P2** (`scripts/r98/cross_phy.py`, `CROSS_PHY_RESULTS.json`) | M04 P2 5-fold 전경 반차/보정 이득 $\pm0.5\%$ 민감도, `PHY05` normal 반전 플럭스 부호 반전, `PHY06` 명시적 2-시각 수송자 $U(N_0,N_k)$ & 641 연속 한계 비교 | 300개 noise 그룹 0.5% 보정 이동 시 raw tail `0.1614 / 0.1472 / 0.1325`; $U(N_0,N_k)$ 직교성 오차 `6.66e-16`, 수송된 교환자 일치 `<=3.89e-16` |
+
+- **검증 결과**: 확장된 R98/R97 전체 회귀 테스트 **65/65 통과** (`28.12s`, `CMB_GROUPED_FULL_CACHE` 포함), `validate_unified.py --strict-authority` **32/32 통과** (60 nodes, 129 edges, SSOT 변경 0건), `SQ-CF4 --mode preparation` exit `0`, `SQ-CF4 --mode science` exit `3`.
