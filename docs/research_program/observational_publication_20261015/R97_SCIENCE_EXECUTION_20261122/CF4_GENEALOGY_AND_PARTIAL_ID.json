@@ -1,0 +1,358 @@
+{
+  "schema": "htt.r97.cf4_genealogy_subspace_and_partial_id/1",
+  "elapsed_seconds": 1.874551324028289,
+  "sources_sha256": {
+    "selected_35970": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+    "table3_dat": "c2351c52de3e38a7fd80256b6f0818c550dd9f105b91e84fbcc1eb7234160b4d",
+    "table4_dat": "b6edfec68bdfddeada8f3b8f11938f3bbda98a8e2894ff136a369c2ad6594e94",
+    "ReadMe": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4",
+    "r36_matrices_npz": "7b100fa378ae28fafd9f82f7a76a494e07300fa1cf144a4da5b166fb0acf7e94",
+    "r27_factor_npz": "b152c216d287d278014b3f94cbe0d3d1d74a1312cb42b2555d2bf59d47209a80"
+  },
+  "r36_K4_exact_formula_max_abs_diff": 0.0,
+  "r36_theta_parity_max_abs_diff": 2.4158453015843406e-13,
+  "cf4_genealogy": {
+    "N_selected_groups": 35970,
+    "count_flag_vs_R27_S7_mismatches": {
+      "SNIa": 0,
+      "FP": 87,
+      "TFR": 120,
+      "SBFm": 0,
+      "SBFir": 2,
+      "SNII": 0,
+      "DirectCal": 9
+    },
+    "numeric_DM_vs_R27_S7_mismatches": {
+      "SNIa": 0,
+      "FP": 0,
+      "TFR": 0,
+      "SBFm": 0,
+      "SBFir": 0,
+      "SNII": 0,
+      "DirectCal": 9
+    },
+    "DirectCal_definition_split_note": "9 of 11 table3 CAL-bearing groups also have velocity indicators so R27 sets DirectCal=1 only on the 2 pure-calibrator groups (DMav==0: {20679, 59927}).",
+    "p0b_usable_multimethod_groups": 922,
+    "complete_numeric_multimethod_groups": 944,
+    "complete_delta_SNIa_gauge_mag": [
+      0.0,
+      -0.12333912805146864,
+      -0.17850620929625347,
+      -0.29490885453868704,
+      -0.11159895504658758,
+      0.0457008179690806
+    ],
+    "complete_overlap_sigma_mag": [
+      null,
+      0.015546520466623052,
+      0.016385530364312072,
+      0.06718557522031354,
+      0.02310753917062069,
+      0.0812856419112984
+    ],
+    "table3_DMav_reconstruction_median_abs_diff_mag": 0.003660871948532929,
+    "table3_DMav_reconstruction_p95_abs_diff_mag": 0.0065062092962548945,
+    "table3_DMzp_minus_DMav_min_max": [
+      -0.14700000000000557,
+      -0.14699999999999847
+    ],
+    "n_CAL_only_groups_with_DMav_zero": 2,
+    "CAL_only_group_ids": [
+      20679,
+      59927
+    ],
+    "table2_comparison": {
+      "table2_sha256": "8e908928e68352b59292cf67020a4d70aaa6d30f278dfa6aa3e41a9df808332f",
+      "table2_total_galaxies": 55877,
+      "table2_galaxies_in_selected_35970_groups": 52810,
+      "single_member_table3_minus_table2_mag": {
+        "SNIA_minus_table2_SNIA": {
+          "n_single_member_groups": 596,
+          "unique_rounded_offsets": [
+            0.147
+          ],
+          "n_unique_offsets": 1,
+          "median_mag": 0.147
+        },
+        "FP_minus_table2_FP": {
+          "n_single_member_groups": 22867,
+          "unique_rounded_offsets": [
+            -0.267,
+            0.024
+          ],
+          "n_unique_offsets": 2,
+          "median_mag": 0.024
+        },
+        "TF_minus_table2_TF": {
+          "n_single_member_groups": 7403,
+          "unique_rounded_offsets": [
+            -0.025
+          ],
+          "n_unique_offsets": 1,
+          "median_mag": -0.025
+        },
+        "SBFO_minus_table2_SBF": {
+          "n_single_member_groups": 5,
+          "unique_rounded_offsets": [
+            -0.323,
+            0.006
+          ],
+          "n_unique_offsets": 2,
+          "median_mag": 0.006
+        },
+        "SBFI_minus_table2_SBF": {
+          "n_single_member_groups": 8,
+          "unique_rounded_offsets": [
+            0.049
+          ],
+          "n_unique_offsets": 1,
+          "median_mag": 0.049
+        },
+        "SNII_minus_table2_SNII": {
+          "n_single_member_groups": 42,
+          "unique_rounded_offsets": [
+            0.238
+          ],
+          "n_unique_offsets": 1,
+          "median_mag": 0.238
+        }
+      },
+      "genealogy_interpretation": "table2 per-method columns are already MCMC-registered to DMzp; table3 retains raw arbitrary per-method scales before global -0.147 mag SNIa->calibrator tie (DMzp = DMav - 0.147 identically across 35,968 groups)."
+    }
+  },
+  "subspace_reconciliation_K4_vs_J7": {
+    "K4_rank": 4,
+    "J7_rank": 7,
+    "euclidean_principal_angles_deg": [
+      62.68575394556811,
+      10.619733049115572,
+      6.202416104875444,
+      3.2978192790746386
+    ],
+    "metric_C0inv_principal_angles_deg": [
+      63.54546286257638,
+      17.533275356530133,
+      7.018569200234982,
+      2.458491913704686
+    ],
+    "K4_relative_residual_orth_to_J7_euclidean": 0.1383263744759251,
+    "whitened_trace_K4Sigma4K4T": 2.308683964985394,
+    "whitened_trace_inside_col_J7": 2.2821036486713746,
+    "whitened_trace_orth_to_col_J7": 0.0265803163140196,
+    "fraction_whitened_variance_inside_col_J7": 0.9884868103572645,
+    "units_distinction": "K4 = A@(d*I4) has dimensionless velocity-offset units [km/s/Mpc per km/s/Mpc offset]; J7 = A@(d*(-ln(10)/5*70)*S7) has mag units [(km/s/Mpc)/mag]."
+  },
+  "sharp_partial_identification_bounds": {
+    "R95_R5_ivw_overlap_only_plus_0p02cal_1sigma": {
+      "H0_point": 72.92614429835994,
+      "H0_stat_sd": 0.35918706714382675,
+      "H0_partial_id_halfwidth": 0.7191813679204497,
+      "H0_partial_id_interval": [
+        72.20696293043949,
+        73.6453256662804
+      ],
+      "dipole_amp_point": 2.550834775925551,
+      "dipole_max_ellipsoid_shift": 0.19424493671735224,
+      "quad_norm_point": 2.96910281574785,
+      "quad_max_ellipsoid_shift": 0.14349797228229677,
+      "chi2_27dof": 50.65490508131414,
+      "gls_substitution_parity_err": 1.0436096431476471e-14
+    },
+    "R95_R5_ivw_overlap_only_plus_0p02cal_95pct_ellipsoid": {
+      "H0_point": 72.92614429835994,
+      "H0_stat_sd": 0.35918706714382675,
+      "H0_partial_id_halfwidth": 2.69737506962579,
+      "H0_partial_id_interval": [
+        70.22876922873415,
+        75.62351936798574
+      ],
+      "dipole_amp_point": 2.550834775925551,
+      "dipole_max_ellipsoid_shift": 0.7285386872819829,
+      "quad_norm_point": 2.96910281574785,
+      "quad_max_ellipsoid_shift": 0.5382061747446917,
+      "chi2_27dof": 50.65490508131414,
+      "gls_substitution_parity_err": 7.66053886991358e-15
+    },
+    "R95_R5_ivw_overlap_plus_0p05cal_1sigma": {
+      "H0_point": 72.92614429835994,
+      "H0_stat_sd": 0.35918706714382675,
+      "H0_partial_id_halfwidth": 1.6430103780064313,
+      "H0_partial_id_interval": [
+        71.2831339203535,
+        74.56915467636638
+      ],
+      "dipole_amp_point": 2.550834775925551,
+      "dipole_max_ellipsoid_shift": 0.1942449367173522,
+      "quad_norm_point": 2.96910281574785,
+      "quad_max_ellipsoid_shift": 0.14349797228229677,
+      "chi2_27dof": 50.65490508131414,
+      "gls_substitution_parity_err": 2.842170943040401e-14
+    },
+    "R95_R5_ivw_overlap_plus_0p05cal_95pct_ellipsoid": {
+      "H0_point": 72.92614429835994,
+      "H0_stat_sd": 0.35918706714382675,
+      "H0_partial_id_halfwidth": 6.16230540786369,
+      "H0_partial_id_interval": [
+        66.76383889049626,
+        79.08844970622363
+      ],
+      "dipole_amp_point": 2.550834775925551,
+      "dipole_max_ellipsoid_shift": 0.7285386872819828,
+      "quad_norm_point": 2.96910281574785,
+      "quad_max_ellipsoid_shift": 0.5382061747446917,
+      "chi2_27dof": 50.65490508131414,
+      "gls_substitution_parity_err": 2.842170943040401e-14
+    },
+    "R95_R5_ivw_overlap_plus_0p087_tully23sys_1sigma": {
+      "H0_point": 72.92614429835994,
+      "H0_stat_sd": 0.35918706714382675,
+      "H0_partial_id_halfwidth": 2.822595635324297,
+      "H0_partial_id_interval": [
+        70.10354866303565,
+        75.74873993368423
+      ],
+      "dipole_amp_point": 2.550834775925551,
+      "dipole_max_ellipsoid_shift": 0.19424493671735168,
+      "quad_norm_point": 2.96910281574785,
+      "quad_max_ellipsoid_shift": 0.1434979722822966,
+      "chi2_27dof": 50.65490508131414,
+      "gls_substitution_parity_err": 1.4210854715202004e-14
+    },
+    "R95_R5_ivw_overlap_plus_0p087_tully23sys_95pct_ellipsoid": {
+      "H0_point": 72.92614429835994,
+      "H0_stat_sd": 0.35918706714382675,
+      "H0_partial_id_halfwidth": 10.586479903356569,
+      "H0_partial_id_interval": [
+        62.339664395003375,
+        83.5126242017165
+      ],
+      "dipole_amp_point": 2.550834775925551,
+      "dipole_max_ellipsoid_shift": 0.7285386872819808,
+      "quad_norm_point": 2.96910281574785,
+      "quad_max_ellipsoid_shift": 0.5382061747446911,
+      "chi2_27dof": 50.65490508131414,
+      "gls_substitution_parity_err": 2.842170943040401e-14
+    },
+    "R95_R5_ivw_isotropic_0p05_1sigma": {
+      "H0_point": 72.92614429835994,
+      "H0_stat_sd": 0.35918706714382675,
+      "H0_partial_id_halfwidth": 1.1343470198967012,
+      "H0_partial_id_interval": [
+        71.79179727846324,
+        74.06049131825665
+      ],
+      "dipole_amp_point": 2.550834775925551,
+      "dipole_max_ellipsoid_shift": 0.8949330115560982,
+      "quad_norm_point": 2.96910281574785,
+      "quad_max_ellipsoid_shift": 0.6817486072590697,
+      "chi2_27dof": 50.65490508131414,
+      "gls_substitution_parity_err": 9.103828801926284e-15
+    },
+    "R95_R5_binaryS7_overlap_plus_0p087_tully23sys_1sigma": {
+      "H0_point": 72.92614429835994,
+      "H0_stat_sd": 0.35918706714382675,
+      "H0_partial_id_halfwidth": 2.9729300044993203,
+      "H0_partial_id_interval": [
+        69.95321429386063,
+        75.89907430285926
+      ],
+      "dipole_amp_point": 2.550834775925551,
+      "dipole_max_ellipsoid_shift": 0.19164847619985195,
+      "quad_norm_point": 2.96910281574785,
+      "quad_max_ellipsoid_shift": 0.21892514981189984,
+      "chi2_27dof": 50.65490508131414,
+      "gls_substitution_parity_err": 4.579669976578771e-15
+    },
+    "R36_inherited_ivw_common_0p05mag_1sigma": {
+      "H0_point": 72.23817782005885,
+      "H0_stat_sd": 0.38769045569773886,
+      "H0_partial_id_halfwidth": 1.6118095798627792,
+      "H0_partial_id_interval": [
+        70.62636824019607,
+        73.84998739992163
+      ],
+      "dipole_amp_point": 2.188877518951894,
+      "dipole_max_ellipsoid_shift": 0.00013451578489415687,
+      "quad_norm_point": 2.6551315860604436,
+      "quad_max_ellipsoid_shift": 7.565281788334796e-05,
+      "chi2_27dof": 80.13769023943787,
+      "gls_substitution_parity_err": 4.282858789839139e-14
+    },
+    "R36_inherited_ivw_common_0p087_tully23sys_1sigma": {
+      "H0_point": 72.23817782005885,
+      "H0_stat_sd": 0.38769045569773886,
+      "H0_partial_id_halfwidth": 2.8045486517534983,
+      "H0_partial_id_interval": [
+        69.43362916830536,
+        75.04272647181234
+      ],
+      "dipole_amp_point": 2.188877518951894,
+      "dipole_max_ellipsoid_shift": 0.0001345157844817825,
+      "quad_norm_point": 2.6551315860604436,
+      "quad_max_ellipsoid_shift": 7.56528178055146e-05,
+      "chi2_27dof": 80.13769023943787,
+      "gls_substitution_parity_err": 6.393968471005151e-14
+    },
+    "R36_inherited_ivw_common_0p087_95pct_1d": {
+      "H0_point": 72.23817782005885,
+      "H0_stat_sd": 0.38769045569773886,
+      "H0_partial_id_halfwidth": 5.496814350327222,
+      "H0_partial_id_interval": [
+        66.74136346973162,
+        77.73499217038608
+      ],
+      "dipole_amp_point": 2.188877518951894,
+      "dipole_max_ellipsoid_shift": 0.00026364609293644557,
+      "quad_norm_point": 2.6551315860604436,
+      "quad_max_ellipsoid_shift": 0.00014827679822777915,
+      "chi2_27dof": 80.13769023943787,
+      "gls_substitution_parity_err": 1.3001513927968222e-13
+    }
+  },
+  "disjoint_partition_consistency": {
+    "radial_inner_to_outer_schur_18dof": {
+      "C_R36_inherited": {
+        "inner_2w_H0": 75.34783687889308,
+        "outer_2w_pred_chi2_18dof": 71.60863884072864,
+        "outer_2w_pred_reduced_chi2": 3.9782577133738135,
+        "outer_2w_H0_residual_z055_z070": [
+          -0.8425448872989705,
+          -2.9574524824084847
+        ]
+      },
+      "C_R95_R5_cal005": {
+        "inner_2w_H0": 75.2500374495118,
+        "outer_2w_pred_chi2_18dof": 40.56637729630896,
+        "outer_2w_pred_reduced_chi2": 2.25368762757272,
+        "outer_2w_H0_residual_z055_z070": [
+          -0.8574154636351068,
+          -2.9943874487589
+        ]
+      }
+    },
+    "galactic_hemisphere_split_cal005_no_PV": {
+      "Galactic_North": {
+        "n_groups": 28737,
+        "H0_working_noise_plus_cal005": 68.11610142015746,
+        "H0_sd": 1.5532325818938193,
+        "dipole_amp": 7.559526272905615,
+        "chi2_27dof_no_PV": 236.23078066929844
+      },
+      "Galactic_South": {
+        "n_groups": 7233,
+        "H0_working_noise_plus_cal005": 76.51397698303995,
+        "H0_sd": 2.2375244391769256,
+        "dipole_amp": 6.192346547317572,
+        "chi2_27dof_no_PV": 50.32933722578567
+      }
+    },
+    "note": "Internal spatial/radial consistency under working covariance models; does not supply independent selection/PV heldout."
+  },
+  "physics_gates": {
+    "sq_cf4_status": "BLOCKED_INPUT",
+    "publication_ready": false,
+    "full_S_PV_and_calibration": null,
+    "independent_raw_zeropoint_posterior": false,
+    "exact_blocker": "Published CF4 table2/table3 are post-MCMC registered with unquantified ~0.087 mag (~3 km/s/Mpc) systematic global tie and missing C_selection + full nonlinear S_PV."
+  }
+}
