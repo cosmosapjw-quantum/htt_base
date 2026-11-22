@@ -1,0 +1,68 @@
+{
+  "schema": "htt.r98.integrated_independent_review/1",
+  "scope": "One complementary C9 pass and focused correction closure; new cross-PHY reviewed independently after production.",
+  "findings": [
+    {
+      "id": "C9-P1-TANGENCY",
+      "category": "NUMERICAL",
+      "observed": "Near-tangent positive quadratic coefficients were lost by floating subtraction; finite mass minimum could be wrong.",
+      "resolution": "Selective exact binary-rational coefficients and algebraic roots; independent rational witness reproduces minimum1/2 and maximum1.",
+      "status": "CLOSED",
+      "evidence": "review/CF4_TANGENCY_CORRECTION.json"
+    },
+    {
+      "id": "C9-CACHE-RAW",
+      "category": "IMPLEMENTATION",
+      "observed": "Raw audit failure could update the storage seal before rejecting cache/source disagreement.",
+      "resolution": "Seal only after all cached/raw identity checks succeed.",
+      "status": "CLOSED",
+      "evidence": "CMB_C9_CROSS_REVIEW.md"
+    },
+    {
+      "id": "C9-CACHE-MAP",
+      "category": "IMPLEMENTATION",
+      "observed": "Explicit fresh raw audit could reseal an altered valid NPZ map.",
+      "resolution": "Always check previous map/receipt digest before audit branch; both normal and audit entry reject alteration.",
+      "status": "CLOSED",
+      "evidence": "CMB_C9_CROSS_REVIEW.md"
+    },
+    {
+      "id": "C9-CODAZZI-SIGN",
+      "category": "CONVENTION_BRIDGE",
+      "observed": "R90(n,a) and R49 signed normal-flux map differ.",
+      "resolution": "A unchanged and n sign reversed; independent Koszul contraction verifies exact correspondence and rank3,2,3.",
+      "status": "CLOSED_FOR_DECLARED_DICTIONARY",
+      "evidence": "review/CROSS_PHY_C9.json"
+    },
+    {
+      "id": "C9-FRAME-TRANSPORT",
+      "category": "PHYSICAL_INTERPRETATION",
+      "observed": "Two-time shear eigenline angles change under time-dependent component-frame rotation without transporter; sampled maximum changes with sample grid.",
+      "resolution": "State geodesic-normal Fermi–Walker frame, explicit two-time transport,161 vs641 samples; no vorticity/GF inference.",
+      "status": "CLOSED_FOR_REPORTED_CLAIM",
+      "evidence": "review/CROSS_PHY_C9.json"
+    }
+  ],
+  "independent_constructions": [
+    "CDS CF4 parser and weighted normal equations",
+    "Exact rational finite-mass tangent witness",
+    "Koszul Ricci/divergence and tilted fluid stress reconstruction",
+    "TypeI momentum fundamental matrix and Thomson eigenspace limit",
+    "NB1 score/logpmf and Gaia common-patch sufficient-statistic reconstruction",
+    "Frame-rotation/transporter witness and bolometric quadrature"
+  ],
+  "integration_corrections": [
+    {
+      "id": "R78-OVERLAY",
+      "resolution": "Use129 hard edges, not only118 node payload dependencies; exact authority preserved.",
+      "evidence": "tests/obsstat/test_r98_program_preparation.py"
+    },
+    {
+      "id": "CROSS-CLI",
+      "resolution": "Pass required --output; subsequent actual cross-PHY run exit0.",
+      "evidence": "review/CROSS_FINAL_REPLAY.json"
+    }
+  ],
+  "scientific_open_obligations": "NODE60_EXECUTION_PREPARATION.json",
+  "new_science_acceptance_claimed": false
+}

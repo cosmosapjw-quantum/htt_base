@@ -1,0 +1,256 @@
+{
+  "schema": "htt.r98.theory_coding_cycle_record/1",
+  "cycle": 4,
+  "selected": "R1–R10 plus C1–C10",
+  "date_user": "2026-11-23",
+  "entry": "SQ-CF4",
+  "stages": [
+    {
+      "id": "R1",
+      "name": "연구 위치·계약",
+      "status": "completed_scoped",
+      "work": "R97-REM baseline과 exact R78 authority를 고정하고 SQ-CF4 재진입, 전체60-node의 준비·가능한 실제계산 범위를 선택했다.",
+      "evidence": [
+        "CYCLE_CHECKPOINT.json",
+        "NODE60_EXECUTION_PREPARATION.json"
+      ]
+    },
+    {
+      "id": "R2",
+      "name": "근거·재사용",
+      "status": "completed_scoped",
+      "work": "legacy source/ZIP payload/AST,7개 root,8개 dossier PDF 및33개 PR 상태를 확인하여 원래 산출 목적과 재사용 교정을 연결했다. CF4,NB1,Gaia,Quaia,LoTSS,AniLoS 원전을 대조했다.",
+      "evidence": [
+        "LEGACY_CONTENT_AUDIT.json",
+        "LEGACY_REUSE_DECISIONS.md",
+        "SOURCE_AND_SOLVER_LOCKS.json"
+      ]
+    },
+    {
+      "id": "R3",
+      "name": "주장·전제 정렬",
+      "status": "completed_scoped",
+      "work": "released-data/log-law,finite working measure,passive k=0 radiation,spatial patch covariance를 각각 physical calibrated law와 구별했다. 관측·모형·수송 규약을 고정했다.",
+      "evidence": [
+        "CF4_P1_THEORY.md",
+        "BIANCHI_THEORY_CODE_KO.md",
+        "RADIO_GAIA_THEORY_KO.md"
+      ]
+    },
+    {
+      "id": "R4",
+      "name": "가설·표현 탐색",
+      "status": "completed_scoped",
+      "work": "CF4 velocity/log 비교,Poisson/NB1 및4/9열,Gaia4가중치/4redshift,CMB raw/ridge/diag/max-TEB,동적/고정 기하를 실제 대안으로 구성했다.",
+      "evidence": [
+        "CF4_P1_RESULTS.json",
+        "RADIO_FULL_MODELS.json",
+        "GAIA_FULL_SHARED_PATCH.json",
+        "CMB_GROUPED_FULL_CACHE.json"
+      ]
+    },
+    {
+      "id": "R5",
+      "name": "구성적 유도",
+      "status": "completed_scoped",
+      "work": "common-modulus exact shift,NB1 score/logdipole,공통patch covariance,finite boosted bolometric moments,STF omitted-variable identity,Codazzi n-sign map,radial rank12→9를 유도·구현했다.",
+      "evidence": [
+        "CF4_P1_THEORY.md",
+        "RADIO_GAIA_THEORY_KO.md",
+        "CROSS_PHY_THEORY_KO.md"
+      ]
+    },
+    {
+      "id": "R6",
+      "name": "독립 검증",
+      "status": "completed_scoped",
+      "work": "independent CDS parser/normal equations,exact-rational tangent counterexample,Koszul constraints,Thomson eigenprojectors,finite boosted quadrature 및two-time frame witness로 검증했다.",
+      "evidence": [
+        "review/CF4_BIANCHI_INITIAL_REVIEW.json",
+        "review/CF4_TANGENCY_CORRECTION.json",
+        "review/CROSS_PHY_C9.json",
+        "CMB_C9_CROSS_REVIEW.md"
+      ]
+    },
+    {
+      "id": "R7",
+      "name": "판별 검증",
+      "status": "completed_scoped",
+      "work": "NB score CAS 검산과 fullCF4,999CMB+300noise,10 observed maps,all Gaia/Quaia,all5 radio catalogues/19cuts,5Bianchi histories,PHY01–07 계산을 실제 실행했다.",
+      "evidence": [
+        "SOURCE_AND_SOLVER_LOCKS.json",
+        "CF4_P1_RESULTS.json",
+        "CMB_OBSERVED_SPLITS.json",
+        "BIANCHI_HISTORY_RESULTS.json",
+        "CROSS_PHY_RESULTS.json"
+      ]
+    },
+    {
+      "id": "R8",
+      "name": "결과 판정",
+      "status": "completed_scoped",
+      "work": "모형별 conditional 결과를 승인하고 calibrated Q/Pi/F/GF는미결로 유지했다. 외부solver 의존성은 선언된 passive scope에서 축소; 전체 atlas/feedback 해결 주장은 하지 않았다. strong no-go 새 승인없음.",
+      "evidence": [
+        "NODE60_EXECUTION_PREPARATION.json",
+        "REPORT_KO.md"
+      ]
+    },
+    {
+      "id": "R9",
+      "name": "정식 결과·코딩 연결",
+      "status": "completed_scoped",
+      "work": "각 계산의 정의/단위/IC/closure/범위를 이론문서와 실제module/API에 연결했다.21개의 data/model/analysis 의무를129edge에전파했다.",
+      "evidence": [
+        "CF4_P1_THEORY.md",
+        "CMB_THEORY_AND_RESULTS.md",
+        "BIANCHI_THEORY_CODE_KO.md",
+        "RADIO_GAIA_THEORY_KO.md",
+        "CROSS_PHY_THEORY_KO.md"
+      ]
+    },
+    {
+      "id": "R10",
+      "name": "종료·재개",
+      "status": "completed_scoped",
+      "work": "최종 결과/코드/검사/남은입력을보존하고 copyable local-agent handoff와source lock를작성했다.자동5차루프시작없음.",
+      "evidence": [
+        "HANDOFF_PROMPT_KO.md",
+        "ARTIFACT_MANIFEST.json"
+      ]
+    },
+    {
+      "id": "C1",
+      "name": "목표·baseline",
+      "status": "completed_scoped",
+      "work": "52fee3f277d715cdb982dfbe751fefac10513060 기준에서 기존 tracked 자료를보존하고 R98추가scope만변경했다.",
+      "evidence": [
+        "CYCLE_CHECKPOINT.json"
+      ]
+    },
+    {
+      "id": "C2",
+      "name": "식–데이터–코드",
+      "status": "completed_scoped",
+      "work": "R49,R69,R89,R93–R97와bass/rec/rei source를고정하고 log/STF/VSH/all-m/Thomson의변수와정규화를매핑했다.",
+      "evidence": [
+        "LEGACY_REUSE_DECISIONS.md",
+        "SOURCE_AND_SOLVER_LOCKS.json"
+      ]
+    },
+    {
+      "id": "C3",
+      "name": "수치 설계",
+      "status": "completed_scoped",
+      "work": "QR재매개화,rank9 collision,sparse expm action,chunk sufficient stats,C++projection/accumulation,group-disjoint folds,선택적exact rational fallback를사용했다.",
+      "evidence": [
+        "RADIO_GAIA_THEORY_KO.md",
+        "CF4_P1_EXECUTION.md",
+        "BIANCHI_THEORY_CODE_KO.md",
+        "CMB_THEORY_AND_RESULTS.md"
+      ]
+    },
+    {
+      "id": "C4",
+      "name": "실행 DAG·자원",
+      "status": "completed_scoped",
+      "work": "exact60노드/129edge와7개재사용패키지를연결했다.1threadBLAS/OpenMP와대용량cache재사용;sciencegate미충족exit3을구현했다.",
+      "evidence": [
+        "NODE60_EXECUTION_PREPARATION.json",
+        "VALIDATION.json"
+      ]
+    },
+    {
+      "id": "C5",
+      "name": "구현",
+      "status": "completed_scoped",
+      "work": "8개실질R98module을작성해입력부터결과까지실행했다.6개자료index와3개Quaia+2개ESAexactID의boundeddownloader를준비했다.",
+      "evidence": [
+        "ACQUISITION_PREFLIGHT.json",
+        "PLANCK_COMMANDER_ACQUISITION.md",
+        "NODE60_EXECUTION_PREPARATION.json"
+      ]
+    },
+    {
+      "id": "C6",
+      "name": "구현 검증",
+      "status": "completed_scoped",
+      "work": "55개R98회귀검사+5개R97실제검사를완료했다.실제CMBcache를포함했고R78strict32checks와SQ-CF4expectedexit3을확인했다.",
+      "evidence": [
+        "VALIDATION.json"
+      ]
+    },
+    {
+      "id": "C7",
+      "name": "과학 검증",
+      "status": "completed_scoped",
+      "work": "EinsteinHamiltonian/Codazzi/Jacobi,FLRWtime/skyzeros,independentray/Thomsonlimits,CF4 calibration/gauge,광자PSD,source-overlapcovariance를확인했다.",
+      "evidence": [
+        "BIANCHI_HISTORY_RESULTS.json",
+        "CF4_P1_RESULTS.json",
+        "CROSS_PHY_RESULTS.json",
+        "review/CROSS_PHY_C9.json"
+      ]
+    },
+    {
+      "id": "C8",
+      "name": "수치·재현성",
+      "status": "completed_scoped",
+      "work": "Bianchitimestep/Lcut/raygrid,CF4near-double-root,fullcache4995projectioncomparison,radioQRscore잔차,cachetransaction반례와실제runtime를기록했다.",
+      "evidence": [
+        "BIANCHI_HISTORY_RESULTS.json",
+        "CMB_GROUPED_FULL_CACHE.json",
+        "CMB_C9_CROSS_REVIEW.md",
+        "VALIDATION.json"
+      ]
+    },
+    {
+      "id": "C9",
+      "name": "독립 검토",
+      "status": "completed_scoped",
+      "work": "한차례의상보적독립검토에서CF4접점numeric오류,두cache재승인경로를교정하고종결했다.Codazzisign과frame-dependentangle해석을추가검증했다.",
+      "evidence": [
+        "review/CF4_TANGENCY_CORRECTION.json",
+        "CMB_C9_CROSS_REVIEW.md",
+        "review/CROSS_PHY_C9.json",
+        "review/CROSS_FINAL_REPLAY.json"
+      ]
+    },
+    {
+      "id": "C10",
+      "name": "판정·인계",
+      "status": "completed_scoped",
+      "work": "working-model실행패키지는검증완료;42개미완료scientificnode의acceptance는유지한다.결과·변경·검증·위험과다음구성적작업을인계한다.",
+      "evidence": [
+        "REPORT_KO.md",
+        "HANDOFF_PROMPT_KO.md",
+        "VALIDATION.json",
+        "ARTIFACT_MANIFEST.json"
+      ]
+    }
+  ],
+  "interpretation": "Stage completion concerns the selected constructive research and execution-preparation scope. It is not scientific acceptance of all60 nodes.",
+  "native_delegation": {
+    "performed": true,
+    "production": [
+      "CF4/P1",
+      "CMB/full-data",
+      "Bianchi/history/PHY",
+      "parent radio/Gaia/integration"
+    ],
+    "independent_review": "One complementary bounded C9 pass across CF4/Bianchi,radio/Gaia/cache,and new cross-PHY,with targeted defect closure. No recursive reviewer tree."
+  },
+  "publication_acceptance": {
+    "new_nodes_promoted": 0,
+    "inherited_completed_scoped": 18,
+    "remaining_science_nodes": 42,
+    "physical_Q": null,
+    "physical_Pi": null,
+    "physical_F": null,
+    "physical_GF": null
+  },
+  "strong_no_go": {
+    "new_claims": 0,
+    "unresolved_models_are_not_impossibility_proofs": true
+  },
+  "publication_receipt": "PUBLICATION_RECEIPT.json"
+}

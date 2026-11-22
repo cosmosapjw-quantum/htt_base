@@ -1,0 +1,75 @@
+{
+  "run_status": "completed",
+  "inputs_sha256": {
+    "cross_phy_independent.py": "d0f57ab2060b9135d7eee298c9976892970bd6a63f541a2fef8a01f57f300569",
+    "CROSS_PHY_RESULTS.json": "c5b7124fa04892f8a8f6f851d92d846e5e1a0b06b21a4673bbe5ad0fd6725cb7",
+    "BIANCHI_HISTORY_RESULTS.json": "298efba982f3f1e3d1fc0526bdcd6bd1efa2fd376d267d0f4ba81e428326eacd",
+    "cross_phy.py": "cab26abb4437f1e5bd1d3819d635b001d6249bb8205c43df8bef7049d051fcc0",
+    "sf_attribution.py": "3a62eb5dae9f1739e3fbe4451eef95ae21c0e5d66b4e81c72242adba2542dffc",
+    "bianchi_history.py": "b5e8fc8e7365112b7796feaf9e1145a29d5b273fa3141015029f0c610a56e167"
+  },
+  "unchanged_inputs": true,
+  "assertion_tested": "R90 to R49 signed Codazzi in the stated diagonal VI_h axes, arc between top oriented-independent eigenspaces at 161 sample times using the normal Fermi-Walker frame, and reconstructed positive blackbody angular moments for the stored VI_h T sky",
+  "PHY05": [
+    {
+      "rank": 3,
+      "same_n_norm_max": 0.002121320343559642,
+      "converted_norm_max": 5.421010862427522e-20
+    },
+    {
+      "rank": 2,
+      "same_n_norm_max": 0.002121320343559642,
+      "converted_norm_max": 5.421010862427522e-20
+    },
+    {
+      "rank": 3,
+      "same_n_norm_max": 0.002121320343559642,
+      "converted_norm_max": 5.421010862427522e-20
+    }
+  ],
+  "PHY06": {
+    "I": {
+      "161_angle_stable_deg": 3.741867335586911e-06,
+      "161_gap": 0.28009780786148875,
+      "641_angle_deg": 3.741867335586911e-06,
+      "641_gap": 0.28009780786148875,
+      "common_frame_rotation_change_deg": 6.5401247683835335e-15,
+      "161_archive_angle_error_deg": -7.632448524593454e-08
+    },
+    "V": {
+      "161_angle_stable_deg": 3.7564891483430293e-06,
+      "161_gap": 0.28009780786148875,
+      "641_angle_deg": 3.7564891483430293e-06,
+      "641_gap": 0.28009780786148875,
+      "common_frame_rotation_change_deg": 4.357862117362497e-15,
+      "161_archive_angle_error_deg": 2.362902244789792e-07
+    },
+    "VII_h": {
+      "161_angle_stable_deg": 80.57039412437398,
+      "161_gap": 0.08272157542080866,
+      "641_angle_deg": 80.57039412437398,
+      "641_gap": 0.08206803528027196,
+      "common_frame_rotation_change_deg": -1.4210854715202004e-14,
+      "161_archive_angle_error_deg": 1.4210854715202004e-14,
+      "gauge_example": {
+        "fixed_FW_angle_deg": 80.57039412437398,
+        "uncompensated_time_dependent_component_angle_deg": 9.574737502465881e-15,
+        "parallel_transporter_compensated_deg": 80.57039412437396
+      }
+    },
+    "VI_h": {
+      "161_angle_stable_deg": 89.7872334288939,
+      "161_gap": 0.04538923716436316,
+      "641_angle_deg": 89.97039561950679,
+      "641_gap": 0.04260720639027954,
+      "common_frame_rotation_change_deg": 0.0,
+      "161_archive_angle_error_deg": 1.4210854715202004e-14
+    }
+  },
+  "PHY02": {
+    "independent_VI_h_arrival_first_moment_norm_error": 6.48344724136686e-18,
+    "second_moment_norm_error": 5.215400639107111e-15,
+    "physical_momentum_direction_is_minus_arrival": true
+  },
+  "interpretation": "Two-time angle and commutator use the Fermi-Walker frame along the geodesic normal. In a rotating local frame include the two-time transporter. One-time chi and gaps are independently rotation invariant. 161-node extrema are discrete, do not supply a continuous gap bound, vorticity, or G_F."
+}

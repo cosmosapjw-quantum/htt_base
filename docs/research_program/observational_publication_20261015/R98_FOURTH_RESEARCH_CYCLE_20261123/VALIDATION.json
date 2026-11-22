@@ -1,0 +1,60 @@
+{
+  "schema": "htt.r98.final_validation/1",
+  "utc": "2026-11-22T17:52:12.574266+00:00",
+  "baseline_commit": "52fee3f277d715cdb982dfbe751fefac10513060",
+  "python": "3.12.3",
+  "focused_suite": {
+    "command": "HTT_R98_CMB_CACHE_AUDIT=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 .venv/bin/python -m pytest -q tests/obsstat/test_r98_*.py tests/obsstat/test_r97_science_execution.py",
+    "actual_test_file_count": 8,
+    "counts": {
+      "tests": 60,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "elapsed_seconds": 21.089,
+    "includes_real_CMB_cache": true,
+    "log": "............................................................             [100%]\n60 passed in 21.10s\n",
+    "junit_sha256": "db6fd867c482695d2b66170997290667175f265a6b6c1b805c3a4ef4bcef2e42"
+  },
+  "R78_authority": {
+    "pass": true,
+    "failed": [],
+    "counts": {
+      "historical_science": 42,
+      "qualification": 11,
+      "conditional_cross_phy": 7,
+      "total": 60,
+      "edges": 129
+    },
+    "checks": 32,
+    "strict": true
+  },
+  "science_gate": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "scripts.r98.program_preparation",
+      "--node",
+      "SQ-CF4",
+      "--mode",
+      "science"
+    ],
+    "exit_code": 3,
+    "expected_exit_code": 3,
+    "output": {
+      "node": "SQ-CF4",
+      "status": "SCIENCE_BLOCKED",
+      "blockers": [
+        "A01",
+        "D01",
+        "D02",
+        "M01"
+      ],
+      "science_command_executed": false,
+      "acceptance": "Match exact group/method IDs, form source-level C=N+S_PV+Jcal Sigma_cal Jcal^T+Csel, compare heldout contrast/coverage with an explicit missing-source remainder."
+    }
+  },
+  "artifact_identity": "ARTIFACT_MANIFEST.json",
+  "test_scope_limit": "Selected new R98 plus R97 regression and exact R78 graph/authority. Not the full repository test suite."
+}

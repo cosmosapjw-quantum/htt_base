@@ -1,0 +1,180 @@
+{
+  "CF4_UPSTREAM_CALIBRATION": {
+    "status": "NO_PUBLIC_DOWNLOAD_LOCATED_FOR_REQUIRED_UPSTREAM_LAW",
+    "catalogue": "J/ApJ/944/94 public post-intercalibration release",
+    "required": [
+      "release DOI/version/checksums",
+      "pre-intercalibration distance modulus and uncertainty per method and group",
+      "group/galaxy membership keys",
+      "absolute anchor/training-set membership",
+      "signed zero-point joint posterior or covariance with stated gauge",
+      "DirectCal cross-covariance and overlap lineage",
+      "independent heldout calibration membership"
+    ],
+    "method_order": [
+      "SNIa",
+      "FP",
+      "TFR",
+      "SBFm",
+      "SBFir",
+      "SNII",
+      "DirectCal"
+    ],
+    "units": {
+      "distance_modulus": "mag",
+      "calibration_covariance": "mag^2",
+      "peculiar_velocity": "km/s"
+    },
+    "reject": [
+      "post-MCMC residual-overlap covariance labeled upstream",
+      "ad hoc ridge on unidentifiable DirectCal contrast",
+      "holdout that shares global fit calibration"
+    ]
+  },
+  "CF4_PV_SELECTION": {
+    "status": "MODEL_AND_UPSTREAM_DATA_REQUIRED",
+    "required": [
+      "targeting/acceptance/rejection denominators",
+      "method-specific completeness versus sky/distance/source properties",
+      "radial peculiar-velocity covariance operator with cosmology, smoothing, nonlinear dispersion",
+      "same source ordering/frame/window as 35970 ID vector"
+    ],
+    "operator_contract": "diag plus low-rank factors or LinearOperator; never allocate 35970^2 by default",
+    "marginalization": "distance/log-modulus likelihood with Jacobian; retain cross-method and overlapping-window covariance"
+  },
+  "PLANCK_MATCHED_NULL": {
+    "status": "OBSERVED_SPLITS_ALREADY_LOCAL; MATCHED_JOINT_LAW_UNQUALIFIED",
+    "full_mission_ID00000_candidates": [
+      {
+        "id": "dx12_v3_commander_cmb_mc_00000_raw.fits",
+        "url": "https://pla.esac.esa.int/pla/aio/product-action?SIMULATED_MAP.FILE_ID=dx12_v3_commander_cmb_mc_00000_raw.fits",
+        "bytes": 603987840
+      },
+      {
+        "id": "dx12_v3_commander_noise_mc_00000_raw.fits",
+        "url": "https://pla.esac.esa.int/pla/aio/product-action?SIMULATED_MAP.FILE_ID=dx12_v3_commander_noise_mc_00000_raw.fits",
+        "bytes": 603987840
+      }
+    ],
+    "source": "https://wiki.cosmos.esa.int/planck-legacy-archive/index.php/CMB_maps",
+    "header_qualification": "Two HTTP 200 identity-encoded 5760-byte FITS prefixes verified; Range ignored; no full-product rehash or Commander joint calibration",
+    "required": [
+      "component/release/beam/pixel/mask identity",
+      "matched signal/noise split IDs and repeated-noise genealogy",
+      "foreground residual and fitted-weight selection law",
+      "same operator applied to observed and simulations"
+    ],
+    "not_repaired_by": "more CMB draws with modulo-reused noise or substituting SMICA null for Commander",
+    "full_mission_ID00000_header_probes": {
+      "dx12_v3_commander_cmb_mc_00000_raw.fits": {
+        "id": "dx12_v3_commander_cmb_mc_00000_raw.fits",
+        "url": "https://pla.esac.esa.int/pla/aio/product-action?SIMULATED_MAP.FILE_ID=dx12_v3_commander_cmb_mc_00000_raw.fits",
+        "bytes": 603987840,
+        "status": "HEADER_VERIFIED_ONLY",
+        "http_status": 200,
+        "content_type": "image/fits",
+        "returned_filename": "dx12_v3_commander_cmb_mc_00000_raw.fits",
+        "range_honored": false,
+        "header_bytes": 5760,
+        "header_sha256": "49ac7aea70f04d5eee42ca1754566099027d88f40d9722eb84338761406fb46e",
+        "nside": 2048,
+        "ordering": "RING",
+        "fields": [
+          "INTENSITY",
+          "Q-POLARISATION",
+          "U-POLARISATION"
+        ],
+        "units": [
+          "K_CMB",
+          "K_CMB",
+          "K_CMB"
+        ],
+        "full_payload_sha256": null,
+        "commander_null_qualified": false,
+        "canonical_local_path": "/mnt/extdrive/workdir/raw/planck_ffp10/commander/cmb_mc/dx12_v3_commander_cmb_mc_00000_raw.fits",
+        "canonical_local_exists": true,
+        "local_header_matches_remote": true
+      },
+      "dx12_v3_commander_noise_mc_00000_raw.fits": {
+        "id": "dx12_v3_commander_noise_mc_00000_raw.fits",
+        "url": "https://pla.esac.esa.int/pla/aio/product-action?SIMULATED_MAP.FILE_ID=dx12_v3_commander_noise_mc_00000_raw.fits",
+        "bytes": 603987840,
+        "status": "HEADER_VERIFIED_ONLY",
+        "http_status": 200,
+        "content_type": "image/fits",
+        "returned_filename": "dx12_v3_commander_noise_mc_00000_raw.fits",
+        "range_honored": false,
+        "header_bytes": 5760,
+        "header_sha256": "49ac7aea70f04d5eee42ca1754566099027d88f40d9722eb84338761406fb46e",
+        "nside": 2048,
+        "ordering": "RING",
+        "fields": [
+          "INTENSITY",
+          "Q-POLARISATION",
+          "U-POLARISATION"
+        ],
+        "units": [
+          "K_CMB",
+          "K_CMB",
+          "K_CMB"
+        ],
+        "full_payload_sha256": null,
+        "commander_null_qualified": false,
+        "canonical_local_path": "/mnt/extdrive/workdir/raw/planck_ffp10/commander/noise_mc/dx12_v3_commander_noise_mc_00000_raw.fits",
+        "canonical_local_exists": false
+      }
+    }
+  },
+  "GAIA_SOURCE_SYSTEMATICS": {
+    "status": "FULL_CRF3_AND_QUAIA_EXIST; ASTROMETRIC_SPATIAL_MODEL_REQUIRED",
+    "required": [
+      "source_id joined redshift/quality/selection metadata",
+      "pmra/pmdec covariance and correlated angular scan error model",
+      "AGN population/centroid motion model",
+      "common observer/source frame and finite-z optical response"
+    ],
+    "existing_joint_patch_covariance": "48 shared patches; rank<=47, diagnostic not AGIS covariance"
+  },
+  "RADIO_SOURCE_SELECTION": {
+    "status": "FIVE_FULL_CATALOGUES_EXIST; RMS/FOOTPRINT/SED_RESPONSE_REQUIRED",
+    "required": [
+      "all survey tiles and zero-source regions in footprint",
+      "noise and completeness maps with flux/size dependence",
+      "source-vs-component association",
+      "source spectral-index distribution",
+      "cross-catalogue match and LSS mocks"
+    ],
+    "available_existing_catalogue": "LoTSS DR3 v1.0 local FITS NAXIS2=13667877; release-page prose 13664379. Compare official catalog header in ACQUISITION_PREFLIGHT.json; cause of 3498 difference unresolved.",
+    "download_preparation": "official DR3 page links are recorded verbatim; separate mosaic RMS/source masks from raw visibilities; resolve byte sizes before bulk transfer",
+    "official_source_catalogue_header": {
+      "status": "OFFICIAL_TABLE_HEADER_READ",
+      "url": "https://lofar-surveys.org/public/DR3/catalogues/LoTSS_DR3_v1.0.srl.fits",
+      "local_path": "/mnt/extdrive/workdir/raw/new_acquisitions/radio_hi/LoTSS_DR3/LoTSS_DR3_v1.0.srl.fits",
+      "http_status": 206,
+      "range_honored": true,
+      "received_bytes": 8640,
+      "table_header_bytes": 8640,
+      "catalogue_row_payload_bytes_read": 0,
+      "extension": "LoTSS_DR3_srl",
+      "table_header_sha256": "a3d6789ef08ba5e84a3edb7ada897b2db28dc201922bc59cd18901e261868056",
+      "local_extension_header_byte_identical": true,
+      "published_page_source_count": 13664379,
+      "local_FITS_NAXIS2": 13667877,
+      "official_FITS_NAXIS2": 13667877,
+      "official_FITS_minus_prose": 3498,
+      "local_minus_official_FITS": 0,
+      "cause_of_page_difference": null,
+      "catalog_payload_byte_identity_checked": false
+    }
+  },
+  "NORMAL_FLUX_AND_NATIVE": {
+    "status": "MODEL_CONSTRUCTION_REQUIRED; NO_SINGLE_MISSING_DOWNLOAD",
+    "required": [
+      "consistent normal-frame rho,j,pi and multi-fluid source closure",
+      "self-consistent radiation/recombination backreaction",
+      "full mode and IC-family atlas with external comparison"
+    ],
+    "local_reuse": "R49 dynamic general tilted history + BASS rank9 Thomson + R97 all-m projected transport + R98 cosmological IVPs",
+    "external_comparator": "AniCLASS/AniLoS nearly-FLRW I,V,VII0,VIIh,IX; not a general-VIh nonlinear substitute"
+  }
+}
