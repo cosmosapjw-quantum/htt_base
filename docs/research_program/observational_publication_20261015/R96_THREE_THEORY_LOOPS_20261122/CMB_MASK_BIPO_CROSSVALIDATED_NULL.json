@@ -1,0 +1,101 @@
+{
+  "schema": "htt.r96.ffp10_masked_biposh_sim_matched_conditional_null/1",
+  "source_shas": {
+    "R95_G05": "1f207df9af46fc0d30d30d1bb41deb896fe1c61752acdb9f420a00919e976350",
+    "R95_fullres_manifest": "f2350de55260220e7c22463a53c087e1e594f08df57aa7c0f329b14b905887d4",
+    "R95_SMICA_observed": "a2697883ed777f9cea5f665688d2265b2a6acb6c2e17b4257e0534b6aab5be89",
+    "R94_gaunt_core": "621db6de8754358772cb60d1c17c172585b35eefd58311ef76910dcb015acfc0"
+  },
+  "N_MC_unique_noise": 300,
+  "N_signal_MC_full": 999,
+  "nside_source": 2048,
+  "lmax": 48,
+  "features": "T/E/B, each 4 ell bands x 5 real signed L2 Gaunt coefficients; total d=60",
+  "legacy_provenance": {
+    "legacy_source_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/legacy/bianchi_departure_v091_github/htt/likelihood/biposh_masked.py",
+    "legacy_source_sha256": "3a2cfb6d86f3ba1b9e55cb2e3db132600c41c433d99ec84f36853514692deba2",
+    "original_retained_untouched": true,
+    "new_source": "scripts/r96/legacy_biposh_recovered.py"
+  },
+  "shrinkage_grid_predeclared": {
+    "0.05": {
+      "N": 300,
+      "d": 60,
+      "lambda": 0.05,
+      "obs_score": 95.92255921674531,
+      "mc_quantiles_50_95_99": [
+        70.37580218624154,
+        103.76096364413634,
+        117.66821030720342
+      ],
+      "tail_count": 30,
+      "rank": 0.10299003322259136,
+      "empirical_cov_corr_min_eigen": 0.17130264166988407,
+      "shrunken_corr_min_eigen": 0.21273750958638968,
+      "max_feature_bias_over_sd": 4.954992335788811,
+      "mean_bias_euclidean": 1.632812163690717
+    },
+    "0.2": {
+      "N": 300,
+      "d": 60,
+      "lambda": 0.2,
+      "obs_score": 85.68461695577939,
+      "mc_quantiles_50_95_99": [
+        63.7062784641863,
+        94.13648770425677,
+        104.71591187107867
+      ],
+      "tail_count": 33,
+      "rank": 0.11295681063122924,
+      "empirical_cov_corr_min_eigen": 0.17130264166988407,
+      "shrunken_corr_min_eigen": 0.3370421133359066,
+      "max_feature_bias_over_sd": 4.954992335788811,
+      "mean_bias_euclidean": 1.632812163690717
+    },
+    "0.4": {
+      "N": 300,
+      "d": 60,
+      "lambda": 0.4,
+      "obs_score": 77.26034942141975,
+      "mc_quantiles_50_95_99": [
+        59.26053225487097,
+        86.7004960782782,
+        98.77503041415918
+      ],
+      "tail_count": 42,
+      "rank": 0.14285714285714285,
+      "empirical_cov_corr_min_eigen": 0.17130264166988407,
+      "shrunken_corr_min_eigen": 0.5027815850019298,
+      "max_feature_bias_over_sd": 4.954992335788811,
+      "mean_bias_euclidean": 1.632812163690717
+    }
+  },
+  "disjoint_150train_150test": {
+    "N_train": 150,
+    "N_test": 150,
+    "fitted_on": "even MC ID train only",
+    "N_exceed": 25,
+    "p_empirical_heldout": 0.17218543046357615,
+    "observed_score": 91.40812107063391,
+    "heldout_score_median": 73.50445934340618,
+    "proper_extrapolation_limit": "same FFP10 signal+noise pipeline but not independent CMB releases"
+  },
+  "noise_signal_mask_bias": {
+    "MC_mean_masked_pair": 1.632812163690717,
+    "MC_mean_signal_only": 0.7717261875916656,
+    "MC_mean_noise_only": 1.4725566052369918,
+    "MC_cross_terms_residual_mean": 0.04768123752587367,
+    "cross_residual_over_pair_bias": 0.02920191225063983,
+    "paired_minus_sum_is_not_expected_exact_per_realization": true
+  },
+  "R95_original_diagonal_60D_rank": 0.2591362126245847,
+  "zero_mean_is_NOT_assumed_on_masked_sky": true,
+  "all_999_raw_SHA_independently_checked": false,
+  "gaussian_theory_of_masked_statistic_assumed": false,
+  "source_conditional_significance_only": true,
+  "full_Wigner9j_mask_coupling_inverted": false,
+  "Bianchi_family_attribution": null,
+  "physical_Pi": null,
+  "physical_GF": null,
+  "elapsed_s": 0.4066689030150883
+}

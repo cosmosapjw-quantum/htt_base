@@ -1,0 +1,23 @@
+# R96-B: SMICA FFP10 full-resolution BiPoSH/null, theory R1–R10 (executed)
+
+**Scope:** 999 actually processed PR3 FFP10 SMICA full-resolution CMB signal realizations + 300 noise realizations. Harmonics T/E/B at NSIDE=2048, ell_max=48. 300 independent-noise-ID paired null is primary, 999 with recycled noise is sensitivity only. This study does not create source-matched Commander MC.
+
+**R1 · Exact question.** Why does the old R95 diagonal 60D empirical BiPoSH rank change when masked-sky correlations and simulation mean bias are explicitly included? Can a retained legacy module be corrected without creating fake significance?
+
+**R2 · Primary literature/source.** Aluri–Pant–Rotti masked BiPoSH bias/mode coupling: https://scispace.com/papers/recovering-hidden-signals-of-statistical-anisotropy-from-a-3f7vb3snsm . Planck FFP10 R95 full-resolution manifest and 40 hash-locked CMB chunks, 6 noise chunks, observed SMICA and Commander separately. Legacy bianchi_departure_v091 biposh_masked.py erroneously accumulates positive |a_lm|^2 and applies a scalar 1/fsky; its original SHA is preserved.
+
+**R3 · Definition and claim.** Each T/E/B channel contributes a *signed real five-vector* (M=0,Re/Im M=1,2) in four fixed L=2 ell->ell+2 Gaunt bands, giving 60D x. For observed x_obs and MC x_i, estimator mean bias mu_MC=N^-1 sum_i x_i. This is a conditional bias under the simulated source and mask, not unbiased physical Bianchi parameters.
+
+**R4 · Rival estimators.** (A) original legacy |alm|²/fsky, invalid for anisotropy; (B) R95 60D diagonal empirical standardization; (C) source-matched full MC covariance with predeclared shrinkage 0.05,0.20,0.40 and exact leave-one-out; (D) independent 150/150 MC source split. Full Wigner 9j mask response is an additional not-yet-completed analytic model.
+
+**R5 · Formula.** Raw signed covariance coefficients B^{2M}_{ell,ell+2} use Wigner 3j, with \ell'=ell+2 and m'=m-M; y=x_obs-mu_MC. Given sample covariance S and D=diag(sqrt(S_ii)), choose C_lambda=D[(1-lambda)D^-1 S D^-1+lambda I]D, positive. Q_obs=y^T C_lambda^-1 y. For leave-one-out i: mu_-i=mu-(x_i-mu)/(N-1), S_-i=[(N-1)S-N/(N-1)(x_i-mu)(x_i-mu)^T]/(N-2). Recompute conditional Q_i and rank P=(1+#(Q_i>=Q_obs))/(N+1). LOO inversions include all 60 cross-correlations. A separate 150/150 train-test cohort evaluates a fixed covariance on disjoint MC rows.
+
+**R6 · Dimensional/semantic checks.** Work with unit-variance normalized correlation matrix to prevent T-power units dominating E/B. MC simulations and observed SMICA use same mask and noise pairing. Legacy fsky-only error has no calibrated covariance. E-to-B leakage, beam, foreground, source processing and 999 repeated-noise dependence remain separate concerns. New class fails closed when requested without source-matched MC.
+
+**R7 · Actual computation.** New cmb_crossfit_null.py consumes all R95 40 hashed checkpoint chunks; computes observed and 300 paired MC all three T/E/B signed5×4 bands, plus signal-only 300 and noise-only 300. New legacy_biposh_recovered.py preserves names BiPoSHLikelihood, estimate_biposh_L2, biposh_variance, but requires MC and uses proper 5×5 covariance. Independent unit test verifies shrinkage LOO against brute-force sample deletion.
+
+**R8 · Result.** R95 original diagonal empirical 60D rank=78/301=0.259136; R96 full covariance rank 31/301=0.102990 for shrinkage .05, 34/301=0.112957 for .20, 43/301=0.142857 for .40; fixed 150-train/150-heldout rank=26/151=0.172185. The change demonstrates covariance sensitivity, not a reliable detection. Simulation-conditioned BipoSH signal+noise mask bias contains substantial noise-only mean and a nonzero finite-sample signal/noise cross term; report norms in source artifact.
+
+**R9 · Computational contract.** Same component-separation pipeline, I/Q/U coordinate convention, mask/pixel and beam, model/frequency, independent noise sampling unit and exact theoretical C_ell. A physical posterior needs polarized Bianchi transfer and complete source matching; no phase information can be restored from Plik-lite scalar power alone. Use actual BipoSH mask bias and full cross-feature covariance; never interpret old positive pseudo A20 as a detection.
+
+**R10 · Stop/restart.** Artifacts CMB_MASK_BIPO_CROSSVALIDATED_NULL.json, scripts/r96/cmb_crossfit_null.py and maintained scripts/r96/legacy_biposh_recovered.py, tests. Next narrow calculation: source-matched full-sky anisotropy injection recovery through the same mask and beam, 300 independent end-to-end noise null with cross-split calibration; Commander only with its own same-release MC. Physical \Pi, G_F and publication null remain unresolved.
