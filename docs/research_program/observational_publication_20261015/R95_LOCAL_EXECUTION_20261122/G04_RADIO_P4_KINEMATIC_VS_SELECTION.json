@@ -1,0 +1,1883 @@
+{
+  "schema": "htt.r95.radio_p4_kinematic_vs_selection/1",
+  "sources_sha256": {
+    "G04_RESULT": "73967cbb924c8a371428ff2f0c0043149dde6ef34c47aefd236bb5ce4a4251fc",
+    "G04_DEEP_FIVE_SURVEY": "28ae39e9ff15df5c073a99e2b1c37dfff0b82f141560ab07f4ff807ef209e84e",
+    "G04_SOLVER_FREE": "587e0d107f9fa4a2068a2538c2c48890db326f8fdc038851cd00499303d7e7a1"
+  },
+  "elapsed_seconds": 0.002582307002739981,
+  "cmb_reference": {
+    "beta_cmb": 0.001233586736861806,
+    "v_cmb_km_s": 369.82,
+    "gal_lb_deg": [
+      264.021,
+      48.253
+    ],
+    "eb_fiducial_alpha0p75_x1p0": 0.0046259502632317725,
+    "eb_parameter_bracket": [
+      0.004046164496906724,
+      0.005674498989564307
+    ]
+  },
+  "ellis_baldwin_2d_grid": {
+    "alpha_0.60": {
+      "x_0.80": 0.004046164496906724,
+      "x_0.90": 0.004243538374804613,
+      "x_1.00": 0.004440912252702502,
+      "x_1.15": 0.004736973069549335,
+      "x_1.30": 0.005033033886396168
+    },
+    "alpha_0.75": {
+      "x_0.80": 0.004194194905330141,
+      "x_0.90": 0.004410072584280957,
+      "x_1.00": 0.0046259502632317725,
+      "x_1.15": 0.004949766781657996,
+      "x_1.30": 0.0052735833000842215
+    },
+    "alpha_0.85": {
+      "x_0.80": 0.004292881844279085,
+      "x_0.90": 0.004521095390598519,
+      "x_1.00": 0.004749308936917954,
+      "x_1.15": 0.0050916292563971035,
+      "x_1.30": 0.005433949575876256
+    },
+    "alpha_1.00": {
+      "x_0.80": 0.004440912252702502,
+      "x_0.90": 0.004687629600074863,
+      "x_1.00": 0.004934346947447224,
+      "x_1.15": 0.005304422968505766,
+      "x_1.30": 0.005674498989564307
+    }
+  },
+  "five_survey_ladder_analysis": {
+    "NVSS": {
+      "thresholds": {
+        "15": {
+          "n_sources": 282144,
+          "sky_fraction": 0.5634765625,
+          "dipole_4p_amp": 0.02157868308204271,
+          "dipole_9p_amp": 0.03988044132736993,
+          "dipole_4p_vs_9p_shift_deg": 20.583121239893938,
+          "dipole_4p_sep_cmb_deg": 58.350800398725646,
+          "sep_recomputed_deg": 58.350800398725646,
+          "quad_9p_frob_norm": 0.04466969577293066,
+          "F9_condition": 26.761129400741474,
+          "sd_poisson": 0.003618177299044541,
+          "sd_overdisp": 0.004246867218703422,
+          "sd_jackknife_48p": 0.006641769913318111,
+          "jackknife_over_poisson_ratio": 1.8356673441823914,
+          "poisson_overdispersion": 1.377709573939177,
+          "x_slope_for_eb": 1.0,
+          "d_eb_fiducial_alpha0p75": 0.0046259502632317725,
+          "excess_ratio_d_obs_over_d_eb": 4.664702786269788,
+          "excess_nonkinematic_amp_if_cmb_kinematic": 0.019552044673965582,
+          "eb_bracket_alpha0p6_to_1p0_x0p8_to_1p3": [
+            0.004046164496906724,
+            0.005674498989564307
+          ],
+          "poisson_shot_noise_floor": 2.509660073182531e-05,
+          "cl_ell1_over_shot_noise": 15.53171865932657,
+          "mean_cl_excess_ell2_5_over_shot": 1.0351420777610874,
+          "snr_against_kinematic_overdisp": 3.99182078124558,
+          "snr_against_kinematic_jackknife": 2.5524420508481076,
+          "vector_snr_against_cmb_kinematic_overdisp": 4.603874730968129,
+          "vector_snr_against_cmb_kinematic_jackknife": 2.9438003618221886
+        },
+        "20": {
+          "n_sources": 219886,
+          "sky_fraction": 0.5634765625,
+          "dipole_4p_amp": 0.020028962808182338,
+          "dipole_9p_amp": 0.033044811200243725,
+          "dipole_4p_vs_9p_shift_deg": 25.45748014503471,
+          "dipole_4p_sep_cmb_deg": 43.78323416603838,
+          "sep_recomputed_deg": 43.78323416603838,
+          "quad_9p_frob_norm": 0.03705595039882913,
+          "F9_condition": 26.76112940074149,
+          "sd_poisson": 0.003726371642040349,
+          "sd_overdisp": 0.004198015238098374,
+          "sd_jackknife_48p": 0.0064453099894025406,
+          "jackknife_over_poisson_ratio": 1.7296476595859493,
+          "poisson_overdispersion": 1.269157992133607,
+          "x_slope_for_eb": 0.8666106530319851,
+          "d_eb_fiducial_alpha0p75": 0.004337992437029571,
+          "excess_ratio_d_obs_over_d_eb": 4.617104132596671,
+          "excess_nonkinematic_amp_if_cmb_kinematic": 0.017161624613313792,
+          "eb_bracket_alpha0p6_to_1p0_x0p8_to_1p3": [
+            0.004046164496906724,
+            0.005674498989564307
+          ],
+          "poisson_shot_noise_floor": 3.2202392680207565e-05,
+          "cl_ell1_over_shot_noise": 13.765986962365075,
+          "mean_cl_excess_ell2_5_over_shot": 0.7769722927586129,
+          "snr_against_kinematic_overdisp": 3.737711628283774,
+          "snr_against_kinematic_jackknife": 2.434478775567359,
+          "vector_snr_against_cmb_kinematic_overdisp": 4.0880329488960365,
+          "vector_snr_against_cmb_kinematic_jackknife": 2.6626530983817926
+        },
+        "30": {
+          "n_sources": 150986,
+          "sky_fraction": 0.5634765625,
+          "dipole_4p_amp": 0.020922743003345613,
+          "dipole_9p_amp": 0.029457976853148445,
+          "dipole_4p_vs_9p_shift_deg": 21.72755091259719,
+          "dipole_4p_sep_cmb_deg": 38.26771906590485,
+          "sep_recomputed_deg": 38.26771906590485,
+          "quad_9p_frob_norm": 0.031078468923653162,
+          "F9_condition": 26.76112940074144,
+          "sd_poisson": 0.0043428227960847264,
+          "sd_overdisp": 0.0048019450919162794,
+          "sd_jackknife_48p": 0.006677648617654559,
+          "jackknife_over_poisson_ratio": 1.5376286188040635,
+          "poisson_overdispersion": 1.2226162447412299,
+          "x_slope_for_eb": 0.9271380087444839,
+          "d_eb_fiducial_alpha0p75": 0.004468657487672017,
+          "excess_ratio_d_obs_over_d_eb": 4.682109349635002,
+          "excess_nonkinematic_amp_if_cmb_kinematic": 0.017632838703715646,
+          "eb_bracket_alpha0p6_to_1p0_x0p8_to_1p3": [
+            0.004046164496906724,
+            0.005674498989564307
+          ],
+          "poisson_shot_noise_floor": 4.689742967480508e-05,
+          "cl_ell1_over_shot_noise": 11.139930664874697,
+          "mean_cl_excess_ell2_5_over_shot": 0.8216268824079741,
+          "snr_against_kinematic_overdisp": 3.426545951842064,
+          "snr_against_kinematic_jackknife": 2.4640538096257134,
+          "vector_snr_against_cmb_kinematic_overdisp": 3.672020059829345,
+          "vector_snr_against_cmb_kinematic_jackknife": 2.6405760041187913
+        },
+        "50": {
+          "n_sources": 90261,
+          "sky_fraction": 0.5634765625,
+          "dipole_4p_amp": 0.01977834574061279,
+          "dipole_9p_amp": 0.019004294719761363,
+          "dipole_4p_vs_9p_shift_deg": 15.897017437351957,
+          "dipole_4p_sep_cmb_deg": 13.397137226499712,
+          "sep_recomputed_deg": 13.39713722649974,
+          "quad_9p_frob_norm": 0.025002612652879327,
+          "F9_condition": 26.761129400741385,
+          "sd_poisson": 0.005631704003920921,
+          "sd_overdisp": 0.00618502056138048,
+          "sd_jackknife_48p": 0.006860391602185902,
+          "jackknife_over_poisson_ratio": 1.2181733268313713,
+          "poisson_overdispersion": 1.2061537017784911,
+          "x_slope_for_eb": 1.0071570804330032,
+          "d_eb_fiducial_alpha0p75": 0.004641400802351182,
+          "excess_ratio_d_obs_over_d_eb": 4.261288042737814,
+          "excess_nonkinematic_amp_if_cmb_kinematic": 0.015301087646957248,
+          "eb_bracket_alpha0p6_to_1p0_x0p8_to_1p3": [
+            0.004046164496906724,
+            0.005674498989564307
+          ],
+          "poisson_shot_noise_floor": 7.844866904731967e-05,
+          "cl_ell1_over_shot_noise": 5.938053606619665,
+          "mean_cl_excess_ell2_5_over_shot": 0.5261399806765842,
+          "snr_against_kinematic_overdisp": 2.4473556373890344,
+          "snr_against_kinematic_jackknife": 2.206425786749342,
+          "vector_snr_against_cmb_kinematic_overdisp": 2.473894386462975,
+          "vector_snr_against_cmb_kinematic_jackknife": 2.230351929484888
+        }
+      },
+      "eb_segments": [
+        {
+          "flux_interval_mJy": [
+            15,
+            20
+          ],
+          "N_c1": 282144,
+          "N_c2": 219886,
+          "x_slope_measured": 0.8666106530319851,
+          "d_kin_alpha0p75": 0.004337992437029571,
+          "d_kin_alpha_0p65_to_0p85": [
+            0.004231088496269231,
+            0.0044448963777899125
+          ],
+          "d_obs_at_c2": 0.020028962808182338,
+          "excess_ratio_d_obs_over_d_kin": 4.617104132596671
+        },
+        {
+          "flux_interval_mJy": [
+            20,
+            30
+          ],
+          "N_c1": 219886,
+          "N_c2": 150986,
+          "x_slope_measured": 0.9271380087444839,
+          "d_kin_alpha0p75": 0.004468657487672017,
+          "d_kin_alpha_0p65_to_0p85": [
+            0.004354286972589252,
+            0.004583028002754784
+          ],
+          "d_obs_at_c2": 0.020922743003345613,
+          "excess_ratio_d_obs_over_d_kin": 4.682109349635002
+        },
+        {
+          "flux_interval_mJy": [
+            30,
+            50
+          ],
+          "N_c1": 150986,
+          "N_c2": 90261,
+          "x_slope_measured": 1.0071570804330032,
+          "d_kin_alpha0p75": 0.004641400802351182,
+          "d_kin_alpha_0p65_to_0p85": [
+            0.0045171592407153216,
+            0.004765642363987044
+          ],
+          "d_obs_at_c2": 0.01977834574061279,
+          "excess_ratio_d_obs_over_d_kin": 4.261288042737814
+        }
+      ]
+    },
+    "RACS_DR1_unif": {
+      "thresholds": {
+        "15": {
+          "n_sources": 274195,
+          "sky_fraction": 0.3912760416666667,
+          "dipole_4p_amp": 0.01920272628328362,
+          "dipole_9p_amp": 0.025692444822233235,
+          "dipole_4p_vs_9p_shift_deg": 29.50239679341639,
+          "dipole_4p_sep_cmb_deg": 19.270728730500498,
+          "sep_recomputed_deg": 19.270728730500498,
+          "quad_9p_frob_norm": 0.02681228948597491,
+          "F9_condition": 53.84696707514924,
+          "sd_poisson": 0.0033966428901061655,
+          "sd_overdisp": 0.003995828295687906,
+          "sd_jackknife_48p": 0.003826643021499656,
+          "jackknife_over_poisson_ratio": 1.1265956255354388,
+          "poisson_overdispersion": 1.3839291511029104,
+          "x_slope_for_eb": 1.0,
+          "d_eb_fiducial_alpha0p75": 0.0046259502632317725,
+          "excess_ratio_d_obs_over_d_eb": 4.151087925849909,
+          "excess_nonkinematic_amp_if_cmb_kinematic": 0.01491431666239742,
+          "eb_bracket_alpha0p6_to_1p0_x0p8_to_1p3": [
+            0.004046164496906724,
+            0.005674498989564307
+          ],
+          "poisson_shot_noise_floor": 1.7932200631312664e-05,
+          "cl_ell1_over_shot_noise": 18.49953933180473,
+          "mean_cl_excess_ell2_5_over_shot": 2.0076185331596914,
+          "snr_against_kinematic_overdisp": 3.6479985978832867,
+          "snr_against_kinematic_jackknife": 3.8092855639142496,
+          "vector_snr_against_cmb_kinematic_overdisp": 3.73247185783538,
+          "vector_snr_against_cmb_kinematic_jackknife": 3.897493593889644
+        },
+        "20": {
+          "n_sources": 215882,
+          "sky_fraction": 0.3912760416666667,
+          "dipole_4p_amp": 0.02526148882858945,
+          "dipole_9p_amp": 0.03166580826343502,
+          "dipole_4p_vs_9p_shift_deg": 26.21269888862872,
+          "dipole_4p_sep_cmb_deg": 18.802482657095375,
+          "sep_recomputed_deg": 18.802482657095354,
+          "quad_9p_frob_norm": 0.030213312700646578,
+          "F9_condition": 53.8469670751504,
+          "sd_poisson": 0.0038876458355318983,
+          "sd_overdisp": 0.0044545444398684485,
+          "sd_jackknife_48p": 0.004163280641897317,
+          "jackknife_over_poisson_ratio": 1.0709001843342314,
+          "poisson_overdispersion": 1.3129047035612214,
+          "x_slope_for_eb": 0.8311521393926731,
+          "d_eb_fiducial_alpha0p75": 0.004261445420794566,
+          "excess_ratio_d_obs_over_d_eb": 5.927915609412951,
+          "excess_nonkinematic_amp_if_cmb_kinematic": 0.021271842720187943,
+          "eb_bracket_alpha0p6_to_1p0_x0p8_to_1p3": [
+            0.004046164496906724,
+            0.005674498989564307
+          ],
+          "poisson_shot_noise_floor": 2.2775959793325872e-05,
+          "cl_ell1_over_shot_noise": 24.511353115179357,
+          "mean_cl_excess_ell2_5_over_shot": 1.7526094180626606,
+          "snr_against_kinematic_overdisp": 4.714296532737039,
+          "snr_against_kinematic_jackknife": 5.044109492994594,
+          "vector_snr_against_cmb_kinematic_overdisp": 4.775312718805459,
+          "vector_snr_against_cmb_kinematic_jackknife": 5.109394381468793
+        },
+        "30": {
+          "n_sources": 151510,
+          "sky_fraction": 0.3912760416666667,
+          "dipole_4p_amp": 0.030459410551033326,
+          "dipole_9p_amp": 0.03440969099348149,
+          "dipole_4p_vs_9p_shift_deg": 17.255293981795198,
+          "dipole_4p_sep_cmb_deg": 28.818478441664464,
+          "sep_recomputed_deg": 28.818478441664464,
+          "quad_9p_frob_norm": 0.024993044561581333,
+          "F9_condition": 53.84696707515024,
+          "sd_poisson": 0.005047963580824161,
+          "sd_overdisp": 0.0056726747452748895,
+          "sd_jackknife_48p": 0.006703909314523889,
+          "jackknife_over_poisson_ratio": 1.3280423297803126,
+          "poisson_overdispersion": 1.2628254921447923,
+          "x_slope_for_eb": 0.8732695506008339,
+          "d_eb_fiducial_alpha0p75": 0.004352367510544914,
+          "excess_ratio_d_obs_over_d_eb": 6.99835445357872,
+          "excess_nonkinematic_amp_if_cmb_kinematic": 0.026728544406026813,
+          "eb_bracket_alpha0p6_to_1p0_x0p8_to_1p3": [
+            0.004046164496906724,
+            0.005674498989564307
+          ],
+          "poisson_shot_noise_floor": 3.24527737581861e-05,
+          "cl_ell1_over_shot_noise": 21.52204025679393,
+          "mean_cl_excess_ell2_5_over_shot": 1.6267458450357488,
+          "snr_against_kinematic_overdisp": 4.60224571525708,
+          "snr_against_kinematic_jackknife": 3.8943013420435166,
+          "vector_snr_against_cmb_kinematic_overdisp": 4.711806265340811,
+          "vector_snr_against_cmb_kinematic_jackknife": 3.9870086470471704
+        },
+        "50": {
+          "n_sources": 93594,
+          "sky_fraction": 0.3912760416666667,
+          "dipole_4p_amp": 0.037326377312849296,
+          "dipole_9p_amp": 0.040288352130721655,
+          "dipole_4p_vs_9p_shift_deg": 10.156554401360092,
+          "dipole_4p_sep_cmb_deg": 40.38568682660352,
+          "sep_recomputed_deg": 40.385686826603504,
+          "quad_9p_frob_norm": 0.023964505501465925,
+          "F9_condition": 53.846967075148754,
+          "sd_poisson": 0.006961782092524991,
+          "sd_overdisp": 0.0076294389543443974,
+          "sd_jackknife_48p": 0.008488673611662613,
+          "jackknife_over_poisson_ratio": 1.21932480776396,
+          "poisson_overdispersion": 1.2010037234778135,
+          "x_slope_for_eb": 0.9429545584573447,
+          "d_eb_fiducial_alpha0p75": 0.004502801888082244,
+          "excess_ratio_d_obs_over_d_eb": 8.289589069339826,
+          "excess_nonkinematic_amp_if_cmb_kinematic": 0.03402191595829446,
+          "eb_bracket_alpha0p6_to_1p0_x0p8_to_1p3": [
+            0.004046164496906724,
+            0.005674498989564307
+          ],
+          "poisson_shot_noise_floor": 5.253456153282022e-05,
+          "cl_ell1_over_shot_noise": 15.940422827510256,
+          "mean_cl_excess_ell2_5_over_shot": 1.2944258957139225,
+          "snr_against_kinematic_overdisp": 4.302226627827786,
+          "snr_against_kinematic_jackknife": 3.8667496155901957,
+          "vector_snr_against_cmb_kinematic_overdisp": 4.459294603690552,
+          "vector_snr_against_cmb_kinematic_jackknife": 4.007918965284712
+        },
+        "100": {
+          "n_sources": 45175,
+          "sky_fraction": 0.3912760416666667,
+          "dipole_4p_amp": 0.04563164404852094,
+          "dipole_9p_amp": 0.04988636266334496,
+          "dipole_4p_vs_9p_shift_deg": 8.892273629003778,
+          "dipole_4p_sep_cmb_deg": 46.374279907156776,
+          "sep_recomputed_deg": 46.37427990715677,
+          "quad_9p_frob_norm": 0.0192063834259836,
+          "F9_condition": 53.846967075149,
+          "sd_poisson": 0.010507705002522962,
+          "sd_overdisp": 0.011001266846292984,
+          "sd_jackknife_48p": 0.010591287884982026,
+          "jackknife_over_poisson_ratio": 1.0079544374760232,
+          "poisson_overdispersion": 1.0961491580552616,
+          "x_slope_for_eb": 1.0508914453032223,
+          "d_eb_fiducial_alpha0p75": 0.004735813534136893,
+          "excess_ratio_d_obs_over_d_eb": 9.635439343123833,
+          "excess_nonkinematic_amp_if_cmb_kinematic": 0.042502667571089996,
+          "eb_bracket_alpha0p6_to_1p0_x0p8_to_1p3": [
+            0.004046164496906724,
+            0.005674498989564307
+          ],
+          "poisson_shot_noise_floor": 0.00010884161045053184,
+          "cl_ell1_over_shot_noise": 9.524520334813715,
+          "mean_cl_excess_ell2_5_over_shot": 0.47910804161412374,
+          "snr_against_kinematic_overdisp": 3.7173746520078654,
+          "snr_against_kinematic_jackknife": 3.8612707876983037,
+          "vector_snr_against_cmb_kinematic_overdisp": 3.863433926740156,
+          "vector_snr_against_cmb_kinematic_jackknife": 4.012983881908911
+        }
+      },
+      "eb_segments": [
+        {
+          "flux_interval_mJy": [
+            15,
+            20
+          ],
+          "N_c1": 274195,
+          "N_c2": 215882,
+          "x_slope_measured": 0.8311521393926731,
+          "d_kin_alpha0p75": 0.004261445420794566,
+          "d_kin_alpha_0p65_to_0p85": [
+            0.004158915595247654,
+            0.004363975246341478
+          ],
+          "d_obs_at_c2": 0.02526148882858945,
+          "excess_ratio_d_obs_over_d_kin": 5.927915609412951
+        },
+        {
+          "flux_interval_mJy": [
+            20,
+            30
+          ],
+          "N_c1": 215882,
+          "N_c2": 151510,
+          "x_slope_measured": 0.8732695506008339,
+          "d_kin_alpha0p75": 0.004352367510544914,
+          "d_kin_alpha_0p65_to_0p85": [
+            0.004244642137012268,
+            0.00446009288407756
+          ],
+          "d_obs_at_c2": 0.030459410551033326,
+          "excess_ratio_d_obs_over_d_kin": 6.99835445357872
+        },
+        {
+          "flux_interval_mJy": [
+            30,
+            50
+          ],
+          "N_c1": 151510,
+          "N_c2": 93594,
+          "x_slope_measured": 0.9429545584573447,
+          "d_kin_alpha0p75": 0.004502801888082244,
+          "d_kin_alpha_0p65_to_0p85": [
+            0.0043864802644046075,
+            0.004619123511759879
+          ],
+          "d_obs_at_c2": 0.037326377312849296,
+          "excess_ratio_d_obs_over_d_kin": 8.289589069339826
+        },
+        {
+          "flux_interval_mJy": [
+            50,
+            100
+          ],
+          "N_c1": 93594,
+          "N_c2": 45175,
+          "x_slope_measured": 1.0508914453032223,
+          "d_kin_alpha0p75": 0.004735813534136893,
+          "d_kin_alpha_0p65_to_0p85": [
+            0.004606176959256134,
+            0.004865450109017652
+          ],
+          "d_obs_at_c2": 0.04563164404852094,
+          "excess_ratio_d_obs_over_d_kin": 9.635439343123833
+        }
+      ]
+    },
+    "SPICE_RACS": {
+      "thresholds": {
+        "20": {
+          "n_sources": 328100,
+          "sky_fraction": 0.609375,
+          "dipole_4p_amp": 0.04359205165687702,
+          "dipole_9p_amp": 0.04603246435656038,
+          "dipole_4p_vs_9p_shift_deg": 14.902737094498478,
+          "dipole_4p_sep_cmb_deg": 11.130871954081814,
+          "sep_recomputed_deg": 11.130871954081814,
+          "quad_9p_frob_norm": 0.055147436439476054,
+          "F9_condition": 18.065450235630646,
+          "sd_poisson": 0.002857650362297217,
+          "sd_overdisp": 0.0035080028636818323,
+          "sd_jackknife_48p": 0.005678412694819851,
+          "jackknife_over_poisson_ratio": 1.987091482477608,
+          "poisson_overdispersion": 1.5069599007325511,
+          "x_slope_for_eb": 1.0,
+          "d_eb_fiducial_alpha0p75": 0.0046259502632317725,
+          "excess_ratio_d_obs_over_d_eb": 9.423372318409411,
+          "excess_nonkinematic_amp_if_cmb_kinematic": 0.03906333057088954,
+          "eb_bracket_alpha0p6_to_1p0_x0p8_to_1p3": [
+            0.004046164496906724,
+            0.005674498989564307
+          ],
+          "poisson_shot_noise_floor": 2.333932366085072e-05,
+          "cl_ell1_over_shot_noise": 108.67491569611376,
+          "mean_cl_excess_ell2_5_over_shot": 10.881835077489194,
+          "snr_against_kinematic_overdisp": 11.107773541766235,
+          "snr_against_kinematic_jackknife": 6.862146780770653,
+          "vector_snr_against_cmb_kinematic_overdisp": 11.135489932266056,
+          "vector_snr_against_cmb_kinematic_jackknife": 6.879269378663721
+        },
+        "30": {
+          "n_sources": 231069,
+          "sky_fraction": 0.609375,
+          "dipole_4p_amp": 0.04533455149304481,
+          "dipole_9p_amp": 0.047325793151754704,
+          "dipole_4p_vs_9p_shift_deg": 13.079194570905862,
+          "dipole_4p_sep_cmb_deg": 9.305026602277078,
+          "sep_recomputed_deg": 9.305026602277078,
+          "quad_9p_frob_norm": 0.05825104691654481,
+          "F9_condition": 18.06545023563052,
+          "sd_poisson": 0.0033852478680945716,
+          "sd_overdisp": 0.004006656210171597,
+          "sd_jackknife_48p": 0.006506320300405628,
+          "jackknife_over_poisson_ratio": 1.921962749530595,
+          "poisson_overdispersion": 1.4008228347645315,
+          "x_slope_for_eb": 0.8646911059369963,
+          "d_eb_fiducial_alpha0p75": 0.004333848563314542,
+          "excess_ratio_d_obs_over_d_eb": 10.46057582094488,
+          "excess_nonkinematic_amp_if_cmb_kinematic": 0.041063709148765996,
+          "eb_bracket_alpha0p6_to_1p0_x0p8_to_1p3": [
+            0.004046164496906724,
+            0.005674498989564307
+          ],
+          "poisson_shot_noise_floor": 3.3140023512998804e-05,
+          "cl_ell1_over_shot_noise": 84.52374920557999,
+          "mean_cl_excess_ell2_5_over_shot": 9.123832861205699,
+          "snr_against_kinematic_overdisp": 10.233147237749726,
+          "snr_against_kinematic_jackknife": 6.301672994361211,
+          "vector_snr_against_cmb_kinematic_overdisp": 10.248872624638619,
+          "vector_snr_against_cmb_kinematic_jackknife": 6.311356842700464
+        },
+        "50": {
+          "n_sources": 142923,
+          "sky_fraction": 0.609375,
+          "dipole_4p_amp": 0.04961921138561713,
+          "dipole_9p_amp": 0.05321701200115744,
+          "dipole_4p_vs_9p_shift_deg": 12.321632524675307,
+          "dipole_4p_sep_cmb_deg": 11.246990347593005,
+          "sep_recomputed_deg": 11.246990347592941,
+          "quad_9p_frob_norm": 0.06300500096864495,
+          "F9_condition": 18.065450235630628,
+          "sd_poisson": 0.004442397604317228,
+          "sd_overdisp": 0.004984023998112627,
+          "sd_jackknife_48p": 0.007627673293497599,
+          "jackknife_over_poisson_ratio": 1.7170172444908678,
+          "poisson_overdispersion": 1.258709172628666,
+          "x_slope_for_eb": 0.9404585854120145,
+          "d_eb_fiducial_alpha0p75": 0.004497413639404747,
+          "excess_ratio_d_obs_over_d_eb": 11.032832504191111,
+          "excess_nonkinematic_amp_if_cmb_kinematic": 0.04521667723347013,
+          "eb_bracket_alpha0p6_to_1p0_x0p8_to_1p3": [
+            0.004046164496906724,
+            0.005674498989564307
+          ],
+          "poisson_shot_noise_floor": 5.357872485971551e-05,
+          "cl_ell1_over_shot_noise": 58.30520799061174,
+          "mean_cl_excess_ell2_5_over_shot": 5.737831336840224,
+          "snr_against_kinematic_overdisp": 9.053286614049073,
+          "snr_against_kinematic_jackknife": 5.915538855692416,
+          "vector_snr_against_cmb_kinematic_overdisp": 9.072323337647047,
+          "vector_snr_against_cmb_kinematic_jackknife": 5.927977706126482
+        }
+      },
+      "eb_segments": [
+        {
+          "flux_interval_mJy": [
+            20,
+            30
+          ],
+          "N_c1": 328100,
+          "N_c2": 231069,
+          "x_slope_measured": 0.8646911059369963,
+          "d_kin_alpha0p75": 0.004333848563314542,
+          "d_kin_alpha_0p65_to_0p85": [
+            0.004227181415337917,
+            0.0044405157112911665
+          ],
+          "d_obs_at_c2": 0.04533455149304481,
+          "excess_ratio_d_obs_over_d_kin": 10.46057582094488
+        },
+        {
+          "flux_interval_mJy": [
+            30,
+            50
+          ],
+          "N_c1": 231069,
+          "N_c2": 142923,
+          "x_slope_measured": 0.9404585854120145,
+          "d_kin_alpha0p75": 0.004497413639404747,
+          "d_kin_alpha_0p65_to_0p85": [
+            0.004381399915651539,
+            0.004613427363157955
+          ],
+          "d_obs_at_c2": 0.04961921138561713,
+          "excess_ratio_d_obs_over_d_kin": 11.032832504191111
+        }
+      ]
+    },
+    "SUMSS": {
+      "thresholds": {
+        "15": {
+          "n_sources": 110562,
+          "sky_fraction": 0.1552734375,
+          "dipole_4p_amp": 0.09160781166325466,
+          "dipole_9p_amp": 1.5069721244101846,
+          "dipole_4p_vs_9p_shift_deg": 19.263523577989197,
+          "dipole_4p_sep_cmb_deg": 74.20164804702924,
+          "sep_recomputed_deg": 74.20164804702924,
+          "quad_9p_frob_norm": 0.7620372416529563,
+          "F9_condition": 27418.647501032738,
+          "sd_poisson": 0.019863765372992618,
+          "sd_overdisp": 0.023402082017675203,
+          "sd_jackknife_48p": 0.028486282905680855,
+          "jackknife_over_poisson_ratio": 1.4340827315858087,
+          "poisson_overdispersion": 1.387988413055565,
+          "x_slope_for_eb": 1.0,
+          "d_eb_fiducial_alpha0p75": 0.0046259502632317725,
+          "excess_ratio_d_obs_over_d_eb": 19.803025638078473,
+          "excess_nonkinematic_amp_if_cmb_kinematic": 0.09045796758020931,
+          "eb_bracket_alpha0p6_to_1p0_x0p8_to_1p3": [
+            0.004046164496906724,
+            0.005674498989564307
+          ],
+          "poisson_shot_noise_floor": 1.7648229610449663e-05,
+          "cl_ell1_over_shot_noise": 3.783275591714736,
+          "mean_cl_excess_ell2_5_over_shot": 4.298131275774634,
+          "snr_against_kinematic_overdisp": 3.7168428575853607,
+          "snr_against_kinematic_jackknife": 3.0534647741870384,
+          "vector_snr_against_cmb_kinematic_overdisp": 3.865381187532285,
+          "vector_snr_against_cmb_kinematic_jackknife": 3.1754921440511916
+        },
+        "20": {
+          "n_sources": 87297,
+          "sky_fraction": 0.1552734375,
+          "dipole_4p_amp": 0.04239809316983582,
+          "dipole_9p_amp": 1.8738284372307425,
+          "dipole_4p_vs_9p_shift_deg": 72.71312821990618,
+          "dipole_4p_sep_cmb_deg": 52.557726735973915,
+          "sep_recomputed_deg": 52.557726735973915,
+          "quad_9p_frob_norm": 0.9997923787122376,
+          "F9_condition": 27418.647500532552,
+          "sd_poisson": 0.010382279126835535,
+          "sd_overdisp": 0.012603271998986967,
+          "sd_jackknife_48p": 0.015968654123553066,
+          "jackknife_over_poisson_ratio": 1.5380682727242596,
+          "poisson_overdispersion": 1.4736054427526073,
+          "x_slope_for_eb": 0.8212550388465922,
+          "d_eb_fiducial_alpha0p75": 0.004240079789852258,
+          "excess_ratio_d_obs_over_d_eb": 9.99936210429501,
+          "excess_nonkinematic_amp_if_cmb_kinematic": 0.039962337486895635,
+          "eb_bracket_alpha0p6_to_1p0_x0p8_to_1p3": [
+            0.004046164496906724,
+            0.005674498989564307
+          ],
+          "poisson_shot_noise_floor": 2.2351553457627818e-05,
+          "cl_ell1_over_shot_noise": 4.777844364327369,
+          "mean_cl_excess_ell2_5_over_shot": 5.563532621707073,
+          "snr_against_kinematic_overdisp": 3.027627538551151,
+          "snr_against_kinematic_jackknife": 2.389557259162008,
+          "vector_snr_against_cmb_kinematic_overdisp": 3.170790687537947,
+          "vector_snr_against_cmb_kinematic_jackknife": 2.502548879680031
+        },
+        "30": {
+          "n_sources": 61426,
+          "sky_fraction": 0.1552734375,
+          "dipole_4p_amp": 0.03661913347299657,
+          "dipole_9p_amp": 1.8420729773557372,
+          "dipole_4p_vs_9p_shift_deg": 98.97119284237915,
+          "dipole_4p_sep_cmb_deg": 48.25729812545137,
+          "sep_recomputed_deg": 48.25729812545138,
+          "quad_9p_frob_norm": 0.9966542186518375,
+          "F9_condition": 27418.64750191561,
+          "sd_poisson": 0.010404593895950255,
+          "sd_overdisp": 0.012899316391010258,
+          "sd_jackknife_48p": 0.014215916118914172,
+          "jackknife_over_poisson_ratio": 1.3663114832811865,
+          "poisson_overdispersion": 1.537032754920744,
+          "x_slope_for_eb": 0.8668634925034161,
+          "d_eb_fiducial_alpha0p75": 0.004338538261011968,
+          "excess_ratio_d_obs_over_d_eb": 8.440431147530118,
+          "excess_nonkinematic_amp_if_cmb_kinematic": 0.03388557407706952,
+          "eb_bracket_alpha0p6_to_1p0_x0p8_to_1p3": [
+            0.004046164496906724,
+            0.005674498989564307
+          ],
+          "poisson_shot_noise_floor": 3.176543421662709e-05,
+          "cl_ell1_over_shot_noise": 2.6796172427569496,
+          "mean_cl_excess_ell2_5_over_shot": 3.324077714423644,
+          "snr_against_kinematic_overdisp": 2.5025043369338142,
+          "snr_against_kinematic_jackknife": 2.270736190475654,
+          "vector_snr_against_cmb_kinematic_overdisp": 2.626927896790323,
+          "vector_snr_against_cmb_kinematic_jackknife": 2.3836363266089484
+        },
+        "50": {
+          "n_sources": 38268,
+          "sky_fraction": 0.1552734375,
+          "dipole_4p_amp": 0.04847245097210934,
+          "dipole_9p_amp": 2.171026501819989,
+          "dipole_4p_vs_9p_shift_deg": 146.09614533870686,
+          "dipole_4p_sep_cmb_deg": 81.21678155676267,
+          "sep_recomputed_deg": 81.21678155676267,
+          "quad_9p_frob_norm": 1.1938366338528519,
+          "F9_condition": 27418.647500893152,
+          "sd_poisson": 0.030543233995716342,
+          "sd_overdisp": 0.03569711228801553,
+          "sd_jackknife_48p": 0.043833906377904325,
+          "jackknife_over_poisson_ratio": 1.4351429316244635,
+          "poisson_overdispersion": 1.3659541815639407,
+          "x_slope_for_eb": 0.9263810162582321,
+          "d_eb_fiducial_alpha0p75": 0.004467023309862865,
+          "excess_ratio_d_obs_over_d_eb": 10.851174845021665,
+          "excess_nonkinematic_amp_if_cmb_kinematic": 0.0479938209249878,
+          "eb_bracket_alpha0p6_to_1p0_x0p8_to_1p3": [
+            0.004046164496906724,
+            0.005674498989564307
+          ],
+          "poisson_shot_noise_floor": 5.0988386176192526e-05,
+          "cl_ell1_over_shot_noise": 0.9248768078246605,
+          "mean_cl_excess_ell2_5_over_shot": 1.7037766866106911,
+          "snr_against_kinematic_overdisp": 1.2327447471716155,
+          "snr_against_kinematic_jackknife": 1.0039129819474317,
+          "vector_snr_against_cmb_kinematic_overdisp": 1.344473483954628,
+          "vector_snr_against_cmb_kinematic_jackknife": 1.0949017527942797
+        }
+      },
+      "eb_segments": [
+        {
+          "flux_interval_mJy": [
+            15,
+            20
+          ],
+          "N_c1": 110562,
+          "N_c2": 87297,
+          "x_slope_measured": 0.8212550388465922,
+          "d_kin_alpha0p75": 0.004240079789852258,
+          "d_kin_alpha_0p65_to_0p85": [
+            0.004138770857502049,
+            0.004341388722202466
+          ],
+          "d_obs_at_c2": 0.04239809316983582,
+          "excess_ratio_d_obs_over_d_kin": 9.99936210429501
+        },
+        {
+          "flux_interval_mJy": [
+            20,
+            30
+          ],
+          "N_c1": 87297,
+          "N_c2": 61426,
+          "x_slope_measured": 0.8668634925034161,
+          "d_kin_alpha0p75": 0.004338538261011968,
+          "d_kin_alpha_0p65_to_0p85": [
+            0.0042316031303097764,
+            0.00444547339171416
+          ],
+          "d_obs_at_c2": 0.03661913347299657,
+          "excess_ratio_d_obs_over_d_kin": 8.440431147530118
+        },
+        {
+          "flux_interval_mJy": [
+            30,
+            50
+          ],
+          "N_c1": 61426,
+          "N_c2": 38268,
+          "x_slope_measured": 0.9263810162582321,
+          "d_kin_alpha0p75": 0.004467023309862865,
+          "d_kin_alpha_0p65_to_0p85": [
+            0.004352746176369194,
+            0.004581300443356537
+          ],
+          "d_obs_at_c2": 0.04847245097210934,
+          "excess_ratio_d_obs_over_d_kin": 10.851174845021665
+        }
+      ]
+    },
+    "LoTSS_DR3_int1500": {
+      "thresholds": {
+        "20": {
+          "n_sources": 438806,
+          "sky_fraction": 0.314453125,
+          "dipole_4p_amp": 0.024451332904127963,
+          "dipole_9p_amp": 0.2851755671666801,
+          "dipole_4p_vs_9p_shift_deg": 39.86242156164034,
+          "dipole_4p_sep_cmb_deg": 56.84109619587591,
+          "sep_recomputed_deg": 56.84109619587591,
+          "quad_9p_frob_norm": 0.23608592289037655,
+          "F9_condition": 395.0683478031051,
+          "sd_poisson": 0.004040587889681965,
+          "sd_overdisp": 0.006834580274384021,
+          "sd_jackknife_48p": 0.01909845491838341,
+          "jackknife_over_poisson_ratio": 4.726652516865967,
+          "poisson_overdispersion": 2.8611101754471164,
+          "x_slope_for_eb": 1.0,
+          "d_eb_fiducial_alpha0p75": 0.0046259502632317725,
+          "excess_ratio_d_obs_over_d_eb": 5.285688672114217,
+          "excess_nonkinematic_amp_if_cmb_kinematic": 0.022260557900654697,
+          "eb_bracket_alpha0p6_to_1p0_x0p8_to_1p3": [
+            0.004046164496906724,
+            0.005674498989564307
+          ],
+          "poisson_shot_noise_floor": 9.005197079332123e-06,
+          "cl_ell1_over_shot_noise": 23.362169010537745,
+          "mean_cl_excess_ell2_5_over_shot": 26.86339233704294,
+          "snr_against_kinematic_overdisp": 2.9007461826444034,
+          "snr_against_kinematic_jackknife": 1.0380621220731876,
+          "vector_snr_against_cmb_kinematic_overdisp": 3.257048276115386,
+          "vector_snr_against_cmb_kinematic_jackknife": 1.1655685235158775
+        },
+        "50": {
+          "n_sources": 226788,
+          "sky_fraction": 0.314453125,
+          "dipole_4p_amp": 0.011370282333533918,
+          "dipole_9p_amp": 0.1471650642882335,
+          "dipole_4p_vs_9p_shift_deg": 103.0216764908349,
+          "dipole_4p_sep_cmb_deg": 14.638996371582541,
+          "sep_recomputed_deg": 14.638996371582541,
+          "quad_9p_frob_norm": 0.13868344909552952,
+          "F9_condition": 395.06834780317376,
+          "sd_poisson": 0.00378276309746348,
+          "sd_overdisp": 0.00518886393495657,
+          "sd_jackknife_48p": 0.008291096489618446,
+          "jackknife_over_poisson_ratio": 2.1918096047775273,
+          "poisson_overdispersion": 1.8815955522601675,
+          "x_slope_for_eb": 0.7203409557707564,
+          "d_eb_fiducial_alpha0p75": 0.004022228809573645,
+          "excess_ratio_d_obs_over_d_eb": 2.8268611438689297,
+          "excess_nonkinematic_amp_if_cmb_kinematic": 0.0075473951243566,
+          "eb_bracket_alpha0p6_to_1p0_x0p8_to_1p3": [
+            0.004046164496906724,
+            0.005674498989564307
+          ],
+          "poisson_shot_noise_floor": 1.7423913565062577e-05,
+          "cl_ell1_over_shot_noise": 4.81325129905448,
+          "mean_cl_excess_ell2_5_over_shot": 7.127610050180194,
+          "snr_against_kinematic_overdisp": 1.4161199091110441,
+          "snr_against_kinematic_jackknife": 0.8862583535435888,
+          "vector_snr_against_cmb_kinematic_overdisp": 1.4545371046465436,
+          "vector_snr_against_cmb_kinematic_jackknife": 0.9103012048897201
+        },
+        "100": {
+          "n_sources": 130576,
+          "sky_fraction": 0.314453125,
+          "dipole_4p_amp": 0.013495688506036574,
+          "dipole_9p_amp": 0.1101646695246568,
+          "dipole_4p_vs_9p_shift_deg": 85.76745102174742,
+          "dipole_4p_sep_cmb_deg": 53.15932985086079,
+          "sep_recomputed_deg": 53.159329850860786,
+          "quad_9p_frob_norm": 0.11422734555895644,
+          "F9_condition": 395.06834780306326,
+          "sd_poisson": 0.004759049728953099,
+          "sd_overdisp": 0.00570755417620245,
+          "sd_jackknife_48p": 0.008175256981359973,
+          "jackknife_over_poisson_ratio": 1.717833905290663,
+          "poisson_overdispersion": 1.43833351172043,
+          "x_slope_for_eb": 0.7964545527373316,
+          "d_eb_fiducial_alpha0p75": 0.004186541076071066,
+          "excess_ratio_d_obs_over_d_eb": 3.2235891779907826,
+          "excess_nonkinematic_amp_if_cmb_kinematic": 0.011485057806341558,
+          "eb_bracket_alpha0p6_to_1p0_x0p8_to_1p3": [
+            0.004046164496906724,
+            0.005674498989564307
+          ],
+          "poisson_shot_noise_floor": 3.0262333886728123e-05,
+          "cl_ell1_over_shot_noise": 3.3074968665455122,
+          "mean_cl_excess_ell2_5_over_shot": 4.418744722597409,
+          "snr_against_kinematic_overdisp": 1.6310221756246903,
+          "snr_against_kinematic_jackknife": 1.1386978355776296,
+          "vector_snr_against_cmb_kinematic_overdisp": 2.0122555917608826,
+          "vector_snr_against_cmb_kinematic_jackknife": 1.4048558757881384
+        }
+      },
+      "eb_segments": [
+        {
+          "flux_interval_mJy": [
+            20,
+            50
+          ],
+          "N_c1": 438806,
+          "N_c2": 226788,
+          "x_slope_measured": 0.7203409557707564,
+          "d_kin_alpha0p75": 0.004022228809573645,
+          "d_kin_alpha_0p65_to_0p85": [
+            0.0039333685046679286,
+            0.004111089114479362
+          ],
+          "d_obs_at_c2": 0.011370282333533918,
+          "excess_ratio_d_obs_over_d_kin": 2.8268611438689297
+        },
+        {
+          "flux_interval_mJy": [
+            50,
+            100
+          ],
+          "N_c1": 226788,
+          "N_c2": 130576,
+          "x_slope_measured": 0.7964545527373316,
+          "d_kin_alpha0p75": 0.004186541076071066,
+          "d_kin_alpha_0p65_to_0p85": [
+            0.004088291498794069,
+            0.004284790653348064
+          ],
+          "d_obs_at_c2": 0.013495688506036574,
+          "excess_ratio_d_obs_over_d_kin": 3.2235891779907826
+        }
+      ]
+    }
+  },
+  "pairwise_common_sky_and_galcuts": {
+    "pairwise_common_sky": {
+      "NVSS_vs_RACS_DR1_unif_S20": {
+        "common_pixels": 893,
+        "sky_fraction": 0.2906901041666667,
+        "fit_a": {
+          "n_sources": 112593,
+          "masked_pixels": 893,
+          "sky_fraction": 0.2906901041666667,
+          "mean_count_per_pixel": 126.08398656215006,
+          "dipole_4p_icrs_vec": [
+            -0.020787243104694573,
+            0.004809990437244146,
+            0.018119296781461614
+          ],
+          "dipole_4p_amp": 0.027992041721795452,
+          "dipole_4p_gal_lb_deg": [
+            174.57125584723755,
+            64.8856636850359
+          ],
+          "dipole_4p_sep_cmb_deg": 47.291192328492166,
+          "sd_poisson": 0.006664351886131717,
+          "sd_overdisp": 0.00771585691616587,
+          "sd_jackknife_48p": 0.013793637800797315,
+          "jackknife_n_patches": 36,
+          "jackknife_over_poisson_ratio": 2.0697643276462325,
+          "poisson_overdispersion": 1.3404557755679818,
+          "dipole_9p_amp": 0.01896277048725093,
+          "dipole_4p_vs_9p_shift_deg": 21.943127576440094,
+          "quad_9p_frob_norm": 0.060762649463676335,
+          "F9_condition": 122.93950806822117,
+          "cl_pseudo_over_fsky_ell1_to_10": [
+            0.0005547008046676816,
+            0.000138942686071196,
+            3.57864082859866e-05,
+            4.768125264686274e-05,
+            4.243659893163098e-05,
+            6.752351725649856e-05,
+            6.317351755928301e-05,
+            0.00011756185047770394,
+            3.4793902038355655e-05,
+            9.501429255576216e-05
+          ],
+          "poisson_shot_noise_floor": 3.244357626926192e-05,
+          "cl_excess_ell2_to_5": [
+            0.00010649910980193409,
+            3.3428320167246846e-06,
+            1.5237676377600822e-05,
+            9.993022662369063e-06
+          ]
+        },
+        "fit_b": {
+          "n_sources": 160635,
+          "masked_pixels": 893,
+          "sky_fraction": 0.2906901041666667,
+          "mean_count_per_pixel": 179.88241881298993,
+          "dipole_4p_icrs_vec": [
+            -0.023048071576535916,
+            -0.005051881163720829,
+            -0.015797323951493615
+          ],
+          "dipole_4p_amp": 0.02839525577834991,
+          "dipole_4p_gal_lb_deg": [
+            302.4600054325472,
+            29.067092825248512
+          ],
+          "dipole_4p_sep_cmb_deg": 35.082549784232036,
+          "sd_poisson": 0.0055868827758108605,
+          "sd_overdisp": 0.006414459386503695,
+          "sd_jackknife_48p": 0.005246400906730808,
+          "jackknife_n_patches": 36,
+          "jackknife_over_poisson_ratio": 0.939056915503183,
+          "poisson_overdispersion": 1.3181990711868938,
+          "dipole_9p_amp": 0.03198680954729373,
+          "dipole_4p_vs_9p_shift_deg": 11.35583891373616,
+          "quad_9p_frob_norm": 0.034071667702356756,
+          "F9_condition": 122.93950806822288,
+          "cl_pseudo_over_fsky_ell1_to_10": [
+            0.0005840710471315981,
+            9.512786539930442e-05,
+            7.071155902383381e-05,
+            3.370394321950896e-05,
+            5.543974446611252e-05,
+            4.874275680003829e-05,
+            3.5191330094525914e-05,
+            4.53708157006322e-05,
+            2.451850909735711e-05,
+            1.772210437356645e-05
+          ],
+          "poisson_shot_noise_floor": 2.2740496049335494e-05,
+          "cl_excess_ell2_to_5": [
+            7.238736934996893e-05,
+            4.7971062974498316e-05,
+            1.0963447170173465e-05,
+            3.2699248416777024e-05
+          ]
+        },
+        "dipole_a_vs_b_angle_deg": 77.75572302902256,
+        "amp_ratio_a_over_b": 0.9857999498331024
+      },
+      "NVSS_vs_SPICE_RACS_S20": {
+        "common_pixels": 1512,
+        "sky_fraction": 0.4921875,
+        "fit_a": {
+          "n_sources": 192109,
+          "masked_pixels": 1512,
+          "sky_fraction": 0.4921875,
+          "mean_count_per_pixel": 127.05621693121694,
+          "dipole_4p_icrs_vec": [
+            -0.014776339975648109,
+            0.009883857733116883,
+            0.019750970079351678
+          ],
+          "dipole_4p_amp": 0.026573138426611864,
+          "dipole_4p_gal_lb_deg": [
+            170.02685941587038,
+            48.39334933359554
+          ],
+          "dipole_4p_sep_cmb_deg": 58.19212160676034,
+          "sd_poisson": 0.004890903387484595,
+          "sd_overdisp": 0.005589479364755752,
+          "sd_jackknife_48p": 0.009085815672443345,
+          "jackknife_n_patches": 40,
+          "jackknife_over_poisson_ratio": 1.8576968205287336,
+          "poisson_overdispersion": 1.3060642627002066,
+          "dipole_9p_amp": 0.03267848648919782,
+          "dipole_4p_vs_9p_shift_deg": 7.92256023613935,
+          "quad_9p_frob_norm": 0.040009325145209114,
+          "F9_condition": 44.13043973235472,
+          "cl_pseudo_over_fsky_ell1_to_10": [
+            0.0005403498755765613,
+            6.368929424758575e-05,
+            5.904774010411256e-05,
+            4.6321880833017235e-05,
+            4.5152987159354806e-05,
+            5.008377632490129e-05,
+            7.191930252637143e-05,
+            7.69401056605732e-05,
+            5.6465205039666055e-05,
+            9.64388037129118e-05
+          ],
+          "poisson_shot_noise_floor": 3.219531899471085e-05,
+          "cl_excess_ell2_to_5": [
+            3.14939752528749e-05,
+            2.6852421109401716e-05,
+            1.4126561838306388e-05,
+            1.2957668164643959e-05
+          ]
+        },
+        "fit_b": {
+          "n_sources": 265905,
+          "masked_pixels": 1512,
+          "sky_fraction": 0.4921875,
+          "mean_count_per_pixel": 175.86309523809524,
+          "dipole_4p_icrs_vec": [
+            -0.0356623797153669,
+            0.0146609764253009,
+            -0.020112956374050146
+          ],
+          "dipole_4p_amp": 0.04348885570822352,
+          "dipole_4p_gal_lb_deg": [
+            268.3662893044452,
+            25.712467914778117
+          ],
+          "dipole_4p_sep_cmb_deg": 22.796892376170877,
+          "sd_poisson": 0.0035873486486676085,
+          "sd_overdisp": 0.004445283717294452,
+          "sd_jackknife_48p": 0.007317712804642227,
+          "jackknife_n_patches": 40,
+          "jackknife_over_poisson_ratio": 2.0398666316863645,
+          "poisson_overdispersion": 1.535506981078117,
+          "dipole_9p_amp": 0.04052317263248264,
+          "dipole_4p_vs_9p_shift_deg": 23.57825250075139,
+          "quad_9p_frob_norm": 0.09395586288520638,
+          "F9_condition": 44.13043973235506,
+          "cl_pseudo_over_fsky_ell1_to_10": [
+            0.0020831648822981714,
+            0.00041543035535136384,
+            0.0002578749320794035,
+            7.425211021501884e-05,
+            0.0001341803889650675,
+            7.541520075159598e-05,
+            0.0001027504387929175,
+            5.1394820207678844e-05,
+            6.95006330483945e-05,
+            6.857496422229699e-05
+          ],
+          "poisson_shot_noise_floor": 2.326022653487112e-05,
+          "cl_excess_ell2_to_5": [
+            0.0003921701288164927,
+            0.0002346147055445324,
+            5.099188368014772e-05,
+            0.00011092016243019638
+          ]
+        },
+        "dipole_a_vs_b_angle_deg": 76.25317350195203,
+        "amp_ratio_a_over_b": 0.6110332864331268
+      },
+      "NVSS_vs_SPICE_RACS_S50": {
+        "common_pixels": 1512,
+        "sky_fraction": 0.4921875,
+        "fit_a": {
+          "n_sources": 78925,
+          "masked_pixels": 1512,
+          "sky_fraction": 0.4921875,
+          "mean_count_per_pixel": 52.199074074074076,
+          "dipole_4p_icrs_vec": [
+            -0.01814864803441577,
+            0.005515823623292719,
+            -0.0016955965208674442
+          ],
+          "dipole_4p_amp": 0.019043969735377,
+          "dipole_4p_gal_lb_deg": [
+            256.6906130588145,
+            46.79469174676393
+          ],
+          "dipole_4p_sep_cmb_deg": 5.158079780200342,
+          "sd_poisson": 0.005280056370787515,
+          "sd_overdisp": 0.0059062626686623935,
+          "sd_jackknife_48p": 0.0066362904777878,
+          "jackknife_n_patches": 40,
+          "jackknife_over_poisson_ratio": 1.2568597779568789,
+          "poisson_overdispersion": 1.2512624060700865,
+          "dipole_9p_amp": 0.019176046266971895,
+          "dipole_4p_vs_9p_shift_deg": 3.422051424599388,
+          "quad_9p_frob_norm": 0.022652676314866754,
+          "F9_condition": 44.13043973235374,
+          "cl_pseudo_over_fsky_ell1_to_10": [
+            0.0005605200640762454,
+            0.00012814710210177338,
+            5.163951057330628e-05,
+            0.00013257307038502312,
+            0.00013380103757182517,
+            4.023377545428291e-05,
+            8.212349316425032e-05,
+            0.00016025390605305248,
+            0.00013805301779251596,
+            0.0002170487273922163
+          ],
+          "poisson_shot_noise_floor": 7.836567040551036e-05,
+          "cl_excess_ell2_to_5": [
+            4.978143169626302e-05,
+            -2.672615983220408e-05,
+            5.420739997951276e-05,
+            5.543536716631481e-05
+          ]
+        },
+        "fit_b": {
+          "n_sources": 115828,
+          "masked_pixels": 1512,
+          "sky_fraction": 0.4921875,
+          "mean_count_per_pixel": 76.6058201058201,
+          "dipole_4p_icrs_vec": [
+            -0.04182280336089418,
+            0.01871558866644669,
+            -0.030229817958575968
+          ],
+          "dipole_4p_amp": 0.05489318749994658,
+          "dipole_4p_gal_lb_deg": [
+            270.63814388167515,
+            20.02469565379813
+          ],
+          "dipole_4p_sep_cmb_deg": 28.72906608999528,
+          "sd_poisson": 0.005778871863123629,
+          "sd_overdisp": 0.006496105794278949,
+          "sd_jackknife_48p": 0.010356520261254,
+          "jackknife_n_patches": 40,
+          "jackknife_over_poisson_ratio": 1.792135300203046,
+          "poisson_overdispersion": 1.2636303509625382,
+          "dipole_9p_amp": 0.050247132624763886,
+          "dipole_4p_vs_9p_shift_deg": 17.069381437904593,
+          "quad_9p_frob_norm": 0.08940116952807502,
+          "F9_condition": 44.130439732354695,
+          "cl_pseudo_over_fsky_ell1_to_10": [
+            0.0028638111180213943,
+            0.0006930058409144972,
+            0.0002580695537921504,
+            0.00010668226457458977,
+            0.0002446866883576887,
+            0.00010206449531292467,
+            0.00011770975031535944,
+            0.00012767202268614393,
+            9.629516896611432e-05,
+            0.00012944650870629423
+          ],
+          "poisson_shot_noise_floor": 5.339823304170758e-05,
+          "cl_excess_ell2_to_5": [
+            0.0006396076078727897,
+            0.00020467132075044283,
+            5.328403153288219e-05,
+            0.00019128845531598111
+          ]
+        },
+        "dipole_a_vs_b_angle_deg": 29.08995482322592,
+        "amp_ratio_a_over_b": 0.34692774463854065
+      },
+      "NVSS_vs_LoTSS_int1500_S50": {
+        "common_pixels": 966,
+        "sky_fraction": 0.314453125,
+        "fit_a": {
+          "n_sources": 50286,
+          "masked_pixels": 966,
+          "sky_fraction": 0.314453125,
+          "mean_count_per_pixel": 52.05590062111801,
+          "dipole_4p_icrs_vec": [
+            -0.009256579513126112,
+            0.006886786828442336,
+            -0.004089176142937886
+          ],
+          "dipole_4p_amp": 0.012240647802759675,
+          "dipole_4p_gal_lb_deg": [
+            251.73494152135666,
+            23.102302625823466
+          ],
+          "dipole_4p_sep_cmb_deg": 26.979805317802647,
+          "sd_poisson": 0.009480109102493655,
+          "sd_overdisp": 0.009927938759410053,
+          "sd_jackknife_48p": 0.010063538243582052,
+          "jackknife_n_patches": 26,
+          "jackknife_over_poisson_ratio": 1.0615424500689483,
+          "poisson_overdispersion": 1.0967092542496293,
+          "dipole_9p_amp": 0.019233254963754838,
+          "dipole_4p_vs_9p_shift_deg": 113.26494816585804,
+          "quad_9p_frob_norm": 0.05285046527752023,
+          "F9_condition": 395.0683478031065,
+          "cl_pseudo_over_fsky_ell1_to_10": [
+            6.30312408245255e-05,
+            8.831502496423726e-05,
+            4.5725822260132446e-05,
+            0.00011775173575932408,
+            0.0002204569287839786,
+            0.00010457751946488732,
+            8.323700299653278e-05,
+            0.00010392876709187019,
+            0.0001687025201417283,
+            0.0001726590988372479
+          ],
+          "poisson_shot_noise_floor": 7.858120569529116e-05,
+          "cl_excess_ell2_to_5": [
+            9.733819268946097e-06,
+            -3.2855383435158715e-05,
+            3.9170530064032915e-05,
+            0.00014187572308868744
+          ]
+        },
+        "fit_b": {
+          "n_sources": 226788,
+          "masked_pixels": 966,
+          "sky_fraction": 0.314453125,
+          "mean_count_per_pixel": 234.77018633540374,
+          "dipole_4p_icrs_vec": [
+            -0.011099842479383622,
+            -0.00033475077858330637,
+            -0.0024422856494239636
+          ],
+          "dipole_4p_amp": 0.011370282333533918,
+          "dipole_4p_gal_lb_deg": [
+            286.22208911354574,
+            49.01812952055275
+          ],
+          "dipole_4p_sep_cmb_deg": 14.638996371582541,
+          "sd_poisson": 0.00378276309746348,
+          "sd_overdisp": 0.00518886393495657,
+          "sd_jackknife_48p": 0.008291096489618446,
+          "jackknife_n_patches": 26,
+          "jackknife_over_poisson_ratio": 2.1918096047775273,
+          "poisson_overdispersion": 1.8815955522601675,
+          "dipole_9p_amp": 0.1471650642882335,
+          "dipole_4p_vs_9p_shift_deg": 103.0216764908349,
+          "quad_9p_frob_norm": 0.13868344909552952,
+          "F9_condition": 395.06834780317376,
+          "cl_pseudo_over_fsky_ell1_to_10": [
+            8.386567460165043e-05,
+            9.46391719856832e-05,
+            0.00017983257608874373,
+            0.000182459563778273,
+            0.00010952778816679454,
+            4.7026395695892556e-05,
+            3.7127868442873236e-05,
+            8.796817245030005e-05,
+            9.067063414034157e-05,
+            4.067009432404465e-05
+          ],
+          "poisson_shot_noise_floor": 1.7423913565062577e-05,
+          "cl_excess_ell2_to_5": [
+            7.721525842062062e-05,
+            0.00016240866252368116,
+            0.00016503565021321043,
+            9.210387460173196e-05
+          ]
+        },
+        "dipole_a_vs_b_angle_deg": 37.49355100868984,
+        "amp_ratio_a_over_b": 1.076547392904996
+      },
+      "RACS_DR1_unif_vs_SUMSS_S20": {
+        "common_pixels": 401,
+        "sky_fraction": 0.13053385416666666,
+        "fit_a": {
+          "n_sources": 71612,
+          "masked_pixels": 401,
+          "sky_fraction": 0.13053385416666666,
+          "mean_count_per_pixel": 178.58354114713217,
+          "dipole_4p_icrs_vec": [
+            -0.02531676705346954,
+            0.016692293206193563,
+            -0.020562857532723813
+          ],
+          "dipole_4p_amp": 0.03663881079446047,
+          "dipole_4p_gal_lb_deg": [
+            264.7528234510074,
+            14.678068154182313
+          ],
+          "dipole_4p_sep_cmb_deg": 33.580374847992736,
+          "sd_poisson": 0.018172167803835376,
+          "sd_overdisp": 0.0204060137945165,
+          "sd_jackknife_48p": 0.021489072470114307,
+          "jackknife_n_patches": 18,
+          "jackknife_over_poisson_ratio": 1.1825266364521942,
+          "poisson_overdispersion": 1.260964542975489,
+          "dipole_9p_amp": 0.1952851837493956,
+          "dipole_4p_vs_9p_shift_deg": 40.18456675414696,
+          "quad_9p_frob_norm": 0.1216758359686015,
+          "F9_condition": 34303.245560672025,
+          "cl_pseudo_over_fsky_ell1_to_10": [
+            5.728284863009541e-05,
+            8.02668402387234e-05,
+            5.0216297494650084e-05,
+            2.9133186964635712e-05,
+            3.738167791475737e-05,
+            4.798623638742082e-05,
+            4.9474648487845347e-05,
+            4.437766891806402e-05,
+            3.6793938810903534e-05,
+            3.596958519995041e-05
+          ],
+          "poisson_shot_noise_floor": 2.2905892716011918e-05,
+          "cl_excess_ell2_to_5": [
+            5.736094752271148e-05,
+            2.7310404778638167e-05,
+            6.227294248623795e-06,
+            1.4475785198745453e-05
+          ]
+        },
+        "fit_b": {
+          "n_sources": 73348,
+          "masked_pixels": 401,
+          "sky_fraction": 0.13053385416666666,
+          "mean_count_per_pixel": 182.91271820448878,
+          "dipole_4p_icrs_vec": [
+            -0.021664191981585625,
+            0.038613100749902915,
+            -0.06378308146013892
+          ],
+          "dipole_4p_amp": 0.07764399683354709,
+          "dipole_4p_gal_lb_deg": [
+            268.7281540950877,
+            -13.355456478354666
+          ],
+          "dipole_4p_sep_cmb_deg": 61.75067296517681,
+          "sd_poisson": 0.024145105207210853,
+          "sd_overdisp": 0.02888676203669715,
+          "sd_jackknife_48p": 0.0361068046244242,
+          "jackknife_n_patches": 18,
+          "jackknife_over_poisson_ratio": 1.495408875403907,
+          "poisson_overdispersion": 1.4313291742964187,
+          "dipole_9p_amp": 2.0821401202428165,
+          "dipole_4p_vs_9p_shift_deg": 35.261782713943845,
+          "quad_9p_frob_norm": 1.1204013285556793,
+          "F9_condition": 34303.24555938206,
+          "cl_pseudo_over_fsky_ell1_to_10": [
+            0.00012834875725098043,
+            0.00022287365392077206,
+            0.00018995701808597676,
+            0.00010892451674714548,
+            7.644092776442988e-05,
+            7.78194004614302e-05,
+            6.743331606911587e-05,
+            5.4886460823481976e-05,
+            5.546081365935874e-05,
+            5.636088247130204e-05
+          ],
+          "poisson_shot_noise_floor": 2.2363756192112196e-05,
+          "cl_excess_ell2_to_5": [
+            0.00020050989772865986,
+            0.00016759326189386457,
+            8.656076055503328e-05,
+            5.407717157231768e-05
+          ]
+        },
+        "dipole_a_vs_b_angle_deg": 28.308355829723617,
+        "amp_ratio_a_over_b": 0.4718820808903825
+      }
+    },
+    "galactic_cut_sensitivity": {
+      "abs_b_gt_15": {
+        "NVSS_S20": {
+          "n_sources": 219886,
+          "masked_pixels": 1731,
+          "sky_fraction": 0.5634765625,
+          "mean_count_per_pixel": 127.02830733679954,
+          "dipole_4p_icrs_vec": [
+            -0.014238399208008228,
+            0.009263863617275752,
+            0.010611699677500145
+          ],
+          "dipole_4p_amp": 0.020028962808182338,
+          "dipole_4p_gal_lb_deg": [
+            194.54782751798766,
+            50.06641121911464
+          ],
+          "dipole_4p_sep_cmb_deg": 43.78323416603838,
+          "sd_poisson": 0.003726371642040349,
+          "sd_overdisp": 0.004198015238098374,
+          "sd_jackknife_48p": 0.0064453099894025406,
+          "jackknife_n_patches": 42,
+          "jackknife_over_poisson_ratio": 1.7296476595859493,
+          "poisson_overdispersion": 1.269157992133607,
+          "dipole_9p_amp": 0.033044811200243725,
+          "dipole_4p_vs_9p_shift_deg": 25.45748014503471,
+          "quad_9p_frob_norm": 0.03705595039882913,
+          "F9_condition": 26.76112940074149,
+          "cl_pseudo_over_fsky_ell1_to_10": [
+            0.00044329771779269783,
+            5.772743740356327e-05,
+            6.446506889439654e-05,
+            5.0317184426221e-05,
+            5.638134748886564e-05,
+            4.5962872697103017e-05,
+            5.9624997294872116e-05,
+            6.72330078463033e-05,
+            5.268696398757161e-05,
+            9.587508224177845e-05
+          ],
+          "poisson_shot_noise_floor": 3.2202392680207565e-05,
+          "cl_excess_ell2_to_5": [
+            2.5525044723355706e-05,
+            3.226267621418897e-05,
+            1.8114791746013433e-05,
+            2.4178954808658073e-05
+          ]
+        },
+        "RACS_DR1_unif_S20": {
+          "n_sources": 215882,
+          "masked_pixels": 1202,
+          "sky_fraction": 0.3912760416666667,
+          "mean_count_per_pixel": 179.60232945091514,
+          "dipole_4p_icrs_vec": [
+            -0.023828756504802533,
+            -0.0010808841875481786,
+            -0.008316541988404128
+          ],
+          "dipole_4p_amp": 0.02526148882858945,
+          "dipole_4p_gal_lb_deg": [
+            289.7222096486417,
+            42.59506839299632
+          ],
+          "dipole_4p_sep_cmb_deg": 18.802482657095375,
+          "sd_poisson": 0.0038876458355318983,
+          "sd_overdisp": 0.0044545444398684485,
+          "sd_jackknife_48p": 0.004163280641897317,
+          "jackknife_n_patches": 40,
+          "jackknife_over_poisson_ratio": 1.0709001843342314,
+          "poisson_overdispersion": 1.3129047035612214,
+          "dipole_9p_amp": 0.03166580826343502,
+          "dipole_4p_vs_9p_shift_deg": 26.21269888862872,
+          "quad_9p_frob_norm": 0.030213312700646578,
+          "F9_condition": 53.8469670751504,
+          "cl_pseudo_over_fsky_ell1_to_10": [
+            0.0005582695930313379,
+            0.00012465787826145436,
+            3.521225376913205e-05,
+            2.8502122619269284e-05,
+            6.240103108024542e-05,
+            4.697560375395051e-05,
+            4.5577917296014125e-05,
+            4.9895403863423284e-05,
+            1.404735125463464e-05,
+            2.4019190863552876e-05
+          ],
+          "poisson_shot_noise_floor": 2.2775959793325872e-05,
+          "cl_excess_ell2_to_5": [
+            0.00010188191846812849,
+            1.243629397580618e-05,
+            5.726162825943411e-06,
+            3.962507128691955e-05
+          ]
+        },
+        "SPICE_RACS_S20": {
+          "n_sources": 328100,
+          "masked_pixels": 1872,
+          "sky_fraction": 0.609375,
+          "mean_count_per_pixel": 175.26709401709402,
+          "dipole_4p_icrs_vec": [
+            -0.03964811082885802,
+            0.017000452047090546,
+            -0.006267288532770826
+          ],
+          "dipole_4p_amp": 0.04359205165687702,
+          "dipole_4p_gal_lb_deg": [
+            253.15149683609124,
+            40.267712204475714
+          ],
+          "dipole_4p_sep_cmb_deg": 11.130871954081814,
+          "sd_poisson": 0.002857650362297217,
+          "sd_overdisp": 0.0035080028636818323,
+          "sd_jackknife_48p": 0.005678412694819851,
+          "jackknife_n_patches": 44,
+          "jackknife_over_poisson_ratio": 1.987091482477608,
+          "poisson_overdispersion": 1.5069599007325511,
+          "dipole_9p_amp": 0.04603246435656038,
+          "dipole_4p_vs_9p_shift_deg": 14.902737094498478,
+          "quad_9p_frob_norm": 0.055147436439476054,
+          "F9_condition": 18.065450235630646,
+          "cl_pseudo_over_fsky_ell1_to_10": [
+            0.002536399031247265,
+            0.0007805321339075296,
+            5.982158755767529e-05,
+            0.00013292910306884567,
+            0.00013597315369942798,
+            0.0001077494278074857,
+            7.503753070976903e-05,
+            4.505501499619208e-05,
+            5.675742590877686e-05,
+            6.437397762766337e-05
+          ],
+          "poisson_shot_noise_floor": 2.333932366085072e-05,
+          "cl_excess_ell2_to_5": [
+            0.0007571928102466788,
+            3.648226389682457e-05,
+            0.00010958977940799496,
+            0.00011263383003857726
+          ]
+        }
+      },
+      "abs_b_gt_20": {
+        "NVSS_S20": {
+          "n_sources": 204192,
+          "masked_pixels": 1608,
+          "sky_fraction": 0.5234375,
+          "mean_count_per_pixel": 126.98507462686567,
+          "dipole_4p_icrs_vec": [
+            -0.015819582271123123,
+            0.010810019341335705,
+            0.00860441435123975
+          ],
+          "dipole_4p_amp": 0.02100361034966859,
+          "dipole_4p_gal_lb_deg": [
+            205.9479664709309,
+            47.59252541168628
+          ],
+          "dipole_4p_sep_cmb_deg": 37.967364341727915,
+          "sd_poisson": 0.003794820213796671,
+          "sd_overdisp": 0.004226610684463653,
+          "sd_jackknife_48p": 0.006508355347884322,
+          "jackknife_n_patches": 39,
+          "jackknife_over_poisson_ratio": 1.7150628965826005,
+          "poisson_overdispersion": 1.2405151787167057,
+          "dipole_9p_amp": 0.033625886811556115,
+          "dipole_4p_vs_9p_shift_deg": 30.403173543662856,
+          "quad_9p_frob_norm": 0.03862191686436623,
+          "F9_condition": 27.52103111080209,
+          "cl_pseudo_over_fsky_ell1_to_10": [
+            0.00048786034306476345,
+            5.9414427909000874e-05,
+            7.004381431068325e-05,
+            4.424845761376067e-05,
+            5.895166659200414e-05,
+            4.935020589710469e-05,
+            6.013441755378479e-05,
+            6.778597382103763e-05,
+            4.141409596668322e-05,
+            8.660921528884628e-05
+          ],
+          "poisson_shot_noise_floor": 3.2213356147418256e-05,
+          "cl_excess_ell2_to_5": [
+            2.7201071761582617e-05,
+            3.783045816326499e-05,
+            1.203510146634241e-05,
+            2.6738310444585885e-05
+          ]
+        },
+        "RACS_DR1_unif_S20": {
+          "n_sources": 197866,
+          "masked_pixels": 1102,
+          "sky_fraction": 0.3587239583333333,
+          "mean_count_per_pixel": 179.55172413793105,
+          "dipole_4p_icrs_vec": [
+            -0.025854032176740854,
+            0.0024031958426173,
+            -0.013447189221130296
+          ],
+          "dipole_4p_amp": 0.029240951215766003,
+          "dipole_4p_gal_lb_deg": [
+            283.70574788827855,
+            32.764779625178654
+          ],
+          "dipole_4p_sep_cmb_deg": 21.41432400017521,
+          "sd_poisson": 0.004507656469716496,
+          "sd_overdisp": 0.005161853213840487,
+          "sd_jackknife_48p": 0.004994183738525202,
+          "jackknife_n_patches": 38,
+          "jackknife_over_poisson_ratio": 1.107933528670011,
+          "poisson_overdispersion": 1.3113230017685107,
+          "dipole_9p_amp": 0.03500074794196698,
+          "dipole_4p_vs_9p_shift_deg": 19.86427406841025,
+          "quad_9p_frob_norm": 0.02673409809411892,
+          "F9_condition": 55.07662040457406,
+          "cl_pseudo_over_fsky_ell1_to_10": [
+            0.0006009176985723475,
+            0.00011313670615657772,
+            3.586410118289478e-05,
+            4.2603928203209496e-05,
+            6.555132143241389e-05,
+            5.810568993881409e-05,
+            4.496926599731125e-05,
+            4.866987284790279e-05,
+            1.4396702371314732e-05,
+            2.4167366641991264e-05
+          ],
+          "poisson_shot_noise_floor": 2.278237902755705e-05,
+          "cl_excess_ell2_to_5": [
+            9.035432712902067e-05,
+            1.3081722155337729e-05,
+            1.9821549175652445e-05,
+            4.276894240485684e-05
+          ]
+        },
+        "SPICE_RACS_S20": {
+          "n_sources": 298991,
+          "masked_pixels": 1707,
+          "sky_fraction": 0.5556640625,
+          "mean_count_per_pixel": 175.1558289396602,
+          "dipole_4p_icrs_vec": [
+            -0.039243805810012244,
+            0.017298220342609753,
+            -0.005346436103582823
+          ],
+          "dipole_4p_amp": 0.043219082596523524,
+          "dipole_4p_gal_lb_deg": [
+            251.5503625367137,
+            40.70554374631996
+          ],
+          "dipole_4p_sep_cmb_deg": 11.641997444418603,
+          "sd_poisson": 0.0030503889297405122,
+          "sd_overdisp": 0.0037614980015406602,
+          "sd_jackknife_48p": 0.005911037705479588,
+          "jackknife_n_patches": 42,
+          "jackknife_over_poisson_ratio": 1.937798045307758,
+          "poisson_overdispersion": 1.520586878438529,
+          "dipole_9p_amp": 0.04602021792852016,
+          "dipole_4p_vs_9p_shift_deg": 15.670453062341348,
+          "quad_9p_frob_norm": 0.055057695373100415,
+          "F9_condition": 20.55447841832431,
+          "cl_pseudo_over_fsky_ell1_to_10": [
+            0.0023870895717457443,
+            0.0007808537539272585,
+            0.00010086287336465,
+            0.000160477531723151,
+            0.00013506956763248678,
+            0.00010880123154430946,
+            6.719888278213686e-05,
+            4.524637067427363e-05,
+            4.956526992310288e-05,
+            5.787434982810553e-05
+          ],
+          "poisson_shot_noise_floor": 2.3354149611377727e-05,
+          "cl_excess_ell2_to_5": [
+            0.0007574996043158808,
+            7.750872375327227e-05,
+            0.00013712338211177327,
+            0.00011171541802110906
+          ]
+        }
+      },
+      "abs_b_gt_30": {
+        "NVSS_S20": {
+          "n_sources": 160772,
+          "masked_pixels": 1265,
+          "sky_fraction": 0.4117838541666667,
+          "mean_count_per_pixel": 127.09249011857708,
+          "dipole_4p_icrs_vec": [
+            -0.012967639704925673,
+            0.00529808611625618,
+            0.007626049570147784
+          ],
+          "dipole_4p_amp": 0.015949483629835247,
+          "dipole_4p_gal_lb_deg": [
+            201.96605086097279,
+            59.05679237073089
+          ],
+          "dipole_4p_sep_cmb_deg": 36.83658751052276,
+          "sd_poisson": 0.004115783358563816,
+          "sd_overdisp": 0.004636079811391918,
+          "sd_jackknife_48p": 0.0064582271644894555,
+          "jackknife_n_patches": 34,
+          "jackknife_over_poisson_ratio": 1.5691368086834931,
+          "poisson_overdispersion": 1.2688105877724887,
+          "dipole_9p_amp": 0.03215928930495362,
+          "dipole_4p_vs_9p_shift_deg": 36.98583538373223,
+          "quad_9p_frob_norm": 0.04090522131390767,
+          "F9_condition": 37.27164363373976,
+          "cl_pseudo_over_fsky_ell1_to_10": [
+            0.0003302510616717059,
+            0.00010106062284076944,
+            0.00011398979789766012,
+            3.180943743717514e-05,
+            4.651865544408251e-05,
+            5.4696494097898155e-05,
+            4.012423407443893e-05,
+            6.805119119532862e-05,
+            3.746060808943028e-05,
+            7.116693651462444e-05
+          ],
+          "poisson_shot_noise_floor": 3.2186130199708674e-05,
+          "cl_excess_ell2_to_5": [
+            6.887449264106076e-05,
+            8.180366769795144e-05,
+            -3.766927625335341e-07,
+            1.4332525244373837e-05
+          ]
+        },
+        "RACS_DR1_unif_S20": {
+          "n_sources": 158572,
+          "masked_pixels": 883,
+          "sky_fraction": 0.2874348958333333,
+          "mean_count_per_pixel": 179.58323895809738,
+          "dipole_4p_icrs_vec": [
+            -0.023926997841411387,
+            0.0014541707991487184,
+            -0.008066569302700981
+          ],
+          "dipole_4p_amp": 0.025292002268133693,
+          "dipole_4p_gal_lb_deg": [
+            282.0430871531062,
+            41.60715176777107
+          ],
+          "dipole_4p_sep_cmb_deg": 14.337445723611387,
+          "sd_poisson": 0.0048231366076509335,
+          "sd_overdisp": 0.005565285884830184,
+          "sd_jackknife_48p": 0.005545352139322946,
+          "jackknife_n_patches": 32,
+          "jackknife_over_poisson_ratio": 1.1497398042855274,
+          "poisson_overdispersion": 1.3314223154098623,
+          "dipole_9p_amp": 0.030432464252167588,
+          "dipole_4p_vs_9p_shift_deg": 23.764065216315334,
+          "quad_9p_frob_norm": 0.026085921709620506,
+          "F9_condition": 59.32403463526911,
+          "cl_pseudo_over_fsky_ell1_to_10": [
+            0.0005157118016823136,
+            0.00010105516406254334,
+            5.180747109107747e-05,
+            3.97809319317086e-05,
+            5.839569656447382e-05,
+            6.22688426954439e-05,
+            4.6180468463522275e-05,
+            5.636738429790489e-05,
+            1.7385570206631895e-05,
+            2.6011536063865e-05
+          ],
+          "poisson_shot_noise_floor": 2.277838097861785e-05,
+          "cl_excess_ell2_to_5": [
+            7.827678308392548e-05,
+            2.902909011245962e-05,
+            1.7002550953090748e-05,
+            3.561731558585597e-05
+          ]
+        },
+        "SPICE_RACS_S20": {
+          "n_sources": 235760,
+          "masked_pixels": 1348,
+          "sky_fraction": 0.4388020833333333,
+          "mean_count_per_pixel": 174.89614243323442,
+          "dipole_4p_icrs_vec": [
+            -0.03384841436458952,
+            0.013452430249976218,
+            0.0013587653489784293
+          ],
+          "dipole_4p_amp": 0.03644899556779322,
+          "dipole_4p_gal_lb_deg": [
+            244.06617968354263,
+            48.56030717925081
+          ],
+          "dipole_4p_sep_cmb_deg": 13.212678304622385,
+          "sd_poisson": 0.003420278955987262,
+          "sd_overdisp": 0.004278605228852012,
+          "sd_jackknife_48p": 0.0064800931330789005,
+          "jackknife_n_patches": 36,
+          "jackknife_over_poisson_ratio": 1.8946095381300336,
+          "poisson_overdispersion": 1.5648812196030444,
+          "dipole_9p_amp": 0.039679138257353454,
+          "dipole_4p_vs_9p_shift_deg": 23.24287617426576,
+          "quad_9p_frob_norm": 0.05912043320432376,
+          "F9_condition": 30.662022098376802,
+          "cl_pseudo_over_fsky_ell1_to_10": [
+            0.0018133276178888438,
+            0.0008223538369405078,
+            0.0002461410230548492,
+            0.00022203130705103185,
+            7.707312713170451e-05,
+            0.00011190566590428066,
+            6.591327587327365e-05,
+            6.940685558005883e-05,
+            5.504389463192773e-05,
+            3.782726045240959e-05
+          ],
+          "poisson_shot_noise_floor": 2.3388825948081034e-05,
+          "cl_excess_ell2_to_5": [
+            0.0007989650109924268,
+            0.0002227521971067682,
+            0.0001986424811029508,
+            5.3684301183623475e-05
+          ]
+        }
+      }
+    },
+    "racs_rms_tile_footprints": {
+      "n_tiles": 799,
+      "dec_min_max": [
+        -80.26323433333,
+        25.13814758333
+      ],
+      "dec_band_counts": {
+        "south_le_minus30": 295,
+        "mid_minus30_to_0": 223,
+        "north_gt_0": 281
+      }
+    }
+  },
+  "selection_and_flux_artifacts": {
+    "racs_S20_uniform_rms_dipole_amp": 0.02526148882858945,
+    "racs_S20_uniform_rms_sep_cmb_deg": 18.80248265709539,
+    "racs_S20_source_rms_cut_0p45_biased_amp": 0.11853599549749526,
+    "racs_S20_source_rms_cut_0p45_biased_sep_cmb_deg": 73.24920904060887,
+    "racs_selection_bias_amp_inflation_factor": 4.692359832859228,
+    "lotss_edge500_sensitivity_S50": {
+      "n_sources": 232146,
+      "masked_pixels": 1000,
+      "sky_fraction": 0.3255208333333333,
+      "mean_count_per_pixel": 232.146,
+      "dipole_icrs_vec": [
+        -0.005857509379007462,
+        -0.007154920507912669,
+        0.05291148770316906
+      ],
+      "dipole_amplitude": 0.053713395299146004,
+      "dipole_amp_sd_cond": 0.01158042753768594,
+      "dipole_ra_dec_deg": [
+        230.6938874206701,
+        80.08710997041236
+      ],
+      "dipole_gal_lb_deg": [
+        115.54697318732201,
+        34.76285812592596
+      ],
+      "angle_to_cmb_deg": 92.34169091579486,
+      "poisson_overdispersion": 2.8970599338106857
+    }
+  },
+  "cross_ladder_summary": {
+    "n_survey_thresholds": 19,
+    "d_obs_over_d_eb_minmax": [
+      2.8268611438689297,
+      19.803025638078473
+    ],
+    "jackknife_over_poisson_minmax": [
+      1.0079544374760232,
+      4.726652516865967
+    ],
+    "sq_frame_conditional_summary": {
+      "beta_RO_norm": 0.0012335867368618062,
+      "radial_operator_rank_tol1e10": 6,
+      "antisymmetric_vorticity_null_dim": 3,
+      "J2_const_vs_free_history_rank_increment": 3,
+      "J2_free_history_wald_3dof": 2.766764113028801
+    }
+  },
+  "physics_gates": {
+    "sq_radio_status": "DIAGNOSTIC_COMPLETED_SCOPED",
+    "sq_frame_status": "DIAGNOSTIC_COMPLETED_SCOPED",
+    "joint_five_survey_covariance_qualified": false,
+    "physical_Pi": null,
+    "physical_GF": null,
+    "cosmological_bulk_flow_detection_claimed": false,
+    "v04_v05_v06_status": "BLOCKED_DEPENDENCY",
+    "exact_blocker": "No shared cross-survey selection/flux/redshift/mask joint covariance + no physical LSS + Bianchi transfer null."
+  }
+}

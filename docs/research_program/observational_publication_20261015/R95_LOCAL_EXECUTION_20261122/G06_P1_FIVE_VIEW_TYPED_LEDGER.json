@@ -1,0 +1,338 @@
+{
+  "schema": "htt.r95.p1_five_view_typed_ledger/1",
+  "elapsed_seconds": 0.02387474599527195,
+  "source_sha256": "cd38f438a0bf07385b07478c7b5c122df5af1e9bb48a5575fe1cad40ef261f27",
+  "backend_receipts": {
+    "tails": {
+      "used": "numpy_sorted_reference",
+      "kernel": "joint_tails",
+      "source_certified": false,
+      "n_rows": 2048,
+      "n_thresholds": 7,
+      "threads": 0,
+      "fallback_reason": "not_admitted_or_small_input"
+    },
+    "floor_grid": {
+      "used": "numpy_reference",
+      "kernel": "floor",
+      "source_certified": false,
+      "n_rows": 2048,
+      "n_anchor": 1,
+      "n_floor": 4,
+      "threads": 0,
+      "fallback_reason": "not_admitted_or_small_input"
+    }
+  },
+  "sample_count": 2048,
+  "thresholds": [
+    0.01,
+    0.02,
+    0.03,
+    0.04,
+    0.05,
+    0.06,
+    0.08
+  ],
+  "tail_lower": [
+    [
+      1.0,
+      1.0,
+      1.0,
+      0.9990234375,
+      1.0,
+      0.9990234375
+    ],
+    [
+      0.99072265625,
+      1.0,
+      1.0,
+      0.96044921875,
+      1.0,
+      0.9521484375
+    ],
+    [
+      0.49169921875,
+      0.998046875,
+      1.0,
+      0.5703125,
+      1.0,
+      0.27783203125
+    ],
+    [
+      0.01171875,
+      0.73291015625,
+      0.98876953125,
+      0.103515625,
+      0.99072265625,
+      0.00244140625
+    ],
+    [
+      0.0,
+      0.06640625,
+      0.59814453125,
+      0.00537109375,
+      0.60302734375,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0458984375,
+      0.0,
+      0.0458984375,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  ],
+  "tail_upper": [
+    [
+      1.0,
+      1.0,
+      1.0,
+      0.9990234375,
+      1.0,
+      0.9990234375
+    ],
+    [
+      0.99072265625,
+      1.0,
+      1.0,
+      0.96044921875,
+      1.0,
+      0.9521484375
+    ],
+    [
+      0.49169921875,
+      0.998046875,
+      1.0,
+      0.5703125,
+      1.0,
+      0.27783203125
+    ],
+    [
+      0.01171875,
+      0.73291015625,
+      0.98876953125,
+      0.103515625,
+      0.99072265625,
+      0.00244140625
+    ],
+    [
+      0.0,
+      0.06640625,
+      0.59814453125,
+      0.00537109375,
+      0.60302734375,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0458984375,
+      0.0,
+      0.0458984375,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  ],
+  "floor_grid_strict_above_one_p005": [
+    [
+      [
+        0.99951171875,
+        1.0,
+        0.56591796875
+      ],
+      [
+        0.99951171875,
+        1.0,
+        0.56591796875
+      ],
+      [
+        0.99951171875,
+        1.0,
+        0.56591796875
+      ],
+      [
+        0.99951171875,
+        1.0,
+        0.56591796875
+      ]
+    ]
+  ],
+  "floor_grid_tie_one_p005": [
+    [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  ],
+  "manski_unknown_mass_stress": {
+    "unknown_frac_0.00": {
+      "missing_mass_W3": 0.0,
+      "at_0p03": {
+        "W3_lower": 0.5703125,
+        "W3_upper": 0.5703125,
+        "ANY_lower": 1.0,
+        "ANY_upper": 1.0,
+        "ALL_lower": 0.27783203125,
+        "ALL_upper": 0.27783203125
+      },
+      "at_0p05": {
+        "W3_lower": 0.00537109375,
+        "W3_upper": 0.00537109375,
+        "ANY_lower": 0.60302734375,
+        "ANY_upper": 0.60302734375,
+        "ALL_lower": 0.0,
+        "ALL_upper": 0.0
+      }
+    },
+    "unknown_frac_0.05": {
+      "missing_mass_W3": 0.0498046875,
+      "at_0p03": {
+        "W3_lower": 0.5419921875,
+        "W3_upper": 0.591796875,
+        "ANY_lower": 1.0,
+        "ANY_upper": 1.0,
+        "ALL_lower": 0.2607421875,
+        "ALL_upper": 0.29052734375
+      },
+      "at_0p05": {
+        "W3_lower": 0.00537109375,
+        "W3_upper": 0.05517578125,
+        "ANY_lower": 0.60302734375,
+        "ANY_upper": 0.62451171875,
+        "ALL_lower": 0.0,
+        "ALL_upper": 0.0
+      }
+    },
+    "unknown_frac_0.15": {
+      "missing_mass_W3": 0.14990234375,
+      "at_0p03": {
+        "W3_lower": 0.48583984375,
+        "W3_upper": 0.6357421875,
+        "ANY_lower": 1.0,
+        "ANY_upper": 1.0,
+        "ALL_lower": 0.23291015625,
+        "ALL_upper": 0.31201171875
+      },
+      "at_0p05": {
+        "W3_lower": 0.00537109375,
+        "W3_upper": 0.1552734375,
+        "ANY_lower": 0.60302734375,
+        "ANY_upper": 0.66162109375,
+        "ALL_lower": 0.0,
+        "ALL_upper": 0.0
+      }
+    },
+    "unknown_frac_0.25": {
+      "missing_mass_W3": 0.25,
+      "at_0p03": {
+        "W3_lower": 0.423828125,
+        "W3_upper": 0.673828125,
+        "ANY_lower": 1.0,
+        "ANY_upper": 1.0,
+        "ALL_lower": 0.205078125,
+        "ALL_upper": 0.32958984375
+      },
+      "at_0p05": {
+        "W3_lower": 0.0048828125,
+        "W3_upper": 0.2548828125,
+        "ANY_lower": 0.60302734375,
+        "ANY_upper": 0.7001953125,
+        "ALL_lower": 0.0,
+        "ALL_upper": 0.0
+      }
+    }
+  },
+  "negative_controls": {
+    "all_unknown_width_1": true,
+    "all_unknown_physical_Pi_is_None": true,
+    "full_draw_physical_Pi_is_None": true,
+    "full_draw_physical_GF_is_None": true,
+    "isotropic_300mc_50draws_false_pos_at_0p05": 3,
+    "isotropic_50draws_mean_rank_p": 0.4590033222591362
+  },
+  "five_view_typed_ledger_P1_to_P6": {
+    "P1_apparent_functional_draws": {
+      "x": "q_app = ||STF5_app|| / H_app across 4 windows (dimensionless working amplitude)",
+      "Q": "Coupled 2,048-row empirical distribution body & anchor-floor grid",
+      "Pi": null,
+      "F": "Strict tail occupancy [lower, upper] with exact unknown-mass retention",
+      "G_F": null,
+      "why_null_absent": "Requires physical normal-frame anchor (274-row HI-CF4 / selected distance calibration) and physical transport law"
+    },
+    "P2_Planck_SMICA_fullres": {
+      "x": "Signed L=2 masked BiPoSH A_{l,l+2}^{2M} on NSIDE=2048 RING T/E/B maps (uK^2 / normalized)",
+      "Q": "300 unique-noise matched FFP10 SMICA covariance (+999 recycled sensitivity)",
+      "Pi": null,
+      "conditional_source_rank": "300-noise empirical LOO rank on fixed mask & 4 bands (p_60D=0.2591; NOT cosmological Pi)",
+      "F": "Positive exceedance count (tail >= obs) under 300-noise null",
+      "G_F": null,
+      "why_null_absent": "Commander 999 MC absent; high-ell Bianchi transfer & beam/foreground residual likelihood incomplete"
+    },
+    "P3_CF4_tomography": {
+      "x": "9D/36D STF Hubble expansion carrier (km/s/Mpc)",
+      "Q": "Conditional R36 low-k PV + R27 7-channel cal + working noise (36x36)",
+      "Pi": null,
+      "F": "Partial-ID interval under sigma_cal & sigma_bulk grid",
+      "G_F": null,
+      "why_null_absent": "Pre-intercalibration CF4 MCMC zero-point posterior & C_selection absent"
+    },
+    "P4_Radio_5survey": {
+      "x": "Survey count dipole vector d_obs (dimensionless)",
+      "Q": "Overdispersed WLS + NSIDE=2 jackknife covariance on NSIDE=16 masked pixels",
+      "Pi": null,
+      "F": "Ellis-Baldwin excess ratio d_obs / d_kin(alpha=0.75)",
+      "G_F": null,
+      "why_null_absent": "Survey-matched clustering + completeness/RMS random mocks absent; shared footprint breaks naive independence"
+    },
+    "P5_Bianchi_conditional_transfer": {
+      "x": "Normal-frame shear Sigma_ab = sigma_ab/H & geodesic T/E/B STF5/alm",
+      "Q": "Einstein-Euler dynamical trajectory constraint envelope & HyRec-2+tanh optical timeline",
+      "Pi": null,
+      "F": "Canonical-algebra compatibility & L_max=4..60 truncation stability",
+      "G_F": null,
+      "why_null_absent": "Full inhomogeneous all-m Boltzmann solver + release-matched Planck E/B likelihood absent"
+    },
+    "P6_Gaia_Quaia_VSH": {
+      "x": "16D VSH (E1, B1, E2, B2) proper-motion carrier (uasyr)",
+      "Q": "48-patch jackknife & sandwich covariance + 4Quaia weighting models",
+      "Pi": null,
+      "F": "Sensitivity across unweighted / selection-weighted / IPW floor 0.20, 0.35",
+      "G_F": null,
+      "why_null_absent": "AGN correlated clustering + scanning-law time-series MC null absent"
+    }
+  },
+  "publication_grade_physical_Pi_promoted": false
+}

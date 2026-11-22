@@ -1,0 +1,901 @@
+{
+  "schema": "htt.r95.bianchi_12_family_einstein_euler_bass_audit/1",
+  "sources_sha256": {
+    "BASS_conventions": "4c5910de0be7132794b631ebe364ed2e453ecbaa603c88af69f862bdc15a0ab8",
+    "R62_log_J2": "7b2c690b1d6530cb40f6b10c94eefb001979daae1996aa05867fb20a03110b03"
+  },
+  "elapsed_seconds": 12.561513651016867,
+  "stf5_quadrupole_roundtrip_maxabs": 2.0328790734103208e-19,
+  "upstream_findings": [
+    {
+      "file": "htt/bass/transport/general_bianchi_transfer.py",
+      "lines": "280-281",
+      "issue": "PolarizedTransferOutput.as_stf5_quadrupole leaves GL grid axes uncontracted in np.einsum('...i,...j,...') -> (n_th, n_ph, 3, 3) and calls orthonormal_to_stf_matrix instead of stf_matrix_to_orthonormal.",
+      "r95_mitigation": "Left unchanged R49 module untouched; exact STF5 quadrupole extraction implemented in scripts/r95/bianchi_bg_audit.py:_extract_stf5_quadrupole with round-trip oracle < 1e-12."
+    }
+  ],
+  "fournodavlos_2026_benchmark": {
+    "K_1": 0.42,
+    "K_2": 0.58,
+    "shear_decay_ratio": 1.154294713357915e-06,
+    "max_speed": 0.9989927107292728,
+    "max_ham_rel": 2.3684277954198563e-12,
+    "max_cod_rel": 9.147371194011657e-14,
+    "passed": true
+  },
+  "global_constraint_maxima": {
+    "n_evolutions": 17,
+    "max_jacobi_residual": 1.6961296919670705e-14,
+    "max_hamiltonian_residual_rel": 2.0160418989492282e-10,
+    "max_codazzi_residual_rel": 7.493046241752293e-11,
+    "max_bass_htt_signed_codazzi_diff": 1.6727821274979306e-17
+  },
+  "action_equivalence_classes": {
+    "FLAT_K0_FLRW_LIMIT": {
+      "members": [
+        "FLRW",
+        "I",
+        "VII_0"
+      ],
+      "curvature_sign": "flat_k0",
+      "has_flrw_limit": true,
+      "note": "Types I and VII_0 both act transitively on flat R^3 and share identical isotropic limit; helical VII_0 modes can mimic flat shear+dipole locally."
+    },
+    "OPEN_KNEG_FLRW_LIMIT": {
+      "members": [
+        "V",
+        "VII_h"
+      ],
+      "curvature_sign": "negative_k",
+      "has_flrw_limit": true,
+      "note": "Types V and VII_h both have negative spatial curvature k<0 and admit FLRW open limits; non-axisymmetric/helical VII_h degenerates with V+boost when |n|/|a|->0 or k_hel->0."
+    },
+    "CLOSED_KPOS_FLRW_LIMIT": {
+      "members": [
+        "IX"
+      ],
+      "curvature_sign": "positive_k",
+      "has_flrw_limit": true,
+      "note": "Unique Bianchi family with closed S^3 spatial curvature in FLRW limit."
+    },
+    "TYPE_III_VI_MINUS_ONE": {
+      "members": [
+        "III",
+        "VI_h(h=-1)"
+      ],
+      "curvature_sign": "anisotropic_marginal",
+      "has_flrw_limit": false,
+      "note": "Type III is canonically isomorphic to Bianchi VI_h at h = -1."
+    },
+    "MARGINAL_CLASS_A_II": {
+      "members": [
+        "II"
+      ],
+      "curvature_sign": "anisotropic_marginal",
+      "has_flrw_limit": false,
+      "note": "No FLRW limit; out of scope for linearized_near_flrw transfer."
+    },
+    "MARGINAL_CLASS_A_VI0": {
+      "members": [
+        "VI_0"
+      ],
+      "curvature_sign": "anisotropic_marginal",
+      "has_flrw_limit": false,
+      "note": "No FLRW limit; out of scope for linearized_near_flrw transfer."
+    },
+    "MARGINAL_CLASS_A_VIII": {
+      "members": [
+        "VIII"
+      ],
+      "curvature_sign": "anisotropic_marginal",
+      "has_flrw_limit": false,
+      "note": "No FLRW limit; out of scope for linearized_near_flrw transfer."
+    },
+    "MARGINAL_CLASS_B_IV": {
+      "members": [
+        "IV"
+      ],
+      "curvature_sign": "anisotropic_marginal",
+      "has_flrw_limit": false,
+      "note": "No FLRW limit; regularized without dividing by n2*n3."
+    },
+    "MARGINAL_CLASS_B_VIH": {
+      "members": [
+        "VI_h"
+      ],
+      "curvature_sign": "anisotropic_marginal",
+      "has_flrw_limit": false,
+      "note": "No FLRW limit; includes special h = -1/9 locus handled without singularity."
+    }
+  },
+  "r62_cf4_carrier_reference": {
+    "variant": "log",
+    "chi2_null_15d": 27.781170244360887,
+    "physical_interpretation": "Source-response J2 Hubble carrier; free flux q_a saturates canonical STF5 compatibility, while barotropic/tilt EOS & finite-z optical transfer restrict trajectories."
+  },
+  "trajectories": {
+    "FLRW__tilted": {
+      "family": "FLRW",
+      "orthogonal_control": false,
+      "bianchi_class": "A",
+      "equivalence_class": "FLAT_K0_FLRW_LIMIT",
+      "N_span": [
+        0.0,
+        2.0
+      ],
+      "final_H": 0.707710663284388,
+      "init_sigma_over_H_norm": 0.0,
+      "final_sigma_over_H_norm": 2.646635777007972e-06,
+      "init_v_photon_norm": 0.0458257569495584,
+      "final_v_photon_norm": 0.04582236497701057,
+      "final_v_cdm_norm": 0.0020712304350063086,
+      "wigner_rad_obs_angle_rad": 7.833703565533647e-06,
+      "photon_congruence_vorticity_norm": 0.0,
+      "cdm_congruence_vorticity_norm": 0.0,
+      "max_jacobi_residual": 0.0,
+      "max_hamiltonian_residual_rel": 2.0160418989492282e-10,
+      "max_codazzi_residual_rel": 5.667734356990237e-12,
+      "max_bass_htt_codazzi_diff": 0.0,
+      "min_dec_margin": 7.896627825614283e-05,
+      "geodesic_cl_TT_l2": 1.181997085421737e-06,
+      "geodesic_cl_EE_l2": 4.4120213396350746e-07,
+      "geodesic_cl_BB_l2": 4.029296243876544e-13,
+      "geodesic_rms_screen_twist_rad": 3.063535090953188e-21,
+      "geodesic_cosmo_Q2_stf5": [
+        0.0008827917038933317,
+        0.0007645200418217173,
+        -0.0011770556051909405,
+        0.0005885278025952193,
+        -0.0002942639012977373
+      ],
+      "geodesic_obs_Q2_stf5": [
+        0.000946981213303359,
+        0.0008077880236756756,
+        -0.0012279663948249124,
+        0.0006152758612677424,
+        -0.00030249292041119037
+      ],
+      "max_null_err": 1.1102230246251565e-15,
+      "max_screen_ortho_err": 2.886579864025407e-15
+    },
+    "I__tilted": {
+      "family": "I",
+      "orthogonal_control": false,
+      "bianchi_class": "A",
+      "equivalence_class": "FLAT_K0_FLRW_LIMIT",
+      "N_span": [
+        0.0,
+        2.0
+      ],
+      "final_H": 0.7077106646886984,
+      "init_sigma_over_H_norm": 0.038364895013210644,
+      "final_sigma_over_H_norm": 0.00012696780215512874,
+      "init_v_photon_norm": 0.0458257569495584,
+      "final_v_photon_norm": 0.04618036546457495,
+      "final_v_cdm_norm": 0.0020874354183082746,
+      "wigner_rad_obs_angle_rad": 7.675327623818364e-06,
+      "photon_congruence_vorticity_norm": 5.028922677505331e-08,
+      "cdm_congruence_vorticity_norm": 1.0253238008072096e-10,
+      "max_jacobi_residual": 0.0,
+      "max_hamiltonian_residual_rel": 1.2314022009399183e-11,
+      "max_codazzi_residual_rel": 1.91613784300033e-13,
+      "max_bass_htt_codazzi_diff": 0.0,
+      "min_dec_margin": 7.89279531709324e-05,
+      "geodesic_cl_TT_l2": 8.647425089284182e-05,
+      "geodesic_cl_EE_l2": 4.4386160961531583e-07,
+      "geodesic_cl_BB_l2": 4.0514330428469047e-13,
+      "geodesic_rms_screen_twist_rad": 3.1823532983065352e-18,
+      "geodesic_cosmo_Q2_stf5": [
+        0.013681000395124022,
+        0.00815085311551907,
+        -0.0011832302629873816,
+        0.0005916151314935849,
+        -0.00029112755065668157
+      ],
+      "geodesic_obs_Q2_stf5": [
+        0.013744777827088281,
+        0.008193872733501301,
+        -0.0012338181669655486,
+        0.0006182254670556827,
+        -0.0002993427959724614
+      ],
+      "max_null_err": 3.7836400679225335e-13,
+      "max_screen_ortho_err": 1.199040866595169e-14
+    },
+    "II__tilted": {
+      "family": "II",
+      "orthogonal_control": false,
+      "bianchi_class": "A",
+      "equivalence_class": "MARGINAL_CLASS_A_II",
+      "N_span": [
+        0.0,
+        2.0
+      ],
+      "final_H": 0.7077107080953985,
+      "init_sigma_over_H_norm": 0.045849125218463946,
+      "final_sigma_over_H_norm": 0.00015530006097543448,
+      "init_v_photon_norm": 0.033166247903554,
+      "final_v_photon_norm": 0.03333538841449268,
+      "final_v_cdm_norm": 0.0015071245468576528,
+      "wigner_rad_obs_angle_rad": 1.3321804786010996e-05,
+      "photon_congruence_vorticity_norm": 2.006990683787447e-05,
+      "cdm_congruence_vorticity_norm": 9.058143077716441e-07,
+      "max_jacobi_residual": 1.5209430028435033e-25,
+      "max_hamiltonian_residual_rel": 9.653422460049534e-12,
+      "max_codazzi_residual_rel": 1.0511730037705109e-11,
+      "max_bass_htt_codazzi_diff": 1.144107973941376e-20,
+      "min_dec_margin": 8.025771422990809e-05,
+      "geodesic_cl_TT_l2": 0.00010908778180229855,
+      "geodesic_cl_EE_l2": 1.1935325024527316e-07,
+      "geodesic_cl_BB_l2": 1.1247204195683429e-11,
+      "geodesic_rms_screen_twist_rad": 0.004063657185863945,
+      "geodesic_cosmo_Q2_stf5": [
+        0.013390203826141854,
+        0.007729229781642074,
+        -0.006290972961209496,
+        0.004175264544057613,
+        -0.0052617844094187275
+      ],
+      "geodesic_obs_Q2_stf5": [
+        0.013447480447928067,
+        0.0077605398214378495,
+        -0.006285326337319498,
+        0.004164672971869739,
+        -0.005255885521737141
+      ],
+      "max_null_err": 7.486233855047431e-13,
+      "max_screen_ortho_err": 1.9317880628477724e-14
+    },
+    "III__tilted": {
+      "family": "III",
+      "orthogonal_control": false,
+      "bianchi_class": "B",
+      "equivalence_class": "TYPE_III_VI_MINUS_ONE",
+      "N_span": [
+        0.0,
+        2.0
+      ],
+      "final_H": 0.7077123158430443,
+      "init_sigma_over_H_norm": 0.045845920939730334,
+      "final_sigma_over_H_norm": 0.00014659169270572658,
+      "init_v_photon_norm": 0.033166247903554,
+      "final_v_photon_norm": 0.03332619177084544,
+      "final_v_cdm_norm": 0.0015671117712794677,
+      "wigner_rad_obs_angle_rad": 1.3289998070827034e-05,
+      "photon_congruence_vorticity_norm": 1.932135378154335e-05,
+      "cdm_congruence_vorticity_norm": 7.679562891071003e-07,
+      "max_jacobi_residual": 6.145722372117214e-19,
+      "max_hamiltonian_residual_rel": 8.085209108216862e-12,
+      "max_codazzi_residual_rel": 6.595202277767188e-11,
+      "max_bass_htt_codazzi_diff": 3.2315242564099946e-19,
+      "min_dec_margin": 8.033133392788517e-05,
+      "geodesic_cl_TT_l2": 0.00010840090848283764,
+      "geodesic_cl_EE_l2": 1.2050101086638946e-07,
+      "geodesic_cl_BB_l2": 2.12536171950722e-11,
+      "geodesic_rms_screen_twist_rad": 0.006857971310003712,
+      "geodesic_cosmo_Q2_stf5": [
+        0.013092045852853562,
+        0.007556293025384188,
+        -0.006533987713879661,
+        0.004259632036038696,
+        -0.0056904249756993775
+      ],
+      "geodesic_obs_Q2_stf5": [
+        0.013149771125439165,
+        0.007587917520128455,
+        -0.006528672959047858,
+        0.004249286602167274,
+        -0.0056843779528440224
+      ],
+      "max_null_err": 1.0964562591198046e-12,
+      "max_screen_ortho_err": 4.474198789239381e-14
+    },
+    "IV__tilted": {
+      "family": "IV",
+      "orthogonal_control": false,
+      "bianchi_class": "B",
+      "equivalence_class": "MARGINAL_CLASS_B_IV",
+      "N_span": [
+        0.0,
+        2.0
+      ],
+      "final_H": 0.7077119849835224,
+      "init_sigma_over_H_norm": 0.045846482831080705,
+      "final_sigma_over_H_norm": 0.0001535532582297189,
+      "init_v_photon_norm": 0.033166247903554,
+      "final_v_photon_norm": 0.033327328810026445,
+      "final_v_cdm_norm": 0.0016109866914204036,
+      "wigner_rad_obs_angle_rad": 1.3308196946293555e-05,
+      "photon_congruence_vorticity_norm": 6.796337781845608e-06,
+      "cdm_congruence_vorticity_norm": 2.85340325596364e-07,
+      "max_jacobi_residual": 1.0611907221761593e-18,
+      "max_hamiltonian_residual_rel": 8.831592518440087e-12,
+      "max_codazzi_residual_rel": 7.493046241752293e-11,
+      "max_bass_htt_codazzi_diff": 9.806507439255448e-20,
+      "min_dec_margin": 8.033121691328727e-05,
+      "geodesic_cl_TT_l2": 0.00010563913087175284,
+      "geodesic_cl_EE_l2": 1.2078002310960803e-07,
+      "geodesic_cl_BB_l2": 4.403885079527827e-12,
+      "geodesic_rms_screen_twist_rad": 0.003911868007486881,
+      "geodesic_cosmo_Q2_stf5": [
+        0.013131202869136478,
+        0.007558760063801468,
+        -0.006452848262770541,
+        0.0040963072686597745,
+        -0.005046611381780119
+      ],
+      "geodesic_obs_Q2_stf5": [
+        0.013189102796572963,
+        0.007590500322839266,
+        -0.006447495254388043,
+        0.0040858770172851515,
+        -0.005040917191383056
+      ],
+      "max_null_err": 1.0957901253050295e-12,
+      "max_screen_ortho_err": 3.159972283839352e-14
+    },
+    "V__tilted": {
+      "family": "V",
+      "orthogonal_control": false,
+      "bianchi_class": "B",
+      "equivalence_class": "OPEN_KNEG_FLRW_LIMIT",
+      "N_span": [
+        0.0,
+        2.0
+      ],
+      "final_H": 0.7077118744623592,
+      "init_sigma_over_H_norm": 0.045846711533416615,
+      "final_sigma_over_H_norm": 0.0001532669370737987,
+      "init_v_photon_norm": 0.033166247903554,
+      "final_v_photon_norm": 0.03332737911901636,
+      "final_v_cdm_norm": 0.0015968674794667088,
+      "wigner_rad_obs_angle_rad": 1.3302673131099343e-05,
+      "photon_congruence_vorticity_norm": 9.642316387300463e-06,
+      "cdm_congruence_vorticity_norm": 3.9721693215142254e-07,
+      "max_jacobi_residual": 3.555561674313881e-23,
+      "max_hamiltonian_residual_rel": 9.624319942083196e-12,
+      "max_codazzi_residual_rel": 7.463815442980542e-11,
+      "max_bass_htt_codazzi_diff": 2.923294700371764e-19,
+      "min_dec_margin": 8.033121084645245e-05,
+      "geodesic_cl_TT_l2": 0.00010671234314163364,
+      "geodesic_cl_EE_l2": 1.205560384448641e-07,
+      "geodesic_cl_BB_l2": 1.0182483264500618e-12,
+      "geodesic_rms_screen_twist_rad": 9.407212361888252e-18,
+      "geodesic_cosmo_Q2_stf5": [
+        0.013131540148899582,
+        0.007578921975882487,
+        -0.0064526375246847754,
+        0.004178409913942551,
+        -0.005261746764950702
+      ],
+      "geodesic_obs_Q2_stf5": [
+        0.013189388857901989,
+        0.0076106163318712195,
+        -0.006447294274333712,
+        0.004168009498941289,
+        -0.005255932441944837
+      ],
+      "max_null_err": 9.39803790345195e-13,
+      "max_screen_ortho_err": 1.9539925233402755e-14
+    },
+    "VI_0__tilted": {
+      "family": "VI_0",
+      "orthogonal_control": false,
+      "bianchi_class": "A",
+      "equivalence_class": "MARGINAL_CLASS_A_VI0",
+      "N_span": [
+        0.0,
+        2.0
+      ],
+      "final_H": 0.7077110309526371,
+      "init_sigma_over_H_norm": 0.04584851958111904,
+      "final_sigma_over_H_norm": 0.00015531475157617934,
+      "init_v_photon_norm": 0.033166247903554,
+      "final_v_photon_norm": 0.03333537272703047,
+      "final_v_cdm_norm": 0.0014929344994640602,
+      "wigner_rad_obs_angle_rad": 1.3316503384441765e-05,
+      "photon_congruence_vorticity_norm": 2.1146109371668268e-05,
+      "cdm_congruence_vorticity_norm": 9.505934746827269e-07,
+      "max_jacobi_residual": 5.918822628024476e-23,
+      "max_hamiltonian_residual_rel": 8.918410469370531e-12,
+      "max_codazzi_residual_rel": 1.52962150000496e-11,
+      "max_bass_htt_codazzi_diff": 3.888613278653022e-20,
+      "min_dec_margin": 8.025771592874986e-05,
+      "geodesic_cl_TT_l2": 0.0001101996981784,
+      "geodesic_cl_EE_l2": 1.1914780393673125e-07,
+      "geodesic_cl_BB_l2": 1.4368727812130533e-11,
+      "geodesic_rms_screen_twist_rad": 0.00676117698992813,
+      "geodesic_cosmo_Q2_stf5": [
+        0.0134077389928201,
+        0.007695595507221958,
+        -0.0062903495125367324,
+        0.004257521642101149,
+        -0.005511405339078628
+      ],
+      "geodesic_obs_Q2_stf5": [
+        0.013464962211450254,
+        0.007726857423679777,
+        -0.006284712135946853,
+        0.004246955107402644,
+        -0.005505382199581345
+      ],
+      "max_null_err": 9.401368572525826e-13,
+      "max_screen_ortho_err": 3.419486915845482e-14
+    },
+    "VI_h__tilted": {
+      "family": "VI_h",
+      "orthogonal_control": false,
+      "bianchi_class": "B",
+      "equivalence_class": "MARGINAL_CLASS_B_VIH",
+      "N_span": [
+        0.0,
+        2.0
+      ],
+      "final_H": 0.7077110684724631,
+      "init_sigma_over_H_norm": 0.045848376532064194,
+      "final_sigma_over_H_norm": 0.00015098875408418237,
+      "init_v_photon_norm": 0.033166247903554,
+      "final_v_photon_norm": 0.033330767103632024,
+      "final_v_cdm_norm": 0.0015316865206075887,
+      "wigner_rad_obs_angle_rad": 1.3303324092573895e-05,
+      "photon_congruence_vorticity_norm": 1.1285649185231364e-05,
+      "cdm_congruence_vorticity_norm": 4.78142670751843e-07,
+      "max_jacobi_residual": 6.327289731037327e-19,
+      "max_hamiltonian_residual_rel": 9.283958360101709e-12,
+      "max_codazzi_residual_rel": 3.452297270419193e-11,
+      "max_bass_htt_codazzi_diff": 4.1784272012398e-20,
+      "min_dec_margin": 8.029452311903493e-05,
+      "geodesic_cl_TT_l2": 0.00010908892847722965,
+      "geodesic_cl_EE_l2": 1.1988659822698867e-07,
+      "geodesic_cl_BB_l2": 7.724865839600659e-12,
+      "geodesic_rms_screen_twist_rad": 0.004564812319478461,
+      "geodesic_cosmo_Q2_stf5": [
+        0.013228694666782597,
+        0.0076570946078294375,
+        -0.006494123884041309,
+        0.004154201627498229,
+        -0.005540294232030477
+      ],
+      "geodesic_obs_Q2_stf5": [
+        0.013286172945857357,
+        0.00768857943321578,
+        -0.006488651519137859,
+        0.004143735501948434,
+        -0.005534302451554433
+      ],
+      "max_null_err": 7.187583861423263e-13,
+      "max_screen_ortho_err": 2.4135289036428254e-14
+    },
+    "VII_0__tilted": {
+      "family": "VII_0",
+      "orthogonal_control": false,
+      "bianchi_class": "A",
+      "equivalence_class": "FLAT_K0_FLRW_LIMIT",
+      "N_span": [
+        0.0,
+        2.0
+      ],
+      "final_H": 0.7077106061212413,
+      "init_sigma_over_H_norm": 0.04584931404129815,
+      "final_sigma_over_H_norm": 0.00015317958164366534,
+      "init_v_photon_norm": 0.033166247903554,
+      "final_v_photon_norm": 0.03333497296321861,
+      "final_v_cdm_norm": 0.0015213374541949076,
+      "wigner_rad_obs_angle_rad": 1.3327070756430396e-05,
+      "photon_congruence_vorticity_norm": 2.124297146879134e-05,
+      "cdm_congruence_vorticity_norm": 9.697820716733252e-07,
+      "max_jacobi_residual": 6.714583464899812e-23,
+      "max_hamiltonian_residual_rel": 8.878684010193107e-12,
+      "max_codazzi_residual_rel": 1.053172515470594e-11,
+      "max_bass_htt_codazzi_diff": 2.199623910514113e-20,
+      "min_dec_margin": 8.025775922037345e-05,
+      "geodesic_cl_TT_l2": 0.0001077890105450213,
+      "geodesic_cl_EE_l2": 1.1969502663823575e-07,
+      "geodesic_cl_BB_l2": 1.7437344535590924e-11,
+      "geodesic_rms_screen_twist_rad": 0.004233314764437481,
+      "geodesic_cosmo_Q2_stf5": [
+        0.013372061661819003,
+        0.007719783800807062,
+        -0.006291352284693103,
+        0.004092579245848167,
+        -0.005011577929355164
+      ],
+      "geodesic_obs_Q2_stf5": [
+        0.013429389462396617,
+        0.0077511405889898605,
+        -0.006285696636233877,
+        0.0040819613875313614,
+        -0.005005802807780831
+      ],
+      "max_null_err": 8.031353360138382e-13,
+      "max_screen_ortho_err": 3.509692536596276e-14
+    },
+    "VII_h__tilted": {
+      "family": "VII_h",
+      "orthogonal_control": false,
+      "bianchi_class": "B",
+      "equivalence_class": "OPEN_KNEG_FLRW_LIMIT",
+      "N_span": [
+        0.0,
+        2.0
+      ],
+      "final_H": 0.7077110470381386,
+      "init_sigma_over_H_norm": 0.045848399258637124,
+      "final_sigma_over_H_norm": 0.00015208061440986868,
+      "init_v_photon_norm": 0.033166247903554,
+      "final_v_photon_norm": 0.03333058815063639,
+      "final_v_cdm_norm": 0.0015409601891453906,
+      "wigner_rad_obs_angle_rad": 1.3303324092573895e-05,
+      "photon_congruence_vorticity_norm": 1.6268274269082808e-05,
+      "cdm_congruence_vorticity_norm": 6.935897325233363e-07,
+      "max_jacobi_residual": 2.0260749620821116e-18,
+      "max_hamiltonian_residual_rel": 7.877418388526558e-12,
+      "max_codazzi_residual_rel": 3.7278091334381516e-11,
+      "max_bass_htt_codazzi_diff": 1.5130494893274103e-19,
+      "min_dec_margin": 8.029817451386043e-05,
+      "geodesic_cl_TT_l2": 0.00010873662097750792,
+      "geodesic_cl_EE_l2": 1.1993628036054673e-07,
+      "geodesic_cl_BB_l2": 6.637214950332726e-12,
+      "geodesic_rms_screen_twist_rad": 0.006754306582311024,
+      "geodesic_cosmo_Q2_stf5": [
+        0.013211271392511357,
+        0.0076775074221523965,
+        -0.006564285515343782,
+        0.004059496707577518,
+        -0.005445036695168965
+      ],
+      "geodesic_obs_Q2_stf5": [
+        0.013268789069856743,
+        0.007709049958700103,
+        -0.006558830857970073,
+        0.004049027662771884,
+        -0.005439103711602568
+      ],
+      "max_null_err": 8.177902799388903e-13,
+      "max_screen_ortho_err": 4.884981308350689e-14
+    },
+    "VIII__tilted": {
+      "family": "VIII",
+      "orthogonal_control": false,
+      "bianchi_class": "A",
+      "equivalence_class": "MARGINAL_CLASS_A_VIII",
+      "N_span": [
+        0.0,
+        2.0
+      ],
+      "final_H": 0.707711134101528,
+      "init_sigma_over_H_norm": 0.04584829821974043,
+      "final_sigma_over_H_norm": 0.00015737854649808876,
+      "init_v_photon_norm": 0.033166247903554,
+      "final_v_photon_norm": 0.0333358143854779,
+      "final_v_cdm_norm": 0.0015026682711345104,
+      "wigner_rad_obs_angle_rad": 1.3316936911591398e-05,
+      "photon_congruence_vorticity_norm": 2.21575096940103e-05,
+      "cdm_congruence_vorticity_norm": 9.976991036483493e-07,
+      "max_jacobi_residual": 1.3775239734319425e-22,
+      "max_hamiltonian_residual_rel": 7.997908134988592e-12,
+      "max_codazzi_residual_rel": 1.803148654032805e-11,
+      "max_bass_htt_codazzi_diff": 6.547456457318434e-20,
+      "min_dec_margin": 8.025766810025038e-05,
+      "geodesic_cl_TT_l2": 0.00010968949366726821,
+      "geodesic_cl_EE_l2": 1.1913765750184157e-07,
+      "geodesic_cl_BB_l2": 8.098880577083006e-12,
+      "geodesic_rms_screen_twist_rad": 0.006218204487275233,
+      "geodesic_cosmo_Q2_stf5": [
+        0.013407497315351645,
+        0.0077414493524016305,
+        -0.006532187389838065,
+        0.003935776269450244,
+        -0.005260533690314826
+      ],
+      "geodesic_obs_Q2_stf5": [
+        0.013464730464517464,
+        0.007772836165620352,
+        -0.006526565017945303,
+        0.003925180615708257,
+        -0.005254657810532173
+      ],
+      "max_null_err": 8.785194793858864e-13,
+      "max_screen_ortho_err": 5.3290705182007514e-14
+    },
+    "IX__tilted": {
+      "family": "IX",
+      "orthogonal_control": false,
+      "bianchi_class": "A",
+      "equivalence_class": "CLOSED_KPOS_FLRW_LIMIT",
+      "N_span": [
+        0.0,
+        2.0
+      ],
+      "final_H": 0.7077103412769474,
+      "init_sigma_over_H_norm": 0.038365417875313175,
+      "final_sigma_over_H_norm": 0.0001268862244893612,
+      "init_v_photon_norm": 0.0458257569495584,
+      "final_v_photon_norm": 0.046180358027992814,
+      "final_v_cdm_norm": 0.002087435081683942,
+      "wigner_rad_obs_angle_rad": 7.67535655342207e-06,
+      "photon_congruence_vorticity_norm": 3.080698312718916e-05,
+      "cdm_congruence_vorticity_norm": 1.3910461061463936e-06,
+      "max_jacobi_residual": 5.404880745721581e-25,
+      "max_hamiltonian_residual_rel": 1.015055366563455e-11,
+      "max_codazzi_residual_rel": 1.8403198739673479e-13,
+      "max_bass_htt_codazzi_diff": 1.6099114735847002e-23,
+      "min_dec_margin": 7.892795396690543e-05,
+      "geodesic_cl_TT_l2": 8.647101801456864e-05,
+      "geodesic_cl_EE_l2": 4.4381490588696145e-07,
+      "geodesic_cl_BB_l2": 5.564677931325851e-11,
+      "geodesic_rms_screen_twist_rad": 0.005558128981433329,
+      "geodesic_cosmo_Q2_stf5": [
+        0.013680743320034558,
+        0.00815069329556347,
+        -0.0011810889915319718,
+        0.0005958974577247604,
+        -0.00029113512521686003
+      ],
+      "geodesic_obs_Q2_stf5": [
+        0.013744520778874003,
+        0.008193712866461792,
+        -0.0012316767887684545,
+        0.0006225080190320252,
+        -0.0002993503974590471
+      ],
+      "max_null_err": 3.785860513971784e-13,
+      "max_screen_ortho_err": 1.712519015484304e-14
+    },
+    "VI_-1/9_exception__tilted": {
+      "family": "VI_-1/9_exception",
+      "orthogonal_control": false,
+      "bianchi_class": "B",
+      "equivalence_class": "MARGINAL_CLASS_B_VIH",
+      "N_span": [
+        0.0,
+        2.0
+      ],
+      "final_H": 0.7149210254885355,
+      "init_sigma_over_H_norm": 0.023652775313683264,
+      "final_sigma_over_H_norm": 0.0858442542019113,
+      "init_v_photon_norm": 0.033166247903554,
+      "final_v_photon_norm": 0.02439132859827602,
+      "final_v_cdm_norm": 0.007249768100077611,
+      "wigner_rad_obs_angle_rad": 9.689742881215903e-06,
+      "photon_congruence_vorticity_norm": 0.0016042292166479426,
+      "cdm_congruence_vorticity_norm": 0.0006820892227197282,
+      "max_jacobi_residual": 1.6961296919670705e-14,
+      "max_hamiltonian_residual_rel": 5.6901460668636105e-12,
+      "max_codazzi_residual_rel": 1.9523931857953345e-11,
+      "max_bass_htt_codazzi_diff": 1.6727821274979306e-17,
+      "min_dec_margin": 8.330818334107096e-05,
+      "geodesic_cl_TT_l2": 0.2232589460315837,
+      "geodesic_cl_EE_l2": 3.2313080981719974e-05,
+      "geodesic_cl_BB_l2": 6.160892138058433e-05,
+      "geodesic_rms_screen_twist_rad": 0.6574961780660321,
+      "geodesic_cosmo_Q2_stf5": [
+        -0.26024916307263224,
+        -0.684438512922263,
+        -0.005574332770984021,
+        -0.00017062701445749303,
+        0.3611864666090892
+      ],
+      "geodesic_obs_Q2_stf5": [
+        -0.2601788194382595,
+        -0.6843654339517031,
+        -0.005630253449903216,
+        -0.00010639111921890876,
+        0.36077495007286436
+      ],
+      "max_null_err": 3.251375724211414e-09,
+      "max_screen_ortho_err": 1.4526615466081694e-09
+    },
+    "I__orthogonal": {
+      "family": "I",
+      "orthogonal_control": true,
+      "bianchi_class": "A",
+      "equivalence_class": "FLAT_K0_FLRW_LIMIT",
+      "N_span": [
+        0.0,
+        2.0
+      ],
+      "final_H": 0.7077105385359003,
+      "init_sigma_over_H_norm": 0.02088855914452496,
+      "final_sigma_over_H_norm": 7.004988756931036e-05,
+      "init_v_photon_norm": 0.0,
+      "final_v_photon_norm": 0.0,
+      "final_v_cdm_norm": 0.0,
+      "wigner_rad_obs_angle_rad": 0.0,
+      "photon_congruence_vorticity_norm": 0.0,
+      "cdm_congruence_vorticity_norm": 0.0,
+      "max_jacobi_residual": 0.0,
+      "max_hamiltonian_residual_rel": 1.286905458067158e-11,
+      "max_codazzi_residual_rel": 0.0,
+      "max_bass_htt_codazzi_diff": 0.0,
+      "min_dec_margin": 8.386565697562809e-05,
+      "geodesic_cl_TT_l2": 2.163338295355081e-05,
+      "geodesic_cl_EE_l2": 7.991318692247983e-11,
+      "geodesic_cl_BB_l2": 6.731492699337492e-17,
+      "geodesic_rms_screen_twist_rad": 1.7321502319561195e-19,
+      "geodesic_cosmo_Q2_stf5": [
+        -0.008035744727499631,
+        -3.766020615835471e-06,
+        -8.838601168968679e-18,
+        -1.845146183622202e-17,
+        1.0795801302177792e-19
+      ],
+      "geodesic_obs_Q2_stf5": [
+        -0.008034759584527523,
+        -3.1670178070971215e-06,
+        -4.332046625886692e-07,
+        2.5371049035659414e-07,
+        -5.371499022408112e-08
+      ],
+      "max_null_err": 1.4954704141700859e-13,
+      "max_screen_ortho_err": 4.884981308350689e-15
+    },
+    "V__orthogonal": {
+      "family": "V",
+      "orthogonal_control": true,
+      "bianchi_class": "B",
+      "equivalence_class": "OPEN_KNEG_FLRW_LIMIT",
+      "N_span": [
+        0.0,
+        2.0
+      ],
+      "final_H": 0.707711832541071,
+      "init_sigma_over_H_norm": 0.020887419944628945,
+      "final_sigma_over_H_norm": 7.004975947926768e-05,
+      "init_v_photon_norm": 0.0,
+      "final_v_photon_norm": 0.0,
+      "final_v_cdm_norm": 0.0,
+      "wigner_rad_obs_angle_rad": 0.0,
+      "photon_congruence_vorticity_norm": 0.0,
+      "cdm_congruence_vorticity_norm": 0.0,
+      "max_jacobi_residual": 1.3777084925908973e-38,
+      "max_hamiltonian_residual_rel": 1.696760954276983e-11,
+      "max_codazzi_residual_rel": 2.479468650118441e-17,
+      "max_bass_htt_codazzi_diff": 7.697900297006155e-22,
+      "min_dec_margin": 8.386565697562809e-05,
+      "geodesic_cl_TT_l2": 2.1635381437104655e-05,
+      "geodesic_cl_EE_l2": 7.991246835898492e-11,
+      "geodesic_cl_BB_l2": 4.252776238838562e-15,
+      "geodesic_rms_screen_twist_rad": 2.854469323460111e-18,
+      "geodesic_cosmo_Q2_stf5": [
+        0.004020812501919945,
+        -0.00695672012570484,
+        3.852859702723446e-17,
+        -2.265772743005571e-17,
+        -3.0417813191689e-18
+      ],
+      "geodesic_obs_Q2_stf5": [
+        0.004021809018699247,
+        -0.006956176221214938,
+        -4.2105127190403676e-07,
+        2.597162155453194e-07,
+        -5.3953515000143495e-08
+      ],
+      "max_null_err": 2.2359891715950653e-13,
+      "max_screen_ortho_err": 4.440892098500626e-15
+    },
+    "VII_h__orthogonal": {
+      "family": "VII_h",
+      "orthogonal_control": true,
+      "bianchi_class": "B",
+      "equivalence_class": "OPEN_KNEG_FLRW_LIMIT",
+      "N_span": [
+        0.0,
+        2.0
+      ],
+      "final_H": 0.7077109939099216,
+      "init_sigma_over_H_norm": 0.02088815375786648,
+      "final_sigma_over_H_norm": 7.454001025544297e-05,
+      "init_v_photon_norm": 0.0,
+      "final_v_photon_norm": 0.0,
+      "final_v_cdm_norm": 0.0,
+      "wigner_rad_obs_angle_rad": 0.0,
+      "photon_congruence_vorticity_norm": 0.0,
+      "cdm_congruence_vorticity_norm": 0.0,
+      "max_jacobi_residual": 5.8012723152762826e-34,
+      "max_hamiltonian_residual_rel": 1.1910742937138458e-11,
+      "max_codazzi_residual_rel": 2.845187209219003e-15,
+      "max_bass_htt_codazzi_diff": 2.2049189338204723e-23,
+      "min_dec_margin": 8.386565697562809e-05,
+      "geodesic_cl_TT_l2": 2.184385945804562e-05,
+      "geodesic_cl_EE_l2": 9.038846190695985e-11,
+      "geodesic_cl_BB_l2": 4.2336516045006283e-14,
+      "geodesic_rms_screen_twist_rad": 0.006666410693739905,
+      "geodesic_cosmo_Q2_stf5": [
+        -0.0037268911179936534,
+        0.0071191940302657904,
+        3.2554464163122423e-17,
+        2.790320724055422e-17,
+        -0.000781693541919014
+      ],
+      "geodesic_obs_Q2_stf5": [
+        -0.0037259423952395294,
+        0.007119819743268982,
+        -4.295658128605694e-07,
+        2.2850373185991012e-07,
+        -0.0007816561084226679
+      ],
+      "max_null_err": 2.728928194528635e-13,
+      "max_screen_ortho_err": 2.32912647502026e-14
+    },
+    "IX__orthogonal": {
+      "family": "IX",
+      "orthogonal_control": true,
+      "bianchi_class": "A",
+      "equivalence_class": "CLOSED_KPOS_FLRW_LIMIT",
+      "N_span": [
+        0.0,
+        2.0
+      ],
+      "final_H": 0.7077102150616431,
+      "init_sigma_over_H_norm": 0.02088884397362451,
+      "final_sigma_over_H_norm": 7.000402012425799e-05,
+      "init_v_photon_norm": 0.0,
+      "final_v_photon_norm": 0.0,
+      "final_v_cdm_norm": 0.0,
+      "wigner_rad_obs_angle_rad": 0.0,
+      "photon_congruence_vorticity_norm": 0.0,
+      "cdm_congruence_vorticity_norm": 0.0,
+      "max_jacobi_residual": 0.0,
+      "max_hamiltonian_residual_rel": 1.2985634137587121e-11,
+      "max_codazzi_residual_rel": 0.0,
+      "max_bass_htt_codazzi_diff": 0.0,
+      "min_dec_margin": 8.386565697562795e-05,
+      "geodesic_cl_TT_l2": 2.1632466279983123e-05,
+      "geodesic_cl_EE_l2": 7.979864170712126e-11,
+      "geodesic_cl_BB_l2": 1.0004566007963019e-14,
+      "geodesic_rms_screen_twist_rad": 0.005579483427944908,
+      "geodesic_cosmo_Q2_stf5": [
+        -0.008035574497708106,
+        -3.7628255643894693e-06,
+        9.78060129921871e-18,
+        3.660737614930286e-17,
+        7.479599354570085e-18
+      ],
+      "geodesic_obs_Q2_stf5": [
+        -0.008034589355107414,
+        -3.1638228660599672e-06,
+        -4.3320466201626696e-07,
+        2.537104657060754e-07,
+        -5.371499000935036e-08
+      ],
+      "max_null_err": 1.5021317523178368e-13,
+      "max_screen_ortho_err": 1.0907941216942163e-14
+    }
+  },
+  "vi_minus_1_9_rk4_convergence": {
+    "steps": [
+      {
+        "n_geodesic_steps": 48,
+        "max_null_err": 8.234342374624504e-07,
+        "max_screen_ortho_err": 3.815152599395688e-07,
+        "cl_TT_l2": 0.22325908272368683,
+        "cl_EE_l2": 3.2313167959556325e-05,
+        "cl_BB_l2": 6.160882512643737e-05
+      },
+      {
+        "n_geodesic_steps": 96,
+        "max_null_err": 5.183747853187981e-08,
+        "max_screen_ortho_err": 2.2906265995104036e-08,
+        "cl_TT_l2": 0.2232589199960823,
+        "cl_EE_l2": 3.23130497690282e-05,
+        "cl_BB_l2": 6.160895529276066e-05
+      },
+      {
+        "n_geodesic_steps": 192,
+        "max_null_err": 3.251375724211414e-09,
+        "max_screen_ortho_err": 1.4526615466081694e-09,
+        "cl_TT_l2": 0.2232589460315837,
+        "cl_EE_l2": 3.2313080981719974e-05,
+        "cl_BB_l2": 6.160892138058433e-05
+      }
+    ],
+    "null_err_ratio_48_over_96": 15.884920732709677,
+    "null_err_ratio_96_over_192": 15.943244622844206
+  },
+  "physics_gates": {
+    "implementation_verified": true,
+    "source_conditioned_empirical_family_attribution": false,
+    "native_all_m_boltzmann_completed": false
+  }
+}

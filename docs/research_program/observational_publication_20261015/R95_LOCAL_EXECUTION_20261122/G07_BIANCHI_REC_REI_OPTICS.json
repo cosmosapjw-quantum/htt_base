@@ -1,0 +1,111 @@
+{
+  "schema": "htt.r95.bianchi_rec_rei_optics_bridge/1",
+  "elapsed_seconds": 0.6924427899939474,
+  "sources_sha256": {
+    "hyrec2_planck2018_csv": "ca5ef46dd70518a83cd0ccca265144dd4f66366a97e9e79f8800066a02a83c96",
+    "rei_thomson_pair_json": "4c7001b2e0e009393a5c1ade6bb55fdfbfdd9c853c5aa04b5e17404834678754",
+    "rec_pr05b2_npz": "d4f82542e13fed4ff0bb60b17865d8b9de5e090a2366108169c3da7a21fcb4b1"
+  },
+  "cosmology_planck2018": {
+    "h": 0.6735837,
+    "T_cmb_K": 2.72548,
+    "Omega_b": 0.0494142797907188,
+    "Y_He": 0.245,
+    "Omega_m": 0.313841,
+    "Omega_r": 9.220339e-05,
+    "Omega_Lambda": 0.686067,
+    "n_H0_per_m3": 0.18998658349499983
+  },
+  "hyrec2_plus_tanh_reionization": {
+    "n_points": 8400,
+    "z_range": [
+      0.0,
+      8000.0
+    ],
+    "reion_params": {
+      "z_reion_H": 7.67,
+      "delta_z_H": 0.5,
+      "z_reion_HeII": 3.5,
+      "include_HeII": true
+    },
+    "tau_reion_z0_to_30": 0.05410794573923899,
+    "z_visibility_peak": 1088.797170396436,
+    "g_visibility_peak_Mpc_inv": 0.021258959245040208,
+    "z_kappa_eq_1": 1085.1657761054305,
+    "kappa_z_max": 987.1672623405708,
+    "conformal_visibility_integral": 1.0001325782539734,
+    "expected_1_minus_exp_minus_kappa_max": 1.0,
+    "visibility_normalization_abs_error": 0.00013257825397339218,
+    "comoving_distance_to_zmax_Mpc": 14121.39371132462,
+    "comoving_distance_to_zstar_Mpc": 13893.52391934385,
+    "x_e_at_z0": 1.1624283253880003,
+    "x_e_at_z1089": 0.1302776,
+    "positivity_and_monotonicity_ok": true
+  },
+  "r94_constant_xe_control_vs_physical": {
+    "r94_assumed_tau_z20_to_z4": 0.18393,
+    "physical_kappa_z20": 0.054074165091220275,
+    "physical_tau_reion": 0.05410794573923899,
+    "delta_z_kappa_20": "R94 used constant n_e0=2e-7 cm^-3, x_e=1; R95 replaces with HyRec-2 + Planck2018 tanh reionization"
+  },
+  "bianchi_anisotropic_peebles_sensitivity": {
+    "0e+00": {
+      "sigma0_over_H0": 0.0,
+      "omega_sigma0": 0.0,
+      "H_ratio_at_z1100": 1.0,
+      "peebles_z_star_grid": 1079.5,
+      "peebles_z_star_quadratic_peak": 1079.4364162045404,
+      "delta_z_star_vs_flrw": 0.0,
+      "freezeout_xe_z200": 0.0003383139077644372
+    },
+    "1e-05": {
+      "sigma0_over_H0": 1e-05,
+      "omega_sigma0": 1.666666666666667e-11,
+      "H_ratio_at_z1100": 1.026427625583543,
+      "peebles_z_star_grid": 1079.5,
+      "peebles_z_star_quadratic_peak": 1079.5655203137376,
+      "delta_z_star_vs_flrw": 0.1291041091972147,
+      "freezeout_xe_z200": 0.0003397280581490891
+    },
+    "1e-04": {
+      "sigma0_over_H0": 0.0001,
+      "omega_sigma0": 1.6666666666666667e-09,
+      "H_ratio_at_z1100": 2.5209853343696835,
+      "peebles_z_star_grid": 1100.0,
+      "peebles_z_star_quadratic_peak": 1099.9854725556165,
+      "delta_z_star_vs_flrw": 20.54905635107616,
+      "freezeout_xe_z200": 0.0004315366002351969
+    },
+    "1e-03": {
+      "sigma0_over_H0": 0.001,
+      "omega_sigma0": 1.6666666666666665e-07,
+      "H_ratio_at_z1100": 23.163261981221517,
+      "peebles_z_star_grid": 1283.5,
+      "peebles_z_star_quadratic_peak": 1283.3329860310585,
+      "delta_z_star_vs_flrw": 203.8965698265181,
+      "freezeout_xe_z200": 0.0019638851115486074
+    },
+    "1e-02": {
+      "sigma0_over_H0": 0.01,
+      "omega_sigma0": 1.6666666666666667e-05,
+      "H_ratio_at_z1100": 231.41882067167796,
+      "peebles_z_star_grid": 1480.5,
+      "peebles_z_star_quadratic_peak": 1480.7176046655534,
+      "delta_z_star_vs_flrw": 401.281188461013,
+      "freezeout_xe_z200": 0.01764153171086974
+    }
+  },
+  "rec_and_rei_provenance": {
+    "rec_bianchi_i_source_sha256": "4f6dbbc10da773bbc6ef2d40aa1c71749b7c9827e68127cc5783e09e24d3026e",
+    "rec_delta_t_flrw_z20_to_z4_s": 4.2794891441557064e+16,
+    "rec_delta_b_shear_q1e_6": 5.893027746558597e-07,
+    "rec_pr05b2": {
+      "schema": "PR05B2_ACCEPTED_HISTORY_V1",
+      "completeness": "SOURCE_COMPLETE_THROUGH_Z900_CURRENT",
+      "n_eta": 7489
+    },
+    "rei_thomson_pair_q_envelope": 8.749468460587409e-08,
+    "REI_full_cmb_electron_history_qualified": false,
+    "anisotropic_reionization_modeled": false
+  }
+}

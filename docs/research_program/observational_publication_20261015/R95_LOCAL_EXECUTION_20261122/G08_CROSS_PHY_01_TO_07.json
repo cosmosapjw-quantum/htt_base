@@ -1,0 +1,132 @@
+{
+  "schema": "htt.r95.cross_phy_01_to_07_synthesis/1",
+  "elapsed_seconds": 0.003967701981309801,
+  "upstream_sha256": {
+    "G02": "abda11e9d0eecb00ebaa5fa94782a62e243f9bc850e03fb9f144346452eaaadb",
+    "G03": "745183fd9c8511500b4917bc79c94a897f045e206bd7c2a32d7489ebbc257203",
+    "G04": "5366537fc9124453655e77bab0b46a29fc0b94fd8e6a301a51e86307e372b7d0",
+    "G05": "1f207df9af46fc0d30d30d1bb41deb896fe1c61752acdb9f420a00919e976350",
+    "G06": "baa207031342d7694b84876c5e3053fa027fd1e7630a669e41d17d40d18d11ab",
+    "G07_BG": "3a0acd98b3067ffd33200e3c51eae7fbaf3c6cd88cc7b92f3fc55e3554be71fb",
+    "G07_OPT": "90fedf4a75c446644158e41997f196277e45f060602aac7611e0c40212214336",
+    "G07_POL": "f51f17e5c7497c33fd6a52fa22be68a9da536f78be98ff7b1b7deb0c7e2e98a2",
+    "R89_G08": "91a2526a4786dace90ec00ef212b7b2dcd27b209a321b08373e00ed89328a9f4"
+  },
+  "cross_probe_dipole_reference_count": 14,
+  "PHY_routes": {
+    "PHY-01": {
+      "title": "Hemisphere/mask E->B & dipole-quadrupole leakage vs Type V j0*chi0 flux/shape bridge",
+      "planck_mask_fsky_I_P": [
+        0.7794118722279867,
+        0.7814398805300394
+      ],
+      "planck_pure_E_to_B_mask_leak_mean": 0.0712481521144124,
+      "nvss_S20_4p_vs_9p_dipole_shift_deg": 25.45748014503471,
+      "bianchi_V_tilted_vs_orth_geodesic_TT_l2": [
+        0.00010671234314163364,
+        2.1635381437104655e-05
+      ],
+      "blocker_bucket": "NATIVE_TRANSFER + DATA (requires masked all-m Bianchi atlas & physical E/B mask transfer covariance)"
+    },
+    "PHY-02": {
+      "title": "Basis-free Thomson rank-9 collision PSD + DEC/WEC conformal normal-flux & HyRec-2+tanh visibility",
+      "max_thomson_energy_rel_err": 4.3820975611275114e-15,
+      "max_screen_transversality_leak": 1.7867651802561113e-16,
+      "min_polarized_transverse_J_eig": 0.49983672783669153,
+      "max_hamiltonian_rel_across_17_evol": 2.0160418989492282e-10,
+      "min_dec_margin_across_17_evol": 7.89279531709324e-05,
+      "physical_z_visibility_peak": 1088.797170396436,
+      "physical_tau_reion": 0.05410794573923899,
+      "blocker_bucket": "DATA + MODEL (SQ-PHOTON-FLUX physical CMB higher moments + anisotropic reionization missing)"
+    },
+    "PHY-03": {
+      "title": "Common Solar/CMB boost beta vector across Planck, Radio Ellis-Baldwin, Gaia E1 aberration & CF4 SR gamma",
+      "beta_cmb": 0.001233586736861806,
+      "exact_3plusbeta2_over3": 1.0000005072454126,
+      "kinematic_beta2_quadrupole_scale": 1.141302178021019e-06,
+      "radio_d_obs_over_d_eb_range": [
+        2.8268611438689297,
+        19.803025638078473
+      ],
+      "gaia_quality_E1_amp_uasyr": 4.836348639232543,
+      "gaia_quality_E1_gal_lb_deg": [
+        359.6216496838388,
+        5.125271107344743
+      ],
+      "gaia_quality_scanlaw_deproj_E1_amp_uasyr": 4.878016416573292,
+      "gaia_quality_scanlaw_deproj_E1_gal_lb_deg": [
+        355.44341352384635,
+        1.3178553564154754
+      ],
+      "cf4_sr_gamma_H0_shift_z040": 0.0017665520419569702,
+      "blocker_bucket": "DATA (matched LSS clustering null in radio & AGN/quasar chromatic selection calibration)"
+    },
+    "PHY-04": {
+      "title": "Gaia VSH B2 vs E2 orthogonality, B1=Omega_frame-omega_cosmic degeneracy & Bianchi IX vorticity",
+      "quaia_inv_E2_norm_uasyr": 6.412690306669539,
+      "quaia_inv_B2_norm_uasyr": 3.416531325696652,
+      "quaia_inv_wald10_jk": 17.70732469266162,
+      "gaia_scanlaw_ecl_m0_frac": 0.9976129896880096,
+      "quaia_inv_E2_ecl_m0_frac": 0.25975048904724174,
+      "bianchi_IX_tilted_photon_vorticity": 3.080698312718916e-05,
+      "actual_normal_vorticity": null,
+      "blocker_bucket": "DATA + MODEL (no external quasar systematic null & radial-free B1 vorticity degeneracy)"
+    },
+    "PHY-05": {
+      "title": "Exceptional Class-B VI_{-1/9} (h=-1/9, N=diag(0,1,-4)) dynamics, BASS-HTT Codazzi & RK4 convergence",
+      "vi_exc_max_jacobi": 1.6961296919670705e-14,
+      "vi_exc_max_hamiltonian_rel": 5.6901460668636105e-12,
+      "vi_exc_max_codazzi_rel": 1.9523931857953345e-11,
+      "vi_exc_max_bass_htt_codazzi_diff": 1.6727821274979306e-17,
+      "vi_exc_rk4_ratio_48_to_96_to_192": [
+        15.884920732709677,
+        15.943244622844206
+      ],
+      "vi_exc_geodesic_cl2_TT_EE_BB": [
+        0.2232589460315837,
+        3.2313080981719974e-05,
+        6.160892138058433e-05
+      ],
+      "r62_cf4_log_15d_null_chi2": 27.781170244360887,
+      "blocker_bucket": "MODEL + NATIVE_TRANSFER (SQ-LIE-FLUX normal-frame rho/j/pi closure & all-m Boltzmann)"
+    },
+    "PHY-06": {
+      "title": "Helical/frame commutator [D, sigma] eigenframe rotation, Class-B mirror parity & Planck E/B BiPoSH",
+      "bianchi_VIIh_wigner_rad_obs_rad": 1.3303324092573895e-05,
+      "bianchi_VIIh_cosmo_vs_obs_Q2_cosine": 0.999996894757421,
+      "vii_h_mirror_chirality_TT_TB_EB": [
+        1.2095332708278514e-11,
+        5.786694778694688e-10,
+        8.842179718329044e-10
+      ],
+      "planck_fullres_smica_20D_p300_T_E_B": [
+        0.33222591362126247,
+        0.37209302325581395,
+        0.31561461794019935
+      ],
+      "blocker_bucket": "NATIVE_TRANSFER + MODEL (full-sky inhomogeneous Bianchi phase/eigenframe template likelihood)"
+    },
+    "PHY-07": {
+      "title": "Radial-operator rank-6/antisymmetric-null-3, CF4 joint PV+calibration & finite-z geodesic vs z->0 STF",
+      "sq_frame_radial_operator_rank_tol1e10": 6,
+      "sq_frame_antisymmetric_vorticity_null_dim": 3,
+      "sq_frame_J2_rank_increment_global": 3,
+      "cf4_R5_cal000_vs_cal005_H0_sd": [
+        0.35918706714382675,
+        1.1060075758170549
+      ],
+      "p1_manski_unknown0p25_W3_interval": [
+        0.0048828125,
+        0.2548828125
+      ],
+      "blocker_bucket": "DATA + MODEL (SQ-CF4 pre-intercalibration MCMC + SQ-OPTICAL finite-z Sachs drift observable)"
+    }
+  },
+  "physics_gates": {
+    "cross_probe_joint_likelihood_qualified": false,
+    "sq_cross_cov_status": "BLOCKED_DEPENDENCY",
+    "physical_Pi": null,
+    "physical_GF": null,
+    "r78_historical_phy_states_changed": false
+  }
+}
