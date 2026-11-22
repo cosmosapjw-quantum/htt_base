@@ -30,9 +30,10 @@ from pathlib import Path
 import sys
 
 import numpy as np
-from scipy.sparse import csc_matrix, eye, lil_matrix
-from scipy.sparse.linalg import splu
+from scipy.sparse import bmat, csc_matrix, eye, lil_matrix
+from scipy.sparse.linalg import expm_multiply, splu
 from scipy.spatial.transform import Rotation
+from scipy.special import sph_harm_y
 
 ROOT = Path(__file__).resolve().parents[2]
 for p in (str(ROOT), str(ROOT / "htt"), str(ROOT / "htt/src")):
@@ -45,13 +46,25 @@ from bass.background.general_tilted_evolution import (
     evolve_general_tilted_bianchi,
 )
 from bass.background.geometry import pstf_rank2
+from bass.recombination.recombination_ingest import build_interpolators, load_recombination_table
+from bass.recombination.reionization import (
+    SEC_PER_MPC,
+    ReionizationParameters,
+    cosmology_from_metadata,
+    extend_table_with_reionization,
+)
 from bass.transport.general_bianchi_transfer import (
+    _fast_scalar_alm_from_gl,
+    _fast_spin2_alm_from_gl,
     _spherical_screen_basis,
     gl_sphere_grid,
+    integrate_polarized_geodesics,
+    qu_from_spin2_alm,
     spin_weighted_spherical_harmonic_grid,
 )
 from scripts.r95.bianchi_bg_audit import _build_vi_minus_1_9_state
 from scripts.r95.bianchi_polarized_hierarchy import (
+    HYREC_CSV,
     _geodesic_aberration_and_twist_on_grid,
     _prepare_physical_visibility_timeline,
 )
@@ -107,8 +120,21 @@ def _build_spin_basis_theta(L: int, m_values: tuple[int, ...], th_1d: np.ndarray
     return basis
 
 
-def _build_diag_stream_and_thomson(L: int, m_values: tuple[int, ...], idx_map: dict, dim: int, k: float) -> tuple[csc_matrix, csc_matrix]:
-    """Exact diagonal-in-m spin-s cos(theta) streaming A and BASS rank-9 Thomson K."""
+def _build_diag_stream_and_thomson(
+    L: int,
+    m_values: tuple[int, ...],
+    idx_map: dict,
+    dim: int,
+    k: float,
+    *,
+    thomson_offdiag_sign: float = +1.0,
+) -> tuple[csc_matrix, csc_matrix]:
+    """Exact diagonal-in-m spin-s cos(theta) streaming A and BASS rank-9 Thomson K.
+
+    Under the sky convention Q +- i U = -sum (E_{lm} +- i B_{lm}) _{+-2}Y_{lm},
+    the exact angular collision integral C[J] = 3/(8pi) P (int J dOmega) P - J
+    yields symmetric off-diagonal T_{2m} <-> E_{2m} coupling +sqrt(6)/10.
+    """
     A = lil_matrix((dim, dim), dtype=np.complex128)
     K = lil_matrix((dim, dim), dtype=np.complex128)
     for m in m_values:
@@ -151,11 +177,106 @@ def _build_diag_stream_and_thomson(L: int, m_values: tuple[int, ...], idx_map: d
         if abs(m) <= 2 and L >= 2:
             t2 = idx_map["T"][(2, m)]
             e2 = idx_map["E"][(2, m)]
+            off_val = float(thomson_offdiag_sign) * (math.sqrt(6.0) / 10.0)
             K[t2, t2] = -0.9
-            K[t2, e2] = -math.sqrt(6.0) / 10.0
-            K[e2, t2] = -3.0 / (5.0 * math.sqrt(6.0))
+            K[t2, e2] = off_val
+            K[e2, t2] = off_val
             K[e2, e2] = -0.4
     return A.tocsc(), K.tocsc()
+
+
+def verify_thomson_signed_angular_projection() -> dict:
+    """Verify exact Thomson collision matrix K2 for all m in {-2..2} against direct 2D angular C[J] projection."""
+    th, ph, d, w = gl_sphere_grid(18)
+    e, p = _spherical_screen_basis(d)
+    P = np.eye(3) - np.einsum("...i,...j->...ij", d, d)
+
+    def _outer(a: np.ndarray, b: np.ndarray) -> np.ndarray:
+        return np.einsum("...i,...j->...ij", a, b)
+
+    def _proj(C_t: np.ndarray, a: np.ndarray, b: np.ndarray) -> np.ndarray:
+        return np.einsum("...i,...ij,...j->...", a, C_t, b)
+
+    max_err_all_m = 0.0
+    m0_matrix = None
+    for m in (-2, -1, 0, 1, 2):
+        idx_map, dim = _mode_index_table(4, (m, -m) if m != 0 else (0,))
+        _, K_sp = _build_diag_stream_and_thomson(4, (m, -m) if m != 0 else (0,), idx_map, dim, 0.0, thomson_offdiag_sign=+1.0)
+        K_dense = K_sp.toarray()
+        cols = [idx_map["T"][(2, m)], idx_map["E"][(2, m)], idx_map["B"][(2, m)]]
+        K_code = K_dense[np.ix_(cols, cols)].real
+        K_num = np.zeros((3, 3), dtype=np.float64)
+        scale = 1.0 if m == 0 else math.sqrt(2.0)
+        alm_unit = {(2, m): 1.0} if m == 0 else {(2, m): 1.0 / scale, (2, -m): ((-1) ** m) / scale}
+        for col_i, ch in enumerate(("T", "E", "B")):
+            if ch == "T":
+                T_map = sph_harm_y(2, m, th, ph).real if m == 0 else (
+                    (sph_harm_y(2, m, th, ph) + ((-1) ** m) * sph_harm_y(2, -m, th, ph)).real / scale
+                )
+            else:
+                T_map = np.zeros_like(th)
+            Q_map, U_map = qu_from_spin2_alm(alm_unit if ch == "E" else {}, alm_unit if ch == "B" else {}, th, ph, ell_max=4)
+            J_t = 0.5 * (
+                T_map[..., None, None] * P
+                + Q_map[..., None, None] * (_outer(e, e) - _outer(p, p))
+                + U_map[..., None, None] * (_outer(e, p) + _outer(p, e))
+            )
+            J_bar = np.sum(w[..., None, None] * J_t, axis=(0, 1))
+            C_t = (3.0 / (8.0 * math.pi)) * (P @ J_bar @ P) - J_t
+            t_alm = _fast_scalar_alm_from_gl(np.trace(C_t, axis1=-2, axis2=-1), 18, 4)
+            e_alm, b_alm = _fast_spin2_alm_from_gl(_proj(C_t, e, e) - _proj(C_t, p, p), _proj(C_t, e, p) + _proj(C_t, p, e), 18, 4)
+            K_num[:, col_i] = [t_alm[(2, m)].real * scale, e_alm[(2, m)].real * scale, b_alm[(2, m)].real * scale]
+        if m == 0:
+            m0_matrix = K_num.tolist()
+        max_err_all_m = max(max_err_all_m, float(np.max(np.abs(K_num - K_code))))
+
+    if max_err_all_m > 1e-13:
+        raise RuntimeError(f"Thomson signed angular projection check failed: {max_err_all_m}")
+    return {
+        "max_abs_err_across_m_minus2_to_2": max_err_all_m,
+        "m0_angular_projection_3x3": m0_matrix,
+        "offdiag_T2_E2_corrected_sign": +math.sqrt(6.0) / 10.0,
+        "legacy_minus_sign_offdiag_discrepancy": 2.0 * math.sqrt(6.0) / 10.0,
+    }
+
+
+def _prepare_resampled_visibility_timeline(time_refinement_factor: int = 1) -> dict:
+    """HyRec-2 + tanh visibility timeline on base 155 intervals (r=1) or r-fold subdivided grid with coefficient re-evaluation."""
+    r = int(time_refinement_factor)
+    if r < 1:
+        raise ValueError(f"time_refinement_factor must be >= 1, got {r}")
+    if r == 1:
+        return _prepare_physical_visibility_timeline()
+
+    recomb = load_recombination_table(HYREC_CSV)
+    cosmo = cosmology_from_metadata(recomb.metadata)
+    reion = ReionizationParameters(z_reion_H=7.67, delta_z_H=0.5, z_reion_HeII=3.5, delta_z_HeII=0.5, include_HeII=True)
+    full_tab = extend_table_with_reionization(recomb, reion, cosmology=cosmo, z_low=0.0, n_low_points=400)
+    z_base = np.unique(np.concatenate([
+        np.linspace(0.0, 12.0, 35),
+        np.linspace(12.0, 200.0, 25),
+        np.linspace(200.0, 850.0, 20),
+        np.linspace(850.0, 1300.0, 65),
+        np.linspace(1300.0, 1600.0, 15),
+    ]))
+    z_grid = np.unique(np.concatenate([np.linspace(z_base[j], z_base[j + 1], r + 1) for j in range(len(z_base) - 1)]))
+    interp = build_interpolators(full_tab)
+    H_Mpc = cosmo.H_of_z(z_grid) * SEC_PER_MPC
+    tau_dot_Mpc = interp.query_tau_dot(z_grid)
+    z_fwd = z_grid[::-1]
+    H_fwd = H_Mpc[::-1]
+    tdot_fwd = tau_dot_Mpc[::-1]
+    invH = 1.0 / H_fwd
+    d_eta = np.abs(np.diff(z_fwd)) * 0.5 * (invH[1:] + invH[:-1])
+    return {
+        "cosmo": cosmo,
+        "z_fwd": z_fwd,
+        "eta_fwd": np.concatenate([[0.0], np.cumsum(d_eta)]),
+        "d_eta": d_eta,
+        "dN_fwd": -np.diff(np.log(1.0 + z_fwd)),
+        "H_fwd_Mpc": H_fwd,
+        "tdot_fwd_Mpc": tdot_fwd,
+    }
 
 
 def _project_gamma4_to_coupled_m_operators(
@@ -375,18 +496,21 @@ def _project_gamma4_to_coupled_m_operators(
 
 
 def verify_angular_quadrature_oracle() -> dict:
-    """Verify M_twist, M_geo_exact, and reality parity against 2D GL and live 4D R49 geodesics."""
+    """Verify M_twist, M_geo_exact, and reality parity against 2D GL and live 4D R49 geodesics on admissible VII_h state."""
     from scipy.linalg import expm
-    from bass.transport.general_bianchi_transfer import _fast_spin2_alm_from_gl, integrate_polarized_geodesics, qu_from_spin2_alm
 
     L = 6
     n_gl = 18
     m_vals = tuple(range(-L, L + 1))  # exact full all-m at L=6
     idx_map, dim = _mode_index_table(L, m_vals)
-    # Use a helical + curved VI_{-1/9}-like geometry with non-axisymmetric rotation
-    alg_a = np.array([0.04, -0.02, 0.03], dtype=np.float64)
-    alg_n = np.array([[0.05, 0.03, -0.01], [0.03, -0.02, 0.04], [-0.01, 0.04, 0.06]], dtype=np.float64)
-    sig_gen = pstf_rank2(np.array([[0.02, 0.015, -0.01], [0.015, -0.01, 0.02], [-0.01, 0.02, -0.01]], dtype=np.float64))
+    # F8 fix: use R49 constraint-admissible tilted VII_h state satisfying Jacobi, Hamiltonian, Codazzi!
+    st = _build_default_admissible_state_for_family("VII_h")
+    alg_a = st.algebra.a / st.H
+    alg_n = st.algebra.n / st.H
+    sig_gen = st.sigma_ab / st.H
+    jacobi_na_norm = float(np.linalg.norm(alg_n @ alg_a))
+    if jacobi_na_norm > 1e-13 or not bool(st.constraints.is_admissible):
+        raise RuntimeError(f"Oracle Bianchi VII_h state violates admissibility: |n@a|={jacobi_na_norm}")
 
     op = _project_gamma4_to_coupled_m_operators(L, m_vals, idx_map, dim, sig_gen, alg_a, alg_n, n_gl_theta=n_gl)
     TH, PH, n_hat_grid, _ = op["grid"]
@@ -425,7 +549,6 @@ def verify_angular_quadrature_oracle() -> dict:
             )
 
     # Check 2: Live 4D R49 geodesic ray oracle exp(+dN * M_geo_exact) vs integrate_polarized_geodesics over dN=1e-5
-    from bass.transport.general_bianchi_transfer import _fast_scalar_alm_from_gl
     dN_ray = 1e-5
     rays = integrate_polarized_geodesics(
         n_hat_grid,
@@ -487,6 +610,9 @@ def verify_angular_quadrature_oracle() -> dict:
                 c_neg = y_adv[idx_map[ch][(ell, -m)]]
                 max_conj_parity_err = max(max_conj_parity_err, abs(c_neg - ((-1) ** m) * np.conj(c_pos)))
 
+    # Check 4: F1 Thomson signed angular collision projection across m in {-2..2}
+    thom_check = verify_thomson_signed_angular_projection()
+
     return {
         "twist_operator_vs_2d_gl_grid_max_abs_err": float(max_tw_err),
         "r49_4d_geodesic_oracle_rel_err_T": rel_T,
@@ -494,6 +620,15 @@ def verify_angular_quadrature_oracle() -> dict:
         "r49_4d_geodesic_oracle_rel_err_B": rel_B,
         "geo_operator_reality_conjugate_parity_err": float(max_conj_parity_err),
         "skew_hermitian_err": op["skew_hermitian_err"],
+        "thomson_signed_angular_projection_max_err": thom_check["max_abs_err_across_m_minus2_to_2"],
+        "thomson_m0_projection_3x3": thom_check["m0_angular_projection_3x3"],
+        "thomson_offdiag_T2_E2_sign": thom_check["offdiag_T2_E2_corrected_sign"],
+        "oracle_state_family": "VII_h_admissible",
+        "jacobi_na_norm": jacobi_na_norm,
+        "hamiltonian_residual": float(st.constraints.hamiltonian_residual),
+        "codazzi_residual_norm": float(st.constraints.codazzi_residual_norm),
+        "is_admissible": bool(st.constraints.is_admissible),
+        "historical_non_jacobi_na_norm_rel": 0.5266267094715141,
     }
 
 
@@ -556,10 +691,12 @@ def evolve_coupled_m_system(
     n_N: np.ndarray,
     k: float = 0.002,
     include_geo_coupling: bool = True,
+    method: str = "expm",
+    thomson_offdiag_sign: float = +1.0,
 ) -> dict:
-    """Evolve the complete coupled-(m, ell, T/E/B) sparse LU hierarchy over R95 HyRec-2+tanh timeline."""
+    """Evolve the coupled-(m, ell, T/E/B) sparse hierarchy via piecewise-constant affine expm (or backward_euler diagnostic)."""
     idx_map, dim = _mode_index_table(L, m_values)
-    A, K = _build_diag_stream_and_thomson(L, m_values, idx_map, dim, k)
+    A, K = _build_diag_stream_and_thomson(L, m_values, idx_map, dim, k, thomson_offdiag_sign=thomson_offdiag_sign)
     if include_geo_coupling and (np.any(sig_N) or np.any(a_N) or np.any(n_N)):
         geo = _project_gamma4_to_coupled_m_operators(L, m_values, idx_map, dim, sig_N, a_N, n_N)
         M_geo = geo["M_geo_exact"]
@@ -572,30 +709,48 @@ def evolve_coupled_m_system(
 
     # Pre-project normalized STF source harmonics S_2m for m in m_values intersect [-2..2]
     quad_m = stf_source_harmonics(sig_N)
-    #Wait: stf_source_harmonics projects n^T S n on S^2, whose scale already carries ||sig_N||!
-    # Check consistency with R96: R96 passed -sigma * (H/(1+z)) / ((1+z)/1100)^0.25 * q[m];
-    # here quad_m = <Y_{2m} | n^T sig_N n> ALREADY includes the dimensionless shear tensor sig_N magnitude!
     zf = vis["z_fwd"]
     H = vis["H_fwd_Mpc"]
     tdot = vis["tdot_fwd_Mpc"]
     deta = vis["d_eta"]
-
-    y = np.zeros(dim, dtype=np.complex128)
-    I_sp = eye(dim, format="csc", dtype=np.complex128)
     active_m2 = [m for m in m_values if abs(m) <= 2]
-    for j, dt in enumerate(deta):
-        z_mid = 0.5 * (zf[j] + zf[j + 1])
-        H_mid = 0.5 * (H[j] + H[j + 1])
-        tdot_mid = 0.5 * (tdot[j] + tdot[j + 1])
-        H_conf = H_mid / (1.0 + z_mid)
-        decay = ((1.0 + z_mid) / 1100.0) ** (-0.25)
 
-        s_vec = np.zeros(dim, dtype=np.complex128)
-        for m in active_m2:
-            s_vec[idx_map["T"][(2, m)]] = -H_conf * decay * quad_m[m]
+    if method == "expm":
+        y_aug = np.zeros(dim + 1, dtype=np.complex128)
+        y_aug[-1] = 1.0
+        for j, dt in enumerate(deta):
+            z_mid = 0.5 * (zf[j] + zf[j + 1])
+            H_mid = 0.5 * (H[j] + H[j + 1])
+            tdot_mid = 0.5 * (tdot[j] + tdot[j + 1])
+            H_conf = H_mid / (1.0 + z_mid)
+            decay = ((1.0 + z_mid) / 1100.0) ** (-0.25)
 
-        op_step = A + tdot_mid * K + H_conf * M_geo
-        y = splu(I_sp - dt * op_step).solve(y + dt * s_vec)
+            s_vec = np.zeros(dim, dtype=np.complex128)
+            for m in active_m2:
+                s_vec[idx_map["T"][(2, m)]] = -H_conf * decay * quad_m[m]
+
+            op_step = A + tdot_mid * K + H_conf * M_geo
+            aug = bmat([[op_step, csc_matrix(s_vec[:, None])], [None, csc_matrix((1, 1), dtype=np.complex128)]], format="csc")
+            y_aug = expm_multiply(dt * aug, y_aug)
+        y = y_aug[:dim]
+    elif method == "backward_euler":
+        y = np.zeros(dim, dtype=np.complex128)
+        I_sp = eye(dim, format="csc", dtype=np.complex128)
+        for j, dt in enumerate(deta):
+            z_mid = 0.5 * (zf[j] + zf[j + 1])
+            H_mid = 0.5 * (H[j] + H[j + 1])
+            tdot_mid = 0.5 * (tdot[j] + tdot[j + 1])
+            H_conf = H_mid / (1.0 + z_mid)
+            decay = ((1.0 + z_mid) / 1100.0) ** (-0.25)
+
+            s_vec = np.zeros(dim, dtype=np.complex128)
+            for m in active_m2:
+                s_vec[idx_map["T"][(2, m)]] = -H_conf * decay * quad_m[m]
+
+            op_step = A + tdot_mid * K + H_conf * M_geo
+            y = splu(I_sp - dt * op_step).solve(y + dt * s_vec)
+    else:
+        raise ValueError(f"Unknown integrator method {method!r}")
 
     if not np.all(np.isfinite(y)):
         raise RuntimeError("Non-finite state in coupled-m solver")
@@ -642,6 +797,8 @@ def evolve_coupled_m_system(
     return {
         "L": L,
         "state_dim": dim,
+        "integrator": method,
+        "thomson_offdiag_sign": float(thomson_offdiag_sign),
         "cross_m_coupling_fraction": cross_m_frac,
         "geo_skew_hermitian_err": skew_geo,
         "reality_conjugate_parity_err": float(conj_err),
@@ -654,6 +811,7 @@ def evolve_coupled_m_system(
         "cl_TT_2_to_5": cl["TT"][2:6].tolist(),
         "cl_EE_2_to_5": cl["EE"][2:6].tolist(),
         "cl_BB_2_to_5": cl["BB"][2:6].tolist(),
+        "cl_TE_2_to_5": cl["TE"][2:6].tolist(),
         "cl_TB_2_to_5": cl["TB"][2:6].tolist(),
         "cl_EB_2_to_5": cl["EB"][2:6].tolist(),
         "cl_full": {c: cl[c].tolist() for c in cl},
@@ -666,7 +824,7 @@ def compute() -> dict:
     vis = _prepare_physical_visibility_timeline()
     m5 = (-2, -1, 0, 1, 2)
 
-    # 1. Negative & axisymmetry controls at L=16
+    # 1. Negative & axisymmetry controls at L=16 (expm + corrected +sqrt(6)/10 Thomson sign)
     ctrl_flrw = evolve_coupled_m_system(
         vis, L=16, m_values=m5, sig_N=np.zeros((3, 3)), a_N=np.zeros(3), n_N=np.zeros((3, 3)), k=0.002
     )
@@ -674,20 +832,18 @@ def compute() -> dict:
     ctrl_axi_I = evolve_coupled_m_system(
         vis, L=16, m_values=m5, sig_N=sig_axi, a_N=np.zeros(3), n_N=np.zeros((3, 3)), k=0.002
     )
-    # Pure axisymmetric m=0 shear in non-helical I must yield cross_m=0 and m_nonzero=0 and B=0!
     if ctrl_flrw["all_mode_norm"] > 1e-25:
         raise RuntimeError(f"FLRW coupled-m null control failed: {ctrl_flrw['all_mode_norm']}")
     if ctrl_axi_I["m_nonzero_over_total_T_power"] > 1e-22 or ctrl_axi_I["total_B_power"] > 1e-22:
         raise RuntimeError(f"Axisymmetric Bianchi-I control failed: {ctrl_axi_I}")
 
-    # 2. Pure axisymmetric shear injected into HELICAL/CURVED Bianchi VI_{-1/9} and VII_h (proves m=0 -> m!=0 scattering strictly from Gamma4 coupling!)
+    # 2. Pure axisymmetric shear injected into HELICAL/CURVED Bianchi VI_{-1/9} and VII_h (proves m=0 -> m!=0 scattering)
     r_v = _family_rescaled_trajectory_history("V", vis["z_fwd"], sigma_amp=5e-5, omega_k=0.04)
     r_vi = _family_rescaled_trajectory_history("VI_-1/9_exception", vis["z_fwd"], sigma_amp=5e-5, omega_k=0.04)
     r_7h_pos = _family_rescaled_trajectory_history("VII_h", vis["z_fwd"], sigma_amp=5e-5, omega_k=0.04, handedness=1)
     r_70 = _family_rescaled_trajectory_history("VII_0", vis["z_fwd"], sigma_amp=5e-5, omega_k=0.0)
     r_ix = _family_rescaled_trajectory_history("IX", vis["z_fwd"], sigma_amp=5e-5, omega_k=0.04)
 
-    # Inject PURE m=0 axisymmetric shear sig_axi into non-axisymmetric VI_{-1/9} & tilted-n IX to measure m=0 -> m!=0 scattering directly!
     R_tilt = Rotation.from_euler("zyx", [0.4, 0.7, -0.3]).as_matrix()
     scatter_vi = evolve_coupled_m_system(
         vis, L=16, m_values=m5, sig_N=sig_axi, a_N=r_vi["a"], n_N=r_vi["n"], k=0.002
@@ -696,8 +852,9 @@ def compute() -> dict:
         vis, L=16, m_values=m5, sig_N=sig_axi, a_N=np.zeros(3), n_N=R_tilt @ r_ix["n"] @ R_tilt.T, k=0.002
     )
 
-    # 3. Full coupled evolution across L in {8, 16, 32, 60} for R49 trajectories (non-axisymmetric rotated R49 shear + curvature)
+    # 3. Full coupled evolution across L in {8, 16, 32, 60} via sparse affine expm_multiply & corrected Thomson sign
     families_L = {}
+    vi_full_by_L = {}
     for L in (8, 16, 32, 60):
         families_L[str(L)] = {}
         for fname, hist in (("I_rotated", {"sig": R_tilt @ sig_axi @ R_tilt.T, "a": np.zeros(3), "n": np.zeros((3, 3))}),
@@ -705,15 +862,101 @@ def compute() -> dict:
             res = evolve_coupled_m_system(
                 vis, L=L, m_values=m5, sig_N=hist["sig"], a_N=hist["a"], n_N=hist["n"], k=0.002
             )
+            if fname == "VI_-1/9" and L in (16, 32, 60):
+                vi_full_by_L[L] = dict(res)
             res.pop("cl_full")
             families_L[str(L)][fname] = res
 
-    # Measure L=32 -> L=60 truncation convergence across all 6 geometries
+    # Measure L=32 -> L=60 truncation convergence across all 6 geometries (under exact expm time integration)
     l32_vs_l60_be_rel = {}
     for fname in ("I_rotated", "V", "VI_-1/9", "VII_0", "VII_h", "IX"):
         b32 = families_L["32"][fname]["B_over_E_norm_ratio"]
         b60 = families_L["60"][fname]["B_over_E_norm_ratio"]
         l32_vs_l60_be_rel[fname] = float(abs(b60 - b32) / max(b60, 1e-30))
+
+    # 3b. F1 Signed polarization check: comparing Thomson off-diag +sqrt(6)/10 vs legacy -sqrt(6)/10 on L=16 VI_-1/9
+    vi16_pos = vi_full_by_L[16]
+    vi16_neg = evolve_coupled_m_system(
+        vis, L=16, m_values=m5, sig_N=r_vi["sig"], a_N=r_vi["a"], n_N=r_vi["n"], k=0.002,
+        method="expm", thomson_offdiag_sign=-1.0,
+    )
+    te_pos = np.array(vi16_pos["cl_full"]["TE"])
+    te_neg = np.array(vi16_neg["cl_full"]["TE"])
+    tb_pos = np.array(vi16_pos["cl_full"]["TB"])
+    tb_neg = np.array(vi16_neg["cl_full"]["TB"])
+    ee_pos = np.array(vi16_pos["cl_full"]["EE"])
+    ee_neg = np.array(vi16_neg["cl_full"]["EE"])
+    te_flip_rel = float(np.max(np.abs(te_pos + te_neg)) / max(np.max(np.abs(te_pos)), 1e-30))
+    tb_flip_rel = float(np.max(np.abs(tb_pos + tb_neg)) / max(np.max(np.abs(tb_pos)), 1e-30))
+    ee_inv_rel = float(np.max(np.abs(ee_pos - ee_neg)) / max(np.max(np.abs(ee_pos)), 1e-30))
+    if te_flip_rel > 1e-12 or tb_flip_rel > 1e-12 or ee_inv_rel > 1e-12:
+        raise RuntimeError(f"Thomson sign flip symmetry check failed: TE={te_flip_rel}, TB={tb_flip_rel}, EE={ee_inv_rel}")
+
+    # 3c. F2 Frozen-interval benchmark: reproduce exact review parity expm vs legacy backward_euler on identical 155 intervals
+    be16_seed = evolve_coupled_m_system(
+        vis, L=16, m_values=m5, sig_N=sig_axi, a_N=r_vi["a"], n_N=r_vi["n"], k=0.002, method="backward_euler"
+    )
+    be60_vi = evolve_coupled_m_system(
+        vis, L=60, m_values=m5, sig_N=r_vi["sig"], a_N=r_vi["a"], n_N=r_vi["n"], k=0.002, method="backward_euler"
+    )
+    expm60_vi = families_L["60"]["VI_-1/9"]
+    frozen_bench = {
+        "L16_pure_m0_seed_VI_minus_1_9": {
+            "expm_B_over_E": scatter_vi["B_over_E_norm_ratio"],
+            "backward_euler_B_over_E": be16_seed["B_over_E_norm_ratio"],
+            "expm_m_nonzero_T_frac": scatter_vi["m_nonzero_over_total_T_power"],
+            "backward_euler_m_nonzero_T_frac": be16_seed["m_nonzero_over_total_T_power"],
+        },
+        "L60_rescaled_VI_minus_1_9": {
+            "n_intervals": int(len(vis["d_eta"])),
+            "expm_B_over_E": expm60_vi["B_over_E_norm_ratio"],
+            "backward_euler_B_over_E": be60_vi["B_over_E_norm_ratio"],
+            "expm_total_E_power": expm60_vi["total_E_power"],
+            "backward_euler_total_E_power": be60_vi["total_E_power"],
+            "E_power_ratio_expm_over_be": float(expm60_vi["total_E_power"] / max(be60_vi["total_E_power"], 1e-30)),
+            "expm_total_B_power": expm60_vi["total_B_power"],
+            "backward_euler_total_B_power": be60_vi["total_B_power"],
+            "B_power_ratio_expm_over_be": float(expm60_vi["total_B_power"] / max(be60_vi["total_B_power"], 1e-30)),
+            "expm_m_nonzero_T_frac": expm60_vi["m_nonzero_over_total_T_power"],
+            "backward_euler_m_nonzero_T_frac": be60_vi["m_nonzero_over_total_T_power"],
+        },
+    }
+
+    # 3d. F2 Separate time-grid convergence with continuous HyRec-2 + tanh coefficient & source re-evaluation
+    vis_r2 = _prepare_resampled_visibility_timeline(2)
+    vis_r4 = _prepare_resampled_visibility_timeline(4)
+    time_ref_diag = {}
+    for L_conv in (32, 60):
+        row_r1 = families_L[str(L_conv)]["VI_-1/9"]
+        row_r2 = evolve_coupled_m_system(vis_r2, L=L_conv, m_values=m5, sig_N=r_vi["sig"], a_N=r_vi["a"], n_N=r_vi["n"], k=0.002)
+        row_r4 = evolve_coupled_m_system(vis_r4, L=L_conv, m_values=m5, sig_N=r_vi["sig"], a_N=r_vi["a"], n_N=r_vi["n"], k=0.002)
+        time_ref_diag[f"L{L_conv}"] = {
+            "r1_155": {
+                "n_intervals": int(len(vis["d_eta"])),
+                "B_over_E": row_r1["B_over_E_norm_ratio"],
+                "total_E_power": row_r1["total_E_power"],
+                "total_B_power": row_r1["total_B_power"],
+                "m_nonzero_T_frac": row_r1["m_nonzero_over_total_T_power"],
+            },
+            "r2_reeval": {
+                "n_intervals": int(len(vis_r2["d_eta"])),
+                "B_over_E": row_r2["B_over_E_norm_ratio"],
+                "total_E_power": row_r2["total_E_power"],
+                "total_B_power": row_r2["total_B_power"],
+                "m_nonzero_T_frac": row_r2["m_nonzero_over_total_T_power"],
+            },
+            "r4_reeval": {
+                "n_intervals": int(len(vis_r4["d_eta"])),
+                "B_over_E": row_r4["B_over_E_norm_ratio"],
+                "total_E_power": row_r4["total_E_power"],
+                "total_B_power": row_r4["total_B_power"],
+                "m_nonzero_T_frac": row_r4["m_nonzero_over_total_T_power"],
+            },
+            "r1_vs_r4_B_over_E_rel_diff": float(abs(row_r1["B_over_E_norm_ratio"] - row_r4["B_over_E_norm_ratio"]) / row_r4["B_over_E_norm_ratio"]),
+            "r2_vs_r4_B_over_E_rel_diff": float(abs(row_r2["B_over_E_norm_ratio"] - row_r4["B_over_E_norm_ratio"]) / row_r4["B_over_E_norm_ratio"]),
+            "r1_vs_r4_E_power_rel_diff": float(abs(row_r1["total_E_power"] - row_r4["total_E_power"]) / row_r4["total_E_power"]),
+            "r1_vs_r4_B_power_rel_diff": float(abs(row_r1["total_B_power"] - row_r4["total_B_power"]) / row_r4["total_B_power"]),
+        }
 
     # 4. Chirality/handedness parity flip check on VII_h under exact improper O(3) reflection (P sig P^T, P a, -P n P^T) at L=16
     P_refl = np.diag([1.0, -1.0, 1.0])
@@ -731,7 +974,7 @@ def compute() -> dict:
     chiral_eb_scale = float(np.max(np.abs(c_p["cl_full"]["EB"])))
     chiral_tt_diff = float(np.max(np.abs(np.array(c_p["cl_full"]["TT"]) - np.array(c_m["cl_full"]["TT"]))) / max(np.max(c_p["cl_full"]["TT"]), 1e-30))
 
-    # 5. Exact k=0 real-sky conjugate parity check (for k>0 plane-wave streaming -i*k introduces complex Fourier phase)
+    # 5. Exact k=0 real-sky conjugate parity check (expm integrator)
     ctrl_k0_real = evolve_coupled_m_system(
         vis, L=12, m_values=tuple(range(-12, 13)),
         sig_N=R_tilt @ sig_axi @ R_tilt.T, a_N=r_vi["a"], n_N=r_vi["n"], k=0.0,
@@ -739,7 +982,7 @@ def compute() -> dict:
     if ctrl_k0_real["reality_conjugate_parity_err"] > 1e-12:
         raise RuntimeError(f"k=0 reality conjugate parity failed: {ctrl_k0_real['reality_conjugate_parity_err']}")
 
-    # 6. Full all-|m|<=L (dim=231 at L=8, dim=499 at L=12) vs m_values=(-2..2) comparison on VI_{-1/9}
+    # 6. Full all-|m|<=L (dim=235 at L=8, dim=499 at L=12) vs m_values=(-2..2) comparison on VI_{-1/9} with expm
     res_allm_L8 = evolve_coupled_m_system(
         vis, L=8, m_values=tuple(range(-8, 9)), sig_N=sig_axi, a_N=r_vi["a"], n_N=r_vi["n"], k=0.002
     )
@@ -762,6 +1005,8 @@ def compute() -> dict:
         "schema": "htt.r97.bianchi_coupled_m_spin2_transport/1",
         "elapsed_seconds": time.perf_counter() - t0,
         "signature": SIGNATURE,
+        "default_integrator": "piecewise_constant_affine_expm_multiply",
+        "thomson_T2_E2_offdiag_convention": "+sqrt(6)/10 aligned with Q+-iU = -sum(E+-iB) _{+-2}Y_{lm}",
         "units": {"k_Mpc_inv": 0.002, "H_conf": "1/Mpc", "d_eta": "Mpc", "sigma_N_and_a_N_n_N": "H-normalized dimensionless"},
         "oracle_verification": oracle,
         "controls": {
@@ -769,6 +1014,13 @@ def compute() -> dict:
             "Bianchi_I_axisym_m_nonzero_ratio": ctrl_axi_I["m_nonzero_over_total_T_power"],
             "Bianchi_I_axisym_total_B_power": ctrl_axi_I["total_B_power"],
             "k0_allm_L12_reality_conjugate_parity_err": ctrl_k0_real["reality_conjugate_parity_err"],
+            "thomson_sign_flip_L16_VI_minus_1_9": {
+                "TE_sign_flip_residual_rel": te_flip_rel,
+                "TB_sign_flip_residual_rel": tb_flip_rel,
+                "EE_invariance_rel": ee_inv_rel,
+                "TE_2_pos": float(te_pos[2]),
+                "TE_2_neg": float(te_neg[2]),
+            },
             "m0_seed_scattering_VI_minus_1_9": {
                 "h_parameter_preserved": r_vi["h_param"],
                 "cross_m_coupling_fraction": scatter_vi["cross_m_coupling_fraction"],
@@ -787,6 +1039,15 @@ def compute() -> dict:
             "TB_flip_residual_rel": float(chiral_tb_sum / max(chiral_tb_scale, 1e-30)),
             "EB_max_abs": chiral_eb_scale,
             "EB_flip_residual_rel": float(chiral_eb_sum / max(chiral_eb_scale, 1e-30)),
+        },
+        "frozen_interval_expm_vs_backward_euler_benchmark": frozen_bench,
+        "convergence_diagnostics": {
+            "time_refinement_with_coeff_reeval": time_ref_diag,
+            "L32_vs_L60_B_over_E_rel_diff_at_expm": l32_vs_l60_be_rel,
+            "note": (
+                "Separates piecewise-constant affine expm time accuracy on frozen grid from continuous-background refinement (r=1,2,4 with re-evaluated HyRec-2+tanh H(z), tdot(z)), "
+                "L-truncation (8..60), and azimuthal m-truncation (m5 vs all-|m|<=L at L=8,12). Geometry input uses R49 trajectory endpoint conformal rescaling."
+            ),
         },
         "full_all_m_vs_m5_L8_VI_minus_1_9": {
             "all_m_dim": res_allm_L8["state_dim"],
@@ -821,13 +1082,11 @@ if __name__ == "__main__":
     print(json.dumps({
         "oracle": res["oracle_verification"],
         "k0_parity": res["controls"]["k0_allm_L12_reality_conjugate_parity_err"],
-        "scatter_vi": res["controls"]["m0_seed_scattering_VI_minus_1_9"],
-        "scatter_ix": res["controls"]["m0_seed_scattering_IX_tilted"],
-        "chiral_VIIh": res["chirality_VIIh_L16"],
-        "allm_L8": res["full_all_m_vs_m5_L8_VI_minus_1_9"],
+        "thomson_flip": res["controls"]["thomson_sign_flip_L16_VI_minus_1_9"],
+        "frozen_L60": res["frozen_interval_expm_vs_backward_euler_benchmark"]["L60_rescaled_VI_minus_1_9"],
+        "time_ref_L60": res["convergence_diagnostics"]["time_refinement_with_coeff_reeval"]["L60"]["r1_vs_r4_B_over_E_rel_diff"],
         "allm_L12": res["full_all_m_vs_m5_L12_VI_minus_1_9"],
         "L32_vs_L60_BE_rel": res["L32_vs_L60_B_over_E_rel_diff"],
-        "L60_VI_dim": res["coupled_m5_by_L"]["60"]["VI_-1/9"]["state_dim"],
         "L60_VI_B_over_E": res["coupled_m5_by_L"]["60"]["VI_-1/9"]["B_over_E_norm_ratio"],
         "elapsed_s": res["elapsed_seconds"],
     }))

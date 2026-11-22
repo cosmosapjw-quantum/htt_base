@@ -1,10 +1,10 @@
 {
   "schema": "htt.r97.phy_and_p1_p4_p6_synthesis/1",
-  "elapsed_seconds": 0.02113621900207363,
+  "elapsed_seconds": 14.007139246998122,
   "upstream_sha256": {
-    "R97_A": "113f057c00c252ee9ec778d7a40bd01e3677cdeb8133800acd838a5a7e144375",
-    "R97_B": "b7463f5d1bf4f07ba31828aba625e2feb22972f911c3a31f526c64af62e0b90f",
-    "R97_C": "8e7d386e9a8e40106eceadfd01e02f277a3ea4761009d2a906429f523084c42c",
+    "R97_A": "1aebf11ab5f4d30566a28e2fdcc1fa809931d73a81e6d8616b0ce8f849d04dad",
+    "R97_B": "49f38af468f9251c6bd92fd9ec68f13431ffda5b0cbcb887520c9cbdd437dbc1",
+    "R97_C": "17cfed064019d409832ec98db19d463e9e98f3bb67442fd7ca67771b751d50e8",
     "R95_G03": "745183fd9c8511500b4917bc79c94a897f045e206bd7c2a32d7489ebbc257203",
     "R95_G04": "5366537fc9124453655e77bab0b46a29fc0b94fd8e6a301a51e86307e372b7d0",
     "R95_G06": "baa207031342d7694b84876c5e3053fa027fd1e7630a669e41d17d40d18d11ab",
@@ -14,6 +14,8 @@
   },
   "P1_five_view_with_r97_cf4_bounds": {
     "N_coupled_draws": 2048,
+    "draws_q_ratio_parity_err": 0.0,
+    "physical_uniform_scale_q_invariance_err": 2.0816681711721685e-17,
     "weighted_mean_q_app_4w": [
       0.029978221633144845,
       0.042917266251886514,
@@ -37,39 +39,465 @@
         0.00537109375
       ]
     },
-    "cal_widened_tail_bounds_at_0p05_4w": {
-      "lower_cal": [
+    "f4_counterexample_regression": {
+      "delta_mag": [
+        0.315481238721,
+        0.301087828206,
+        0.304561550799,
+        0.305795937348,
+        0.308176649253,
+        0.321630403743,
+        0.315480198825
+      ],
+      "mahalanobis2": 14.064326442202892,
+      "chi2_7_0p95_cutoff": 14.067140449340169,
+      "window_index": 2,
+      "actual_w3_count": 1972,
+      "uniform_width_reported_w3_count": 1971,
+      "actual_w3_weighted_tail": 0.962890625,
+      "uniform_width_w3_weighted_tail": 0.96240234375,
+      "min_positive_margin": 3.468865460762999e-05
+    },
+    "conservative_outer_tail_bounds_at_0p05_4w": {
+      "lower_outer": [
+        0.0,
+        0.0,
+        0.00048828125,
+        0.0
+      ],
+      "upper_outer": [
+        0.0400390625,
+        0.9453125,
+        1.0,
+        0.27685546875
+      ],
+      "bH_denominator_bound": [
+        10.608787127985156,
+        10.603951704097264,
+        10.59266862078515,
+        10.567354441905625
+      ],
+      "bQ_numerator_bound": [
+        0.41704617264317745,
+        0.5544864727715773,
+        0.760415199764874,
+        0.5413708035865834
+      ],
+      "outer_any_all_lower": [
+        0.00048828125,
+        0.0
+      ],
+      "outer_any_all_upper": [
+        1.0,
+        0.009765625
+      ],
+      "1sigma_lower_outer": [
+        0.0,
+        0.00830078125,
+        0.2646484375,
+        0.0009765625
+      ],
+      "1sigma_upper_outer": [
+        0.0,
+        0.2373046875,
+        0.88427734375,
+        0.0205078125
+      ]
+    },
+    "certified_sharp_tail_bounds_at_0p05_4w": {
+      "bH_denominator_bound": [
+        10.608787127985156,
+        10.603951704097264,
+        10.59266862078515,
+        10.567354441905625
+      ],
+      "bQ_numerator_bound": [
+        0.41704617264317745,
+        0.5544864727715773,
+        0.760415199764874,
+        0.5413708035865834
+      ],
+      "lower_outer": [
+        0.0,
+        0.0,
+        0.00048828125,
+        0.0
+      ],
+      "upper_outer": [
+        0.0400390625,
+        0.9453125,
+        1.0,
+        0.27685546875
+      ],
+      "outer_any_all_lower": [
+        0.00048828125,
+        0.0
+      ],
+      "outer_any_all_upper": [
+        1.0,
+        0.009765625
+      ],
+      "per_draw_sharp_lower": [
+        0.0,
+        0.00048828125,
+        0.1318359375,
+        0.00048828125
+      ],
+      "per_draw_sharp_upper": [
+        0.0009765625,
+        0.501953125,
+        0.9638671875,
+        0.0615234375
+      ],
+      "per_draw_sharp_any_all_lower": [
+        0.13232421875,
+        0.0
+      ],
+      "per_draw_sharp_any_all_upper": [
+        0.9677734375,
+        0.00048828125
+      ],
+      "per_draw_sharp_lower_counts": [
+        0,
+        1,
+        270,
+        1
+      ],
+      "per_draw_sharp_upper_counts": [
+        2,
+        1028,
+        1974,
+        126
+      ],
+      "common_witness_lower": [
+        0.0,
+        0.00048828125,
+        0.1337890625,
+        0.00048828125
+      ],
+      "common_witness_upper": [
+        0.0009765625,
+        0.5,
+        0.962890625,
+        0.05810546875
+      ],
+      "common_witness_lower_counts": [
+        0,
+        1,
+        274,
+        1
+      ],
+      "common_witness_upper_counts": [
+        2,
+        1024,
+        1972,
+        119
+      ],
+      "trs_slemma_max_disagreements": 0,
+      "trs_slemma_min_disagreements": 0,
+      "trs_slemma_min_abs_margin": 0.001226383270264142,
+      "ambiguity_set_curvature_min_gap": 0.2467877389932171,
+      "min_global_optimality_cert_gap": 0.2467877389932171
+    },
+    "certified_sharp_tail_bounds_rank6_chi2_df6": {
+      "bH_denominator_bound": [
+        10.036980093052689,
+        10.032405295508093,
+        10.021730363376294,
+        9.997780603010614
+      ],
+      "bQ_numerator_bound": [
+        0.3945676430495386,
+        0.5245999963930194,
+        0.7194292929454097,
+        0.5121912536282986
+      ],
+      "lower_outer": [
+        0.0,
+        0.0,
+        0.00146484375,
+        0.0
+      ],
+      "upper_outer": [
+        0.02783203125,
+        0.92626953125,
+        0.99951171875,
+        0.236328125
+      ],
+      "outer_any_all_lower": [
+        0.00146484375,
+        0.0
+      ],
+      "outer_any_all_upper": [
+        0.99951171875,
+        0.0068359375
+      ],
+      "per_draw_sharp_lower": [
+        0.0,
+        0.00048828125,
+        0.1474609375,
+        0.00048828125
+      ],
+      "per_draw_sharp_upper": [
+        0.00048828125,
+        0.4658203125,
+        0.95703125,
+        0.05322265625
+      ],
+      "per_draw_sharp_any_all_lower": [
+        0.14794921875,
+        0.0
+      ],
+      "per_draw_sharp_any_all_upper": [
+        0.9609375,
+        0.00048828125
+      ],
+      "per_draw_sharp_lower_counts": [
+        0,
+        1,
+        302,
+        1
+      ],
+      "per_draw_sharp_upper_counts": [
+        1,
+        954,
+        1960,
+        109
+      ],
+      "common_witness_lower": [
+        0.0,
+        0.00048828125,
+        0.1484375,
+        0.00048828125
+      ],
+      "common_witness_upper": [
+        0.00048828125,
+        0.46240234375,
+        0.9560546875,
+        0.05224609375
+      ],
+      "common_witness_lower_counts": [
+        0,
+        1,
+        304,
+        1
+      ],
+      "common_witness_upper_counts": [
+        1,
+        947,
+        1958,
+        107
+      ],
+      "trs_slemma_max_disagreements": 0,
+      "trs_slemma_min_disagreements": 0,
+      "trs_slemma_min_abs_margin": 0.0002794777822661132,
+      "ambiguity_set_curvature_min_gap": 0.2528124762615689,
+      "min_global_optimality_cert_gap": 0.2528124762615689
+    },
+    "certified_sharp_tail_bounds_1sigma_r1": {
+      "bH_denominator_bound": [
+        2.828543247320697,
+        2.8272540136485507,
+        2.8242456877460307,
+        2.817496353550959
+      ],
+      "bQ_numerator_bound": [
+        0.11119396790788841,
+        0.14783866896069844,
+        0.2027439378796783,
+        0.14434173410285364
+      ],
+      "lower_outer": [
+        0.0,
+        0.00830078125,
+        0.2646484375,
+        0.0009765625
+      ],
+      "upper_outer": [
+        0.0,
+        0.2373046875,
+        0.88427734375,
+        0.0205078125
+      ],
+      "outer_any_all_lower": [
+        0.265625,
+        0.0
+      ],
+      "outer_any_all_upper": [
+        0.8876953125,
+        0.0
+      ],
+      "per_draw_sharp_lower": [
+        0.0,
+        0.02294921875,
+        0.4501953125,
+        0.00341796875
+      ],
+      "per_draw_sharp_upper": [
+        0.0,
+        0.1318359375,
+        0.73974609375,
+        0.00927734375
+      ],
+      "per_draw_sharp_any_all_lower": [
+        0.45361328125,
+        0.0
+      ],
+      "per_draw_sharp_any_all_upper": [
+        0.7490234375,
+        0.0
+      ],
+      "per_draw_sharp_lower_counts": [
+        0,
+        47,
+        922,
+        7
+      ],
+      "per_draw_sharp_upper_counts": [
+        0,
+        270,
+        1515,
+        19
+      ],
+      "common_witness_lower": [
+        0.0,
+        0.02294921875,
+        0.451171875,
+        0.00341796875
+      ],
+      "common_witness_upper": [
+        0.0,
+        0.1318359375,
+        0.7392578125,
+        0.00927734375
+      ],
+      "common_witness_lower_counts": [
+        0,
+        47,
+        924,
+        7
+      ],
+      "common_witness_upper_counts": [
+        0,
+        270,
+        1514,
+        19
+      ],
+      "trs_slemma_max_disagreements": 0,
+      "trs_slemma_min_disagreements": 0,
+      "trs_slemma_min_abs_margin": 0.00038925745918294563,
+      "ambiguity_set_curvature_min_gap": 0.12809404406597386,
+      "min_global_optimality_cert_gap": 0.12809404406597386
+    },
+    "source_modulus_jacobian_bounds_95pct": {
+      "bH_denominator_bound": [
+        11.392278483712403,
+        11.407291213716011,
+        11.282878943463809,
+        10.936608297703287
+      ],
+      "bQ_numerator_bound": [
+        0.44721786657838114,
+        0.5890398126009184,
+        0.8363437040516355,
+        0.5737644863838977
+      ],
+      "lower_outer": [
+        0.0,
+        0.0,
+        0.00048828125,
+        0.0
+      ],
+      "upper_outer": [
+        0.06591796875,
+        0.97119140625,
+        1.0,
+        0.30859375
+      ],
+      "outer_any_all_lower": [
+        0.00048828125,
+        0.0
+      ],
+      "outer_any_all_upper": [
+        1.0,
+        0.02001953125
+      ],
+      "per_draw_sharp_lower": [
+        0.0,
+        0.03076171875,
+        0.4560546875,
+        0.00048828125
+      ],
+      "per_draw_sharp_upper": [
+        0.00048828125,
+        0.12646484375,
+        0.83935546875,
+        0.02490234375
+      ],
+      "per_draw_sharp_any_all_lower": [
+        0.458984375,
+        0.0
+      ],
+      "per_draw_sharp_any_all_upper": [
+        0.8447265625,
+        0.0
+      ],
+      "per_draw_sharp_lower_counts": [
+        0,
+        63,
+        934,
+        1
+      ],
+      "per_draw_sharp_upper_counts": [
+        1,
+        259,
+        1719,
+        51
+      ],
+      "common_witness_lower": [
+        0.0,
+        0.03173828125,
+        0.46484375,
+        0.00048828125
+      ],
+      "common_witness_upper": [
+        0.00048828125,
+        0.11474609375,
+        0.83837890625,
+        0.02197265625
+      ],
+      "common_witness_lower_counts": [
+        0,
+        65,
+        952,
+        1
+      ],
+      "common_witness_upper_counts": [
+        1,
+        235,
+        1717,
+        45
+      ],
+      "trs_slemma_max_disagreements": 0,
+      "trs_slemma_min_disagreements": 0,
+      "trs_slemma_min_abs_margin": 0.0007678373906423452,
+      "ambiguity_set_curvature_min_gap": -0.06557594355393839,
+      "min_global_optimality_cert_gap": 0.0007678373906423452
+    },
+    "legacy_uniform_q_sensitivity_NOT_A_BOUND": {
+      "lower_sens": [
         0.0,
         0.00048828125,
         0.1220703125,
         0.00048828125
       ],
-      "upper_cal": [
+      "upper_sens": [
         0.001953125,
         0.5263671875,
         0.96240234375,
         0.05908203125
       ],
-      "1sigma_lower_cal": [
-        0.0,
-        0.02294921875,
-        0.447265625,
-        0.00341796875
-      ],
-      "1sigma_upper_cal": [
-        0.0,
-        0.134765625,
-        0.74072265625,
-        0.00927734375
-      ],
-      "95pct_lower_any_all": [
-        0.12255859375,
-        0.0
-      ],
-      "95pct_upper_any_all": [
-        0.966796875,
-        0.00048828125
-      ]
+      "warning": "Uniform additive ||delta_q5||/H0 width is NOT a valid bound over the 7D ellipsoid (violated by f4_counterexample_regression 1972 > 1971)."
     },
     "physical_Pi": null,
     "physical_GF": null
@@ -222,34 +650,34 @@
     },
     "r97c_coupled_m_L60_cmb_summary": {
       "I_rotated": {
-        "B_over_E_norm_ratio": 1.6176338462666224,
+        "B_over_E_norm_ratio": 1.470316770621644,
         "cross_m_coupling_fraction": 0.9063608468984881,
-        "m_nonzero_over_total_T_power": 0.7639807003487105
+        "m_nonzero_over_total_T_power": 0.8166103196503567
       },
       "V": {
-        "B_over_E_norm_ratio": 0.5852749564914428,
+        "B_over_E_norm_ratio": 0.8572572826335161,
         "cross_m_coupling_fraction": 0.9999871919022708,
-        "m_nonzero_over_total_T_power": 0.7736697392833927
+        "m_nonzero_over_total_T_power": 0.7547653064235644
       },
       "VI_-1/9": {
-        "B_over_E_norm_ratio": 1.394860114079292,
+        "B_over_E_norm_ratio": 1.4672400900274174,
         "cross_m_coupling_fraction": 0.9795482055275543,
-        "m_nonzero_over_total_T_power": 0.7632735829212681
+        "m_nonzero_over_total_T_power": 0.748755642503964
       },
       "VII_0": {
-        "B_over_E_norm_ratio": 0.6920236133676031,
+        "B_over_E_norm_ratio": 0.9162809027806439,
         "cross_m_coupling_fraction": 0.9898473130619467,
-        "m_nonzero_over_total_T_power": 0.8445885487353973
+        "m_nonzero_over_total_T_power": 0.840752419111151
       },
       "VII_h": {
-        "B_over_E_norm_ratio": 0.4529069700837586,
+        "B_over_E_norm_ratio": 0.7547071355219342,
         "cross_m_coupling_fraction": 0.9985066927415287,
-        "m_nonzero_over_total_T_power": 0.8323112862868568
+        "m_nonzero_over_total_T_power": 0.8348912843092355
       },
       "IX": {
-        "B_over_E_norm_ratio": 0.7786736748203326,
+        "B_over_E_norm_ratio": 0.9695670951499777,
         "cross_m_coupling_fraction": 0.2844488670455797,
-        "m_nonzero_over_total_T_power": 0.8230321259278465
+        "m_nonzero_over_total_T_power": 0.8240044889792955
       }
     },
     "frame_projection_note": "template_10x10_overlap projects canonical-triad R95_G07_BG scalar geodesic Q2_stf5 with B2=0 into ICRS via M5_gal.T as an exploratory canonical-axis alignment check, alongside R97 Unit C coupled-m L=60 CMB E/B summary metrics.",
@@ -258,38 +686,55 @@
   },
   "PHY_routes": {
     "PHY-01": {
-      "r97_upgrade": "Exact NSIDE=2048 Mask-Pol analytic Master M^{EE->BB} cross-checked vs 8-draw pure-E MC + out-of-sample 150/150 60D E->B leakage debiasing",
+      "r97_upgrade": "Exact NSIDE=2048 Mask-Pol analytic Master M^{EE->BB} vs matched-estimand N=512 MC + train-only Gaunt/OLS 150/150 debiasing",
       "master_analytic_eb_ratio": 0.04957597357034698,
-      "mc8_eb_ratio": 0.053987964343548495,
-      "master_vs_mc_rel_diff": 0.08172174718657906,
-      "te_to_b_heldout_variance_ratio": 0.9960128819927209,
-      "debiased_150_150_rank_p": 0.17218543046357615,
+      "mc8_matched_eb_ratio": 0.048544266578043595,
+      "mc512_matched_eb_ratio": 0.04948492209452771,
+      "mc512_batch16_se": 0.0002510887791445404,
+      "master_vs_mc512_rel_diff": 0.001836604896726194,
+      "te_to_b_heldout_variance_ratio": 0.9959704890212507,
+      "te_to_b_heldout_variance_ratio_bootstrap_95pct_ci": [
+        0.9910036341169466,
+        1.0006316184701747
+      ],
+      "debiased_150_150_rank_p": 0.16556291390728478,
       "blocker_bucket": "NATIVE_TRANSFER + DATA"
     },
     "PHY-02": {
-      "r97_upgrade": "Coupled-m (m=-2..2 to L=60 + all-m to L=8,12) exact Gamma4 transport verified vs live 4D R49 geodesics + HyRec-2+tanh optics + BASS rank-9 Thomson eigenvalues",
-      "skew_hermitian_err_oracle": 1.4304896245381992e-17,
-      "twist_vs_2d_gl_err": 6.109919953762384e-17,
+      "r97_upgrade": "Coupled-m (m=-2..2 to L=60 + all-m to L=8,12) exact Gamma4 transport + corrected +sqrt(6)/10 Thomson sign + expm time integrator + admissible VII_h 4D ray oracle",
+      "skew_hermitian_err_oracle": 3.4741735700143715e-18,
+      "thomson_signed_angular_projection_max_err": 8.881784197001252e-15,
+      "twist_vs_2d_gl_err": 1.541868459373685e-17,
       "r49_4d_geodesic_oracle_rel_errs": {
-        "T": 4.3124602947454425e-10,
-        "E": 5.308040661764217e-10,
-        "B": 7.941411213739374e-10
+        "T": 2.408413553102268e-09,
+        "E": 1.6730148951085672e-09,
+        "B": 3.23679689234242e-09
       },
-      "k0_allm_L12_parity_err": 3.144186300207963e-18,
-      "L60_VI_minus_1_9_B_over_E": 1.394860114079292,
-      "allm_vs_m5_L8_power_leak_gt2": 0.00026804334832558423,
-      "allm_vs_m5_L12_power_leak_gt2": 0.0018906346753799158,
+      "admissible_oracle_jacobi_na_norm": 0.0,
+      "k0_allm_L12_parity_err": 1.0842021724855044e-19,
+      "L60_VI_minus_1_9_B_over_E": 1.4672400900274174,
+      "time_refinement_r1_to_r4_L60_BE_rel_diff": 0.011575961365712413,
+      "allm_vs_m5_L8_power_leak_gt2": 0.000861177055802031,
+      "allm_vs_m5_L12_power_leak_gt2": 0.003779335387243087,
       "blocker_bucket": "NATIVE_TRANSFER + MODEL"
     },
     "PHY-03": {
-      "r97_upgrade": "CF4 SR-gamma tomography paired with 5-survey radio Ellis-Baldwin ladder & Gaia E1 aberration + IVW partial-ID calibration ellipsoid",
+      "r97_upgrade": "CF4 SR-gamma tomography paired with 5-survey radio Ellis-Baldwin ladder, frozen-design sensitivity, & physical source-modulus refit intervals",
       "radio_surveys_d_obs_over_d_eb_envelope": [
         2.8268611438689297,
         19.803025638078473
       ],
-      "cf4_R95_0087sys_H0_1s_interval": [
+      "cf4_R95_0087sys_H0_1s_interval_frozen_design": [
         70.10354866303565,
         75.74873993368423
+      ],
+      "cf4_R95_pm0087mag_H0_interval_source_fixed_w": [
+        70.06211645240936,
+        75.90724904574796
+      ],
+      "cf4_R95_pm0087mag_H0_interval_source_updated_w": [
+        70.0651119998104,
+        75.90382890277718
       ],
       "blocker_bucket": "DATA"
     },
@@ -298,37 +743,42 @@
       "quaia_inv_E2_norm_uasyr": 6.412690306669539,
       "quaia_inv_B2_norm_uasyr": 3.416531325696652,
       "VIIh_cos_E2": 0.22404237999626678,
-      "r97c_L60_VI_B_over_E": 1.394860114079292,
-      "r97c_L60_VIIh_B_over_E": 0.4529069700837586,
+      "r97c_L60_VI_B_over_E": 1.4672400900274174,
+      "r97c_L60_VIIh_B_over_E": 0.7547071355219342,
       "actual_normal_vorticity": null,
       "blocker_bucket": "DATA + MODEL"
     },
     "PHY-05": {
-      "r97_upgrade": "Exceptional Class-B VI_{-1/9} rotationally-invariant Casimir h=-1/9 verified across R49 evolution + m0 -> m!=0 geodesic scattering at L=8..60",
+      "r97_upgrade": "Exceptional Class-B VI_{-1/9} rotationally-invariant Casimir h=-1/9 verified across R49 evolution + m0 -> m!=0 geodesic scattering at L=8..60 (expm)",
       "h_casimir_preserved": -0.11111111111111935,
-      "m0_to_m_nonzero_scatter_ratio": 0.24582088966475568,
+      "m0_to_m_nonzero_scatter_ratio": 0.26389196468227694,
       "L60_VI_cross_m_frac": 0.9795482055275543,
       "blocker_bucket": "MODEL + NATIVE_TRANSFER"
     },
     "PHY-06": {
-      "r97_upgrade": "Chiral VII_h parity flip on coupled-m TB/EB & Planck NSIDE=2048 150-heldout L=2 anisotropy injection recovery linear slope & power",
-      "VIIh_TB_flip_residual_rel": 1.9862530400534967e-15,
-      "VIIh_EB_flip_residual_rel": 3.2598113774504147e-15,
-      "inj_recovery_slope": 0.9332285063189941,
-      "L60_VIIh_B_over_E": 0.4529069700837586,
+      "r97_upgrade": "Chiral VII_h parity flip on coupled-m TB/EB & Planck NSIDE=2048 150-heldout L=2 single-sign vs antithetic +-sqrt(A) injection recovery",
+      "VIIh_TB_flip_residual_rel": 2.70955183011209e-15,
+      "VIIh_EB_flip_residual_rel": 2.9571019074057303e-15,
+      "inj_recovery_single_sign_slope": 0.9332412978376252,
+      "inj_recovery_antithetic_pair_slope": 0.9999999999999998,
+      "L60_VIIh_B_over_E": 0.7547071355219342,
       "blocker_bucket": "NATIVE_TRANSFER + MODEL"
     },
     "PHY-07": {
-      "r97_upgrade": "CF4 K4-vs-J7 metric subspace reconciliation (98.85% whitened trace inside col(J7)) + Schur 18-dof predictive variance with parameter uncertainty + P1 calibration-widened tails",
-      "K4_in_J7_whitened_frac": 0.9884868103572645,
+      "r97_upgrade": "CF4 K4-vs-J7 subspace overlap + physical source-modulus refit + P1 shared-nuisance 9-vector outer & certified sharp tail bounds",
+      "K4_in_J7_whitened_frac_binary": 0.9884868103572645,
+      "K4_in_J7_whitened_frac_ivw": 0.9951353307503504,
       "radial_schur_red_chi2_R36_vs_R95": [
         3.9782577133738135,
         2.25368762757272
       ],
-      "p1_R95_quad_frac_sys_95pct": 0.007380153988983002,
-      "p1_cal_widened_tail_w3": [
-        0.1220703125,
-        0.96240234375
+      "p1_w3_conservative_outer_tail": [
+        0.00048828125,
+        1.0
+      ],
+      "p1_w3_certified_sharp_tail": [
+        0.1318359375,
+        0.9638671875
       ],
       "blocker_bucket": "DATA + MODEL"
     }

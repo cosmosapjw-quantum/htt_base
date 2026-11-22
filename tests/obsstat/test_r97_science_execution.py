@@ -71,7 +71,26 @@ def test_unit_a_cf4_genealogy_subspace_and_partial_id():
 
     sub = a["subspace_reconciliation_K4_vs_J7"]
     assert sub["K4_rank"] == 4 and sub["J7_rank"] == 7
-    assert 0.95 < sub["fraction_whitened_variance_inside_col_J7"] <= 1.0
+    assert 0.95 < sub["binary_S7"]["fraction_whitened_variance_inside_col_J7"] < 0.992
+    assert 0.992 < sub["ivw_W7"]["fraction_whitened_variance_inside_col_J7"] <= 1.0
+
+    aud = a["nuisance_dimension_and_directcal_audit"]
+    assert aud["rank_F_overlap_7x7"] == 5
+    assert aud["rank_Sigma7_overlap"] == 5
+    assert aud["rank_Sigma7_plus_common0087_unregularized"] == 6
+    assert aud["rank_Sigma7_plus_common0087_with_ridge_1e8"] == 7
+    assert aud["unregularized_contrast_variance"] == 0.0
+    assert aud["ridge_1e8_induced_contrast_sd_mag"] == pytest.approx((2e-8) ** 0.5, rel=1e-9)
+    assert aud["R95_0p087_95pct_H0_halfwidth_rank6_chi2"] < aud["R95_0p087_95pct_H0_halfwidth_rank7_chi2"]
+
+    src_p = a["source_modulus_perturbation"]
+    assert src_p["fixed_w_scaling_law_max_abs_err"] < 1e-11
+    assert src_p["fixed_w_q_invariance_max_abs_err"] < 1e-13
+    assert src_p["jacobian_common_mode_vs_analytic_max_abs_err"] < 1e-6
+    assert src_p["frozen_design_J7_common_dipole_quad_norm"] < 1e-12
+    assert src_p["source_jacobian_common_dipole_quad_norm"] > 1.0
+    assert src_p["fixed_w_R95_H0_interval_exact_refit"][0] < 72.926 < src_p["fixed_w_R95_H0_interval_exact_refit"][1]
+    assert src_p["updated_w_R95_fixedC_H0_interval_refit"][0] < 72.926 < src_p["updated_w_R95_fixedC_H0_interval_refit"][1]
 
     bounds = a["sharp_partial_identification_bounds"]
     req_keys = (
@@ -117,17 +136,31 @@ def test_unit_b_cmb_master_eb_and_injection_recovery():
         assert abs(r97b._racah_w3j(l1, l2, l3, 2, -2, 0) - float(wigner_3j(l1, l2, l3, 2, -2, 0))) < 1e-13
 
     b = _load("CMB_INJECTION_AND_EB_LEAKAGE.json")
+    assert b["N_train_even"] == 150 and b["N_test_odd"] == 150
     mc = b["master_spin2_mask_coupling"]
     assert mc["wigner3j_sympy_oracle_err"] < 1e-12
-    assert mc["analytic_vs_mc_rel_diff"] < 0.15
+    assert mc["analytic_vs_mc512_matched_estimand_rel_diff"] < 0.01
+    assert mc["analytic_vs_mc_rel_diff"] < 0.01
 
     deb = b["cross_split_60D_eb_leakage_debiasing"]
     assert 0.9 < deb["paired_TE_to_B_heldout_variance_ratio"] < 1.0
     assert 0.9 < deb["sig_only_999_E_to_B_heldout_variance_ratio"] < 1.0
+    assert deb["raw_60D_150_150_exceed_count"] == 23
+    assert deb["debiased_B_60D_150_150_exceed_count"] == 24
+    assert deb["obs_64_to_2048_ols_reconstruction_max_err"] < 1e-11
+    assert deb["mc_corrected_low_moment_max_abs"] < 1e-13
+    assert set(deb["ablation_3way"].keys()) == {
+        "legacy_300weights_mixed_ols",
+        "train150weights_mixed_ols",
+        "train150weights_matched2048_ols",
+    }
 
     inj = b["anisotropy_injection_recovery"]
     slope = inj["recovered_amplitude_linear_fit"]["slope"]
     assert 0.85 < slope < 1.05
+    assert inj["antithetic_pair_amplitude_linear_fit"]["slope"] == pytest.approx(1.0, abs=1e-11)
+    assert inj["quadratic_expansion_fit"]["c_signal_A"] == pytest.approx(1.0, abs=1e-11)
+    assert inj["quadratic_expansion_fit"]["max_abs_fit_residual"] < 1e-12
     sw = inj["coherent_additive_L2_sweep_150_heldout"]
     assert sw["A_6.00"]["by_shrinkage"]["0.2"]["power_at_p95"] > sw["A_0.00"]["by_shrinkage"]["0.2"]["power_at_p95"]
 
@@ -143,19 +176,33 @@ def test_unit_b_cmb_master_eb_and_injection_recovery():
 
 def test_unit_c_bianchi_coupled_m_oracles_and_controls():
     c = _load("BIANCHI_COUPLED_M_TRANSPORT.json")
+    assert c["default_integrator"] == "piecewise_constant_affine_expm_multiply"
     ov = c["oracle_verification"]
     assert ov["twist_operator_vs_2d_gl_grid_max_abs_err"] < 1e-12
     assert ov["geo_operator_reality_conjugate_parity_err"] < 1e-12
     assert ov["skew_hermitian_err"] < 1e-12
+    assert ov["thomson_signed_angular_projection_max_err"] < 1e-13
+    assert ov["thomson_offdiag_T2_E2_sign"] == pytest.approx((6.0 ** 0.5) / 10.0, abs=1e-14)
+    assert ov["oracle_state_family"] == "VII_h_admissible"
+    assert ov["jacobi_na_norm"] < 1e-13
+    assert ov["hamiltonian_residual"] < 1e-13
+    assert ov["codazzi_residual_norm"] < 1e-13
+    assert ov["is_admissible"] is True
     assert ov["r49_4d_geodesic_oracle_rel_err_T"] < 1e-8
     assert ov["r49_4d_geodesic_oracle_rel_err_E"] < 1e-8
     assert ov["r49_4d_geodesic_oracle_rel_err_B"] < 1e-8
 
-    # Live run of full-all-m L=6 angular quadrature + 4D geodesic ray oracle
+    # Live run of Thomson signed angular projection + full-all-m L=6 angular quadrature + admissible VII_h geodesic oracle
+    live_thom = r97c.verify_thomson_signed_angular_projection()
+    assert live_thom["max_abs_err_across_m_minus2_to_2"] < 1e-13
+    assert live_thom["offdiag_T2_E2_corrected_sign"] == pytest.approx((6.0 ** 0.5) / 10.0, abs=1e-14)
     live_ov = r97c.verify_angular_quadrature_oracle()
     assert live_ov["twist_operator_vs_2d_gl_grid_max_abs_err"] < 1e-12
     assert live_ov["geo_operator_reality_conjugate_parity_err"] < 1e-12
     assert live_ov["skew_hermitian_err"] < 1e-12
+    assert live_ov["thomson_signed_angular_projection_max_err"] < 1e-13
+    assert live_ov["jacobi_na_norm"] < 1e-13
+    assert live_ov["is_admissible"] is True
     assert live_ov["r49_4d_geodesic_oracle_rel_err_T"] < 1e-8
     assert live_ov["r49_4d_geodesic_oracle_rel_err_E"] < 1e-8
     assert live_ov["r49_4d_geodesic_oracle_rel_err_B"] < 1e-8
@@ -165,6 +212,10 @@ def test_unit_c_bianchi_coupled_m_oracles_and_controls():
     assert ctrl["Bianchi_I_axisym_m_nonzero_ratio"] < 1e-20
     assert ctrl["Bianchi_I_axisym_total_B_power"] < 1e-20
     assert ctrl["k0_allm_L12_reality_conjugate_parity_err"] < 1e-12
+    tf = ctrl["thomson_sign_flip_L16_VI_minus_1_9"]
+    assert tf["TE_sign_flip_residual_rel"] < 1e-12
+    assert tf["TB_sign_flip_residual_rel"] < 1e-12
+    assert tf["EE_invariance_rel"] < 1e-12
     assert ctrl["m0_seed_scattering_VI_minus_1_9"]["h_parameter_preserved"] == pytest.approx(-1.0 / 9.0, abs=1e-10)
     assert ctrl["m0_seed_scattering_VI_minus_1_9"]["m_nonzero_over_total_T_power"] > 0.05
 
@@ -172,6 +223,13 @@ def test_unit_c_bianchi_coupled_m_oracles_and_controls():
     assert chi["TT_rel_diff"] < 1e-10
     assert chi["TB_flip_residual_rel"] < 1e-10
     assert chi["EB_flip_residual_rel"] < 1e-10
+
+    fb = c["frozen_interval_expm_vs_backward_euler_benchmark"]["L60_rescaled_VI_minus_1_9"]
+    assert fb["n_intervals"] == 155
+    assert fb["expm_B_over_E"] == pytest.approx(1.4672400900274174, rel=1e-6)
+    tr60 = c["convergence_diagnostics"]["time_refinement_with_coeff_reeval"]["L60"]
+    assert tr60["r1_155"]["n_intervals"] == 155 and tr60["r4_reeval"]["n_intervals"] == 620
+    assert tr60["r2_vs_r4_B_over_E_rel_diff"] < tr60["r1_vs_r4_B_over_E_rel_diff"] < 0.02
 
     allm8 = c["full_all_m_vs_m5_L8_VI_minus_1_9"]
     allm12 = c["full_all_m_vs_m5_L12_VI_minus_1_9"]
@@ -192,11 +250,31 @@ def test_unit_d_cross_phy_synthesis_and_gates():
     p1 = syn["P1_five_view_with_r97_cf4_bounds"]
     assert p1["physical_Pi"] is None
     assert p1["physical_GF"] is None
-    cal_b = p1["cal_widened_tail_bounds_at_0p05_4w"]
+    assert p1["draws_q_ratio_parity_err"] < 1e-14
+    assert p1["physical_uniform_scale_q_invariance_err"] < 1e-13
+
+    f4 = p1["f4_counterexample_regression"]
+    assert f4["mahalanobis2"] < f4["chi2_7_0p95_cutoff"]
+    assert f4["actual_w3_count"] == 1972 and f4["uniform_width_reported_w3_count"] == 1971
+
+    out_b = p1["conservative_outer_tail_bounds_at_0p05_4w"]
+    sh_b = p1["certified_sharp_tail_bounds_at_0p05_4w"]
+    sh6_b = p1["certified_sharp_tail_bounds_rank6_chi2_df6"]
+    src_b = p1["source_modulus_jacobian_bounds_95pct"]
     nom_b = p1["tail_bounds_at_0p05_4w"]
     for j in range(4):
-        assert cal_b["lower_cal"][j] <= nom_b["lower"][j] <= cal_b["upper_cal"][j]
-        assert cal_b["lower_cal"][j] < cal_b["upper_cal"][j]
+        assert out_b["lower_outer"][j] <= sh_b["per_draw_sharp_lower"][j] <= sh_b["common_witness_lower"][j] <= nom_b["lower"][j]
+        assert nom_b["upper"][j] <= sh_b["common_witness_upper"][j] <= sh_b["per_draw_sharp_upper"][j] <= out_b["upper_outer"][j]
+        assert out_b["lower_outer"][j] < out_b["upper_outer"][j]
+    assert f4["actual_w3_weighted_tail"] <= sh_b["per_draw_sharp_upper"][2]
+    assert f4["actual_w3_weighted_tail"] > p1["legacy_uniform_q_sensitivity_NOT_A_BOUND"]["upper_sens"][2]
+
+    for blk in (sh_b, sh6_b, p1["certified_sharp_tail_bounds_1sigma_r1"], src_b):
+        assert blk["trs_slemma_max_disagreements"] == 0
+        assert blk["trs_slemma_min_disagreements"] == 0
+        assert blk["trs_slemma_min_abs_margin"] > 0.0
+    assert sh_b["ambiguity_set_curvature_min_gap"] > 0.2
+
     assert not syn["P4_radio_five_survey_summary"]["joint_five_survey_covariance_qualified"]
     assert syn["P6_gaia_quaia_bianchi_overlap"]["actual_normal_vorticity"] is None
     assert syn["physics_gates"]["Bianchi_family_attribution"] is None

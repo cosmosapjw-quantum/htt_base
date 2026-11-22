@@ -374,10 +374,183 @@ def _evaluate_disjoint_partitions(H, inp, d, sig, X, y_raw, theta_full, PV_r5, C
             "chi2_27dof_no_PV": float(chi_m),
         }
 
+    # Update outer residual keys cleanly (windows 2 and 3 have centers z = 0.06, 0.08)
+    for m_row in radial_checks.values():
+        res_vals = m_row.pop("outer_2w_H0_residual_z055_z070")
+        m_row["outer_2w_H0_residual_z060_z080"] = res_vals
+
+    win_masks = [H.window(inp.z, sig, zc) > 0.0 for zc in H.CENTERS]
     return {
+        "window_centers_z": [float(c) for c in H.CENTERS],
+        "window_positive_weight_counts": [int(np.count_nonzero(m)) for m in win_masks],
+        "all_four_windows_shared_support_count": int(np.count_nonzero(np.logical_and.reduce(win_masks))),
         "radial_inner_to_outer_schur_18dof": radial_checks,
         "galactic_hemisphere_split_cal005_no_PV": hemi_out,
-        "note": "Internal spatial/radial consistency under working covariance models; does not supply independent selection/PV heldout.",
+        "note": "Internal spatial/radial consistency on overlapping windows over the same 35,970 groups under working covariance models; does not supply independent selection/PV heldout.",
+    }
+
+
+def _evaluate_source_modulus_perturbation(
+    H,
+    inp,
+    dist: np.ndarray,
+    sig: np.ndarray,
+    X: np.ndarray,
+    y_raw: np.ndarray,
+    weights_base: list[np.ndarray],
+    theta_base: np.ndarray,
+    W7: np.ndarray,
+    J7_ivw: np.ndarray,
+    C_pv5_noise: np.ndarray,
+    PV_r5: np.ndarray,
+    C_r36: np.ndarray,
+    Sigma_pri_r95: np.ndarray,
+    D: np.ndarray,
+    chi2_7_95: float,
+) -> dict:
+    """Compare frozen-design velocity-residual approximation against actual source distance-modulus refits.
+
+    Evaluates:
+      1. Common zero-point shift delta = delta_0 * 1_7 (delta_0 in {-0.087, +0.087} mag):
+         - Fixed window weights w_base -> exact scaling beta(delta_0) = 10^(-delta_0/5) * beta(0),
+           non-zero dipole & STF5 shifts, and invariant q = ||STF5|| / H0.
+         - Updated working weights w(z, sigma(k*d, e_mu)) under both fixed-C and updated C_noise(delta_0).
+      2. Full 36x7 finite-difference source-response Jacobians J_source_fixed_w and J_source_updated_w
+         vs frozen-design J7_ivw, plus resulting 7-channel ellipsoid sensitivity bounds.
+    """
+    beta_r95_0, _, _ = r96.woodbury_gls(C_pv5_noise, np.zeros((36, 0)), D, theta_base)
+    beta_r36_0, _, _ = r96.woodbury_gls(C_r36, np.zeros((36, 0)), D, theta_base)
+    q_r95_0 = float(np.linalg.norm(beta_r95_0[4:9]) / beta_r95_0[0])
+    q_r36_0 = float(np.linalg.norm(beta_r36_0[4:9]) / beta_r36_0[0])
+
+    cc_r95 = cho_factor(0.5 * (C_pv5_noise + C_pv5_noise.T), lower=True, check_finite=False)
+    B_r95 = np.linalg.inv(D.T @ cho_solve(cc_r95, D, check_finite=False)) @ (D.T @ cho_solve(cc_r95, np.eye(36), check_finite=False))
+    cc_r36 = cho_factor(0.5 * (C_r36 + C_r36.T), lower=True, check_finite=False)
+    B_r36 = np.linalg.inv(D.T @ cho_solve(cc_r36, D, check_finite=False)) @ (D.T @ cho_solve(cc_r36, np.eye(36), check_finite=False))
+
+    common_shifts = {}
+    max_scaling_err = 0.0
+    max_q_invariance_err = 0.0
+    for delta_0 in (-0.087, 0.087):
+        k = 10.0 ** (delta_0 / 5.0)
+        d_k = k * dist
+        X_k = k * X
+        th_fix = np.concatenate([H.fit(X_k, y_raw, wb, influence=False)["theta"] for wb in weights_base])
+        b95_fix = B_r95 @ th_fix
+        b36_fix = B_r36 @ th_fix
+        sc_err = max(
+            float(np.max(np.abs(b95_fix - beta_r95_0 / k))),
+            float(np.max(np.abs(b36_fix - beta_r36_0 / k))),
+        )
+        max_scaling_err = max(max_scaling_err, sc_err)
+        q95_fix = float(np.linalg.norm(b95_fix[4:9]) / b95_fix[0])
+        q36_fix = float(np.linalg.norm(b36_fix[4:9]) / b36_fix[0])
+        q_inv_err = max(abs(q95_fix - q_r95_0), abs(q36_fix - q_r36_0))
+        max_q_invariance_err = max(max_q_invariance_err, q_inv_err)
+
+        # Updated working weights w(z, sigma(k*d, e_mu))
+        sig_k = H.working_sigma(d_k, inp.e_mu)
+        fits_upd = [H.fit(X_k, y_raw, H.window(inp.z, sig_k, zc), influence=True) for zc in H.CENTERS]
+        th_upd = np.concatenate([f["theta"] for f in fits_upd])
+        b95_upd_fixedC = B_r95 @ th_upd
+        b36_upd_fixedC = B_r36 @ th_upd
+        A_upd = np.vstack([f["A"] for f in fits_upd])
+        Cn_upd, _ = H.joint_covariance(A_upd, sig_k)
+        b95_upd_updC, _, _ = r96.woodbury_gls(PV_r5 + Cn_upd, np.zeros((36, 0)), D, th_upd)
+
+        common_shifts[f"delta_{delta_0:+.3f}"] = {
+            "delta_mag": delta_0,
+            "distance_scale_k": k,
+            "R95_fixed_weights": {
+                "H0": float(b95_fix[0]),
+                "dipole_shift_norm_kms_Mpc": float(np.linalg.norm(b95_fix[1:4] - beta_r95_0[1:4])),
+                "quad_shift_norm_kms_Mpc": float(np.linalg.norm(b95_fix[4:9] - beta_r95_0[4:9])),
+                "q_app_global": q95_fix,
+                "scaling_law_max_abs_err": sc_err,
+            },
+            "R36_fixed_weights": {
+                "H0": float(b36_fix[0]),
+                "dipole_shift_norm_kms_Mpc": float(np.linalg.norm(b36_fix[1:4] - beta_r36_0[1:4])),
+                "quad_shift_norm_kms_Mpc": float(np.linalg.norm(b36_fix[4:9] - beta_r36_0[4:9])),
+                "q_app_global": q36_fix,
+            },
+            "R95_updated_weights_fixed_C": {
+                "H0": float(b95_upd_fixedC[0]),
+                "dipole_shift_norm_kms_Mpc": float(np.linalg.norm(b95_upd_fixedC[1:4] - beta_r95_0[1:4])),
+                "quad_shift_norm_kms_Mpc": float(np.linalg.norm(b95_upd_fixedC[4:9] - beta_r95_0[4:9])),
+            },
+            "R36_updated_weights_fixed_C": {
+                "H0": float(b36_upd_fixedC[0]),
+                "dipole_shift_norm_kms_Mpc": float(np.linalg.norm(b36_upd_fixedC[1:4] - beta_r36_0[1:4])),
+                "quad_shift_norm_kms_Mpc": float(np.linalg.norm(b36_upd_fixedC[4:9] - beta_r36_0[4:9])),
+            },
+            "R95_updated_weights_updated_Cnoise": {
+                "H0": float(b95_upd_updC[0]),
+                "dipole_shift_norm_kms_Mpc": float(np.linalg.norm(b95_upd_updC[1:4] - beta_r95_0[1:4])),
+                "quad_shift_norm_kms_Mpc": float(np.linalg.norm(b95_upd_updC[4:9] - beta_r95_0[4:9])),
+            },
+        }
+
+    # Central finite-difference 36x7 source Jacobians under fixed vs updated working weights
+    eps = 1e-5
+    J_src_fixed_w = np.zeros((36, 7), dtype=np.float64)
+    J_src_updated_w = np.zeros((36, 7), dtype=np.float64)
+    for c in range(7):
+        th_f_pm = {}
+        th_u_pm = {}
+        for sgn in (+1.0, -1.0):
+            k_i = np.power(10.0, (sgn * eps / 5.0) * W7[:, c])
+            d_i = dist * k_i
+            X_i = X * k_i[:, None]
+            sig_i = H.working_sigma(d_i, inp.e_mu)
+            th_f_pm[sgn] = np.concatenate([H.fit(X_i, y_raw, wb, influence=False)["theta"] for wb in weights_base])
+            th_u_pm[sgn] = np.concatenate([H.fit(X_i, y_raw, H.window(inp.z, sig_i, zc), influence=False)["theta"] for zc in H.CENTERS])
+        J_src_fixed_w[:, c] = (th_f_pm[+1.0] - th_f_pm[-1.0]) / (2.0 * eps)
+        J_src_updated_w[:, c] = (th_u_pm[+1.0] - th_u_pm[-1.0]) / (2.0 * eps)
+
+    u_com = np.ones(7, dtype=np.float64)
+    exact_dth_dcom = -(math.log(10.0) / 5.0) * theta_base
+    jac_common_scale_err = float(np.max(np.abs(J_src_fixed_w @ u_com - exact_dth_dcom)))
+    # Note sign convention in _sharp_partial_id_bounds: y_shift = y - J_bound @ delta => pass -J_src!
+    # Since _sharp_partial_id_bounds is symmetric in sign (+/-delta), sign does not change halfwidths/shifts,
+    # while matching d(theta)/d(+delta) = J_src requires passing -J_src so y - (-J_src) delta = y + J_src delta.
+    src_bounds = {
+        "R95_source_fixed_w_0p087_1sigma": _sharp_partial_id_bounds(C_pv5_noise, -J_src_fixed_w, Sigma_pri_r95, D, theta_base, 1.0),
+        "R95_source_fixed_w_0p087_95pct_ellipsoid": _sharp_partial_id_bounds(C_pv5_noise, -J_src_fixed_w, Sigma_pri_r95, D, theta_base, chi2_7_95),
+        "R95_source_updated_w_0p087_1sigma": _sharp_partial_id_bounds(C_pv5_noise, -J_src_updated_w, Sigma_pri_r95, D, theta_base, 1.0),
+        "R95_source_updated_w_0p087_95pct_ellipsoid": _sharp_partial_id_bounds(C_pv5_noise, -J_src_updated_w, Sigma_pri_r95, D, theta_base, chi2_7_95),
+        "R36_source_fixed_w_common_0p087_1sigma": _sharp_partial_id_bounds(
+            C_r36, -J_src_fixed_w, (0.087 ** 2) * np.outer(u_com, u_com) + 1e-10 * np.eye(7), D, theta_base, 1.0
+        ),
+    }
+
+    return {
+        "regime": "physical_source_modulus_perturbation",
+        "common_scale_shifts_pm0p087mag": common_shifts,
+        "fixed_w_R95_H0_interval_exact_refit": [
+            common_shifts["delta_+0.087"]["R95_fixed_weights"]["H0"],
+            common_shifts["delta_-0.087"]["R95_fixed_weights"]["H0"],
+        ],
+        "fixed_w_R36_H0_interval_exact_refit": [
+            common_shifts["delta_+0.087"]["R36_fixed_weights"]["H0"],
+            common_shifts["delta_-0.087"]["R36_fixed_weights"]["H0"],
+        ],
+        "updated_w_R95_fixedC_H0_interval_refit": [
+            common_shifts["delta_+0.087"]["R95_updated_weights_fixed_C"]["H0"],
+            common_shifts["delta_-0.087"]["R95_updated_weights_fixed_C"]["H0"],
+        ],
+        "updated_w_R36_fixedC_H0_interval_refit": [
+            common_shifts["delta_+0.087"]["R36_updated_weights_fixed_C"]["H0"],
+            common_shifts["delta_-0.087"]["R36_updated_weights_fixed_C"]["H0"],
+        ],
+        "fixed_w_scaling_law_max_abs_err": max_scaling_err,
+        "fixed_w_q_invariance_max_abs_err": max_q_invariance_err,
+        "jacobian_common_mode_vs_analytic_max_abs_err": jac_common_scale_err,
+        "frozen_design_J7_common_dipole_quad_norm": float(np.linalg.norm((B_r95 @ J7_ivw @ u_com)[1:9])),
+        "source_jacobian_common_dipole_quad_norm": float(np.linalg.norm((B_r95 @ J_src_fixed_w @ u_com)[1:9])),
+        "source_jacobian_ellipsoid_sensitivity_bounds": src_bounds,
+        "J_source_fixed_w_36x7": J_src_fixed_w.tolist(),
+        "J_source_updated_w_36x7": J_src_updated_w.tolist(),
     }
 
 
@@ -461,35 +634,95 @@ def compute() -> dict:
     Sigma7_overlap[1:6, 1:6] = fit_complete["cov_working_mag2"][1:6, 1:6]
     u_common = np.ones(7, dtype=np.float64)
 
-    # 2. Subspace reconciliation K4 vs J7
-    subspace_rec = _reconcile_subspaces(K4, Sigma4, J7, PVall[:36, :36] + Cnoise)
+    # 2. Subspace reconciliation K4 vs J7 (report both binary S7 and IVW W7)
+    sub_bin = _reconcile_subspaces(K4, Sigma4, J7, PVall[:36, :36] + Cnoise)
+    sub_ivw = _reconcile_subspaces(K4, Sigma4, J7_ivw, PVall[:36, :36] + Cnoise)
+    subspace_rec = dict(sub_bin)
+    subspace_rec["binary_S7"] = sub_bin
+    subspace_rec["ivw_W7"] = sub_ivw
+    subspace_rec["interpretation_note"] = "High whitened trace inclusion measures subspace overlap only and does not equate covariance models or recover a physical calibration posterior."
 
-    # 3. Sharp partial-identification bounds across both covariance families (NEVER added!)
+    # 3. Sharp partial-identification bounds under frozen-design linear residual approximation
     D = np.tile(np.eye(9, dtype=np.float64), (4, 1))
     from scipy.stats import chi2 as sp_chi2
+    chi2_6_95 = float(sp_chi2.ppf(0.95, df=6))
     chi2_7_95 = float(sp_chi2.ppf(0.95, df=7))
     chi2_1_95 = float(sp_chi2.ppf(0.95, df=1))
 
     bounds_grid = {}
-    # Family A: R95 PV(R5) + Cnoise
-    # Compute exact partition-of-unity J7_ivw bounds (1x common-mode shift on multi-method groups) AND binary S7 bounds:
     C_pv5_noise = PVall[:36, :36] + Cnoise
     for label, sig_com in (("overlap_only_plus_0p02cal", 0.02),
                            ("overlap_plus_0p05cal", 0.05),
                            ("overlap_plus_0p087_tully23sys", 0.087)):
         Sig_pri = Sigma7_overlap + (sig_com ** 2) * np.outer(u_common, u_common) + 1e-8 * np.eye(7)
-        bounds_grid[f"R95_R5_ivw_{label}_1sigma"] = _sharp_partial_id_bounds(C_pv5_noise, J7_ivw, Sig_pri, D, theta, 1.0)
-        bounds_grid[f"R95_R5_ivw_{label}_95pct_ellipsoid"] = _sharp_partial_id_bounds(C_pv5_noise, J7_ivw, Sig_pri, D, theta, chi2_7_95)
-    bounds_grid["R95_R5_ivw_isotropic_0p05_1sigma"] = _sharp_partial_id_bounds(C_pv5_noise, J7_ivw, (0.05 ** 2) * np.eye(7), D, theta, 1.0)
-    bounds_grid["R95_R5_binaryS7_overlap_plus_0p087_tully23sys_1sigma"] = _sharp_partial_id_bounds(
+        b_1s = _sharp_partial_id_bounds(C_pv5_noise, J7_ivw, Sig_pri, D, theta, 1.0)
+        b_1s["regime"] = "frozen_design_velocity_residual_approx"
+        b_1s["radius_definition"] = "mahalanobis_r1"
+        b_95 = _sharp_partial_id_bounds(C_pv5_noise, J7_ivw, Sig_pri, D, theta, chi2_7_95)
+        b_95["regime"] = "frozen_design_velocity_residual_approx"
+        b_95["radius_definition"] = "chi2_df7_0p95_with_1e8_ridge"
+        b_95["rank6_unregularized_chi2_df6_H0_halfwidth"] = _sharp_partial_id_bounds(
+            C_pv5_noise, J7_ivw, Sig_pri, D, theta, chi2_6_95
+        )["H0_partial_id_halfwidth"]
+        bounds_grid[f"R95_R5_ivw_{label}_1sigma"] = b_1s
+        bounds_grid[f"R95_R5_ivw_{label}_95pct_ellipsoid"] = b_95
+
+    b_iso = _sharp_partial_id_bounds(C_pv5_noise, J7_ivw, (0.05 ** 2) * np.eye(7), D, theta, 1.0)
+    b_iso["regime"] = "frozen_design_velocity_residual_approx"
+    bounds_grid["R95_R5_ivw_isotropic_0p05_1sigma"] = b_iso
+
+    b_bin = _sharp_partial_id_bounds(
         C_pv5_noise, J7, Sigma7_overlap + (0.087 ** 2) * np.outer(u_common, u_common) + 1e-8 * np.eye(7), D, theta, 1.0
     )
+    b_bin["regime"] = "frozen_design_velocity_residual_approx"
+    bounds_grid["R95_R5_binaryS7_overlap_plus_0p087_tully23sys_1sigma"] = b_bin
+
     # Family B: Inherited R36 conditional_R5 base with rank-1 common zero-point magnitude uncertainty (exact partition-of-unity J7_ivw)
     for label, sig_com in (("common_0p05mag_1sigma", 0.05), ("common_0p087_tully23sys_1sigma", 0.087)):
         Sig_com = (sig_com ** 2) * np.outer(u_common, u_common) + 1e-10 * np.eye(7)
-        bounds_grid[f"R36_inherited_ivw_{label}"] = _sharp_partial_id_bounds(C_r36, J7_ivw, Sig_com, D, theta, 1.0)
-    bounds_grid["R36_inherited_ivw_common_0p087_95pct_1d"] = _sharp_partial_id_bounds(
+        b_r36 = _sharp_partial_id_bounds(C_r36, J7_ivw, Sig_com, D, theta, 1.0)
+        b_r36["regime"] = "frozen_design_velocity_residual_approx"
+        b_r36["radius_definition"] = "mahalanobis_r1"
+        bounds_grid[f"R36_inherited_ivw_{label}"] = b_r36
+    b_r36_95 = _sharp_partial_id_bounds(
         C_r36, J7_ivw, (0.087 ** 2) * np.outer(u_common, u_common) + 1e-10 * np.eye(7), D, theta, chi2_1_95
+    )
+    b_r36_95["regime"] = "frozen_design_velocity_residual_approx"
+    bounds_grid["R36_inherited_ivw_common_0p087_95pct_1d"] = b_r36_95
+
+    # 3b. DirectCal / nuisance dimension 5/6/7 audit
+    F7_zero = np.zeros((7, 7), dtype=np.float64)
+    F7_zero[:6, :6] = fit_complete["F"]
+    Sig_087_unreg = Sigma7_overlap + (0.087 ** 2) * np.outer(u_common, u_common)
+    Sig_087_reg = Sig_087_unreg + 1e-8 * np.eye(7)
+    v_sn_minus_cal = np.zeros(7, dtype=np.float64)
+    v_sn_minus_cal[0] = 1.0
+    v_sn_minus_cal[6] = -1.0
+    r95_087_1s = bounds_grid["R95_R5_ivw_overlap_plus_0p087_tully23sys_1sigma"]
+    r95_087_95 = bounds_grid["R95_R5_ivw_overlap_plus_0p087_tully23sys_95pct_ellipsoid"]
+    nuisance_audit = {
+        "rank_F_overlap_7x7": int(np.linalg.matrix_rank(F7_zero)),
+        "rank_Sigma7_overlap": int(np.linalg.matrix_rank(Sigma7_overlap)),
+        "rank_Sigma7_plus_common0087_unregularized": int(np.linalg.matrix_rank(Sig_087_unreg)),
+        "rank_Sigma7_plus_common0087_with_ridge_1e8": int(np.linalg.matrix_rank(Sig_087_reg)),
+        "unestimated_contrast_vector": "e_SNIa - e_DirectCal",
+        "unregularized_contrast_variance": float(v_sn_minus_cal @ Sig_087_unreg @ v_sn_minus_cal),
+        "ridge_1e8_induced_contrast_sd_mag": float(math.sqrt(max(0.0, float(v_sn_minus_cal @ Sig_087_reg @ v_sn_minus_cal)))),
+        "R95_0p087_95pct_H0_halfwidth_rank6_chi2": float(r95_087_1s["H0_partial_id_halfwidth"] * math.sqrt(chi2_6_95)),
+        "R95_0p087_95pct_H0_halfwidth_rank7_chi2": float(r95_087_95["H0_partial_id_halfwidth"]),
+        "R36_0p087_95pct_H0_halfwidth_rank6_chi2": float(bounds_grid["R36_inherited_ivw_common_0p087_tully23sys_1sigma"]["H0_partial_id_halfwidth"] * math.sqrt(chi2_6_95)),
+        "R36_0p087_95pct_H0_halfwidth_rank7_chi2": float(bounds_grid["R36_inherited_ivw_common_0p087_tully23sys_1sigma"]["H0_partial_id_halfwidth"] * math.sqrt(chi2_7_95)),
+        "directcal_sensitivity_note": (
+            "The 6-method velocity overlap table leaves SNIa - DirectCal unconstrained (zero unregularized contrast variance; "
+            "the ~1.414e-4 mag contrast SD arises purely from the 1e-8*I_7 numerical stabilization ridge, NOT data constraints on groups {20679, 59927}). "
+            "Likewise, 0.087 mag is a sensitivity scale (~3 km/s/Mpc systematic scale in Tully+23, where 0.087 mag also appears as TRGB-CPLR RMS), not a 7-channel Gaussian posterior."
+        ),
+    }
+
+    # 3c. Actual physical source-modulus perturbation (d -> 10^(delta/5)*d, X -> 10^(delta/5)*X) vs frozen-design approx
+    weights_base = [H.window(inp.z, sig, zc) for zc in H.CENTERS]
+    source_pert = _evaluate_source_modulus_perturbation(
+        H, inp, dist, sig, X, y_raw, weights_base, theta, W7, J7_ivw, C_pv5_noise, PVall[:36, :36], C_r36, Sig_087_reg, D, chi2_7_95
     )
 
     # 4. Disjoint radial & sky partitions
@@ -525,7 +758,9 @@ def compute() -> dict:
             "table2_comparison": t2_gen,
         },
         "subspace_reconciliation_K4_vs_J7": subspace_rec,
+        "nuisance_dimension_and_directcal_audit": nuisance_audit,
         "sharp_partial_identification_bounds": bounds_grid,
+        "source_modulus_perturbation": source_pert,
         "disjoint_partition_consistency": partitions,
         "physics_gates": {
             "sq_cf4_status": "BLOCKED_INPUT",
