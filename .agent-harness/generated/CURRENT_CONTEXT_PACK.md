@@ -1,7 +1,7 @@
 # Generated Shared Context View
 
-Context version: `57d1b1e18259b76fdb1babc51783d51b3c0a208cca170b2f0691e4e936cc021d`
-Built at: `2026-11-23T11:35:12+00:00`
+Context version: `159fd3df95ebe82a0014c4c3e3e0f854209254780876cfbe192ab1f5730aa4c2`
+Built at: `2026-11-23T12:02:49+00:00`
 
 This compact view is generated from the current machine context index. It does not compute live HEAD, DAG or status. SessionStart can read a host-installed active-controller pointer for a bounded advisory snapshot; absent or invalid pointers provide no active-state observation. Reference-only sources are read on demand.
 
@@ -44,11 +44,13 @@ current pack is static guidance, not live HEAD/DAG/status computation.
 
 ## Source: `.agent-harness/context/CURRENT_FROZEN_DECISIONS.md`
 
-SHA-256: `54f8e2e00f14216966c398efaf124725c3da69cc0881cb6da084a4ae759daa6e`
+SHA-256: `e172b58d656a0ed2ef03d4768cd26bfaa13270d0b6b1fa988700b5677b1c5fe1`
 
 # Current execution and scientific boundaries
 
 - **Active R101 owner scope (2026-11-23):** directly develop native BASS/REI/REC solver capabilities and integrate the four supplementary studies; commit/push validated work to the existing research branch. Earlier solver-free/no-native/no-push restrictions apply only to their historical assignments. Conditional development/data-analysis execution is allowed while original scientific acceptances remain blocked. R78's 60-node/42-original scientific contracts are unchanged. Use the existing checkout, preserve unrelated edits, and do not merge/main-push/force-push. See root AGENTS.md and R101_SIXTH_SOLVER_RESPONSE_20261123.
+
+- **R101 verified implementation / resume (2026-11-23):** implementation commit `fc53d3dc1d90d2ffe26b946c88d873374fc5b122` was pushed and the remote SHA matched. Five conditional jobs executed; scoped owner tests 55 + 26 subtests, R100 replay 21, acquisition 9 + 8 subtests. Four prior studies and the 4,073-record catalogue are consolidated. Start local continuation at SQ-CF4 selection/calibration/holdout and prepared Commander/SDSS analysis. Continue concrete native Lie/screen/frame and actual REC/REI rate development using R101 kernels; original science gates remain unchanged (zero promotions). Read R101 `REPORT_KO.md`, `PUBLICATION_RECEIPT.json`, and `HANDOFF_LOCAL_AGENT_KO.md`. BASS/HYREC eight inputs are already recovered in `data/external/r101_legacy_recovery`; do not treat vanished old worktree paths as unavailable inputs.
 
 - R58/R59 scope (owner 2026-11-17): use owned data only, no new observational download or native Bianchi solver. Read docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/LOCAL_AGENT_CONTRACT.json. R58 is complete_scoped C0; R59 native replay, matched benchmark and manuscript decision is the sole terminal successor. The general continuous-controller/acquisition bullets below do not auto-extend this bounded assignment. Historical R57 stop and unrelated DAG nodes remain unchanged.
 
