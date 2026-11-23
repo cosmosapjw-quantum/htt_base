@@ -1,0 +1,1025 @@
+{
+  "schema": "htt.r102.conditional_execution/1",
+  "parent_head": "c69fa980c5efb360f38e0b01c4c9476a292d1350",
+  "science_authority": "docs/research_program/observational_publication_20261015/R78_UNIFIED_SCIENCE_DAG_20261119/INTEGRATED_DAG.json",
+  "science_authority_sha256": "90aba8c1ca9c8e3a7744be0f071dcfe09b81e5353892aca13878191e20f58c11",
+  "original_42_sha256": "e3264e105cabf78ddac37addc36cacc3cfa05ee942e33e54b431b22e3e87de0d",
+  "r101_parent_overlay_schema": "htt.r101.conditional_execution/1",
+  "next_id": "SQ-CF4",
+  "counts": {
+    "nodes": 60,
+    "canonical_edges": 129,
+    "new_science_acceptances": 0
+  },
+  "native_solver_milestones_r102": {
+    "M08_general_lie_moving_thomson_einstein_boltzmann": "CODE_AND_CONVERGENCE_COMPLETE_AT_R102_SCOPED",
+    "M09_four_channel_tilted_hyrec_jacobians": "CODE_AND_PLANCK2018_VALIDATION_COMPLETE_AT_R102_SCOPED",
+    "A03_family_convergence_and_geodesic_oracles": "SEVEN_FAMILY_NUMERICAL_SUITE_COMPLETE_ATLAS_UNQUALIFIED",
+    "observational_family_id_and_planck_null_gate": "BLOCKED_D03_A02_M04"
+  },
+  "source_qualification_guarantees": {
+    "source_qualification": "BLOCKED_INPUT",
+    "physical_Pi": null,
+    "physical_GF": null,
+    "calibrated_p": null,
+    "Bianchi_family_attribution": null,
+    "commander_null_qualified": false,
+    "atlas_qualified_for_planck_family_id": false
+  },
+  "jobs": {
+    "ACQUISITION_BOUNDED_INTAKE": {
+      "module": "scripts.r102.acquire_commander_pair",
+      "result": "ACQUISITION_RECEIPT.json",
+      "scope": "SDSS randoms v1.1.0 (MD5-verified 284,000,071 B) + Commander PR3 FFP10 noise 00000 (chunked FITS 603,987,840 B)."
+    },
+    "COMMANDER_PAIR_CHECK": {
+      "module": "scripts.r102.commander_pair_check",
+      "result": "COMMANDER_PAIR_00000_CHECK.json",
+      "scope": "Single FFP10 s+n pair vs PR3 observed alignment, RING/NESTED & K_CMB checks; pseudo-C_l identity only (null UNQUALIFIED)."
+    },
+    "CF4_HOLDOUT_AND_SELECTION": {
+      "module": "scripts.r102.cf4_selection_holdout",
+      "result": "CF4_SELECTION_HOLDOUT_RESULTS.json",
+      "scope": "6dFGSv 8,885-row 5-fold group CV & Fisher selection uncertainty, 4-row ambiguity policies, 4M SDSS_randoms geometry, 36D component Euler tangents."
+    },
+    "NATIVE_SOLVER_CONVERGENCE": {
+      "module": "scripts.r102.native_solver_convergence",
+      "result": "NATIVE_SOLVER_CONVERGENCE.json",
+      "scope": "Coupled Bianchi Einstein-Euler + GeneralLieStokes (T,E,B,V) + MovingFrameThomson + 4-channel TiltedHyrec convergence across 7 families."
+    },
+    "R101_PREDICTIVE_AND_COLLISION_REPLAY": {
+      "module": "scripts.r101.program",
+      "result": "../R101_SIXTH_SOLVER_RESPONSE_20261123/NODE60_EXECUTION.json",
+      "scope": "Inherited R101 rank-9 collision, SDIRK2, moving projection, clocked chemistry, and 8,885-row CF4 plug-in baseline."
+    }
+  },
+  "nodes": [
+    {
+      "id": "E0",
+      "paper": "COMMON",
+      "title": "Reused published solver-free dossier (NOT newly revalidated astrophysical claims)",
+      "science_status": "completed_scoped",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "R101_PREDICTIVE_AND_COLLISION_REPLAY"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "INHERITED_ONLY",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "E1",
+      "paper": "COMMON",
+      "title": "Reused real CF4 35,970-group Schur diagnostic only",
+      "science_status": "completed_scoped",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "R101_PREDICTIVE_AND_COLLISION_REPLAY"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "INHERITED_ONLY",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "E2",
+      "paper": "COMMON",
+      "title": "Reused Planck 9 same-sky + FFP10 999 signal / 300 noise MES conditioning",
+      "science_status": "completed_scoped",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "R101_PREDICTIVE_AND_COLLISION_REPLAY"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "INHERITED_ONLY",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "E3",
+      "paper": "COMMON",
+      "title": "Frozen PR066/PR521 samplewise functional operators (not physical likelihood)",
+      "science_status": "completed_scoped",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "R101_PREDICTIVE_AND_COLLISION_REPLAY"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "INHERITED_ONLY",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "X01",
+      "paper": "COMMON",
+      "title": "Bind physical source identities and overlaps across all 6 papers",
+      "science_status": "completed_scoped",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "R101_PREDICTIVE_AND_COLLISION_REPLAY"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "INHERITED_ONLY",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "X02",
+      "paper": "COMMON",
+      "title": "Complete precise six-paper primary literature novelty comparator",
+      "science_status": "completed_scoped",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "R101_PREDICTIVE_AND_COLLISION_REPLAY"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "INHERITED_ONLY",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "X03",
+      "paper": "COMMON",
+      "title": "Freeze prospective statistics versus known historical choices",
+      "science_status": "completed_scoped",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "R101_PREDICTIVE_AND_COLLISION_REPLAY"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "INHERITED_ONLY",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "S01",
+      "paper": "P1",
+      "title": "Define typed common x,F,Pi,Q,G_F and boundary domains",
+      "science_status": "completed_scoped",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "CF4_HOLDOUT_AND_SELECTION"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "PARTIAL_SCOPED",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "S02",
+      "paper": "P1",
+      "title": "Run actual-data conditional finite draw pushforward, retaining unknown physical sectors",
+      "science_status": "blocked_input",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "CF4_HOLDOUT_AND_SELECTION"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "PARTIAL_SCOPED",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "S03",
+      "paper": "P1",
+      "title": "Evaluate nontrivial anchor/floor, depth and selection sensitivity",
+      "science_status": "pending",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "CF4_HOLDOUT_AND_SELECTION"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "PARTIAL_SCOPED",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "S04",
+      "paper": "P1",
+      "title": "Qualify real observational law or rigorous externally calibrated identified interval",
+      "science_status": "pending",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "CF4_HOLDOUT_AND_SELECTION"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "PARTIAL_SCOPED",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "S05",
+      "paper": "P1",
+      "title": "Write P1 real-data statistical-functional paper",
+      "science_status": "pending",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "CF4_HOLDOUT_AND_SELECTION"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "PARTIAL_SCOPED",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "S06",
+      "paper": "P1",
+      "title": "Decide publication readiness without submitting",
+      "science_status": "pending",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "CF4_HOLDOUT_AND_SELECTION"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "PARTIAL_SCOPED",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "L01",
+      "paper": "P2",
+      "title": "Map real Planck low-l harmonic/STF/beam/mask/transfer response",
+      "science_status": "completed_scoped",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "NATIVE_SOLVER_CONVERGENCE"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "COMPLETE_SCOPED_R102",
+        "source_conditioned_analysis": "INHERITED_ONLY",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "L02",
+      "paper": "P2",
+      "title": "Predefine tensor invariant/orbit morphology and selection family",
+      "science_status": "completed_scoped",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "NATIVE_SOLVER_CONVERGENCE"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "COMPLETE_SCOPED_R102",
+        "source_conditioned_analysis": "INHERITED_ONLY",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "L03",
+      "paper": "P2",
+      "title": "Establish release-matched Planck signal+noise+foreground null adequacy",
+      "science_status": "pending",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "COMMANDER_PAIR_CHECK",
+        "NATIVE_SOLVER_CONVERGENCE"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "COMPLETE_SCOPED_R102",
+        "source_conditioned_analysis": "PARTIAL_SCOPED",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "L04",
+      "paper": "P2",
+      "title": "Compute corrected joint large-angle morphology rarity",
+      "science_status": "pending",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "COMMANDER_PAIR_CHECK",
+        "NATIVE_SOLVER_CONVERGENCE"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "COMPLETE_SCOPED_R102",
+        "source_conditioned_analysis": "PARTIAL_SCOPED",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "L05",
+      "paper": "P2",
+      "title": "Analyze anomaly versus robust negative null interpretation",
+      "science_status": "pending",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "COMMANDER_PAIR_CHECK"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "PARTIAL_SCOPED",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "L06",
+      "paper": "P2",
+      "title": "Decide and draft P2 manuscript",
+      "science_status": "pending",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "COMMANDER_PAIR_CHECK"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "PARTIAL_SCOPED",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "H01",
+      "paper": "P3",
+      "title": "Define H_W(z,n) under survey radial/angular window and velocity law",
+      "science_status": "completed_scoped",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "CF4_HOLDOUT_AND_SELECTION"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "PARTIAL_SCOPED",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "H02",
+      "paper": "P3",
+      "title": "Build empirical CF4 method-selection/calibration/velocity covariance model",
+      "science_status": "pending",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "CF4_HOLDOUT_AND_SELECTION"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "PARTIAL_SCOPED",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "H03",
+      "paper": "P3",
+      "title": "Fit observed depth windows monopole/dipole/STF2 with method and patch comparisons",
+      "science_status": "completed_scoped",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "CF4_HOLDOUT_AND_SELECTION"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "PARTIAL_SCOPED",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "H04",
+      "paper": "P3",
+      "title": "Infer physical H(z,n) alternatives with peculiar-velocity and survey covariance",
+      "science_status": "pending",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "CF4_HOLDOUT_AND_SELECTION"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "PARTIAL_SCOPED",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "H05",
+      "paper": "P3",
+      "title": "Compare 2025\u201326 CF4 conflicting null and anisotropic papers",
+      "science_status": "pending",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "CF4_HOLDOUT_AND_SELECTION"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "PARTIAL_SCOPED",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "H06",
+      "paper": "P3",
+      "title": "Decide and draft P3 manuscript",
+      "science_status": "pending",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "CF4_HOLDOUT_AND_SELECTION"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "PARTIAL_SCOPED",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "V01",
+      "paper": "P4",
+      "title": "Fix beta_RO, beta_RM, beta_MO, windowed B and rapidity with congruence",
+      "science_status": "completed_scoped",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "R101_PREDICTIVE_AND_COLLISION_REPLAY"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "INHERITED_ONLY",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "V02",
+      "paper": "P4",
+      "title": "Inject finite local observer boost through the actual processed Planck source",
+      "science_status": "completed_scoped",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "R101_PREDICTIVE_AND_COLLISION_REPLAY"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "INHERITED_ONLY",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "V03",
+      "paper": "P4",
+      "title": "Obtain physically distinct global tilt source-history response (not endpoint copy)",
+      "science_status": "completed_scoped",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "R101_PREDICTIVE_AND_COLLISION_REPLAY"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "INHERITED_ONLY",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "V04",
+      "paper": "P4",
+      "title": "Measure projected local-global information and stable singular values",
+      "science_status": "pending",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "R101_PREDICTIVE_AND_COLLISION_REPLAY"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "INHERITED_ONLY",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "V05",
+      "paper": "P4",
+      "title": "Calibrated local/global joint inference and independent injections",
+      "science_status": "pending",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "R101_PREDICTIVE_AND_COLLISION_REPLAY"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "INHERITED_ONLY",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "V06",
+      "paper": "P4",
+      "title": "Decide and draft P4 manuscript",
+      "science_status": "pending",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "R101_PREDICTIVE_AND_COLLISION_REPLAY"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "INHERITED_ONLY",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "B01",
+      "paper": "P5",
+      "title": "Inventory admissible Bianchi I\u2013IX and exceptional VI_-1/9 source/mode templates",
+      "science_status": "completed_scoped",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "NATIVE_SOLVER_CONVERGENCE"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "COMPLETE_SCOPED_R102",
+        "source_conditioned_analysis": "INHERITED_ONLY",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "B02",
+      "paper": "P5",
+      "title": "Qualify external native polarized all-m and high-ell Bianchi transfer atlas",
+      "science_status": "pending",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "NATIVE_SOLVER_CONVERGENCE"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "COMPLETE_SCOPED_R102",
+        "source_conditioned_analysis": "INHERITED_ONLY",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "B03",
+      "paper": "P5",
+      "title": "Convolve physical Bianchi atlas with actual Planck response and null",
+      "science_status": "pending",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "COMMANDER_PAIR_CHECK",
+        "NATIVE_SOLVER_CONVERGENCE"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "COMPLETE_SCOPED_R102",
+        "source_conditioned_analysis": "PARTIAL_SCOPED",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "B04",
+      "paper": "P5",
+      "title": "Evaluate family equivalence, confusion/injection recovery and Bayes evidence",
+      "science_status": "pending",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "COMMANDER_PAIR_CHECK",
+        "NATIVE_SOLVER_CONVERGENCE"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "COMPLETE_SCOPED_R102",
+        "source_conditioned_analysis": "PARTIAL_SCOPED",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "B05",
+      "paper": "P5",
+      "title": "Decide/draft independent Bianchi identification paper or verified subset",
+      "science_status": "pending",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "COMMANDER_PAIR_CHECK",
+        "NATIVE_SOLVER_CONVERGENCE"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "COMPLETE_SCOPED_R102",
+        "source_conditioned_analysis": "PARTIAL_SCOPED",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "K01",
+      "paper": "P6",
+      "title": "Freeze one-congruence sigma_ab, omega_a, A_a and beta_a; units and radial blindness",
+      "science_status": "completed_scoped",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "R101_PREDICTIVE_AND_COLLISION_REPLAY"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "INHERITED_ONLY",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "K02",
+      "paper": "P6",
+      "title": "Determine identified subspace from actual CF4 apparent STF and safe physics bridges",
+      "science_status": "completed_scoped",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "R101_PREDICTIVE_AND_COLLISION_REPLAY"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "INHERITED_ONLY",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "K03",
+      "paper": "P6",
+      "title": "Secure nonradial physical observables and matching covariance for omega/A/beta",
+      "science_status": "pending",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "R101_PREDICTIVE_AND_COLLISION_REPLAY"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "INHERITED_ONLY",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "K04",
+      "paper": "P6",
+      "title": "Fit physical partial-identification for available kinematic modes",
+      "science_status": "pending",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "CF4_HOLDOUT_AND_SELECTION"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "PARTIAL_SCOPED",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "K05",
+      "paper": "P6",
+      "title": "Combine physically independent sector signals with common congruence",
+      "science_status": "pending",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "R101_PREDICTIVE_AND_COLLISION_REPLAY"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "INHERITED_ONLY",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "K06",
+      "paper": "P6",
+      "title": "Decide/draft P6 paper",
+      "science_status": "pending",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "R101_PREDICTIVE_AND_COLLISION_REPLAY"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "INHERITED_ONLY",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "SQ-CF4",
+      "paper": "P3",
+      "title": "CF4 selected-group method/PV calibration",
+      "science_status": "ready_scoped",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "CF4_HOLDOUT_AND_SELECTION"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "PARTIAL_SCOPED",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "SQ-GAIA",
+      "paper": "P6",
+      "title": "Gaia quasar redshift/scan/AGN source calibration",
+      "science_status": "ready_scoped",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "R101_PREDICTIVE_AND_COLLISION_REPLAY"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "INHERITED_ONLY",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "SQ-RADIO",
+      "paper": "P4",
+      "title": "Radio same-source selection response k,kappa and LSS null",
+      "science_status": "ready_scoped",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "R101_PREDICTIVE_AND_COLLISION_REPLAY"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "INHERITED_ONLY",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "SQ-FRAME",
+      "paper": "COMMON",
+      "title": "Observer/emitter normal and source frame matching",
+      "science_status": "ready_scoped",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "R101_PREDICTIVE_AND_COLLISION_REPLAY"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "INHERITED_ONLY",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "SQ-P1-ANCHOR",
+      "paper": "P1",
+      "title": "P1 selected 274-row source physical anchor and null",
+      "science_status": "blocked_physical_anchor",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "CF4_HOLDOUT_AND_SELECTION"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "PARTIAL_SCOPED",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "SQ-CMB-NULL",
+      "paper": "P2",
+      "title": "Qualified release-matched CMB T/E/B Monte Carlo/null",
+      "science_status": "blocked_source",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "COMMANDER_PAIR_CHECK"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "PARTIAL_SCOPED",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "SQ-PHOTON-FLUX",
+      "paper": "P2",
+      "title": "Photon flux/kinetic higher moments and common normal source",
+      "science_status": "blocked_source",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "NATIVE_SOLVER_CONVERGENCE"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "COMPLETE_SCOPED_R102",
+        "source_conditioned_analysis": "INHERITED_ONLY",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "SQ-LIE-FLUX",
+      "paper": "P5",
+      "title": "Independent normal-frame rho,j,pi and Bianchi family source",
+      "science_status": "blocked_source",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "NATIVE_SOLVER_CONVERGENCE"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "COMPLETE_SCOPED_R102",
+        "source_conditioned_analysis": "INHERITED_ONLY",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "SQ-OPTICAL",
+      "paper": "COMMON",
+      "title": "Finite-redshift Sachs/Jacobi + position-drift transfer",
+      "science_status": "pending_conditional",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "R101_PREDICTIVE_AND_COLLISION_REPLAY"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "INHERITED_ONLY",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "SQ-CROSS-COV",
+      "paper": "COMMON",
+      "title": "Actual cross-probe source covariance and null/heldout",
+      "science_status": "pending_dependency",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "CF4_HOLDOUT_AND_SELECTION"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "PARTIAL_SCOPED",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "SQ-NATIVE",
+      "paper": "P5",
+      "title": "External native polarized Bianchi transfer/atlas qualification",
+      "science_status": "blocked_external",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "NATIVE_SOLVER_CONVERGENCE"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "COMPLETE_SCOPED_R102",
+        "source_conditioned_analysis": "INHERITED_ONLY",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "PHY-01",
+      "paper": "CROSS",
+      "title": "Hemisphere shear leakage exact, Type V j0 chi0 still nonzero masked contrast",
+      "science_status": "theory_verified_physical_data_pending",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "CF4_HOLDOUT_AND_SELECTION"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "PARTIAL_SCOPED",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "PHY-02",
+      "paper": "CROSS",
+      "title": "Photon moment covariance PSD plus Einstein normal-flux ellipsoid, exceptional Lie image",
+      "science_status": "theory_verified_physical_data_pending",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "COMMANDER_PAIR_CHECK",
+        "NATIVE_SOLVER_CONVERGENCE"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "COMPLETE_SCOPED_R102",
+        "source_conditioned_analysis": "PARTIAL_SCOPED",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "PHY-03",
+      "paper": "CROSS",
+      "title": "Same beta implies Q_count=A(3+beta\u00b2)Sgamma/4 and d=k(3+beta\u00b2)m/4",
+      "science_status": "theory_verified_physical_data_pending",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "NATIVE_SOLVER_CONVERGENCE"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "COMPLETE_SCOPED_R102",
+        "source_conditioned_analysis": "INHERITED_ONLY",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "PHY-04",
+      "paper": "CROSS",
+      "title": "V_B=-c n\u00d7Nn, allsky B2 norm c\u00b2||N_STF||\u00b2/5 orthogonal local shear E2",
+      "science_status": "theory_verified_physical_data_pending",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "R101_PREDICTIVE_AND_COLLISION_REPLAY"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "INHERITED_ONLY",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "PHY-05",
+      "paper": "CROSS",
+      "title": "exceptional VI_-1/9 rank M2 left flux null; independent noisy residual covariance can rank3",
+      "science_status": "theory_verified_physical_data_pending",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "NATIVE_SOLVER_CONVERGENCE"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "COMPLETE_SCOPED_R102",
+        "source_conditioned_analysis": "INHERITED_ONLY",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "PHY-06",
+      "paper": "CROSS",
+      "title": "commutator[D,sigma]!=0 can rotate eigenframe with dot chi=0; photon ell4 changes F and dot stress",
+      "science_status": "theory_verified_physical_data_pending",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "COMMANDER_PAIR_CHECK",
+        "NATIVE_SOLVER_CONVERGENCE"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "COMPLETE_SCOPED_R102",
+        "source_conditioned_analysis": "PARTIAL_SCOPED",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    },
+    {
+      "id": "PHY-07",
+      "paper": "CROSS",
+      "title": "radius variation makes dipole n and (100Mpc/r)n design rank12 vs fixed r rank9",
+      "science_status": "theory_verified_physical_data_pending",
+      "new_scientific_acceptance": false,
+      "r102_conditional_jobs": [
+        "CF4_HOLDOUT_AND_SELECTION"
+      ],
+      "r102_capability_status": {
+        "native_implementation_and_numerical_validation": "INHERITED_SCOPED",
+        "source_conditioned_analysis": "PARTIAL_SCOPED",
+        "calibrated_observational_inference": "BLOCKED_MISSING_UPSTREAM_INPUTS",
+        "bianchi_family_attribution": "BLOCKED_ATLAS_UNQUALIFIED_AND_MISSING_NULL"
+      }
+    }
+  ]
+}

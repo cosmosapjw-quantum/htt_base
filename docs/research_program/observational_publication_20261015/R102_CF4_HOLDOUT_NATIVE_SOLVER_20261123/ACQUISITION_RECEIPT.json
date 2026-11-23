@@ -1,0 +1,69 @@
+{
+  "schema": "htt.r102.acquisition_receipt/1",
+  "destination": "/home/cosmosapjw/Downloads/htt_r101",
+  "live_endpoint_finding": "PLA endpoint https://pla.esac.esa.int/pla/aio/product-action responds HTTP 200 with Content-Type=image/fits, inline FITS SIMPLE=T, Transfer-Encoding=chunked, and no Content-Length (ignoring Range), which trips R101's strict fixed-Content-Length check (scripts/r101/acquire.py). R101/R99 contracts are preserved unchanged; R102 acquires dx12_v3_commander_noise_mc_00000_raw.fits via strict <=603,987,840 B bounded chunked stream + full FITS validation.",
+  "commander_pr3_ffp10_noise_00000": {
+    "id": "commander_pr3_ffp10_noise_00000",
+    "filename": "dx12_v3_commander_noise_mc_00000_raw.fits",
+    "path": "/home/cosmosapjw/Downloads/htt_r101/dx12_v3_commander_noise_mc_00000_raw.fits",
+    "url": "https://pla.esac.esa.int/pla/aio/product-action?SIMULATED_MAP.FILE_ID=dx12_v3_commander_noise_mc_00000_raw.fits",
+    "release": "Planck PR3/FFP10 dx12_v3 Commander fullmission",
+    "expected_bytes": 603987840,
+    "downloaded": true,
+    "transferred_bytes": 603987840,
+    "status": "FETCHED_CHUNKED_FITS_VERIFIED_EXACT_BYTES",
+    "transfer_encoding_chunked": true,
+    "response_content_length": null,
+    "bytes": 603987840,
+    "md5": "573a0706a101015ff77ea9aafce9258e",
+    "sha256": "7c25b9674652e117362c69f57948d4b5346f14c7426486241c39de316c74e3cb",
+    "channels": {
+      "INTENSITY": {
+        "pixels": 50331648,
+        "finite": 50331648
+      },
+      "Q-POLARISATION": {
+        "pixels": 50331648,
+        "finite": 50331648
+      },
+      "U-POLARISATION": {
+        "pixels": 50331648,
+        "finite": 50331648
+      }
+    },
+    "fetched_at_utc": "2026-11-23T12:39:11.718666+00:00",
+    "elapsed_seconds": 492.8086429590476,
+    "http_status": 200,
+    "headers": {
+      "content-type": "image/fits",
+      "content-disposition": "inline; filename=\"dx12_v3_commander_noise_mc_00000_raw.fits\"",
+      "transfer-encoding": "chunked"
+    },
+    "provider_checksum": null,
+    "provider_checksum_available": false,
+    "commander_null_qualified": false
+  },
+  "sdss_randoms_v1_1": {
+    "id": "sdss_randoms_v1_1",
+    "path": "/home/cosmosapjw/Downloads/htt_r101/SDSS_randoms_public.dat",
+    "url": "https://zenodo.org/api/records/6824749/files/SDSS_randoms_public.dat/content",
+    "release": "10.5281/zenodo.6824749 v1.1.0",
+    "expected_bytes": 284000071,
+    "provider_checksum": "md5:8627b4063e8a71572e333e0ac65d6657",
+    "provider_checksum_available": true,
+    "status": "FETCHED_PROVIDER_MD5_VERIFIED",
+    "downloaded": true,
+    "bytes": 284000071,
+    "md5": "8627b4063e8a71572e333e0ac65d6657",
+    "sha256": "2ec2853acd263b91bf679764fed22fd2b1edc34d4d08dd5d1c4f4e311e44f848",
+    "fetched_at_utc": "2026-11-23T12:34:23.680773+00:00",
+    "http_status": 200,
+    "headers": {
+      "content-type": "application/octet-stream",
+      "content-length": "284000071",
+      "accept-ranges": "bytes"
+    },
+    "transferred_bytes": 284000071
+  },
+  "recorded_at_utc": "2026-11-23T12:47:24.538209+00:00"
+}
