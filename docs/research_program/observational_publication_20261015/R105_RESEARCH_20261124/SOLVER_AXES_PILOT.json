@@ -1,0 +1,583 @@
+{
+  "schema": "htt.r105.solver_axes.1",
+  "physics_identity": {
+    "sha256": {
+      "Alpha_inf.dat": "357101049c9382e90e5e1e896961407d3b465b61b78de9750b852c05ea4d1023",
+      "R_inf.dat": "ce914f4b552ba55ba00f7916f36b0986f19adfdb638e5aefae91f7b2d05a8112",
+      "baryon_history.py": "75466b3bc2896a0097722ea3523ab4ef7f1d76bd7be8988f8cbe5f1c26baa6ef",
+      "bass.background": "c360e22ac39303931fe4caa3e73543376cf847b0c42953f7d271ff3f803ed458",
+      "bass.background.bianchi_types": "1fb4fac22c38a688609e0eb7658bcf4a2c383862bf74256b2d377b23fdbee420",
+      "bass.background.constraints": "ce19bbb2ded3e9a3bf66e512c79f509ccf7a3ead949dccd5f01d1ccd0f764db2",
+      "bass.background.convention_bridge": "28042f5a6ab15e3039f90a3dd6d2ce21d32f8b1192a69147f9844881e1b72a6b",
+      "bass.background.general_tilted_evolution": "9679d7651a0f29adae712afc8fff9a67731f88970925ce1ef9bdb5f42d207ddd",
+      "bass.background.geometry": "749e47c9e30709ed19d9ced4fdaa7d2d97e261903a3cf390ee9ead333287107a",
+      "bass.background.initial_conditions": "69510bfc85e8cf18f89a26a6e927e770dac37003136d411d8873b59b3d4853a3",
+      "bass.background.matter_projection": "27fd27788cfe4f33265c03fe70a74545c0fdeda60bda2f6f6cb314d3c54b937f",
+      "bass.background.rhs": "ca404df08e9a3d600d268fb58fcc69cf1fee124c285202c1aea357c6b8d83911",
+      "bass.background.tilted_bianchi_state": "e36dd616f4d0e2998e48e1a50ae9b67e1cd48842ef5b52ee2b1e4b94b888fe04",
+      "bass.closure": "882e79087cfebd87600c8473e56e461d4105878b95da91549e8ee9a87d7455bd",
+      "bass.closure.quadrupole_tca": "805509cbd551cc73fb888f6e42787f93841ab2af5d0ad306ecea5707be6da2f7",
+      "bass.closure.stiff_closure": "385a053ba16d6601d123a21f0bfcf60b1a97c19d93397cbf1cbd31b7157c8d95",
+      "bass.collision": "50b062a69f2a79a7ed239a9af209f405ccc8b24003f64eec6781f58cf68f06a5",
+      "bass.collision._tilted_layer_b_common": "ade969833558b836fd50b8b6d1c393416510ea60d51bcc40f337862c3e180b83",
+      "bass.collision.coherency": "f1f5c9f7ca8e2c5cbada91404d65bb002fa62219a8341670f28ba5d8968987e2",
+      "bass.collision.electron_frame": "9f460bb6fddde3ce7250fd1326b4117e4ae1b113266a0760096f5c6080d52b7a",
+      "bass.collision.moving_thomson": "b068e958bd1282967c0c643ac699bed42fe4420301c0df2888dd416e392f376f",
+      "bass.collision.polarization": "7aab8843049b0f12d3c260ccc33c607d58fc14d3eff5d96875786295168a04f5",
+      "bass.collision.thomson_pstf": "bb0fc7b003b488424bf7948f1a58d99e5bdaaebdef1ef16b7cf329006ef4525a",
+      "bass.collision.thomson_tensor": "917cef933926051b980ceab6dd27f0fa3bec44b5381fd5ef45152ae89b718800",
+      "bass.collision.tilted_eb_mixing": "4bb4f26113f2177c9f424eb0ff5e943dc7c66ded5abdbd5a0a67d3b6b5a940ba",
+      "bass.diagnostics": "2bd88f1ba1846a8ff501b287fbb807671ca216943a5425a863179885f176e22d",
+      "bass.diagnostics.bianchi_similarity": "36896961347c3684fc978501f0b67b33de4def15ee8a08a4a2087f00dba72a9f",
+      "bass.hierarchy": "331a9e08a8b21674120ef550cfe51b862c47188d64ef0c2d3d7d331fd26a27c1",
+      "bass.hierarchy.boost_kernel": "96e304faadf88734d037cc2811be580a559a04bbeb585f6fc72bee791b38e33e",
+      "bass.hierarchy.closure": "c43fe58b26305581c698181e4b816d9a4949f15e2bf44e7108d55096cc7d7f3a",
+      "bass.hierarchy.closure_diagnostics": "df95b1857e470071d3054cba14e43c4007a07ba38ad321f938eff38d9e66646c",
+      "bass.hierarchy.closure_interface": "faad3ed245afb0a8d71b798d30c7b77c942562aec23c15507584f35b9db79a32",
+      "bass.hierarchy.collision_interface": "a70c4ae8920ba7e15044879ec8568dab29d417bfa9a43a8f320e368998069a76",
+      "bass.hierarchy.contractions": "89026ff9263c933d10cc9a54403852ac6202dfb3096c4a240304c86e439b9738",
+      "bass.hierarchy.frame_contracts": "06fc21afc0febed2539bffb74f6b08bb8c9358f64f320a3d89cc2e6cfa91d796",
+      "bass.hierarchy.hierarchy_rhs": "380bdd49af1dff77fe257254a5a57d6f94ecddfde20fd6ed27b1d5c856142184",
+      "bass.hierarchy.ic": "b3e33ef7455669d16c906453d728eef596c3cafc8e8b0fd8ce8c70db5638fcad",
+      "bass.hierarchy.nabla_dispatch": "14933de06efa05cc98f4b88c62307644cc258396950a4664705f9c9f1aaaf587",
+      "bass.hierarchy.pack_unpack": "6599cf0b31573cac48ebdd21f6db06b82b5f2a182d5788fba8235c181fe36159",
+      "bass.hierarchy.packed_operators": "9fe1156705b21c6c4c2b8e769d5424d95b89249b08739384cc671cb38449f4b2",
+      "bass.hierarchy.pstf_radiation": "332da19ccd5a949ab712b29f3d0e8634bff1aa71f0385f26f952a922fd6d73f2",
+      "bass.hierarchy.pstf_tensor": "fe19fdca29896f757e9102e77a9d8302e61ba8d892d242722c58df42e00e0e21",
+      "bass.hierarchy.seed_compatibility": "9dc42ab66a4c8849ed3a4e4245fc99f802393270774c934a611f5da8cf8370f3",
+      "bass.hierarchy.spin2_projection": "c68773aa3eb45918fe0f2e9b6b370c40773912301f88c0a31fb1292516ab05fa",
+      "bass.hierarchy.terms": "fa37d98c619a2c2067fd56bd96b050224d9555ada66980ee40c78505077955ed",
+      "bass.hierarchy.tilt_kinematics": "0ae6ac829db6ff97098d9fbaceaeb3f03f1377ab7c87da860bc36a073fe38d03",
+      "bass.hierarchy.ver3_layout_protocol": "e33ec236d3d224830423fd953415ae7937b21b8b01e177574041375ec9e255ef",
+      "bass.hierarchy.ver3_state_contracts": "963aa0018c377aaf61fd4ede561d03783f136e4a38d104104debb72e9b95b722",
+      "bass.los": "e5a7e0dde2b460cc553ebf675bd9cadad5b4c8ec46792349745597b7ead24557",
+      "bass.los.bianchi_propagator": "8343a0c08849049ad8548537fb6891906c1f1d182c3ec1476e53abd3bcd74307",
+      "bass.los.family_backend_protocol": "cee6d54657cbfefbe480d0218d22ff932fc04c45ded6ac3fa31c56a97ebfe55f",
+      "bass.los.flrw_bessel_projector": "a7975c934bce584499c1388dc8b678fd587055d198432a2fb4a3941769e4a7cb",
+      "bass.los.ver2_source_propagator": "67da4d59e3b937ed874ca72e66a13864fc8e0b690d7e3253a57e5229d6c71ad9",
+      "bass.perturbation": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bass.perturbation.regular_adiabatic_ic": "f0447cb851fb21b8f54b7ca865bfb41210e33391f19ee2f71f329c8040dd8a0b",
+      "bass.recombination": "ad70e788431f1a1e8c5c6a6ec700630c1e3b71e4ba219f96c4f0605658491ca6",
+      "bass.recombination.baryon_history": "75466b3bc2896a0097722ea3523ab4ef7f1d76bd7be8988f8cbe5f1c26baa6ef",
+      "bass.recombination.clocked_chemistry": "5cbc1f5382e76e33dc2126c60fbada56a1c65c9c981ec4926de5a3a9806d281c",
+      "bass.recombination.history_visibility": "9e5cebca1f9297d95cab9f145c6fcb85bf4b06592c72f803ae5492416ad69b91",
+      "bass.recombination.opacity_history": "3a2ffc1a22f92eae32781c88e9911040b49cc1f9e4c1502ee4dd0c24d3b44b88",
+      "bass.recombination.recombination_ingest": "0666730dd850d621baedf60c272a74764c71b66ed64d7274caf75d99ccb6e45c",
+      "bass.recombination.reionization": "6475f103bfaf4492e469577c4f7e5ce51360f065a0085c3054449f5f74a22e93",
+      "bass.recombination.tilted_hyrec": "b21f746b9e74c30178832c5f345d5e5c87914c4e92e153df2f1d282e790977a7",
+      "bass.runtime": "71fdabcf5dab55062fe84909d200f896f7a4e4a571993a5b086dc616200d507d",
+      "bass.runtime.canonical_decision": "16fd313b9422753d755ef3cad41e5967163b294d273fd26051715046da94ab22",
+      "bass.runtime.cosmological_config": "0478a27d77a551a120ed54b0beb320c6a4ccd3480b1c5840690222b07e6bf662",
+      "bass.runtime.gate_fragments": "7ec1605a7cb7c1da5f1057988085184bc633f83f9a7dddd57d5e6a1a250a8e89",
+      "bass.runtime.validation_labels": "6e37b4e3f7b0bfc171a11b48bf7d3e5a9d558684b1270cfeb7a763121e612bbc",
+      "bass.runtime.ver2_execution": "312dde7dc753fdd44623a9c9b6cdf633654d7a82f8e69032880ef6fe296c23e3",
+      "bass.species": "2473e538e762264a6c7748c155ef36278a07b0a688e9ad2ac67e383ca24f1cfd",
+      "bass.species.background_table": "241524e68af08c92f872d503263bdc5a24b33b5912bab8c218b4f6f6c533eae3",
+      "bass.species.barotropic_closures": "382d3d546f92c07d1c6852decf7f9ce97074f6ec167d7bee122d96e303a8edc8",
+      "bass.species.baryon": "9d55e3faf9125bd35840ccd6fef34954901898803c215bf92ac530171460e858",
+      "bass.species.base": "f17d49272bc56833c46f91c71f1035c4f007810cb6f2ff323577164fa08c6570",
+      "bass.species.cdm": "2f66e6ac248554eadcb5357c15a4f626a2619e8b5da2b5b0bc7aad7b6fea047d",
+      "bass.species.constants": "3677407ed5e0eb7da482e9f8ea32e667564f2a15459fbb963c952474adcefcdc",
+      "bass.species.lambda_": "695e77469a1a989a40ee0f01de55588be1ff203d60dd19b1ddcd9e9f8a5e6d1a",
+      "bass.species.massive_neutrino": "69aa6ab2737fee840cc6117ca01789d2708e83db07fa40ee8e056a16bd51021f",
+      "bass.species.massive_neutrino.background": "113b9c1c204db382c1f12da94fb78a79babcced8334c293a55b5231e3aaf34d1",
+      "bass.species.massive_neutrino.phase_space": "9581e7ea812d8fdbcd24ea3d473a8d178a48d6ed932d2994a4ff8265a1fb2582",
+      "bass.species.neutrino": "817e5675083e9e16071f673f0eb8f2527415e44c0ed97a43875e089ed26c0d5c",
+      "bass.species.photon": "52838d742a0e083a56a44a404db3985b9e672058aa06a5a5d9c96c5865ca91e1",
+      "bass.species.registry": "3784a7e75ddeb60ab7c632c0f0289f98a0c917bd1d055da46c4d23d76586065e",
+      "bass.species.tilted": "4f94092bc90594af630a5d4aa6a01e553941cf13e8fdc598904686bcd5d8b93a",
+      "bass.spectrum": "96e32cf2a3c1a96396c2a3ec0bc2afd2e1aa3619c8728878a4acc106e8c185ee",
+      "bass.spectrum.lowell_los": "d704226156c658063a036c26620e4e2ca61c4e55eeb238595d8e9dd98f05ecb7",
+      "bass.spectrum.off_diagonal_covariance": "f0963040b551c1048071feee290f5b0ce6bc3874b37f74493f45bf2d75ca48ec",
+      "bass.spectrum.tier_b_source_extraction": "4c5473201841ca2f16302cade66c19282c8e10db37284ff4e112155852c64494",
+      "bass.spectrum.ver2_cutoff_campaign": "f6b461e69f4452fd59a3cbf041b55b9e10c35b728de6b428c6be42f513dff4e1",
+      "bass.tilt": "e6817ca3fc0f8d9938b246806a5e376194d49423b036af81f4479c53b0525190",
+      "bass.tilt.species_tilt": "772d7ead913f87d0015bec73464816b18d41cf4e5aacf6e62b3f209a8364f968",
+      "bass.transport": "049cdd8562a6b6df81454b6987ba9877d72411a6e4c5cf084c1fa0f038810db0",
+      "bass.transport.bianchi_i_hierarchy": "57d97b879e2e3d636e4a6052e2a79a1b406a750f5cd6b781275ea88185a89747",
+      "bass.transport.coupled_einstein_boltzmann": "f3e00c689509a425a9d6b8be44c8f92d7d795ea90501bd4b86763023c2de3dcf",
+      "bass.transport.general_bianchi_transfer": "9bcb541d35cabc05b8c325a58bbef57f253627203ff1ac1c354e4bd789f60410",
+      "bass.transport.general_lie_stokes": "1d0b5e94d41f4d9aba806ceb4b9ce087ee4a0ccec6dcdc92f9345a5221676357",
+      "bass.transport.geodesics": "1960b053fc07cfdb67e5f3b350d5ec6076f7f73af25916d5c4b6ceff904da302",
+      "bass.transport.moving_collision_stage": "e2d2e94f98f3fab70d0030ef8781b91a1019bcdff9075cd21f16e585db2c1504",
+      "bass.transport.ray_transport": "6f81516aaad3e76c82f98bc8b19979a0ba8a422aa905b34bfdeb149409467d0b",
+      "bass.transport.visibility_polter_source": "9e09be3a3e58b86190a6c45e3625e1510ae193de45d2375f40cea09c72032af6",
+      "bass.validation": "fc470e1f9785b932c0bb93ce935fc20e4135a18ea5fb08153e3e2863c56ff003",
+      "bass.validation.ver3_gate_stop": "b1c8f285023eba9139981d57694f06dfa9fec6be29f8c234e02867e599be9ac2",
+      "coupled_einstein_boltzmann.py": "f3e00c689509a425a9d6b8be44c8f92d7d795ea90501bd4b86763023c2de3dcf",
+      "fit_swift.dat": "46a644d7d2633b8f13080f9062df9b72a2e5adfa956d70d32ad1d7f4ec0a4641",
+      "general_lie_stokes.py": "1d0b5e94d41f4d9aba806ceb4b9ce087ee4a0ccec6dcdc92f9345a5221676357",
+      "moving_collision_stage.py": "e2d2e94f98f3fab70d0030ef8781b91a1019bcdff9075cd21f16e585db2c1504",
+      "moving_thomson.py": "b068e958bd1282967c0c643ac699bed42fe4420301c0df2888dd416e392f376f",
+      "native_optical_refinement.py": "6b8845531f01300c9d507238d3e6ea4bd135c2831b7759b64c539e60ea89483e",
+      "opacity_history.py": "3a2ffc1a22f92eae32781c88e9911040b49cc1f9e4c1502ee4dd0c24d3b44b88",
+      "recombination_ref_planck2018.csv": "ca5ef46dd70518a83cd0ccca265144dd4f66366a97e9e79f8800066a02a83c96",
+      "solver_axes.py": "476eeba420587ab5db6b3f3a0405483f1cd91f3f1e92d234080e1c867e012eaf",
+      "tilted_hyrec.py": "b21f746b9e74c30178832c5f345d5e5c87914c4e92e153df2f1d282e790977a7",
+      "two_photon_tables.dat": "93d23871e21c40f5b72a6ef9acf3eb7be054735c8aee9401e455736c1d9d8cf9"
+    },
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1"
+  },
+  "git_HEAD_if_known": "5a5f3b44d4fa5be65b71c2f80e715ebf9d1abf0a",
+  "requested_cases": {
+    "{\"cells\":48,\"depth\":1.0,\"ell\":4,\"epsilon\":0.0,\"family\":\"FLRW\",\"picard\":4,\"rings\":16}": [
+      "baseline"
+    ],
+    "{\"cells\":96,\"depth\":1.0,\"ell\":4,\"epsilon\":0.0,\"family\":\"FLRW\",\"picard\":4,\"rings\":16}": [
+      "cells"
+    ],
+    "{\"cells\":48,\"depth\":1.0,\"ell\":4,\"epsilon\":0.0002,\"family\":\"VI_-1/9\",\"picard\":4,\"rings\":16}": [
+      "baseline"
+    ],
+    "{\"cells\":96,\"depth\":1.0,\"ell\":4,\"epsilon\":0.0002,\"family\":\"VI_-1/9\",\"picard\":4,\"rings\":16}": [
+      "cells"
+    ]
+  },
+  "cases": {
+    "{\"cells\":48,\"depth\":1.0,\"ell\":4,\"epsilon\":0.0,\"family\":\"FLRW\",\"picard\":4,\"rings\":16}": {
+      "status": "executed",
+      "observables": {
+        "family": "FLRW",
+        "revision": "R105",
+        "n_cells": 48,
+        "min_substeps": 2,
+        "max_substep_depth": 1.0,
+        "n_picard": 4,
+        "ell_max": 4,
+        "gl_rings": 16,
+        "epsilon": 0.0,
+        "relative_first": null,
+        "relative_peak": null,
+        "relative_final": null,
+        "absolute_final": 3.848975605552665e-17,
+        "first_cell_depth": 20.814770893965235,
+        "n_photon_substeps_final_sweep": 137,
+        "C2T": 0.0,
+        "C2E": 0.0,
+        "C2B": 0.0,
+        "max_codazzi": 0.0,
+        "max_hamiltonian": 1.3872218073853763e-09,
+        "max_stokes_reality": 0.0,
+        "seconds": 21.334580741997343,
+        "signed_photon_q_over_E": {
+          "first": {
+            "cell_index": 0,
+            "N_end": -7.224667385642617,
+            "sky": [
+              3.672857334795511e-17,
+              -1.1267915619551181e-17,
+              2.3467634368437372e-18
+            ],
+            "fluid": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "sky_minus_fluid": [
+              3.672857334795511e-17,
+              -1.1267915619551181e-17,
+              2.3467634368437372e-18
+            ],
+            "absolute_norm": 3.848975605552665e-17,
+            "relative_norm": null
+          },
+          "peak": {
+            "cell_index": 0,
+            "N_end": -7.224667385642617,
+            "sky": [
+              3.672857334795511e-17,
+              -1.1267915619551181e-17,
+              2.3467634368437372e-18
+            ],
+            "fluid": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "sky_minus_fluid": [
+              3.672857334795511e-17,
+              -1.1267915619551181e-17,
+              2.3467634368437372e-18
+            ],
+            "absolute_norm": 3.848975605552665e-17,
+            "relative_norm": null
+          },
+          "final": {
+            "cell_index": 47,
+            "N_end": 0.0,
+            "sky": [
+              3.672857334795511e-17,
+              -1.1267915619551181e-17,
+              2.3467634368437372e-18
+            ],
+            "fluid": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "sky_minus_fluid": [
+              3.672857334795511e-17,
+              -1.1267915619551181e-17,
+              2.3467634368437372e-18
+            ],
+            "absolute_norm": 3.848975605552665e-17,
+            "relative_norm": null
+          }
+        },
+        "picard_pressure_change": 0.0,
+        "max_jacobi": 0.0
+      },
+      "cpu_s": 21.334027090000003,
+      "wall_s": 21.334878875000868,
+      "worker_peak_RSS_KiB": 111888,
+      "inputs": {
+        "family": "FLRW",
+        "cells": 48,
+        "ell": 4,
+        "picard": 4,
+        "depth": 1.0,
+        "rings": 16,
+        "epsilon": 0.0
+      },
+      "axes": [
+        "baseline"
+      ]
+    },
+    "{\"cells\":96,\"depth\":1.0,\"ell\":4,\"epsilon\":0.0,\"family\":\"FLRW\",\"picard\":4,\"rings\":16}": {
+      "status": "executed",
+      "observables": {
+        "family": "FLRW",
+        "revision": "R105",
+        "n_cells": 96,
+        "min_substeps": 2,
+        "max_substep_depth": 1.0,
+        "n_picard": 4,
+        "ell_max": 4,
+        "gl_rings": 16,
+        "epsilon": 0.0,
+        "relative_first": null,
+        "relative_peak": null,
+        "relative_final": null,
+        "absolute_final": 3.848975605552665e-17,
+        "first_cell_depth": 11.660870046786377,
+        "n_photon_substeps_final_sweep": 228,
+        "C2T": 0.0,
+        "C2E": 0.0,
+        "C2B": 0.0,
+        "max_codazzi": 0.0,
+        "max_hamiltonian": 1.3872218073853763e-09,
+        "max_stokes_reality": 0.0,
+        "seconds": 22.651271482987795,
+        "signed_photon_q_over_E": {
+          "first": {
+            "cell_index": 0,
+            "N_end": -7.301525549319665,
+            "sky": [
+              3.672857334795511e-17,
+              -1.1267915619551181e-17,
+              2.3467634368437372e-18
+            ],
+            "fluid": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "sky_minus_fluid": [
+              3.672857334795511e-17,
+              -1.1267915619551181e-17,
+              2.3467634368437372e-18
+            ],
+            "absolute_norm": 3.848975605552665e-17,
+            "relative_norm": null
+          },
+          "peak": {
+            "cell_index": 0,
+            "N_end": -7.301525549319665,
+            "sky": [
+              3.672857334795511e-17,
+              -1.1267915619551181e-17,
+              2.3467634368437372e-18
+            ],
+            "fluid": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "sky_minus_fluid": [
+              3.672857334795511e-17,
+              -1.1267915619551181e-17,
+              2.3467634368437372e-18
+            ],
+            "absolute_norm": 3.848975605552665e-17,
+            "relative_norm": null
+          },
+          "final": {
+            "cell_index": 95,
+            "N_end": 0.0,
+            "sky": [
+              3.672857334795511e-17,
+              -1.1267915619551181e-17,
+              2.3467634368437372e-18
+            ],
+            "fluid": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "sky_minus_fluid": [
+              3.672857334795511e-17,
+              -1.1267915619551181e-17,
+              2.3467634368437372e-18
+            ],
+            "absolute_norm": 3.848975605552665e-17,
+            "relative_norm": null
+          }
+        },
+        "picard_pressure_change": 0.0,
+        "max_jacobi": 0.0
+      },
+      "cpu_s": 22.643398832,
+      "wall_s": 22.651513000018895,
+      "worker_peak_RSS_KiB": 111212,
+      "inputs": {
+        "family": "FLRW",
+        "cells": 96,
+        "ell": 4,
+        "picard": 4,
+        "depth": 1.0,
+        "rings": 16,
+        "epsilon": 0.0
+      },
+      "axes": [
+        "cells"
+      ]
+    },
+    "{\"cells\":48,\"depth\":1.0,\"ell\":4,\"epsilon\":0.0002,\"family\":\"VI_-1/9\",\"picard\":4,\"rings\":16}": {
+      "status": "executed",
+      "observables": {
+        "family": "VI_-1/9",
+        "revision": "R105",
+        "n_cells": 48,
+        "min_substeps": 2,
+        "max_substep_depth": 1.0,
+        "n_picard": 4,
+        "ell_max": 4,
+        "gl_rings": 16,
+        "epsilon": 0.0002,
+        "relative_first": 3.1935484771574664e-06,
+        "relative_peak": 0.0022050795401840962,
+        "relative_final": 0.0020551535307031196,
+        "absolute_final": 4.483456870909278e-08,
+        "first_cell_depth": 20.814767665147034,
+        "n_photon_substeps_final_sweep": 137,
+        "C2T": 2.984954194925652e-07,
+        "C2E": 1.036246728161232e-11,
+        "C2B": 5.952330116946152e-14,
+        "max_codazzi": 1.187437576150513e-09,
+        "max_hamiltonian": 1.0433186435843637e-09,
+        "max_stokes_reality": 6.776263578034403e-19,
+        "seconds": 40.16170908900676,
+        "signed_photon_q_over_E": {
+          "first": {
+            "cell_index": 0,
+            "N_end": -7.224667385642617,
+            "sky": [
+              2.0638751021974246e-05,
+              -1.0319214125309649e-05,
+              5.159650681741739e-06
+            ],
+            "fluid": [
+              2.0638816339902196e-05,
+              -1.0319248120251356e-05,
+              5.159667406761632e-06
+            ],
+            "sky_minus_fluid": [
+              -6.531792794966661e-11,
+              3.399494170694829e-11,
+              -1.672501989299338e-11
+            ],
+            "absolute_norm": 7.551035732744001e-11,
+            "relative_norm": 3.1935484771574664e-06
+          },
+          "peak": {
+            "cell_index": 5,
+            "N_end": -6.456085748872125,
+            "sky": [
+              1.8712477762578966e-05,
+              -9.360541161196921e-06,
+              4.68042092810061e-06
+            ],
+            "fluid": [
+              1.8753806907829448e-05,
+              -9.381266782346288e-06,
+              4.690783911320278e-06
+            ],
+            "sky_minus_fluid": [
+              -4.132914525048213e-08,
+              2.0725621149366794e-08,
+              -1.0362983219667846e-08
+            ],
+            "absolute_norm": 4.7381864044944955e-08,
+            "relative_norm": 0.0022050795401840962
+          },
+          "final": {
+            "cell_index": 47,
+            "N_end": 0.0,
+            "sky": [
+              1.8366013514663794e-05,
+              -1.0454600287156077e-05,
+              5.230937139445552e-06
+            ],
+            "fluid": [
+              1.8404931714896253e-05,
+              -1.0474507960039813e-05,
+              5.240896898596793e-06
+            ],
+            "sky_minus_fluid": [
+              -3.891820023245942e-08,
+              1.9907672883736046e-08,
+              -9.959759151240423e-09
+            ],
+            "absolute_norm": 4.483456870909278e-08,
+            "relative_norm": 0.0020551535307031196
+          }
+        },
+        "picard_pressure_change": 7.909575086796224e-07,
+        "max_jacobi": 6.740518508147447e-20
+      },
+      "cpu_s": 40.143871466,
+      "wall_s": 40.161972797010094,
+      "worker_peak_RSS_KiB": 119276,
+      "inputs": {
+        "family": "VI_-1/9",
+        "cells": 48,
+        "ell": 4,
+        "picard": 4,
+        "depth": 1.0,
+        "rings": 16,
+        "epsilon": 0.0002
+      },
+      "axes": [
+        "baseline"
+      ]
+    },
+    "{\"cells\":96,\"depth\":1.0,\"ell\":4,\"epsilon\":0.0002,\"family\":\"VI_-1/9\",\"picard\":4,\"rings\":16}": {
+      "status": "executed",
+      "observables": {
+        "family": "VI_-1/9",
+        "revision": "R105",
+        "n_cells": 96,
+        "min_substeps": 2,
+        "max_substep_depth": 1.0,
+        "n_picard": 4,
+        "ell_max": 4,
+        "gl_rings": 16,
+        "epsilon": 0.0002,
+        "relative_first": 6.205363228745096e-07,
+        "relative_peak": 0.0006296307776946626,
+        "relative_final": 0.0006118701305789909,
+        "absolute_final": 1.3352211007801748e-08,
+        "first_cell_depth": 11.660868351782032,
+        "n_photon_substeps_final_sweep": 228,
+        "C2T": 2.982520391641556e-07,
+        "C2E": 1.0081730334219489e-11,
+        "C2B": 5.768542981047534e-14,
+        "max_codazzi": 8.016731407724692e-10,
+        "max_hamiltonian": 8.078294170635356e-10,
+        "max_stokes_reality": 1.1947428996318318e-18,
+        "seconds": 45.85974209901178,
+        "signed_photon_q_over_E": {
+          "first": {
+            "cell_index": 0,
+            "N_end": -7.301525549319665,
+            "sky": [
+              2.0986192147094163e-05,
+              -1.0493004385953243e-05,
+              5.246525568764892e-06
+            ],
+            "fluid": [
+              2.098620492216053e-05,
+              -1.0493011334911289e-05,
+              5.246528899940624e-06
+            ],
+            "sky_minus_fluid": [
+              -1.2775066367856332e-11,
+              6.948958046148709e-12,
+              -3.3311757317150675e-12
+            ],
+            "absolute_norm": 1.4919352210663715e-11,
+            "relative_norm": 6.205363228745096e-07
+          },
+          "peak": {
+            "cell_index": 10,
+            "N_end": -6.532943912549174,
+            "sky": [
+              1.8770020922661917e-05,
+              -9.388147712168144e-06,
+              4.694218117580804e-06
+            ],
+            "fluid": [
+              1.8781840654033488e-05,
+              -9.394071946681089e-06,
+              4.697180273073346e-06
+            ],
+            "sky_minus_fluid": [
+              -1.1819731371571476e-08,
+              5.924234512945202e-09,
+              -2.96215549254188e-09
+            ],
+            "absolute_norm": 1.3549057879516127e-08,
+            "relative_norm": 0.0006296307776946626
+          },
+          "final": {
+            "cell_index": 95,
+            "N_end": 0.0,
+            "sky": [
+              1.839751590154613e-05,
+              -1.047316931902629e-05,
+              5.240227265025025e-06
+            ],
+            "fluid": [
+              1.840889947947648e-05,
+              -1.0479410075569875e-05,
+              5.243349547854012e-06
+            ],
+            "sky_minus_fluid": [
+              -1.1383577930350965e-08,
+              6.240756543585165e-09,
+              -3.1222828289870794e-09
+            ],
+            "absolute_norm": 1.3352211007801748e-08,
+            "relative_norm": 0.0006118701305789909
+          }
+        },
+        "picard_pressure_change": 7.692916146369832e-07,
+        "max_jacobi": 8.756382802469593e-20
+      },
+      "cpu_s": 45.83504655,
+      "wall_s": 45.859907792008016,
+      "worker_peak_RSS_KiB": 120932,
+      "inputs": {
+        "family": "VI_-1/9",
+        "cells": 96,
+        "ell": 4,
+        "picard": 4,
+        "depth": 1.0,
+        "rings": 16,
+        "epsilon": 0.0002
+      },
+      "axes": [
+        "cells"
+      ]
+    }
+  },
+  "description": "one-factor changes from each named baseline; ell and time axes do not change GL rings",
+  "neutrino_fraction": 0.0,
+  "wall_timeout_per_case_seconds": 900.0,
+  "status": "executed",
+  "worker_limit": 3
+}

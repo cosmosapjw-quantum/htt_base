@@ -1,0 +1,235 @@
+{
+  "schema": "htt.r105.radio_matched_refits/1",
+  "raw_sha256": "52eb576c1e3e71837f2fca26121789ccc0b316152cca3f25ea2f37ea8ef5a38e",
+  "raw_rows_reread": 1773488,
+  "carrier_sha256": "a51da9a98c3d0563446eb61f21aceff69fbfeed5446ec74471177170b8664e89",
+  "fit_definition": "R65 ring-conditioned multinomial on its identical NSIDE=64 mask, three source flux bins, common transverse dipole, optional four independent STF coefficients per bin",
+  "n_pixels": 33000,
+  "counts_by_flux_bin_peak_integrated": [
+    [
+      119014,
+      66302,
+      56576
+    ],
+    [
+      127130,
+      72123,
+      63905
+    ]
+  ],
+  "full_refits": {
+    "dipole": {
+      "actual_delta_xy": [
+        -0.0013960439131910536,
+        0.005627036601351965
+      ],
+      "full_fit_replay_error": 3.903127820947816e-16,
+      "R65_source_Poisson_Wald": 32.792386268354115
+    },
+    "dipole_stf": {
+      "actual_delta_xy": [
+        -0.0016440241048542026,
+        0.005524671826759816
+      ],
+      "full_fit_replay_error": 0.0,
+      "R65_source_Poisson_Wald": 30.989468960483375
+    }
+  },
+  "spatial_deletions": {
+    "4": {
+      "dipole": {
+        "paired_replicates": 166,
+        "joint_covariance_peak_xy_integrated_xy": [
+          [
+            1.4490770539598961e-05,
+            -1.0143408786314334e-06,
+            1.3464005333445774e-05,
+            -1.7196288519352397e-06
+          ],
+          [
+            -1.0143408786314334e-06,
+            1.862152323693554e-05,
+            -1.6853572913083606e-06,
+            1.8957445019056204e-05
+          ],
+          [
+            1.3464005333445774e-05,
+            -1.6853572913083606e-06,
+            1.4007626133679421e-05,
+            -2.1186137390444704e-06
+          ],
+          [
+            -1.7196288519352397e-06,
+            1.8957445019056204e-05,
+            -2.1186137390444704e-06,
+            2.453838384272029e-05
+          ]
+        ],
+        "contrast_covariance_xy": [
+          [
+            1.5703860063868345e-06,
+            2.720315255676965e-07
+          ],
+          [
+            2.720315255676965e-07,
+            5.245017041543423e-06
+          ]
+        ],
+        "generalized_eigenvalues_vs_R65_poisson": [
+          1.9254479742242547,
+          5.246720940871686
+        ],
+        "direct_matched_Wald": 7.867511050999176,
+        "covariance_xy_correlation": 0.09478564657762842,
+        "ignoring_shared_peak_integrated_crosscov_Wald": 0.768132008215684,
+        "naive_scalar_trace_Wald": 8.725855076882059
+      },
+      "dipole_stf": {
+        "paired_replicates": 166,
+        "joint_covariance_peak_xy_integrated_xy": [
+          [
+            1.4994174307070743e-05,
+            -5.372705531035082e-07,
+            1.3920693911848328e-05,
+            -1.1488218606783978e-06
+          ],
+          [
+            -5.372705531035082e-07,
+            2.007508445981629e-05,
+            -1.1031524851491024e-06,
+            2.0161097281446698e-05
+          ],
+          [
+            1.3920693911848328e-05,
+            -1.1031524851491024e-06,
+            1.4479899249589287e-05,
+            -1.4290255926942675e-06
+          ],
+          [
+            -1.1488218606783978e-06,
+            2.0161097281446698e-05,
+            -1.4290255926942675e-06,
+            2.619380937380561e-05
+          ]
+        ],
+        "contrast_covariance_xy": [
+          [
+            1.6326857329633737e-06,
+            2.856782000297245e-07
+          ],
+          [
+            2.856782000297245e-07,
+            5.946699270728504e-06
+          ]
+        ],
+        "generalized_eigenvalues_vs_R65_poisson": [
+          1.9708620686844904,
+          5.729819500641393
+        ],
+        "direct_matched_Wald": 7.384603639907028,
+        "covariance_xy_correlation": 0.09168278850235424,
+        "ignoring_shared_peak_integrated_crosscov_Wald": 0.7272371280401346,
+        "naive_scalar_trace_Wald": 7.636770165943793
+      }
+    },
+    "8": {
+      "dipole": {
+        "paired_replicates": 594,
+        "joint_covariance_peak_xy_integrated_xy": [
+          [
+            1.196685075135874e-05,
+            -2.3166502133432634e-07,
+            1.1047250249756053e-05,
+            -5.14766560312149e-07
+          ],
+          [
+            -2.3166502133432634e-07,
+            1.553777261702877e-05,
+            -4.803767741964267e-07,
+            1.4770884890889376e-05
+          ],
+          [
+            1.1047250249756053e-05,
+            -4.803767741964267e-07,
+            1.1435816907115902e-05,
+            -6.226306295428526e-07
+          ],
+          [
+            -5.14766560312149e-07,
+            1.4770884890889376e-05,
+            -6.226306295428526e-07,
+            1.7328638936229677e-05
+          ]
+        ],
+        "contrast_covariance_xy": [
+          [
+            1.3081671589625345e-06,
+            1.4084768363139674e-07
+          ],
+          [
+            1.4084768363139674e-07,
+            3.324641771479693e-06
+          ]
+        ],
+        "generalized_eigenvalues_vs_R65_poisson": [
+          1.6111085175768232,
+          3.3257049877795675
+        ],
+        "direct_matched_Wald": 11.575322097320848,
+        "covariance_xy_correlation": 0.06753760556479292,
+        "ignoring_shared_peak_integrated_crosscov_Wald": 1.0302070553674252,
+        "naive_scalar_trace_Wald": 12.836751996396911
+      },
+      "dipole_stf": {
+        "paired_replicates": 594,
+        "joint_covariance_peak_xy_integrated_xy": [
+          [
+            1.2139661337853245e-05,
+            -6.583281828903522e-07,
+            1.1082929725961078e-05,
+            -8.512745001816179e-07
+          ],
+          [
+            -6.583281828903522e-07,
+            1.611363023266603e-05,
+            -8.146369674770673e-07,
+            1.5196661130654849e-05
+          ],
+          [
+            1.1082929725961078e-05,
+            -8.146369674770673e-07,
+            1.1334779832112317e-05,
+            -9.240228718091454e-07
+          ],
+          [
+            -8.512745001816179e-07,
+            1.5196661130654849e-05,
+            -9.240228718091454e-07,
+            1.7931025778117998e-05
+          ]
+        ],
+        "contrast_covariance_xy": [
+          [
+            1.3085817180434066e-06,
+            8.356041295918763e-08
+          ],
+          [
+            8.356041295918763e-08,
+            3.6513337494743287e-06
+          ]
+        ],
+        "generalized_eigenvalues_vs_R65_poisson": [
+          1.6011500368362066,
+          3.4951822730849513
+        ],
+        "direct_matched_Wald": 10.757994045693213,
+        "covariance_xy_correlation": 0.038227367146120336,
+        "ignoring_shared_peak_integrated_crosscov_Wald": 0.9787665365634717,
+        "naive_scalar_trace_Wald": 11.669961242578163
+      }
+    }
+  },
+  "physical_Pi": null,
+  "calibrated_p": null,
+  "scope": "Same-source and same-patch deletions refit all nuisance coefficients and omit the deleted patch from the conditional exposure. Uneven boundary block coverage and one underlying sky limit the jackknife. Independent physical LSS and flux-response calibration absent."
+}

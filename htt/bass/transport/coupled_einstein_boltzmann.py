@@ -267,6 +267,8 @@ class CoupledSolverConfig:
     # R104: evaluate the moving-Thomson frame at SDIRK stage times (False keeps the
     # R103 cell-midpoint frozen baryon velocity for A/B diagnostics only).
     stage_velocity_collision: bool = True
+    # R105: cap scalar conserved-anchor depth per scattering substep.
+    max_substep_depth: float | None = 1.0
 
 
 @dataclass(frozen=True)
@@ -312,25 +314,53 @@ def sky_energy_momentum_ratios(state: np.ndarray, op: GeneralLieStokesOperator) 
     return tensor / tensor[0, 0]
 
 
-def _advance_moving_photon_cell(op, state, delta_N, geometry, shear_source, sub_depths, baryon_velocity_at):
+def _optical_substeps(opacity, start, stop, min_steps, max_depth):
+    """Refine physical-time intervals until their integrated scalar depth is bounded.
+
+    Equal-N bisections retain the time midpoint and integrate each PCHIP piece
+    exactly. The returned N edges and depths describe the same intervals.
+    """
+    if isinstance(min_steps, (bool, np.bool_)) or not isinstance(min_steps,(int, np.integer)) or min_steps < 1:
+        raise ValueError("min_steps must be a positive integer")
+    if max_depth is not None and (not max_depth > 0 or not np.isfinite(max_depth)):
+        raise ValueError("max_substep_depth must be finite and positive")
+    edges = np.linspace(start,stop,min_steps+1)
+    while True:
+        dtau = opacity.cells(edges).delta_tau
+        if max_depth is None:
+            return (edges-start)/(stop-start), dtau
+        split = dtau > max_depth*(1.0 + 8*np.finfo(float).eps)
+        if not np.any(split):
+            return (edges-start)/(stop-start), dtau
+        lo, hi = edges[:-1][split], edges[1:][split]
+        mid = lo + (hi-lo)/2
+        if np.any(mid==lo) or np.any(mid==hi):
+            raise FloatingPointError("optical resolution exceeds floating-point time resolution")
+        edges = np.sort(np.r_[edges, mid])
+
+
+def _advance_moving_photon_cell(op, state, delta_N, geometry, shear_source, sub_depths,
+                                baryon_velocity_at, *, sub_edges=None):
     """SDIRK(2,2) photon cell with the electron velocity evaluated at each stage time.
 
-    ``shear_source`` is the cell source per unit cell coordinate u in [0, 1]. Substep j
-    spans ``h = 1/len(sub_depths)`` with exact optical depth ``sub_depths[j]``. The
-    moving-Thomson operator and its emission use ``baryon_velocity_at(u)`` at the
-    stage abscissae ``u_j + gamma h`` and ``u_j + h``. The second stage is the step
-    result, so an opaque step relaxes to the end-of-step baryon frame rather than to
-    a velocity frozen at the cell midpoint.
+    The source and Lie operator are expressed per unit cell coordinate u. Substep
+    j spans [a,b] in that coordinate, carries its exact integrated anchor optical
+    depth and uses the electron velocity at a+gamma*(b-a) and at b. The second
+    stage is the step result. Omitted edges use a uniform time partition.
     """
     gamma = 1.0 - 1.0 / math.sqrt(2.0)
-    h = 1.0 / float(len(sub_depths))
+    edges = np.linspace(0.,1.,len(sub_depths)+1) if sub_edges is None else np.asarray(sub_edges,dtype=float)
+    if (edges.shape != (len(sub_depths)+1,) or edges[0] != 0. or edges[-1] != 1.
+        or not np.isfinite(edges).all() or np.any(np.diff(edges) <= 0)):
+        raise ValueError("sub_edges must cover [0,1] in increasing order and match sub_depths")
     m_total = delta_N * (op.base_operator(geometry) + op.bolometric_redshift_operator(geometry))
     y = np.array(state, dtype=np.complex128, copy=True)
     for j, depth in enumerate(sub_depths):
+        h = edges[j+1]-edges[j]
         rate = float(depth) / h
         stages = []
         for c in (gamma, 1.0):
-            v = np.asarray(baryon_velocity_at((j + c) * h), dtype=np.float64)
+            v = np.asarray(baryon_velocity_at(edges[j] + c * h), dtype=np.float64)
             inc = gamma * h * shear_source
             if rate > 0.0 and np.any(v):
                 moving = MovingCollisionStage(op, v)
@@ -666,6 +696,7 @@ def solve_coupled_einstein_boltzmann(
             record = {
                 "N_end": N_eval[2::2].copy(),
                 "delta_tau": np.asarray(cell_depths[:n_c], dtype=np.float64).copy(),
+                "photon_substeps": np.full(n_c,cfg.substeps_per_cell,dtype=int),
                 "hamiltonian": ham_grid[2::2].copy(),
                 "codazzi": cod_grid[2::2].copy(),
                 "q_over_E_sky": np.zeros((n_rad, n_c, 3)),
@@ -726,11 +757,12 @@ def solve_coupled_einstein_boltzmann(
                     y_u = sol.sol(n0 + u * dn)
                     return primitive_from_energy_momentum_ratio(y_u[b_off], y_u[b_off + 1:b_off + 4], 0.0)[2]
 
-                sub_edges = np.linspace(n0, float(N_eval[i1]), int(cfg.substeps_per_cell) + 1)
-                sub_edges[-1] = float(N_eval[i1])
-                sub_depths = opacity.cells(sub_edges).delta_tau
-                S_vec = _advance_moving_photon_cell(
-                    op_lie, S_vec, dN_cell, geom, src_vec, sub_depths, _baryon_velocity_at)
+                u_edges, sub_depths = _optical_substeps(
+                    opacity, n0, float(N_eval[i1]), cfg.substeps_per_cell, cfg.max_substep_depth)
+                S_vec = _advance_moving_photon_cell(op_lie, S_vec, dN_cell, geom, src_vec,
+                                                    sub_depths, _baryon_velocity_at, sub_edges=u_edges)
+                if cfg.record_history:
+                    record["photon_substeps"][cell] = len(sub_depths)
             else:
                 moving = None
                 if dtau_cell > 0.0 and np.any(vb_mid):

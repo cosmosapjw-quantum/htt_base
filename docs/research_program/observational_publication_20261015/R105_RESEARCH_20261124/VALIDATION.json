@@ -1,0 +1,65 @@
+{
+  "schema": "htt.r105.integration_validation/1",
+  "base_commit": "5a5f3b44d4fa5be65b71c2f80e715ebf9d1abf0a",
+  "branch": "research/r69-observable-physics-bridges-20261118",
+  "r105_direct": {
+    "nodes": 60,
+    "edges": 129,
+    "r104_nodes_with_evidence": 9,
+    "r105_nodes_with_direct_work": 20,
+    "r105_nodes_without_direct_work": 40,
+    "canonical_open": 42,
+    "canonical_open_with_r105_direct_work": 20,
+    "canonical_open_without_r105_direct_work": 22,
+    "r105_new_scientific_acceptances": 0,
+    "new_receipt_files": 21
+  },
+  "canonical_ledger_sha256": "9b2f78f4c1935f3c72e4deffbd4c394b47672172b1ea813b68c610c4997529ab",
+  "regression_suite": "1183 passed, 2 warnings, 5 subtests passed in 210.86s (0:03:30)",
+  "final_focused_command": [
+    ".venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/obsstat/test_r105_cf4_coras_marks.py",
+    "tests/obsstat/test_r105_cf4_field_holdout.py",
+    "tests/obsstat/test_r105_commander_transfer.py",
+    "tests/obsstat/test_r105_common_time_moments.py",
+    "tests/obsstat/test_r105_coras_build.py",
+    "tests/obsstat/test_r105_coras_reduce.py",
+    "tests/obsstat/test_r105_cross_p1.py",
+    "tests/obsstat/test_r105_gaia_radio.py",
+    "tests/obsstat/test_r105_program.py",
+    "tests/obsstat/test_r105_rei_observer.py",
+    "tests/obsstat/test_r105_solver_axes.py",
+    "htt/bass/transport/test_optical_substeps.py"
+  ],
+  "focused_summary": "38 passed in 2.46s",
+  "focused_exit": 0,
+  "focused_wall_s": 3.3736037029884756,
+  "case_receipts": {
+    "solver_192": "executed",
+    "common_time_sha256": "dbd76d3a59067799457c01d3bf1fb27e93d542f15dbd7f12d9e7c8dd9eac2104",
+    "heldout_coras_8_run_bound_by_sha": true,
+    "commander_indices": [
+      0,
+      1,
+      2
+    ],
+    "CORAS_three_mesh_draw_counts": [
+      48,
+      128,
+      16
+    ],
+    "R78_replayed_by_ledger": true
+  },
+  "unresolved": [
+    "CF3/CF4 calibration and selection overlap",
+    "finite ensemble and lattice resolution",
+    "full 300 Commander systematics-matched null",
+    "two early VI_-1/9 common times",
+    "z<4 signed REI histories",
+    "independent normal-frame matter/radiation flux for attribution"
+  ]
+}

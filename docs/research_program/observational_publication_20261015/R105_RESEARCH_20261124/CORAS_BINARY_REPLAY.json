@@ -1,0 +1,174 @@
+{
+  "schema": "htt.r105.coras_binary_replay/1",
+  "scope": "Different binaries, same radial driver source and pinned CORAS inputs. One coarse seed, 21,860 ordered sites. Equality applies to serialized per-site output and its decoded float64, not unrecorded internal floating-point states.",
+  "site_count": 21860,
+  "pilot_binary": {
+    "path": "/tmp/htt-r105-coras.6PyQAjZp/coras_radial",
+    "size": 439632,
+    "sha256": "a5450321da56b0ad46326ac74350bf9ddf641aed14458903b48228efb8c3da79"
+  },
+  "independent_binary": {
+    "path": "/tmp/htt-r105-coras-build-check.5aYaDPOT/build/coras_radial",
+    "size": 533968,
+    "sha256": "bf6cf3c706e771eb04d957bc12d179e05e66750bd3f15780b3ca82b97a357049"
+  },
+  "persistent_binary": {
+    "path": "/home/cosmosapjw/Downloads/htt_r105_coras/deps/build/coras_radial",
+    "size": 533968,
+    "sha256": "bf6cf3c706e771eb04d957bc12d179e05e66750bd3f15780b3ca82b97a357049"
+  },
+  "pilot_same_binary_as_independent": false,
+  "persistent_binary_equals_replay": true,
+  "source_driver": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r105/coras_radial.cpp",
+    "size": 5266,
+    "sha256": "bfa7bf84e82626278213fd3a66995b07247be41e04a449fc855108b67ad92272"
+  },
+  "build_script": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r105/coras_build.py",
+    "size": 7654,
+    "sha256": "acce3bf2e51ff7fbde21e697c6ccd775ca11d77e3270820d1b960e6ea3e42bb8"
+  },
+  "site_input": {
+    "path": "/home/cosmosapjw/Downloads/htt_r105_coras/coarse/sites.tsv",
+    "size": 1404112,
+    "sha256": "58290005a922b1c485ee51442a8d9a638415f2c425a224cef130ca78aa0502c1"
+  },
+  "pilot_receipt": {
+    "path": "/home/cosmosapjw/Downloads/htt_r105_coras/coarse/run.json",
+    "size": 5670,
+    "sha256": "ec1dac08eed851e5d17e0603369405e9c72053989780f99bdfb8ef8cd24cafa5"
+  },
+  "persistent_build_receipt": {
+    "path": "/home/cosmosapjw/Downloads/htt_r105_coras/deps/build/build_receipt.json",
+    "size": 34130,
+    "sha256": "9f51327de39d46d1262414d2f10bfbc60b853986df1ff7f84e25dbc3fd392d26"
+  },
+  "donor": {
+    "directory": "/home/cosmosapjw/Downloads/htt_r105_coras/deps/CORAS",
+    "origin": "https://github.com/rlilow/CORAS.git",
+    "commit": "45ab25635aa32869ce207511d556ea257ab8a591",
+    "tree": "dc7259f94bc6535156f538b5f6603a56b052fe20",
+    "clean": true,
+    "has_temporary_git_alternate": false,
+    "runtime_inputs": {
+      "data/2MRS_group_member_catalog.dat": {
+        "path": "/home/cosmosapjw/Downloads/htt_r105_coras/deps/CORAS/data/2MRS_group_member_catalog.dat",
+        "size": 3471262,
+        "sha256": "60cb3ece1aa773cc1263ac9d356b5f200853d465fa1de596ba9993101ea32dfc"
+      },
+      "data/CosmicEmu_spectrum_Planck18.dat": {
+        "path": "/home/cosmosapjw/Downloads/htt_r105_coras/deps/CORAS/data/CosmicEmu_spectrum_Planck18.dat",
+        "size": 7407,
+        "sha256": "41a8b1dea0777d6b0750a90bf166a07c145a1a8038a648b3ba4f8e54ba3a57ab"
+      }
+    }
+  },
+  "gsl_deb": {
+    "path": "/home/cosmosapjw/Downloads/htt_r105_coras/deps/libgsl-dev_2.7.1+dfsg-6ubuntu2_amd64.deb",
+    "size": 1258794,
+    "sha256": "a93350a23826d58dff49bcd6fdcbcd669c9571ff5d9b3f10ac0bdb337503d581"
+  },
+  "gsl_include": "/home/cosmosapjw/Downloads/htt_r105_coras/deps/gsl_dev/usr/include",
+  "gsl_version_header": {
+    "path": "/home/cosmosapjw/Downloads/htt_r105_coras/deps/gsl_dev/usr/include/gsl/gsl_version.h",
+    "size": 460,
+    "sha256": "eb76fdb1fa2e26f1c656b4e53c773fbcc3061440fdf966068384e75824c8c3e5"
+  },
+  "config": {
+    "radial": 24,
+    "ell": 4,
+    "fft": 16,
+    "smoothing_Mpch": 15.0,
+    "growth_fsigma8": 0.405,
+    "external_bulk_galactic_kms": [
+      95,
+      -172,
+      28
+    ]
+  },
+  "execution": {
+    "argv": [
+      "/tmp/htt-r105-coras-build-check.5aYaDPOT/build/coras_radial",
+      "/home/cosmosapjw/Downloads/htt_r105_coras/coarse/sites.tsv",
+      "/home/cosmosapjw/Downloads/htt_r105_coras/replay-rebuilt-seed1",
+      "1",
+      "1",
+      "24",
+      "4",
+      "16",
+      "15.0"
+    ],
+    "cwd": "/home/cosmosapjw/Downloads/htt_r105_coras/deps/CORAS",
+    "environment": {
+      "OMP_NUM_THREADS": "1"
+    },
+    "exit_code": 0,
+    "log": {
+      "path": "/home/cosmosapjw/Downloads/htt_r105_coras/replay-rebuilt-seed1/generate.log",
+      "size": 58,
+      "sha256": "2792a3e89207da047e8ef144db821a8aa7ce16144343aec884660411bbb48af2"
+    }
+  },
+  "comparison": {
+    "mean.tsv": {
+      "pilot": {
+        "path": "/home/cosmosapjw/Downloads/htt_r105_coras/coarse/mean.tsv",
+        "size": 509279,
+        "sha256": "a39f5dd2343ffaaa481ce413ccfc5994c3a2c5872494d77a6935a3f82904858b"
+      },
+      "rebuilt": {
+        "path": "/home/cosmosapjw/Downloads/htt_r105_coras/replay-rebuilt-seed1/mean.tsv",
+        "size": 509279,
+        "sha256": "a39f5dd2343ffaaa481ce413ccfc5994c3a2c5872494d77a6935a3f82904858b"
+      },
+      "site_ids_match": true,
+      "different_float64_readouts": 0,
+      "mean_abs_difference_km_s": 0.0,
+      "rms_difference_km_s": 0.0,
+      "max_abs_difference_km_s": 0.0,
+      "identical_tsv_bytes": true
+    },
+    "residual_1.tsv": {
+      "pilot": {
+        "path": "/home/cosmosapjw/Downloads/htt_r105_coras/coarse/residual_1.tsv",
+        "size": 506148,
+        "sha256": "b5263d9013bf282d49c077e1b6658065ef265bf79fcd4e0fd1f724d94de0ed6d"
+      },
+      "rebuilt": {
+        "path": "/home/cosmosapjw/Downloads/htt_r105_coras/replay-rebuilt-seed1/residual_1.tsv",
+        "size": 506148,
+        "sha256": "b5263d9013bf282d49c077e1b6658065ef265bf79fcd4e0fd1f724d94de0ed6d"
+      },
+      "site_ids_match": true,
+      "different_float64_readouts": 0,
+      "mean_abs_difference_km_s": 0.0,
+      "rms_difference_km_s": 0.0,
+      "max_abs_difference_km_s": 0.0,
+      "identical_tsv_bytes": true
+    }
+  },
+  "mean_plus_residual": {
+    "different_float64_sites": 0,
+    "mean_abs_difference_km_s": 0.0,
+    "rms_difference_km_s": 0.0,
+    "max_abs_difference_km_s": 0.0
+  },
+  "rerun": {
+    "binary": "/home/cosmosapjw/Downloads/htt_r105_coras/deps/build/coras_radial",
+    "cwd": "/home/cosmosapjw/Downloads/htt_r105_coras/deps/CORAS",
+    "sites": "/home/cosmosapjw/Downloads/htt_r105_coras/coarse/sites.tsv",
+    "environment": {
+      "OMP_NUM_THREADS": "1"
+    },
+    "argv_tail": [
+      "NEW_EMPTY_OUTPUT_DIRECTORY",
+      "1",
+      "1",
+      "24",
+      "4",
+      "16",
+      "15.0"
+    ]
+  }
+}

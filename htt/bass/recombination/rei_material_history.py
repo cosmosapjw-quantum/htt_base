@@ -55,6 +55,8 @@ class ReiMaterialHistory:
                   "xe_per_H", "temperature_K", "nH_proper_cm3", "ne_proper_cm3")
         with gzip.open(path, "rt") as stream:
             header = stream.readline().strip().split(",")
+            if "b" in header:
+                fields += ("b",)
             source = stream
             if self.sha256 == FIVE_CASE_SHA:
                 # Case is the first field, q_ref is the second, as locked by the file SHA.
@@ -64,7 +66,8 @@ class ReiMaterialHistory:
             data = np.loadtxt(source, delimiter=",", usecols=[header.index(k) for k in fields])
         if data.shape != (nrows, len(fields)) or not np.isfinite(data).all():
             raise ValueError("REI columns or population invalid")
-        a, z, self.t, h1, h2, he1, he2, he3, xe, temp, nh, ne = data.T
+        a, z, self.t, h1, h2, he1, he2, he3, xe, temp, nh, ne = data.T[:12]
+        self.b = data[:, 12] if len(fields) > 12 else None
         if (np.any(np.diff(a) <= 0) or np.any(np.diff(self.t) <= 0)
                 or not np.allclose(z[[0,-1]], [20,4], atol=1e-12, rtol=0)
                 or not np.allclose((1 + z) * a, 1, rtol=1e-12)):
@@ -85,6 +88,8 @@ class ReiMaterialHistory:
         self.nh0 = float(nh[0] * a[0]**3)
         if not np.allclose(nh * a**3, self.nh0, rtol=density_rtol, atol=0):
             raise ValueError("donor proper H density violates conserved nucleus current")
+        if self.b is not None:
+            self.b.setflags(write=False)
         self.z = z
         self.N = -np.log1p(z)
         self.material = np.stack((h2, he2, he3, temp))
@@ -117,6 +122,13 @@ class ReiMaterialHistory:
         dtau = np.add.reduceat(depth, np.searchsorted(cuts, e[:-1]))
         tau = np.r_[np.cumsum(dtau[::-1])[::-1], 0.]
         return OpticalCells(dtau, tau, np.exp(-tau[1:]) * (-np.expm1(-dtau)))
+
+    def observer_rays(self, observer_z_mean=4.0):
+        """Trace finite-interval normal-observer rays in the archived LRS-I metric."""
+        from bass.recombination.rei_observer_rays import ReiObserverRays
+        if self.b is None:
+            raise ValueError("directional rays require a material history with archived metric b")
+        return ReiObserverRays(self, observer_z_mean)
 
     def evaluate(self, z_eval):
         """Evaluate source densities and exact sampled-opacity cell integrals on a finite window.

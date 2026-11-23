@@ -1,0 +1,118 @@
+{
+  "schema": "htt.r105.manticore-bounded-get.v1",
+  "at_utc": "2026-11-23T17:31:38.108793+00:00",
+  "base_commit": "5a5f3b44d4fa5be65b71c2f80e715ebf9d1abf0a",
+  "request_method": "GET",
+  "request_range": "bytes=0-4095",
+  "read_limit_per_response_bytes": 4096,
+  "anonymous_direct_get": true,
+  "interpretation": "HTTP evidence on owner workstation only. Prefix SHA-256 is for received bytes only. Raw catalogue or field files are not persisted.",
+  "routes": [
+    {
+      "id": "stockholm_release",
+      "role": "release_page",
+      "url": "https://digitaltwin.fysik.su.se/data-access.html",
+      "http_status": 206,
+      "final_url": "https://digitaltwin.fysik.su.se/data-access.html",
+      "headers": {
+        "Content-Type": "text/html",
+        "Content-Length": "4096",
+        "Content-Range": "bytes 0-4095/37001",
+        "ETag": "\"9089-656e7beda8dd1\"",
+        "Last-Modified": "Sat, 18 Jul 2026 19:33:19 GMT"
+      },
+      "bytes_read": 4096,
+      "sha256_read_bytes": "e893f823cc64e0caeec0c4d229a1054d4b0ce3b92ce5c4c73e0bea5b55cc32f6",
+      "prefix_is_hdf5": false,
+      "elapsed_s": 0.75
+    },
+    {
+      "id": "stockholm_assoc",
+      "role": "halo_catalogue",
+      "url": "https://digitaltwin.fysik.su.se/downloads/manticore_local_posterior_associations/manticore_local_posterior_cluster_catalog.h5",
+      "http_status": 206,
+      "final_url": "https://digitaltwin.fysik.su.se/downloads/manticore_local_posterior_associations/manticore_local_posterior_cluster_catalog.h5",
+      "headers": {
+        "Content-Length": "4096",
+        "Content-Range": "bytes 0-4095/29062384",
+        "ETag": "\"1bb74f0-64d3d13669f94\"",
+        "Last-Modified": "Tue, 17 Mar 2026 19:09:34 GMT"
+      },
+      "bytes_read": 4096,
+      "sha256_read_bytes": "39c1dd78ee658241ff5f749a871a108ad45dd9497320c8dede57c1e50741984c",
+      "prefix_is_hdf5": true,
+      "elapsed_s": 0.75
+    },
+    {
+      "id": "stockholm_readme",
+      "role": "halo_catalogue_schema",
+      "url": "https://digitaltwin.fysik.su.se/downloads/manticore_local_posterior_associations/README.md",
+      "http_status": 206,
+      "final_url": "https://digitaltwin.fysik.su.se/downloads/manticore_local_posterior_associations/README.md",
+      "headers": {
+        "Content-Type": "text/markdown",
+        "Content-Length": "4096",
+        "Content-Range": "bytes 0-4095/12477",
+        "ETag": "\"30bd-64f8062a478d7\"",
+        "Last-Modified": "Wed, 15 Apr 2026 14:18:09 GMT"
+      },
+      "bytes_read": 4096,
+      "sha256_read_bytes": "28261a5d0332bceba8e66adc09c39c0aa57b45e4bb3e8ac24075c85494773dbd",
+      "prefix_is_hdf5": false,
+      "elapsed_s": 0.8
+    },
+    {
+      "id": "tutorial",
+      "role": "field_tutorial",
+      "url": "https://raw.githubusercontent.com/stuartmcalpine/manticore_public_scripts/7b345b4d7c4de505fa585ab0af1176a8219ba7bb/manticore_data_tutorial.ipynb",
+      "http_status": 206,
+      "final_url": "https://raw.githubusercontent.com/stuartmcalpine/manticore_public_scripts/7b345b4d7c4de505fa585ab0af1176a8219ba7bb/manticore_data_tutorial.ipynb",
+      "headers": {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Content-Length": "4096",
+        "Content-Range": "bytes 0-4095/1224825",
+        "ETag": "\"b286614f10cdb8246c82bd6f09701a4c71a7bcca9033298757b9f28289d186fb\""
+      },
+      "bytes_read": 4096,
+      "sha256_read_bytes": "d6f2b6836fe88ebbfe2e33f665a160d467dc1eb708ad6243d93a40c555b15651",
+      "prefix_is_hdf5": false,
+      "elapsed_s": 0.37
+    },
+    {
+      "id": "public_key_metadata",
+      "role": "public_access_bootstrap",
+      "url": "https://manticore.web.data-2-osu.iap.fr/public-keys.json",
+      "error_type": "ConnectTimeout",
+      "error": "HTTPSConnectionPool(host='manticore.web.data-2-osu.iap.fr', port=443): Max retries exceeded with url: /public-keys.json (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x7650d4348e00>, 'Connection to manticore.web.data-2-osu.iap.fr timed out. (connect timeout=5)'))",
+      "bytes_read": 0,
+      "elapsed_s": 5.37
+    },
+    {
+      "id": "field_0",
+      "role": "velocity_grid",
+      "url": "https://data-2-osu.iap.fr/manticore-local/R1024/mcmc_0/velocity_fields/N256/field.h5",
+      "error_type": "ConnectTimeout",
+      "error": "HTTPSConnectionPool(host='data-2-osu.iap.fr', port=443): Max retries exceeded with url: /manticore-local/R1024/mcmc_0/velocity_fields/N256/field.h5 (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x7650d434b3b0>, 'Connection to data-2-osu.iap.fr timed out. (connect timeout=5)'))",
+      "bytes_read": 0,
+      "elapsed_s": 5.7
+    },
+    {
+      "id": "field_1",
+      "role": "velocity_grid",
+      "url": "https://data-2-osu.iap.fr/manticore-local/R1024/mcmc_1/velocity_fields/N256/field.h5",
+      "error_type": "ConnectTimeout",
+      "error": "HTTPSConnectionPool(host='data-2-osu.iap.fr', port=443): Max retries exceeded with url: /manticore-local/R1024/mcmc_1/velocity_fields/N256/field.h5 (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x7650d434b5f0>, 'Connection to data-2-osu.iap.fr timed out. (connect timeout=5)'))",
+      "bytes_read": 0,
+      "elapsed_s": 5.7
+    },
+    {
+      "id": "consortium",
+      "role": "data_portal",
+      "url": "https://aquila-consortium.org/?m=data",
+      "error_type": "ConnectTimeout",
+      "error": "HTTPSConnectionPool(host='aquila-consortium.org', port=443): Max retries exceeded with url: /?m=data (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x7650d434b170>, 'Connection to aquila-consortium.org timed out. (connect timeout=5)'))",
+      "bytes_read": 0,
+      "elapsed_s": 5.01
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "base_commit": "5a5f3b44d4fa5be65b71c2f80e715ebf9d1abf0a",
+  "argv": [
+    ".venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "htt/bass/collision",
+    "htt/bass/recombination",
+    "htt/bass/transport",
+    "htt/htt/tests/test_cf4_group_holdout.py",
+    "htt/htt/tests/test_cf4_predictive_response.py",
+    "htt/htt/tests/test_cf4_shared_field_holdout.py",
+    "tests/obsstat/test_r102_acquire_commander.py",
+    "tests/obsstat/test_r102_program.py",
+    "tests/obsstat/test_r103_commander_ensemble.py",
+    "tests/obsstat/test_r103_gaia_frame_curvature.py",
+    "tests/obsstat/test_r103_manticore_cf4_pv.py",
+    "tests/obsstat/test_r103_program.py",
+    "tests/obsstat/test_r103_rei_material.py",
+    "tests/obsstat/test_r104_velocity_normalization.py",
+    "tests/obsstat/test_r105_cf4_coras_marks.py",
+    "tests/obsstat/test_r105_cf4_field_holdout.py",
+    "tests/obsstat/test_r105_commander_transfer.py",
+    "tests/obsstat/test_r105_coras_build.py",
+    "tests/obsstat/test_r105_coras_reduce.py",
+    "tests/obsstat/test_r105_cross_p1.py",
+    "tests/obsstat/test_r105_gaia_radio.py",
+    "tests/obsstat/test_r105_program.py",
+    "tests/obsstat/test_r105_rei_observer.py",
+    "tests/obsstat/test_r105_solver_axes.py"
+  ],
+  "exit_code": 0,
+  "seconds": 211.8721654950059,
+  "summary": "1183 passed, 2 warnings, 5 subtests passed in 210.86s (0:03:30)",
+  "warnings": [
+    "  /home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r102/commander_pair_check.py:86: HealpyDeprecationWarning: \"verbose\" was deprecated in version 1.15.0 and will be removed in a future version. ",
+    "  /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/EXTERNAL_AUDIT_20261025_R35/CF4_FINITE_COMPONENT/sources/r30_cf4_pv_tensor_numeric/fast_window_fixture_repair/science.py:84: RuntimeWarning: divide by zero encountered in divide"
+  ],
+  "scope": "BASS collision/recombination/transport, inherited CF4 and R102-R105 targeted tests. No raw large ensembles are downloaded by pytest."
+}
