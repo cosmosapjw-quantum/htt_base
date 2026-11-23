@@ -269,6 +269,18 @@ class CoupledSolverConfig:
     stage_velocity_collision: bool = True
     # R105: cap scalar conserved-anchor depth per scattering substep.
     max_substep_depth: float | None = 1.0
+    # R106: evaluate the Thomson rate at the same SDIRK stage times as the electron
+    # velocity (False keeps the R105 substep-average rate for A/B diagnostics only).
+    stage_rate_collision: bool = True
+    # R106: bisect photon substeps while |Delta ln(opacity rate)| exceeds this bound
+    # (stage-rate path only; None disables).
+    max_substep_log_rate: float | None = 0.25
+    # R106: n_picard is the minimum sweep count; continue up to max_picard until the
+    # largest per-node relative change of the radiation STF stress fed to the fluid
+    # is <= picard_rtol (None restores exactly n_picard sweeps). A globally normalised
+    # change hides unconverged late-time class-B stress.
+    picard_rtol: float | None = 1e-6
+    max_picard: int = 12
 
 
 @dataclass(frozen=True)
@@ -295,6 +307,8 @@ class CoupledSolverResult:
     total_optical_depth: float
     neutrino_final_state: np.ndarray | None = None
     history: dict | None = None
+    picard_iterations_used: int = 0
+    picard_pi_local_rel_change: float = float("nan")
 
 
 def sky_energy_momentum_ratios(state: np.ndarray, op: GeneralLieStokesOperator) -> np.ndarray:
@@ -314,22 +328,36 @@ def sky_energy_momentum_ratios(state: np.ndarray, op: GeneralLieStokesOperator) 
     return tensor / tensor[0, 0]
 
 
-def _optical_substeps(opacity, start, stop, min_steps, max_depth):
+def _optical_substeps(opacity, start, stop, min_steps, max_depth, max_log_rate=None):
     """Refine physical-time intervals until their integrated scalar depth is bounded.
 
     Equal-N bisections retain the time midpoint and integrate each PCHIP piece
     exactly. The returned N edges and depths describe the same intervals.
+    ``max_log_rate`` additionally bisects an interval while the anchor opacity rate
+    changes by more than that bound in |ln r| between its ends (R106). Stage-time
+    collision rates leave a tau_sub^2 * Delta(ln r) damping error that the depth
+    cap alone does not control in visibility and transparent cells.
     """
     if isinstance(min_steps, (bool, np.bool_)) or not isinstance(min_steps,(int, np.integer)) or min_steps < 1:
         raise ValueError("min_steps must be a positive integer")
     if max_depth is not None and (not max_depth > 0 or not np.isfinite(max_depth)):
         raise ValueError("max_substep_depth must be finite and positive")
+    if max_log_rate is not None and (not max_log_rate > 0 or not np.isfinite(max_log_rate)):
+        raise ValueError("max_substep_log_rate must be finite and positive")
     edges = np.linspace(start,stop,min_steps+1)
+    tol = 1.0 + 8*np.finfo(float).eps
     while True:
         dtau = opacity.cells(edges).delta_tau
-        if max_depth is None:
-            return (edges-start)/(stop-start), dtau
-        split = dtau > max_depth*(1.0 + 8*np.finfo(float).eps)
+        split = np.zeros(len(dtau), dtype=bool)
+        if max_depth is not None:
+            split |= dtau > max_depth*tol
+        if max_log_rate is not None:
+            rate = np.asarray(opacity.rate(edges), dtype=float)
+            ra, rb = rate[:-1], rate[1:]
+            both = (ra > 0.0) & (rb > 0.0)
+            change = np.zeros(len(dtau))
+            change[both] = np.abs(np.log(rb[both]/ra[both]))
+            split |= both & (change > max_log_rate*tol)
         if not np.any(split):
             return (edges-start)/(stop-start), dtau
         lo, hi = edges[:-1][split], edges[1:][split]
@@ -339,14 +367,41 @@ def _optical_substeps(opacity, start, stop, min_steps, max_depth):
         edges = np.sort(np.r_[edges, mid])
 
 
+def _stage_opacity_rate(opacity, n0, n_stop):
+    """Anchor optical depth per unit cell coordinate u in [0, 1] for one e-fold cell.
+
+    u = (N - n0)/(n_stop - n0), so d tau/du = (n_stop - n0) * d tau/dN with the same
+    PCHIP rate that drives the fluid Thomson force. Stage abscissae are clamped to
+    the cell, which absorbs the one-ulp overshoot of edges[j] + 1.0*h.
+    """
+    n0, n_stop = float(n0), float(n_stop)
+    if not n_stop > n0:
+        raise ValueError("cell must have positive e-fold width")
+    dn = n_stop - n0
+
+    def rate_at(u):
+        return dn * float(opacity.rate(min(max(n0 + u * dn, n0), n_stop)))
+
+    return rate_at
+
+
 def _advance_moving_photon_cell(op, state, delta_N, geometry, shear_source, sub_depths,
-                                baryon_velocity_at, *, sub_edges=None):
+                                baryon_velocity_at, *, sub_edges=None, opacity_rate_at=None):
     """SDIRK(2,2) photon cell with the electron velocity evaluated at each stage time.
 
     The source and Lie operator are expressed per unit cell coordinate u. Substep
     j spans [a,b] in that coordinate, carries its exact integrated anchor optical
     depth and uses the electron velocity at a+gamma*(b-a) and at b. The second
     stage is the step result. Omitted edges use a uniform time partition.
+
+    Without ``opacity_rate_at`` both stages use the substep-average rate depth/h
+    (R105). With ``opacity_rate_at(u)`` (anchor depth per unit u) the stages sample
+    the rate at the same abscissae as the electron velocity and the pair is then
+    rescaled so the SDIRK node quadrature h[(1-gamma) r1 + gamma r2] equals the exact
+    substep depth (R106). Both forms are second order in the depth cap; on a
+    tight-coupling ramp the stage-time shape lowers the error constant by roughly
+    30x, and the rescaling keeps the applied depth exact in visibility and
+    transparent cells. For a constant rate the two forms are identical.
     """
     gamma = 1.0 - 1.0 / math.sqrt(2.0)
     edges = np.linspace(0.,1.,len(sub_depths)+1) if sub_edges is None else np.asarray(sub_edges,dtype=float)
@@ -357,15 +412,25 @@ def _advance_moving_photon_cell(op, state, delta_N, geometry, shear_source, sub_
     y = np.array(state, dtype=np.complex128, copy=True)
     for j, depth in enumerate(sub_depths):
         h = edges[j+1]-edges[j]
-        rate = float(depth) / h
+        if opacity_rate_at is None:
+            stage_rates = (float(depth) / h,) * 2
+        else:
+            stage_rates = tuple(float(opacity_rate_at(edges[j] + c * h)) for c in (gamma, 1.0))
+            if not all(math.isfinite(r) and r >= 0.0 for r in stage_rates):
+                raise ValueError("stage opacity rates must be finite and nonnegative")
+            quad = h * ((1.0 - gamma) * stage_rates[0] + gamma * stage_rates[1])
+            if quad > 0.0:
+                stage_rates = tuple(r * float(depth) / quad for r in stage_rates)
+            else:
+                stage_rates = (float(depth) / h,) * 2
         stages = []
-        for c in (gamma, 1.0):
+        for c, rate in zip((gamma, 1.0), stage_rates):
             v = np.asarray(baryon_velocity_at(edges[j] + c * h), dtype=np.float64)
             inc = gamma * h * shear_source
             if rate > 0.0 and np.any(v):
                 moving = MovingCollisionStage(op, v)
                 solve = moving.factor_sdirk_stage(m_total, gamma * h, rate)
-                inc = inc + gamma * float(depth) * moving.emission
+                inc = inc + gamma * h * rate * moving.emission
             else:
                 solve = op.factor_sdirk_stage(m_total, gamma * h, rate)
             stages.append((solve, inc))
@@ -420,6 +485,9 @@ def solve_coupled_einstein_boltzmann(
 ) -> CoupledSolverResult:
     """Run coupled N3 recombination + Bianchi Einstein-Euler + N1/N2 Boltzmann integration."""
     cfg = CoupledSolverConfig() if config is None else config
+    if cfg.stage_rate_collision and cfg.include_moving_correction and cfg.max_substep_depth is None:
+        # Unequal stage rates lose the L-stable damping bound unless the depth is capped.
+        raise ValueError("stage_rate_collision requires a finite max_substep_depth")
     tbl = load_hyrec_atomic_tables() if tables is None else tables
     op_lie = GeneralLieStokesOperator(cfg.ell_max) if lie_op is None else lie_op
 
@@ -491,7 +559,14 @@ def solve_coupled_einstein_boltzmann(
         else cfg.reionization
     )
 
-    for picard_idx in range(max(1, int(cfg.n_picard))):
+    n_picard_min = max(1, int(cfg.n_picard))
+    if cfg.picard_rtol is not None and not (math.isfinite(cfg.picard_rtol) and cfg.picard_rtol > 0):
+        raise ValueError("picard_rtol must be finite and positive")
+    n_picard_max = n_picard_min if cfg.picard_rtol is None else max(n_picard_min, int(cfg.max_picard))
+    picard_local_change = float("nan")
+    picard_used = 0
+    prev_ratio_tab = None
+    for picard_idx in range(n_picard_max):
         # Step 1: N3 physical 4-channel recombination coupled to current background (H_n, v_b, sigma)
         recomb_hist = integrate_tilted_recombination(
             z_eval_recomb,
@@ -679,7 +754,7 @@ def solve_coupled_einstein_boltzmann(
         )
 
         # Update recombination background callbacks for next Picard iteration
-        if picard_idx + 1 < int(cfg.n_picard):
+        if picard_idx + 1 < n_picard_max:
             baryon_history = BaryonHistory(N_eval, H_grid*href_i, sig_grid*href_i,
                                           a_grid*href_i, n_grid*href_i, v_grid["baryon"])
 
@@ -691,6 +766,7 @@ def solve_coupled_einstein_boltzmann(
         # The boosted perfect-fluid pressure already contains STF(v_i q_j).
         # The prescribed IC matches that stress, so its initial correction is zero.
         new_pi_tab = np.zeros_like(pi_tab)
+        stress_scale_tab = np.zeros(pi_tab.shape[:2])
         if cfg.record_history:
             n_rad, n_c = len(radiation_indices), int(cfg.n_cells)
             record = {
@@ -758,9 +834,13 @@ def solve_coupled_einstein_boltzmann(
                     return primitive_from_energy_momentum_ratio(y_u[b_off], y_u[b_off + 1:b_off + 4], 0.0)[2]
 
                 u_edges, sub_depths = _optical_substeps(
-                    opacity, n0, float(N_eval[i1]), cfg.substeps_per_cell, cfg.max_substep_depth)
-                S_vec = _advance_moving_photon_cell(op_lie, S_vec, dN_cell, geom, src_vec,
-                                                    sub_depths, _baryon_velocity_at, sub_edges=u_edges)
+                    opacity, n0, float(N_eval[i1]), cfg.substeps_per_cell, cfg.max_substep_depth,
+                    cfg.max_substep_log_rate if cfg.stage_rate_collision else None)
+                S_vec = _advance_moving_photon_cell(
+                    op_lie, S_vec, dN_cell, geom, src_vec, sub_depths, _baryon_velocity_at,
+                    sub_edges=u_edges,
+                    opacity_rate_at=(_stage_opacity_rate(opacity, n0, float(N_eval[i1]))
+                                     if cfg.stage_rate_collision else None))
                 if cfg.record_history:
                     record["photon_substeps"][cell] = len(sub_depths)
             else:
@@ -789,6 +869,8 @@ def solve_coupled_einstein_boltzmann(
                 new_pi_tab[slot, i1] = _stress_feedback_ratio(
                     angular_state, op_lie, sol.y[offset+1:offset+4, i1], v_grid[spec_key][i1])
                 new_pi_tab[slot, i_mid] = .5*(new_pi_tab[slot, i0] + new_pi_tab[slot, i1])
+                boosted = pstf_rank2(np.outer(v_grid[spec_key][i1], sol.y[offset+1:offset+4, i1]))
+                stress_scale_tab[slot, i1] = float(np.linalg.norm(new_pi_tab[slot, i1] + boosted))
             if cfg.record_history:
                 T4_end = _unpack(float(N_eval[i1]), sol.y[:, i1])[11]
                 for slot, species_idx in enumerate(radiation_indices):
@@ -820,7 +902,18 @@ def solve_coupled_einstein_boltzmann(
             denom = max(float(np.max(np.abs(physical_pi))), 1e-30)
             picard_rel_change = float(np.max(np.abs(physical_pi - prev_pi_tab)) / denom)
         prev_pi_tab = physical_pi
+        if prev_ratio_tab is not None:
+            ends = slice(2, None, 2)
+            change = np.linalg.norm((new_pi_tab - prev_ratio_tab)[:, ends].reshape(len(radiation_indices), -1, 9), axis=2)
+            scale = stress_scale_tab[:, ends]
+            ratio = np.divide(change, scale, out=np.where(change > 0, np.inf, 0.0), where=scale > 0)
+            picard_local_change = float(np.max(ratio)) if ratio.size else 0.0
+        prev_ratio_tab = new_pi_tab.copy()
         pi_tab = new_pi_tab
+        picard_used = picard_idx + 1
+        if (cfg.picard_rtol is not None and picard_used >= n_picard_min and picard_idx > 0
+                and picard_local_change <= cfg.picard_rtol):
+            break
 
     reality_err = max_stokes_reality_error(final_S, op_lie.idx)
     if reality_err > 1e-12:
@@ -847,6 +940,8 @@ def solve_coupled_einstein_boltzmann(
         max_momentum_sum_error=max_mom_sum_err,
         max_stokes_reality_err=reality_err,
         picard_pi_rel_change=picard_rel_change,
+        picard_iterations_used=picard_used,
+        picard_pi_local_rel_change=picard_local_change,
         total_optical_depth=float(recomb_hist.kappa[0]),
         neutrino_final_state=neutrino_final,
         history=({"radiation_species": [species_specs[i].species for i in radiation_indices],

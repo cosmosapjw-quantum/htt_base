@@ -1,0 +1,4950 @@
+{
+ "schema": "htt.r106.radio_null_mocks.review_corrections/1",
+ "stage": "report",
+ "provenance": {
+  "script": "scripts/r106/radio_null_mocks.py",
+  "script_sha256": "32e375962eb07c1213a9b2d502416d952e766b5a0a49d4335f66a77e84c575a5",
+  "modules_sha256": {
+   "r65_count_quotient": "3cfa8dc552f4399cf77e8dd4cf744c59a065c831f5cd3f71485369b9c9832b91",
+   "r65_overlap": "764050b1b39b3d8934f66135f707e8b88457f49311c29f847a1026332bfacef1",
+   "r105_radio_matched_refits": "d8788e3821d22258887f294e76b21700d4bc2603603dfbbc43af2c41b270c88b"
+  },
+  "command": "python -B -m scripts.r106.radio_null_mocks --followup report --followup-dir /home/cosmosapjw/Downloads/htt_r106_analysis/nvss/review_followup --n-boot 200 --update-run-record",
+  "shell_setup": "cd <repo> && export PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1",
+  "repo_head": "b234bb0e0a9388d735bfa60a3b08041fc86e3cc5",
+  "script_git_status": "?? scripts/r106/radio_null_mocks.py",
+  "python": "3.12.3",
+  "platform": "Linux-7.0.0-43-generic-x86_64-with-glibc2.39",
+  "numpy": "2.5.4",
+  "healpy": "1.19.0",
+  "scipy": "1.18.1",
+  "root_seed": 20261124,
+  "input_sha256": {
+   "raw_catalogue": "52eb576c1e3e71837f2fca26121789ccc0b316152cca3f25ea2f37ea8ef5a38e",
+   "r65_carrier": "a51da9a98c3d0563446eb61f21aceff69fbfeed5446ec74471177170b8664e89",
+   "r65_result": "60735aa244272fc4d295813ab644c429c19cedca122bd9b308dcb7da0053806a",
+   "r105_matched_refits": "5a2eca905b85890ba8d06f8df43fe2e57a9aa1f3bbfb837075519ca8888d3124",
+   "reference_json": "9c7d7e6a9b26136605a3ac1efa4c0af73cc9265be2e13f9dda5c7391f75abeed",
+   "reference_npz": "1e7f5100331a57e38d6ca2c0aba843943e6c0a03aa80143ab07bffe1837da88d",
+   "c1zero_json": "469622dc363ea83c48cd99a54da4f8332554fd1a81f01d2c21bc9fff697053ed",
+   "amplitude_nuisance_json": "ae9004154f5869686ea8c98f3d594d883f68b338278cc08d61a0c35bbae316c2",
+   "c1_validation_json": "bc713fec3db3d3af01cd2e689800a99d11aee0852c0499f92aecf118cff280f2",
+   "c1zero_npz": "cf288192ba5bb953c4905b91285b870dcaeb9b2addd9c151949a0b5470e310f0",
+   "run_record_pre_review": "f00e610a907e1849428d5fea52aa6775d0b8a0ad3a81cc418c9cda1b15cf3bde"
+  }
+ },
+ "review_corrections": [
+  {
+   "id": "F1",
+   "finding": "p is driven by the extrapolated C_1 of g_diff, which no same-sky jackknife constrains",
+   "change": "--diff-c1-scale option; C_1 = 0 runs (CRN with the reference); first-order closed form Cov = Cov_{C_1=0} + df^2 (3 C_1/4pi) I_2 with df from the observed joint class counts, validated per mock at C_1 = A_m (reference) and by direct mocks at the 0.05 crossing; p versus C_1 and the 0.05/0.01 crossings reported; docstring and scope restate each null as an assumed resolved-fraction dipole and forbid quoting a family p as the LSS/selection-null p"
+  },
+  {
+   "id": "F2",
+   "finding": "labelling MID as favoured by the data was unsupported; the NSIDE8/4 selector does not discriminate and is blind to C_1",
+   "change": "MID is not labelled as favoured by the data anywhere in code or outputs; it is reported only as the family whose NSIDE8/4 contrast ratio is closest to the data, with the 9-mock z-scores; NSIDE4 calibration traces and the 8/4 ratio shown to be C_1-insensitive at C_1 = 0 on the same seeds; full family range of p reported"
+  },
+  {
+   "id": "F3",
+   "finding": "amplitude calibration uncertainty not propagated; p quoted to 4 digits",
+   "change": "amplitude ratio r ~ N(1, sigma_r) truncated at r > 0 with sigma_r = hypot(jk4-trace SD/excess, calibration SE/excess) from fresh and reference jackknife mocks; marginal p from per-mock r draws, 16-84% band from fixed r16/r84 ensembles; p shown to two significant figures with counts"
+  },
+  {
+   "id": "F4",
+   "finding": "DIFF families not jointly calibrated; they are empirical differential-selection fields, not LSS",
+   "change": "DIFF families renamed EMPIRICAL_DIFF_SELECTION_{RED,MID,FLAT} in docstring and outputs (internal keys kept for seeds); the violated single-selection constraint is stated with its measured ratio"
+  },
+  {
+   "id": "F5",
+   "finding": "mock overdispersion never used as a validity check",
+   "change": "overdispersion validity table (per-selection and off-diagonal-class) for every family and ensemble"
+  },
+  {
+   "id": "F6",
+   "finding": "provenance did not record per-run script SHAs or the post-smoke design change",
+   "change": "per-run script SHAs taken from each run's own JSON and a design-change note added to RUN_RECORD.json"
+  }
+ ],
+ "family_labels": {
+  "LSS_COMMON": "LSS_COMMON",
+  "LSS_DIFF_RED": "EMPIRICAL_DIFF_SELECTION_RED",
+  "LSS_DIFF_MID": "EMPIRICAL_DIFF_SELECTION_MID",
+  "LSS_DIFF_FLAT": "EMPIRICAL_DIFF_SELECTION_FLAT"
+ },
+ "df_offdiag_fraction": {
+  "observed_counts": {
+   "df": 0.07445961301045968,
+   "f_off_peak": 0.0785929257685248,
+   "f_off_integrated": 0.15305253877898448
+  },
+  "reference_mock_mean_counts_RED": {
+   "df": 0.07485267800863253,
+   "f_off_peak": 0.07877899706163359,
+   "f_off_integrated": 0.15363167507026612
+  }
+ },
+ "f1_c1_dependence": {
+  "summary": {
+   "LSS_DIFF_RED": {
+    "directly_validated_C1_points": [
+     0.0,
+     0.018223709796973776,
+     0.001616830922432542
+    ],
+    "crossing_within_validated_C1_range": {
+     "0.05": {
+      "semi_analytic": true,
+      "gaussian": true
+     },
+     "0.01": {
+      "semi_analytic": true,
+      "gaussian": true
+     }
+    },
+    "label": "EMPIRICAL_DIFF_SELECTION_RED",
+    "A_m": 0.018223709796973776,
+    "null_restated": "random dipole in the log-density of the resolved/migrating classes, per-component RMS sqrt(3 C_1/4pi) = 0.066 at C_1 = A_m",
+    "required_dipole_for_observed_contrast": 0.07786270737990325,
+    "p_t_self_dipole_at_C1_0": "0.007 (6/1000)",
+    "p_t_self_dipole_at_C1_A_m_reference": "0.57 (1134/2000)",
+    "cov_c1zero_trace_over_r65_poisson": 2.7663465225176664,
+    "crossing_0p05_C1_semi_analytic": 0.001616830922432542,
+    "crossing_0p01_C1_semi_analytic": 0.0002761667642417326,
+    "crossing_0p05_C1_gaussian": 0.0017954612077185517,
+    "crossing_0p01_C1_gaussian": 0.0003145477822167753,
+    "validation_at_A_m": "0.56 (563/1000) predicted vs 0.57 (571/1000) direct (paired seeds)",
+    "validation_at_0p05_crossing": "0.042 (20/500) direct"
+   },
+   "LSS_DIFF_MID": {
+    "directly_validated_C1_points": [
+     0.0,
+     0.0045617338045644065,
+     0.0020561843239505634
+    ],
+    "crossing_within_validated_C1_range": {
+     "0.05": {
+      "semi_analytic": true,
+      "gaussian": true
+     },
+     "0.01": {
+      "semi_analytic": true,
+      "gaussian": true
+     }
+    },
+    "label": "EMPIRICAL_DIFF_SELECTION_MID",
+    "A_m": 0.0045617338045644065,
+    "null_restated": "random dipole in the log-density of the resolved/migrating classes, per-component RMS sqrt(3 C_1/4pi) = 0.033 at C_1 = A_m",
+    "required_dipole_for_observed_contrast": 0.07786270737990325,
+    "p_t_self_dipole_at_C1_0": "0.004 (3/1000)",
+    "p_t_self_dipole_at_C1_A_m_reference": "0.17 (335/2000)",
+    "cov_c1zero_trace_over_r65_poisson": 2.210947948542958,
+    "crossing_0p05_C1_semi_analytic": 0.0020561843239505634,
+    "crossing_0p01_C1_semi_analytic": 0.0009266056744365648,
+    "crossing_0p05_C1_gaussian": 0.0023018240953446693,
+    "crossing_0p01_C1_gaussian": 0.0008209337464622047,
+    "validation_at_A_m": "0.17 (166/1000) predicted vs 0.16 (164/1000) direct (paired seeds)",
+    "validation_at_0p05_crossing": "0.05 (24/500) direct"
+   },
+   "LSS_DIFF_FLAT": {
+    "directly_validated_C1_points": [
+     0.0,
+     0.0012695624620731579,
+     0.002391037256520678
+    ],
+    "crossing_within_validated_C1_range": {
+     "0.05": {
+      "semi_analytic": true,
+      "gaussian": false
+     },
+     "0.01": {
+      "semi_analytic": true,
+      "gaussian": true
+     }
+    },
+    "label": "EMPIRICAL_DIFF_SELECTION_FLAT",
+    "A_m": 0.0012695624620731579,
+    "null_restated": "random dipole in the log-density of the resolved/migrating classes, per-component RMS sqrt(3 C_1/4pi) = 0.0174 at C_1 = A_m",
+    "required_dipole_for_observed_contrast": 0.07786270737990325,
+    "p_t_self_dipole_at_C1_0": "0.001 (0/1000)",
+    "p_t_self_dipole_at_C1_A_m_reference": "0.012 (23/2000)",
+    "cov_c1zero_trace_over_r65_poisson": 1.9704701321216496,
+    "crossing_0p05_C1_semi_analytic": 0.002391037256520678,
+    "crossing_0p01_C1_semi_analytic": 0.0010768726510402577,
+    "crossing_0p05_C1_gaussian": 0.0025354642456290153,
+    "crossing_0p01_C1_gaussian": 0.0010549417527582858,
+    "validation_at_A_m": "0.018 (17/1000) predicted vs 0.016 (15/1000) direct (paired seeds)",
+    "validation_at_0p05_crossing": "0.054 (26/500) direct"
+   }
+  },
+  "closed_form": "Cov(C_1) = Cov_{C_1=0}(mocks) + df^2 (3 C_1/4pi) I_2",
+  "semi_analytic": "t_i(C_1) = (delta0_i + df sqrt(C_1) u_i)^T S_i^-1 (...) with u_i the mock's own unit-C_1 l=1 dipole",
+  "per_family": {
+   "LSS_DIFF_RED": {
+    "label": "EMPIRICAL_DIFF_SELECTION_RED",
+    "A_m": 0.018223709796973776,
+    "C1_nominal": 0.018223709796973776,
+    "n_c1zero_mocks": 1000,
+    "rms_dipole_per_component_at_nominal_C1": 0.0659590042639431,
+    "models": {
+     "dipole": {
+      "observed_delta": [
+       -0.0013960439131920563,
+       0.0056270366013520525
+      ],
+      "observed_abs_delta": 0.00579762705945426,
+      "observed_t_self": 32.792386268357376,
+      "cov_c1zero": [
+       [
+        1.843997755301117e-06,
+        -2.960080951294723e-07
+       ],
+       [
+        -2.960080951294723e-07,
+        3.1728751544971385e-06
+       ]
+      ],
+      "cov_c1zero_trace_over_r65_poisson": 2.7663465225176664,
+      "p_versus_C1": [
+       {
+        "C1": 0.0,
+        "C1_over_A_m": 0.0,
+        "rms_dipole_per_component": 0.0,
+        "closed_form_cov_trace_over_r65_poisson": 2.7663465225176664,
+        "gaussian_wald": 10.397189112312645,
+        "gaussian_p": 0.0055243230931762465,
+        "t_self_semi_analytic_k": 6,
+        "t_self_semi_analytic_p_mc": 0.006993006993006993,
+        "t_self_semi_analytic_p_display": "0.007 (6/1000)"
+       },
+       {
+        "C1": 1e-05,
+        "C1_over_A_m": 0.0005487356916570631,
+        "rms_dipole_per_component": 0.0015450968080927584,
+        "closed_form_cov_trace_over_r65_poisson": 2.7809432808201966,
+        "gaussian_wald": 10.354763059464458,
+        "gaussian_p": 0.005642762492611919,
+        "t_self_semi_analytic_k": 5,
+        "t_self_semi_analytic_p_mc": 0.005994005994005994,
+        "t_self_semi_analytic_p_display": "0.006 (5/1000)"
+       },
+       {
+        "C1": 2e-05,
+        "C1_over_A_m": 0.0010974713833141261,
+        "rms_dipole_per_component": 0.0021850968611841584,
+        "closed_form_cov_trace_over_r65_poisson": 2.7955400391227267,
+        "gaussian_wald": 10.312682298666639,
+        "gaussian_p": 0.005762746186900046,
+        "t_self_semi_analytic_k": 5,
+        "t_self_semi_analytic_p_mc": 0.005994005994005994,
+        "t_self_semi_analytic_p_display": "0.006 (5/1000)"
+       },
+       {
+        "C1": 5e-05,
+        "C1_over_A_m": 0.002743678458285315,
+        "rms_dipole_per_component": 0.003454941494713355,
+        "closed_form_cov_trace_over_r65_poisson": 2.8393303140303168,
+        "gaussian_wald": 10.18847002782503,
+        "gaussian_p": 0.006131995732497738,
+        "t_self_semi_analytic_k": 5,
+        "t_self_semi_analytic_p_mc": 0.005994005994005994,
+        "t_self_semi_analytic_p_display": "0.006 (5/1000)"
+       },
+       {
+        "C1": 0.0001,
+        "C1_over_A_m": 0.00548735691657063,
+        "rms_dipole_per_component": 0.004886025119029199,
+        "closed_form_cov_trace_over_r65_poisson": 2.912314105542967,
+        "gaussian_wald": 9.987975767586791,
+        "gaussian_p": 0.006778578337214406,
+        "t_self_semi_analytic_k": 5,
+        "t_self_semi_analytic_p_mc": 0.005994005994005994,
+        "t_self_semi_analytic_p_display": "0.006 (5/1000)"
+       },
+       {
+        "C1": 0.0002,
+        "C1_over_A_m": 0.01097471383314126,
+        "rms_dipole_per_component": 0.00690988298942671,
+        "closed_form_cov_trace_over_r65_poisson": 3.058281688568268,
+        "gaussian_wald": 9.609787259626277,
+        "gaussian_p": 0.008189572094358782,
+        "t_self_semi_analytic_k": 6,
+        "t_self_semi_analytic_p_mc": 0.006993006993006993,
+        "t_self_semi_analytic_p_display": "0.007 (6/1000)"
+       },
+       {
+        "C1": 0.0003,
+        "C1_over_A_m": 0.01646207074971189,
+        "rms_dipole_per_component": 0.008462843753216345,
+        "closed_form_cov_trace_over_r65_poisson": 3.2042492715935693,
+        "gaussian_wald": 9.25921862995093,
+        "gaussian_p": 0.009758570885196893,
+        "t_self_semi_analytic_k": 10,
+        "t_self_semi_analytic_p_mc": 0.01098901098901099,
+        "t_self_semi_analytic_p_display": "0.011 (10/1000)"
+       },
+       {
+        "C1": 0.0005,
+        "C1_over_A_m": 0.02743678458285315,
+        "rms_dipole_per_component": 0.010925484305920791,
+        "closed_form_cov_trace_over_r65_poisson": 3.4961844376441715,
+        "gaussian_wald": 8.629647826046245,
+        "gaussian_p": 0.01336890336865612,
+        "t_self_semi_analytic_k": 12,
+        "t_self_semi_analytic_p_mc": 0.012987012987012988,
+        "t_self_semi_analytic_p_display": "0.013 (12/1000)"
+       },
+       {
+        "C1": 0.0007,
+        "C1_over_A_m": 0.03841149841599441,
+        "rms_dipole_per_component": 0.012927207364566026,
+        "closed_form_cov_trace_over_r65_poisson": 3.7881196036947737,
+        "gaussian_wald": 8.080285481525626,
+        "gaussian_p": 0.017594960718252266,
+        "t_self_semi_analytic_k": 15,
+        "t_self_semi_analytic_p_mc": 0.015984015984015984,
+        "t_self_semi_analytic_p_display": "0.016 (15/1000)"
+       },
+       {
+        "C1": 0.001,
+        "C1_over_A_m": 0.0548735691657063,
+        "rms_dipole_per_component": 0.015450968080927583,
+        "closed_form_cov_trace_over_r65_poisson": 4.226022352770676,
+        "gaussian_wald": 7.376006127126996,
+        "gaussian_p": 0.0250219193673212,
+        "t_self_semi_analytic_k": 25,
+        "t_self_semi_analytic_p_mc": 0.025974025974025976,
+        "t_self_semi_analytic_p_display": "0.026 (25/1000)"
+       },
+       {
+        "C1": 0.0012695624620731579,
+        "C1_over_A_m": 0.0696654235727558,
+        "rms_dipole_per_component": 0.017409357027308333,
+        "closed_form_cov_trace_over_r65_poisson": 4.619496163402359,
+        "gaussian_wald": 6.840325049761596,
+        "gaussian_p": 0.03270711878644598,
+        "t_self_semi_analytic_k": 31,
+        "t_self_semi_analytic_p_mc": 0.03196803196803197,
+        "t_self_semi_analytic_p_display": "0.032 (31/1000)"
+       },
+       {
+        "C1": 0.0015,
+        "C1_over_A_m": 0.08231035374855945,
+        "rms_dipole_per_component": 0.0189234939151512,
+        "closed_form_cov_trace_over_r65_poisson": 4.955860267897181,
+        "gaussian_wald": 6.440490042247317,
+        "gaussian_p": 0.03994526962664306,
+        "t_self_semi_analytic_k": 42,
+        "t_self_semi_analytic_p_mc": 0.04295704295704296,
+        "t_self_semi_analytic_p_display": "0.043 (42/1000)"
+       },
+       {
+        "C1": 0.002,
+        "C1_over_A_m": 0.1097471383314126,
+        "rms_dipole_per_component": 0.021850968611841583,
+        "closed_form_cov_trace_over_r65_poisson": 5.685698183023686,
+        "gaussian_wald": 5.715610089867649,
+        "gaussian_p": 0.057394600677447415,
+        "t_self_semi_analytic_k": 61,
+        "t_self_semi_analytic_p_mc": 0.061938061938061936,
+        "t_self_semi_analytic_p_display": "0.062 (61/1000)"
+       },
+       {
+        "C1": 0.003,
+        "C1_over_A_m": 0.1646207074971189,
+        "rms_dipole_per_component": 0.02676186174229157,
+        "closed_form_cov_trace_over_r65_poisson": 7.145374013276697,
+        "gaussian_wald": 4.665462350089333,
+        "gaussian_p": 0.09703037792290843,
+        "t_self_semi_analytic_k": 107,
+        "t_self_semi_analytic_p_mc": 0.10789210789210789,
+        "t_self_semi_analytic_p_display": "0.11 (107/1000)"
+       },
+       {
+        "C1": 0.0045617338045644065,
+        "C1_over_A_m": 0.2503186154403055,
+        "rms_dipole_per_component": 0.033000510997539645,
+        "closed_form_cov_trace_over_r65_poisson": 9.424999101088439,
+        "gaussian_wald": 3.625262811880068,
+        "gaussian_p": 0.16322406243329898,
+        "t_self_semi_analytic_k": 171,
+        "t_self_semi_analytic_p_mc": 0.17182817182817184,
+        "t_self_semi_analytic_p_display": "0.17 (171/1000)"
+       },
+       {
+        "C1": 0.005,
+        "C1_over_A_m": 0.2743678458285315,
+        "rms_dipole_per_component": 0.034549414947133546,
+        "closed_form_cov_trace_over_r65_poisson": 10.064725673782716,
+        "gaussian_wald": 3.411796762259656,
+        "gaussian_p": 0.18160915862495758,
+        "t_self_semi_analytic_k": 186,
+        "t_self_semi_analytic_p_mc": 0.18681318681318682,
+        "t_self_semi_analytic_p_display": "0.19 (186/1000)"
+       },
+       {
+        "C1": 0.007,
+        "C1_over_A_m": 0.3841149841599441,
+        "rms_dipole_per_component": 0.0408794190573313,
+        "closed_form_cov_trace_over_r65_poisson": 12.984077334288738,
+        "gaussian_wald": 2.6891949973229554,
+        "gaussian_p": 0.2606445965486302,
+        "t_self_semi_analytic_k": 294,
+        "t_self_semi_analytic_p_mc": 0.2947052947052947,
+        "t_self_semi_analytic_p_display": "0.29 (294/1000)"
+       },
+       {
+        "C1": 0.01,
+        "C1_over_A_m": 0.548735691657063,
+        "rms_dipole_per_component": 0.04886025119029199,
+        "closed_form_cov_trace_over_r65_poisson": 17.36310482504777,
+        "gaussian_wald": 2.0408419366204593,
+        "gaussian_p": 0.3604431730772465,
+        "t_self_semi_analytic_k": 381,
+        "t_self_semi_analytic_p_mc": 0.38161838161838163,
+        "t_self_semi_analytic_p_display": "0.38 (381/1000)"
+       },
+       {
+        "C1": 0.015,
+        "C1_over_A_m": 0.8231035374855944,
+        "rms_dipole_per_component": 0.0598413420602149,
+        "closed_form_cov_trace_over_r65_poisson": 24.66148397631282,
+        "gaussian_wald": 1.4558483575574948,
+        "gaussian_p": 0.48291038599839525,
+        "t_self_semi_analytic_k": 503,
+        "t_self_semi_analytic_p_mc": 0.5034965034965035,
+        "t_self_semi_analytic_p_display": "0.5 (503/1000)"
+       },
+       {
+        "C1": 0.018223709796973776,
+        "C1_over_A_m": 1.0,
+        "rms_dipole_per_component": 0.0659590042639431,
+        "closed_form_cov_trace_over_r65_poisson": 29.36705525070528,
+        "gaussian_wald": 1.228760654168528,
+        "gaussian_p": 0.5409760196522946,
+        "t_self_semi_analytic_k": 563,
+        "t_self_semi_analytic_p_mc": 0.5634365634365635,
+        "t_self_semi_analytic_p_display": "0.56 (563/1000)"
+       },
+       {
+        "C1": 0.02,
+        "C1_over_A_m": 1.097471383314126,
+        "rms_dipole_per_component": 0.06909882989426709,
+        "closed_form_cov_trace_over_r65_poisson": 31.959863127577872,
+        "gaussian_wald": 1.1315098164658324,
+        "gaussian_p": 0.5679312489131173,
+        "t_self_semi_analytic_k": 593,
+        "t_self_semi_analytic_p_mc": 0.5934065934065934,
+        "t_self_semi_analytic_p_display": "0.59 (593/1000)"
+       },
+       {
+        "C1": 0.03,
+        "C1_over_A_m": 1.6462070749711888,
+        "rms_dipole_per_component": 0.08462843753216344,
+        "closed_form_cov_trace_over_r65_poisson": 46.55662143010797,
+        "gaussian_wald": 0.7827454241092238,
+        "gaussian_p": 0.6761281079752267,
+        "t_self_semi_analytic_k": 706,
+        "t_self_semi_analytic_p_mc": 0.7062937062937062,
+        "t_self_semi_analytic_p_display": "0.71 (706/1000)"
+       },
+       {
+        "C1": 0.05,
+        "C1_over_A_m": 2.743678458285315,
+        "rms_dipole_per_component": 0.10925484305920792,
+        "closed_form_cov_trace_over_r65_poisson": 75.75013803516819,
+        "gaussian_wald": 0.48423501450245715,
+        "gaussian_p": 0.784963933178143,
+        "t_self_semi_analytic_k": 788,
+        "t_self_semi_analytic_p_mc": 0.7882117882117882,
+        "t_self_semi_analytic_p_display": "0.79 (788/1000)"
+       }
+      ],
+      "crossings": {
+       "0.05": {
+        "gaussian_closed_form_C1": 0.0017954612077185517,
+        "gaussian_C1_over_A_m": 0.09852336476608652,
+        "gaussian_rms_dipole": 0.020703497035699733,
+        "gaussian_bootstrap_C1": {
+         "n_finite": 200,
+         "p16_50_84": [
+          0.0016794498214787467,
+          0.0017918652331055883,
+          0.0019205197107053761
+         ]
+        },
+        "t_self_semi_analytic_C1": 0.001616830922432542,
+        "t_self_semi_analytic_C1_over_A_m": 0.0887212834513548,
+        "t_self_semi_analytic_rms_dipole": 0.019646626941372196,
+        "t_self_semi_analytic_bootstrap_C1": {
+         "n_finite": 200,
+         "p16_50_84": [
+          0.001514502675455919,
+          0.001616830922432542,
+          0.0017823462176376462
+         ]
+        },
+        "t_self_k_monotone_on_grid": false
+       },
+       "0.01": {
+        "gaussian_closed_form_C1": 0.0003145477822167753,
+        "gaussian_C1_over_A_m": 0.01726035948339174,
+        "gaussian_rms_dipole": 0.008665607397498986,
+        "gaussian_bootstrap_C1": {
+         "n_finite": 200,
+         "p16_50_84": [
+          0.00020236989672793302,
+          0.00031130118337183567,
+          0.00043985051470616943
+         ]
+        },
+        "t_self_semi_analytic_C1": 0.0002761667642417326,
+        "t_self_semi_analytic_C1_over_A_m": 0.01515425603888802,
+        "t_self_semi_analytic_rms_dipole": 0.008119726502176582,
+        "t_self_semi_analytic_bootstrap_C1": {
+         "n_finite": 200,
+         "p16_50_84": [
+          0.00020618631043189278,
+          0.0002761667642417326,
+          0.0006012647657413166
+         ]
+        },
+        "t_self_k_monotone_on_grid": false
+       }
+      },
+      "validation_at_C1_equals_A_m": {
+       "n_paired": 1000,
+       "per_mock_delta_shift_regression_slope": 1.00353201447292,
+       "per_mock_delta_shift_correlation": 0.9976865453859937,
+       "per_mock_residual_rms_over_predicted_rms": 0.06849073051071224,
+       "t_self_predicted_vs_reference_spearman": 0.9955091635091635,
+       "k_ge_observed_predicted": 563,
+       "k_ge_observed_reference_paired": 571,
+       "p_predicted": "0.56 (563/1000)",
+       "p_reference_paired": "0.57 (571/1000)",
+       "p_reference_full": "0.57 (1134/2000)",
+       "exceedance_agreement": {
+        "both": 551,
+        "predicted_only": 12,
+        "reference_only": 20
+       },
+       "closed_form_cov_trace": 5.325825334192964e-05,
+       "reference_full_cov_trace": 5.21451003391073e-05,
+       "closed_form_over_reference_trace": 1.0213472214183756,
+       "closed_form_cov": [
+        [
+         2.596468797136681e-05,
+         -2.960080951294723e-07
+        ],
+        [
+         -2.960080951294723e-07,
+         2.729356537056283e-05
+        ]
+       ],
+       "reference_full_cov": [
+        [
+         2.4891022996913516e-05,
+         -1.0028481180874108e-06
+        ],
+        [
+         -1.0028481180874108e-06,
+         2.7254077342193783e-05
+        ]
+       ],
+       "gaussian_wald_closed_form": 1.228760654168528,
+       "gaussian_wald_reference_full": 1.2186707589638854,
+       "gaussian_p_closed_form": 0.5409760196522946,
+       "gaussian_p_reference_full": 0.5437121112417718
+      }
+     },
+     "dipole_stf": {
+      "observed_delta": [
+       -0.0016440241048542026,
+       0.005524671826759816
+      ],
+      "observed_abs_delta": 0.00576409698484813,
+      "observed_t_self": 30.989468960483375,
+      "cov_c1zero": [
+       [
+        1.917585530853479e-06,
+        -2.7661844055328034e-07
+       ],
+       [
+        -2.7661844055328034e-07,
+        3.307887232265225e-06
+       ]
+      ],
+      "cov_c1zero_trace_over_r65_poisson": 2.7976670896554436,
+      "p_versus_C1": [
+       {
+        "C1": 0.0,
+        "C1_over_A_m": 0.0,
+        "rms_dipole_per_component": 0.0,
+        "closed_form_cov_trace_over_r65_poisson": 2.7976670896554436,
+        "gaussian_wald": 9.964555306542893,
+        "gaussian_p": 0.006858423643197038,
+        "t_self_semi_analytic_k": 3,
+        "t_self_semi_analytic_p_mc": 0.003996003996003996,
+        "t_self_semi_analytic_p_display": "0.004 (3/1000)"
+       },
+       {
+        "C1": 1e-05,
+        "C1_over_A_m": 0.0005487356916570631,
+        "rms_dipole_per_component": 0.0015450968080927584,
+        "closed_form_cov_trace_over_r65_poisson": 2.8118398153435766,
+        "gaussian_wald": 9.924913136778468,
+        "gaussian_p": 0.0069957212389959575,
+        "t_self_semi_analytic_k": 4,
+        "t_self_semi_analytic_p_mc": 0.004995004995004995,
+        "t_self_semi_analytic_p_display": "0.005 (4/1000)"
+       },
+       {
+        "C1": 2e-05,
+        "C1_over_A_m": 0.0010974713833141261,
+        "rms_dipole_per_component": 0.0021850968611841584,
+        "closed_form_cov_trace_over_r65_poisson": 2.8260125410317105,
+        "gaussian_wald": 9.885588485545238,
+        "gaussian_p": 0.0071346345923351305,
+        "t_self_semi_analytic_k": 4,
+        "t_self_semi_analytic_p_mc": 0.004995004995004995,
+        "t_self_semi_analytic_p_display": "0.005 (4/1000)"
+       },
+       {
+        "C1": 5e-05,
+        "C1_over_A_m": 0.002743678458285315,
+        "rms_dipole_per_component": 0.003454941494713355,
+        "closed_form_cov_trace_over_r65_poisson": 2.8685307180961095,
+        "gaussian_wald": 9.769481284354534,
+        "gaussian_p": 0.007561084534182039,
+        "t_self_semi_analytic_k": 5,
+        "t_self_semi_analytic_p_mc": 0.005994005994005994,
+        "t_self_semi_analytic_p_display": "0.006 (5/1000)"
+       },
+       {
+        "C1": 0.0001,
+        "C1_over_A_m": 0.00548735691657063,
+        "rms_dipole_per_component": 0.004886025119029199,
+        "closed_form_cov_trace_over_r65_poisson": 2.9393943465367767,
+        "gaussian_wald": 9.581970971459004,
+        "gaussian_p": 0.008304269608925515,
+        "t_self_semi_analytic_k": 5,
+        "t_self_semi_analytic_p_mc": 0.005994005994005994,
+        "t_self_semi_analytic_p_display": "0.006 (5/1000)"
+       },
+       {
+        "C1": 0.0002,
+        "C1_over_A_m": 0.01097471383314126,
+        "rms_dipole_per_component": 0.00690988298942671,
+        "closed_form_cov_trace_over_r65_poisson": 3.0811216034181093,
+        "gaussian_wald": 9.227922772047611,
+        "gaussian_p": 0.009912473295734853,
+        "t_self_semi_analytic_k": 6,
+        "t_self_semi_analytic_p_mc": 0.006993006993006993,
+        "t_self_semi_analytic_p_display": "0.007 (6/1000)"
+       },
+       {
+        "C1": 0.0003,
+        "C1_over_A_m": 0.01646207074971189,
+        "rms_dipole_per_component": 0.008462843753216345,
+        "closed_form_cov_trace_over_r65_poisson": 3.222848860299442,
+        "gaussian_wald": 8.899293464887803,
+        "gaussian_p": 0.011682693358024332,
+        "t_self_semi_analytic_k": 7,
+        "t_self_semi_analytic_p_mc": 0.007992007992007992,
+        "t_self_semi_analytic_p_display": "0.008 (7/1000)"
+       },
+       {
+        "C1": 0.0005,
+        "C1_over_A_m": 0.02743678458285315,
+        "rms_dipole_per_component": 0.010925484305920791,
+        "closed_form_cov_trace_over_r65_poisson": 3.5063033740621075,
+        "gaussian_wald": 8.307973782172404,
+        "gaussian_p": 0.015701690597020604,
+        "t_self_semi_analytic_k": 16,
+        "t_self_semi_analytic_p_mc": 0.016983016983016984,
+        "t_self_semi_analytic_p_display": "0.017 (16/1000)"
+       },
+       {
+        "C1": 0.0007,
+        "C1_over_A_m": 0.03841149841599441,
+        "rms_dipole_per_component": 0.012927207364566026,
+        "closed_form_cov_trace_over_r65_poisson": 3.7897578878247735,
+        "gaussian_wald": 7.790686901452869,
+        "gaussian_p": 0.020336388702126555,
+        "t_self_semi_analytic_k": 21,
+        "t_self_semi_analytic_p_mc": 0.02197802197802198,
+        "t_self_semi_analytic_p_display": "0.022 (21/1000)"
+       },
+       {
+        "C1": 0.001,
+        "C1_over_A_m": 0.0548735691657063,
+        "rms_dipole_per_component": 0.015450968080927583,
+        "closed_form_cov_trace_over_r65_poisson": 4.214939658468772,
+        "gaussian_wald": 7.125608291683878,
+        "gaussian_p": 0.028359189808240107,
+        "t_self_semi_analytic_k": 34,
+        "t_self_semi_analytic_p_mc": 0.03496503496503497,
+        "t_self_semi_analytic_p_display": "0.035 (34/1000)"
+       },
+       {
+        "C1": 0.0012695624620731579,
+        "C1_over_A_m": 0.0696654235727558,
+        "rms_dipole_per_component": 0.017409357027308333,
+        "closed_form_cov_trace_over_r65_poisson": 4.596983141546841,
+        "gaussian_wald": 6.618207938679145,
+        "gaussian_p": 0.03654890802829196,
+        "t_self_semi_analytic_k": 41,
+        "t_self_semi_analytic_p_mc": 0.04195804195804196,
+        "t_self_semi_analytic_p_display": "0.042 (41/1000)"
+       },
+       {
+        "C1": 0.0015,
+        "C1_over_A_m": 0.08231035374855945,
+        "rms_dipole_per_component": 0.0189234939151512,
+        "closed_form_cov_trace_over_r65_poisson": 4.923575942875436,
+        "gaussian_wald": 6.238574455759916,
+        "gaussian_p": 0.044188653637802264,
+        "t_self_semi_analytic_k": 46,
+        "t_self_semi_analytic_p_mc": 0.04695304695304695,
+        "t_self_semi_analytic_p_display": "0.047 (46/1000)"
+       },
+       {
+        "C1": 0.002,
+        "C1_over_A_m": 0.1097471383314126,
+        "rms_dipole_per_component": 0.021850968611841583,
+        "closed_form_cov_trace_over_r65_poisson": 5.6322122272821,
+        "gaussian_wald": 5.548256688372272,
+        "gaussian_p": 0.062403847666467845,
+        "t_self_semi_analytic_k": 61,
+        "t_self_semi_analytic_p_mc": 0.061938061938061936,
+        "t_self_semi_analytic_p_display": "0.062 (61/1000)"
+       },
+       {
+        "C1": 0.003,
+        "C1_over_A_m": 0.1646207074971189,
+        "rms_dipole_per_component": 0.02676186174229157,
+        "closed_form_cov_trace_over_r65_poisson": 7.049484796095428,
+        "gaussian_wald": 4.54323883509844,
+        "gaussian_p": 0.10314500992130614,
+        "t_self_semi_analytic_k": 113,
+        "t_self_semi_analytic_p_mc": 0.11388611388611389,
+        "t_self_semi_analytic_p_display": "0.11 (113/1000)"
+       },
+       {
+        "C1": 0.0045617338045644065,
+        "C1_over_A_m": 0.2503186154403055,
+        "rms_dipole_per_component": 0.033000510997539645,
+        "closed_form_cov_trace_over_r65_poisson": 9.262887277093036,
+        "gaussian_wald": 3.5416756705361725,
+        "gaussian_p": 0.17019033760750837,
+        "t_self_semi_analytic_k": 185,
+        "t_self_semi_analytic_p_mc": 0.18581418581418582,
+        "t_self_semi_analytic_p_display": "0.19 (185/1000)"
+       },
+       {
+        "C1": 0.005,
+        "C1_over_A_m": 0.2743678458285315,
+        "rms_dipole_per_component": 0.034549414947133546,
+        "closed_form_cov_trace_over_r65_poisson": 9.884029933722083,
+        "gaussian_wald": 3.3353645234343863,
+        "gaussian_p": 0.18868387908348186,
+        "t_self_semi_analytic_k": 208,
+        "t_self_semi_analytic_p_mc": 0.2087912087912088,
+        "t_self_semi_analytic_p_display": "0.21 (208/1000)"
+       },
+       {
+        "C1": 0.007,
+        "C1_over_A_m": 0.3841149841599441,
+        "rms_dipole_per_component": 0.0408794190573313,
+        "closed_form_cov_trace_over_r65_poisson": 12.71857507134874,
+        "gaussian_wald": 2.6349729633518155,
+        "gaussian_p": 0.26780759600009046,
+        "t_self_semi_analytic_k": 294,
+        "t_self_semi_analytic_p_mc": 0.2947052947052947,
+        "t_self_semi_analytic_p_display": "0.29 (294/1000)"
+       },
+       {
+        "C1": 0.01,
+        "C1_over_A_m": 0.548735691657063,
+        "rms_dipole_per_component": 0.04886025119029199,
+        "closed_form_cov_trace_over_r65_poisson": 16.97039277778872,
+        "gaussian_wald": 2.0038545961931944,
+        "gaussian_p": 0.3671711106260079,
+        "t_self_semi_analytic_k": 390,
+        "t_self_semi_analytic_p_mc": 0.3906093906093906,
+        "t_self_semi_analytic_p_display": "0.39 (390/1000)"
+       },
+       {
+        "C1": 0.015,
+        "C1_over_A_m": 0.8231035374855944,
+        "rms_dipole_per_component": 0.0598413420602149,
+        "closed_form_cov_trace_over_r65_poisson": 24.05675562185536,
+        "gaussian_wald": 1.4321758261127258,
+        "gaussian_p": 0.48866020269872656,
+        "t_self_semi_analytic_k": 517,
+        "t_self_semi_analytic_p_mc": 0.5174825174825175,
+        "t_self_semi_analytic_p_display": "0.52 (517/1000)"
+       },
+       {
+        "C1": 0.018223709796973776,
+        "C1_over_A_m": 1.0,
+        "rms_dipole_per_component": 0.0659590042639431,
+        "closed_form_cov_trace_over_r65_poisson": 28.62563108692108,
+        "gaussian_wald": 1.2096764389453796,
+        "gaussian_p": 0.5461627779949735,
+        "t_self_semi_analytic_k": 582,
+        "t_self_semi_analytic_p_mc": 0.5824175824175825,
+        "t_self_semi_analytic_p_display": "0.58 (582/1000)"
+       },
+       {
+        "C1": 0.02,
+        "C1_over_A_m": 1.097471383314126,
+        "rms_dipole_per_component": 0.06909882989426709,
+        "closed_form_cov_trace_over_r65_poisson": 31.143118465922,
+        "gaussian_wald": 1.1142903833278957,
+        "gaussian_p": 0.5728420861196302,
+        "t_self_semi_analytic_k": 611,
+        "t_self_semi_analytic_p_mc": 0.6113886113886113,
+        "t_self_semi_analytic_p_display": "0.61 (611/1000)"
+       },
+       {
+        "C1": 0.03,
+        "C1_over_A_m": 1.6462070749711888,
+        "rms_dipole_per_component": 0.08462843753216344,
+        "closed_form_cov_trace_over_r65_poisson": 45.315844154055284,
+        "gaussian_wald": 0.7717162724127657,
+        "gaussian_p": 0.6798669673465118,
+        "t_self_semi_analytic_k": 694,
+        "t_self_semi_analytic_p_mc": 0.6943056943056943,
+        "t_self_semi_analytic_p_display": "0.69 (694/1000)"
+       },
+       {
+        "C1": 0.05,
+        "C1_over_A_m": 2.743678458285315,
+        "rms_dipole_per_component": 0.10925484305920792,
+        "closed_form_cov_trace_over_r65_poisson": 73.66129553032185,
+        "gaussian_wald": 0.4778821512309572,
+        "gaussian_p": 0.7874612816770066,
+        "t_self_semi_analytic_k": 798,
+        "t_self_semi_analytic_p_mc": 0.7982017982017982,
+        "t_self_semi_analytic_p_display": "0.8 (798/1000)"
+       }
+      ],
+      "crossings": {
+       "0.05": {
+        "gaussian_closed_form_C1": 0.0016657202097388217,
+        "gaussian_C1_over_A_m": 0.09140401313981804,
+        "gaussian_rms_dipole": 0.019941449490496,
+        "gaussian_bootstrap_C1": {
+         "n_finite": 200,
+         "p16_50_84": [
+          0.001548194612170777,
+          0.0016592676522023324,
+          0.001779542050309696
+         ]
+        },
+        "t_self_semi_analytic_C1": 0.0016165518746162895,
+        "t_self_semi_analytic_C1_over_A_m": 0.08870597110170914,
+        "t_self_semi_analytic_rms_dipole": 0.019644931468816032,
+        "t_self_semi_analytic_bootstrap_C1": {
+         "n_finite": 200,
+         "p16_50_84": [
+          0.00141613526276889,
+          0.0016165518746162895,
+          0.0018457058988305202
+         ]
+        },
+        "t_self_k_monotone_on_grid": true
+       },
+       "0.01": {
+        "gaussian_closed_form_C1": 0.00020516818227724396,
+        "gaussian_C1_over_A_m": 0.011258310440792584,
+        "gaussian_rms_dipole": 0.0069985923986115636,
+        "gaussian_bootstrap_C1": {
+         "n_finite": 200,
+         "p16_50_84": [
+          8.63157854241444e-05,
+          0.00020208986824924038,
+          0.0003201327543887567
+         ]
+        },
+        "t_self_semi_analytic_C1": 0.0003385800768441189,
+        "t_self_semi_analytic_C1_over_A_m": 0.018579097264835913,
+        "t_self_semi_analytic_rms_dipole": 0.00899055278018337,
+        "t_self_semi_analytic_bootstrap_C1": {
+         "n_finite": 200,
+         "p16_50_84": [
+          0.0003134297286669375,
+          0.0003385800768441189,
+          0.0004598345761424206
+         ]
+        },
+        "t_self_k_monotone_on_grid": true
+       }
+      },
+      "validation_at_C1_equals_A_m": {
+       "n_paired": 1000,
+       "per_mock_delta_shift_regression_slope": 1.0027238526954836,
+       "per_mock_delta_shift_correlation": 0.9978046472632298,
+       "per_mock_residual_rms_over_predicted_rms": 0.06662668757380641,
+       "t_self_predicted_vs_reference_spearman": 0.9956687516687517,
+       "k_ge_observed_predicted": 582,
+       "k_ge_observed_reference_paired": 581,
+       "p_predicted": "0.58 (582/1000)",
+       "p_reference_paired": "0.58 (581/1000)",
+       "p_reference_full": "0.57 (1138/2000)",
+       "exceedance_agreement": {
+        "both": 567,
+        "predicted_only": 15,
+        "reference_only": 14
+       },
+       "closed_form_cov_trace": 5.3466853195250086e-05,
+       "reference_full_cov_trace": 5.184006890363928e-05,
+       "closed_form_over_reference_trace": 1.031380828112607,
+       "closed_form_cov": [
+        [
+         2.603827574691917e-05,
+         -2.7661844055328034e-07
+        ],
+        [
+         -2.7661844055328034e-07,
+         2.7428577448330914e-05
+        ]
+       ],
+       "reference_full_cov": [
+        [
+         2.4758148793311428e-05,
+         -1.0117720418134628e-06
+        ],
+        [
+         -1.0117720418134628e-06,
+         2.7081920110327854e-05
+        ]
+       ],
+       "gaussian_wald_closed_form": 1.2096764389453796,
+       "gaussian_wald_reference_full": 1.2106306560616347,
+       "gaussian_p_closed_form": 0.5461627779949735,
+       "gaussian_p_reference_full": 0.5459022612117966
+      }
+     }
+    }
+   },
+   "LSS_DIFF_MID": {
+    "label": "EMPIRICAL_DIFF_SELECTION_MID",
+    "A_m": 0.0045617338045644065,
+    "C1_nominal": 0.0045617338045644065,
+    "n_c1zero_mocks": 1000,
+    "rms_dipole_per_component_at_nominal_C1": 0.033000510997539645,
+    "models": {
+     "dipole": {
+      "observed_delta": [
+       -0.0013960439131920563,
+       0.0056270366013520525
+      ],
+      "observed_abs_delta": 0.00579762705945426,
+      "observed_t_self": 32.792386268357376,
+      "cov_c1zero": [
+       [
+        1.48416448780082e-06,
+        -2.117998550066277e-07
+       ],
+       [
+        -2.117998550066277e-07,
+        2.525472330194152e-06
+       ]
+      ],
+      "cov_c1zero_trace_over_r65_poisson": 2.210947948542958,
+      "p_versus_C1": [
+       {
+        "C1": 0.0,
+        "C1_over_A_m": 0.0,
+        "rms_dipole_per_component": 0.0,
+        "closed_form_cov_trace_over_r65_poisson": 2.210947948542958,
+        "gaussian_wald": 13.120059870953984,
+        "gaussian_p": 0.0014158433257671018,
+        "t_self_semi_analytic_k": 3,
+        "t_self_semi_analytic_p_mc": 0.003996003996003996,
+        "t_self_semi_analytic_p_display": "0.004 (3/1000)"
+       },
+       {
+        "C1": 1e-05,
+        "C1_over_A_m": 0.002192148956608152,
+        "rms_dipole_per_component": 0.0015450968080927584,
+        "closed_form_cov_trace_over_r65_poisson": 2.2255447068454877,
+        "gaussian_wald": 13.052524542456233,
+        "gaussian_p": 0.0014644694222451528,
+        "t_self_semi_analytic_k": 2,
+        "t_self_semi_analytic_p_mc": 0.002997002997002997,
+        "t_self_semi_analytic_p_display": "0.003 (2/1000)"
+       },
+       {
+        "C1": 2e-05,
+        "C1_over_A_m": 0.004384297913216304,
+        "rms_dipole_per_component": 0.0021850968611841584,
+        "closed_form_cov_trace_over_r65_poisson": 2.240141465148018,
+        "gaussian_wald": 12.985682711598354,
+        "gaussian_p": 0.0015142403940888618,
+        "t_self_semi_analytic_k": 3,
+        "t_self_semi_analytic_p_mc": 0.003996003996003996,
+        "t_self_semi_analytic_p_display": "0.004 (3/1000)"
+       },
+       {
+        "C1": 5e-05,
+        "C1_over_A_m": 0.01096074478304076,
+        "rms_dipole_per_component": 0.003454941494713355,
+        "closed_form_cov_trace_over_r65_poisson": 2.2839317400556083,
+        "gaussian_wald": 12.789212552030996,
+        "gaussian_p": 0.0016705434672293668,
+        "t_self_semi_analytic_k": 3,
+        "t_self_semi_analytic_p_mc": 0.003996003996003996,
+        "t_self_semi_analytic_p_display": "0.004 (3/1000)"
+       },
+       {
+        "C1": 0.0001,
+        "C1_over_A_m": 0.02192148956608152,
+        "rms_dipole_per_component": 0.004886025119029199,
+        "closed_form_cov_trace_over_r65_poisson": 2.3569155315682586,
+        "gaussian_wald": 12.474677756957563,
+        "gaussian_p": 0.0019550512354854447,
+        "t_self_semi_analytic_k": 2,
+        "t_self_semi_analytic_p_mc": 0.002997002997002997,
+        "t_self_semi_analytic_p_display": "0.003 (2/1000)"
+       },
+       {
+        "C1": 0.0002,
+        "C1_over_A_m": 0.04384297913216304,
+        "rms_dipole_per_component": 0.00690988298942671,
+        "closed_form_cov_trace_over_r65_poisson": 2.50288311459356,
+        "gaussian_wald": 11.889931126809872,
+        "gaussian_p": 0.0026189925359958455,
+        "t_self_semi_analytic_k": 1,
+        "t_self_semi_analytic_p_mc": 0.001998001998001998,
+        "t_self_semi_analytic_p_display": "0.002 (1/1000)"
+       },
+       {
+        "C1": 0.0003,
+        "C1_over_A_m": 0.06576446869824455,
+        "rms_dipole_per_component": 0.008462843753216345,
+        "closed_form_cov_trace_over_r65_poisson": 2.648850697618861,
+        "gaussian_wald": 11.357634718348395,
+        "gaussian_p": 0.003417597845081719,
+        "t_self_semi_analytic_k": 3,
+        "t_self_semi_analytic_p_mc": 0.003996003996003996,
+        "t_self_semi_analytic_p_display": "0.004 (3/1000)"
+       },
+       {
+        "C1": 0.0005,
+        "C1_over_A_m": 0.10960744783040761,
+        "rms_dipole_per_component": 0.010925484305920791,
+        "closed_form_cov_trace_over_r65_poisson": 2.940785863669463,
+        "gaussian_wald": 10.424434225931543,
+        "gaussian_p": 0.0054495779538520075,
+        "t_self_semi_analytic_k": 5,
+        "t_self_semi_analytic_p_mc": 0.005994005994005994,
+        "t_self_semi_analytic_p_display": "0.006 (5/1000)"
+       },
+       {
+        "C1": 0.0007,
+        "C1_over_A_m": 0.15345042696257064,
+        "rms_dipole_per_component": 0.012927207364566026,
+        "closed_form_cov_trace_over_r65_poisson": 3.232721029720065,
+        "gaussian_wald": 9.63307541674988,
+        "gaussian_p": 0.008094765114658953,
+        "t_self_semi_analytic_k": 6,
+        "t_self_semi_analytic_p_mc": 0.006993006993006993,
+        "t_self_semi_analytic_p_display": "0.007 (6/1000)"
+       },
+       {
+        "C1": 0.001,
+        "C1_over_A_m": 0.21921489566081523,
+        "rms_dipole_per_component": 0.015450968080927583,
+        "closed_form_cov_trace_over_r65_poisson": 3.6706237787959672,
+        "gaussian_wald": 8.648421358962345,
+        "gaussian_p": 0.013243999732682638,
+        "t_self_semi_analytic_k": 11,
+        "t_self_semi_analytic_p_mc": 0.011988011988011988,
+        "t_self_semi_analytic_p_display": "0.012 (11/1000)"
+       },
+       {
+        "C1": 0.0012695624620731579,
+        "C1_over_A_m": 0.278307002658255,
+        "rms_dipole_per_component": 0.017409357027308333,
+        "closed_form_cov_trace_over_r65_poisson": 4.06409758942765,
+        "gaussian_wald": 7.920999033771659,
+        "gaussian_p": 0.019053594322017205,
+        "t_self_semi_analytic_k": 19,
+        "t_self_semi_analytic_p_mc": 0.01998001998001998,
+        "t_self_semi_analytic_p_display": "0.02 (19/1000)"
+       },
+       {
+        "C1": 0.0015,
+        "C1_over_A_m": 0.3288223434912228,
+        "rms_dipole_per_component": 0.0189234939151512,
+        "closed_form_cov_trace_over_r65_poisson": 4.400461693922472,
+        "gaussian_wald": 7.389698970073093,
+        "gaussian_p": 0.024851193857540442,
+        "t_self_semi_analytic_k": 29,
+        "t_self_semi_analytic_p_mc": 0.029970029970029972,
+        "t_self_semi_analytic_p_display": "0.03 (29/1000)"
+       },
+       {
+        "C1": 0.002,
+        "C1_over_A_m": 0.43842979132163046,
+        "rms_dipole_per_component": 0.021850968611841583,
+        "closed_form_cov_trace_over_r65_poisson": 5.130299609048978,
+        "gaussian_wald": 6.4509108220965645,
+        "gaussian_p": 0.03973768047609173,
+        "t_self_semi_analytic_k": 48,
+        "t_self_semi_analytic_p_mc": 0.04895104895104895,
+        "t_self_semi_analytic_p_display": "0.049 (48/1000)"
+       },
+       {
+        "C1": 0.003,
+        "C1_over_A_m": 0.6576446869824456,
+        "rms_dipole_per_component": 0.02676186174229157,
+        "closed_form_cov_trace_over_r65_poisson": 6.5899754393019885,
+        "gaussian_wald": 5.144023647310721,
+        "gaussian_p": 0.07638172418563645,
+        "t_self_semi_analytic_k": 92,
+        "t_self_semi_analytic_p_mc": 0.09290709290709291,
+        "t_self_semi_analytic_p_display": "0.093 (92/1000)"
+       },
+       {
+        "C1": 0.0045617338045644065,
+        "C1_over_A_m": 1.0,
+        "rms_dipole_per_component": 0.033000510997539645,
+        "closed_form_cov_trace_over_r65_poisson": 8.869600527113729,
+        "gaussian_wald": 3.9077321193755417,
+        "gaussian_p": 0.1417250934087105,
+        "t_self_semi_analytic_k": 166,
+        "t_self_semi_analytic_p_mc": 0.16683316683316685,
+        "t_self_semi_analytic_p_display": "0.17 (166/1000)"
+       },
+       {
+        "C1": 0.005,
+        "C1_over_A_m": 1.0960744783040761,
+        "rms_dipole_per_component": 0.034549414947133546,
+        "closed_form_cov_trace_over_r65_poisson": 9.509327099808006,
+        "gaussian_wald": 3.6608339607045512,
+        "gaussian_p": 0.1603466924129971,
+        "t_self_semi_analytic_k": 181,
+        "t_self_semi_analytic_p_mc": 0.18181818181818182,
+        "t_self_semi_analytic_p_display": "0.18 (181/1000)"
+       },
+       {
+        "C1": 0.007,
+        "C1_over_A_m": 1.5345042696257065,
+        "rms_dipole_per_component": 0.0408794190573313,
+        "closed_form_cov_trace_over_r65_poisson": 12.428678760314028,
+        "gaussian_wald": 2.8415513076938748,
+        "gaussian_p": 0.24152660318345182,
+        "t_self_semi_analytic_k": 279,
+        "t_self_semi_analytic_p_mc": 0.27972027972027974,
+        "t_self_semi_analytic_p_display": "0.28 (279/1000)"
+       },
+       {
+        "C1": 0.01,
+        "C1_over_A_m": 2.1921489566081522,
+        "rms_dipole_per_component": 0.04886025119029199,
+        "closed_form_cov_trace_over_r65_poisson": 16.80770625107306,
+        "gaussian_wald": 2.1274039818174715,
+        "gaussian_p": 0.3451756051859119,
+        "t_self_semi_analytic_k": 383,
+        "t_self_semi_analytic_p_mc": 0.3836163836163836,
+        "t_self_semi_analytic_p_display": "0.38 (383/1000)"
+       },
+       {
+        "C1": 0.015,
+        "C1_over_A_m": 3.288223434912228,
+        "rms_dipole_per_component": 0.0598413420602149,
+        "closed_form_cov_trace_over_r65_poisson": 24.10608540233811,
+        "gaussian_wald": 1.4993675433306495,
+        "gaussian_p": 0.47251595205024666,
+        "t_self_semi_analytic_k": 507,
+        "t_self_semi_analytic_p_mc": 0.5074925074925075,
+        "t_self_semi_analytic_p_display": "0.51 (507/1000)"
+       },
+       {
+        "C1": 0.018223709796973776,
+        "C1_over_A_m": 3.994908641696582,
+        "rms_dipole_per_component": 0.0659590042639431,
+        "closed_form_cov_trace_over_r65_poisson": 28.81165667673057,
+        "gaussian_wald": 1.2596179926176476,
+        "gaussian_p": 0.5326935377225145,
+        "t_self_semi_analytic_k": 573,
+        "t_self_semi_analytic_p_mc": 0.5734265734265734,
+        "t_self_semi_analytic_p_display": "0.57 (573/1000)"
+       },
+       {
+        "C1": 0.02,
+        "C1_over_A_m": 4.3842979132163045,
+        "rms_dipole_per_component": 0.06909882989426709,
+        "closed_form_cov_trace_over_r65_poisson": 31.404464553603162,
+        "gaussian_wald": 1.1576239975034972,
+        "gaussian_p": 0.5605639217857145,
+        "t_self_semi_analytic_k": 599,
+        "t_self_semi_analytic_p_mc": 0.5994005994005994,
+        "t_self_semi_analytic_p_display": "0.6 (599/1000)"
+       },
+       {
+        "C1": 0.03,
+        "C1_over_A_m": 6.576446869824456,
+        "rms_dipole_per_component": 0.08462843753216344,
+        "closed_form_cov_trace_over_r65_poisson": 46.00122285613325,
+        "gaussian_wald": 0.7951538368355867,
+        "gaussian_p": 0.6719462556169479,
+        "t_self_semi_analytic_k": 702,
+        "t_self_semi_analytic_p_mc": 0.7022977022977023,
+        "t_self_semi_analytic_p_display": "0.7 (702/1000)"
+       },
+       {
+        "C1": 0.05,
+        "C1_over_A_m": 10.960744783040761,
+        "rms_dipole_per_component": 0.10925484305920792,
+        "closed_form_cov_trace_over_r65_poisson": 75.19473946119348,
+        "gaussian_wald": 0.48895526420737667,
+        "gaussian_p": 0.7831135047711364,
+        "t_self_semi_analytic_k": 799,
+        "t_self_semi_analytic_p_mc": 0.7992007992007992,
+        "t_self_semi_analytic_p_display": "0.8 (799/1000)"
+       }
+      ],
+      "crossings": {
+       "0.05": {
+        "gaussian_closed_form_C1": 0.0023018240953446693,
+        "gaussian_C1_over_A_m": 0.504594128890532,
+        "gaussian_rms_dipole": 0.02344184345040299,
+        "gaussian_bootstrap_C1": {
+         "n_finite": 200,
+         "p16_50_84": [
+          0.0022145478844909972,
+          0.00230289671263517,
+          0.002386466081594347
+         ]
+        },
+        "t_self_semi_analytic_C1": 0.0020561843239505634,
+        "t_self_semi_analytic_C1_over_A_m": 0.45074623203422665,
+        "t_self_semi_analytic_rms_dipole": 0.02215576332689079,
+        "t_self_semi_analytic_bootstrap_C1": {
+         "n_finite": 200,
+         "p16_50_84": [
+          0.0019037937286897548,
+          0.002033946615525515,
+          0.0021767184688929117
+         ]
+        },
+        "t_self_k_monotone_on_grid": false
+       },
+       "0.01": {
+        "gaussian_closed_form_C1": 0.0008209337464622047,
+        "gaussian_C1_over_A_m": 0.17996090557515435,
+        "gaussian_rms_dipole": 0.013999410542969763,
+        "gaussian_bootstrap_C1": {
+         "n_finite": 200,
+         "p16_50_84": [
+          0.0007334656038162978,
+          0.0008226025816052968,
+          0.0009064101715264596
+         ]
+        },
+        "t_self_semi_analytic_C1": 0.0009266056744365648,
+        "t_self_semi_analytic_C1_over_A_m": 0.20312576624033088,
+        "t_self_semi_analytic_rms_dipole": 0.014873157367397421,
+        "t_self_semi_analytic_bootstrap_C1": {
+         "n_finite": 200,
+         "p16_50_84": [
+          0.0008140914524319963,
+          0.0009266056744365648,
+          0.0011303806001491125
+         ]
+        },
+        "t_self_k_monotone_on_grid": false
+       }
+      },
+      "validation_at_C1_equals_A_m": {
+       "n_paired": 1000,
+       "per_mock_delta_shift_regression_slope": 1.007348877863141,
+       "per_mock_delta_shift_correlation": 0.9954322479099047,
+       "per_mock_residual_rms_over_predicted_rms": 0.09687830866372088,
+       "t_self_predicted_vs_reference_spearman": 0.9915784155784156,
+       "k_ge_observed_predicted": 166,
+       "k_ge_observed_reference_paired": 164,
+       "p_predicted": "0.17 (166/1000)",
+       "p_reference_paired": "0.16 (164/1000)",
+       "p_reference_full": "0.17 (335/2000)",
+       "exceedance_agreement": {
+        "both": 152,
+        "predicted_only": 14,
+        "reference_only": 12
+       },
+       "closed_form_cov_trace": 1.6085352374695143e-05,
+       "reference_full_cov_trace": 1.6700125391848556e-05,
+       "closed_form_over_reference_trace": 0.9631875208881074,
+       "closed_form_cov": [
+        [
+         7.522022266150907e-06,
+         -2.117998550066277e-07
+        ],
+        [
+         -2.117998550066277e-07,
+         8.563330108544238e-06
+        ]
+       ],
+       "reference_full_cov": [
+        [
+         7.754071377060921e-06,
+         -3.11111314938762e-07
+        ],
+        [
+         -3.11111314938762e-07,
+         8.946054014787635e-06
+        ]
+       ],
+       "gaussian_wald_closed_form": 3.9077321193755417,
+       "gaussian_wald_reference_full": 3.7254650165563143,
+       "gaussian_p_closed_form": 0.1417250934087105,
+       "gaussian_p_reference_full": 0.1552478342605895
+      }
+     },
+     "dipole_stf": {
+      "observed_delta": [
+       -0.0016440241048542026,
+       0.005524671826759816
+      ],
+      "observed_abs_delta": 0.00576409698484813,
+      "observed_t_self": 30.989468960483375,
+      "cov_c1zero": [
+       [
+        1.5789895973466873e-06,
+        -2.475380401990757e-07
+       ],
+       [
+        -2.475380401990757e-07,
+        2.723779685660029e-06
+       ]
+      ],
+      "cov_c1zero_trace_over_r65_poisson": 2.3036606567754463,
+      "p_versus_C1": [
+       {
+        "C1": 0.0,
+        "C1_over_A_m": 0.0,
+        "rms_dipole_per_component": 0.0,
+        "closed_form_cov_trace_over_r65_poisson": 2.3036606567754463,
+        "gaussian_wald": 12.043549725849086,
+        "gaussian_p": 0.002425361089176175,
+        "t_self_semi_analytic_k": 5,
+        "t_self_semi_analytic_p_mc": 0.005994005994005994,
+        "t_self_semi_analytic_p_display": "0.006 (5/1000)"
+       },
+       {
+        "C1": 1e-05,
+        "C1_over_A_m": 0.002192148956608152,
+        "rms_dipole_per_component": 0.0015450968080927584,
+        "closed_form_cov_trace_over_r65_poisson": 2.3178333824635793,
+        "gaussian_wald": 11.985774352854056,
+        "gaussian_p": 0.002496445955345859,
+        "t_self_semi_analytic_k": 5,
+        "t_self_semi_analytic_p_mc": 0.005994005994005994,
+        "t_self_semi_analytic_p_display": "0.006 (5/1000)"
+       },
+       {
+        "C1": 2e-05,
+        "C1_over_A_m": 0.004384297913216304,
+        "rms_dipole_per_component": 0.0021850968611841584,
+        "closed_form_cov_trace_over_r65_poisson": 2.3320061081517127,
+        "gaussian_wald": 11.928555155128377,
+        "gaussian_p": 0.0025688997680279025,
+        "t_self_semi_analytic_k": 5,
+        "t_self_semi_analytic_p_mc": 0.005994005994005994,
+        "t_self_semi_analytic_p_display": "0.006 (5/1000)"
+       },
+       {
+        "C1": 5e-05,
+        "C1_over_A_m": 0.01096074478304076,
+        "rms_dipole_per_component": 0.003454941494713355,
+        "closed_form_cov_trace_over_r65_poisson": 2.3745242852161126,
+        "gaussian_wald": 11.760154367748138,
+        "gaussian_p": 0.002794569571006669,
+        "t_self_semi_analytic_k": 5,
+        "t_self_semi_analytic_p_mc": 0.005994005994005994,
+        "t_self_semi_analytic_p_display": "0.006 (5/1000)"
+       },
+       {
+        "C1": 0.0001,
+        "C1_over_A_m": 0.02192148956608152,
+        "rms_dipole_per_component": 0.004886025119029199,
+        "closed_form_cov_trace_over_r65_poisson": 2.4453879136567793,
+        "gaussian_wald": 11.48988402884107,
+        "gaussian_p": 0.0031989200374973052,
+        "t_self_semi_analytic_k": 6,
+        "t_self_semi_analytic_p_mc": 0.006993006993006993,
+        "t_self_semi_analytic_p_display": "0.007 (6/1000)"
+       },
+       {
+        "C1": 0.0002,
+        "C1_over_A_m": 0.04384297913216304,
+        "rms_dipole_per_component": 0.00690988298942671,
+        "closed_form_cov_trace_over_r65_poisson": 2.5871151705381115,
+        "gaussian_wald": 10.98519474085683,
+        "gaussian_p": 0.0041171365457227434,
+        "t_self_semi_analytic_k": 6,
+        "t_self_semi_analytic_p_mc": 0.006993006993006993,
+        "t_self_semi_analytic_p_display": "0.007 (6/1000)"
+       },
+       {
+        "C1": 0.0003,
+        "C1_over_A_m": 0.06576446869824455,
+        "rms_dipole_per_component": 0.008462843753216345,
+        "closed_form_cov_trace_over_r65_poisson": 2.7288424274194445,
+        "gaussian_wald": 10.523200856752831,
+        "gaussian_p": 0.005186996655612587,
+        "t_self_semi_analytic_k": 7,
+        "t_self_semi_analytic_p_mc": 0.007992007992007992,
+        "t_self_semi_analytic_p_display": "0.008 (7/1000)"
+       },
+       {
+        "C1": 0.0005,
+        "C1_over_A_m": 0.10960744783040761,
+        "rms_dipole_per_component": 0.010925484305920791,
+        "closed_form_cov_trace_over_r65_poisson": 3.01229694118211,
+        "gaussian_wald": 9.707180813195768,
+        "gaussian_p": 0.0078003208883723335,
+        "t_self_semi_analytic_k": 8,
+        "t_self_semi_analytic_p_mc": 0.008991008991008992,
+        "t_self_semi_analytic_p_display": "0.009 (8/1000)"
+       },
+       {
+        "C1": 0.0007,
+        "C1_over_A_m": 0.15345042696257064,
+        "rms_dipole_per_component": 0.012927207364566026,
+        "closed_form_cov_trace_over_r65_poisson": 3.2957514549447757,
+        "gaussian_wald": 9.008974651911478,
+        "gaussian_p": 0.011059258528525774,
+        "t_self_semi_analytic_k": 12,
+        "t_self_semi_analytic_p_mc": 0.012987012987012988,
+        "t_self_semi_analytic_p_display": "0.013 (12/1000)"
+       },
+       {
+        "C1": 0.001,
+        "C1_over_A_m": 0.21921489566081523,
+        "rms_dipole_per_component": 0.015450968080927583,
+        "closed_form_cov_trace_over_r65_poisson": 3.720933225588774,
+        "gaussian_wald": 8.132026831990743,
+        "gaussian_p": 0.017145604836065777,
+        "t_self_semi_analytic_k": 17,
+        "t_self_semi_analytic_p_mc": 0.017982017982017984,
+        "t_self_semi_analytic_p_display": "0.018 (17/1000)"
+       },
+       {
+        "C1": 0.0012695624620731579,
+        "C1_over_A_m": 0.278307002658255,
+        "rms_dipole_per_component": 0.017409357027308333,
+        "closed_form_cov_trace_over_r65_poisson": 4.102976708666844,
+        "gaussian_wald": 7.478186464367848,
+        "gaussian_p": 0.023775652356119448,
+        "t_self_semi_analytic_k": 22,
+        "t_self_semi_analytic_p_mc": 0.022977022977022976,
+        "t_self_semi_analytic_p_display": "0.023 (22/1000)"
+       },
+       {
+        "C1": 0.0015,
+        "C1_over_A_m": 0.3288223434912228,
+        "rms_dipole_per_component": 0.0189234939151512,
+        "closed_form_cov_trace_over_r65_poisson": 4.429569509995439,
+        "gaussian_wald": 6.997345856433768,
+        "gaussian_p": 0.030237484120149313,
+        "t_self_semi_analytic_k": 31,
+        "t_self_semi_analytic_p_mc": 0.03196803196803197,
+        "t_self_semi_analytic_p_display": "0.032 (31/1000)"
+       },
+       {
+        "C1": 0.002,
+        "C1_over_A_m": 0.43842979132163046,
+        "rms_dipole_per_component": 0.021850968611841583,
+        "closed_form_cov_trace_over_r65_poisson": 5.1382057944021025,
+        "gaussian_wald": 6.140804982151355,
+        "gaussian_p": 0.04640247451646595,
+        "t_self_semi_analytic_k": 54,
+        "t_self_semi_analytic_p_mc": 0.054945054945054944,
+        "t_self_semi_analytic_p_display": "0.055 (54/1000)"
+       },
+       {
+        "C1": 0.003,
+        "C1_over_A_m": 0.6576446869824456,
+        "rms_dipole_per_component": 0.02676186174229157,
+        "closed_form_cov_trace_over_r65_poisson": 6.555478363215431,
+        "gaussian_wald": 4.9333563986917754,
+        "gaussian_p": 0.08486630022855646,
+        "t_self_semi_analytic_k": 101,
+        "t_self_semi_analytic_p_mc": 0.1018981018981019,
+        "t_self_semi_analytic_p_display": "0.1 (101/1000)"
+       },
+       {
+        "C1": 0.0045617338045644065,
+        "C1_over_A_m": 1.0,
+        "rms_dipole_per_component": 0.033000510997539645,
+        "closed_form_cov_trace_over_r65_poisson": 8.768880844213038,
+        "gaussian_wald": 3.7745286678941614,
+        "gaussian_p": 0.15148565667199657,
+        "t_self_semi_analytic_k": 172,
+        "t_self_semi_analytic_p_mc": 0.17282717282717283,
+        "t_self_semi_analytic_p_display": "0.17 (172/1000)"
+       },
+       {
+        "C1": 0.005,
+        "C1_over_A_m": 1.0960744783040761,
+        "rms_dipole_per_component": 0.034549414947133546,
+        "closed_form_cov_trace_over_r65_poisson": 9.390023500842085,
+        "gaussian_wald": 3.5411233903825186,
+        "gaussian_p": 0.17023734046979885,
+        "t_self_semi_analytic_k": 188,
+        "t_self_semi_analytic_p_mc": 0.1888111888111888,
+        "t_self_semi_analytic_p_display": "0.19 (188/1000)"
+       },
+       {
+        "C1": 0.007,
+        "C1_over_A_m": 1.5345042696257065,
+        "rms_dipole_per_component": 0.0408794190573313,
+        "closed_form_cov_trace_over_r65_poisson": 12.224568638468742,
+        "gaussian_wald": 2.7618125690769384,
+        "gaussian_p": 0.25135065459293515,
+        "t_self_semi_analytic_k": 290,
+        "t_self_semi_analytic_p_mc": 0.2907092907092907,
+        "t_self_semi_analytic_p_display": "0.29 (290/1000)"
+       },
+       {
+        "C1": 0.01,
+        "C1_over_A_m": 2.1921489566081522,
+        "rms_dipole_per_component": 0.04886025119029199,
+        "closed_form_cov_trace_over_r65_poisson": 16.476386344908725,
+        "gaussian_wald": 2.0764057038471138,
+        "gaussian_p": 0.35409046348622925,
+        "t_self_semi_analytic_k": 397,
+        "t_self_semi_analytic_p_mc": 0.39760239760239763,
+        "t_self_semi_analytic_p_display": "0.4 (397/1000)"
+       },
+       {
+        "C1": 0.015,
+        "C1_over_A_m": 3.288223434912228,
+        "rms_dipole_per_component": 0.0598413420602149,
+        "closed_form_cov_trace_over_r65_poisson": 23.562749188975364,
+        "gaussian_wald": 1.4688704895896536,
+        "gaussian_p": 0.479776338661916,
+        "t_self_semi_analytic_k": 518,
+        "t_self_semi_analytic_p_mc": 0.5184815184815185,
+        "t_self_semi_analytic_p_display": "0.52 (518/1000)"
+       },
+       {
+        "C1": 0.018223709796973776,
+        "C1_over_A_m": 3.994908641696582,
+        "rms_dipole_per_component": 0.0659590042639431,
+        "closed_form_cov_trace_over_r65_poisson": 28.131624654041087,
+        "gaussian_wald": 1.2357550408615607,
+        "gaussian_p": 0.5390874262287672,
+        "t_self_semi_analytic_k": 578,
+        "t_self_semi_analytic_p_mc": 0.5784215784215784,
+        "t_self_semi_analytic_p_display": "0.58 (578/1000)"
+       },
+       {
+        "C1": 0.02,
+        "C1_over_A_m": 4.3842979132163045,
+        "rms_dipole_per_component": 0.06909882989426709,
+        "closed_form_cov_trace_over_r65_poisson": 30.64911203304201,
+        "gaussian_wald": 1.136382166417746,
+        "gaussian_p": 0.5665493529700658,
+        "t_self_semi_analytic_k": 613,
+        "t_self_semi_analytic_p_mc": 0.6133866133866134,
+        "t_self_semi_analytic_p_display": "0.61 (613/1000)"
+       },
+       {
+        "C1": 0.03,
+        "C1_over_A_m": 6.576446869824456,
+        "rms_dipole_per_component": 0.08462843753216344,
+        "closed_form_cov_trace_over_r65_poisson": 44.821837721175285,
+        "gaussian_wald": 0.7822504571107375,
+        "gaussian_p": 0.6762954592328083,
+        "t_self_semi_analytic_k": 696,
+        "t_self_semi_analytic_p_mc": 0.6963036963036963,
+        "t_self_semi_analytic_p_display": "0.7 (696/1000)"
+       },
+       {
+        "C1": 0.05,
+        "C1_over_A_m": 10.960744783040761,
+        "rms_dipole_per_component": 0.10925484305920792,
+        "closed_form_cov_trace_over_r65_poisson": 73.16728909744185,
+        "gaussian_wald": 0.48190146202324985,
+        "gaussian_p": 0.7858803449641054,
+        "t_self_semi_analytic_k": 810,
+        "t_self_semi_analytic_p_mc": 0.8101898101898102,
+        "t_self_semi_analytic_p_display": "0.81 (810/1000)"
+       }
+      ],
+      "crossings": {
+       "0.05": {
+        "gaussian_closed_form_C1": 0.0021018263896151745,
+        "gaussian_C1_over_A_m": 0.4607516526966384,
+        "gaussian_rms_dipole": 0.02240031448757741,
+        "gaussian_bootstrap_C1": {
+         "n_finite": 200,
+         "p16_50_84": [
+          0.001990699090260534,
+          0.002101066131076472,
+          0.0021887843297948135
+         ]
+        },
+        "t_self_semi_analytic_C1": 0.0018731736499543587,
+        "t_self_semi_analytic_C1_over_A_m": 0.41062756622933316,
+        "t_self_semi_analytic_rms_dipole": 0.02114680279592132,
+        "t_self_semi_analytic_bootstrap_C1": {
+         "n_finite": 200,
+         "p16_50_84": [
+          0.0016744096623177375,
+          0.001849735176254768,
+          0.002081164904012036
+         ]
+        },
+        "t_self_k_monotone_on_grid": false
+       },
+       "0.01": {
+        "gaussian_closed_form_C1": 0.0006391979223860055,
+        "gaussian_C1_over_A_m": 0.14012170586245803,
+        "gaussian_rms_dipole": 0.01235302648919299,
+        "gaussian_bootstrap_C1": {
+         "n_finite": 200,
+         "p16_50_84": [
+          0.0005299328000416291,
+          0.000639371331406337,
+          0.0007258308409328022
+         ]
+        },
+        "t_self_semi_analytic_C1": 0.0006408550312232554,
+        "t_self_semi_analytic_C1_over_A_m": 0.1404849688033144,
+        "t_self_semi_analytic_rms_dipole": 0.01236902862138891,
+        "t_self_semi_analytic_bootstrap_C1": {
+         "n_finite": 200,
+         "p16_50_84": [
+          0.0002503991827544642,
+          0.0006408550312232554,
+          0.000840965778116811
+         ]
+        },
+        "t_self_k_monotone_on_grid": false
+       }
+      },
+      "validation_at_C1_equals_A_m": {
+       "n_paired": 1000,
+       "per_mock_delta_shift_regression_slope": 1.0066473238519338,
+       "per_mock_delta_shift_correlation": 0.995285686304092,
+       "per_mock_residual_rms_over_predicted_rms": 0.09830422436699862,
+       "t_self_predicted_vs_reference_spearman": 0.9912985392985394,
+       "k_ge_observed_predicted": 172,
+       "k_ge_observed_reference_paired": 174,
+       "p_predicted": "0.17 (172/1000)",
+       "p_reference_paired": "0.17 (174/1000)",
+       "p_reference_full": "0.18 (359/2000)",
+       "exceedance_agreement": {
+        "both": 164,
+        "predicted_only": 8,
+        "reference_only": 10
+       },
+       "closed_form_cov_trace": 1.637848483970689e-05,
+       "reference_full_cov_trace": 1.6969746646925364e-05,
+       "closed_form_over_reference_trace": 0.9651578883574198,
+       "closed_form_cov": [
+        [
+         7.616847375696774e-06,
+         -2.475380401990757e-07
+        ],
+        [
+         -2.475380401990757e-07,
+         8.761637464010116e-06
+        ]
+       ],
+       "reference_full_cov": [
+        [
+         7.910618826611745e-06,
+         -3.038633556248798e-07
+        ],
+        [
+         -3.038633556248798e-07,
+         9.059127820313621e-06
+        ]
+       ],
+       "gaussian_wald_closed_form": 3.7745286678941614,
+       "gaussian_wald_reference_full": 3.6385316075907537,
+       "gaussian_p_closed_form": 0.15148565667199657,
+       "gaussian_p_reference_full": 0.1621447533054668
+      }
+     }
+    }
+   },
+   "LSS_DIFF_FLAT": {
+    "label": "EMPIRICAL_DIFF_SELECTION_FLAT",
+    "A_m": 0.0012695624620731579,
+    "C1_nominal": 0.0012695624620731579,
+    "n_c1zero_mocks": 1000,
+    "rms_dipole_per_component_at_nominal_C1": 0.017409357027308333,
+    "models": {
+     "dipole": {
+      "observed_delta": [
+       -0.0013960439131920563,
+       0.0056270366013520525
+      ],
+      "observed_abs_delta": 0.00579762705945426,
+      "observed_t_self": 32.792386268357376,
+      "cov_c1zero": [
+       [
+        1.4104749309780982e-06,
+        -2.9131255924613025e-07
+       ],
+       [
+        -2.9131255924613025e-07,
+        2.163046370471425e-06
+       ]
+      ],
+      "cov_c1zero_trace_over_r65_poisson": 1.9704701321216496,
+      "p_versus_C1": [
+       {
+        "C1": 0.0,
+        "C1_over_A_m": 0.0,
+        "rms_dipole_per_component": 0.0,
+        "closed_form_cov_trace_over_r65_poisson": 1.9704701321216496,
+        "gaussian_wald": 14.93544162324708,
+        "gaussian_p": 0.0005712287522557542,
+        "t_self_semi_analytic_k": 0,
+        "t_self_semi_analytic_p_mc": 0.000999000999000999,
+        "t_self_semi_analytic_p_display": "0.001 (0/1000)"
+       },
+       {
+        "C1": 1e-05,
+        "C1_over_A_m": 0.007876729423513591,
+        "rms_dipole_per_component": 0.0015450968080927584,
+        "closed_form_cov_trace_over_r65_poisson": 1.9850668904241795,
+        "gaussian_wald": 14.847786118913158,
+        "gaussian_p": 0.0005968211567071048,
+        "t_self_semi_analytic_k": 0,
+        "t_self_semi_analytic_p_mc": 0.000999000999000999,
+        "t_self_semi_analytic_p_display": "0.001 (0/1000)"
+       },
+       {
+        "C1": 2e-05,
+        "C1_over_A_m": 0.015753458847027182,
+        "rms_dipole_per_component": 0.0021850968611841584,
+        "closed_form_cov_trace_over_r65_poisson": 1.9996636487267097,
+        "gaussian_wald": 14.761159923754768,
+        "gaussian_p": 0.0006232393261144711,
+        "t_self_semi_analytic_k": 0,
+        "t_self_semi_analytic_p_mc": 0.000999000999000999,
+        "t_self_semi_analytic_p_display": "0.001 (0/1000)"
+       },
+       {
+        "C1": 5e-05,
+        "C1_over_A_m": 0.039383647117567956,
+        "rms_dipole_per_component": 0.003454941494713355,
+        "closed_form_cov_trace_over_r65_poisson": 2.0434539236343,
+        "gaussian_wald": 14.50727725722075,
+        "gaussian_p": 0.0007075950235150068,
+        "t_self_semi_analytic_k": 0,
+        "t_self_semi_analytic_p_mc": 0.000999000999000999,
+        "t_self_semi_analytic_p_display": "0.001 (0/1000)"
+       },
+       {
+        "C1": 0.0001,
+        "C1_over_A_m": 0.07876729423513591,
+        "rms_dipole_per_component": 0.004886025119029199,
+        "closed_form_cov_trace_over_r65_poisson": 2.1164377151469504,
+        "gaussian_wald": 14.10310829601441,
+        "gaussian_p": 0.0008660619224214963,
+        "t_self_semi_analytic_k": 0,
+        "t_self_semi_analytic_p_mc": 0.000999000999000999,
+        "t_self_semi_analytic_p_display": "0.001 (0/1000)"
+       },
+       {
+        "C1": 0.0002,
+        "C1_over_A_m": 0.15753458847027182,
+        "rms_dipole_per_component": 0.00690988298942671,
+        "closed_form_cov_trace_over_r65_poisson": 2.262405298172251,
+        "gaussian_wald": 13.359057630666575,
+        "gaussian_p": 0.0012563698153105001,
+        "t_self_semi_analytic_k": 0,
+        "t_self_semi_analytic_p_mc": 0.000999000999000999,
+        "t_self_semi_analytic_p_display": "0.001 (0/1000)"
+       },
+       {
+        "C1": 0.0003,
+        "C1_over_A_m": 0.23630188270540772,
+        "rms_dipole_per_component": 0.008462843753216345,
+        "closed_form_cov_trace_over_r65_poisson": 2.4083728811975527,
+        "gaussian_wald": 12.689865938230417,
+        "gaussian_p": 0.0017556204195637727,
+        "t_self_semi_analytic_k": 3,
+        "t_self_semi_analytic_p_mc": 0.003996003996003996,
+        "t_self_semi_analytic_p_display": "0.004 (3/1000)"
+       },
+       {
+        "C1": 0.0005,
+        "C1_over_A_m": 0.39383647117567955,
+        "rms_dipole_per_component": 0.010925484305920791,
+        "closed_form_cov_trace_over_r65_poisson": 2.7003080472481544,
+        "gaussian_wald": 11.534813180236835,
+        "gaussian_p": 0.0031278588245990053,
+        "t_self_semi_analytic_k": 5,
+        "t_self_semi_analytic_p_mc": 0.005994005994005994,
+        "t_self_semi_analytic_p_display": "0.006 (5/1000)"
+       },
+       {
+        "C1": 0.0007,
+        "C1_over_A_m": 0.5513710596459513,
+        "rms_dipole_per_component": 0.012927207364566026,
+        "closed_form_cov_trace_over_r65_poisson": 2.9922432132987566,
+        "gaussian_wald": 10.572895430433833,
+        "gaussian_p": 0.005059701875939933,
+        "t_self_semi_analytic_k": 5,
+        "t_self_semi_analytic_p_mc": 0.005994005994005994,
+        "t_self_semi_analytic_p_display": "0.006 (5/1000)"
+       },
+       {
+        "C1": 0.001,
+        "C1_over_A_m": 0.7876729423513591,
+        "rms_dipole_per_component": 0.015450968080927583,
+        "closed_form_cov_trace_over_r65_poisson": 3.4301459623746595,
+        "gaussian_wald": 9.39777913719406,
+        "gaussian_p": 0.009105382392586054,
+        "t_self_semi_analytic_k": 8,
+        "t_self_semi_analytic_p_mc": 0.008991008991008992,
+        "t_self_semi_analytic_p_display": "0.009 (8/1000)"
+       },
+       {
+        "C1": 0.0012695624620731579,
+        "C1_over_A_m": 1.0,
+        "rms_dipole_per_component": 0.017409357027308333,
+        "closed_form_cov_trace_over_r65_poisson": 3.823619773006342,
+        "gaussian_wald": 8.544682291785081,
+        "gaussian_p": 0.013949088046079893,
+        "t_self_semi_analytic_k": 17,
+        "t_self_semi_analytic_p_mc": 0.017982017982017984,
+        "t_self_semi_analytic_p_display": "0.018 (17/1000)"
+       },
+       {
+        "C1": 0.0015,
+        "C1_over_A_m": 1.1815094135270388,
+        "rms_dipole_per_component": 0.0189234939151512,
+        "closed_form_cov_trace_over_r65_poisson": 4.159983877501165,
+        "gaussian_wald": 7.929453049061368,
+        "gaussian_p": 0.01897322461450785,
+        "t_self_semi_analytic_k": 21,
+        "t_self_semi_analytic_p_mc": 0.02197802197802198,
+        "t_self_semi_analytic_p_display": "0.022 (21/1000)"
+       },
+       {
+        "C1": 0.002,
+        "C1_over_A_m": 1.5753458847027182,
+        "rms_dipole_per_component": 0.021850968611841583,
+        "closed_form_cov_trace_over_r65_poisson": 4.88982179262767,
+        "gaussian_wald": 6.858190026444769,
+        "gaussian_p": 0.032416263792545176,
+        "t_self_semi_analytic_k": 34,
+        "t_self_semi_analytic_p_mc": 0.03496503496503497,
+        "t_self_semi_analytic_p_display": "0.035 (34/1000)"
+       },
+       {
+        "C1": 0.003,
+        "C1_over_A_m": 2.3630188270540775,
+        "rms_dipole_per_component": 0.02676186174229157,
+        "closed_form_cov_trace_over_r65_poisson": 6.349497622880681,
+        "gaussian_wald": 5.399525202070906,
+        "gaussian_p": 0.06722146915282905,
+        "t_self_semi_analytic_k": 82,
+        "t_self_semi_analytic_p_mc": 0.08291708291708291,
+        "t_self_semi_analytic_p_display": "0.083 (82/1000)"
+       },
+       {
+        "C1": 0.0045617338045644065,
+        "C1_over_A_m": 3.593154288064906,
+        "rms_dipole_per_component": 0.033000510997539645,
+        "closed_form_cov_trace_over_r65_poisson": 8.629122710692423,
+        "gaussian_wald": 4.0533455675260575,
+        "gaussian_p": 0.13177323060014642,
+        "t_self_semi_analytic_k": 153,
+        "t_self_semi_analytic_p_mc": 0.15384615384615385,
+        "t_self_semi_analytic_p_display": "0.15 (153/1000)"
+       },
+       {
+        "C1": 0.005,
+        "C1_over_A_m": 3.9383647117567957,
+        "rms_dipole_per_component": 0.034549414947133546,
+        "closed_form_cov_trace_over_r65_poisson": 9.2688492833867,
+        "gaussian_wald": 3.7883128878791275,
+        "gaussian_p": 0.15044519048623856,
+        "t_self_semi_analytic_k": 180,
+        "t_self_semi_analytic_p_mc": 0.18081918081918083,
+        "t_self_semi_analytic_p_display": "0.18 (180/1000)"
+       },
+       {
+        "C1": 0.007,
+        "C1_over_A_m": 5.5137105964595134,
+        "rms_dipole_per_component": 0.0408794190573313,
+        "closed_form_cov_trace_over_r65_poisson": 12.18820094389272,
+        "gaussian_wald": 2.9177335963734765,
+        "gaussian_p": 0.23249959446641083,
+        "t_self_semi_analytic_k": 266,
+        "t_self_semi_analytic_p_mc": 0.26673326673326675,
+        "t_self_semi_analytic_p_display": "0.27 (266/1000)"
+       },
+       {
+        "C1": 0.01,
+        "C1_over_A_m": 7.876729423513591,
+        "rms_dipole_per_component": 0.04886025119029199,
+        "closed_form_cov_trace_over_r65_poisson": 16.56722843465175,
+        "gaussian_wald": 2.1698067373365766,
+        "gaussian_p": 0.33793443937192086,
+        "t_self_semi_analytic_k": 374,
+        "t_self_semi_analytic_p_mc": 0.37462537462537465,
+        "t_self_semi_analytic_p_display": "0.37 (374/1000)"
+       },
+       {
+        "C1": 0.015,
+        "C1_over_A_m": 11.815094135270385,
+        "rms_dipole_per_component": 0.0598413420602149,
+        "closed_form_cov_trace_over_r65_poisson": 23.865607585916802,
+        "gaussian_wald": 1.520301594974957,
+        "gaussian_p": 0.46759590940481055,
+        "t_self_semi_analytic_k": 483,
+        "t_self_semi_analytic_p_mc": 0.4835164835164835,
+        "t_self_semi_analytic_p_display": "0.48 (483/1000)"
+       },
+       {
+        "C1": 0.018223709796973776,
+        "C1_over_A_m": 14.354323116339623,
+        "rms_dipole_per_component": 0.0659590042639431,
+        "closed_form_cov_trace_over_r65_poisson": 28.57117886030926,
+        "gaussian_wald": 1.2743582905741575,
+        "gaussian_p": 0.5287819392277624,
+        "t_self_semi_analytic_k": 553,
+        "t_self_semi_analytic_p_mc": 0.5534465534465535,
+        "t_self_semi_analytic_p_display": "0.55 (553/1000)"
+       },
+       {
+        "C1": 0.02,
+        "C1_over_A_m": 15.753458847027183,
+        "rms_dipole_per_component": 0.06909882989426709,
+        "closed_form_cov_trace_over_r65_poisson": 31.16398673718185,
+        "gaussian_wald": 1.1700615663935765,
+        "gaussian_p": 0.5570887125767533,
+        "t_self_semi_analytic_k": 587,
+        "t_self_semi_analytic_p_mc": 0.5874125874125874,
+        "t_self_semi_analytic_p_display": "0.59 (587/1000)"
+       },
+       {
+        "C1": 0.03,
+        "C1_over_A_m": 23.63018827054077,
+        "rms_dipole_per_component": 0.08462843753216344,
+        "closed_form_cov_trace_over_r65_poisson": 45.76074503971195,
+        "gaussian_wald": 0.8010015484113353,
+        "gaussian_p": 0.6699844510827039,
+        "t_self_semi_analytic_k": 694,
+        "t_self_semi_analytic_p_mc": 0.6943056943056943,
+        "t_self_semi_analytic_p_display": "0.69 (694/1000)"
+       },
+       {
+        "C1": 0.05,
+        "C1_over_A_m": 39.38364711756796,
+        "rms_dipole_per_component": 0.10925484305920792,
+        "closed_form_cov_trace_over_r65_poisson": 74.95426164477217,
+        "gaussian_wald": 0.4911599463463543,
+        "gaussian_p": 0.7822507222204437,
+        "t_self_semi_analytic_k": 789,
+        "t_self_semi_analytic_p_mc": 0.7892107892107892,
+        "t_self_semi_analytic_p_display": "0.79 (789/1000)"
+       }
+      ],
+      "crossings": {
+       "0.05": {
+        "gaussian_closed_form_C1": 0.0025354642456290153,
+        "gaussian_C1_over_A_m": 1.9971165825812756,
+        "gaussian_rms_dipole": 0.02460279458896757,
+        "gaussian_bootstrap_C1": {
+         "n_finite": 200,
+         "p16_50_84": [
+          0.002460486305260725,
+          0.0025323650458550385,
+          0.0025971885614797566
+         ]
+        },
+        "t_self_semi_analytic_C1": 0.002391037256520678,
+        "t_self_semi_analytic_C1_over_A_m": 1.8833553511153638,
+        "t_self_semi_analytic_rms_dipole": 0.02389179980114987,
+        "t_self_semi_analytic_bootstrap_C1": {
+         "n_finite": 200,
+         "p16_50_84": [
+          0.0021879840789395815,
+          0.002391037256520678,
+          0.0025693467963588098
+         ]
+        },
+        "t_self_k_monotone_on_grid": true
+       },
+       "0.01": {
+        "gaussian_closed_form_C1": 0.0010549417527582858,
+        "gaussian_C1_over_A_m": 0.830949074404419,
+        "gaussian_rms_dipole": 0.015869744545463357,
+        "gaussian_bootstrap_C1": {
+         "n_finite": 200,
+         "p16_50_84": [
+          0.0009807755617776005,
+          0.0010539879586528495,
+          0.0011162230962067066
+         ]
+        },
+        "t_self_semi_analytic_C1": 0.0010768726510402577,
+        "t_self_semi_analytic_C1_over_A_m": 0.8482234495825882,
+        "t_self_semi_analytic_rms_dipole": 0.016033851946438075,
+        "t_self_semi_analytic_bootstrap_C1": {
+         "n_finite": 200,
+         "p16_50_84": [
+          0.0008827013660570787,
+          0.0010768726510402577,
+          0.001136837787859776
+         ]
+        },
+        "t_self_k_monotone_on_grid": true
+       }
+      },
+      "validation_at_C1_equals_A_m": {
+       "n_paired": 1000,
+       "per_mock_delta_shift_regression_slope": 1.0077243875943973,
+       "per_mock_delta_shift_correlation": 0.9923198158180929,
+       "per_mock_residual_rms_over_predicted_rms": 0.12585739396772774,
+       "t_self_predicted_vs_reference_spearman": 0.9903881583881585,
+       "k_ge_observed_predicted": 17,
+       "k_ge_observed_reference_paired": 15,
+       "p_predicted": "0.018 (17/1000)",
+       "p_reference_paired": "0.016 (15/1000)",
+       "p_reference_full": "0.012 (23/2000)",
+       "exceedance_agreement": {
+        "both": 15,
+        "predicted_only": 2,
+        "reference_only": 0
+       },
+       "closed_form_cov_trace": 6.934277502988409e-06,
+       "reference_full_cov_trace": 6.790005528903388e-06,
+       "closed_form_over_reference_trace": 1.0212476961131904,
+       "closed_form_cov": [
+        [
+         3.090853031747541e-06,
+         -2.9131255924613025e-07
+        ],
+        [
+         -2.9131255924613025e-07,
+         3.843424471240868e-06
+        ]
+       ],
+       "reference_full_cov": [
+        [
+         2.8471226357853786e-06,
+         -3.0283313359745146e-07
+        ],
+        [
+         -3.0283313359745146e-07,
+         3.942882893118009e-06
+        ]
+       ],
+       "gaussian_wald_closed_form": 8.544682291785081,
+       "gaussian_wald_reference_full": 8.359546456900153,
+       "gaussian_p_closed_form": 0.013949088046079893,
+       "gaussian_p_reference_full": 0.015301977226393117
+      }
+     },
+     "dipole_stf": {
+      "observed_delta": [
+       -0.0016440241048542026,
+       0.005524671826759816
+      ],
+      "observed_abs_delta": 0.00576409698484813,
+      "observed_t_self": 30.989468960483375,
+      "cov_c1zero": [
+       [
+        1.4771858492926599e-06,
+        -3.2860346266496113e-07
+       ],
+       [
+        -3.2860346266496113e-07,
+        2.3241953486661734e-06
+       ]
+      ],
+      "cov_c1zero_trace_over_r65_poisson": 2.0352223721891827,
+      "p_versus_C1": [
+       {
+        "C1": 0.0,
+        "C1_over_A_m": 0.0,
+        "rms_dipole_per_component": 0.0,
+        "closed_form_cov_trace_over_r65_poisson": 2.0352223721891827,
+        "gaussian_wald": 13.65274913102946,
+        "gaussian_p": 0.0010847838097665687,
+        "t_self_semi_analytic_k": 0,
+        "t_self_semi_analytic_p_mc": 0.000999000999000999,
+        "t_self_semi_analytic_p_display": "0.001 (0/1000)"
+       },
+       {
+        "C1": 1e-05,
+        "C1_over_A_m": 0.007876729423513591,
+        "rms_dipole_per_component": 0.0015450968080927584,
+        "closed_form_cov_trace_over_r65_poisson": 2.049395097877316,
+        "gaussian_wald": 13.57882093591149,
+        "gaussian_p": 0.001125632174844762,
+        "t_self_semi_analytic_k": 0,
+        "t_self_semi_analytic_p_mc": 0.000999000999000999,
+        "t_self_semi_analytic_p_display": "0.001 (0/1000)"
+       },
+       {
+        "C1": 2e-05,
+        "C1_over_A_m": 0.015753458847027182,
+        "rms_dipole_per_component": 0.0021850968611841584,
+        "closed_form_cov_trace_over_r65_poisson": 2.063567823565449,
+        "gaussian_wald": 13.505690447610094,
+        "gaussian_p": 0.0011675529410396703,
+        "t_self_semi_analytic_k": 0,
+        "t_self_semi_analytic_p_mc": 0.000999000999000999,
+        "t_self_semi_analytic_p_display": "0.001 (0/1000)"
+       },
+       {
+        "C1": 5e-05,
+        "C1_over_A_m": 0.039383647117567956,
+        "rms_dipole_per_component": 0.003454941494713355,
+        "closed_form_cov_trace_over_r65_poisson": 2.1060860006298494,
+        "gaussian_wald": 13.290957794445292,
+        "gaussian_p": 0.0012998857574996435,
+        "t_self_semi_analytic_k": 0,
+        "t_self_semi_analytic_p_mc": 0.000999000999000999,
+        "t_self_semi_analytic_p_display": "0.001 (0/1000)"
+       },
+       {
+        "C1": 0.0001,
+        "C1_over_A_m": 0.07876729423513591,
+        "rms_dipole_per_component": 0.004886025119029199,
+        "closed_form_cov_trace_over_r65_poisson": 2.1769496290705157,
+        "gaussian_wald": 12.947874680209557,
+        "gaussian_p": 0.0015431378971223753,
+        "t_self_semi_analytic_k": 1,
+        "t_self_semi_analytic_p_mc": 0.001998001998001998,
+        "t_self_semi_analytic_p_display": "0.002 (1/1000)"
+       },
+       {
+        "C1": 0.0002,
+        "C1_over_A_m": 0.15753458847027182,
+        "rms_dipole_per_component": 0.00690988298942671,
+        "closed_form_cov_trace_over_r65_poisson": 2.3186768859518483,
+        "gaussian_wald": 12.312301506949408,
+        "gaussian_p": 0.002120399523707152,
+        "t_self_semi_analytic_k": 2,
+        "t_self_semi_analytic_p_mc": 0.002997002997002997,
+        "t_self_semi_analytic_p_display": "0.003 (2/1000)"
+       },
+       {
+        "C1": 0.0003,
+        "C1_over_A_m": 0.23630188270540772,
+        "rms_dipole_per_component": 0.008462843753216345,
+        "closed_form_cov_trace_over_r65_poisson": 2.4604041428331813,
+        "gaussian_wald": 11.736269636958049,
+        "gaussian_p": 0.00282814341849825,
+        "t_self_semi_analytic_k": 5,
+        "t_self_semi_analytic_p_mc": 0.005994005994005994,
+        "t_self_semi_analytic_p_display": "0.006 (5/1000)"
+       },
+       {
+        "C1": 0.0005,
+        "C1_over_A_m": 0.39383647117567955,
+        "rms_dipole_per_component": 0.010925484305920791,
+        "closed_form_cov_trace_over_r65_poisson": 2.743858656595847,
+        "gaussian_wald": 10.732187202058492,
+        "gaussian_p": 0.004672347761240976,
+        "t_self_semi_analytic_k": 5,
+        "t_self_semi_analytic_p_mc": 0.005994005994005994,
+        "t_self_semi_analytic_p_display": "0.006 (5/1000)"
+       },
+       {
+        "C1": 0.0007,
+        "C1_over_A_m": 0.5513710596459513,
+        "rms_dipole_per_component": 0.012927207364566026,
+        "closed_form_cov_trace_over_r65_poisson": 3.027313170358512,
+        "gaussian_wald": 9.886466182455829,
+        "gaussian_p": 0.0071315042558870835,
+        "t_self_semi_analytic_k": 10,
+        "t_self_semi_analytic_p_mc": 0.01098901098901099,
+        "t_self_semi_analytic_p_display": "0.011 (10/1000)"
+       },
+       {
+        "C1": 0.001,
+        "C1_over_A_m": 0.7876729423513591,
+        "rms_dipole_per_component": 0.015450968080927583,
+        "closed_form_cov_trace_over_r65_poisson": 3.4524949410025103,
+        "gaussian_wald": 8.841478014924204,
+        "gaussian_p": 0.012025342182595194,
+        "t_self_semi_analytic_k": 13,
+        "t_self_semi_analytic_p_mc": 0.013986013986013986,
+        "t_self_semi_analytic_p_display": "0.014 (13/1000)"
+       },
+       {
+        "C1": 0.0012695624620731579,
+        "C1_over_A_m": 1.0,
+        "rms_dipole_per_component": 0.017409357027308333,
+        "closed_form_cov_trace_over_r65_poisson": 3.83453842408058,
+        "gaussian_wald": 8.074648248671233,
+        "gaussian_p": 0.017644624121731407,
+        "t_self_semi_analytic_k": 19,
+        "t_self_semi_analytic_p_mc": 0.01998001998001998,
+        "t_self_semi_analytic_p_display": "0.02 (19/1000)"
+       },
+       {
+        "C1": 0.0015,
+        "C1_over_A_m": 1.1815094135270388,
+        "rms_dipole_per_component": 0.0189234939151512,
+        "closed_form_cov_trace_over_r65_poisson": 4.161131225409175,
+        "gaussian_wald": 7.51731999098126,
+        "gaussian_p": 0.023314961605617572,
+        "t_self_semi_analytic_k": 25,
+        "t_self_semi_analytic_p_mc": 0.025974025974025976,
+        "t_self_semi_analytic_p_display": "0.026 (25/1000)"
+       },
+       {
+        "C1": 0.002,
+        "C1_over_A_m": 1.5753458847027182,
+        "rms_dipole_per_component": 0.021850968611841583,
+        "closed_form_cov_trace_over_r65_poisson": 4.869767509815839,
+        "gaussian_wald": 6.5381861778264705,
+        "gaussian_p": 0.03804091115989292,
+        "t_self_semi_analytic_k": 39,
+        "t_self_semi_analytic_p_mc": 0.03996003996003996,
+        "t_self_semi_analytic_p_display": "0.04 (39/1000)"
+       },
+       {
+        "C1": 0.003,
+        "C1_over_A_m": 2.3630188270540775,
+        "rms_dipole_per_component": 0.02676186174229157,
+        "closed_form_cov_trace_over_r65_poisson": 6.287040078629167,
+        "gaussian_wald": 5.187031486700851,
+        "gaussian_p": 0.07475675197615443,
+        "t_self_semi_analytic_k": 89,
+        "t_self_semi_analytic_p_mc": 0.0899100899100899,
+        "t_self_semi_analytic_p_display": "0.09 (89/1000)"
+       },
+       {
+        "C1": 0.0045617338045644065,
+        "C1_over_A_m": 3.593154288064906,
+        "rms_dipole_per_component": 0.033000510997539645,
+        "closed_form_cov_trace_over_r65_poisson": 8.500442559626775,
+        "gaussian_wald": 3.9214638166597937,
+        "gaussian_p": 0.1407553631884438,
+        "t_self_semi_analytic_k": 166,
+        "t_self_semi_analytic_p_mc": 0.16683316683316685,
+        "t_self_semi_analytic_p_display": "0.17 (166/1000)"
+       },
+       {
+        "C1": 0.005,
+        "C1_over_A_m": 3.9383647117567957,
+        "rms_dipole_per_component": 0.034549414947133546,
+        "closed_form_cov_trace_over_r65_poisson": 9.121585216255822,
+        "gaussian_wald": 3.6701727590402404,
+        "gaussian_p": 0.15959971502588524,
+        "t_self_semi_analytic_k": 184,
+        "t_self_semi_analytic_p_mc": 0.1848151848151848,
+        "t_self_semi_analytic_p_display": "0.18 (184/1000)"
+       },
+       {
+        "C1": 0.007,
+        "C1_over_A_m": 5.5137105964595134,
+        "rms_dipole_per_component": 0.0408794190573313,
+        "closed_form_cov_trace_over_r65_poisson": 11.956130353882479,
+        "gaussian_wald": 2.839753740845609,
+        "gaussian_p": 0.24174378087411458,
+        "t_self_semi_analytic_k": 275,
+        "t_self_semi_analytic_p_mc": 0.2757242757242757,
+        "t_self_semi_analytic_p_display": "0.28 (275/1000)"
+       },
+       {
+        "C1": 0.01,
+        "C1_over_A_m": 7.876729423513591,
+        "rms_dipole_per_component": 0.04886025119029199,
+        "closed_form_cov_trace_over_r65_poisson": 16.20794806032246,
+        "gaussian_wald": 2.120186111912399,
+        "gaussian_p": 0.34642357205335145,
+        "t_self_semi_analytic_k": 385,
+        "t_self_semi_analytic_p_mc": 0.3856143856143856,
+        "t_self_semi_analytic_p_display": "0.39 (385/1000)"
+       },
+       {
+        "C1": 0.015,
+        "C1_over_A_m": 11.815094135270385,
+        "rms_dipole_per_component": 0.0598413420602149,
+        "closed_form_cov_trace_over_r65_poisson": 23.294310904389103,
+        "gaussian_wald": 1.4906580806171874,
+        "gaussian_p": 0.47457811891569546,
+        "t_self_semi_analytic_k": 497,
+        "t_self_semi_analytic_p_mc": 0.4975024975024975,
+        "t_self_semi_analytic_p_display": "0.5 (497/1000)"
+       },
+       {
+        "C1": 0.018223709796973776,
+        "C1_over_A_m": 14.354323116339623,
+        "rms_dipole_per_component": 0.0659590042639431,
+        "closed_form_cov_trace_over_r65_poisson": 27.86318636945482,
+        "gaussian_wald": 1.2511430129128183,
+        "gaussian_p": 0.5349556105535196,
+        "t_self_semi_analytic_k": 565,
+        "t_self_semi_analytic_p_mc": 0.5654345654345654,
+        "t_self_semi_analytic_p_display": "0.57 (565/1000)"
+       },
+       {
+        "C1": 0.02,
+        "C1_over_A_m": 15.753458847027183,
+        "rms_dipole_per_component": 0.06909882989426709,
+        "closed_form_cov_trace_over_r65_poisson": 30.38067374845574,
+        "gaussian_wald": 1.1493829923142678,
+        "gaussian_p": 0.5628784922017473,
+        "t_self_semi_analytic_k": 594,
+        "t_self_semi_analytic_p_mc": 0.5944055944055944,
+        "t_self_semi_analytic_p_display": "0.59 (594/1000)"
+       },
+       {
+        "C1": 0.03,
+        "C1_over_A_m": 23.63018827054077,
+        "rms_dipole_per_component": 0.08462843753216344,
+        "closed_form_cov_trace_over_r65_poisson": 44.55339943658902,
+        "gaussian_wald": 0.7883910233857385,
+        "gaussian_p": 0.6742222250250074,
+        "t_self_semi_analytic_k": 698,
+        "t_self_semi_analytic_p_mc": 0.6983016983016983,
+        "t_self_semi_analytic_p_display": "0.7 (698/1000)"
+       },
+       {
+        "C1": 0.05,
+        "C1_over_A_m": 39.38364711756796,
+        "rms_dipole_per_component": 0.10925484305920792,
+        "closed_form_cov_trace_over_r65_poisson": 72.89885081285558,
+        "gaussian_wald": 0.48422549341927745,
+        "gaussian_p": 0.7849676700404881,
+        "t_self_semi_analytic_k": 799,
+        "t_self_semi_analytic_p_mc": 0.7992007992007992,
+        "t_self_semi_analytic_p_display": "0.8 (799/1000)"
+       }
+      ],
+      "crossings": {
+       "0.05": {
+        "gaussian_closed_form_C1": 0.0023502996270084965,
+        "gaussian_C1_over_A_m": 1.8512674226130843,
+        "gaussian_rms_dipole": 0.023687395489545914,
+        "gaussian_bootstrap_C1": {
+         "n_finite": 200,
+         "p16_50_84": [
+          0.0022689177828229623,
+          0.0023476112385510846,
+          0.0024158653849338705
+         ]
+        },
+        "t_self_semi_analytic_C1": 0.002238238307133522,
+        "t_self_semi_analytic_C1_over_A_m": 1.7629997530633865,
+        "t_self_semi_analytic_rms_dipole": 0.023115796235408027,
+        "t_self_semi_analytic_bootstrap_C1": {
+         "n_finite": 200,
+         "p16_50_84": [
+          0.002105020591721075,
+          0.002238238307133522,
+          0.0022952487158952577
+         ]
+        },
+        "t_self_k_monotone_on_grid": true
+       },
+       "0.01": {
+        "gaussian_closed_form_C1": 0.0008863282322542282,
+        "gaussian_C1_over_A_m": 0.6981367665887668,
+        "gaussian_rms_dipole": 0.014546314964544898,
+        "gaussian_bootstrap_C1": {
+         "n_finite": 200,
+         "p16_50_84": [
+          0.000805575494125796,
+          0.0008859094616080788,
+          0.0009523857912367774
+         ]
+        },
+        "t_self_semi_analytic_C1": 0.000668222513547783,
+        "t_self_semi_analytic_C1_over_A_m": 0.5263407933916031,
+        "t_self_semi_analytic_rms_dipole": 0.012630375060726859,
+        "t_self_semi_analytic_bootstrap_C1": {
+         "n_finite": 200,
+         "p16_50_84": [
+          0.0005790401310057354,
+          0.000668222513547783,
+          0.0010256179880290392
+         ]
+        },
+        "t_self_k_monotone_on_grid": true
+       }
+      },
+      "validation_at_C1_equals_A_m": {
+       "n_paired": 1000,
+       "per_mock_delta_shift_regression_slope": 1.0064004969002251,
+       "per_mock_delta_shift_correlation": 0.9919897696796273,
+       "per_mock_residual_rms_over_predicted_rms": 0.12831195429360648,
+       "t_self_predicted_vs_reference_spearman": 0.9905697545697547,
+       "k_ge_observed_predicted": 19,
+       "k_ge_observed_reference_paired": 18,
+       "p_predicted": "0.02 (19/1000)",
+       "p_reference_paired": "0.019 (18/1000)",
+       "p_reference_full": "0.015 (30/2000)",
+       "exceedance_agreement": {
+        "both": 18,
+        "predicted_only": 1,
+        "reference_only": 0
+       },
+       "closed_form_cov_trace": 7.162137399497719e-06,
+       "reference_full_cov_trace": 7.09969879899567e-06,
+       "closed_form_over_reference_trace": 1.0087945421728146,
+       "closed_form_cov": [
+        [
+         3.1575639500621027e-06,
+         -3.2860346266496113e-07
+        ],
+        [
+         -3.2860346266496113e-07,
+         4.004573449435617e-06
+        ]
+       ],
+       "reference_full_cov": [
+        [
+         2.917172182831174e-06,
+         -3.193123886880222e-07
+        ],
+        [
+         -3.193123886880222e-07,
+         4.1825266161644965e-06
+        ]
+       ],
+       "gaussian_wald_closed_form": 8.074648248671233,
+       "gaussian_wald_reference_full": 7.8139189638438085,
+       "gaussian_p_closed_form": 0.017644624121731407,
+       "gaussian_p_reference_full": 0.020101527296126343
+      }
+     }
+    }
+   }
+  },
+  "validation_at_crossing": {
+   "targets": {
+    "LSS_DIFF_RED": {
+     "C1": 0.001616830922432542,
+     "c1_scale": 0.0887212834513548
+    },
+    "LSS_DIFF_MID": {
+     "C1": 0.0020561843239505634,
+     "c1_scale": 0.45074623203422665
+    },
+    "LSS_DIFF_FLAT": {
+     "C1": 0.002391037256520678,
+     "c1_scale": 1.8833553511153638
+    }
+   },
+   "ensembles": {
+    "LSS_DIFF_RED": {
+     "label": "EMPIRICAL_DIFF_SELECTION_RED at C_1 = 0.001617 (closed-form 0.05 crossing)",
+     "n_mocks": 500,
+     "mean_seconds_per_mock": 0.20146725463867188,
+     "offdiag_overdispersion": {
+      "n": 500,
+      "mean": 1.3308315218322178,
+      "sd": 0.014149425603732054,
+      "min": 1.2910665347653518,
+      "max": 1.3710069286646474,
+      "data": 1.5092073635389898,
+      "frac_ge_data": 0.0
+     },
+     "models": {
+      "dipole": {
+       "wald_self_R65_estimator": {
+        "observed": 32.792386268357376,
+        "n_mocks": 500,
+        "mocks_ge_observed": 20,
+        "rank_descending": 21,
+        "p_mc": 0.041916167664670656,
+        "resolution": 0.001996007984031936,
+        "mean": 10.462464317983017,
+        "p_display": "0.042 (20/500)",
+        "p_mc_binomial_se": 0.008962053621015428,
+        "quantiles_50_90_95_99": [
+         6.6936567393114625,
+         25.605285883936116,
+         31.44666191950092,
+         59.78005321819738
+        ],
+        "max": 92.16248829662898
+       },
+       "wald_fixed_R65_poisson_cov": {
+        "observed": 32.79238626835715,
+        "n_mocks": 500,
+        "mocks_ge_observed": 20,
+        "rank_descending": 21,
+        "p_mc": 0.041916167664670656,
+        "resolution": 0.001996007984031936,
+        "mean": 10.530392704334874,
+        "p_display": "0.042 (20/500)",
+        "p_mc_binomial_se": 0.008962053621015428,
+        "quantiles_50_90_95_99": [
+         6.6378862256393525,
+         26.335009333590207,
+         31.72751057256016,
+         60.4779877840133
+        ],
+        "max": 90.90738624613492
+       },
+       "wald_fixed_R105_jk4_cov": {
+        "observed": 7.867511051001548,
+        "n_mocks": 500,
+        "mocks_ge_observed": 62,
+        "rank_descending": 63,
+        "p_mc": 0.12574850299401197,
+        "resolution": 0.001996007984031936,
+        "mean": 3.692919662359954,
+        "p_display": "0.13 (62/500)",
+        "p_mc_binomial_se": 0.014828069125059871,
+        "quantiles_50_90_95_99": [
+         2.280493200139172,
+         8.846330120470796,
+         11.20256251255984,
+         16.246616340284973
+        ],
+        "max": 28.38967841998727
+       },
+       "wald_fixed_R105_jk8_cov": {
+        "observed": 11.57532209732367,
+        "n_mocks": 500,
+        "mocks_ge_observed": 45,
+        "rank_descending": 46,
+        "p_mc": 0.09181636726546906,
+        "resolution": 0.001996007984031936,
+        "mean": 4.8112012588802315,
+        "p_display": "0.092 (45/500)",
+        "p_mc_binomial_se": 0.012914032830037375,
+        "quantiles_50_90_95_99": [
+         2.9634850465068068,
+         11.073087775477976,
+         14.548529571430713,
+         21.529824930268568
+        ],
+        "max": 35.19990679904518
+       },
+       "mock_delta_mean": [
+        1.2665896083615292e-05,
+        -0.00011647461210232065
+       ],
+       "mock_delta_mean_se": [
+        8.976286969090042e-05,
+        0.00010582394062563803
+       ],
+       "mock_delta_covariance": [
+        [
+         4.028686387572787e-06,
+         -4.740925138677909e-07
+        ],
+        [
+         -4.740925138677909e-07,
+         5.599353204769282e-06
+        ]
+       ],
+       "mock_cov_trace_over_r65_poisson": 5.308983170157474,
+       "observed_wald_under_mock_covariance": 5.866883511560445,
+       "gaussian_p_exp_minus_w_over_2": 0.053213574480183184,
+       "overdispersion_peak": {
+        "n": 500,
+        "mean": 1.013468689221027,
+        "sd": 0.0048771185426395415,
+        "min": 1.000137414941945,
+        "max": 1.0285058652304007,
+        "data": 1.0635569327189316,
+        "frac_ge_data": 0.0
+       },
+       "overdispersion_integrated": {
+        "n": 500,
+        "mean": 1.0260985369490259,
+        "sd": 0.004802456822876886,
+        "min": 1.0147684603103282,
+        "max": 1.0392565055702756,
+        "data": 1.1044088343927705,
+        "frac_ge_data": 0.0
+       },
+       "closed_form_check": {
+        "n_paired": 500,
+        "k_ge_observed_direct": 20,
+        "k_ge_observed_semi_analytic": 27,
+        "p_direct": "0.042 (20/500)",
+        "p_semi_analytic": "0.056 (27/500)",
+        "p_direct_value": 0.041916167664670656,
+        "p_direct_binomial_se": 0.008962053621015428,
+        "t_self_semi_analytic_vs_direct_spearman": 0.991122844491378,
+        "per_mock_delta_shift_regression_slope": 1.0030263480354065,
+        "per_mock_residual_rms_over_predicted_rms": 0.12910343593796975,
+        "closed_form_cov_trace": 9.296910097202025e-06,
+        "direct_cov_trace": 9.62803959234207e-06,
+        "closed_form_over_direct_trace": 0.9656077966896378,
+        "gaussian_wald_closed_form": 6.255121893533747,
+        "gaussian_wald_direct": 5.866883511560445
+       }
+      },
+      "dipole_stf": {
+       "wald_self_R65_estimator": {
+        "observed": 30.989468960483375,
+        "n_mocks": 500,
+        "mocks_ge_observed": 26,
+        "rank_descending": 27,
+        "p_mc": 0.05389221556886228,
+        "resolution": 0.001996007984031936,
+        "mean": 10.167213354031452,
+        "p_display": "0.054 (26/500)",
+        "p_mc_binomial_se": 0.010098301309620502,
+        "quantiles_50_90_95_99": [
+         6.969137954578786,
+         22.88744367700371,
+         31.256092791155343,
+         51.87374832717721
+        ],
+        "max": 63.26611403985292
+       },
+       "wald_fixed_R65_poisson_cov": {
+        "observed": 30.989468960483375,
+        "n_mocks": 500,
+        "mocks_ge_observed": 27,
+        "rank_descending": 28,
+        "p_mc": 0.05588822355289421,
+        "resolution": 0.001996007984031936,
+        "mean": 10.328634034987559,
+        "p_display": "0.056 (27/500)",
+        "p_mc_binomial_se": 0.010272753284392255,
+        "quantiles_50_90_95_99": [
+         7.02985901566656,
+         23.85361541882246,
+         32.31608555133822,
+         52.630450656820614
+        ],
+        "max": 66.00014431178533
+       },
+       "wald_fixed_R105_jk4_cov": {
+        "observed": 7.384603639907028,
+        "n_mocks": 500,
+        "mocks_ge_observed": 66,
+        "rank_descending": 67,
+        "p_mc": 0.13373253493013973,
+        "resolution": 0.001996007984031936,
+        "mean": 3.4740449215686953,
+        "p_display": "0.13 (66/500)",
+        "p_mc_binomial_se": 0.015221573113926083,
+        "quantiles_50_90_95_99": [
+         2.120691831883712,
+         8.681853790265073,
+         10.303978348913168,
+         14.97093071618828
+        ],
+        "max": 26.68958568349098
+       },
+       "wald_fixed_R105_jk8_cov": {
+        "observed": 10.757994045693213,
+        "n_mocks": 500,
+        "mocks_ge_observed": 55,
+        "rank_descending": 56,
+        "p_mc": 0.11177644710578842,
+        "resolution": 0.001996007984031936,
+        "mean": 4.653157202730705,
+        "p_display": "0.11 (55/500)",
+        "p_mc_binomial_se": 0.01409130746085652,
+        "quantiles_50_90_95_99": [
+         2.887699910687105,
+         11.260756525867166,
+         14.554806169423191,
+         19.822079951588723
+        ],
+        "max": 33.05814338632894
+       },
+       "mock_delta_mean": [
+        3.156169144701275e-05,
+        -9.803185067776076e-05
+       ],
+       "mock_delta_mean_se": [
+        8.983982818464186e-05,
+        0.00010654480996946062
+       ],
+       "mock_delta_covariance": [
+        [
+         4.035597364122983e-06,
+         -3.928376591444336e-07
+        ],
+        [
+         -3.928376591444336e-07,
+         5.675898265714236e-06
+        ]
+       ],
+       "mock_cov_trace_over_r65_poisson": 5.199439925644687,
+       "observed_wald_under_mock_covariance": 5.774581952008486,
+       "gaussian_p_exp_minus_w_over_2": 0.05572697402097807,
+       "overdispersion_peak": {
+        "n": 500,
+        "mean": 1.0133044848248376,
+        "sd": 0.004887829749407643,
+        "min": 0.9999140912480334,
+        "max": 1.028442952116331,
+        "data": 1.0635607751362608,
+        "frac_ge_data": 0.0
+       },
+       "overdispersion_integrated": {
+        "n": 500,
+        "mean": 1.0257766438051403,
+        "sd": 0.004814839944494112,
+        "min": 1.014360069766241,
+        "max": 1.039044877587208,
+        "data": 1.1043439789403715,
+        "frac_ge_data": 0.0
+       },
+       "closed_form_check": {
+        "n_paired": 500,
+        "k_ge_observed_direct": 26,
+        "k_ge_observed_semi_analytic": 26,
+        "p_direct": "0.054 (26/500)",
+        "p_semi_analytic": "0.054 (26/500)",
+        "p_direct_value": 0.05389221556886228,
+        "p_direct_binomial_se": 0.010098301309620502,
+        "t_self_semi_analytic_vs_direct_spearman": 0.9911441565766264,
+        "per_mock_delta_shift_regression_slope": 1.0013690068687844,
+        "per_mock_residual_rms_over_predicted_rms": 0.1300543918282067,
+        "closed_form_cov_trace": 9.505509950522474e-06,
+        "direct_cov_trace": 9.71149562983722e-06,
+        "closed_form_over_direct_trace": 0.9787894998704543,
+        "gaussian_wald_closed_form": 6.062301069823651,
+        "gaussian_wald_direct": 5.774581952008486
+       }
+      }
+     },
+     "C1": 0.001616830922432542,
+     "c1_scale": 0.0887212834513548,
+     "rms_dipole_per_component": 0.019646626941372196
+    },
+    "LSS_DIFF_MID": {
+     "label": "EMPIRICAL_DIFF_SELECTION_MID at C_1 = 0.002056 (closed-form 0.05 crossing)",
+     "n_mocks": 500,
+     "mean_seconds_per_mock": 0.20594047784805297,
+     "offdiag_overdispersion": {
+      "n": 500,
+      "mean": 2.5119076160501272,
+      "sd": 0.06266362459343579,
+      "min": 2.360098005005623,
+      "max": 2.6969967236291996,
+      "data": 1.5092073635389898,
+      "frac_ge_data": 1.0
+     },
+     "models": {
+      "dipole": {
+       "wald_self_R65_estimator": {
+        "observed": 32.792386268357376,
+        "n_mocks": 500,
+        "mocks_ge_observed": 24,
+        "rank_descending": 25,
+        "p_mc": 0.0499001996007984,
+        "resolution": 0.001996007984031936,
+        "mean": 10.460010105639855,
+        "p_display": "0.05 (24/500)",
+        "p_mc_binomial_se": 0.009737573586946482,
+        "quantiles_50_90_95_99": [
+         6.486511557967374,
+         24.815665628625656,
+         31.39280349178825,
+         48.01683938803177
+        ],
+        "max": 103.1049750847839
+       },
+       "wald_fixed_R65_poisson_cov": {
+        "observed": 32.79238626835715,
+        "n_mocks": 500,
+        "mocks_ge_observed": 24,
+        "rank_descending": 25,
+        "p_mc": 0.0499001996007984,
+        "resolution": 0.001996007984031936,
+        "mean": 10.492660516391778,
+        "p_display": "0.05 (24/500)",
+        "p_mc_binomial_se": 0.009737573586946482,
+        "quantiles_50_90_95_99": [
+         6.566204326984032,
+         24.818811434417462,
+         31.751866173751935,
+         48.0147372636524
+        ],
+        "max": 103.769018417849
+       },
+       "wald_fixed_R105_jk4_cov": {
+        "observed": 7.867511051001548,
+        "n_mocks": 500,
+        "mocks_ge_observed": 60,
+        "rank_descending": 61,
+        "p_mc": 0.1217564870259481,
+        "resolution": 0.001996007984031936,
+        "mean": 3.8052522768128667,
+        "p_display": "0.12 (60/500)",
+        "p_mc_binomial_se": 0.014624079108993375,
+        "quantiles_50_90_95_99": [
+         2.26184500047989,
+         9.348396803726105,
+         12.260904502124465,
+         22.351815659852427
+        ],
+        "max": 53.5000349941635
+       },
+       "wald_fixed_R105_jk8_cov": {
+        "observed": 11.57532209732367,
+        "n_mocks": 500,
+        "mocks_ge_observed": 52,
+        "rank_descending": 53,
+        "p_mc": 0.10578842315369262,
+        "resolution": 0.001996007984031936,
+        "mean": 4.913535098613938,
+        "p_display": "0.11 (52/500)",
+        "p_mc_binomial_se": 0.013754797903302534,
+        "quantiles_50_90_95_99": [
+         2.8982907713405717,
+         11.731371132412844,
+         15.312947760571705,
+         26.7747677783271
+        ],
+        "max": 63.883742138209854
+       },
+       "mock_delta_mean": [
+        2.9467413033189177e-06,
+        0.00012683678582367297
+       ],
+       "mock_delta_mean_se": [
+        9.328955547378803e-05,
+        0.00010134874184993087
+       ],
+       "mock_delta_covariance": [
+        [
+         4.351470580248488e-06,
+         -3.85109536122631e-07
+        ],
+        [
+         -3.85109536122631e-07,
+         5.135783737281964e-06
+        ]
+       ],
+       "mock_cov_trace_over_r65_poisson": 5.231352968555961,
+       "observed_wald_under_mock_covariance": 6.3847923954055466,
+       "gaussian_p_exp_minus_w_over_2": 0.041073333101722814,
+       "overdispersion_peak": {
+        "n": 500,
+        "mean": 1.0330573359007944,
+        "sd": 0.004984058737729836,
+        "min": 1.018157965539269,
+        "max": 1.0476307880471616,
+        "data": 1.0635569327189316,
+        "frac_ge_data": 0.0
+       },
+       "overdispersion_integrated": {
+        "n": 500,
+        "mean": 1.0896515905476776,
+        "sd": 0.0061305539139247,
+        "min": 1.071550274000782,
+        "max": 1.106867802950998,
+        "data": 1.1044088343927705,
+        "frac_ge_data": 0.01
+       },
+       "closed_form_check": {
+        "n_paired": 500,
+        "k_ge_observed_direct": 24,
+        "k_ge_observed_semi_analytic": 23,
+        "p_direct": "0.05 (24/500)",
+        "p_semi_analytic": "0.048 (23/500)",
+        "p_direct_value": 0.0499001996007984,
+        "p_direct_binomial_se": 0.009737573586946482,
+        "t_self_semi_analytic_vs_direct_spearman": 0.990198360793443,
+        "per_mock_delta_shift_regression_slope": 1.01343866115136,
+        "per_mock_residual_rms_over_predicted_rms": 0.12298348536464575,
+        "closed_form_cov_trace": 9.452720104294669e-06,
+        "direct_cov_trace": 9.487254317530454e-06,
+        "closed_form_over_direct_trace": 0.9963599359646159,
+        "gaussian_wald_closed_form": 6.360121616139232,
+        "gaussian_wald_direct": 6.3847923954055466
+       }
+      },
+      "dipole_stf": {
+       "wald_self_R65_estimator": {
+        "observed": 30.989468960483375,
+        "n_mocks": 500,
+        "mocks_ge_observed": 29,
+        "rank_descending": 30,
+        "p_mc": 0.059880239520958084,
+        "resolution": 0.001996007984031936,
+        "mean": 10.426679472963396,
+        "p_display": "0.06 (29/500)",
+        "p_mc_binomial_se": 0.010610805477047515,
+        "quantiles_50_90_95_99": [
+         6.648700900336225,
+         24.031511653753785,
+         31.92684945985638,
+         44.47548721170296
+        ],
+        "max": 109.5015526229875
+       },
+       "wald_fixed_R65_poisson_cov": {
+        "observed": 30.989468960483375,
+        "n_mocks": 500,
+        "mocks_ge_observed": 30,
+        "rank_descending": 31,
+        "p_mc": 0.06187624750499002,
+        "resolution": 0.001996007984031936,
+        "mean": 10.57941368949166,
+        "p_display": "0.062 (30/500)",
+        "p_mc_binomial_se": 0.010774746168675273,
+        "quantiles_50_90_95_99": [
+         6.8448885966063004,
+         24.267207782857056,
+         32.43234495944841,
+         45.7128585763963
+        ],
+        "max": 112.53859494855101
+       },
+       "wald_fixed_R105_jk4_cov": {
+        "observed": 7.384603639907028,
+        "n_mocks": 500,
+        "mocks_ge_observed": 63,
+        "rank_descending": 64,
+        "p_mc": 0.1277445109780439,
+        "resolution": 0.001996007984031936,
+        "mean": 3.707292065583839,
+        "p_display": "0.13 (63/500)",
+        "p_mc_binomial_se": 0.014928218305814282,
+        "quantiles_50_90_95_99": [
+         2.1366673837886365,
+         8.792507474459818,
+         11.934459978087586,
+         21.91785791293099
+        ],
+        "max": 56.23766817903029
+       },
+       "wald_fixed_R105_jk8_cov": {
+        "observed": 10.757994045693213,
+        "n_mocks": 500,
+        "mocks_ge_observed": 56,
+        "rank_descending": 57,
+        "p_mc": 0.11377245508982035,
+        "resolution": 0.001996007984031936,
+        "mean": 4.919447038041615,
+        "p_display": "0.11 (56/500)",
+        "p_mc_binomial_se": 0.014200583336796777,
+        "quantiles_50_90_95_99": [
+         2.9952221344263124,
+         11.31474857085822,
+         15.096599806235506,
+         27.075849634200456
+        ],
+        "max": 69.56526882838583
+       },
+       "mock_delta_mean": [
+        2.4821103296935646e-05,
+        9.427322373589483e-05
+       ],
+       "mock_delta_mean_se": [
+        9.512238038959569e-05,
+        0.00010289262765232327
+       ],
+       "mock_delta_covariance": [
+        [
+         4.524133625491467e-06,
+         -3.506322230756688e-07
+        ],
+        [
+         -3.506322230756688e-07,
+         5.293446412599818e-06
+        ]
+       ],
+       "mock_cov_trace_over_r65_poisson": 5.256236481889838,
+       "observed_wald_under_mock_covariance": 6.12891929459526,
+       "gaussian_p_exp_minus_w_over_2": 0.04667905820624469,
+       "overdispersion_peak": {
+        "n": 500,
+        "mean": 1.0329205125971443,
+        "sd": 0.0049799449612554945,
+        "min": 1.0181115878781593,
+        "max": 1.0476143099132083,
+        "data": 1.0635607751362608,
+        "frac_ge_data": 0.0
+       },
+       "overdispersion_integrated": {
+        "n": 500,
+        "mean": 1.0894125136295734,
+        "sd": 0.006121831264830868,
+        "min": 1.0712600908884111,
+        "max": 1.1068144919201082,
+        "data": 1.1043439789403715,
+        "frac_ge_data": 0.008
+       },
+       "closed_form_check": {
+        "n_paired": 500,
+        "k_ge_observed_direct": 29,
+        "k_ge_observed_semi_analytic": 28,
+        "p_direct": "0.06 (29/500)",
+        "p_semi_analytic": "0.058 (28/500)",
+        "p_direct_value": 0.059880239520958084,
+        "p_direct_binomial_se": 0.010610805477047515,
+        "t_self_semi_analytic_vs_direct_spearman": 0.9900503282013127,
+        "per_mock_delta_shift_regression_slope": 1.0136592796903623,
+        "per_mock_residual_rms_over_predicted_rms": 0.12516028291786696,
+        "closed_form_cov_trace": 9.745852569306414e-06,
+        "direct_cov_trace": 9.817580038091286e-06,
+        "closed_form_over_direct_trace": 0.9926939766717892,
+        "gaussian_wald_closed_form": 6.057495177600938,
+        "gaussian_wald_direct": 6.12891929459526
+       }
+      }
+     },
+     "C1": 0.0020561843239505634,
+     "c1_scale": 0.45074623203422665,
+     "rms_dipole_per_component": 0.02215576332689079
+    },
+    "LSS_DIFF_FLAT": {
+     "label": "EMPIRICAL_DIFF_SELECTION_FLAT at C_1 = 0.002391 (closed-form 0.05 crossing)",
+     "n_mocks": 500,
+     "mean_seconds_per_mock": 0.19672688961029053,
+     "offdiag_overdispersion": {
+      "n": 500,
+      "mean": 1.3304745806992124,
+      "sd": 0.019979924040503697,
+      "min": 1.2774535001998009,
+      "max": 1.4106229256396807,
+      "data": 1.5092073635389898,
+      "frac_ge_data": 0.0
+     },
+     "models": {
+      "dipole": {
+       "wald_self_R65_estimator": {
+        "observed": 32.792386268357376,
+        "n_mocks": 500,
+        "mocks_ge_observed": 26,
+        "rank_descending": 27,
+        "p_mc": 0.05389221556886228,
+        "resolution": 0.001996007984031936,
+        "mean": 10.810430230317222,
+        "p_display": "0.054 (26/500)",
+        "p_mc_binomial_se": 0.010098301309620502,
+        "quantiles_50_90_95_99": [
+         6.778130510225477,
+         25.530318166612446,
+         33.15766371516439,
+         48.765635896841005
+        ],
+        "max": 107.30522424886351
+       },
+       "wald_fixed_R65_poisson_cov": {
+        "observed": 32.79238626835715,
+        "n_mocks": 500,
+        "mocks_ge_observed": 28,
+        "rank_descending": 29,
+        "p_mc": 0.05788423153692615,
+        "resolution": 0.001996007984031936,
+        "mean": 10.83945225027557,
+        "p_display": "0.058 (28/500)",
+        "p_mc_binomial_se": 0.010443528836203371,
+        "quantiles_50_90_95_99": [
+         6.792645849526098,
+         25.96444461558303,
+         33.74199637381725,
+         49.01134150447472
+        ],
+        "max": 110.45207852884069
+       },
+       "wald_fixed_R105_jk4_cov": {
+        "observed": 7.867511051001548,
+        "n_mocks": 500,
+        "mocks_ge_observed": 69,
+        "rank_descending": 70,
+        "p_mc": 0.13972055888223553,
+        "resolution": 0.001996007984031936,
+        "mean": 3.7774111119449176,
+        "p_display": "0.14 (69/500)",
+        "p_mc_binomial_se": 0.01550475567739597,
+        "quantiles_50_90_95_99": [
+         2.2321228622513596,
+         8.895531052815821,
+         11.687436020891443,
+         19.066930305275854
+        ],
+        "max": 48.949214849448644
+       },
+       "wald_fixed_R105_jk8_cov": {
+        "observed": 11.57532209732367,
+        "n_mocks": 500,
+        "mocks_ge_observed": 47,
+        "rank_descending": 48,
+        "p_mc": 0.09580838323353294,
+        "resolution": 0.001996007984031936,
+        "mean": 4.928150609256954,
+        "p_display": "0.096 (47/500)",
+        "p_mc_binomial_se": 0.013162760875721281,
+        "quantiles_50_90_95_99": [
+         2.93223876431676,
+         11.261104377380201,
+         15.562144237522313,
+         24.07143413148155
+        ],
+        "max": 60.90931156940132
+       },
+       "mock_delta_mean": [
+        -5.863015184618599e-05,
+        4.9231936092080624e-05
+       ],
+       "mock_delta_mean_se": [
+        9.05960069887416e-05,
+        0.00010785252569126084
+       ],
+       "mock_delta_covariance": [
+        [
+         4.103818241152064e-06,
+         -3.9355643499591076e-07
+        ],
+        [
+         -3.9355643499591076e-07,
+         5.8160836489920374e-06
+        ]
+       ],
+       "mock_cov_trace_over_r65_poisson": 5.469918531107475,
+       "observed_wald_under_mock_covariance": 5.696953967663778,
+       "gaussian_p_exp_minus_w_over_2": 0.05793248583204976,
+       "overdispersion_peak": {
+        "n": 500,
+        "mean": 1.0135205571819799,
+        "sd": 0.004918598208339013,
+        "min": 0.9949833230730758,
+        "max": 1.0299936467745174,
+        "data": 1.0635569327189316,
+        "frac_ge_data": 0.0
+       },
+       "overdispersion_integrated": {
+        "n": 500,
+        "mean": 1.0261832272641478,
+        "sd": 0.004798573769124731,
+        "min": 1.0109106388793896,
+        "max": 1.039831572939163,
+        "data": 1.1044088343927705,
+        "frac_ge_data": 0.0
+       },
+       "closed_form_check": {
+        "n_paired": 500,
+        "k_ge_observed_direct": 26,
+        "k_ge_observed_semi_analytic": 28,
+        "p_direct": "0.054 (26/500)",
+        "p_semi_analytic": "0.058 (28/500)",
+        "p_direct_value": 0.05389221556886228,
+        "p_direct_binomial_se": 0.010098301309620502,
+        "t_self_semi_analytic_vs_direct_spearman": 0.9923387853551415,
+        "per_mock_delta_shift_regression_slope": 1.0050938033973726,
+        "per_mock_residual_rms_over_predicted_rms": 0.1009105500275693,
+        "closed_form_cov_trace": 9.903019477411928e-06,
+        "direct_cov_trace": 9.919901890144101e-06,
+        "closed_form_over_direct_trace": 0.9982981270461005,
+        "gaussian_wald_closed_form": 6.202894389501113,
+        "gaussian_wald_direct": 5.696953967663778
+       }
+      },
+      "dipole_stf": {
+       "wald_self_R65_estimator": {
+        "observed": 30.989468960483375,
+        "n_mocks": 500,
+        "mocks_ge_observed": 30,
+        "rank_descending": 31,
+        "p_mc": 0.06187624750499002,
+        "resolution": 0.001996007984031936,
+        "mean": 10.591699287775315,
+        "p_display": "0.062 (30/500)",
+        "p_mc_binomial_se": 0.010774746168675273,
+        "quantiles_50_90_95_99": [
+         6.89399473254351,
+         24.601731086423488,
+         33.63059024721434,
+         51.179963295912664
+        ],
+        "max": 104.05538628054032
+       },
+       "wald_fixed_R65_poisson_cov": {
+        "observed": 30.989468960483375,
+        "n_mocks": 500,
+        "mocks_ge_observed": 31,
+        "rank_descending": 32,
+        "p_mc": 0.06387225548902195,
+        "resolution": 0.001996007984031936,
+        "mean": 10.724182095299021,
+        "p_display": "0.064 (31/500)",
+        "p_mc_binomial_se": 0.010935500945797321,
+        "quantiles_50_90_95_99": [
+         7.065980707827552,
+         24.852402611062747,
+         33.64367108831866,
+         52.37021714300038
+        ],
+        "max": 105.774200403608
+       },
+       "wald_fixed_R105_jk4_cov": {
+        "observed": 7.384603639907028,
+        "n_mocks": 500,
+        "mocks_ge_observed": 71,
+        "rank_descending": 72,
+        "p_mc": 0.1437125748502994,
+        "resolution": 0.001996007984031936,
+        "mean": 3.569499795583829,
+        "p_display": "0.14 (71/500)",
+        "p_mc_binomial_se": 0.01568816564676677,
+        "quantiles_50_90_95_99": [
+         2.10910071493388,
+         8.396100363000786,
+         10.685886102482534,
+         17.551559563224735
+        ],
+        "max": 46.18953221184636
+       },
+       "wald_fixed_R105_jk8_cov": {
+        "observed": 10.757994045693213,
+        "n_mocks": 500,
+        "mocks_ge_observed": 56,
+        "rank_descending": 57,
+        "p_mc": 0.11377245508982035,
+        "resolution": 0.001996007984031936,
+        "mean": 4.792673268695831,
+        "p_display": "0.11 (56/500)",
+        "p_mc_binomial_se": 0.014200583336796777,
+        "quantiles_50_90_95_99": [
+         2.963450534762067,
+         11.372738412154161,
+         14.633198956493539,
+         22.626201621824865
+        ],
+        "max": 58.030389502422615
+       },
+       "mock_delta_mean": [
+        -5.267017363325028e-05,
+        3.921607485887247e-05
+       ],
+       "mock_delta_mean_se": [
+        9.04466383298943e-05,
+        0.00010984105636228312
+       ],
+       "mock_delta_covariance": [
+        [
+         4.090297192589349e-06,
+         -4.2168617008431783e-07
+        ],
+        [
+         -4.2168617008431783e-07,
+         6.0325288313911305e-06
+        ]
+       ],
+       "mock_cov_trace_over_r65_poisson": 5.419662201950802,
+       "observed_wald_under_mock_covariance": 5.449184566878061,
+       "gaussian_p_exp_minus_w_over_2": 0.06557293243908584,
+       "overdispersion_peak": {
+        "n": 500,
+        "mean": 1.0134099839747468,
+        "sd": 0.004919391739165559,
+        "min": 0.9949960811146582,
+        "max": 1.0298116832185715,
+        "data": 1.0635607751362608,
+        "frac_ge_data": 0.0
+       },
+       "overdispersion_integrated": {
+        "n": 500,
+        "mean": 1.0260353188703122,
+        "sd": 0.004799939345175872,
+        "min": 1.0108498601194162,
+        "max": 1.0396698747732145,
+        "data": 1.1043439789403715,
+        "frac_ge_data": 0.0
+       },
+       "closed_form_check": {
+        "n_paired": 500,
+        "k_ge_observed_direct": 30,
+        "k_ge_observed_semi_analytic": 33,
+        "p_direct": "0.062 (30/500)",
+        "p_semi_analytic": "0.068 (33/500)",
+        "p_direct_value": 0.06187624750499002,
+        "p_direct_binomial_se": 0.010774746168675273,
+        "t_self_semi_analytic_vs_direct_spearman": 0.9916168624674498,
+        "per_mock_delta_shift_regression_slope": 1.0050829502098961,
+        "per_mock_residual_rms_over_predicted_rms": 0.10474089701340515,
+        "closed_form_cov_trace": 1.0130879373921238e-05,
+        "direct_cov_trace": 1.012282602398048e-05,
+        "closed_form_over_direct_trace": 1.0007955634050887,
+        "gaussian_wald_closed_form": 5.933762664980304,
+        "gaussian_wald_direct": 5.449184566878061
+       }
+      }
+     },
+     "C1": 0.002391037256520678,
+     "c1_scale": 1.8833553511153638,
+     "rms_dipole_per_component": 0.02389179980114987
+    }
+   }
+  }
+ },
+ "f2_shape_selector": {
+  "selector": {
+   "data_contrast_ratio": 0.6797556795777685,
+   "data_single_ratio": 0.7852415737573055,
+   "families": {
+    "LSS_COMMON": {
+     "label": "LSS_COMMON",
+     "n_mocks": 9,
+     "contrast_ratio_per_mock_mean": 0.9677334655833536,
+     "contrast_ratio_per_mock_sd": 0.09418435216107783,
+     "z_data_contrast": -3.0575969298283647,
+     "single_ratio_per_mock_mean": 0.8180807181462071,
+     "single_ratio_per_mock_sd": 0.11462012827637491,
+     "z_data_single": -0.2865041671364998
+    },
+    "LSS_DIFF_RED": {
+     "label": "EMPIRICAL_DIFF_SELECTION_RED",
+     "n_mocks": 9,
+     "contrast_ratio_per_mock_mean": 0.5914752276511279,
+     "contrast_ratio_per_mock_sd": 0.06499800647873916,
+     "z_data_contrast": 1.3582024543401514,
+     "single_ratio_per_mock_mean": 0.7053192945309045,
+     "single_ratio_per_mock_sd": 0.07759139260993492,
+     "z_data_single": 1.0300405307607237
+    },
+    "LSS_DIFF_FLAT": {
+     "label": "EMPIRICAL_DIFF_SELECTION_FLAT",
+     "n_mocks": 9,
+     "contrast_ratio_per_mock_mean": 0.8599446920503557,
+     "contrast_ratio_per_mock_sd": 0.103629439441631,
+     "z_data_contrast": -1.7387820820364295,
+     "single_ratio_per_mock_mean": 0.8065145112180419,
+     "single_ratio_per_mock_sd": 0.11138059935670352,
+     "z_data_single": -0.1909932033370406
+    },
+    "LSS_DIFF_MID": {
+     "label": "EMPIRICAL_DIFF_SELECTION_MID",
+     "n_mocks": 9,
+     "contrast_ratio_per_mock_mean": 0.7183454651992466,
+     "contrast_ratio_per_mock_sd": 0.0651086424809755,
+     "z_data_contrast": -0.5926983600180862,
+     "single_ratio_per_mock_mean": 0.7862347631377826,
+     "single_ratio_per_mock_sd": 0.0921188809012325,
+     "z_data_single": -0.010781604930068266
+    }
+   },
+   "closest_contrast_ratio_family": "EMPIRICAL_DIFF_SELECTION_MID",
+   "statement": "The NSIDE8/4 contrast ratio is closest to the data for EMPIRICAL_DIFF_SELECTION_MID. With 9 mocks per family no DIFF family is excluded at 2 sigma, and the ratio is blind to C_1 (see C1ZERO jackknife_c1_insensitivity), so it does not select a family and does not set p."
+  },
+  "c1_insensitivity": {
+   "LSS_DIFF_RED": {
+    "calibration_seeds": {
+     "n": 12,
+     "seeds": "[ROOT_SEED, 100, i]",
+     "jk4_contrast_trace_c1zero": [
+      9.795544235574884e-06,
+      4.6625813726456735e-06,
+      5.9450276644986096e-06,
+      6.175893785259821e-06,
+      6.874327990423106e-06,
+      5.501814284799952e-06,
+      6.525181757289067e-06,
+      8.304731908115383e-06,
+      5.4334370335321784e-06,
+      6.9548892160931685e-06,
+      6.0305606988397864e-06,
+      9.441760792378538e-06
+     ],
+     "jk4_contrast_trace_reference": [
+      9.190356045013657e-06,
+      4.6337735740404785e-06,
+      6.0702166421316034e-06,
+      6.251576936427599e-06,
+      6.8994913550182805e-06,
+      5.349880512818832e-06,
+      6.523580216995391e-06,
+      8.34093264544903e-06,
+      5.6134361824739205e-06,
+      7.081449864214381e-06,
+      5.783835327858759e-06,
+      9.534804406015028e-06
+     ],
+     "mean_c1zero": 6.8038125616208465e-06,
+     "mean_reference": 6.77277780903808e-06,
+     "mean_ratio_c1zero_over_reference": 1.0045822782701288,
+     "jk4_single_trace_mean_ratio_c1zero_over_reference": 0.9855055337482315,
+     "data_target": 6.815403047930258e-06
+    },
+    "scale_seeds": {
+     "n": 9,
+     "seeds": "[ROOT_SEED, 200, i]",
+     "jk4_c1zero": [
+      1.0011245714858988e-05,
+      8.562968537373035e-06,
+      7.030981569896468e-06,
+      5.9791357017467416e-06,
+      8.786787881023796e-06,
+      6.4423579079855874e-06,
+      8.006284155876307e-06,
+      6.5758359024036415e-06,
+      6.786784061726981e-06
+     ],
+     "jk8_c1zero": [
+      4.7335738698412535e-06,
+      4.4458801863644495e-06,
+      4.5877678653791795e-06,
+      3.8020519985741174e-06,
+      4.910267409998071e-06,
+      3.975008404439393e-06,
+      4.7338831421966986e-06,
+      4.05481483416813e-06,
+      4.2830063594749375e-06
+     ],
+     "jk4_reference": [
+      9.82382013492558e-06,
+      8.615521695442137e-06,
+      7.275567740418318e-06,
+      5.7888636833216026e-06,
+      8.605848426642282e-06,
+      6.461598498591013e-06,
+      8.366816099430175e-06,
+      6.491057838812132e-06,
+      6.757577026820026e-06
+     ],
+     "jk8_reference": [
+      4.7173257893966765e-06,
+      4.365911783543508e-06,
+      4.8295395823303554e-06,
+      3.779722692514367e-06,
+      4.914548789301624e-06,
+      3.9313316222279625e-06,
+      4.768699513025374e-06,
+      4.048586432192936e-06,
+      4.3684054496059345e-06
+     ],
+     "ratio_8_over_4_of_means_c1zero": 0.5797136040098557,
+     "ratio_8_over_4_of_means_reference": 0.5825782515473227,
+     "ratio_8_over_4_per_mock_c1zero": [
+      0.47282566072826904,
+      0.5191984726979233,
+      0.6525074514520076,
+      0.6358865542160864,
+      0.558823938449957,
+      0.6170114205409473,
+      0.5912709379322003,
+      0.6166234824512559,
+      0.6310803939716145
+     ],
+     "ratio_8_over_4_per_mock_reference": [
+      0.48019260578943945,
+      0.5067495548009824,
+      0.6638024350320564,
+      0.6529299875214185,
+      0.571070805068678,
+      0.608414717052632,
+      0.5699539055663179,
+      0.6237175099542527,
+      0.6464455280743747
+     ],
+     "data_ratio": 0.6797556795777685
+    },
+    "seconds": [
+     4.090180397033691,
+     4.386650085449219,
+     4.039508104324341,
+     4.291952848434448,
+     4.502944231033325,
+     4.515727996826172,
+     4.574482679367065,
+     4.486456394195557,
+     4.618221044540405,
+     4.19901967048645,
+     4.399965047836304,
+     4.040146112442017,
+     18.683887004852295,
+     16.98863959312439,
+     18.651957511901855,
+     16.25906801223755,
+     17.126713037490845,
+     17.27247452735901,
+     18.68544054031372,
+     19.396429777145386,
+     16.836745977401733
+    ]
+   },
+   "LSS_DIFF_MID": {
+    "calibration_seeds": {
+     "n": 12,
+     "seeds": "[ROOT_SEED, 100, i]",
+     "jk4_contrast_trace_c1zero": [
+      8.701984187064352e-06,
+      4.512704831112393e-06,
+      5.757670347485138e-06,
+      5.256054260474503e-06,
+      7.135530155384977e-06,
+      5.3885770867456385e-06,
+      5.978195822966532e-06,
+      7.856410087673977e-06,
+      5.569020613717819e-06,
+      6.2626724876461074e-06,
+      6.32973799143118e-06,
+      1.0658329847160587e-05
+     ],
+     "jk4_contrast_trace_reference": [
+      8.366006941886672e-06,
+      4.483263862076707e-06,
+      5.996460241627488e-06,
+      5.7180523532596925e-06,
+      7.159825902519837e-06,
+      5.413040349466441e-06,
+      5.9394875778527925e-06,
+      7.572706793562606e-06,
+      5.556459482494569e-06,
+      6.277966471013538e-06,
+      6.4938513228075816e-06,
+      1.050194092904007e-05
+     ],
+     "mean_c1zero": 6.6172406432386e-06,
+     "mean_reference": 6.623255185634e-06,
+     "mean_ratio_c1zero_over_reference": 0.9990919053808397,
+     "jk4_single_trace_mean_ratio_c1zero_over_reference": 1.004833671223476,
+     "data_target": 6.815403047930258e-06
+    },
+    "scale_seeds": {
+     "n": 9,
+     "seeds": "[ROOT_SEED, 200, i]",
+     "jk4_c1zero": [
+      8.477220528944197e-06,
+      8.128912834845785e-06,
+      7.1586890189017465e-06,
+      6.062539761891748e-06,
+      8.430891987920604e-06,
+      6.978286067358583e-06,
+      7.372584383425761e-06,
+      6.953110279297019e-06,
+      6.108264132003175e-06
+     ],
+     "jk8_c1zero": [
+      5.2193977745365625e-06,
+      5.204763212318139e-06,
+      5.372667401941464e-06,
+      4.846691967683017e-06,
+      5.891352322544801e-06,
+      4.9520892218827415e-06,
+      5.486739899353567e-06,
+      4.997921355389923e-06,
+      4.984916852307312e-06
+     ],
+     "jk4_reference": [
+      8.763288740823938e-06,
+      8.031455972256505e-06,
+      7.246220968428235e-06,
+      6.095627566463719e-06,
+      8.481946920500726e-06,
+      7.102444504842867e-06,
+      7.4861102004732135e-06,
+      6.925402492824974e-06,
+      6.323820300747437e-06
+     ],
+     "jk8_reference": [
+      5.294567354282863e-06,
+      5.20736586326347e-06,
+      5.54304811750684e-06,
+      4.911202412684791e-06,
+      5.858805932076067e-06,
+      5.013896751333856e-06,
+      5.506624293321219e-06,
+      4.992385903954639e-06,
+      4.988072772580978e-06
+     ],
+     "ratio_8_over_4_of_means_c1zero": 0.7150324837919511,
+     "ratio_8_over_4_of_means_reference": 0.7119860242308128,
+     "ratio_8_over_4_per_mock_c1zero": [
+      0.6156968261844448,
+      0.6402778966957492,
+      0.7505099589820866,
+      0.7994491018679373,
+      0.6987816153955786,
+      0.7096426219966078,
+      0.7442084910805845,
+      0.7188036942648964,
+      0.8160938598234018
+     ],
+     "ratio_8_over_4_per_mock_reference": [
+      0.6041758420692024,
+      0.648371339051295,
+      0.764957091656173,
+      0.8056926639850385,
+      0.6907383395568569,
+      0.7059395885339315,
+      0.7355788448015544,
+      0.720880253404329,
+      0.7887752237348392
+     ],
+     "data_ratio": 0.6797556795777685
+    },
+    "seconds": [
+     4.22010350227356,
+     4.527602672576904,
+     4.576807737350464,
+     4.76936936378479,
+     4.762106895446777,
+     4.3460001945495605,
+     4.292093276977539,
+     4.253415822982788,
+     4.392751932144165,
+     4.583690166473389,
+     4.065963268280029,
+     4.505640745162964,
+     14.570348024368286,
+     13.716769933700562,
+     15.188647747039795,
+     12.778640508651733,
+     12.902402400970459,
+     13.225295066833496,
+     12.133513927459717,
+     11.377151489257812,
+     11.982723712921143
+    ]
+   },
+   "LSS_DIFF_FLAT": {
+    "calibration_seeds": {
+     "n": 12,
+     "seeds": "[ROOT_SEED, 100, i]",
+     "jk4_contrast_trace_c1zero": [
+      7.97079585761155e-06,
+      4.943704938974537e-06,
+      6.57546435049767e-06,
+      5.877002613807481e-06,
+      6.760119675144106e-06,
+      6.401560790832871e-06,
+      6.0018128284197576e-06,
+      7.5197981919909475e-06,
+      6.319675268597368e-06,
+      7.100886292248695e-06,
+      6.609009028399414e-06,
+      1.0707410955814813e-05
+     ],
+     "jk4_contrast_trace_reference": [
+      7.834432736650495e-06,
+      4.851156629983538e-06,
+      6.61077236795627e-06,
+      5.859842613815167e-06,
+      6.5148349975162925e-06,
+      6.469416743065291e-06,
+      5.9616815860207124e-06,
+      7.4099045177022405e-06,
+      6.175341736884553e-06,
+      6.98077099449951e-06,
+      6.650922404547162e-06,
+      1.0046607650614066e-05
+     ],
+     "mean_c1zero": 6.898936732694935e-06,
+     "mean_reference": 6.780473748271275e-06,
+     "mean_ratio_c1zero_over_reference": 1.0174711957927516,
+     "jk4_single_trace_mean_ratio_c1zero_over_reference": 0.9931481427048527,
+     "data_target": 6.815403047930258e-06
+    },
+    "scale_seeds": {
+     "n": 9,
+     "seeds": "[ROOT_SEED, 200, i]",
+     "jk4_c1zero": [
+      8.103808440155284e-06,
+      6.968854739929322e-06,
+      6.8021730978339116e-06,
+      5.395364082253202e-06,
+      8.799324282823774e-06,
+      6.646351223665369e-06,
+      8.149235271434668e-06,
+      6.244118441455536e-06,
+      5.843007402869182e-06
+     ],
+     "jk8_c1zero": [
+      5.497932300139372e-06,
+      6.168190999823246e-06,
+      6.423927231958387e-06,
+      5.632528176469617e-06,
+      7.087136729947234e-06,
+      5.414781581588264e-06,
+      6.783209308181026e-06,
+      5.331955975428823e-06,
+      5.282885220825588e-06
+     ],
+     "jk4_reference": [
+      8.222170006242574e-06,
+      6.960081738134369e-06,
+      6.7969880618322735e-06,
+      5.321620743887734e-06,
+      8.71078167785753e-06,
+      6.7194238588576305e-06,
+      8.276480951290058e-06,
+      6.289056910050474e-06,
+      5.80237403927629e-06
+     ],
+     "jk8_reference": [
+      5.54280377642348e-06,
+      6.0869534211139994e-06,
+      6.427635797001503e-06,
+      5.558361478377248e-06,
+      7.014223389851892e-06,
+      5.459959972590816e-06,
+      6.753863964652419e-06,
+      5.3836692320095605e-06,
+      5.284850428147281e-06
+     ],
+     "ratio_8_over_4_of_means_c1zero": 0.8517973323066494,
+     "ratio_8_over_4_of_means_reference": 0.8480695435483813,
+     "ratio_8_over_4_per_mock_c1zero": [
+      0.6784380875659026,
+      0.8851082753212623,
+      0.9443933783461093,
+      1.04395701394768,
+      0.8054182914682757,
+      0.814699885601605,
+      0.8323737236987203,
+      0.8539165336822017,
+      0.9041380331353767
+     ],
+     "ratio_8_over_4_per_mock_reference": [
+      0.6741290647377979,
+      0.8745520024231196,
+      0.9456594212803128,
+      1.0444865851745313,
+      0.8052346677086142,
+      0.8125637089247506,
+      0.8160308716230044,
+      0.8560376077064872,
+      0.9108082988745831
+     ],
+     "data_ratio": 0.6797556795777685
+    },
+    "seconds": [
+     4.0583226680755615,
+     4.775460481643677,
+     4.655116558074951,
+     3.9978725910186768,
+     4.7206151485443115,
+     4.662697076797485,
+     4.223257541656494,
+     4.47976279258728,
+     4.499846696853638,
+     4.494155168533325,
+     4.459164142608643,
+     4.088085174560547,
+     11.81789517402649,
+     13.833892345428467,
+     13.456533432006836,
+     13.040584564208984,
+     13.289782047271729,
+     12.985524892807007,
+     13.207915544509888,
+     13.719341516494751,
+     13.656402111053467
+    ]
+   }
+  },
+  "p_t_self_dipole_range_at_reference": {
+   "LSS_COMMON": "0.0005 (0/2000)",
+   "EMPIRICAL_DIFF_SELECTION_RED": "0.57 (1134/2000)",
+   "EMPIRICAL_DIFF_SELECTION_FLAT": "0.012 (23/2000)",
+   "EMPIRICAL_DIFF_SELECTION_MID": "0.17 (335/2000)"
+  }
+ },
+ "f3_amplitude_marginal": {
+  "per_family": {
+   "LSS_DIFF_RED": {
+    "label": "EMPIRICAL_DIFF_SELECTION_RED",
+    "sigma_r": 0.2868130697841363,
+    "r_quantiles_16_50_84": [
+     0.7150185876644577,
+     1.0000879288466757,
+     1.2852696567136737
+    ],
+    "conditional_on": "the family's assumed shape with C_1 = r A_m",
+    "models": {
+     "dipole": {
+      "wald_self_R65_estimator": {
+       "marginal_p": 0.5493133583021224,
+       "marginal_p_display": "0.55 (439/800)",
+       "marginal_p_mc_se": 0.017591482054284343,
+       "band_16_84": [
+        0.46107784431137727,
+        0.6347305389221557
+       ],
+       "band_display": "[0.46 (230/500), 0.63 (317/500)]",
+       "band_mc_se": [
+        0.02229282690896561,
+        0.021533586876400574
+       ],
+       "nominal_amplitude_p_display": "0.57 (1134/2000)",
+       "nominal_amplitude_same_seeds_as_band_p_display": "0.56 (279/500)"
+      },
+      "wald_fixed_R65_poisson_cov": {
+       "marginal_p": 0.5518102372034956,
+       "marginal_p_display": "0.55 (441/800)",
+       "marginal_p_mc_se": 0.017582509040269166,
+       "band_16_84": [
+        0.46107784431137727,
+        0.6347305389221557
+       ],
+       "band_display": "[0.46 (230/500), 0.63 (317/500)]",
+       "band_mc_se": [
+        0.02229282690896561,
+        0.021533586876400574
+       ],
+       "nominal_amplitude_p_display": "0.57 (1137/2000)",
+       "nominal_amplitude_same_seeds_as_band_p_display": "0.56 (282/500)"
+      },
+      "wald_fixed_R105_jk4_cov": {
+       "marginal_p": 0.6554307116104869,
+       "marginal_p_display": "0.66 (524/800)",
+       "marginal_p_mc_se": 0.01680183374993105,
+       "band_16_84": [
+        0.5788423153692615,
+        0.7225548902195609
+       ],
+       "band_display": "[0.58 (289/500), 0.72 (361/500)]",
+       "band_mc_se": [
+        0.0220809369958439,
+        0.02002345229171829
+       ],
+       "nominal_amplitude_p_display": "0.66 (1313/2000)",
+       "nominal_amplitude_same_seeds_as_band_p_display": "0.67 (336/500)"
+      },
+      "wald_fixed_R105_jk8_cov": {
+       "marginal_p": 0.6279650436953808,
+       "marginal_p_display": "0.63 (502/800)",
+       "marginal_p_mc_se": 0.017088919933396878,
+       "band_16_84": [
+        0.5389221556886228,
+        0.6966067864271457
+       ],
+       "band_display": "[0.54 (269/500), 0.7 (348/500)]",
+       "band_mc_se": [
+        0.02229282690896561,
+        0.020559463588858087
+       ],
+       "nominal_amplitude_p_display": "0.64 (1270/2000)",
+       "nominal_amplitude_same_seeds_as_band_p_display": "0.65 (326/500)"
+      }
+     },
+     "dipole_stf": {
+      "wald_self_R65_estimator": {
+       "marginal_p": 0.5555555555555556,
+       "marginal_p_display": "0.56 (444/800)",
+       "marginal_p_mc_se": 0.017568209223157664,
+       "band_16_84": [
+        0.4590818363273453,
+        0.6506986027944112
+       ],
+       "band_display": "[0.46 (229/500), 0.65 (325/500)]",
+       "band_mc_se": [
+        0.022285677188798092,
+        0.021320878552058418
+       ],
+       "nominal_amplitude_p_display": "0.57 (1138/2000)",
+       "nominal_amplitude_same_seeds_as_band_p_display": "0.58 (289/500)"
+      },
+      "wald_fixed_R65_poisson_cov": {
+       "marginal_p": 0.5543071161048689,
+       "marginal_p_display": "0.55 (443/800)",
+       "marginal_p_mc_se": 0.017573087987757453,
+       "band_16_84": [
+        0.4590818363273453,
+        0.6506986027944112
+       ],
+       "band_display": "[0.46 (229/500), 0.65 (325/500)]",
+       "band_mc_se": [
+        0.022285677188798092,
+        0.021320878552058418
+       ],
+       "nominal_amplitude_p_display": "0.57 (1144/2000)",
+       "nominal_amplitude_same_seeds_as_band_p_display": "0.58 (291/500)"
+      },
+      "wald_fixed_R105_jk4_cov": {
+       "marginal_p": 0.6466916354556804,
+       "marginal_p_display": "0.65 (517/800)",
+       "marginal_p_mc_se": 0.016899761983802383,
+       "band_16_84": [
+        0.5688622754491018,
+        0.7385229540918163
+       ],
+       "band_display": "[0.57 (284/500), 0.74 (369/500)]",
+       "band_mc_se": [
+        0.02214759522024782,
+        0.019652317948339493
+       ],
+       "nominal_amplitude_p_display": "0.64 (1279/2000)",
+       "nominal_amplitude_same_seeds_as_band_p_display": "0.66 (332/500)"
+      },
+      "wald_fixed_R105_jk8_cov": {
+       "marginal_p": 0.6292134831460674,
+       "marginal_p_display": "0.63 (503/800)",
+       "marginal_p_mc_se": 0.017077173206259174,
+       "band_16_84": [
+        0.5528942115768463,
+        0.7225548902195609
+       ],
+       "band_display": "[0.55 (276/500), 0.72 (361/500)]",
+       "band_mc_se": [
+        0.02223520642502173,
+        0.02002345229171829
+       ],
+       "nominal_amplitude_p_display": "0.63 (1264/2000)",
+       "nominal_amplitude_same_seeds_as_band_p_display": "0.65 (326/500)"
+      }
+     }
+    }
+   },
+   "LSS_DIFF_MID": {
+    "label": "EMPIRICAL_DIFF_SELECTION_MID",
+    "sigma_r": 0.24999295070868563,
+    "r_quantiles_16_50_84": [
+     0.7514198592817628,
+     1.0000099184954911,
+     1.2486126646987772
+    ],
+    "conditional_on": "the family's assumed shape with C_1 = r A_m",
+    "models": {
+     "dipole": {
+      "wald_self_R65_estimator": {
+       "marginal_p": 0.16978776529338327,
+       "marginal_p_display": "0.17 (135/800)",
+       "marginal_p_mc_se": 0.013274029157063723,
+       "band_16_84": [
+        0.09780439121756487,
+        0.23552894211576847
+       ],
+       "band_display": "[0.098 (48/500), 0.24 (117/500)]",
+       "band_mc_se": [
+        0.013284479084715847,
+        0.01897656763177132
+       ],
+       "nominal_amplitude_p_display": "0.17 (335/2000)",
+       "nominal_amplitude_same_seeds_as_band_p_display": "0.16 (79/500)"
+      },
+      "wald_fixed_R65_poisson_cov": {
+       "marginal_p": 0.16853932584269662,
+       "marginal_p_display": "0.17 (134/800)",
+       "marginal_p_mc_se": 0.013235077516168254,
+       "band_16_84": [
+        0.09780439121756487,
+        0.2315369261477046
+       ],
+       "band_display": "[0.098 (48/500), 0.23 (115/500)]",
+       "band_mc_se": [
+        0.013284479084715847,
+        0.01886412351410884
+       ],
+       "nominal_amplitude_p_display": "0.17 (345/2000)",
+       "nominal_amplitude_same_seeds_as_band_p_display": "0.16 (81/500)"
+      },
+      "wald_fixed_R105_jk4_cov": {
+       "marginal_p": 0.2808988764044944,
+       "marginal_p_display": "0.28 (224/800)",
+       "marginal_p_mc_se": 0.01589004002666399,
+       "band_16_84": [
+        0.18962075848303392,
+        0.34530938123752497
+       ],
+       "band_display": "[0.19 (94/500), 0.35 (172/500)]",
+       "band_mc_se": [
+        0.01753081438127464,
+        0.021263622102872436
+       ],
+       "nominal_amplitude_p_display": "0.3 (590/2000)",
+       "nominal_amplitude_same_seeds_as_band_p_display": "0.28 (139/500)"
+      },
+      "wald_fixed_R105_jk8_cov": {
+       "marginal_p": 0.24719101123595505,
+       "marginal_p_display": "0.25 (197/800)",
+       "marginal_p_mc_se": 0.015251541528649694,
+       "band_16_84": [
+        0.16367265469061876,
+        0.313373253493014
+       ],
+       "band_display": "[0.16 (81/500), 0.31 (156/500)]",
+       "band_mc_se": [
+        0.016545931028331056,
+        0.020744659914696945
+       ],
+       "nominal_amplitude_p_display": "0.25 (509/2000)",
+       "nominal_amplitude_same_seeds_as_band_p_display": "0.24 (119/500)"
+      }
+     },
+     "dipole_stf": {
+      "wald_self_R65_estimator": {
+       "marginal_p": 0.1797752808988764,
+       "marginal_p_display": "0.18 (143/800)",
+       "marginal_p_mc_se": 0.01357645615010626,
+       "band_16_84": [
+        0.10778443113772455,
+        0.25748502994011974
+       ],
+       "band_display": "[0.11 (53/500), 0.26 (128/500)]",
+       "band_mc_se": [
+        0.013868449627989545,
+        0.019554359580249894
+       ],
+       "nominal_amplitude_p_display": "0.18 (359/2000)",
+       "nominal_amplitude_same_seeds_as_band_p_display": "0.17 (82/500)"
+      },
+      "wald_fixed_R65_poisson_cov": {
+       "marginal_p": 0.18726591760299627,
+       "marginal_p_display": "0.19 (149/800)",
+       "marginal_p_mc_se": 0.013792996126082618,
+       "band_16_84": [
+        0.11377245508982035,
+        0.2634730538922156
+       ],
+       "band_display": "[0.11 (56/500), 0.26 (131/500)]",
+       "band_mc_se": [
+        0.014200583336796777,
+        0.019700507798781495
+       ],
+       "nominal_amplitude_p_display": "0.18 (368/2000)",
+       "nominal_amplitude_same_seeds_as_band_p_display": "0.17 (84/500)"
+      },
+      "wald_fixed_R105_jk4_cov": {
+       "marginal_p": 0.2846441947565543,
+       "marginal_p_display": "0.28 (227/800)",
+       "marginal_p_mc_se": 0.01595391320131001,
+       "band_16_84": [
+        0.1996007984031936,
+        0.3532934131736527
+       ],
+       "band_display": "[0.2 (99/500), 0.35 (176/500)]",
+       "band_mc_se": [
+        0.017875140261267953,
+        0.021376490702721223
+       ],
+       "nominal_amplitude_p_display": "0.3 (600/2000)",
+       "nominal_amplitude_same_seeds_as_band_p_display": "0.28 (137/500)"
+      },
+      "wald_fixed_R105_jk8_cov": {
+       "marginal_p": 0.264669163545568,
+       "marginal_p_display": "0.26 (211/800)",
+       "marginal_p_mc_se": 0.015597251256778284,
+       "band_16_84": [
+        0.17964071856287425,
+        0.3333333333333333
+       ],
+       "band_display": "[0.18 (89/500), 0.33 (166/500)]",
+       "band_mc_se": [
+        0.01716798944530713,
+        0.021081851067789197
+       ],
+       "nominal_amplitude_p_display": "0.27 (547/2000)",
+       "nominal_amplitude_same_seeds_as_band_p_display": "0.26 (127/500)"
+      }
+     }
+    }
+   },
+   "LSS_DIFF_FLAT": {
+    "label": "EMPIRICAL_DIFF_SELECTION_FLAT",
+    "sigma_r": 0.22523995582560274,
+    "r_quantiles_16_50_84": [
+     0.7760118526553296,
+     1.0000012714678115,
+     1.2239923168030926
+    ],
+    "conditional_on": "the family's assumed shape with C_1 = r A_m",
+    "models": {
+     "dipole": {
+      "wald_self_R65_estimator": {
+       "marginal_p": 0.02122347066167291,
+       "marginal_p_display": "0.021 (16/800)",
+       "marginal_p_mc_se": 0.005095713266406629,
+       "band_16_84": [
+        0.003992015968063872,
+        0.031936127744510975
+       ],
+       "band_display": "[0.004 (1/500), 0.032 (15/500)]",
+       "band_mc_se": [
+        0.002819957367257383,
+        0.0078633595223921
+       ],
+       "nominal_amplitude_p_display": "0.012 (23/2000)",
+       "nominal_amplitude_same_seeds_as_band_p_display": "0.018 (8/500)"
+      },
+      "wald_fixed_R65_poisson_cov": {
+       "marginal_p": 0.02247191011235955,
+       "marginal_p_display": "0.022 (17/800)",
+       "marginal_p_mc_se": 0.00524010059162293,
+       "band_16_84": [
+        0.003992015968063872,
+        0.031936127744510975
+       ],
+       "band_display": "[0.004 (1/500), 0.032 (15/500)]",
+       "band_mc_se": [
+        0.002819957367257383,
+        0.0078633595223921
+       ],
+       "nominal_amplitude_p_display": "0.012 (24/2000)",
+       "nominal_amplitude_same_seeds_as_band_p_display": "0.02 (9/500)"
+      },
+      "wald_fixed_R105_jk4_cov": {
+       "marginal_p": 0.0599250936329588,
+       "marginal_p_display": "0.06 (47/800)",
+       "marginal_p_mc_se": 0.008391519289291416,
+       "band_16_84": [
+        0.03792415169660679,
+        0.08582834331337326
+       ],
+       "band_display": "[0.038 (18/500), 0.086 (42/500)]",
+       "band_mc_se": [
+        0.008542354524918706,
+        0.01252691812038819
+       ],
+       "nominal_amplitude_p_display": "0.051 (101/2000)",
+       "nominal_amplitude_same_seeds_as_band_p_display": "0.052 (25/500)"
+      },
+      "wald_fixed_R105_jk8_cov": {
+       "marginal_p": 0.04244694132334582,
+       "marginal_p_display": "0.042 (33/800)",
+       "marginal_p_mc_se": 0.007127867711984266,
+       "band_16_84": [
+        0.023952095808383235,
+        0.059880239520958084
+       ],
+       "band_display": "[0.024 (11/500), 0.06 (29/500)]",
+       "band_mc_se": [
+        0.006837893376584526,
+        0.010610805477047515
+       ],
+       "nominal_amplitude_p_display": "0.033 (66/2000)",
+       "nominal_amplitude_same_seeds_as_band_p_display": "0.036 (17/500)"
+      }
+     },
+     "dipole_stf": {
+      "wald_self_R65_estimator": {
+       "marginal_p": 0.02746566791510612,
+       "marginal_p_display": "0.027 (21/800)",
+       "marginal_p_mc_se": 0.005778332912817851,
+       "band_16_84": [
+        0.00998003992015968,
+        0.033932135728542916
+       ],
+       "band_display": "[0.01 (4/500), 0.034 (16/500)]",
+       "band_mc_se": [
+        0.004445320848566884,
+        0.008097005112193354
+       ],
+       "nominal_amplitude_p_display": "0.015 (30/2000)",
+       "nominal_amplitude_same_seeds_as_band_p_display": "0.022 (10/500)"
+      },
+      "wald_fixed_R65_poisson_cov": {
+       "marginal_p": 0.02871410736579276,
+       "marginal_p_display": "0.029 (22/800)",
+       "marginal_p_mc_se": 0.005904405918885753,
+       "band_16_84": [
+        0.00998003992015968,
+        0.03592814371257485
+       ],
+       "band_display": "[0.01 (4/500), 0.036 (17/500)]",
+       "band_mc_se": [
+        0.004445320848566884,
+        0.008323137894080984
+       ],
+       "nominal_amplitude_p_display": "0.016 (31/2000)",
+       "nominal_amplitude_same_seeds_as_band_p_display": "0.024 (11/500)"
+      },
+      "wald_fixed_R105_jk4_cov": {
+       "marginal_p": 0.07116104868913857,
+       "marginal_p_display": "0.071 (56/800)",
+       "marginal_p_mc_se": 0.00908963378240569,
+       "band_16_84": [
+        0.03992015968063872,
+        0.08383233532934131
+       ],
+       "band_display": "[0.04 (19/500), 0.084 (41/500)]",
+       "band_mc_se": [
+        0.008755174530723078,
+        0.012393907768139166
+       ],
+       "nominal_amplitude_p_display": "0.059 (117/2000)",
+       "nominal_amplitude_same_seeds_as_band_p_display": "0.054 (26/500)"
+      },
+      "wald_fixed_R105_jk8_cov": {
+       "marginal_p": 0.046192259675405745,
+       "marginal_p_display": "0.046 (36/800)",
+       "marginal_p_mc_se": 0.007421129868615495,
+       "band_16_84": [
+        0.029940119760479042,
+        0.06786427145708583
+       ],
+       "band_display": "[0.03 (14/500), 0.068 (33/500)]",
+       "band_mc_se": [
+        0.007621510216381949,
+        0.0112479964541855
+       ],
+       "nominal_amplitude_p_display": "0.041 (81/2000)",
+       "nominal_amplitude_same_seeds_as_band_p_display": "0.042 (20/500)"
+      }
+     }
+    }
+   }
+  },
+  "nuisance": {
+   "LSS_DIFF_RED": {
+    "n_new_jk_mocks": 40,
+    "n_reference_jk_mocks": 21,
+    "jk4_contrast_trace_new": [
+     9.4173021474612e-06,
+     8.005113404925335e-06,
+     5.88085461527423e-06,
+     9.390308115748264e-06,
+     7.152391507419297e-06,
+     7.32147374153023e-06,
+     7.770537272934487e-06,
+     7.472671886005531e-06,
+     7.841051681392965e-06,
+     6.008655351450705e-06,
+     6.489372314030011e-06,
+     6.411152196056407e-06,
+     7.31045490743583e-06,
+     6.297425798695552e-06,
+     6.678811052619541e-06,
+     6.47841687611979e-06,
+     7.972741777550856e-06,
+     8.266658411618891e-06,
+     7.426610142321974e-06,
+     9.43777733545288e-06,
+     5.4176271966339275e-06,
+     7.387692929961117e-06,
+     6.165427621698498e-06,
+     6.060194815886333e-06,
+     5.879416133037841e-06,
+     7.453945703257991e-06,
+     9.302370300794336e-06,
+     7.581717584868217e-06,
+     6.722614830552665e-06,
+     5.376355986438939e-06,
+     5.684615778576779e-06,
+     6.6683560502834215e-06,
+     5.7395883236636005e-06,
+     4.3888239514930456e-06,
+     4.875749150993591e-06,
+     6.4193062544442295e-06,
+     7.609339324222313e-06,
+     6.14358719145476e-06,
+     6.333235497699519e-06,
+     8.454774572253655e-06
+    ],
+    "jk4_contrast_trace_new_mean": 6.96736299335647e-06,
+    "jk4_contrast_trace_new_rel_sd": 0.1772339168803578,
+    "jk4_contrast_trace_pooled_mean": 7.0189266325757205e-06,
+    "jk4_contrast_trace_pooled_sd": 1.3107536833112573e-06,
+    "jk4_contrast_trace_pooled_rel_sd": 0.18674560255807274,
+    "data_target": 6.815403047930258e-06,
+    "common_only_base": 1.992451173120672e-06,
+    "excess": 4.8229518748095856e-06,
+    "amplitude_rel_sd_from_trace_scatter": 0.2717741576807683,
+    "calibration_mc_rel_se": 0.09165448279221662,
+    "sigma_r": 0.2868130697841363,
+    "calibration_relative_excess_miss": 0.00883799797273753,
+    "r_quantiles_16_50_84": [
+     0.7150185876644577,
+     1.0000879288466757,
+     1.2852696567136737
+    ],
+    "spearman_jk4_trace_vs_t_self_dipole": {
+     "rho": -0.13377110694183866,
+     "p": 0.4105518475792776,
+     "n": 40
+    },
+    "single_selection_jk4_trace_new_mean": 9.546841324244513e-05,
+    "single_selection_target": 7.16583037529342e-05,
+    "single_selection_ratio_to_target": 1.3322728594246966
+   },
+   "LSS_DIFF_MID": {
+    "n_new_jk_mocks": 40,
+    "n_reference_jk_mocks": 21,
+    "jk4_contrast_trace_new": [
+     7.914346839056274e-06,
+     6.8977686199697494e-06,
+     6.007740172224705e-06,
+     9.121533397460965e-06,
+     6.009523893152133e-06,
+     7.483744101892176e-06,
+     6.443708149673184e-06,
+     6.867056546605357e-06,
+     7.316916393497126e-06,
+     5.676624052077041e-06,
+     6.64466540726459e-06,
+     6.3406913700197875e-06,
+     7.07463348560414e-06,
+     6.063175471494971e-06,
+     6.469979899968232e-06,
+     5.71604150686153e-06,
+     7.930840702584356e-06,
+     7.555842791632335e-06,
+     6.4979900626046765e-06,
+     7.841850142134792e-06,
+     4.857134789109732e-06,
+     7.120382502658924e-06,
+     5.537780272244921e-06,
+     5.508457923035488e-06,
+     6.783689202740759e-06,
+     7.3570343142692e-06,
+     8.138880034078625e-06,
+     6.01743354518855e-06,
+     5.7023644528815386e-06,
+     6.197039033834116e-06,
+     6.135776547384289e-06,
+     7.065525071226354e-06,
+     6.712857721987466e-06,
+     4.983712389758457e-06,
+     5.078657649697732e-06,
+     6.996650621037862e-06,
+     8.089835999607014e-06,
+     6.433540520024001e-06,
+     6.060797515712449e-06,
+     7.421048606841309e-06
+    ],
+    "jk4_contrast_trace_new_mean": 6.651831792977422e-06,
+    "jk4_contrast_trace_new_rel_sd": 0.14298500355990593,
+    "jk4_contrast_trace_pooled_mean": 6.7542401903945335e-06,
+    "jk4_contrast_trace_pooled_sd": 1.1133574374545133e-06,
+    "jk4_contrast_trace_pooled_rel_sd": 0.16483829506653644,
+    "data_target": 6.815403047930258e-06,
+    "common_only_base": 1.992451173120672e-06,
+    "excess": 4.8229518748095856e-06,
+    "amplitude_rel_sd_from_trace_scatter": 0.23084564523017756,
+    "calibration_mc_rel_se": 0.09595188107743552,
+    "sigma_r": 0.24999295070868563,
+    "calibration_relative_excess_miss": 0.039840302637032636,
+    "r_quantiles_16_50_84": [
+     0.7514198592817628,
+     1.0000099184954911,
+     1.2486126646987772
+    ],
+    "spearman_jk4_trace_vs_t_self_dipole": {
+     "rho": -0.10825515947467168,
+     "p": 0.5061059433086323,
+     "n": 40
+    },
+    "single_selection_jk4_trace_new_mean": 9.569535475619072e-05,
+    "single_selection_target": 7.16583037529342e-05,
+    "single_selection_ratio_to_target": 1.335439854760339
+   },
+   "LSS_DIFF_FLAT": {
+    "n_new_jk_mocks": 40,
+    "n_reference_jk_mocks": 21,
+    "jk4_contrast_trace_new": [
+     8.097409353397534e-06,
+     6.149397171856809e-06,
+     5.842777173807466e-06,
+     8.041967211134097e-06,
+     6.746060581148628e-06,
+     7.317293836863198e-06,
+     5.857604055450636e-06,
+     6.195883195290127e-06,
+     8.07427156575456e-06,
+     5.866426151429777e-06,
+     7.187075771260842e-06,
+     5.778627658035605e-06,
+     7.644416867655809e-06,
+     5.338570256218721e-06,
+     5.914088234604994e-06,
+     6.504826774477769e-06,
+     7.146338504120158e-06,
+     8.113635245259114e-06,
+     5.52394059104457e-06,
+     8.188875294697854e-06,
+     5.83344630111243e-06,
+     7.409303352552025e-06,
+     5.106787296389745e-06,
+     6.2008037803390585e-06,
+     6.257390897529651e-06,
+     6.248924604845461e-06,
+     7.942912268690382e-06,
+     7.304475081998464e-06,
+     5.821942306535783e-06,
+     5.809185059254055e-06,
+     6.750520747904492e-06,
+     7.13800751292416e-06,
+     5.742202922815494e-06,
+     5.519354378478774e-06,
+     5.636439817943968e-06,
+     7.069045799457315e-06,
+     7.439106497271137e-06,
+     5.769538994881786e-06,
+     5.918216002627263e-06,
+     6.6799949931845765e-06
+    ],
+    "jk4_contrast_trace_new_mean": 6.5781771027561075e-06,
+    "jk4_contrast_trace_new_rel_sd": 0.1379708489307415,
+    "jk4_contrast_trace_pooled_mean": 6.681831919293911e-06,
+    "jk4_contrast_trace_pooled_sd": 1.021504962180161e-06,
+    "jk4_contrast_trace_pooled_rel_sd": 0.1528779793503256,
+    "data_target": 6.815403047930258e-06,
+    "common_only_base": 1.992451173120672e-06,
+    "excess": 4.8229518748095856e-06,
+    "amplitude_rel_sd_from_trace_scatter": 0.21180077858862958,
+    "calibration_mc_rel_se": 0.07663855354565208,
+    "sigma_r": 0.22523995582560274,
+    "calibration_relative_excess_miss": 0.007242307318349959,
+    "r_quantiles_16_50_84": [
+     0.7760118526553296,
+     1.0000012714678115,
+     1.2239923168030926
+    ],
+    "spearman_jk4_trace_vs_t_self_dipole": {
+     "rho": -0.10881801125703565,
+     "p": 0.5038840003394047,
+     "n": 40
+    },
+    "single_selection_jk4_trace_new_mean": 9.27508577959071e-05,
+    "single_selection_target": 7.16583037529342e-05,
+    "single_selection_ratio_to_target": 1.2943490557032509
+   }
+  }
+ },
+ "f4_joint_calibration": {
+  "LSS_DIFF_RED": {
+   "label": "EMPIRICAL_DIFF_SELECTION_RED",
+   "reference_calibration_single_trace_ratio_to_target": 1.319631967980785,
+   "fresh_jk_single_trace_ratio_to_target": 1.3322728594246966,
+   "C10_diff_over_C10_common": 72.39517180912031,
+   "statement": "not jointly calibrated: the single-selection constraint is violated at the fitted A_m"
+  },
+  "LSS_DIFF_MID": {
+   "label": "EMPIRICAL_DIFF_SELECTION_MID",
+   "reference_calibration_single_trace_ratio_to_target": 1.3142496814760678,
+   "fresh_jk_single_trace_ratio_to_target": 1.335439854760339,
+   "C10_diff_over_C10_common": 72.14442080063012,
+   "statement": "not jointly calibrated: the single-selection constraint is violated at the fitted A_m"
+  },
+  "LSS_DIFF_FLAT": {
+   "label": "EMPIRICAL_DIFF_SELECTION_FLAT",
+   "reference_calibration_single_trace_ratio_to_target": 1.3641709896007133,
+   "fresh_jk_single_trace_ratio_to_target": 1.2943490557032509,
+   "C10_diff_over_C10_common": 79.93314211850208,
+   "statement": "not jointly calibrated: the single-selection constraint is violated at the fitted A_m"
+  }
+ },
+ "f5_overdispersion_validity": {
+  "table": [
+   {
+    "family": "LSS_COMMON",
+    "ensemble": "reference nominal (2000 mocks)",
+    "quantity": "per-selection OD, peak",
+    "n": 2000,
+    "mean": 1.0080638717523516,
+    "sd": 0.004693145446429001,
+    "min": 0.9913443550604689,
+    "max": 1.0227337196433781,
+    "data": 1.0635569327189316,
+    "frac_ge_data": 0.0
+   },
+   {
+    "family": "LSS_COMMON",
+    "ensemble": "reference nominal (2000 mocks)",
+    "quantity": "per-selection OD, integrated",
+    "n": 2000,
+    "mean": 1.0087927635220006,
+    "sd": 0.004524571945386213,
+    "min": 0.9932399959064073,
+    "max": 1.025050229696201,
+    "data": 1.1044088343927705,
+    "frac_ge_data": 0.0
+   },
+   {
+    "family": "EMPIRICAL_DIFF_SELECTION_RED",
+    "ensemble": "reference nominal (2000 mocks)",
+    "quantity": "per-selection OD, peak",
+    "n": 2000,
+    "mean": 1.0133356311179875,
+    "sd": 0.0046439563575141635,
+    "min": 0.9984384777702483,
+    "max": 1.0285912105704722,
+    "data": 1.0635569327189316,
+    "frac_ge_data": 0.0
+   },
+   {
+    "family": "EMPIRICAL_DIFF_SELECTION_RED",
+    "ensemble": "reference nominal (2000 mocks)",
+    "quantity": "per-selection OD, integrated",
+    "n": 2000,
+    "mean": 1.026010770976841,
+    "sd": 0.004675287589637033,
+    "min": 1.0101123252341293,
+    "max": 1.0407334356409594,
+    "data": 1.1044088343927705,
+    "frac_ge_data": 0.0
+   },
+   {
+    "family": "EMPIRICAL_DIFF_SELECTION_FLAT",
+    "ensemble": "reference nominal (2000 mocks)",
+    "quantity": "per-selection OD, peak",
+    "n": 2000,
+    "mean": 1.013431363428336,
+    "sd": 0.004652885144541883,
+    "min": 0.994841559429661,
+    "max": 1.03003401004607,
+    "data": 1.0635569327189316,
+    "frac_ge_data": 0.0
+   },
+   {
+    "family": "EMPIRICAL_DIFF_SELECTION_FLAT",
+    "ensemble": "reference nominal (2000 mocks)",
+    "quantity": "per-selection OD, integrated",
+    "n": 2000,
+    "mean": 1.0260046177005606,
+    "sd": 0.004747633083148738,
+    "min": 1.0102756640150918,
+    "max": 1.0432742391363585,
+    "data": 1.1044088343927705,
+    "frac_ge_data": 0.0
+   },
+   {
+    "family": "EMPIRICAL_DIFF_SELECTION_MID",
+    "ensemble": "reference nominal (2000 mocks)",
+    "quantity": "per-selection OD, peak",
+    "n": 2000,
+    "mean": 1.033118911009569,
+    "sd": 0.004808551369303798,
+    "min": 1.0165134500027038,
+    "max": 1.054109266708606,
+    "data": 1.0635569327189316,
+    "frac_ge_data": 0.0
+   },
+   {
+    "family": "EMPIRICAL_DIFF_SELECTION_MID",
+    "ensemble": "reference nominal (2000 mocks)",
+    "quantity": "per-selection OD, integrated",
+    "n": 2000,
+    "mean": 1.08964063912682,
+    "sd": 0.006101789774947098,
+    "min": 1.0706598075609963,
+    "max": 1.1132121568856663,
+    "data": 1.1044088343927705,
+    "frac_ge_data": 0.0105
+   },
+   {
+    "family": "LSS_COMMON",
+    "ensemble": "nominal replay subset",
+    "quantity": "off-diagonal-class OD",
+    "n": 100,
+    "mean": 1.005683818259505,
+    "sd": 0.00674876391039784,
+    "min": 0.9877013401006371,
+    "max": 1.0263059560349792,
+    "data": 1.5092073635389898,
+    "frac_ge_data": 0.0
+   },
+   {
+    "family": "LSS_COMMON",
+    "ensemble": "nominal replay subset",
+    "quantity": "per-selection OD, peak",
+    "n": 100,
+    "mean": 1.0078928271977952,
+    "sd": 0.004091865344135793,
+    "min": 0.9970394585517446,
+    "max": 1.01763351878658,
+    "data": 1.0635569327189316,
+    "frac_ge_data": 0.0
+   },
+   {
+    "family": "LSS_COMMON",
+    "ensemble": "nominal replay subset",
+    "quantity": "per-selection OD, integrated",
+    "n": 100,
+    "mean": 1.0089028190586158,
+    "sd": 0.004530956380196398,
+    "min": 0.9991261808783054,
+    "max": 1.0188232204814531,
+    "data": 1.1044088343927705,
+    "frac_ge_data": 0.0
+   },
+   {
+    "family": "EMPIRICAL_DIFF_SELECTION_RED",
+    "ensemble": "nominal replay subset",
+    "quantity": "off-diagonal-class OD",
+    "n": 100,
+    "mean": 1.3306901708145602,
+    "sd": 0.01503160282865692,
+    "min": 1.2982493081582889,
+    "max": 1.369346215306924,
+    "data": 1.5092073635389898,
+    "frac_ge_data": 0.0
+   },
+   {
+    "family": "EMPIRICAL_DIFF_SELECTION_RED",
+    "ensemble": "nominal replay subset",
+    "quantity": "per-selection OD, peak",
+    "n": 100,
+    "mean": 1.0139867763512336,
+    "sd": 0.0050260974608588626,
+    "min": 1.0029314179366717,
+    "max": 1.0285912105704722,
+    "data": 1.0635569327189316,
+    "frac_ge_data": 0.0
+   },
+   {
+    "family": "EMPIRICAL_DIFF_SELECTION_RED",
+    "ensemble": "nominal replay subset",
+    "quantity": "per-selection OD, integrated",
+    "n": 100,
+    "mean": 1.0262526018027553,
+    "sd": 0.004772184211952585,
+    "min": 1.0111186185046095,
+    "max": 1.0383939947426666,
+    "data": 1.1044088343927705,
+    "frac_ge_data": 0.0
+   },
+   {
+    "family": "EMPIRICAL_DIFF_SELECTION_FLAT",
+    "ensemble": "nominal replay subset",
+    "quantity": "off-diagonal-class OD",
+    "n": 100,
+    "mean": 1.3301939425411704,
+    "sd": 0.02107872660546674,
+    "min": 1.2851485409253813,
+    "max": 1.4099117942264805,
+    "data": 1.5092073635389898,
+    "frac_ge_data": 0.0
+   },
+   {
+    "family": "EMPIRICAL_DIFF_SELECTION_FLAT",
+    "ensemble": "nominal replay subset",
+    "quantity": "per-selection OD, peak",
+    "n": 100,
+    "mean": 1.0139607479149242,
+    "sd": 0.004668426853467524,
+    "min": 1.0051273111468682,
+    "max": 1.03003401004607,
+    "data": 1.0635569327189316,
+    "frac_ge_data": 0.0
+   },
+   {
+    "family": "EMPIRICAL_DIFF_SELECTION_FLAT",
+    "ensemble": "nominal replay subset",
+    "quantity": "per-selection OD, integrated",
+    "n": 100,
+    "mean": 1.0266393257285404,
+    "sd": 0.004573560217634945,
+    "min": 1.017028444468689,
+    "max": 1.0397763564701035,
+    "data": 1.1044088343927705,
+    "frac_ge_data": 0.0
+   },
+   {
+    "family": "EMPIRICAL_DIFF_SELECTION_MID",
+    "ensemble": "nominal replay subset",
+    "quantity": "off-diagonal-class OD",
+    "n": 100,
+    "mean": 2.5104057952627254,
+    "sd": 0.06687792008894713,
+    "min": 2.367550627672034,
+    "max": 2.6981597220151077,
+    "data": 1.5092073635389898,
+    "frac_ge_data": 1.0
+   },
+   {
+    "family": "EMPIRICAL_DIFF_SELECTION_MID",
+    "ensemble": "nominal replay subset",
+    "quantity": "per-selection OD, peak",
+    "n": 100,
+    "mean": 1.033234739029219,
+    "sd": 0.004640654951272342,
+    "min": 1.0250884061334387,
+    "max": 1.0457483795975693,
+    "data": 1.0635569327189316,
+    "frac_ge_data": 0.0
+   },
+   {
+    "family": "EMPIRICAL_DIFF_SELECTION_MID",
+    "ensemble": "nominal replay subset",
+    "quantity": "per-selection OD, integrated",
+    "n": 100,
+    "mean": 1.0902288897026444,
+    "sd": 0.0063148056182005825,
+    "min": 1.0751912785670574,
+    "max": 1.1077337258117996,
+    "data": 1.1044088343927705,
+    "frac_ge_data": 0.03
+   },
+   {
+    "family": "EMPIRICAL_DIFF_SELECTION_RED",
+    "ensemble": "C_1 = 0",
+    "quantity": "off-diagonal-class OD",
+    "n": 1000,
+    "mean": 1.3311583387535126,
+    "sd": 0.013973566733771205,
+    "min": 1.2886264713035438,
+    "max": 1.3767113764679986,
+    "data": 1.5092073635389898,
+    "frac_ge_data": 0.0
+   },
+   {
+    "family": "EMPIRICAL_DIFF_SELECTION_FLAT",
+    "ensemble": "C_1 = 0",
+    "quantity": "off-diagonal-class OD",
+    "n": 1000,
+    "mean": 1.3299908348739797,
+    "sd": 0.02024003177356804,
+    "min": 1.276057909409487,
+    "max": 1.4096742728106075,
+    "data": 1.5092073635389898,
+    "frac_ge_data": 0.0
+   },
+   {
+    "family": "EMPIRICAL_DIFF_SELECTION_MID",
+    "ensemble": "C_1 = 0",
+    "quantity": "off-diagonal-class OD",
+    "n": 1000,
+    "mean": 2.5110753356423414,
+    "sd": 0.0618323940451386,
+    "min": 2.3534384912511874,
+    "max": 2.8198761930123317,
+    "data": 1.5092073635389898,
+    "frac_ge_data": 1.0
+   },
+   {
+    "family": "EMPIRICAL_DIFF_SELECTION_RED",
+    "ensemble": "amplitude-marginal",
+    "quantity": "off-diagonal-class OD",
+    "n": 800,
+    "mean": 1.3314255951442937,
+    "sd": 0.10598876565471886,
+    "min": 1.035846446074696,
+    "max": 1.6524339776444532,
+    "data": 1.5092073635389898,
+    "frac_ge_data": 0.0475
+   },
+   {
+    "family": "EMPIRICAL_DIFF_SELECTION_FLAT",
+    "ensemble": "amplitude-marginal",
+    "quantity": "off-diagonal-class OD",
+    "n": 800,
+    "mean": 1.3350521101188937,
+    "sd": 0.08199277735141028,
+    "min": 1.1125314114690663,
+    "max": 1.632926601595046,
+    "data": 1.5092073635389898,
+    "frac_ge_data": 0.01625
+   },
+   {
+    "family": "EMPIRICAL_DIFF_SELECTION_MID",
+    "ensemble": "amplitude-marginal",
+    "quantity": "off-diagonal-class OD",
+    "n": 800,
+    "mean": 2.549500230264997,
+    "sd": 0.5692676247529334,
+    "min": 1.2332866275718386,
+    "max": 4.459451374627475,
+    "data": 1.5092073635389898,
+    "frac_ge_data": 0.98375
+   },
+   {
+    "family": "EMPIRICAL_DIFF_SELECTION_RED",
+    "ensemble": "closed-form 0.05 crossing",
+    "quantity": "off-diagonal-class OD",
+    "n": 500,
+    "mean": 1.3308315218322178,
+    "sd": 0.014149425603732054,
+    "min": 1.2910665347653518,
+    "max": 1.3710069286646474,
+    "data": 1.5092073635389898,
+    "frac_ge_data": 0.0
+   },
+   {
+    "family": "EMPIRICAL_DIFF_SELECTION_FLAT",
+    "ensemble": "closed-form 0.05 crossing",
+    "quantity": "off-diagonal-class OD",
+    "n": 500,
+    "mean": 1.3304745806992124,
+    "sd": 0.019979924040503697,
+    "min": 1.2774535001998009,
+    "max": 1.4106229256396807,
+    "data": 1.5092073635389898,
+    "frac_ge_data": 0.0
+   },
+   {
+    "family": "EMPIRICAL_DIFF_SELECTION_MID",
+    "ensemble": "closed-form 0.05 crossing",
+    "quantity": "off-diagonal-class OD",
+    "n": 500,
+    "mean": 2.5119076160501272,
+    "sd": 0.06266362459343579,
+    "min": 2.360098005005623,
+    "max": 2.6969967236291996,
+    "data": 1.5092073635389898,
+    "frac_ge_data": 1.0
+   }
+  ],
+  "note": "Model-adequacy checks only: pixel overdispersion is dominated by high l and does not constrain C_1. No source-multiplicity or white small-scale term was added in this follow-up, so its effect on the contrast-null spread is untested."
+ },
+ "f6_provenance": {
+  "prior_runs": [
+   {
+    "command": "/usr/bin/time -f '%e s %M kB' .venv/bin/python -B -m scripts.r106.radio_null_mocks --timing-only --output /home/cosmosapjw/Downloads/htt_r106_analysis/nvss/timing",
+    "return_code": 0,
+    "wall_s": 8.47,
+    "maxrss_kB": 387584,
+    "note": "R65 replay + per-mock timing (0.23 s main mock, 2.48 s NSIDE4 jackknife mock)",
+    "script_sha256": null,
+    "script_sha256_source": "not recorded: the run wrote no JSON (timing-only run, log only)"
+   },
+   {
+    "command": "/usr/bin/time -f '%e s %M kB' .venv/bin/python -B -m scripts.r106.radio_null_mocks --workers 3 --calib-mocks 12 --max-mocks 2000 --budget-seconds 1320 --output /home/cosmosapjw/Downloads/htt_r106_analysis/nvss",
+    "return_code": 1,
+    "wall_s": 88.69,
+    "maxrss_kB": 387092,
+    "note": "IndexError in budget loop (tuple index 4 instead of 3) after calibration; logs in failed_attempt1/; superseded",
+    "script_sha256": null,
+    "script_sha256_source": "not recorded: the run crashed before writing JSON (logs moved to failed_attempt1/)"
+   },
+   {
+    "command": "/usr/bin/time -f '%e s %M kB' .venv/bin/python -B -m scripts.r106.radio_null_mocks --workers 3 --calib-mocks 4 --max-mocks 18 --budget-seconds 300 --output /home/cosmosapjw/Downloads/htt_r106_analysis/nvss/smoke",
+    "return_code": 0,
+    "wall_s": 52.26,
+    "maxrss_kB": 386352,
+    "note": "smoke test, 3 families, superseded",
+    "script_sha256": "b6b40890d7d536c6cd90a23b7fd3b79d18434ba6b501fc6a66ab9eaa593dee12",
+    "script_sha256_source": "/home/cosmosapjw/Downloads/htt_r106_analysis/nvss/smoke/NVSS_NULL_MOCKS.json (script_sha256 written by that run)",
+    "families_in_run": [
+     "LSS_COMMON",
+     "LSS_DIFF_RED",
+     "LSS_DIFF_FLAT"
+    ],
+    "output_json_mtime": "2026-11-24 03:00:41 +0900",
+    "p_self_dipole_shown": {
+     "LSS_COMMON": "0.053 (0/18)",
+     "EMPIRICAL_DIFF_SELECTION_RED": "0.58 (10/18)",
+     "EMPIRICAL_DIFF_SELECTION_FLAT": "0.16 (2/18)"
+    }
+   },
+   {
+    "command": "/usr/bin/time -f '%e s %M kB' .venv/bin/python -B -m scripts.r106.radio_null_mocks --workers 3 --calib-mocks 3 --scale-mocks 3 --max-mocks 18 --budget-seconds 400 --pilot-common 2.4e-4 --pilot-red 2e-2 --pilot-flat 1.3e-3 --output /home/cosmosapjw/Downloads/htt_r106_analysis/nvss/smoke2",
+    "return_code": 0,
+    "wall_s": 98.25,
+    "maxrss_kB": 388028,
+    "note": "smoke test, 4 families + scale diagnostic, superseded",
+    "script_sha256": "44b7d90e38c2721711d84f14cf105494806ca22991c41095409a3a7740b6b3a9",
+    "script_sha256_source": "/home/cosmosapjw/Downloads/htt_r106_analysis/nvss/smoke2/NVSS_NULL_MOCKS.json (script_sha256 written by that run)",
+    "families_in_run": [
+     "LSS_COMMON",
+     "LSS_DIFF_RED",
+     "LSS_DIFF_FLAT",
+     "LSS_DIFF_MID"
+    ],
+    "output_json_mtime": "2026-11-24 03:03:47 +0900",
+    "p_self_dipole_shown": {
+     "LSS_COMMON": "0.053 (0/18)",
+     "EMPIRICAL_DIFF_SELECTION_RED": "0.58 (10/18)",
+     "EMPIRICAL_DIFF_SELECTION_FLAT": "0.16 (2/18)",
+     "EMPIRICAL_DIFF_SELECTION_MID": "0.26 (4/18)"
+    }
+   },
+   {
+    "command": "/usr/bin/time -f '%e s %M kB' .venv/bin/python -B -m scripts.r106.radio_null_mocks --workers 3 --calib-mocks 12 --scale-mocks 9 --max-mocks 2000 --budget-seconds 930 --pilot-common 2.4e-4 --pilot-red 2e-2 --pilot-mid 5e-3 --pilot-flat 1.3e-3 --output /home/cosmosapjw/Downloads/htt_r106_analysis/nvss",
+    "return_code": 0,
+    "wall_s": 785.66,
+    "maxrss_kB": 387348,
+    "note": "FINAL: 2000 mocks x 4 families; 108 NSIDE4-jackknife calibration mocks; 36 NSIDE4+8 shape-diagnostic mocks",
+    "script_sha256": "44b7d90e38c2721711d84f14cf105494806ca22991c41095409a3a7740b6b3a9",
+    "script_sha256_source": "/home/cosmosapjw/Downloads/htt_r106_analysis/nvss/NVSS_NULL_MOCKS.json (script_sha256 written by that run)",
+    "families_in_run": [
+     "LSS_COMMON",
+     "LSS_DIFF_RED",
+     "LSS_DIFF_FLAT",
+     "LSS_DIFF_MID"
+    ],
+    "output_json_mtime": "2026-11-24 03:17:02 +0900",
+    "p_self_dipole_shown": {
+     "LSS_COMMON": "0.0005 (0/2000)",
+     "EMPIRICAL_DIFF_SELECTION_RED": "0.57 (1134/2000)",
+     "EMPIRICAL_DIFF_SELECTION_FLAT": "0.012 (23/2000)",
+     "EMPIRICAL_DIFF_SELECTION_MID": "0.17 (335/2000)"
+    }
+   }
+  ],
+  "design_change_note": "LSS_DIFF_MID (MID_SLOPE=-0.6) and the NSIDE8/4 jackknife shape diagnostic were introduced after smoke run 1 (script b6b40890d7d5..., JSON written 2026-11-24 03:00:41 +0900) had displayed RED/FLAT dipole p_self values ({\"LSS_COMMON\": \"0.053 (0/18)\", \"EMPIRICAL_DIFF_SELECTION_RED\": \"0.58 (10/18)\", \"EMPIRICAL_DIFF_SELECTION_FLAT\": \"0.16 (2/18)\"}); smoke2 and the FINAL run used script 44b7d90e38c2....",
+  "followup_runs": {
+   "C1ZERO": {
+    "stage": "c1zero",
+    "command": "python -B -m scripts.r106.radio_null_mocks --followup c1zero --followup-dir /home/cosmosapjw/Downloads/htt_r106_analysis/nvss/review_followup --workers 3 --n-mocks 1000 --n-nominal 100",
+    "script_sha256": "32e375962eb07c1213a9b2d502416d952e766b5a0a49d4335f66a77e84c575a5",
+    "script_sha256_equals_current": true,
+    "json_sha256": "469622dc363ea83c48cd99a54da4f8332554fd1a81f01d2c21bc9fff697053ed",
+    "npz_sha256": "cf288192ba5bb953c4905b91285b870dcaeb9b2addd9c151949a0b5470e310f0",
+    "elapsed_seconds": 613.3471164703369,
+    "wall_s_gnu_time": 616.63,
+    "maxrss_kB_gnu_time": 390532,
+    "return_code": 0
+   },
+   "AMPLITUDE_NUISANCE": {
+    "stage": "amplitude",
+    "command": "python -B -m scripts.r106.radio_null_mocks --followup amplitude --followup-dir /home/cosmosapjw/Downloads/htt_r106_analysis/nvss/review_followup --workers 3 --n-jk 40 --n-mocks 800 --n-band 500",
+    "script_sha256": "32e375962eb07c1213a9b2d502416d952e766b5a0a49d4335f66a77e84c575a5",
+    "script_sha256_equals_current": true,
+    "json_sha256": "ae9004154f5869686ea8c98f3d594d883f68b338278cc08d61a0c35bbae316c2",
+    "npz_sha256": "f96630c700e7f8e19bd20bf9ab1a5b95c22df697465b28bbba4aefebcd2e72d1",
+    "elapsed_seconds": 503.57270550727844,
+    "wall_s_gnu_time": 506.08,
+    "maxrss_kB_gnu_time": 390308,
+    "return_code": 0
+   },
+   "C1_VALIDATION": {
+    "stage": "validate",
+    "command": "python -B -m scripts.r106.radio_null_mocks --followup validate --followup-dir /home/cosmosapjw/Downloads/htt_r106_analysis/nvss/review_followup --workers 3 --n-mocks 500 --n-boot 200",
+    "script_sha256": "32e375962eb07c1213a9b2d502416d952e766b5a0a49d4335f66a77e84c575a5",
+    "script_sha256_equals_current": true,
+    "json_sha256": "bc713fec3db3d3af01cd2e689800a99d11aee0852c0499f92aecf118cff280f2",
+    "npz_sha256": "f5bf1fd248260eb42bda9e0c84065de797f3e4143e475fe9f1ed372e1302f355",
+    "elapsed_seconds": 105.5986738204956,
+    "wall_s_gnu_time": 107.27,
+    "maxrss_kB_gnu_time": 390312,
+    "return_code": 0
+   }
+  },
+  "followup_smoke_runs": {
+   "C1ZERO": {
+    "stage": "c1zero",
+    "command": "python -B -m scripts.r106.radio_null_mocks --followup c1zero --followup-dir /home/cosmosapjw/Downloads/htt_r106_analysis/nvss/review_followup_smoke --workers 3 --n-mocks 30 --n-nominal 6 --n-jk-check 2",
+    "script_sha256": "d2f9cb46900307f2dc1994d416ee88610b3dfa1aa28934d378192805c0315b97",
+    "script_sha256_equals_current": false,
+    "json_sha256": "a131513d999dacb4b17855cefe1c9faf8938987c158bbd56ec03ac9d56496b31",
+    "npz_sha256": "31618396901937709af4cb68f7ac18f35419fa37016d88b5669fb0b37ad391e5",
+    "elapsed_seconds": 49.668957471847534,
+    "wall_s_gnu_time": 52.63,
+    "maxrss_kB_gnu_time": 391164,
+    "return_code": 0,
+    "note": "smoke test of the follow-up stages, tiny ensembles, superseded"
+   },
+   "AMPLITUDE_NUISANCE": {
+    "stage": "amplitude",
+    "command": "python -B -m scripts.r106.radio_null_mocks --followup amplitude --followup-dir /home/cosmosapjw/Downloads/htt_r106_analysis/nvss/review_followup_smoke --workers 3 --n-jk 4 --n-mocks 12 --n-band 6",
+    "script_sha256": "d2f9cb46900307f2dc1994d416ee88610b3dfa1aa28934d378192805c0315b97",
+    "script_sha256_equals_current": false,
+    "json_sha256": "6013dbb471381a066b46fbe69b040de28a7991949b7012bfaeb9756ab1df99ae",
+    "npz_sha256": "8e81019526ce0d1dbf603a07777a98cc0dbd1f6cef5537a83311ec3dd5e6b6b3",
+    "elapsed_seconds": 24.931877613067627,
+    "wall_s_gnu_time": 29.24,
+    "maxrss_kB_gnu_time": 391156,
+    "return_code": 0,
+    "note": "smoke test of the follow-up stages, tiny ensembles, superseded"
+   },
+   "C1_VALIDATION": {
+    "stage": "validate",
+    "command": "python -B -m scripts.r106.radio_null_mocks --followup validate --followup-dir /home/cosmosapjw/Downloads/htt_r106_analysis/nvss/review_followup_smoke --workers 3 --n-mocks 12 --n-boot 20",
+    "script_sha256": "bfb60d6494f491b82f1f3efa73d40951fdfc3ac609ecf530d144471fe96c78fe",
+    "script_sha256_equals_current": false,
+    "json_sha256": "6e29cb30efaba56e639db1441153b7094c3d940b0992d5d0e19dad286cc36d61",
+    "npz_sha256": "b6701f2745e4f62a88e99a743d93c652c89b753005c4c6274cf183352a565c40",
+    "elapsed_seconds": 4.343383073806763,
+    "wall_s_gnu_time": 7.73,
+    "maxrss_kB_gnu_time": 390576,
+    "return_code": 0,
+    "note": "smoke test of the follow-up stages, tiny ensembles, superseded"
+   }
+  },
+  "current_script_sha256": "32e375962eb07c1213a9b2d502416d952e766b5a0a49d4335f66a77e84c575a5"
+ },
+ "claim_classes": {
+  "physical_attribution": "none: no statement that the NVSS integrated-minus-peak contrast is or is not caused by LSS or selection; C_1 is not anchored by independent data",
+  "conditional_prediction": "every p here is conditional on a family shape and its C_1; p versus C_1, the crossings and the amplitude-marginal p with band are conditional predictions",
+  "numerical_convergence": "MC binomial SEs, bootstrap intervals of the crossings, per-mock validation of the first-order closed form at C_1 = A_m and at the 0.05 crossing, and the bit-exact replay of the reference mocks"
+ },
+ "scope": "Null mocks are Cox processes with positions independent of the flux pair; the common dipole cancels in the contrast by construction. Clustering amplitudes are fitted to the data's own NSIDE=4 delete-one jackknife traces (one sky); the angular shape of each field is assumed, not fitted. The DIFF families are empirical differential-selection (excess-variance) fields on the resolved/migrating classes, not large-scale structure, and are not jointly calibrated (their single-selection jackknife trace exceeds the data target). Their C_1 is the power law extrapolated to l=1; the NSIDE=4/8 jackknife traces and the NSIDE8/4 ratio are insensitive to the transverse l=1 mode, which lies inside the fitted log-linear model, while that mode sets most of the null contrast covariance. Every p_mc is therefore conditional on an assumed C_1 (a random resolved-fraction dipole of per-component RMS sqrt(3 C_1/4pi)); no family's p_mc is the LSS/selection-null p-value, and C_1 = 0 is not a conservative limit. The mocks do not model source multiplicity, spatially varying flux calibration or a physical redshift-dependent bias, and they under-predict the data's per-selection pixel overdispersion. No physical Pi or Bianchi inference is made.",
+ "elapsed_seconds": 4.2120444774627686
+}

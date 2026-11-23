@@ -1,0 +1,169 @@
+--- /home/cosmosapjw/Dropbox/bianchi/htt_base/htt/bass/transport/coupled_einstein_boltzmann.py	2026-11-24 02:24:17.908719152 +0900
++++ variants/coupled_matter_feedback_variant.py	2026-11-24 02:53:05.437182068 +0900
+@@ -85,6 +85,17 @@
+ ROOT = Path(__file__).resolve().parents[3]
+ HYREC_REF_CSV = ROOT / "htt/bass/recombination/fixtures/recombination_ref_planck2018.csv"
+ 
++# R106 matter-feedback diagnostic switches (variant copy only; defaults reproduce R105).
++# PI_FEEDBACK_EINSTEIN_EULER: previous-Picard photon STF correction enters rho/p/q/pi sources of
++#   Raychaudhuri + shear, the Gamma4 transport of the photon fluid, and the recorded fluid moments.
++# PI_FEEDBACK_THOMSON: the same correction enters the photon stress used by the Thomson four-force.
++# MIDPOINT_PI: "average" stores pi/E at the cell midpoint as the mean of the two cell ends (R105);
++#   "half_cell" stores pi/E from a separate sky state advanced over the first half cell with
++#   quarter-point dense geometry, the same depth-capped SDIRK substeps and stage-time baryon velocity.
++PI_FEEDBACK_EINSTEIN_EULER = True
++PI_FEEDBACK_THOMSON = True
++MIDPOINT_PI = "average"
++
+ Z_INITIAL = 1600.0
+ N_INITIAL = -math.log1p(Z_INITIAL)
+ ALL_SEVEN_FAMILIES = ("FLRW", "I", "V", "VII_h", "VI_h", "VI_-1/9", "IX")
+@@ -531,16 +542,18 @@
+             n_m = _unpack_sym6(y[9:15])
+             C = build_structure_tensor_with_sign(a_v, n_m, a_sign=1)
+             _, R_sc, S_ab = exact_spatial_ricci_from_compact(a_v, n_m, a_sign=1)
+-            T4_list, eh_list, vv_list = [], [], []
++            T4_list, eh_list, vv_list, T4_th_list = [], [], [], []
+             for idx, spec in enumerate(species_specs):
+                 off = 16 + 4 * idx
+                 eh, _, vv, T4_s = primitive_from_energy_momentum_ratio(y[off], y[off + 1 : off + 4], spec.K_eos)
+                 if T4_s[0, 0] <= 0.0:
+                     raise FloatingPointError(f"{spec.species} normal energy underflow at N={N_val}")
++                T4_raw = T4_s
+                 if idx in pi_splines:
+                     T4_s = T4_s.copy()
+                     T4_s[1:, 1:] += T4_s[0, 0] * orthonormal_to_stf_matrix(pi_splines[idx](N_val))
+-                T4_list.append(T4_s)
++                T4_list.append(T4_s if PI_FEEDBACK_EINSTEIN_EULER else T4_raw)
++                T4_th_list.append(T4_s if PI_FEEDBACK_THOMSON else T4_raw)
+                 eh_list.append(eh)
+                 vv_list.append(vv)
+             T4_tot = sum(T4_list)
+@@ -548,10 +561,10 @@
+             q_tot = T4_tot[0, 1:]
+             p_tot = float(np.trace(T4_tot[1:, 1:]) / 3.0)
+             pi_tot = pstf_rank2(T4_tot[1:, 1:])
+-            return H, sig, a_v, n_m, C, R_sc, S_ab, rho_tot, p_tot, q_tot, pi_tot, T4_list, eh_list, vv_list
++            return H, sig, a_v, n_m, C, R_sc, S_ab, rho_tot, p_tot, q_tot, pi_tot, T4_list, eh_list, vv_list, T4_th_list
+ 
+         def ode_rhs(N_val: float, y: np.ndarray) -> np.ndarray:
+-            H, sig, a_v, n_m, C, _, S_ab, rho_tot, p_tot, q_tot, pi_tot, T4_list, _, vv_list = _unpack(N_val, y)
++            H, sig, a_v, n_m, C, _, S_ab, rho_tot, p_tot, q_tot, pi_tot, T4_list, _, vv_list, T4_th = _unpack(N_val, y)
+             matter = MatterNormalFrameState(rho=rho_tot, p=p_tot, q=q_tot, pi=pi_tot)
+             dH_dt = ver2_rhs.raychaudhuri_rhs(H=H, sigma_ab=sig, matter=matter, lambda_value=lam_val, kappa=kappa_grav)
+             dsig_dt = ver2_rhs.shear_rhs(H=H, sigma_ab=sig, S_ab=S_ab, pi_ab=pi_tot, kappa=kappa_grav)
+@@ -577,7 +590,7 @@
+             dy[15] = math.exp(-float(N_val)) * inv_H
+ 
+             op_val = float(opacity.rate(min(max(float(N_val), N_start), N_end)))
+-            coll_forces = _species_thomson_forces(T4_list[photon_idx], vv_list[baryon_idx], op_val,
++            coll_forces = _species_thomson_forces(T4_th[photon_idx], vv_list[baryon_idx], op_val,
+                                                   len(species_specs), photon_idx, baryon_idx)
+ 
+             for idx, (T4_s, F_s) in enumerate(zip(T4_list, coll_forces)):
+@@ -617,7 +630,7 @@
+         cod_grid = np.zeros(n_eval, dtype=np.float64)
+ 
+         for k in range(n_eval):
+-            H, sig, a_v, n_m, _, R_sc, _, rho_tot, _, q_tot, _, T4_list, eh_list, vv_list = _unpack(float(N_eval[k]), sol.y[:, k])
++            H, sig, a_v, n_m, _, R_sc, _, rho_tot, _, q_tot, _, T4_list, eh_list, vv_list, T4_th = _unpack(float(N_eval[k]), sol.y[:, k])
+             H_grid[k] = H
+             sig_grid[k] = sig
+             a_grid[k] = a_v
+@@ -643,7 +656,7 @@
+             max_trace = max(max_trace, abs(float(np.trace(sig))))
+ 
+             op_k = float(recomb_hist.opacity_per_efold[k])
+-            force_grid = _species_thomson_forces(T4_list[photon_idx], vv_list[baryon_idx], op_k,
++            force_grid = _species_thomson_forces(T4_th[photon_idx], vv_list[baryon_idx], op_k,
+                                                 len(species_specs), photon_idx, baryon_idx)
+             F_rad, F_bar = force_grid[photon_idx], force_grid[baryon_idx]
+             max_mom_sum_err = max(max_mom_sum_err, float(np.linalg.norm(F_rad + F_bar)))
+@@ -707,11 +720,71 @@
+                 "thomson_force_over_E_sky": np.zeros((n_c, 4)),
+             }
+ 
++        def _lie_geometry(H_mid, sig_mid, a_mid, n_mid, cell):
++            sigN_mid = pstf_rank2(sig_mid / H_mid)
++            aN_mid = a_mid / H_mid
++            nN_mid = n_mid / H_mid
++            scale_mid = float(aN_mid @ aN_mid + np.sum(nN_mid * nN_mid))
++            if scale_mid <= 1e-24:
++                aN_mid = np.zeros(3, dtype=np.float64)
++                nN_mid = np.zeros((3, 3), dtype=np.float64)
++            elif float(aN_mid @ aN_mid) <= 1e-24 * max(scale_mid, 1.0):
++                aN_mid = np.zeros(3, dtype=np.float64)
++                nN_mid = 0.5 * (nN_mid + nN_mid.T)
++            else:
++                jac_mid = float(np.max(np.abs(nN_mid @ aN_mid))) / scale_mid
++                if jac_mid > 1e-8:
++                    raise CodazziProjectionError(f"[{family}] Lie Jacobi breach at quarter point cell {cell}: {jac_mid:.3e}")
++                if jac_mid > 5e-12:
++                    anorm2 = float(aN_mid @ aN_mid)
++                    a_hat = aN_mid / math.sqrt(anorm2)
++                    proj = np.eye(3, dtype=np.float64) - np.outer(a_hat, a_hat)
++                    n_proj = proj @ nN_mid @ proj
++                    nN_mid = 0.5 * (n_proj + n_proj.T)
++            return sigN_mid, LieGeometry(sigN_mid, aN_mid, nN_mid)
++
++        half_state = {}
+         for cell in range(int(cfg.n_cells)):
+             i0 = 2 * cell
+             i_mid = i0 + 1
+             i1 = i0 + 2
+             dN_cell = float(N_eval[i1] - N_eval[i0])
++            if MIDPOINT_PI == "half_cell":
++                # Separate first-half-cell sky states (the full-cell sky update below is unchanged).
++                n0h = float(N_eval[i0])
++                n_mid_val = float(N_eval[i_mid])
++                Nq = n0h + 0.25 * dN_cell
++                uq = _unpack(Nq, sol.sol(Nq))
++                sigN_q, geom_q = _lie_geometry(uq[0], uq[1], uq[2], uq[3], cell)
++                src_half = op_lie.shear_source_vector(sigN_q, amplitude=0.5 * dN_cell)
++                dtau_half = float(opacity.cells(np.array([n0h, n_mid_val])).delta_tau[0])
++                b_offh = 16 + 4 * baryon_idx
++                half_state.clear()
++                if nu_vec is not None:
++                    half_state["nu"] = op_lie.advance_cell(nu_vec, 0.5 * dN_cell, geom_q, 0.0,
++                                                           source_increment=src_half, substeps=cfg.substeps_per_cell,
++                                                           bolometric_redshift=True)
++                if cfg.include_moving_correction and dtau_half > 0.0 and cfg.stage_velocity_collision:
++                    def _vb_half(u, n0=n0h, dn=0.5 * dN_cell, b_off=b_offh):
++                        y_u = sol.sol(n0 + u * dn)
++                        return primitive_from_energy_momentum_ratio(y_u[b_off], y_u[b_off + 1:b_off + 4], 0.0)[2]
++                    hu_edges, h_depths = _optical_substeps(
++                        opacity, n0h, n_mid_val, cfg.substeps_per_cell, cfg.max_substep_depth)
++                    half_state["gamma"] = _advance_moving_photon_cell(op_lie, S_vec, 0.5 * dN_cell, geom_q, src_half,
++                                                                      h_depths, _vb_half, sub_edges=hu_edges)
++                else:
++                    vb_q = uq[13][baryon_idx]
++                    src_h = src_half.copy()
++                    moving_h = None
++                    if dtau_half > 0.0 and np.any(vb_q):
++                        if cfg.include_moving_correction:
++                            moving_h = MovingCollisionStage(op_lie, vb_q)
++                            src_h += dtau_half * moving_h.emission
++                        else:
++                            src_h += op_lie.dipole_source_vector(-vb_q, channel="T", amplitude=dtau_half)
++                    half_state["gamma"] = op_lie.advance_cell(S_vec, 0.5 * dN_cell, geom_q, dtau_half,
++                                                              source_increment=src_h, substeps=cfg.substeps_per_cell,
++                                                              moving_collision=moving_h, bolometric_redshift=True)
+             H_mid = float(H_grid[i_mid])
+             sigN_mid = pstf_rank2(sig_grid[i_mid] / H_mid)
+             aN_mid = a_grid[i_mid] / H_mid
+@@ -788,7 +861,14 @@
+                 offset = 16 + 4*species_idx
+                 new_pi_tab[slot, i1] = _stress_feedback_ratio(
+                     angular_state, op_lie, sol.y[offset+1:offset+4, i1], v_grid[spec_key][i1])
+-                new_pi_tab[slot, i_mid] = .5*(new_pi_tab[slot, i0] + new_pi_tab[slot, i1])
++                if MIDPOINT_PI == "half_cell":
++                    half_ang = half_state["gamma"] if species_idx == photon_idx else half_state["nu"]
++                    new_pi_tab[slot, i_mid] = _stress_feedback_ratio(
++                        half_ang, op_lie, sol.y[offset+1:offset+4, i_mid], v_grid[spec_key][i_mid])
++                elif MIDPOINT_PI == "average":
++                    new_pi_tab[slot, i_mid] = .5*(new_pi_tab[slot, i0] + new_pi_tab[slot, i1])
++                else:
++                    raise ValueError(f"unknown MIDPOINT_PI {MIDPOINT_PI!r}")
+             if cfg.record_history:
+                 T4_end = _unpack(float(N_eval[i1]), sol.y[:, i1])[11]
+                 for slot, species_idx in enumerate(radiation_indices):

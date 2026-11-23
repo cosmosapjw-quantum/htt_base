@@ -1,0 +1,504 @@
+{
+ "schema": "htt.r106.data_subtasks_first_pass/1",
+ "workflow_run": "wf_8de2fec4-dda",
+ "tasks": [
+  {
+   "task": "D1 REC/REI restart replay: verify the actual REI mean-z=4 restart (charge, temperature, proper time, photon inventory) for the five shear cases, replay the last two output intervals, compare c*sigma_T*int(n_e dt) with int(c*sigma_T*n_e/H dN), and keep FLRW+tanh only as a sensitivity.",
+   "files_created": [
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r106/rei_restart_replay.py",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/rei/REI_RESTART_REPLAY.json",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/rei/BUILD.json",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/rei/COMMANDS.jsonl",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/rei/logs/",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/rei/inputs/five_case_abundances.csv.gz",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/rei/replay/{ZERO,SHEAR_HALF_PLUS,SHEAR_HALF_MINUS,SHEAR_PLUS,SHEAR_MINUS}/ (replay.json, continuous_00312180.txt, continuous_00312237.txt, restart_00312237_from_00312180.txt, *_history/abundances/ledgers/feedback/spectra.csv)",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/rei/native/tree_d7676/ and tree_4de69/ (copied frozen crate + examples/rei_restart_replay.rs), native/target_*/release/examples/rei_restart_replay"
+   ],
+   "commands": [
+    {
+     "command": "cd /home/cosmosapjw/Dropbox/bianchi/htt_base && PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 /usr/bin/time -f '%e s %M kB' .venv/bin/python -B scripts/r106/rei_restart_replay.py --stages build,replay,analyze --workers 3   [FINAL clean run after rm -rf of this task's own output dir]",
+     "return_code": 0,
+     "wall_s": 20.17,
+     "maxrss_kB": 421228
+    },
+    {
+     "command": "  sub: cargo build --release --offline --locked -j 3 --manifest-path .../rei/native/tree_d7676/rust/rei_microphysics/Cargo.toml --example rei_restart_replay (CARGO_TARGET_DIR=.../rei/native/target_d7676)",
+     "return_code": 0,
+     "wall_s": 3.23,
+     "maxrss_kB": 274408
+    },
+    {
+     "command": "  sub: cargo build --release --offline --locked -j 3 --manifest-path .../rei/native/tree_4de69/rust/rei_microphysics/Cargo.toml --example rei_restart_replay (CARGO_TARGET_DIR=.../rei/native/target_4de69)",
+     "return_code": 0,
+     "wall_s": 3.34,
+     "maxrss_kB": 274664
+    },
+    {
+     "command": "  sub: target_d7676/release/examples/rei_restart_replay --config <ZERO_continuation_001>/config.cfg --case ZERO --start checkpoints/00312120.txt --references checkpoints/00312180.txt,checkpoints/00312237.txt --terminal checkpoint.txt --caps 500000.0,1550054.0,20000000.0,15745.126871471 --out .../rei/replay/ZERO",
+     "return_code": 0,
+     "wall_s": 3.16,
+     "maxrss_kB": 3680
+    },
+    {
+     "command": "  sub: target_4de69/.../rei_restart_replay ... --case SHEAR_HALF_PLUS (same arguments pattern; caps from effective_resource_overrides.json)",
+     "return_code": 0,
+     "wall_s": 4.08,
+     "maxrss_kB": 4228
+    },
+    {
+     "command": "  sub: target_4de69/.../rei_restart_replay ... --case SHEAR_HALF_MINUS",
+     "return_code": 0,
+     "wall_s": 4.13,
+     "maxrss_kB": 4228
+    },
+    {
+     "command": "  sub: target_d7676/.../rei_restart_replay ... --case SHEAR_PLUS (segment /home/cosmosapjw/Dropbox/bianchi/rei_ax08_plus_recovery_20261115/SHEAR_PLUS_continuation_002, caps 330480,1081494,8050500,10042.101283315)",
+     "return_code": 0,
+     "wall_s": 4,
+     "maxrss_kB": 4020
+    },
+    {
+     "command": "  sub: target_4de69/.../rei_restart_replay ... --case SHEAR_MINUS",
+     "return_code": 0,
+     "wall_s": 4.03,
+     "maxrss_kB": 3820
+    },
+    {
+     "command": "earlier development run: same script --stages build",
+     "return_code": 0,
+     "wall_s": 8.47,
+     "maxrss_kB": 274680
+    },
+    {
+     "command": "earlier development run: same script --stages replay --workers 3",
+     "return_code": 0,
+     "wall_s": 10.25,
+     "maxrss_kB": 36168
+    },
+    {
+     "command": "earlier development run: same script --stages analyze (failed: scipy quad ValueError 'If epsabs<=0, epsrel must be greater than both 5e-29 and 50*(machine epsilon)'; fixed epsrel 1e-14 -> 5e-14)",
+     "return_code": 1,
+     "wall_s": 2.87,
+     "maxrss_kB": 203480
+    },
+    {
+     "command": "earlier development run: same script --stages analyze",
+     "return_code": 0,
+     "wall_s": 8.95,
+     "maxrss_kB": 421396
+    },
+    {
+     "command": "earlier development run: same script --stages analyze (after fixing the foreground proper-time integration direction, which had given a negative sign, and adding Richardson)",
+     "return_code": 0,
+     "wall_s": 6.36,
+     "maxrss_kB": 396580
+    }
+   ],
+   "key_results": [
+    "Restart files: SOLVER_SOURCES_KO.md names only the five-case sample (blob f4bc0046...) and the +0.01 manifest at rei_bianchi 56dc609e. I found the actual restart files through the run manifests in that commit. They are native AXBI_CHECKPOINT_V2 terminal checkpoints at a=0.2 (mean z=4), each with 312237 accepted steps. ZERO: runs/flrw/32d11e733155/ZERO_continuation_001/checkpoint.txt. The three paired cases (SHEAR_HALF_PLUS, SHEAR_HALF_MINUS, SHEAR_MINUS): runs/paired/32d11e733155/<CASE>_continuation_001/checkpoint.txt. SHEAR_PLUS: /home/cosmosapjw/Dropbox/bianchi/rei_ax08_plus_recovery_20261115/SHEAR_PLUS_continuation_002/checkpoint.txt.",
+    "Provenance chain verified for all five cases. For the four original cases, the git INPUT_MANIFEST_ORIGINAL_FOUR terminal RETURN SHA matches the composed RETURN.txt, and the COMPOSITION_RECEIPT checkpoint SHA matches checkpoint.txt. For SHEAR_PLUS, the PLUS_COMPLETE_COMPOSITION_MANIFEST native checkpoint SHA 671f1295... matches the file.",
+    "Build: the frozen crate was copied (rei_bianchi and the recovery bundle are unmodified). The compiled source identity re-hashes to d7676b93..., used for ZERO and SHEAR_PLUS. A second tree, rebuilt from the paired source_identity.txt, gives 4de69c1e... for the three paired cases. It differs only in src/axbi_driver.rs, in the output-budget lines. Built with rustc 1.99.0, with no dependencies.",
+    "Charge at restart (n_H = 2.372748063392533e-5 cm^-3). x_e per H: ZERO 1.083394352319165; +/-0.005 1.0833943521593157 / 1.083394352159316; +/-0.01 1.0833943516797104 / 1.083394351679712. n_e = 2.57062185e-5 cm^-3. Python, the native EOS and the last history row agree to 0.0 cm^-3, and the abundance-row neutrality residual n_e - (n_HII + n_HeII + 2 n_HeIII) is 0.0 cm^-3. Event-ledger closures: x_HII - (2e-4 + photo + CI - RR) = +4.57e-9 to +4.59e-9 per H; f_He*x_HeII closure +1.54e-10 per H; f_He*x_HeIII closure -1.2e-15 to -1.4e-14 per H; absorbed minus the sum of photoionization events <= 1.9e-14 per H.",
+    "Temperature at restart (Python EOS from w = native EOS = history, difference 0.0 K): ZERO 7900.621365666492 K; +0.005 7900.623351182352 K; -0.005 7900.623351185612 K; +0.01 7900.629307415599 K; -0.01 7900.629307442252 K.",
+    "Proper time at restart (elapsed seconds since mean z=20): ZERO 4.2794891441558e16 s; +/-0.005 4.279482918209246e16 s; +/-0.01 4.279464240897777e16 s. Independent adaptive quadrature of 1/H differs by +24 s, -8 s and 0 s (<= 5.6e-16 relative). Anisotropy b = 0, +/-0.002946499991410193, +/-0.005892916695356844, with quadrature difference <= 7e-18. The frozen reader also passes its exact clock and b identity check. H and s are not stored in the checkpoint; recomputed H = 1.38349e-17 s^-1 matches history to 2.2e-16 relative.",
+    "Photon inventory at restart: 392 nodes (8 angles x 49 energies). n = 2.2518080058259464 photons/H and u = 44.804316297257444 eV/H for ZERO; +0.01 gives 2.251804779518487 photons/H and 44.80425501303098 eV/H. Differences from history are <= 3.6e-15 photons/H and <= 2.1e-14 eV/H. Count-ledger residual <= 7.7e-13 photons/H; augmented-energy residual 7.32e-8 to 7.35e-8 eV/H. Dipole J1 <= 5e-15 eV/H. Signed quadrupole J2: +0.01 -0.011897411 eV/H; -0.01 +0.011902338 eV/H; +0.005 -0.005949338 eV/H; -0.005 +0.005950570 eV/H; ZERO 2.8e-12 eV/H.",
+    "Replay of the last two output intervals (accepted steps 312120 -> 312180 -> 312237, mean z 4.0072954801941 -> 4.0), both continuous and restarted from the original 312180 checkpoint, in all five cases: every residual is exactly 0. That covers a, t [s], b, the three fractions, w [erg/H], n_e [cm^-3], T [K], the 392 photon stocks [photons/H], the 24 ledgers and the step counters. Checkpoint text is byte-identical once the wall-clock field is substituted. Rows are byte-identical: 118 history, 708 abundance, 3186 ledger and 118 feedback rows, plus 3 x 392 spectra rows. No step was rejected in the window. Replay wall time is 2.07-2.76 s continuous and 1.07-1.35 s restarted.",
+    "Clock integrals on the native rows, mean z 20 -> 4 (312238 rows; Richardson values). c*sigma_T*int(n_e dt) / int(c*sigma_T*n_e/H dN): ZERO 0.031968182839900695 / 0.031968182839900654; +/-0.005 0.03196811801497368; +/-0.01 0.031967923545325586. Relative difference between the two forms is 3.66e-11 on raw native rows and <= 1.3e-15 after Richardson. Over the replayed interval alone, tau = 5.40894456e-5 (ZERO) and 5.40894095e-5 (+/-0.01), with relative difference 1.44e-10 raw and <= 4.1e-13 after Richardson. The R105 1001-row sample overestimates tau(20 -> 4) by +2.02e-8 (6.32e-7 relative).",
+    "Extension to z=0 is not possible for any case with the frozen model; native tau(4 -> 0) is null.",
+    "Sensitivity only, the common FLRW+tanh foreground: tau(0 -> 4) = 0.021127959231591706 (H plus first He ionization) and 0.022430454251735874 (with HeII -> HeIII) for ZERO. This reproduces R105's 0.02112795923 and 0.02243045425. Shear cases differ by <= 5.3e-9. The proper-time and dN forms agree to <= 1.8e-15 relative after Richardson. Junction charge mismatch x_e(restart) - x_e(tanh, z=4) = +0.0020955 against tanh 1.0812988942693786, and -0.0071397 against tanh 1.0905340518837032, for all cases. The tanh foreground therefore does not match the restart charge in either variant.",
+    "Classification: the replay and clock checks are numerical convergence (restart reproducibility and clock/unit consistency). The tanh numbers are a conditional prediction. This task adds no new physical attribution; the signed photon J2 is a native-model output, not a resolved physical effect."
+   ],
+   "classification": "numerical convergence (bit-exact replay of the restart and clock/unit consistency between the two forms of the Thomson integral on z in [4,20]); conditional prediction (FLRW+tanh z<4 foreground, sensitivity only); native z<4 extension blocked",
+   "blockers": [
+    "Native z=4 -> 0 continuation blocked in all five cases; first failing input: config.cfg with end_zbar=0.0 -> DriverConfig::read -> InvalidInput(\"AXBI_CONFIG_DOMAIN\") (validate requires 4 <= end_zbar < 20; end_zbar=3.999 fails the same way). Further failures: AxbiSource::at_redshift(3.999) and at_redshift(0.0) -> InvalidInput(\"AXBI_SOURCE_DOMAIN_OR_QUADRATURE\") (REDSHIFT_SUPPORT=[4,20]); AxbiBackground::point_at_scale(0.25) -> InvalidInput(\"AxbiScaleDomain\") (a_end=0.2).",
+    "Quantities the restart lacks for any z<4 continuation: the ionizing source emissivity below mean z=4; a configuration domain below z=4; the background clock and geometry beyond a=0.2; the absolute cosmic age (only elapsed time since mean z=20 is stored). H and s are not stored either, but the locked background recomputes them from q_ref. Extending would mean changing the scenario lock (owner decision); I did not do it.",
+    "Static type-checker (pyright) warnings in the new script: fixed by annotating CASES as dict[str, dict[str, Any]]; no runtime errors. Pandas 3.1.1 prints a deprecation warning for float_precision='round_trip'. Exact round-trip parsing is still checked, because each case's last native history row must equal the native terminal state."
+   ],
+   "input_sha256": {
+    "git:56dc609ea9b801c88d3364aed3eee140b3a20d46:research/rei_igm_sync_20261116/approximation_validity/incremental_fifth/results_five/five_case_abundances.csv.gz": "f4bc0046d79faf2cd13ae7ed78135503306c7d76c11580e4601a757c407bc83d",
+    "ZERO_continuation_001/checkpoint.txt (restart)": "352eae297cbc239bed29de412e0ee1f72cbdf954069ed673abdad87dba5724a2",
+    "ZERO_continuation_001/checkpoints/00312120.txt": "827876c0bb12d1e775d28810a6610e549709c7ba71d891de1e77b4abb3b1f9d0",
+    "ZERO_composed_001/history.csv": "4f6852c3a5152b91224ce5fecad6ccdfe9f7ece4c8a6d39825c6f5e5ca8ae92f",
+    "SHEAR_HALF_PLUS_continuation_001/checkpoint.txt (restart)": "3b3bac5c062126b05960da69f10424773704fcf105afb2140f4f565589574d36",
+    "SHEAR_HALF_PLUS_continuation_001/checkpoints/00312120.txt": "5b29aec0f17ea09a371a6ec2619832332f6a759211b61e21c58d7a8260c16f7f",
+    "SHEAR_HALF_PLUS_composed_002/history.csv": "50efa302db22f58d55c17c0c18c4b0c94e2063cc729e12067a05b2337373031e",
+    "SHEAR_HALF_MINUS_continuation_001/checkpoint.txt (restart)": "7626bee34c885473387ea8bf329831ca6a4b0ccaf3e42e15bcd769a59dfcae8b",
+    "SHEAR_HALF_MINUS_continuation_001/checkpoints/00312120.txt": "2e99bcc5db2dc1f7fee01f31742e55034e470b3df64490c8a9e29d1bca89cb00",
+    "SHEAR_HALF_MINUS_composed_001/history.csv": "5c8ff1e7f21f56a34514797415680256628279250c63219dccf8e317303ff83e",
+    "rei_ax08_plus_recovery_20261115/SHEAR_PLUS_continuation_002/checkpoint.txt (restart)": "671f1295428dc652304e9dd7f9d097e3330aaf272aba271fe99cd987acb521a5",
+    "rei_ax08_plus_recovery_20261115/SHEAR_PLUS_continuation_002/checkpoints/00312120.txt": "ab717e4e5d157edbe2b94a424d7e596c84d52788451e278bdf394d57cf324777",
+    "SHEAR_PLUS segments history.csv (plus_0/plus_1/plus_2)": "1f29ed5dd6a7cc0588eceb9cc8748a3f3ab78e94c482f3758fd585f8910c1587 / dbe87394cb417ae18c700325a95f8e1ddebf1fed220375c3f4df947c992f66b3 / 7ddf62467da7e1d253ab538d4cb16872979833a7f1c606c525ab0dfa2e94c72a",
+    "SHEAR_MINUS_continuation_001/checkpoint.txt (restart)": "d338724e4172b4db44c2fbb1be1fe960430119a9f2e71fc031b23135189863fe",
+    "SHEAR_MINUS_continuation_001/checkpoints/00312120.txt": "d3ca51c1717d78ab293ffaeda2bf65439652207e58d03b2da4ff6516be903830",
+    "SHEAR_MINUS_composed_001/history.csv": "0c1d2479eebef9b1ec2d4ff56417ee3395ecd122c17326d4a8d827e2ead76d11",
+    "compiled source identity (ZERO, SHEAR_PLUS)": "d7676b9309ac9b084499bbf599e803baecd661c80765489be45839ef5a7cf185",
+    "compiled source identity (paired cases)": "4de69c1e68ebd395fe2d0b5580d901b9a82bde86cadbd11bdd07e5ad2042b4a1",
+    "replay binary target_d7676": "2b4f5aeb2f35908138276ac36fca0526f8c023c0af1d810a21320ee6fb3d83bf",
+    "replay binary target_4de69": "4b2571094731f9e58eee955b99d85f15059acdddc052c5bb42bac93999cebffa",
+    "embedded Rust replay example source": "2b6f6c6b1bcf33eba75f768c894d1c4b77a0c9a7024acbaa29bfe060c20d70d5",
+    "scripts/r106/rei_restart_replay.py": "10508b344137fb46fb86aa414e124bccdb3e65c90adcc26349b905711a41a3d5",
+    "output REI_RESTART_REPLAY.json": "ec8396f2bcc8759db2d975d0e59d46bcbdf12ffb49f1dad61701c90223bb0f70"
+   },
+   "output_json": "/home/cosmosapjw/Downloads/htt_r106_analysis/rei/REI_RESTART_REPLAY.json"
+  },
+  {
+   "task": "D2 Gaia independent null: kept the joint 32-dim covariance across both redshift-curvature rows, refit without patches 8 and 47, and ran the same estimator on the frame/sky nulls that real data allow. The R105 handoff names an \"independent frame/sky null\" but gives no catalogue or mock set. R100/R101 list the independent AGIS scan-error law and AGN-centroid controls (D04) as BLOCKED_DATA. So I built only randomization nulls from real catalogue rows, invented no data, and report them as working diagnostics, not significances.",
+   "files_created": [
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r106/gaia_null_refit.py",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia/GAIA_NULL_REFIT.json",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia/observed.json",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia/null_patch.npz",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia/null_patch.json",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia/null_patch_gmag.npz",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia/null_patch_gmag.json",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia/null_patch_gmag_colour.npz",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia/null_patch_gmag_colour.json",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia/null_crf3_complement.npz",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia/null_crf3_complement.json",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia/null_crf3_complement_all_g.npz",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia/null_crf3_complement_all_g.json",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia/logs/run_nulls.sh",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia/logs/jobs.txt",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia/logs/time_patch.txt",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia/logs/time_patch_gmag.txt",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia/logs/time_patch_gmag_colour.txt",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia/logs/time_crf3_complement.txt",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia/logs/time_crf3_complement_all_g.txt",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia/logs/time_driver.txt",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia/logs/time_observed.txt",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia/logs/time_summarize.txt"
+   ],
+   "commands": [
+    {
+     "command": "cd /home/cosmosapjw/Dropbox/bianchi/htt_base && PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 /usr/bin/time -f '%e s %M kB' .venv/bin/python -B -m scripts.r106.gaia_null_refit observed  (first run, superseded by the final rerun below)",
+     "return_code": 0,
+     "wall_s": 1.3,
+     "maxrss_kB": 161560
+    },
+    {
+     "command": "[scratch test] .venv/bin/python -B -m scripts.r106.gaia_null_refit null --kind patch_gmag_colour --draws 10 --seed 7 --out <scratchpad>/gaia_test",
+     "return_code": 0,
+     "wall_s": 19.8,
+     "maxrss_kB": 742584
+    },
+    {
+     "command": "[scratch test] .venv/bin/python -B -m scripts.r106.gaia_null_refit null --kind crf3_complement --draws 4 --seed 7 --out <scratchpad>/gaia_test",
+     "return_code": 0,
+     "wall_s": 13.81,
+     "maxrss_kB": 743052
+    },
+    {
+     "command": "[scratch test] .venv/bin/python -B -m scripts.r106.gaia_null_refit null --kind crf3_complement_all_g --draws 3 --seed 7 --out <scratchpad>/gaia_test  (FAILED: ValueError 'Out of range float values are not JSON compliant: nan' from the complement G-quantile census; fixed by switching to np.nanquantile)",
+     "return_code": 1,
+     "wall_s": 12.02,
+     "maxrss_kB": 963952
+    },
+    {
+     "command": "[scratch test, after the fix] same crf3_complement_all_g --draws 3 --seed 7",
+     "return_code": 0,
+     "wall_s": 7.83,
+     "maxrss_kB": 964004
+    },
+    {
+     "command": "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia/logs/run_nulls.sh  (xargs -P 3 driver over jobs.txt; reported RSS is the largest child)",
+     "return_code": 0,
+     "wall_s": 640.01,
+     "maxrss_kB": 1023660
+    },
+    {
+     "command": ".venv/bin/python -B -m scripts.r106.gaia_null_refit null --kind patch --draws 1000 --seed 106001 --out /home/cosmosapjw/Downloads/htt_r106_analysis/gaia",
+     "return_code": 0,
+     "wall_s": 319.72,
+     "maxrss_kB": 748748
+    },
+    {
+     "command": ".venv/bin/python -B -m scripts.r106.gaia_null_refit null --kind patch_gmag --draws 1000 --seed 106002 --out /home/cosmosapjw/Downloads/htt_r106_analysis/gaia",
+     "return_code": 0,
+     "wall_s": 330.69,
+     "maxrss_kB": 748356
+    },
+    {
+     "command": ".venv/bin/python -B -m scripts.r106.gaia_null_refit null --kind patch_gmag_colour --draws 2000 --seed 106003 --out /home/cosmosapjw/Downloads/htt_r106_analysis/gaia",
+     "return_code": 0,
+     "wall_s": 640.01,
+     "maxrss_kB": 748824
+    },
+    {
+     "command": ".venv/bin/python -B -m scripts.r106.gaia_null_refit null --kind crf3_complement --draws 1000 --seed 106004 --out /home/cosmosapjw/Downloads/htt_r106_analysis/gaia",
+     "return_code": 0,
+     "wall_s": 98.2,
+     "maxrss_kB": 747364
+    },
+    {
+     "command": ".venv/bin/python -B -m scripts.r106.gaia_null_refit null --kind crf3_complement_all_g --draws 1000 --seed 106005 --out /home/cosmosapjw/Downloads/htt_r106_analysis/gaia",
+     "return_code": 0,
+     "wall_s": 264.16,
+     "maxrss_kB": 1023660
+    },
+    {
+     "command": ".venv/bin/python -B -m scripts.r106.gaia_null_refit observed  (final; adds per-shell fit coefficients)",
+     "return_code": 0,
+     "wall_s": 1.45,
+     "maxrss_kB": 161732
+    },
+    {
+     "command": ".venv/bin/python -B -m scripts.r106.gaia_null_refit summarize  (final)",
+     "return_code": 0,
+     "wall_s": 1.4,
+     "maxrss_kB": 160224
+    }
+   ],
+   "key_results": [
+    "Verdict: across every null, the only robust excess is the spin (B1) redshift curvature, and with it the 16-dim magnetic block. E2, B2 and glide sit inside the null bulk. Removing patches 8 and 47 changes none of this. Because the nulls are randomizations of real rows, not independent mocks, this is a working diagnostic: calibrated_p = None, significance = None, physical_Pi = None, physical_GF = None.",
+    "Replay checks. R105 is replayed exactly: |\u0394| \u2264 4.5e-13 on every R105 quadratic form (joint 406.385, magnetic 171.981, electric 16.826, magnetic rows without cross-covariance 52.131; delete-two joint 396.615). Re-accumulating the R98 shell\u00d7patch normal equations from the 634,233 source rows matches the cache to a max relative difference of 1.57e-15 (F) and 2.60e-15 (s). Injecting an affine-in-z frame into the RHS changes the curvature by at most 3.4e-14 (48 patches) and 3.2e-14 (46 patches) \u03bcas/yr/z\u00b2.",
+    "Excluding patches 8 and 47. Patch centres (ICRS, deg): 8 at (202.5, +41.8) and 47 at (315.0, \u221266.4). Shell source counts drop from 92,686/238,552/174,944/128,051 to 87,403/224,704/164,465/119,991. Delete-one quadratic forms, all 48 patches \u2192 without 8 and 47: joint 32-dim 406.39 \u2192 762.99; magnetic 16-dim (cross-row covariance kept) 171.98 \u2192 199.85; electric 16-dim 16.83 \u2192 17.27; magnetic given electric 389.56 \u2192 745.72; spin6 104.12 \u2192 103.19; B2_10 6.64 \u2192 13.97; E2_10 5.38 \u2192 3.86; glide6 8.28 \u2192 7.60; magnetic rows without cross-covariance 52.13 \u2192 61.94. Delete-two: joint 396.61 \u2192 694.53, magnetic 169.83 \u2192 195.85.",
+    "Why the joint form nearly doubles: the covariance changed, not the curvature vector. The shift of the 32-dim curvature vector caused by the exclusion gives a quadratic form of only 1.93 under the 48-patch delete-one covariance. Per-sector shift norms, row 0 / row 1 (\u03bcas/yr/z\u00b2): glide 5.88/3.66, spin 3.73/2.15, E2 11.47/7.44, B2 10.08/8.19. Meanwhile the covariance condition number rises from 722.9 to 1107.4 and the largest electric\u2013magnetic canonical correlation from 0.958 to 0.968.",
+    "Curvature norms, row 0 / row 1 (\u03bcas/yr/z\u00b2). All 48 patches: spin 31.56/26.83, E2 23.44/12.11, B2 14.34/19.10, glide 11.21/10.30. Without 8 and 47: spin 33.95/27.78, E2 21.97/8.15, B2 18.60/23.37, glide 12.21/12.03. Per-shell spin magnitude (all 48 patches, shells z0\u2013z3): 8.16, 3.20, 7.87, 5.23 \u03bcas/yr; the x component is \u22126.63, +2.13, +7.30, +1.95 \u03bcas/yr, i.e. it changes non-monotonically with z.",
+    "Nulls used, all through the identical estimator, the same exclusion and the same jackknife. (1) patch: redshift labels permuted inside each NSIDE-2 patch; 1000 draws; 71.97% of labels change. (2) patch_gmag: inside patch \u00d7 8 G-magnitude quantiles; 1000 draws; 71.55% change. (3) patch_gmag_colour: inside patch \u00d7 4 G \u00d7 4 BP\u2212RP strata (768 strata); 2000 draws; 69.73% change. Every Quaia source has a CRF3 bp_rp value. (4) crf3_complement: 31,449 Gaia-CRF3 sources disjoint from Quaia G<20, with the same quality cuts and G between 13.88 and 20.00, given pseudo-shells from the Quaia shell fractions per stratum; 1000 draws. (5) crf3_complement_all_g: 580,531 disjoint CRF3 sources, median G 20.34, shells from Quaia fractions per patch \u00d7 colour; 1000 draws.",
+    "spin6 against the nulls. Observed 104.12 (all 48) and 103.19 (without 8 and 47). Null 99th percentiles: 21.4 / 27.0 / 34.9 / 19.6 / 17.8 for nulls 1\u20135. None of the 6000 draws in either configuration reaches the observed value; the largest null value is 61.7. The magnetic 16-dim form behaves the same way: none of the 6000 draws reaches it, and its null 99th percentiles are 58.9\u201390.4. The idealized iid-patch Hotelling reference for spin6 is mean 7.05 and 99th percentile 21.9.",
+    "Joint 32-dim against the nulls (count of draws \u2265 observed). All 48 patches (observed 406.39): 20/1000, 21/1000, 82/2000, 4/1000, 6/1000. Without 8 and 47 (observed 762.99): 6/1000, 1/1000, 18/2000, 0/1000, 0/1000. The same-source null tails are heavier than the Hotelling reference: 99th percentiles 496\u2013612 versus 290 (48 patches) and 342 (46 patches).",
+    "E2_10, B2_10, glide6 and electric16 are within the null bulk in both configurations (between 23% and 96% of draws \u2265 observed). The doubling of B2_10 on exclusion (ratio 2.10) lies in the upper tail of the null exclusion ratios (draws \u2265 ratio: 14/1000, 9/1000, 17/2000, 1/1000, 2/1000), but the value after exclusion, 13.97, sits near the null median of about 11.",
+    "Systematics carried by the colour/magnitude-stratified null. Its mean spin curvature is 7.53/9.88 \u03bcas/yr/z\u00b2 (row 0 / row 1), against 31.56/26.83 observed. Under that null's own 32-dim ensemble covariance, the null mean gives a quadratic of 7.25 and the observed-minus-null-mean vector gives 210.96. So magnitude and colour composition carry only part of the spin curvature. Permutation-ensemble RMS for spin (8.1/7.3) is smaller than the patch-jackknife RMS (12.19/9.11).",
+    "Classification of the result. Physical attribution: none. Conditional diagnostic: spin curvature depends on z in a way not exchangeable within sky \u00d7 G \u00d7 BP\u2212RP strata. Possible causes not separated here include redshift-correlated AGN/host centroid effects, the scan law, and chromaticity beyond BP\u2212RP. Numerical: R105 replay and source replay match to machine precision.",
+    "Gaps in the record. The null receipts do not store the SHA of quaia_gaia_full_join.npz; it was used only to exclude Quaia IDs from the complement, and I hashed it afterwards: 4cd83b1e8bb9f71f89aacfc2db5daba87f9a79f2af8ccd2e7e94b0be57252dae. The null ensembles ran under code SHA 72b1e19f4457119775ddcd9521b984a65d2db23399b820aa49a968e194f1db32. The final file (9dd338268206c950caff6fbc6a234a505a4ad2de5e58b44b26628cc0e612189b) differs only in summarize() and observed(); null() was not edited. No tracked file was edited (git shows only the untracked scripts/r106/)."
+   ],
+   "classification": "conditional prediction (working diagnostic only, no physical attribution). The R105/R98 replay matches to machine precision. Not converted to a significance: no independent-mock calibration exists.",
+   "blockers": [
+    "No independent mock ensemble exists for the Gaia/Quaia curvature estimator: no release-calibrated AGIS scan-correlated error law and no independent AGN photocentre control sample (R100/R101 D04 = BLOCKED_DATA). All nulls here are randomizations of one real noise realization, so neither a significance nor a calibrated p can be produced.",
+    "The R105 handoff asks for an 'independent frame/sky null' but names no catalogue or mock set; none was found in the R98\u2013R105 docs. The CRF3 complement inside the Quaia G range has only 31,449 sources (5% of Quaia), and the all-G complement is mostly fainter than Quaia (median G 20.34), so neither is fully magnitude-matched.",
+    "A physical interpretation of the spin (B1) curvature needs controls that are not available: an independent AGN-centroid/host sample, a chromaticity calibration beyond BP\u2212RP, and a scan-law model. physical_Pi and physical_GF stay None."
+   ],
+   "input_sha256": {
+    "docs/research_program/observational_publication_20261015/R98_FOURTH_RESEARCH_CYCLE_20261123/GAIA_FULL_SHARED_PATCH.json": "0a56bc358b6048f4b018d93d2b55be2f2ac5526e22191a44ca6a9f1148a9d800",
+    "/home/cosmosapjw/Downloads/htt_r98_full_data/gaia_joint_patch_statistics.npz": "70d1bc9c959ccfa0197923fc7d7e950ac790eaa1345ca0aca507ade446464c92",
+    "/mnt/extdrive/workdir/htt_open_data/a22_20261023/quaia_join/quaia_crf3_join.npz": "2fbaa40a8afe58066064efa8a7784ac508c5b2c67b41c779676eab7df8cf9ef4",
+    "/mnt/extdrive/workdir/htt_open_data/a22_20261023/quaia_join/quaia_gaia_full_join.npz": "4cd83b1e8bb9f71f89aacfc2db5daba87f9a79f2af8ccd2e7e94b0be57252dae",
+    "/mnt/extdrive/workdir/raw/observational_bundles/Gaia_CRF3_astrometry/gaia_crf3_astrometry_full.fits": "e69cfff82f762c00d1d6a259c6d003fd20f805f3b1fcd4acc81d847c485120c0",
+    "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/GAIA_FRAME_PARITY.json": "6c5d595048d4eb2ac25a780a8d23812b04b571419675423b4d89dfc389375cda",
+    "scripts/r106/gaia_null_refit.py (final)": "9dd338268206c950caff6fbc6a234a505a4ad2de5e58b44b26628cc0e612189b",
+    "scripts/r106/gaia_null_refit.py (at null-ensemble run time)": "72b1e19f4457119775ddcd9521b984a65d2db23399b820aa49a968e194f1db32",
+    "GAIA_NULL_REFIT.json": "d9a9912142e2a08ae7b03698d3b5f36bb056898507956afe7d542dc911a46321",
+    "observed.json": "fb629f398ae06333e1bd873eb70fd803a7c3c1353807bdea77e0544fb2d0a874",
+    "null_patch.npz": "60d08a5763251995077f20c1caf9496fe88d61b8f0a64d9b218cc60dff391276",
+    "null_patch_gmag.npz": "8a02ebfb1cc1390a8af6f6ec2d6b52bda0a430e953cd95c45d3953b522857287",
+    "null_patch_gmag_colour.npz": "b4f0adf71d15d0781ff63ea46feedd6292999deb37a398722cacf679bc4db542",
+    "null_crf3_complement.npz": "4551afd1b50baab29d982a2bae754fa76eab6900ae805edcf002fba080539664",
+    "null_crf3_complement_all_g.npz": "7dbdd4311186b89ee649ed9e2d82cc18d02278e6b32eb7382f0eb40e38283a42"
+   },
+   "output_json": "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia/GAIA_NULL_REFIT.json"
+  },
+  {
+   "task": "D3: build an independent LSS/selection null for the NVSS integrated-minus-peak contrast and evaluate it with the identical R65 estimator. The estimator is the peak-integrated nonlinear common-transverse fit: ring-conditioned multinomial, fit_joint/shared_maps, common_influences + source_overlap_sandwich. It runs on the SHA-pinned provider catalogue with the R65 NSIDE=64 mask (33,000 pixels) and the R105 deletion blocks (166 at NSIDE=4, 594 at NSIDE=8). Each mock is a Cox process that keeps the footprint's actual flux pairs and adds provider-sigma flux scatter. It uses lognormal fields with amplitudes fitted to the data's own block-jackknife traces. The report gives the null distribution of the Wald statistic and the observed rank. No committed R65 or R105 file was written.",
+   "files_created": [
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r106/radio_null_mocks.py",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/nvss/NVSS_NULL_MOCKS.json",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/nvss/NVSS_NULL_MOCK_DRAWS.npz",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/nvss/radio_null_mocks.log",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/nvss/main_run.stdout",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/nvss/main_run.time",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/nvss/RUN_RECORD.json",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/nvss/timing/radio_null_mocks.log",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/nvss/failed_attempt1/ (superseded logs of the rc=1 attempt)",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/nvss/smoke/ and /home/cosmosapjw/Downloads/htt_r106_analysis/nvss/smoke2/ (superseded smoke-test outputs)"
+   ],
+   "commands": [
+    {
+     "command": "cd /home/cosmosapjw/Dropbox/bianchi/htt_base && export PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1; /usr/bin/time -f '%e s %M kB' .venv/bin/python -B -m scripts.r106.radio_null_mocks --timing-only --output /home/cosmosapjw/Downloads/htt_r106_analysis/nvss/timing",
+     "return_code": 0,
+     "wall_s": 8.47,
+     "maxrss_kB": 387584
+    },
+    {
+     "command": "(same setup) /usr/bin/time -f '%e s %M kB' .venv/bin/python -B -m scripts.r106.radio_null_mocks --workers 3 --calib-mocks 12 --max-mocks 2000 --budget-seconds 1320 --output /home/cosmosapjw/Downloads/htt_r106_analysis/nvss  [FAILED: IndexError tuple index in budget loop after calibration; fixed r[4]->r[3]; superseded]",
+     "return_code": 1,
+     "wall_s": 88.69,
+     "maxrss_kB": 387092
+    },
+    {
+     "command": "(same setup) /usr/bin/time -f '%e s %M kB' .venv/bin/python -B -m scripts.r106.radio_null_mocks --workers 3 --calib-mocks 4 --max-mocks 18 --budget-seconds 300 --output /home/cosmosapjw/Downloads/htt_r106_analysis/nvss/smoke  [smoke test, superseded]",
+     "return_code": 0,
+     "wall_s": 52.26,
+     "maxrss_kB": 386352
+    },
+    {
+     "command": "(same setup) /usr/bin/time -f '%e s %M kB' .venv/bin/python -B -m scripts.r106.radio_null_mocks --workers 3 --calib-mocks 3 --scale-mocks 3 --max-mocks 18 --budget-seconds 400 --pilot-common 2.4e-4 --pilot-red 2e-2 --pilot-flat 1.3e-3 --output /home/cosmosapjw/Downloads/htt_r106_analysis/nvss/smoke2  [smoke test with 4 families, superseded]",
+     "return_code": 0,
+     "wall_s": 98.25,
+     "maxrss_kB": 388028
+    },
+    {
+     "command": "(same setup) /usr/bin/time -f '%e s %M kB' -o /home/cosmosapjw/Downloads/htt_r106_analysis/nvss/main_run.time .venv/bin/python -B -m scripts.r106.radio_null_mocks --workers 3 --calib-mocks 12 --scale-mocks 9 --max-mocks 2000 --budget-seconds 930 --pilot-common 2.4e-4 --pilot-red 2e-2 --pilot-mid 5e-3 --pilot-flat 1.3e-3 --output /home/cosmosapjw/Downloads/htt_r106_analysis/nvss  [FINAL]",
+     "return_code": 0,
+     "wall_s": 785.66,
+     "maxrss_kB": 387348
+    }
+   ],
+   "key_results": [
+    "Mocks actually completed in the final run: 2000 per family x 4 families = 8000 full R65 refits, each with both the dipole and dipole_stf models. Also run: 108 NSIDE=4 block-jackknife calibration mocks (12 per amplitude level), 36 shape-diagnostic mocks with both NSIDE=4 and NSIDE=8 jackknifes (9 per family), and 3 timing mocks. Total compute wall time across all 5 commands: 1033.6 s (final run 785.66 s). Peak RSS of the largest single process: 388,028 kB. Workers: 3.",
+    "The R65 statistic replays exactly from the raw catalogue and the carrier. Dipole: delta(int-peak) = (-1.39604e-3, +5.62704e-3), Wald 32.7924; maximum delta error vs R65 = 6.1e-16; relative Wald error = 9.9e-14. dipole_stf: Wald 30.9895, identical to R65. The raw-to-joint-carrier replay is bitwise equal.",
+    "Data targets from R105 for the dipole model. Single-selection jackknife trace (peak + integrated): NSIDE=4 7.166e-5, NSIDE=8 5.627e-5, ratio 0.785. Contrast jackknife trace: NSIDE=4 6.815e-6, NSIDE=8 4.633e-6, ratio 0.680. R65 Poisson contrast trace: 1.814e-6 (dipole).",
+    "LSS_COMMON: one shared lognormal field, C_l = A_c l^-1.2 with A_c = 2.517e-4, fitted so the mock NSIDE=4 single-selection jackknife trace is 7.176e-5 +- 0.17e-5, matching the target. This family reproduces neither the contrast jackknife trace (1.99e-6 vs 6.815e-6) nor the pixel overdispersion (mock 1.008/1.009 vs data 1.064/1.104), so the data reject it as a null. Under it, contrast covariance = 0.98x R65 Poisson, and 0 of 2000 mocks reach the observed Wald 32.79 (dipole) or 30.99 (stf), giving p_MC = 1/2001 = 5.0e-4 (the resolution limit). A shared LSS field cancels in the contrast.",
+    "Differential-field families: an extra independent lognormal field acts on the off-diagonal (resolved/migrating) joint classes. Its amplitude is fitted so the mock NSIDE=4 contrast jackknife trace matches 6.815e-6 (achieved 6.77e-6, 6.62e-6 and 6.78e-6). The angular shape is assumed per family and then checked against the data's NSIDE=8/NSIDE=4 contrast jackknife ratio, which is 0.680.",
+    "LSS_DIFF_MID (C_l = A_m l^-0.6, A_m = 4.562e-3) is the shape the data's own diagnostics prefer. Contrast jackknife ratio NSIDE=8/NSIDE=4 = 0.712 +- 0.022 (data 0.680). Single-selection ratio = 0.774 +- 0.031 (data 0.785). Unfitted pixel overdispersion: integrated 1.090 vs data 1.104, peak 1.033 vs data 1.064. The ensemble contrast covariance is 9.2x R65 Poisson and 2.45x the data's NSIDE=4 jackknife.",
+    "LSS_DIFF_MID null result. Dipole: 335 of 2000 mocks have R65 Wald >= 32.79 (rank 336, p_MC = 0.168; mock median 12.8, 95th percentile 53.5). dipole_stf: 359/2000 reach 30.99 (rank 360, p_MC = 0.180). R105 jackknife covariances held fixed, NSIDE=4: observed 7.87, p_MC = 0.295. Same, NSIDE=8: observed 11.58, p_MC = 0.255. Observed Wald under the mock-ensemble covariance: 3.73, p_MC = 0.154.",
+    "LSS_DIFF_FLAT (C_l = A_m for l <= 48, A_m = 1.270e-3) is too white: contrast ratio 0.848 +- 0.035 vs 0.680, about 4.9 sigma off. Dipole: 23/2000 reach 32.79, p_MC = 0.012. dipole_stf: p_MC = 0.0155. Fixed jackknife NSIDE=4 covariance: p_MC = 0.051. Ensemble contrast covariance = 3.74x Poisson and 1.00x the data's NSIDE=4 jackknife.",
+    "LSS_DIFF_RED (C_l = A_m l^-1.2, A_m = 1.822e-2) is too red: contrast ratio 0.583 +- 0.022 vs 0.680, about 4.5 sigma off; single-selection ratio 0.696 +- 0.026 vs 0.785. Dipole: 1134/2000 reach 32.79, p_MC = 0.567. dipole_stf: p_MC = 0.569. Ensemble contrast covariance = 28.8x Poisson and 7.65x the data's NSIDE=4 jackknife.",
+    "Per-mock R105 statistic (each mock's own NSIDE=4 jackknife Wald), 9 mocks per family. MID: 1/9 reach 7.87 (p = 0.2). FLAT: 0/9 (p = 0.1). COMMON: 0/9 (p = 0.1). RED: 6/9 (p = 0.7). This is coarse at 9 mocks.",
+    "Mean mock contrast is consistent with zero, as the construction requires. For example, MID dipole mean = (3.1e-5 +- 6.2e-5, -3.7e-5 +- 6.7e-5). The largest deviation is RED y = -2.6e-4 +- 1.17e-4 (2.2 sigma, one of 16 components).",
+    "Interpretation: the R65 Poisson Wald (p ~ 7.6e-8 under chi2 df 2) is not a calibrated significance. Under nulls whose differential clustering reproduces the data's own contrast jackknife variance, p_MC ranges from 0.012 to 0.57 depending on the assumed angular shape. The shape preferred by the data's own two-scale jackknife ratio gives p_MC ~ 0.17-0.18. The integrated-minus-peak contrast is therefore not significant beyond plausible resolved-population clustering. This is a conditional calibration, not a physical attribution.",
+    "Input SHA-256. Raw catalogue Full_NVSS_combined_named.dat: 52eb576c1e3e71837f2fca26121789ccc0b316152cca3f25ea2f37ea8ef5a38e (1,773,488 rows; 1,435,874 in footprint; 365,663 flux-scatter candidates). R65 PROVIDER_NVSS_CARRIERS.npz: a51da9a98c3d0563446eb61f21aceff69fbfeed5446ec74471177170b8664e89. R65 PROVIDER_NVSS_RESULT.json: 60735aa244272fc4d295813ab644c429c19cedca122bd9b308dcb7da0053806a. R105 RADIO_MATCHED_REFITS.json: 5a2eca905b85890ba8d06f8df43fe2e57a9aa1f3bbfb837075519ca8888d3124.",
+    "Code SHA-256. scripts/r106/radio_null_mocks.py: 44b7d90e38c2721711d84f14cf105494806ca22991c41095409a3a7740b6b3a9. htt/htt/htt/infer/r65_count_quotient.py: 3cfa8dc5...b91. r65_overlap.py: 764050b1...ef1. scripts/r105/radio_matched_refits.py: d8788e38...88b. Outputs: NVSS_NULL_MOCKS.json 9c7d7e6a9b26136605a3ac1efa4c0af73cc9265be2e13f9dda5c7391f75abeed; NVSS_NULL_MOCK_DRAWS.npz 1e7f5100331a57e38d6ca2c0aba843943e6c0a03aa80143ab07bffe1837da88d. Root seed 20261124; calibration uses common random numbers across amplitude levels.",
+    "Limits: positions are independent of the flux pair in every mock. The common dipole D0 = (-0.012279, +0.008518) is injected into every class and cancels in the contrast. Each family's angular shape is assumed, then checked against the NSIDE=8/4 ratio; it is not fitted jointly with the amplitude. Source multiplicity, spatially varying flux calibration, and redshift-dependent bias are not modelled explicitly. Peak-selection pixel overdispersion in MID (1.033) remains below the data (1.064)."
+   ],
+   "classification": "conditional prediction",
+   "blockers": [],
+   "output_json": "/home/cosmosapjw/Downloads/htt_r106_analysis/nvss/NVSS_NULL_MOCKS.json",
+   "input_sha256": {
+    "Full_NVSS_combined_named.dat": "52eb576c1e3e71837f2fca26121789ccc0b316152cca3f25ea2f37ea8ef5a38e",
+    "R65/RESULTS/PROVIDER_NVSS_CARRIERS.npz": "a51da9a98c3d0563446eb61f21aceff69fbfeed5446ec74471177170b8664e89",
+    "R65/RESULTS/PROVIDER_NVSS_RESULT.json": "60735aa244272fc4d295813ab644c429c19cedca122bd9b308dcb7da0053806a",
+    "R105/RADIO_MATCHED_REFITS.json": "5a2eca905b85890ba8d06f8df43fe2e57a9aa1f3bbfb837075519ca8888d3124",
+    "scripts/r106/radio_null_mocks.py": "44b7d90e38c2721711d84f14cf105494806ca22991c41095409a3a7740b6b3a9"
+   }
+  },
+  {
+   "task": "R106 D4: CF3 overlap and lineage for the R105 6dFGSv/CF4 held-out scores. Cross-tabulate 6dFGSv, CF4, CF3 (CORAS donor copy) and the 2MRS galaxies CORAS reads. Reproduce the CORAS 2MRS input cut and the CF3 calibration window, measure common zero points, and rescore the R105 relative held-out score (CF4_FIELD_HOLDOUT plus CORAS marks with 8 and 128 draws) on exclusion folds against cz x inclusion matched random controls.",
+   "files_created": [
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r106/cf3_overlap.py",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/cf3/CF3_OVERLAP.json",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/cf3/SIXDF_CF3_2MRS_CROSSTABLE.tsv",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/cf3/CF4_R98_GROUP_CF3_MEMBERSHIP.tsv",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/cf3/run.log",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/cf3/run.time"
+   ],
+   "commands": [
+    {
+     "command": "cd /home/cosmosapjw/Dropbox/bianchi/htt_base && export PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1; /usr/bin/time -f '%e s %M kB' .venv/bin/python -B <scratchpad>/explore1.py  (6dFGSv-CF4-CF3 PGC overlap probe)",
+     "return_code": 0,
+     "wall_s": 3.74,
+     "maxrss_kB": 229040
+    },
+    {
+     "command": "same env; /usr/bin/time -f '%e s %M kB' .venv/bin/python -B <scratchpad>/explore2.py  (sky+cz and designation matches to CF3/2MRS)",
+     "return_code": 0,
+     "wall_s": 4.19,
+     "maxrss_kB": 259888
+    },
+    {
+     "command": "same env; /usr/bin/time -f '%e s %M kB' .venv/bin/python -B <scratchpad>/explore6.py  (timing of R105 source_sample, finite_shift, probit)",
+     "return_code": 0,
+     "wall_s": 4.55,
+     "maxrss_kB": 327548
+    },
+    {
+     "command": "same env; /usr/bin/time -f '%e s %M kB' .venv/bin/python -B -m scripts.r106.cf3_overlap --output-dir <scratchpad>/cf3_test --replicates 50 --drop-replicates 2  (smoke 1; failed: 'CF3 member-to-group order mapping failed')",
+     "return_code": 1,
+     "wall_s": 3.86,
+     "maxrss_kB": 328824
+    },
+    {
+     "command": "same smoke command (smoke 2; failed: 'CF3 group mapping check failed: 5.811162861984529 deg, 11125.0 km/s')",
+     "return_code": 1,
+     "wall_s": 3.95,
+     "maxrss_kB": 328720
+    },
+    {
+     "command": "same smoke command (smoke 3; failed: 'CF3 singleton mapping is not a bijection')",
+     "return_code": 1,
+     "wall_s": 3.96,
+     "maxrss_kB": 328396
+    },
+    {
+     "command": "same smoke command (smoke 4; failed: group mapping check, same message as smoke 2)",
+     "return_code": 1,
+     "wall_s": 4.44,
+     "maxrss_kB": 328704
+    },
+    {
+     "command": "same smoke command (smoke 5, after group-modulus-based mapping check)",
+     "return_code": 0,
+     "wall_s": 8.86,
+     "maxrss_kB": 472440
+    },
+    {
+     "command": "same env; .venv/bin/python -B -m scripts.r106.cf3_overlap --output-dir <scratchpad>/cf3_test --replicates 100 --drop-replicates 4  (smoke 6, contrasts and recentred variant)",
+     "return_code": 0,
+     "wall_s": 11.29,
+     "maxrss_kB": 472796
+    },
+    {
+     "command": "same env; .venv/bin/python -B -m scripts.r106.cf3_overlap --output-dir <scratchpad>/cf3_test --replicates 100 --drop-replicates 2 --coras \"$HOME/Downloads/htt_r105_coras/sixdf8=$R105D/CF4_CORAS_MARKS.json\" \"$HOME/Downloads/htt_r106_analysis/marks128=$HOME/Downloads/htt_r106_analysis/CF4_MARKS128.json\"  (smoke 7 with 128 draws)",
+     "return_code": 0,
+     "wall_s": 49.2,
+     "maxrss_kB": 862500
+    },
+    {
+     "command": "final run A (superseded by run B; same arguments as run B but without drop/recentred variants for the union set)",
+     "return_code": 0,
+     "wall_s": 318.89,
+     "maxrss_kB": 864876
+    },
+    {
+     "command": "cd /home/cosmosapjw/Dropbox/bianchi/htt_base && export PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1; R105D=docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124; /usr/bin/time -o /home/cosmosapjw/Downloads/htt_r106_analysis/cf3/run.time -f '%e s %M kB rc=%x' .venv/bin/python -B -m scripts.r106.cf3_overlap --output-dir /home/cosmosapjw/Downloads/htt_r106_analysis/cf3 --replicates 2000 --drop-replicates 32 --seed 20261124 --coras \"$HOME/Downloads/htt_r105_coras/sixdf8=$R105D/CF4_CORAS_MARKS.json\" \"$HOME/Downloads/htt_r106_analysis/marks128=$HOME/Downloads/htt_r106_analysis/CF4_MARKS128.json\" > /home/cosmosapjw/Downloads/htt_r106_analysis/cf3/run.log 2>&1  (FINAL, outputs)",
+     "return_code": 0,
+     "wall_s": 483.23,
+     "maxrss_kB": 865848
+    }
+   ],
+   "key_results": [
+    "CF3 availability: the original VizieR J/AJ/152/50 table3.dat is NOT on disk (17,669 rows; 7,191,283 B; SHA-256 8acd4718ffe370e58d9747ffa3d8aeafcf3f554c698c82c00f29f5dec270aa19). Its recorded path /home/cosmosapjw/.cache/htt-r9/cf3_tempel_2017/CF3_table3.dat no longer exists, and it was not found in the repo or /mnt/extdrive/workdir/raw. Used instead: the CF3 copy shipped in the CORAS donor (commit 45ab256): CF3_group_member_catalog.dat (17,647 galaxies, SHA a776865717eb...) and CF3_group_catalog.dat (11,500 nests including singletons, SHA ad457eec5ca6...). Because table3 is missing, CF3's own per-galaxy method letters (r_Dist P/I/H/F/N/S/T/C/L/M) are unavailable; method attribution uses CF4 table2 per-method moduli for the same PGC.",
+    "6dFGSv vs CF3: 8,878 of 8,885 6dFGSv rows are CF3 members. Sky+CMB-cz route (15 arcsec, 500 km/s; median separation 0.44 arcsec): 8,864 matched. PGC route via the CF4 R103 match: 7,193. The two routes agree on all 7,179 rows matched by both (0 disagree); position-only 1,685, PGC-only 14, unmatched 7. All 7,190 R105-selected marks are CF3 members. For 8,620 of 8,878 the CF3 mu error is exactly 0.50 mag, which matches CF3's fixed e_DM-P for 6dF FP distances. CF4 method flags of these galaxies: FP 7,111, TF 133, SBF 38, SNIa 36, SNII 5, TRGB 1; 1,684 have no CF4 row.",
+    "CF4 galaxies that are CF3 members (exact PGC match), by method: all 15,823 of 55,877; FP 8,440 of 42,223 (6dFGSv FP 7,110 of 7,111; SDSS-PV FP 251 of 34,000; other FP 1,079 of 1,112); TF 6,703 of 12,222; SNIa 467 of 1,004; SBF 416 of 469; SNII 45 of 94; TRGB 291 of 446; Cepheid 60 of 69; Maser 3 of 6.",
+    "R98 CF4 groups: 8,945 of the 35,970 selected groups contain a CF3 member, and 4,980 contain a 6dFGSv galaxy. In the 21,860 groups covered by the 2MRS field: 8,880 with a CF3 member, 4,980 with a 6dFGSv galaxy. In the 14,110 missing groups: 65 with a CF3 member, 0 with a 6dFGSv galaxy. By method in the selected groups: FP-6dFGSv groups 4,915, all with a CF3 FP member; SDSS-FP groups 22,624, of which 56 have a CF3 SDSS-FP member; TF groups 8,463 (4,031 with a CF3 TF member); SNIa 851 (367).",
+    "CORAS calibration lineage: CORAS fixes f sigma8 = 0.405, external bulk (95, -172, 28) km/s and h = 0.7499. These come from the calibrated row rs = 15 Mpc/h, czMin = 2000 km/s, fitted on CF3 groups with 2,000-16,000 km/s: f sigma8 = 0.40502 +/- 0.06662, bulk (95.37, -172.43, 27.85) km/s, h = 0.74991. CF3 groups in that window: 10,319 (CMB frame) and 10,226 (LG frame) of 11,500. 6dFGSv rows whose CF3 group lies in the window: 8,627 (CMB), 8,575 (LG), 8,725 in either frame, 8,477 in both. Only 160 rows (120 R105-selected) are outside the window in both frames or not in CF3. The 6dFGSv-attributable share of the window's distance-modulus inverse variance is 0.407 (CMB) / 0.409 (LG); the share of velocity-error inverse variance is 0.172 / 0.181. These window counts are taken before CORAS's 5-sigma clip, so they are a superset of the objects actually used in calibration.",
+    "2MRS galaxies used by CORAS vs the 6dFGSv held-out galaxies: the reproduced CORAS pilot cut (CMB frame, Ks <= 11.754, partial volume limit M <= -20.624, R <= 200 Mpc/h) keeps 42,701 of 44,572 real 2MRS galaxies. The pilot log reports 46,876 selected, which implies 4,175 zone-of-avoidance clones (not independently verified). 3,983 of 8,885 6dFGSv rows are the same object as a 2MRS galaxy (sky+cz; median separation 0.25 arcsec, 99th percentile 0.72 arcsec). The 2MASS/6dF designation route agrees on 3,982 with 0 disagreements. All 3,983 are in the CORAS input, including 3,230 of the 7,190 R105-selected marks; example: PGC fold 0 has 824 of 1,777 test rows (656 of 1,442 selected). 8,226 of 17,647 CF3 galaxies are themselves CORAS 2MRS tracers.",
+    "Common zero points: CF3 mu minus mu_6dF (H0 = 75, Om = 0.3) has median -0.0062 mag, robust sd 0.0323 mag, rms 0.1035 mag (n = 8,878); Hubble-residual Pearson correlation 0.983. CF4 DMfp minus CF3 mu: median -0.034 mag, robust sd 0.030 mag (n = 7,111), Pearson 0.984. CF4 DMfp minus mu_6dF: median -0.0475 mag. At the median cz of 11,576 km/s these equal -33, -181 and -253 km/s. CF4 single-method minus CF3: TF -0.075 mag (n = 6,396), FP -0.034 (8,194), SNIa -0.027 (253), TRGB -0.050 (210), SBF +0.034 (233). Conclusion: one set of 6dF FP measurements, shifted by zero points, appears in all three catalogues; they are not independent samples.",
+    "6dFGSv delta_d split: 2MRS members minus non-members at matched cz is +0.0988 +/- 0.0028 dex (0.494 mag). It falls from 0.222 dex at 4,000-6,000 km/s to 0.078 dex at 14,000-16,000 km/s. This is apparent-K-magnitude selection acting on the mark itself. By contrast, CF3-window minus outside is -0.0099 +/- 0.0118 dex, consistent with zero, so the CF3 split is not confounded this way.",
+    "Replay: the R105 relative scores are reproduced exactly before any exclusion. Field holdout maximum fold error 3.3e-12; CORAS 8 draws (r24/l4/fft16) 0.0; CORAS 128 draws (r36/l8/fft24, R106 marks128) 0.0 against CF4_MARKS128.json. Full PGC/PGC1 sums: fixed_2mrs_offset 47.869/47.885 nats; CORAS-8 mean_offset 72.793/72.797; CORAS-128 draws_offset 78.588/79.231.",
+    "Rescore with CF3 overlap excluded: excluding all CF3 members leaves 7 rows and 0 selected marks, so no rescoring is possible. Excluding the CF3 calibration window keeps 160 rows (120 selected). On those, scoring only the held-out rows (training unchanged), PGC/PGC1: NN fixed_2mrs +1.65/+1.65 nats vs control 2.01+/-1.18 / 0.13+/-1.14. CORAS-128 draws+offset minus offset-only +5.00/+5.93 vs 5.96+/-0.88 / 4.85+/-1.19 (F = 0.09/0.82, where F is the fraction of controls <= observed). CORAS-8 mean+offset minus offset-only +3.74/+4.78. Removing the rows from both training and test sets: CORAS-128 draws minus offset +3.25/+3.24 vs 3.19+/-0.94 / 3.17+/-0.98. All are consistent with matched controls, but power is low (control sd about 1 nat).",
+    "Rescore with 2MRS tracers excluded (4,902 rows, 3,960 selected kept), test rows only, PGC/PGC1: offset_only -39.45/-39.12 (control +16.59/+18.25, sd about 3.2); fixed_2mrs -3.47/-3.45 (control +14.09/+13.46); CORAS-8 mean_offset -46.62/-46.69 (control +29.75/+29.85); CORAS-128 draws_offset -44.97/-44.35 (control +32.75/+33.14). In every case F = 0 of 2,000 controls; this is driven by the +0.099 dex zero point. Removed from both training and test sets: offset_only +79.35/+79.34; field minus offset: NN -0.77/-0.71 (control +8.48+/-3.03), CORAS-8 mean -7.57/-7.55, CORAS-128 draws +11.12/+11.15 (control 12.31+/-2.68, F = 0.28/0.34).",
+    "Recentred sensitivity (outside the R105 model set; the mark zero point is fitted on training rows): on the full sample NN fixed_2mrs drops 25.50 -> 17.93 and offset_only 25.24 -> 3.82, so these parts of the R105 scores are zero-point absorption. CORAS-128 draws minus offset becomes +38.60/+39.20. On non-2MRS galaxies only: NN +9.04/+8.83 (control 8.18+/-2.74 / 7.91+/-2.72); CORAS-8 mean +12.09/+12.35 (control 11.13 / 10.74); CORAS-128 draws +19.18/+19.18 (control 12.60+/-2.24 / 11.99+/-2.28; above all 32 controls). So there is no evidence that the field gain depends on a galaxy being a CORAS/NN tracer.",
+    "Union keep-set (120 rows, 87 selected; neither a 2MRS tracer nor in the CF3 window): CORAS field minus offset is -0.22 to -0.72 nats vs controls of +0.0 to +0.3, below all 32 drop controls; test-only F = 0.0005-0.18. NN is -0.02 to +0.12 vs about 0.8. Tiny sample, reported without a calibrated p-value.",
+    "Scope: Q and the predictive gain must stay conditioned on sample overlap. 100% of selected marks share their measurement with CF3. At least 98.2% (8,725 of 8,885) sit in CF3 groups inside the window that fixed CORAS's growth rate and bulk flow. Independence from the CF3 calibration is bounded only by the 160-row exclusion; it has not been removed."
+   ],
+   "classification": "This is a conditional prediction, not a physical attribution or a numerical-convergence result. The rescoring gives working-model relative log predictive scores on the R105 folds, with no calibrated p-value and no physical Pi/G_F, H0-axis or Bianchi claim. The overlap counts and calibration-window figures are sample-lineage bookkeeping only. The only numerical check is the exact replay of the R105 scores before any exclusion.",
+   "blockers": [
+    "Missing input: VizieR J/AJ/152/50 table3.dat (Cosmicflows-3, 17,669 rows, 7,191,283 B, SHA-256 8acd4718ffe370e58d9747ffa3d8aeafcf3f554c698c82c00f29f5dec270aa19, https://cdsarc.cds.unistra.fr/ftp/J/AJ/152/50/table3.dat). Its recorded location /home/cosmosapjw/.cache/htt-r9/cf3_tempel_2017/CF3_table3.dat is absent. Without it, CF3's internal source letters (r_Dist), o_Dist, DM-P/e_DM-P (6dF with the CF3 zero point), DM-I, DM-N, DM-CF2 and Ksmag cannot be used. Method attribution falls back on CF4 table2 for the same PGC.",
+    "CORAS's 5-sigma outlier clip in prepare_distance_catalog_data needs the fiducial 5 Mpc/h reconstruction from estimate_parameters.x, which was not run. The CF3 calibration-window membership (8,725 rows in either frame) is therefore a superset of actual calibration use.",
+    "f sigma8 and the external bulk were not recalibrated on CF3 minus 6dFGSv; that needs estimate_parameters.x with 50 constrained realisations at full resolution, which was not attempted within the 3-worker / 6 GB limit. The leakage of 6dF labels into the fixed CORAS calibration can only be bounded by the 160-row exclusion, not removed.",
+    "No local K-band magnitudes exist for the 4,902 non-2MRS 6dFGSv rows (6dFGS photometry, or CF3 table3 Ksmag). A luminosity-matched control is therefore impossible; the 2MRS split is confounded with the +0.0988 dex apparent-magnitude zero point.",
+    "Drop and recentred controls use 32 replicates, so F has a resolution of 1/32. Test-only controls use 2,000 replicates."
+   ],
+   "input_sha256": {
+    "sixdf_table1 (/home/cosmosapjw/Downloads/htt_r100/source_intake/table1.txt)": "08f3d4b264e28efcb574bea4efa370d66e4f299f8254e21bd04979fb8301a14d",
+    "sdss_pv_public (/home/cosmosapjw/Downloads/htt_r100/source_intake/SDSS_PV_public.dat)": "a48cfd9a9a3c27ff908f98972b2e26536e514b6635f9ed14c656dff3e5075485",
+    "cf4_table2 (/mnt/extdrive/workdir/raw/cf4_full/table2.dat)": "8e908928e68352b59292cf67020a4d70aaa6d30f278dfa6aa3e41a9df808332f",
+    "cf4_table3": "c2351c52de3e38a7fd80256b6f0818c550dd9f105b91e84fbcc1eb7234160b4d",
+    "cf4_table4": "b6edfec68bdfddeada8f3b8f11938f3bbda98a8e2894ff136a369c2ad6594e94",
+    "coras CF3_group_member_catalog.dat": "a776865717ebee8a8a0fe5fbe6bfe0a92a815995446c01cddbf620785954a194",
+    "coras CF3_group_catalog.dat": "ad457eec5ca63914135b862c9261b90fd52eaf83ebe7dec9b963579b874fd19f",
+    "coras 2MRS_group_member_catalog.dat": "60cb3ece1aa773cc1263ac9d356b5f200853d465fa1de596ba9993101ea32dfc",
+    "coras calibrated_parameters_CR1-50.dat": "d4c1eceb688d3361aa13f453676da76d87d2c2ed2e90b11d68b70ed961b7a1a5",
+    "coras configuration.hpp": "73caeb95da7da53e069f9182feb4921c6b0dad7392157810ee1abda5ebe6b181",
+    "coras src/transformations.cpp": "b3e557d552d218be9e338762459ca6718f792dfc743257556e9131dd8c727e31",
+    "coras src/survey.cpp": "714ad0ae53f50e01add8e94501744e5e6fd2ddb861721fddc599538c4570f0b9",
+    "coras src/cosmology.cpp": "0f72bacc50185b1e6b570b71082806a76c68b9a4cc1e5775dc8757cad651a429",
+    "R105 CF4_FIELD_HOLDOUT.json": "71de6766f163037e7e538ce11b4e3e2722b19e18bf4447073cee63702c8c1a25",
+    "R105 CF4_CORAS_MARKS.json": "ee4991e3490c6f7349135e59e72bd367fe89d8e476bb8f45b0682d58210eac9b",
+    "R105 CF4_CORAS_DRAW_RUN.json / sixdf8 run.json": "93d648a3f7c4439c17c15dfb111c8a33e8365d46e90b318469dbeb73afb0d363",
+    "R106 marks128/run.json": "79e5a513015a1c54d7d4b1b9cf659653c259ead57ccb1f77f45c81b307c1c9b2",
+    "R106 CF4_MARKS128.json (replay reference)": "0b0ba74933184cdef8fc82e77b5a0e741ed11ca22046316c455b2eaa3835318a",
+    "CF3_ReadMe.txt (local harness copy)": "74ebe9ea1431f0612c350624fd64ed70089ff0a28ecc7d5fd02eb13ab7694f0f",
+    "R104 2MRS-NN xVelocity.npy": "50edf12e9dd8a79959071eda57ccd197f2cfba2bae5233210ab6243541aa4643",
+    "R104 2MRS-NN yVelocity.npy": "c125f3d97aa8f9ed34110285e018df0849d955b62f0a472cebb34d196e2cb447",
+    "R104 2MRS-NN zVelocity.npy": "ae1e0dfadf48c27afcf7f30c53c2e978f7edeab3506c9e446ed7f73770b207d6",
+    "code scripts/r106/cf3_overlap.py": "cf281083c6d0f1a8edb8ea2df02668bbaa1dab539abebed8fe447978392b2f73",
+    "output CF3_OVERLAP.json": "20ade171568e348c54e387f59ee1df8c7ed3c972236ca2ae41e000c14336e705",
+    "output SIXDF_CF3_2MRS_CROSSTABLE.tsv": "a1632b172aafecbd3b8ad541d921ff7223a1224188bb47e883cff9801ccfe60b",
+    "output CF4_R98_GROUP_CF3_MEMBERSHIP.tsv": "08863b19da90dec7570202fdd8197518811962eded314bbe62ecaa2d509f19fd"
+   },
+   "output_json": "/home/cosmosapjw/Downloads/htt_r106_analysis/cf3/CF3_OVERLAP.json"
+  }
+ ],
+ "note": "first-pass agent reports; superseded where REVIEW/REMEDIATION records corrections"
+}

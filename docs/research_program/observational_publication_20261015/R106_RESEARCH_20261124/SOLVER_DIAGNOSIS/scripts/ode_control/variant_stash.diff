@@ -1,0 +1,22 @@
+--- /home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/ode_control/coupled_h5_variant.py	2026-11-24 02:53:45.476048954 +0900
++++ /home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/ode_control/coupled_h5_variant_stash.py	2026-11-24 02:59:04.246498922 +0900
+@@ -89,6 +89,8 @@
+ # H5 control: Radau tolerances as module globals (R105 values by default).
+ RADAU_RTOL = 1e-10
+ RADAU_ATOL = 1e-13
++# Read-only references to the most recent Picard fluid solution (H5 mimic driver).
++_H5_STASH: dict = {}
+ N_INITIAL = -math.log1p(Z_INITIAL)
+ ALL_SEVEN_FAMILIES = ("FLRW", "I", "V", "VII_h", "VI_h", "VI_-1/9", "IX")
+ 
+@@ -608,6 +610,10 @@
+         )
+         if not sol.success:
+             raise CodazziProjectionError(f"[{family}] coupled Einstein-Euler ODE failed: {sol.message}")
++        _H5_STASH.clear()
++        _H5_STASH.update(sol=sol, opacity=opacity, ode_rhs=ode_rhs, unpack=_unpack, N_eval=N_eval.copy(),
++                         photon_idx=photon_idx, baryon_idx=baryon_idx, picard_idx=picard_idx,
++                         n_species=len(species_specs), N_start=N_start, N_end=N_end)
+ 
+         H_grid = np.zeros(n_eval, dtype=np.float64)
+         sig_grid = np.zeros((n_eval, 3, 3), dtype=np.float64)

@@ -1,0 +1,78 @@
+--- htt/bass/transport/coupled_einstein_boltzmann.py	2026-11-24 02:24:17.908719152 +0900
++++ /home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/ode_control/coupled_h5_variant.py	2026-11-24 02:53:45.476048954 +0900
+@@ -86,6 +86,9 @@
+ HYREC_REF_CSV = ROOT / "htt/bass/recombination/fixtures/recombination_ref_planck2018.csv"
+ 
+ Z_INITIAL = 1600.0
++# H5 control: Radau tolerances as module globals (R105 values by default).
++RADAU_RTOL = 1e-10
++RADAU_ATOL = 1e-13
+ N_INITIAL = -math.log1p(Z_INITIAL)
+ ALL_SEVEN_FAMILIES = ("FLRW", "I", "V", "VII_h", "VI_h", "VI_-1/9", "IX")
+ 
+@@ -600,8 +603,8 @@
+             method="Radau",
+             t_eval=N_eval,
+             dense_output=True,
+-            rtol=1e-10,
+-            atol=1e-13,
++            rtol=RADAU_RTOL,
++            atol=RADAU_ATOL,
+         )
+         if not sol.success:
+             raise CodazziProjectionError(f"[{family}] coupled Einstein-Euler ODE failed: {sol.message}")
+@@ -705,6 +708,18 @@
+                 "pi_over_E_fluid": np.zeros((n_rad, n_c, 3, 3)),
+                 "thomson_force_over_E_fluid": np.zeros((n_c, 4)),
+                 "thomson_force_over_E_sky": np.zeros((n_c, 4)),
++                # H5 read-only diagnostics
++                "q_over_E_fluid_dense": np.zeros((n_rad, n_c, 3)),
++                "r_raw_fluid": np.zeros((n_rad, n_c, 3)),
++                "y_dense_minus_grid_absmax": np.zeros(n_c),
++                "y_dense_minus_grid_relmax": np.zeros(n_c),
++                "v_b_end": np.zeros((n_c, 3)),
++                "rate_fn_end": np.zeros(n_c),
++                "rate_grid_end": np.zeros(n_c),
++                "drgamma_dN_full": np.zeros((n_c, 3)),
++                "drgamma_dN_thomson": np.zeros((n_c, 3)),
++                "dvb_dN": np.zeros((n_c, 3)),
++                "E_gamma_end": np.zeros(n_c),
+             }
+ 
+         for cell in range(int(cfg.n_cells)):
+@@ -806,6 +821,35 @@
+                             fluid_t, vb_end, clock="conserved_anchor")
+                         record["thomson_force_over_E_sky"][cell] = rate * covariant_thomson_four_force(
+                             sky_t, vb_end, clock="conserved_anchor")
++                # ---- H5 read-only diagnostics (no effect on the evolved state) ----
++                N1 = float(N_eval[i1])
++                y_grid = sol.y[:, i1]
++                y_dense = np.asarray(sol.sol(N1), dtype=np.float64)
++                dyd = np.abs(y_dense - y_grid)
++                record["y_dense_minus_grid_absmax"][cell] = float(dyd.max())
++                record["y_dense_minus_grid_relmax"][cell] = float(np.max(dyd / np.maximum(np.abs(y_grid), 1e-300)))
++                T4_dense = _unpack(N1, y_dense)[11]
++                for slot, species_idx in enumerate(radiation_indices):
++                    offr = 16 + 4 * species_idx
++                    record["q_over_E_fluid_dense"][slot, cell] = T4_dense[species_idx][0, 1:] / T4_dense[species_idx][0, 0]
++                    record["r_raw_fluid"][slot, cell] = y_grid[offr + 1:offr + 4]
++                unp = _unpack(N1, y_grid)
++                T4g, vvg = unp[11], unp[13]
++                record["v_b_end"][cell] = vvg[baryon_idx]
++                rate_fn = float(opacity.rate(min(max(N1, N_start), N_end)))
++                record["rate_fn_end"][cell] = rate_fn
++                record["rate_grid_end"][cell] = float(recomb_hist.opacity_per_efold[i1])
++                dy_full = ode_rhs(N1, y_grid)
++                offg = 16 + 4 * photon_idx
++                offb = 16 + 4 * baryon_idx
++                Eg = float(T4g[photon_idx][0, 0])
++                rg = T4g[photon_idx][0, 1:] / Eg
++                Fg = _species_thomson_forces(T4g[photon_idx], vvg[baryon_idx], rate_fn,
++                                             len(species_specs), photon_idx, baryon_idx)[photon_idx]
++                record["drgamma_dN_full"][cell] = dy_full[offg + 1:offg + 4]
++                record["drgamma_dN_thomson"][cell] = (Fg[1:] - rg * Fg[0]) / Eg
++                record["dvb_dN"][cell] = dy_full[offb + 1:offb + 4]
++                record["E_gamma_end"][cell] = Eg
+ 
+         if cfg.record_history:
+             history_iterations.append(record)

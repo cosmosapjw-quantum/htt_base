@@ -52,6 +52,7 @@ def solve(cells):
     cfg = coupled.CoupledSolverConfig(
         n_cells=cells, ell_max=4, n_picard=4, max_substep_depth=1.0,
         epsilon=2e-4, substeps_per_cell=2, record_history=True,
+        stage_rate_collision=False, picard_rtol=None,  # R106 pin: reproduce R105 exactly
     )
     start = perf_counter()
     out = coupled.solve_coupled_einstein_boltzmann(FAMILY, cfg, lie_op=angular_basis(4, 16))

@@ -1,0 +1,119 @@
+--- coupled_repo_R105_copy.py	2026-11-24 02:52:18.334891795 +0900
++++ coupled_geometry_stage.py	2026-11-24 02:52:47.828249353 +0900
+@@ -269,6 +269,12 @@
+     stage_velocity_collision: bool = True
+     # R105: cap scalar conserved-anchor depth per scattering substep.
+     max_substep_depth: float | None = 1.0
++    # R106 H2 experiment (variant copy only):
++    #   "midpoint"       -> R105 behaviour (grid midpoint LieGeometry + uniform shear source).
++    #   "midpoint_dense" -> stage-geometry code path, but every stage evaluated at u=1/2 from
++    #                       the dense ODE output (validates the dense/normalisation path).
++    #   "stage"          -> LieGeometry and shear source at each SDIRK stage time.
++    geometry_timing: str = "midpoint"
+ 
+ 
+ @dataclass(frozen=True)
+@@ -377,6 +383,74 @@
+     return y
+ 
+ 
++def _normalized_lie_geometry(H, sig, a_v, n_m, *, family, cell):
++    """H-normalised (sigma/H, a/H, n/H) with the exact R105 cell-loop filters and Jacobi projection."""
++    sigN = pstf_rank2(sig / H)
++    aN = a_v / H
++    nN = n_m / H
++    scale = float(aN @ aN + np.sum(nN * nN))
++    if scale <= 1e-24:
++        aN = np.zeros(3, dtype=np.float64)
++        nN = np.zeros((3, 3), dtype=np.float64)
++    elif float(aN @ aN) <= 1e-24 * max(scale, 1.0):
++        aN = np.zeros(3, dtype=np.float64)
++        nN = 0.5 * (nN + nN.T)
++    else:
++        jac = float(np.max(np.abs(nN @ aN))) / scale
++        if jac > 1e-8:
++            raise CodazziProjectionError(f"[{family}] Lie Jacobi breach at stage in cell {cell}: {jac:.3e}")
++        if jac > 5e-12:
++            anorm2 = float(aN @ aN)
++            a_hat = aN / math.sqrt(anorm2)
++            proj = np.eye(3, dtype=np.float64) - np.outer(a_hat, a_hat)
++            n_proj = proj @ nN @ proj
++            nN = 0.5 * (n_proj + n_proj.T)
++    return sigN, aN, nN
++
++
++def _advance_moving_photon_cell_stage_geometry(op, state, delta_N, geometry_at, sub_depths,
++                                               baryon_velocity_at, *, sub_edges=None):
++    """R106-H2 variant of ``_advance_moving_photon_cell``.
++
++    Identical SDIRK(2,2) tableau, optical substeps, conserved-anchor depths and
++    stage-time electron velocity. The Lie/bolometric operator and the shear source
++    of each stage are evaluated at that stage's own cell coordinate u via
++    ``geometry_at(u) -> (LieGeometry, sigma_N)``; the source per unit u is
++    ``shear_source_vector(sigma_N(u), amplitude=delta_N)`` and each stage adds
++    ``gamma*h`` times it (h = substep width in u), exactly as the frozen version.
++    """
++    gamma = 1.0 - 1.0 / math.sqrt(2.0)
++    edges = np.linspace(0.,1.,len(sub_depths)+1) if sub_edges is None else np.asarray(sub_edges,dtype=float)
++    if (edges.shape != (len(sub_depths)+1,) or edges[0] != 0. or edges[-1] != 1.
++        or not np.isfinite(edges).all() or np.any(np.diff(edges) <= 0)):
++        raise ValueError("sub_edges must cover [0,1] in increasing order and match sub_depths")
++    y = np.array(state, dtype=np.complex128, copy=True)
++    for j, depth in enumerate(sub_depths):
++        h = edges[j+1]-edges[j]
++        rate = float(depth) / h
++        stages = []
++        for c in (gamma, 1.0):
++            u = edges[j] + c * h
++            geom_u, sig_u = geometry_at(u)
++            m_total = delta_N * (op.base_operator(geom_u) + op.bolometric_redshift_operator(geom_u))
++            src_u = op.shear_source_vector(sig_u, amplitude=delta_N)
++            v = np.asarray(baryon_velocity_at(u), dtype=np.float64)
++            inc = gamma * h * src_u
++            if rate > 0.0 and np.any(v):
++                moving = MovingCollisionStage(op, v)
++                solve = moving.factor_sdirk_stage(m_total, gamma * h, rate)
++                inc = inc + gamma * float(depth) * moving.emission
++            else:
++                solve = op.factor_sdirk_stage(m_total, gamma * h, rate)
++            stages.append((solve, inc))
++        (solve1, inc1), (solve2, inc2) = stages
++        y1 = solve1(y + inc1)
++        y = solve2(y + ((1.0 - gamma) / gamma) * (y1 - y) + inc2)
++    if not np.all(np.isfinite(y)):
++        raise FloatingPointError("moving photon cell produced a non-finite state")
++    return y
++
++
+ def _power_spectrum_from_alms(alms: dict[str, dict[tuple[int, int], complex]], ell_max: int) -> dict[str, np.ndarray]:
+     out = {}
+     for ch in ("T", "E", "B", "V"):
+@@ -759,8 +833,26 @@
+ 
+                 u_edges, sub_depths = _optical_substeps(
+                     opacity, n0, float(N_eval[i1]), cfg.substeps_per_cell, cfg.max_substep_depth)
+-                S_vec = _advance_moving_photon_cell(op_lie, S_vec, dN_cell, geom, src_vec,
+-                                                    sub_depths, _baryon_velocity_at, sub_edges=u_edges)
++                if cfg.geometry_timing == "midpoint":
++                    S_vec = _advance_moving_photon_cell(op_lie, S_vec, dN_cell, geom, src_vec,
++                                                        sub_depths, _baryon_velocity_at, sub_edges=u_edges)
++                elif cfg.geometry_timing in ("stage", "midpoint_dense"):
++                    frozen_u = 0.5 if cfg.geometry_timing == "midpoint_dense" else None
++
++                    def _geometry_at(u, n0=n0, dn=dN_cell, cell=cell, frozen_u=frozen_u):
++                        uu = u if frozen_u is None else frozen_u
++                        y_u = sol.sol(n0 + uu * dn)
++                        H_u = math.exp(float(y_u[0]))
++                        sig_u = orthonormal_to_stf_matrix(y_u[1:6], convention="kinematic_response")
++                        sN, aN, nN = _normalized_lie_geometry(H_u, sig_u, y_u[6:9], _unpack_sym6(y_u[9:15]),
++                                                              family=family, cell=cell)
++                        return LieGeometry(sN, aN, nN), sN
++
++                    S_vec = _advance_moving_photon_cell_stage_geometry(
++                        op_lie, S_vec, dN_cell, _geometry_at, sub_depths, _baryon_velocity_at,
++                        sub_edges=u_edges)
++                else:
++                    raise ValueError(f"unknown geometry_timing {cfg.geometry_timing!r}")
+                 if cfg.record_history:
+                     record["photon_substeps"][cell] = len(sub_depths)
+             else:

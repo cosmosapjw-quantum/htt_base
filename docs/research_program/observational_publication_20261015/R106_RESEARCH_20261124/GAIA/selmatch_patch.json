@@ -1,0 +1,266 @@
+{
+ "code_identity": {
+  "script": "scripts/r106/gaia_null_refit.py",
+  "script_sha256": "a2c9c68893addeba9f356359aa7e74193e46116d3d0f9501b22c9228342a6e03",
+  "pre_review_script_sha256": "9dd338268206c950caff6fbc6a234a505a4ad2de5e58b44b26628cc0e612189b",
+  "module_sha256": {
+   "scripts/r103/__init__.py": "2301c8001a3b6a41b931c9bf2fcc80982397576f56ba34b38306567a723d8c90",
+   "scripts/r103/gaia_frame_curvature.py": "175203c431e9d3354f7dc7c558aa311d2cb338c01b2e9d4419f877f05e906273",
+   "scripts/r105/gaia_frame_parity.py": "4e2bce871cc35e4337825afe21cc61891621dbc799dbed42c3bf1a12a35e303f",
+   "scripts/r106/__init__.py": "7c828d52fe4f58253704c5cb4e362dcf6ec24f901de7acb04a47b5c3ee89dc0d",
+   "scripts/r67/gaia_frame.py": "79d0dc0db2af66c85594c58846e7920f30eccc6acc744874e1aa5cedb756124f",
+   "scripts/r68/fiveview_geometry.py": "2c76a29f9b920dc8b50ac52347774cdd049c8abf6b6a0b9261be34ddc2d0a44d",
+   "scripts/r69/gaia_e2_b2.py": "4396f6e32f773e0162c053856595a89ebbd4bf9ad0a877e96299a65e133d23a5",
+   "scripts/r106/gaia_null_refit.py": "a2c9c68893addeba9f356359aa7e74193e46116d3d0f9501b22c9228342a6e03"
+  },
+  "git": {
+   "head": "b234bb0e0a9388d735bfa60a3b08041fc86e3cc5",
+   "status_porcelain_of_code_files": [
+    "?? scripts/r106/__init__.py",
+    "?? scripts/r106/gaia_null_refit.py"
+   ]
+  }
+ },
+ "command": {
+  "argv": [
+   "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+   "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r106/gaia_null_refit.py",
+   "selmatch",
+   "--kind",
+   "patch",
+   "--out",
+   "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia"
+  ],
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "env": {
+   "PYTHONPATH": ".:htt:htt/src",
+   "OPENBLAS_NUM_THREADS": "1",
+   "OMP_NUM_THREADS": "1",
+   "MKL_NUM_THREADS": "1"
+  }
+ },
+ "input_sha256": {
+  "r98_receipt": "0a56bc358b6048f4b018d93d2b55be2f2ac5526e22191a44ca6a9f1148a9d800",
+  "r98_patch_cache": "70d1bc9c959ccfa0197923fc7d7e950ac790eaa1345ca0aca507ade446464c92",
+  "quaia_crf3_join": "2fbaa40a8afe58066064efa8a7784ac508c5b2c67b41c779676eab7df8cf9ef4",
+  "gaia_crf3_fits": "e69cfff82f762c00d1d6a259c6d003fd20f805f3b1fcd4acc81d847c485120c0"
+ },
+ "cached_null_receipt_sha256": "a04f7f41f373d19e29e4c7de361f98adc687a80a9cb2ce161faa84e578edd3af",
+ "cached_null_npz_sha256": "60d08a5763251995077f20c1caf9496fe88d61b8f0a64d9b218cc60dff391276",
+ "replay_vs_cache": {
+  "all48_vec_max_abs": 0.0,
+  "all48_stat_max_rel": 0.0,
+  "excl_8_47_vec_max_abs": 0.0,
+  "excl_8_47_stat_max_rel": 0.0,
+  "used_equal": true,
+  "shell_counts_equal": true,
+  "changed_equal": true,
+  "draws_checked_all48": 1000,
+  "draws_checked_fixed_8_47": 25
+ },
+ "source_replay_vs_r98_cache": {
+  "F_max_rel": 1.5694575697426271e-15,
+  "s_max_rel": 2.6001891934845985e-15
+ },
+ "complement_usable": null,
+ "generated_with_null_draws": false,
+ "runtime_seconds": 395.3294259769609,
+ "maxrss_kib": 748268,
+ "schema": "htt.r106.gaia_null_refit.selmatch/1",
+ "kind": "patch",
+ "seed": 106001,
+ "draws": 1000,
+ "rules": {
+  "EB": [
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15
+  ],
+  "B2": [
+   11,
+   12,
+   13,
+   14,
+   15
+  ],
+  "E2": [
+   6,
+   7,
+   8,
+   9,
+   10
+  ]
+ },
+ "primary_rule": "EB",
+ "pair_statistics": {
+  "EB": {
+   "fraction_pair_is_8_47": 0.004,
+   "fraction_pair_contains_8_or_47": 0.235,
+   "n_distinct_pairs": 399,
+   "most_common_pairs": [
+    [
+     [
+      1,
+      6
+     ],
+     15
+    ],
+    [
+     [
+      1,
+      29
+     ],
+     12
+    ],
+    [
+     [
+      1,
+      36
+     ],
+     12
+    ],
+    [
+     [
+      1,
+      47
+     ],
+     12
+    ],
+    [
+     [
+      1,
+      18
+     ],
+     11
+    ]
+   ]
+  },
+  "B2": {
+   "fraction_pair_is_8_47": 0.003,
+   "fraction_pair_contains_8_or_47": 0.18,
+   "n_distinct_pairs": 439,
+   "most_common_pairs": [
+    [
+     [
+      1,
+      6
+     ],
+     13
+    ],
+    [
+     [
+      1,
+      29
+     ],
+     11
+    ],
+    [
+     [
+      1,
+      47
+     ],
+     10
+    ],
+    [
+     [
+      1,
+      2
+     ],
+     9
+    ],
+    [
+     [
+      1,
+      35
+     ],
+     9
+    ]
+   ]
+  },
+  "E2": {
+   "fraction_pair_is_8_47": 0.009,
+   "fraction_pair_contains_8_or_47": 0.279,
+   "n_distinct_pairs": 379,
+   "most_common_pairs": [
+    [
+     [
+      1,
+      47
+     ],
+     20
+    ],
+    [
+     [
+      1,
+      36
+     ],
+     19
+    ],
+    [
+     [
+      1,
+      8
+     ],
+     17
+    ],
+    [
+     [
+      1,
+      29
+     ],
+     12
+    ],
+    [
+     [
+      1,
+      30
+     ],
+     10
+    ]
+   ]
+  }
+ },
+ "rule_pair_agreement": {
+  "EB_vs_B2": 0.597,
+  "EB_vs_E2": 0.577,
+  "B2_vs_E2": 0.31
+ },
+ "npz_sha256": "28e6ef54f70b6478fcbcf20cd0d557bd56f7f15bd07e54fa01fee5fa14f49d62",
+ "review_corrections": [
+  {
+   "id": "GNR-1",
+   "change": "Pooled '6000 draws' statements withdrawn; draws of different nulls are never pooled. per_null_ranks gives, for every null separately, draws_ge_observed, rank, max, q95 and q99 for spin6, magnetic16 and joint32 (all48 and the selection-matched exclusion, jk1 and jk2). null_structure states that the three permutation nulls relabel one Quaia realization and the two complement nulls relabel fixed complement samples (subset relation computed). (b+1)/(N+1) is reported only for the within-stratum permutation nulls, as an exact conditional permutation p-value; complement nulls get the rank only. Spin is flagged as selected after R104."
+  },
+  {
+   "id": "GNR-2",
+   "change": "Each null draw applies the R104 influence rule (top delete-one shift-norm patch in curvature row 0, top distinct patch in row 1) to its own all-48 delete-one refits in three sector variants (E2+B2 primary, B2, E2). The excluded-configuration null tables and exclusion ratios use that per-draw selection; the rule spread is reported; the fixed-(8,47) tables survive only under fixed_patch_conditional_diagnostic."
+  },
+  {
+   "id": "GNR-3",
+   "change": "Docstring describes 8/47 as the top row-0 (every sector) and row-1 E2/B2 patches. observed.json replays the R104 per-row/sector delete-one top-5 and worst delete-two pair from the R98 cache (checked against GAIA_PATCH_INFLUENCE.json) and reports observed statistics after the alternative exclusions {32}, {43,47}, {8,47,32}, {8,47,43}, {8,47,32,43} with the largest relative spin6 change."
+  },
+  {
+   "id": "GNR-4",
+   "change": "Docstring restricted to frames evaluated at the shell medians. observed.json adds a direct per-source z-linear frame injection (R105 test frame), its curvature leak, the precision-weighted effective shell redshifts, the leak's own spin6 quadratic form, and the spin slope that a leak-only explanation would need."
+  },
+  {
+   "id": "GNR-5",
+   "change": "Docstring no longer says patch_gmag_colour keeps the magnitude composition. observed.json reports the exact within-stratum-permutation expectation of the shell G and BP-RP curvature and the retained fraction for each permutation null, plus a patch x G8 x C4 stratification that is evaluated but not run as a null."
+  },
+  {
+   "id": "GNR-6",
+   "change": "idealized_hotelling_reference carries a scope string and the empirical/Hotelling q95 ratio for every null, configuration and statistic."
+  },
+  {
+   "id": "GNR-7",
+   "change": "FULL_JOIN sha256 pinned, fail closed if missing or changed, and recorded; the CRF3 FITS sha is verified for every null kind (it sets the BP-RP strata); the R105 parity JSON is checked against a pinned sha; every output JSON records the sha256 of this script and of every imported scripts.* module, git HEAD, the git status of those files, and the command."
+  }
+ ]
+}

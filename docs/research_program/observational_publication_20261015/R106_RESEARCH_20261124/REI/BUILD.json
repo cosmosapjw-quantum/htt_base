@@ -1,0 +1,440 @@
+{
+  "d7676": {
+    "compiled_source_identity_sha256": "d7676b9309ac9b084499bbf599e803baecd661c80765489be45839ef5a7cf185",
+    "files_replaced_from_identity_record": [],
+    "copied_from": "/home/cosmosapjw/Dropbox/bianchi/rei_ax08_plus_recovery_20261115/rust/rei_microphysics",
+    "replay_example_sha256": "2b6f6c6b1bcf33eba75f768c894d1c4b77a0c9a7024acbaa29bfe060c20d70d5",
+    "binary": "/home/cosmosapjw/Downloads/htt_r106_analysis/rei/native/target_d7676/release/examples/rei_restart_replay",
+    "binary_sha256": "2b4f5aeb2f35908138276ac36fca0526f8c023c0af1d810a21320ee6fb3d83bf",
+    "build": {
+      "tag": "build_d7676",
+      "command": "cargo build --release --offline --locked -j 3 --manifest-path /home/cosmosapjw/Downloads/htt_r106_analysis/rei/native/tree_d7676/rust/rei_microphysics/Cargo.toml --example rei_restart_replay",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "return_code": 0,
+      "wall_s": 3.23,
+      "maxrss_kB": 274408,
+      "stderr_tail": "   Compiling rei_microphysics v0.1.0 (/home/cosmosapjw/Downloads/htt_r106_analysis/rei/native/tree_d7676/rust/rei_microphysics)\n    Finished `release` profile [optimized] target(s) in 3.22s\n"
+    },
+    "post_build_record": {
+      "src_tree": {
+        "root": "/home/cosmosapjw/Downloads/htt_r106_analysis/rei/native/tree_d7676/rust/rei_microphysics/src",
+        "n_files": 37,
+        "sha256": "b31a549a8fa355da2b3696589ca0805d2ae0d1a4f22caefb7d5e12058e1afc7b",
+        "definition": "sha256 of the sorted '<sha256>  <relative path>\\n' manifest of all files",
+        "files": {
+          "adaptive_history.rs": "88f85b00e8a4cb487c98c1a2e473a4c356c5558f5df0154502c4afcf585d5d73",
+          "angular_photons.rs": "8da6478182f70b285e7456490469d7a7708c969d200ab93d4d468f34c0fe82db",
+          "atomic_provider.rs": "b0b572d3940a7a1f740e09d5f43c60236ec61511e8bdbcc68e60395ec7e107d3",
+          "axbi_background.rs": "65f10dced178aa85bb1c92da0b35350a0eec2d3d3de05630c900b5df4ec1e254",
+          "axbi_driver.rs": "a614725c153ee21d88554573c15801087d8fb412954fa51d67b781f671475dbf",
+          "axbi_rates.rs": "e0d4d7e5d3a1b704af95ae54b63bb5e0c49e1fb68fdc4b0e7465dc92feeaf361",
+          "axbi_sources.rs": "606e3c2ec367dd9951ebbf2f53486f2232b49c0218896d66d8dc13dd5ee83bfe",
+          "axisym_contract.rs": "1e2aaaa71091c4ff578eab3c64587aeb63017d1ea3c6c08d6370ba5690baa1b6",
+          "axisym_coupling.rs": "60e6aab18e088f35aa62164a3be375eef1a9a61f4b1de1468fbc9e89939dd89f",
+          "axisym_radiation.rs": "8134004a4aed69d60e991bd42c1d4b673ed7f6c75c4ecd6f50da07ab47103d62",
+          "axisym_sources.rs": "15a391503df57adfb2c00d6b7c7925a7d91222ebbfbc6be8607057eb501e7b34",
+          "bianchi_i.rs": "0c0bb17168b36a67af6e3e2a3ada835bc77db3dbc73d06e13075f6019ec11289",
+          "coupled_primary.rs": "915d0a898100a54d04a525227e7fbeb870e321fcc14aaa91afd61352b6d4cf4b",
+          "coverage.rs": "0c542eaf42cd8ece217a2f02cc7fbb500f0bea8b983c1f18d44c96d0aea050c1",
+          "flrw_three_equations.rs": "c3b538cade78ef493296b6822cdd4db237f6e27c79565646016e39d0e5079daf",
+          "ft03_controlled.rs": "61e11471482bb49d99e5d0eb79504d3f67538fbe6361653a0462d1abb0b672db",
+          "ft03_interval.rs": "886580a810b8ec29c8f0b6199c0e35d82fde1f46d984a5f8f1da304326a42a42",
+          "ft03_rates.rs": "1a97cd7a3555deeb4d8700376cd84580c5102127773bc3a235a29c33b0c1542f",
+          "group_rates.rs": "393786f3c473d98dbf57752967ba63cf07f055dfff9027a1d00770d2ef73a6a4",
+          "he_rct.rs": "e077cdf628dfefc07f0dfbfae0688a9330f363d3c11163166406ef0a1e1218b4",
+          "hhe_events.rs": "c100b08e034089c2d67b2102769ccdd51f1d29a2f388d6bb2dfe7984af93b290",
+          "homogeneous_rates.rs": "50000b7cd7b1f7c9536cfe92a1f932add545bb951cc32b8a63c4affecfca3f47",
+          "hydrogen_step.rs": "d3a4515dd2cb4e723095db6c750531acc3999fe0d5fa856707e520ec93056fb6",
+          "igm_background.rs": "ebe5d4ba0a61133512cecfe50791794a50aa22132bcc5189170e5668cbf1871f",
+          "igm_rates.rs": "310164e620617f3089d488bd1f9668996b4a4cbd191383e45303def176ef81cf",
+          "igm_state.rs": "1651b00a517d67aaa71b38d3c69af6413570adfc38b591a3ed25284f039e0ae0",
+          "igm_thermal.rs": "30515d96270ec73a37829ba298513a42112991168479d3cb40f33b67fd469ab2",
+          "interval_ad.rs": "b14a16a24ba55d1d915fc890348bbafccf3c9df4566c04bbf06d38cdac2ef2dd",
+          "interval_math.rs": "e4639a4386feee536dbe7e7ffb1260f26fa00697b6b05477083c182ddf03de18",
+          "isotope_state.rs": "a3a750c3751ea30621482c341e89f690e517c3ad122e56231d2810c62afe8708",
+          "joint_affine.rs": "5782ec4a2fdb8885af4056dca26e60bb31b585a7ce5de0c18cccbb143ae5f8b3",
+          "lib.rs": "6d191fa7f206a6a29127041cc55fe285a53334deec0019771e5eca8d1672d3b1",
+          "lift.rs": "632474da40f075051f77ed618b65af13fba133ea6bbee6e49325aeb2578d1871",
+          "microstep.rs": "e03cc1512cdd2b60735b1ab655c8e6657423c18ee4ad55ca1d30f24ad4974e53",
+          "paired_runtime.rs": "b6c1d2a07ab51ff02318139ae18387b77f61859c08037347f788524df770ebe7",
+          "rux_adapter.rs": "1b77eec6158a412f4a3d8c436ae7bcd09efecfd7d35c222080067a3b6f60c2f0",
+          "thermal.rs": "6d7be31934bb33a46c0911d28b62e34d22027e08a8a1945c5d7d32bf32f79b8a"
+        }
+      },
+      "examples_tree": {
+        "root": "/home/cosmosapjw/Downloads/htt_r106_analysis/rei/native/tree_d7676/rust/rei_microphysics/examples",
+        "n_files": 16,
+        "sha256": "a311cc10d8272395209876831581d5671750fa97fdf9d184c31e33afecfd97d6",
+        "definition": "sha256 of the sorted '<sha256>  <relative path>\\n' manifest of all files",
+        "files": {
+          "axbi_plus_recovery_002.rs": "3e5d3c9e91cad6b2a5dfcd292ffad730622806bdcf8dfa93598c7c3d0285f4e5",
+          "axbi_reionization.rs": "b45be75a3361e487063cd0b6488049ed179b703b35025b4a7ab70c51f406ef0f",
+          "axbi_resource_continuation.rs": "2efaca95b4391be94eb1895253de68421deb6f6a26afbf2fa11741b3b4dec507",
+          "axisym_manufactured_probe.rs": "ea21486706ed396f24c6c0385d1f6ce61d6c2accb486e153cd222b0cef9928e7",
+          "eval_fixture.rs": "f6820b533f33aab8defa6dfef1112337a2ad2664f7845d47c79bdd3f0b143bf1",
+          "first_interval.rs": "b22ac6bd4b4373946c38351cd7596392dcb8532a7d8088c62fe70d7b70e08a59",
+          "flrw_three_probe.rs": "1c248506edd1cecd6f31a3d5e2da263137c33a5a5038e88b87d70905e0dd8979",
+          "ft03_fixture.rs": "259f661ecaa8795d80ffc5822f89095367780df1f594cfb071368d486de86faf",
+          "he_rct_probe.rs": "d5556f188e9e45d276ed301d348d09f7f6b507130ee27574ac47f435846fc917",
+          "hhe_fixture.rs": "cbe1ef923e853a2b60750596fa145fb237f714766854155c10010a693186e897",
+          "igm_foundation_probe.rs": "06d8485a6747974fb3ea971b5625818cd47433f1376c9e9f7e8c05c6b50f4899",
+          "interval_probe.rs": "f2b3c06a58a3e26428976e62733c103444719ee01efbeda24c71184536153b8d",
+          "map_certificate.rs": "7dab5315138ee2b7a72c160581fce5736e1d9190f51837010c2fa842aac4df24",
+          "paired_history.rs": "b4f2bd67f0276766792ac8ff6dd53f314c5d507def726d8524a8af5b4bd076a3",
+          "rei_restart_replay.rs": "2b6f6c6b1bcf33eba75f768c894d1c4b77a0c9a7024acbaa29bfe060c20d70d5",
+          "rux_science.rs": "f894abaf98bc1df2b1dd13636e239482ac5edc3b300a667f02e61726c3e246fd"
+        }
+      },
+      "cargo_toml_sha256": "e04b3802c2555b612305bb900e1e9d509c2a4039a6deacf20d65ddf7e5249407",
+      "cargo_lock_sha256": "d7cbe31e7171939a4c438f4e313e5aff1f881199c8720b2fa9b2f4859b6c7407",
+      "identity_hash_recomputed": "d7676b9309ac9b084499bbf599e803baecd661c80765489be45839ef5a7cf185",
+      "binary_sha256_recomputed": "2b4f5aeb2f35908138276ac36fca0526f8c023c0af1d810a21320ee6fb3d83bf",
+      "checks": {
+        "identity_hash_recomputed_equals_record": true,
+        "binary_sha256_recomputed_equals_record": true,
+        "replay_example_in_tree_equals_this_script": true
+      },
+      "compiled_src_files_not_in_identity_hash": [
+        "src/adaptive_history.rs",
+        "src/angular_photons.rs",
+        "src/axisym_contract.rs",
+        "src/axisym_coupling.rs",
+        "src/axisym_radiation.rs",
+        "src/axisym_sources.rs",
+        "src/coupled_primary.rs",
+        "src/coverage.rs",
+        "src/flrw_three_equations.rs",
+        "src/ft03_controlled.rs",
+        "src/ft03_interval.rs",
+        "src/ft03_rates.rs",
+        "src/group_rates.rs",
+        "src/he_rct.rs",
+        "src/homogeneous_rates.rs",
+        "src/hydrogen_step.rs",
+        "src/interval_ad.rs",
+        "src/interval_math.rs",
+        "src/isotope_state.rs",
+        "src/joint_affine.rs",
+        "src/lift.rs",
+        "src/microstep.rs",
+        "src/paired_runtime.rs",
+        "src/rux_adapter.rs",
+        "src/thermal.rs"
+      ],
+      "src_files_differing_from_copy_origin_now": [],
+      "rustc_that_built_cached_binary": "rustc 1.99.0 (b940084d7 2026-09-28)\nbinary: rustc\ncommit-hash: b940084d7eb6a299eb4bfeb8e34901bc051e7ac4\ncommit-date: 2026-09-28\nhost: x86_64-unknown-linux-gnu\nrelease: 1.99.0\nLLVM version: 23.1.1",
+      "identity_files_importing_uncovered_modules": {
+        "src/igm_state.rs": [
+          "coupled_primary"
+        ]
+      },
+      "construction": "copy of the copy-origin crate with files_replaced_from_identity_record grafted in; src files outside IDENTITY_FILES come from the copy origin and no record binds them to the source compiled by the original runs; agreement of the replay with the original checkpoints is functional evidence over the replayed window, not a hash binding"
+    }
+  },
+  "4de69": {
+    "compiled_source_identity_sha256": "4de69c1e68ebd395fe2d0b5580d901b9a82bde86cadbd11bdd07e5ad2042b4a1",
+    "files_replaced_from_identity_record": [
+      "src/axbi_driver.rs"
+    ],
+    "copied_from": "/home/cosmosapjw/Dropbox/bianchi/rei_ax08_plus_recovery_20261115/rust/rei_microphysics",
+    "replay_example_sha256": "2b6f6c6b1bcf33eba75f768c894d1c4b77a0c9a7024acbaa29bfe060c20d70d5",
+    "binary": "/home/cosmosapjw/Downloads/htt_r106_analysis/rei/native/target_4de69/release/examples/rei_restart_replay",
+    "binary_sha256": "4b2571094731f9e58eee955b99d85f15059acdddc052c5bb42bac93999cebffa",
+    "build": {
+      "tag": "build_4de69",
+      "command": "cargo build --release --offline --locked -j 3 --manifest-path /home/cosmosapjw/Downloads/htt_r106_analysis/rei/native/tree_4de69/rust/rei_microphysics/Cargo.toml --example rei_restart_replay",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "return_code": 0,
+      "wall_s": 3.34,
+      "maxrss_kB": 274664,
+      "stderr_tail": "   Compiling rei_microphysics v0.1.0 (/home/cosmosapjw/Downloads/htt_r106_analysis/rei/native/tree_4de69/rust/rei_microphysics)\n    Finished `release` profile [optimized] target(s) in 3.33s\n"
+    },
+    "post_build_record": {
+      "src_tree": {
+        "root": "/home/cosmosapjw/Downloads/htt_r106_analysis/rei/native/tree_4de69/rust/rei_microphysics/src",
+        "n_files": 37,
+        "sha256": "a654318ffd5b2c52ebcca6af3ffeb40abe7118b544e3a830fd46aedd4416cefd",
+        "definition": "sha256 of the sorted '<sha256>  <relative path>\\n' manifest of all files",
+        "files": {
+          "adaptive_history.rs": "88f85b00e8a4cb487c98c1a2e473a4c356c5558f5df0154502c4afcf585d5d73",
+          "angular_photons.rs": "8da6478182f70b285e7456490469d7a7708c969d200ab93d4d468f34c0fe82db",
+          "atomic_provider.rs": "b0b572d3940a7a1f740e09d5f43c60236ec61511e8bdbcc68e60395ec7e107d3",
+          "axbi_background.rs": "65f10dced178aa85bb1c92da0b35350a0eec2d3d3de05630c900b5df4ec1e254",
+          "axbi_driver.rs": "92bc6ca1540c927cde7452d218f666882ecdd651558b151b31e9a6a8e2d92c8f",
+          "axbi_rates.rs": "e0d4d7e5d3a1b704af95ae54b63bb5e0c49e1fb68fdc4b0e7465dc92feeaf361",
+          "axbi_sources.rs": "606e3c2ec367dd9951ebbf2f53486f2232b49c0218896d66d8dc13dd5ee83bfe",
+          "axisym_contract.rs": "1e2aaaa71091c4ff578eab3c64587aeb63017d1ea3c6c08d6370ba5690baa1b6",
+          "axisym_coupling.rs": "60e6aab18e088f35aa62164a3be375eef1a9a61f4b1de1468fbc9e89939dd89f",
+          "axisym_radiation.rs": "8134004a4aed69d60e991bd42c1d4b673ed7f6c75c4ecd6f50da07ab47103d62",
+          "axisym_sources.rs": "15a391503df57adfb2c00d6b7c7925a7d91222ebbfbc6be8607057eb501e7b34",
+          "bianchi_i.rs": "0c0bb17168b36a67af6e3e2a3ada835bc77db3dbc73d06e13075f6019ec11289",
+          "coupled_primary.rs": "915d0a898100a54d04a525227e7fbeb870e321fcc14aaa91afd61352b6d4cf4b",
+          "coverage.rs": "0c542eaf42cd8ece217a2f02cc7fbb500f0bea8b983c1f18d44c96d0aea050c1",
+          "flrw_three_equations.rs": "c3b538cade78ef493296b6822cdd4db237f6e27c79565646016e39d0e5079daf",
+          "ft03_controlled.rs": "61e11471482bb49d99e5d0eb79504d3f67538fbe6361653a0462d1abb0b672db",
+          "ft03_interval.rs": "886580a810b8ec29c8f0b6199c0e35d82fde1f46d984a5f8f1da304326a42a42",
+          "ft03_rates.rs": "1a97cd7a3555deeb4d8700376cd84580c5102127773bc3a235a29c33b0c1542f",
+          "group_rates.rs": "393786f3c473d98dbf57752967ba63cf07f055dfff9027a1d00770d2ef73a6a4",
+          "he_rct.rs": "e077cdf628dfefc07f0dfbfae0688a9330f363d3c11163166406ef0a1e1218b4",
+          "hhe_events.rs": "c100b08e034089c2d67b2102769ccdd51f1d29a2f388d6bb2dfe7984af93b290",
+          "homogeneous_rates.rs": "50000b7cd7b1f7c9536cfe92a1f932add545bb951cc32b8a63c4affecfca3f47",
+          "hydrogen_step.rs": "d3a4515dd2cb4e723095db6c750531acc3999fe0d5fa856707e520ec93056fb6",
+          "igm_background.rs": "ebe5d4ba0a61133512cecfe50791794a50aa22132bcc5189170e5668cbf1871f",
+          "igm_rates.rs": "310164e620617f3089d488bd1f9668996b4a4cbd191383e45303def176ef81cf",
+          "igm_state.rs": "1651b00a517d67aaa71b38d3c69af6413570adfc38b591a3ed25284f039e0ae0",
+          "igm_thermal.rs": "30515d96270ec73a37829ba298513a42112991168479d3cb40f33b67fd469ab2",
+          "interval_ad.rs": "b14a16a24ba55d1d915fc890348bbafccf3c9df4566c04bbf06d38cdac2ef2dd",
+          "interval_math.rs": "e4639a4386feee536dbe7e7ffb1260f26fa00697b6b05477083c182ddf03de18",
+          "isotope_state.rs": "a3a750c3751ea30621482c341e89f690e517c3ad122e56231d2810c62afe8708",
+          "joint_affine.rs": "5782ec4a2fdb8885af4056dca26e60bb31b585a7ce5de0c18cccbb143ae5f8b3",
+          "lib.rs": "6d191fa7f206a6a29127041cc55fe285a53334deec0019771e5eca8d1672d3b1",
+          "lift.rs": "632474da40f075051f77ed618b65af13fba133ea6bbee6e49325aeb2578d1871",
+          "microstep.rs": "e03cc1512cdd2b60735b1ab655c8e6657423c18ee4ad55ca1d30f24ad4974e53",
+          "paired_runtime.rs": "b6c1d2a07ab51ff02318139ae18387b77f61859c08037347f788524df770ebe7",
+          "rux_adapter.rs": "1b77eec6158a412f4a3d8c436ae7bcd09efecfd7d35c222080067a3b6f60c2f0",
+          "thermal.rs": "6d7be31934bb33a46c0911d28b62e34d22027e08a8a1945c5d7d32bf32f79b8a"
+        }
+      },
+      "examples_tree": {
+        "root": "/home/cosmosapjw/Downloads/htt_r106_analysis/rei/native/tree_4de69/rust/rei_microphysics/examples",
+        "n_files": 16,
+        "sha256": "a311cc10d8272395209876831581d5671750fa97fdf9d184c31e33afecfd97d6",
+        "definition": "sha256 of the sorted '<sha256>  <relative path>\\n' manifest of all files",
+        "files": {
+          "axbi_plus_recovery_002.rs": "3e5d3c9e91cad6b2a5dfcd292ffad730622806bdcf8dfa93598c7c3d0285f4e5",
+          "axbi_reionization.rs": "b45be75a3361e487063cd0b6488049ed179b703b35025b4a7ab70c51f406ef0f",
+          "axbi_resource_continuation.rs": "2efaca95b4391be94eb1895253de68421deb6f6a26afbf2fa11741b3b4dec507",
+          "axisym_manufactured_probe.rs": "ea21486706ed396f24c6c0385d1f6ce61d6c2accb486e153cd222b0cef9928e7",
+          "eval_fixture.rs": "f6820b533f33aab8defa6dfef1112337a2ad2664f7845d47c79bdd3f0b143bf1",
+          "first_interval.rs": "b22ac6bd4b4373946c38351cd7596392dcb8532a7d8088c62fe70d7b70e08a59",
+          "flrw_three_probe.rs": "1c248506edd1cecd6f31a3d5e2da263137c33a5a5038e88b87d70905e0dd8979",
+          "ft03_fixture.rs": "259f661ecaa8795d80ffc5822f89095367780df1f594cfb071368d486de86faf",
+          "he_rct_probe.rs": "d5556f188e9e45d276ed301d348d09f7f6b507130ee27574ac47f435846fc917",
+          "hhe_fixture.rs": "cbe1ef923e853a2b60750596fa145fb237f714766854155c10010a693186e897",
+          "igm_foundation_probe.rs": "06d8485a6747974fb3ea971b5625818cd47433f1376c9e9f7e8c05c6b50f4899",
+          "interval_probe.rs": "f2b3c06a58a3e26428976e62733c103444719ee01efbeda24c71184536153b8d",
+          "map_certificate.rs": "7dab5315138ee2b7a72c160581fce5736e1d9190f51837010c2fa842aac4df24",
+          "paired_history.rs": "b4f2bd67f0276766792ac8ff6dd53f314c5d507def726d8524a8af5b4bd076a3",
+          "rei_restart_replay.rs": "2b6f6c6b1bcf33eba75f768c894d1c4b77a0c9a7024acbaa29bfe060c20d70d5",
+          "rux_science.rs": "f894abaf98bc1df2b1dd13636e239482ac5edc3b300a667f02e61726c3e246fd"
+        }
+      },
+      "cargo_toml_sha256": "e04b3802c2555b612305bb900e1e9d509c2a4039a6deacf20d65ddf7e5249407",
+      "cargo_lock_sha256": "d7cbe31e7171939a4c438f4e313e5aff1f881199c8720b2fa9b2f4859b6c7407",
+      "identity_hash_recomputed": "4de69c1e68ebd395fe2d0b5580d901b9a82bde86cadbd11bdd07e5ad2042b4a1",
+      "binary_sha256_recomputed": "4b2571094731f9e58eee955b99d85f15059acdddc052c5bb42bac93999cebffa",
+      "checks": {
+        "identity_hash_recomputed_equals_record": true,
+        "binary_sha256_recomputed_equals_record": true,
+        "replay_example_in_tree_equals_this_script": true
+      },
+      "compiled_src_files_not_in_identity_hash": [
+        "src/adaptive_history.rs",
+        "src/angular_photons.rs",
+        "src/axisym_contract.rs",
+        "src/axisym_coupling.rs",
+        "src/axisym_radiation.rs",
+        "src/axisym_sources.rs",
+        "src/coupled_primary.rs",
+        "src/coverage.rs",
+        "src/flrw_three_equations.rs",
+        "src/ft03_controlled.rs",
+        "src/ft03_interval.rs",
+        "src/ft03_rates.rs",
+        "src/group_rates.rs",
+        "src/he_rct.rs",
+        "src/homogeneous_rates.rs",
+        "src/hydrogen_step.rs",
+        "src/interval_ad.rs",
+        "src/interval_math.rs",
+        "src/isotope_state.rs",
+        "src/joint_affine.rs",
+        "src/lift.rs",
+        "src/microstep.rs",
+        "src/paired_runtime.rs",
+        "src/rux_adapter.rs",
+        "src/thermal.rs"
+      ],
+      "src_files_differing_from_copy_origin_now": [
+        "axbi_driver.rs"
+      ],
+      "rustc_that_built_cached_binary": "rustc 1.99.0 (b940084d7 2026-09-28)\nbinary: rustc\ncommit-hash: b940084d7eb6a299eb4bfeb8e34901bc051e7ac4\ncommit-date: 2026-09-28\nhost: x86_64-unknown-linux-gnu\nrelease: 1.99.0\nLLVM version: 23.1.1",
+      "identity_files_importing_uncovered_modules": {
+        "src/igm_state.rs": [
+          "coupled_primary"
+        ]
+      },
+      "construction": "copy of the copy-origin crate with files_replaced_from_identity_record grafted in; src files outside IDENTITY_FILES come from the copy origin and no record binds them to the source compiled by the original runs; agreement of the replay with the original checkpoints is functional evidence over the replayed window, not a hash binding"
+    }
+  },
+  "schema": "htt.r106.rei_build/2",
+  "script_sha256": "c78b430710a5e6bb79129b09cd7ef548bb2f2f309727b1b09a4d09a2e6941a90",
+  "mode": "record stage: no copy and no compilation; the epoch trees, binaries and target/.rustc_info.json are the cached outputs of the build stage",
+  "environment": {
+    "script": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r106/rei_restart_replay.py",
+      "sha256": "c78b430710a5e6bb79129b09cd7ef548bb2f2f309727b1b09a4d09a2e6941a90",
+      "git_tracked_in_htt_base": false
+    },
+    "htt_base": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "head": "b234bb0e0a9388d735bfa60a3b08041fc86e3cc5",
+      "dirty_tracked_files": true,
+      "n_modified_tracked_paths": 12
+    },
+    "rei_bianchi": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/rei_bianchi",
+      "head": "fef2baf960f57f37b838004fbb8a7d37b3824852"
+    },
+    "python": {
+      "version": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+      "executable": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "implementation": "CPython"
+    },
+    "libraries": {
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "pandas": "3.1.1"
+    },
+    "platform": "Linux-7.0.0-43-generic-x86_64-with-glibc2.39",
+    "toolchain_now": {
+      "rustc_vV": "rustc 1.99.0 (b940084d7 2026-09-28)\nbinary: rustc\ncommit-hash: b940084d7eb6a299eb4bfeb8e34901bc051e7ac4\ncommit-date: 2026-09-28\nhost: x86_64-unknown-linux-gnu\nrelease: 1.99.0\nLLVM version: 23.1.1",
+      "cargo_V": "cargo 1.99.0 (5f94df478 2026-08-27)"
+    },
+    "env": {
+      "PYTHONPATH": ".:htt:htt/src",
+      "OPENBLAS_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    }
+  },
+  "src_files_differing_between_epochs": [
+    "axbi_driver.rs"
+  ],
+  "identity_hash_scope": {
+    "n_identity_files": 17,
+    "n_src_files_covered": 12,
+    "n_compiled_src_files": {
+      "d7676": 37,
+      "4de69": 37
+    },
+    "note": "The source identity hash covers only the listed IDENTITY_FILES; the compiled crate contains more src/ files (per epoch: post_build_record.compiled_src_files_not_in_identity_hash). post_build_record.src_tree.sha256 hashes the full compiled src/ tree."
+  },
+  "input_sha256": {
+    "tree:/home/cosmosapjw/Dropbox/bianchi/rei_ax08_plus_recovery_20261115/rust/rei_microphysics/src": "b31a549a8fa355da2b3696589ca0805d2ae0d1a4f22caefb7d5e12058e1afc7b",
+    "/home/cosmosapjw/Dropbox/bianchi/rei_ax08_plus_recovery_20261115/rust/rei_microphysics/Cargo.toml": "e04b3802c2555b612305bb900e1e9d509c2a4039a6deacf20d65ddf7e5249407",
+    "/home/cosmosapjw/Dropbox/bianchi/rei_ax08_plus_recovery_20261115/rust/rei_microphysics/Cargo.lock": "d7cbe31e7171939a4c438f4e313e5aff1f881199c8720b2fa9b2f4859b6c7407",
+    "/home/cosmosapjw/Dropbox/bianchi/rei_bianchi/research/axbi_goal_20261014/runs/paired/32d11e733155/SHEAR_MINUS_continuation_001/source_identity.txt": "4de69c1e68ebd395fe2d0b5580d901b9a82bde86cadbd11bdd07e5ad2042b4a1"
+  },
+  "review_corrections": [
+    {
+      "id": "REI-R106-01",
+      "change": "Removed the per-case cosmic_age_at_mean_z20_s_from_locked_background and cosmic_age_at_restart_s fields and the a=1e-12..a_ref quadrature of the sheared H law that produced them (outside the locked domain; SCENARIO_LOCK clock.absolute_cosmic_age_s=null). Added one top-level q=0 FLRW age at zbar=20, labelled EXTERNAL_CONVENTION_OUTSIDE_LOCKED_DOMAIN and identical for all cases. No q-dependent extrapolated age is reported. The z<4 foreground H model is now labelled as an extension beyond a_end (sensitivity only)."
+    },
+    {
+      "id": "REI-R106-02",
+      "change": "Provenance is described as RECEIPT_LINKED_PLUS_CONTENT_BOUND for the four composed cases and GIT_MANIFEST_HASH_BOUND_PLUS_CONTENT_BOUND for SHEAR_PLUS. COMPOSITION_RECEIPT.json, composed RETURN.txt and composed checkpoint.txt are hashed into input_sha256. chain_ok now also requires equality of every RETURN counter/clock/error field with the checkpoint and of both RETURN residuals with the natively recomputed residuals. The git refs whose tips actually contain each checkpoint sha256 are found by a scan of the rei_bianchi object store run now, and the REI_COMMIT ancestry is recorded."
+    },
+    {
+      "id": "REI-R106-03",
+      "change": "The dt-form versus dN-form agreement is reported as a clock/H consistency check (dt/dN=1/H) plus a quadrature-error estimate (native rows versus Richardson and versus a cubic spline). It is stated not to validate tau(4..20), because both forms share n_e, sigma_T and H."
+    },
+    {
+      "id": "REI-R106-04",
+      "change": "Renamed ne_vs_native_eos_cm3, ne_vs_history_last_row_cm3 and abundance_rows_charge_neutrality_cm3 to electron_formula_*_consistency fields, and stated that charge neutrality is imposed by the EOS (n_e = n_H x_HII + n_He (x_HeII + 2 x_HeIII)); these are bookkeeping identities, not tests."
+    },
+    {
+      "id": "REI-R106-05",
+      "change": "The z<4 list is now a top-level z_below_4_continuation with three independent blockers (1 scenario-lock scope, 2 DriverConfig::validate 4<=end_zbar<20, 3 source redshift guard plus no admitted z<4 source model), each with the source line found now in both compiled epochs, and with background domain, absolute age and stored H/s marked DERIVED or NON_BLOCKING. Each case records the positive control from the cached native replay: the config.cfg end_zbar passed DriverConfig::read and Driver::new (both call validate)."
+    },
+    {
+      "id": "REI-R106-06",
+      "change": "Each case states the replay window next to the residual: accepted-step count, zbar range, rejections in window, attempts per step and the per-step dln a regime (constant step, endpoint-clipped final step). The headline residual covers every compared field including ledgers, photons and the energy residual. The reject and step-size-change branches are listed as not exercised. No new native window run."
+    },
+    {
+      "id": "REI-R106-07",
+      "change": "BUILD.json and the result record the script sha256, htt_base HEAD and dirty flag, script git tracking status, python/numpy/scipy/pandas versions, platform, current rustc/cargo versions, the rustc that built the cached binaries (target/.rustc_info.json), the full src/ tree hash per epoch, the compiled src files not covered by the 17-file identity hash, and a recomputed binary sha256. Done without recompiling."
+    }
+  ],
+  "commands": [
+    {
+      "tag": "build_d7676",
+      "command": "cargo build --release --offline --locked -j 3 --manifest-path /home/cosmosapjw/Downloads/htt_r106_analysis/rei/native/tree_d7676/rust/rei_microphysics/Cargo.toml --example rei_restart_replay",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "return_code": 0,
+      "wall_s": 3.23,
+      "maxrss_kB": 274408,
+      "stderr_tail": "   Compiling rei_microphysics v0.1.0 (/home/cosmosapjw/Downloads/htt_r106_analysis/rei/native/tree_d7676/rust/rei_microphysics)\n    Finished `release` profile [optimized] target(s) in 3.22s\n"
+    },
+    {
+      "tag": "build_4de69",
+      "command": "cargo build --release --offline --locked -j 3 --manifest-path /home/cosmosapjw/Downloads/htt_r106_analysis/rei/native/tree_4de69/rust/rei_microphysics/Cargo.toml --example rei_restart_replay",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "return_code": 0,
+      "wall_s": 3.34,
+      "maxrss_kB": 274664,
+      "stderr_tail": "   Compiling rei_microphysics v0.1.0 (/home/cosmosapjw/Downloads/htt_r106_analysis/rei/native/tree_4de69/rust/rei_microphysics)\n    Finished `release` profile [optimized] target(s) in 3.33s\n"
+    },
+    {
+      "tag": "record_htt_base_head",
+      "command": "git -C /home/cosmosapjw/Dropbox/bianchi/htt_base rev-parse HEAD",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "return_code": 0,
+      "wall_s": 0.005,
+      "maxrss_kB": null,
+      "stdout_sha256": "31bb25e0a077293988313ce2780a9a4aece8d136b027e4684255c6818bced476",
+      "stderr_tail": ""
+    },
+    {
+      "tag": "record_htt_base_status",
+      "command": "git -C /home/cosmosapjw/Dropbox/bianchi/htt_base status --porcelain --untracked-files=no",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "return_code": 0,
+      "wall_s": 0.061,
+      "maxrss_kB": null,
+      "stdout_sha256": "cceec2e47cd65c42c19fd0e5d110b25341dcdfeebec1ffc7d196a7c8a9799a98",
+      "stderr_tail": ""
+    },
+    {
+      "tag": "record_script_tracked",
+      "command": "git -C /home/cosmosapjw/Dropbox/bianchi/htt_base ls-files --error-unmatch scripts/r106/rei_restart_replay.py",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "return_code": 1,
+      "wall_s": 0.02,
+      "maxrss_kB": null,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_tail": "error: pathspec 'scripts/r106/rei_restart_replay.py' did not match any file(s) known to git\nDid you forget to 'git add'?\n"
+    },
+    {
+      "tag": "record_rei_head",
+      "command": "git -C /home/cosmosapjw/Dropbox/bianchi/rei_bianchi rev-parse HEAD",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "return_code": 0,
+      "wall_s": 0.003,
+      "maxrss_kB": null,
+      "stdout_sha256": "d46451c8eef0efc88a961307fe8758ea950d69261fe7e499960c388664e9db17",
+      "stderr_tail": ""
+    },
+    {
+      "tag": "record_rustc_vV",
+      "command": "rustc -vV",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "return_code": 0,
+      "wall_s": 0.043,
+      "maxrss_kB": null,
+      "stdout_sha256": "b569b0c98ea3133c7252b4b8ea6b39b7b353813df0dd5f5c412c355691424112",
+      "stderr_tail": ""
+    },
+    {
+      "tag": "record_cargo_V",
+      "command": "cargo -V",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "return_code": 0,
+      "wall_s": 0.014,
+      "maxrss_kB": null,
+      "stdout_sha256": "1f88eaf7fe1aaec83184752cf4c944cd22f00184136ff36a3e4c318cc60ef566",
+      "stderr_tail": ""
+    }
+  ]
+}

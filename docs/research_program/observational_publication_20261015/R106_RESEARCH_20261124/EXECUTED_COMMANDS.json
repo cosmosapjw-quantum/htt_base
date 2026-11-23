@@ -1,0 +1,161 @@
+{
+ "schema": "htt.r106.executed/1",
+ "lead_commands": [
+  {
+   "label": "commander",
+   "command": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python -m scripts.r105.commander_ensemble batch --start 0 --stop 7 --include docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/COMMANDER_TRANSFER.json docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/COMMANDER_PAIR_00001.json --directory /home/cosmosapjw/Downloads/htt_r105_commander/reductions --max-download-bytes 2415951360",
+   "return_code": 0,
+   "wall_s": 277.85,
+   "maxrss_kB": 3335368
+  },
+  {
+   "label": "coras129",
+   "command": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python -m scripts.r105.coras_flow --donor /home/cosmosapjw/Downloads/htt_r105_coras/deps/CORAS --binary /home/cosmosapjw/Downloads/htt_r105_coras/deps/pilot/coras_radial --output /home/cosmosapjw/Downloads/htt_r106_analysis/fine-129-256 --first 129 --last 256 --radial 36 --ell 8 --fft 24",
+   "return_code": 0,
+   "wall_s": 178.01,
+   "maxrss_kB": 404992
+  },
+  {
+   "label": "coras_l12",
+   "command": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python -m scripts.r105.coras_flow --donor /home/cosmosapjw/Downloads/htt_r105_coras/deps/CORAS --binary /home/cosmosapjw/Downloads/htt_r105_coras/deps/pilot/coras_radial --output /home/cosmosapjw/Downloads/htt_r106_analysis/ell12-1-128 --first 1 --last 128 --radial 36 --ell 12 --fft 24",
+   "return_code": 0,
+   "wall_s": 250.25,
+   "maxrss_kB": 404528
+  },
+  {
+   "label": "coras_r48",
+   "command": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python -m scripts.r105.coras_flow --donor /home/cosmosapjw/Downloads/htt_r105_coras/deps/CORAS --binary /home/cosmosapjw/Downloads/htt_r105_coras/deps/pilot/coras_radial --output /home/cosmosapjw/Downloads/htt_r106_analysis/radial48-1-128 --first 1 --last 128 --radial 48 --ell 8 --fft 24",
+   "return_code": 0,
+   "wall_s": 245.51,
+   "maxrss_kB": 404760
+  },
+  {
+   "label": "infl3",
+   "command": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python -B -m scripts.r106.coras_marks_influence --run /home/cosmosapjw/Downloads/htt_r106_analysis/marks128 --reference docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_FIELD_HOLDOUT.json --marks /home/cosmosapjw/Downloads/htt_r106_analysis/CF4_MARKS128.json --run8 /home/cosmosapjw/Downloads/htt_r106_analysis/marks8-main --marks8 /home/cosmosapjw/Downloads/htt_r106_analysis/CF4_MARKS8_MAIN.json --exclude-seed 41 --output /home/cosmosapjw/Downloads/htt_r106_analysis/CF4_MARKS128_INFLUENCE.json",
+   "return_code": 0,
+   "wall_s": 47.66,
+   "maxrss_kB": 326820
+  },
+  {
+   "label": "marks128",
+   "command": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python -m scripts.r105.cf4_coras_marks generate --donor /home/cosmosapjw/Downloads/htt_r105_coras/deps/CORAS --binary /home/cosmosapjw/Downloads/htt_r105_coras/deps/pilot/coras_radial --output /home/cosmosapjw/Downloads/htt_r106_analysis/marks128 --last 128 --radial 36 --ell 8 --fft 24",
+   "return_code": 0,
+   "wall_s": 175.01,
+   "maxrss_kB": 403388
+  },
+  {
+   "label": "marks8",
+   "command": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python -m scripts.r105.cf4_coras_marks generate --donor /home/cosmosapjw/Downloads/htt_r105_coras/deps/CORAS --binary /home/cosmosapjw/Downloads/htt_r105_coras/deps/pilot/coras_radial --output /home/cosmosapjw/Downloads/htt_r106_analysis/marks8-main --last 8 --radial 36 --ell 8 --fft 24",
+   "return_code": 0,
+   "wall_s": 69.45,
+   "maxrss_kB": 403348
+  },
+  {
+   "label": "marks_influence",
+   "command": ".venv/bin/python -B -m scripts.r106.coras_marks_influence --run /home/cosmosapjw/Downloads/htt_r106_analysis/marks128 --reference docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_FIELD_HOLDOUT.json --marks /home/cosmosapjw/Downloads/htt_r106_analysis/CF4_MARKS128.json --run8 /home/cosmosapjw/Downloads/htt_r106_analysis/marks8-main --marks8 /home/cosmosapjw/Downloads/htt_r106_analysis/CF4_MARKS8_MAIN.json --exclude-seed 41 --output /home/cosmosapjw/Downloads/htt_r106_analysis/CF4_MARKS128_INFLUENCE.json",
+   "return_code": 0,
+   "wall_s": 60.25,
+   "maxrss_kB": 328048
+  },
+  {
+   "label": "marks_influence_rerun",
+   "command": ".venv/bin/python -B -m scripts.r106.coras_marks_influence --run /home/cosmosapjw/Downloads/htt_r106_analysis/marks128 --reference docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_FIELD_HOLDOUT.json --marks /home/cosmosapjw/Downloads/htt_r106_analysis/CF4_MARKS128.json --run8 /home/cosmosapjw/Downloads/htt_r106_analysis/marks8-main --marks8 /home/cosmosapjw/Downloads/htt_r106_analysis/CF4_MARKS8_MAIN.json --exclude-seed 41 --output /home/cosmosapjw/Downloads/htt_r106_analysis/CF4_MARKS128_INFLUENCE.json",
+   "return_code": 0,
+   "wall_s": 60.24,
+   "maxrss_kB": 327628
+  },
+  {
+   "label": "marks_score",
+   "command": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python -m scripts.r105.cf4_coras_marks score --run /home/cosmosapjw/Downloads/htt_r106_analysis/marks128 --reference docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_FIELD_HOLDOUT.json --output /home/cosmosapjw/Downloads/htt_r106_analysis/CF4_MARKS128.json",
+   "return_code": 0,
+   "wall_s": 10.21,
+   "maxrss_kB": 326160
+  },
+  {
+   "label": "reduce",
+   "command": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python -m scripts.r105.coras_reduce --runs /home/cosmosapjw/Downloads/htt_r105_coras/coarse /home/cosmosapjw/Downloads/htt_r105_coras/fine /home/cosmosapjw/Downloads/htt_r105_coras/fine-ext /home/cosmosapjw/Downloads/htt_r106_analysis/fine-129-256 /home/cosmosapjw/Downloads/htt_r105_coras/fft24 --output /home/cosmosapjw/Downloads/htt_r106_analysis/CORAS_H02_EXTENDED.json",
+   "return_code": 0,
+   "wall_s": 9.4,
+   "maxrss_kB": 320828
+  },
+  {
+   "label": "reduce2",
+   "command": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python -m scripts.r105.coras_reduce --runs /home/cosmosapjw/Downloads/htt_r105_coras/coarse /home/cosmosapjw/Downloads/htt_r105_coras/fine /home/cosmosapjw/Downloads/htt_r105_coras/fine-ext /home/cosmosapjw/Downloads/htt_r106_analysis/fine-129-256 /home/cosmosapjw/Downloads/htt_r105_coras/fft24 /home/cosmosapjw/Downloads/htt_r106_analysis/radial48-1-128 /home/cosmosapjw/Downloads/htt_r106_analysis/ell12-1-128 --output /home/cosmosapjw/Downloads/htt_r106_analysis/CORAS_H02_EXTENDED_AXES.json",
+   "return_code": 0,
+   "wall_s": 14.98,
+   "maxrss_kB": 319980
+  },
+  {
+   "label": "scheme",
+   "command": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python -m scripts.r106.solver_scheme_select --opacity-pickle /home/cosmosapjw/Downloads/htt_r106_analysis/opacity_c48_vi19.pkl --workers 10 --output /home/cosmosapjw/Downloads/htt_r106_analysis/SOLVER_SCHEME_SELECT.json",
+   "return_code": 0,
+   "wall_s": 124.6,
+   "maxrss_kB": 144448
+  },
+  {
+   "label": "stab",
+   "command": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python -m scripts.r106.coras_stability --main /home/cosmosapjw/Downloads/htt_r105_coras/fine /home/cosmosapjw/Downloads/htt_r105_coras/fine-ext /home/cosmosapjw/Downloads/htt_r106_analysis/fine-129-256 --output /home/cosmosapjw/Downloads/htt_r106_analysis/CORAS_STABILITY_MAIN.json",
+   "return_code": 0,
+   "wall_s": 12.18,
+   "maxrss_kB": 321892
+  },
+  {
+   "label": "stab2",
+   "command": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python -m scripts.r106.coras_stability --main /home/cosmosapjw/Downloads/htt_r105_coras/fine /home/cosmosapjw/Downloads/htt_r105_coras/fine-ext /home/cosmosapjw/Downloads/htt_r106_analysis/fine-129-256 --radial48 /home/cosmosapjw/Downloads/htt_r106_analysis/radial48-1-128 --ell12 /home/cosmosapjw/Downloads/htt_r106_analysis/ell12-1-128 --output /home/cosmosapjw/Downloads/htt_r106_analysis/CORAS_STABILITY.json",
+   "return_code": 0,
+   "wall_s": 18.62,
+   "maxrss_kB": 321164
+  },
+  {
+   "label": "stab3",
+   "command": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python -B -m scripts.r106.coras_stability --main /home/cosmosapjw/Downloads/htt_r105_coras/fine /home/cosmosapjw/Downloads/htt_r105_coras/fine-ext /home/cosmosapjw/Downloads/htt_r106_analysis/fine-129-256 --radial48 /home/cosmosapjw/Downloads/htt_r106_analysis/radial48-1-128 --ell12 /home/cosmosapjw/Downloads/htt_r106_analysis/ell12-1-128 --fft-probe /home/cosmosapjw/Downloads/htt_r105_coras/coarse /home/cosmosapjw/Downloads/htt_r105_coras/fft24 --output /home/cosmosapjw/Downloads/htt_r106_analysis/CORAS_STABILITY.json",
+   "return_code": 0,
+   "wall_s": 14.43,
+   "maxrss_kB": 319672
+  },
+  {
+   "label": "stab3_rerun",
+   "command": ".venv/bin/python -B -m scripts.r106.coras_stability --main /home/cosmosapjw/Downloads/htt_r105_coras/fine /home/cosmosapjw/Downloads/htt_r105_coras/fine-ext /home/cosmosapjw/Downloads/htt_r106_analysis/fine-129-256 --radial48 /home/cosmosapjw/Downloads/htt_r106_analysis/radial48-1-128 --ell12 /home/cosmosapjw/Downloads/htt_r106_analysis/ell12-1-128 --fft-probe /home/cosmosapjw/Downloads/htt_r105_coras/coarse /home/cosmosapjw/Downloads/htt_r105_coras/fft24 --output /home/cosmosapjw/Downloads/htt_r106_analysis/CORAS_STABILITY.json",
+   "return_code": 0,
+   "wall_s": 20.98,
+   "maxrss_kB": 319972
+  },
+  {
+   "label": "stage_rate",
+   "command": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python -m scripts.r106.solver_stage_rate --workers 12 --output /home/cosmosapjw/Downloads/htt_r106_analysis/SOLVER_STAGE_RATE.json",
+   "return_code": 0,
+   "wall_s": 230.23,
+   "maxrss_kB": 146164
+  },
+  {
+   "label": "stage_rate2",
+   "command": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python -m scripts.r106.solver_stage_rate --workers 12 --output /home/cosmosapjw/Downloads/htt_r106_analysis/SOLVER_STAGE_RATE.json",
+   "return_code": 0,
+   "wall_s": 499.04,
+   "maxrss_kB": 147048
+  }
+ ],
+ "agent_command_records": [
+  "REVIEW/DATA_SUBTASKS_FIRST_PASS.json",
+  "REVIEW/ADVERSARIAL_REVIEW.json",
+  "REVIEW/REMEDIATION.json",
+  "SOLVER_DIAGNOSIS/HYPOTHESES_AND_SYNTHESIS.json",
+  "GAIA/GAIA_NULL_REFIT.json (provenance)",
+  "NVSS/RUN_RECORD.json",
+  "REI/COMMANDS.jsonl",
+  "CF3/CF3_OVERLAP.json.gz (code)"
+ ],
+ "failed_attempts": [
+  {
+   "command": "python -B -m scripts.r106.coras_marks_influence (lead rerun 1)",
+   "return_code": 1,
+   "first_failing_input": "SyntaxError at coras_marks_influence.py:191 introduced by the lead's wording fix",
+   "resolution": "corrected expression; rerun rc=0 (logs infl3.time)"
+  },
+  {
+   "command": "python -B -m scripts.r106.solver_stage_rate (first scheme)",
+   "return_code": 0,
+   "note": "pure stage-time rate without depth rescaling; superseded after review F1 (inexact applied depth): SOLVER/SOLVER_STAGE_RATE_STAGEONLY_SUPERSEDED.json"
+  }
+ ]
+}

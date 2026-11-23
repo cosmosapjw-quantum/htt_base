@@ -1,0 +1,58 @@
+--- /home/cosmosapjw/Dropbox/bianchi/htt_base/htt/bass/transport/coupled_einstein_boltzmann.py	2026-11-24 02:24:17.908719152 +0900
++++ variant/coupled_stage_rate.py	2026-11-24 03:38:24.131457294 +0900
+@@ -339,8 +339,11 @@
+         edges = np.sort(np.r_[edges, mid])
+ 
+ 
++RATE_MODE = "frozen"
++
++
+ def _advance_moving_photon_cell(op, state, delta_N, geometry, shear_source, sub_depths,
+-                                baryon_velocity_at, *, sub_edges=None):
++                                baryon_velocity_at, *, sub_edges=None, rate_at=None):
+     """SDIRK(2,2) photon cell with the electron velocity evaluated at each stage time.
+ 
+     The source and Lie operator are expressed per unit cell coordinate u. Substep
+@@ -357,15 +360,25 @@
+     y = np.array(state, dtype=np.complex128, copy=True)
+     for j, depth in enumerate(sub_depths):
+         h = edges[j+1]-edges[j]
+-        rate = float(depth) / h
++        if RATE_MODE == "frozen" or rate_at is None:
++            stage_rates = (float(depth) / h, float(depth) / h)
++        else:
++            stage_rates = tuple(float(rate_at(edges[j] + c * h)) for c in (gamma, 1.0))
++            if RATE_MODE == "stage_norm":
++                quad = h * ((1.0 - gamma) * stage_rates[0] + gamma * stage_rates[1])
++                if quad > 0.0:
++                    stage_rates = tuple(r * float(depth) / quad for r in stage_rates)
++            elif RATE_MODE != "stage":
++                raise ValueError(RATE_MODE)
+         stages = []
+-        for c in (gamma, 1.0):
++        for c, rate in zip((gamma, 1.0), stage_rates):
+             v = np.asarray(baryon_velocity_at(edges[j] + c * h), dtype=np.float64)
+             inc = gamma * h * shear_source
+             if rate > 0.0 and np.any(v):
+                 moving = MovingCollisionStage(op, v)
+                 solve = moving.factor_sdirk_stage(m_total, gamma * h, rate)
+-                inc = inc + gamma * float(depth) * moving.emission
++                stage_depth = float(depth) if RATE_MODE == "frozen" or rate_at is None else h * rate
++                inc = inc + gamma * stage_depth * moving.emission
+             else:
+                 solve = op.factor_sdirk_stage(m_total, gamma * h, rate)
+             stages.append((solve, inc))
+@@ -759,8 +772,12 @@
+ 
+                 u_edges, sub_depths = _optical_substeps(
+                     opacity, n0, float(N_eval[i1]), cfg.substeps_per_cell, cfg.max_substep_depth)
++                def _rate_at(u, n0=n0, dn=dN_cell):
++                    return dn * float(opacity.rate(min(n0 + u * dn, float(N_eval[i1]))))
++
+                 S_vec = _advance_moving_photon_cell(op_lie, S_vec, dN_cell, geom, src_vec,
+-                                                    sub_depths, _baryon_velocity_at, sub_edges=u_edges)
++                                                    sub_depths, _baryon_velocity_at, sub_edges=u_edges,
++                                                    rate_at=_rate_at)
+                 if cfg.record_history:
+                     record["photon_substeps"][cell] = len(sub_depths)
+             else:

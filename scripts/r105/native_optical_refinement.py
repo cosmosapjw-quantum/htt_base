@@ -38,7 +38,7 @@ def run_case(args):
 
 def solve_case(fam,cells,capacity,picards,ref,epsilon,*,ell=4,rings=12,detailed=False):
     mod=_solver(ref) if ref else live
-    extra={} if ref else {"max_substep_depth":capacity}
+    extra={} if ref else {"max_substep_depth":capacity,"stage_rate_collision":False,"picard_rtol":None}  # R106 pin: keep R105 semantics
     cfg=mod.CoupledSolverConfig(ell_max=ell,n_cells=cells,n_picard=picards,epsilon=epsilon,
                                 substeps_per_cell=2,record_history=True,**extra)
     t0=time.perf_counter()

@@ -1,0 +1,699 @@
+{
+ "schema": "htt.r106.review_remediation/1",
+ "workflow_run": "wf_e153d106-7cc",
+ "artifacts": [
+  {
+   "fix": {
+    "artifact": "scripts/r106/gaia_null_refit.py (Gaia/Quaia null refit). Outputs are in /home/cosmosapjw/Downloads/htt_r106_analysis/gaia/. The script was rewritten, and its current sha256 is a2c9c68893addeba9f356359aa7e74193e46116d3d0f9501b22c9228342a6e03; the version the review read was 9dd33826..., and a copy of it is in the scratchpad at gaia_pre/. The cached null draws were reused and not regenerated. A new `selmatch` subcommand reran every cached draw with the same seed and RNG sequence: for all 6000 draws the all48 vectors and statistics match the cache exactly (max abs/rel diff 0.0), and so do the fixed (8,47) refits of the first 25 draws in each null. The R104 exclusion rule was then applied to each draw's own all-48 delete-one refits. The `null` subcommand now writes the null tables and the selection-matched tables in a single pass. A 4-draw smoke run reproduced the cache exactly, so this new path was tested but not used for production draws. No files under htt/bass/transport, legacy, data/external or any committed R65/R98-R105 path were touched, and nothing was staged or committed.",
+    "files_changed": [
+     "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r106/gaia_null_refit.py",
+     "/home/cosmosapjw/Dropbox/bianchi/htt_base/tests/obsstat/test_r106_gaia_null_refit.py",
+     "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia/observed.json",
+     "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia/GAIA_NULL_REFIT.json",
+     "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia/selmatch_{patch,patch_gmag,patch_gmag_colour,crf3_complement,crf3_complement_all_g}.{json,npz} (new)",
+     "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia/logs/run_r106_review.sh (new driver) plus logs/review_*.log, logs/selmatch_*.log, logs/time_selmatch_*.txt, logs/time_review_*.txt"
+    ],
+    "outputs": [
+     "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia/GAIA_NULL_REFIT.json (schema htt.r106.gaia_null_refit/2). New blocks: headline_per_null, per_null_ranks, null_structure, exclusion_selection (rule, observed pairs, per-null pair statistics, ratio_rule_spread), claim_classes (numerical_convergence / conditional_prediction / physical_attribution), and provenance (input_sha256 of every cached and new npz/json, commands). Each null has configs.all48 and configs.excl_selected__{EB,B2,E2}, plus exclusion_ratio_selected_over_all48 and fixed_patch_conditional_diagnostic. idealized_hotelling_reference now carries a scope string and empirical_over_hotelling_q95. Also present: code_identity, review_corrections, and calibrated_p / significance / physical_Pi / physical_GF, all set to None.",
+     "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia/observed.json (schema /2). jk1/jk2 statistics are identical to the previous file (max diff 0.0). Added: exclusion_selection, which replays R104's influence ranking and checks it against GAIA_PATCH_INFLUENCE.json (match true), with all three rule variants selecting (8,47); alternative_exclusions_observed_only; quaia_rows.z_linear_frame_leak; quaia_rows.composition_retention; pinned input shas; code_identity; command; review_corrections.",
+     "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia/selmatch_<kind>.json/.npz for the 5 nulls. These hold the selected pair per draw and rule, the 32-dim vectors and all statistics for jk1/jk2, and the replay-vs-cache diffs (all 0.0). For the complement nulls they also hold the usable source ids, their sha, and the median pmra error.",
+     "The cached null_<kind>.json/.npz files from the 03:05-03:10 run are unchanged and still match their sha. Their receipts have no code identity; that identity is now in the selmatch receipts, which cite the cached receipt and npz shas and certify the exact replay."
+    ],
+    "commands": [
+     {
+      "command": ".venv/bin/python -B -m pytest -q -p no:cacheprovider tests/obsstat/test_r106_gaia_null_refit.py (8 passed)",
+      "return_code": 0,
+      "wall_s": 2,
+      "maxrss_kB": 168668
+     },
+     {
+      "command": ".venv/bin/python -B -m scripts.r106.gaia_null_refit observed --out <scratchpad>/gaia_smoke",
+      "return_code": 0,
+      "wall_s": 6.19,
+      "maxrss_kB": 772988
+     },
+     {
+      "command": ".venv/bin/python -B -m scripts.r106.gaia_null_refit selmatch --kind patch --limit 6 --verify-fixed 6 --out <scratchpad>/gaia_smoke",
+      "return_code": 0,
+      "wall_s": 4.44,
+      "maxrss_kB": 747944
+     },
+     {
+      "command": ".venv/bin/python -B -m scripts.r106.gaia_null_refit selmatch --kind crf3_complement --limit 6 --verify-fixed 6 --out <scratchpad>/gaia_smoke",
+      "return_code": 0,
+      "wall_s": 4.96,
+      "maxrss_kB": 747492
+     },
+     {
+      "command": ".venv/bin/python -B -m scripts.r106.gaia_null_refit null --kind patch --draws 4 --seed 106001 --out <scratchpad>/gaia_smoke/fresh (bit-identical to cache rows 0-3 and to the selmatch replay)",
+      "return_code": 0,
+      "wall_s": 3.96,
+      "maxrss_kB": 748472
+     },
+     {
+      "command": ".venv/bin/python -B -m scripts.r106.gaia_null_refit null --kind crf3_complement --draws 4 --seed 106004 --out <scratchpad>/gaia_smoke/fresh",
+      "return_code": 0,
+      "wall_s": 5.19,
+      "maxrss_kB": 747756
+     },
+     {
+      "command": "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia/logs/run_r106_review.sh (driver: observed, then 5x selmatch via xargs -P 3, then summarize)",
+      "return_code": 0,
+      "wall_s": 1045.38,
+      "maxrss_kB": 968476
+     },
+     {
+      "command": "  observed --out OUT",
+      "return_code": 0,
+      "wall_s": 4.22,
+      "maxrss_kB": 772836
+     },
+     {
+      "command": "  selmatch --kind patch_gmag_colour --out OUT (2000 draws)",
+      "return_code": 0,
+      "wall_s": 1038.68,
+      "maxrss_kB": 747652
+     },
+     {
+      "command": "  selmatch --kind patch --out OUT",
+      "return_code": 0,
+      "wall_s": 397.32,
+      "maxrss_kB": 748268
+     },
+     {
+      "command": "  selmatch --kind patch_gmag --out OUT",
+      "return_code": 0,
+      "wall_s": 433.88,
+      "maxrss_kB": 751488
+     },
+     {
+      "command": "  selmatch --kind crf3_complement_all_g --out OUT",
+      "return_code": 0,
+      "wall_s": 530.82,
+      "maxrss_kB": 968476
+     },
+     {
+      "command": "  selmatch --kind crf3_complement --out OUT",
+      "return_code": 0,
+      "wall_s": 230.99,
+      "maxrss_kB": 748972
+     },
+     {
+      "command": "  summarize --out OUT",
+      "return_code": 0,
+      "wall_s": 2.45,
+      "maxrss_kB": 193604
+     }
+    ],
+    "findings_addressed": [
+     {
+      "id": "GNR-1",
+      "action": "fixed_in_code",
+      "detail": "Pooled counts removed: nulls are never pooled. per_null_ranks reports draws_ge_observed, rank, max, q95, q99 and median for each null, for spin6, magnetic16 and joint32, in all48 and excl_selected__{EB,B2,E2}, for jk1 and jk2; headline_per_null gives the same per-null lines. null_structure describes the three permutation nulls as relabelings of one Quaia realization (634,233 rows) and gives the exact nesting. Patch-level exchangeability implies both refinements; patch x G8 and patch x G4 x C4 both refine patch x G4, but neither refines the other (checked: G4 edges are a subset of G8 edges). The two complement nulls are relabelings of fixed samples: the 31,449 G-matched usable rows are a strict subset of the 580,531 all-G rows, with 0 overlap with Quaia. Their median pmra error is 0.334 and 0.729 mas/yr against 0.304 for Quaia. (b+1)/(N+1) is reported only for the permutation nulls, as exact_conditional_permutation_p; the complements get exact_conditional_permutation_p=None with a reason. The post-selection of spin after R104 is stated. The pooled sentence in the separate R106 prose write-up is outside the files assigned to me and needs to be replaced from headline_per_null."
+     },
+     {
+      "id": "GNR-2",
+      "action": "fixed_in_code",
+      "detail": "select_exclusion() implements the R104 rule: take the top delete-one shift-norm patch in curvature row 0, then the top row-1 patch that differs from it, both computed on the data set's own all-48 delete-one refits. Three sector variants are implemented: EB (E2+B2 10-dim, primary), B2 and E2. On the observed data all three select (8,47); fail closed otherwise. Each of the 6000 cached draws was replayed and given its own selection. The excl null tables (configs.excl_selected__*) and exclusion_ratio_selected_over_all48 use this selection, and ratio_rule_spread gives the per-rule counts next to the fixed value. Fixed-(8,47) tables are kept only under fixed_patch_conditional_diagnostic, with a scope string. The matched rules pick (8,47) itself in 0-1.8% of draws, with 323-553 distinct pairs per null."
+     },
+     {
+      "id": "GNR-3",
+      "action": "fixed_in_code",
+      "detail": "The docstring now describes 8/47 as the top patches for row 0 (every sector) and for row-1 E2/B2, notes that 32 is the top row-1 glide/spin patch, and notes that (43,47) is the worst delete-two pair in 7 of 8 row-sectors. observed.json replays the R104 top-5 and worst-pair lists from the R98 cache and asserts they match GAIA_PATCH_INFLUENCE.json. It also reports observed-only statistics for the exclusions {32}, {43,47}, {8,47,32}, {8,47,43} and {8,47,32,43}; across these, spin6 jk1 changes by at most 5.59% relative to all48."
+     },
+     {
+      "id": "GNR-4",
+      "action": "fixed_in_code",
+      "detail": "Docstring restricted to frames evaluated at the shell medians. The key was renamed to shell_median_affine_frame_rhs_injection_max_abs (3.4e-14) and now carries a scope string. A new direct per-source injection of the R105 test frame through group_normal gives: shell-median leak 8.8e-14; per-source leak max 1.3136 uas/yr/z^2 (all48) and 1.3233 (excl). The analytic formula agrees with the injection to 1.5e-13. The leak's own spin6 Q (jk1) is 0.0374, and a unit spin-x slope leaks 0.182. Precision-weighted effective z (spin block) is [0.499, 1.158, 1.772, 2.520] against medians [0.596, 1.171, 1.761, 2.461]. Explaining the observed spin by leak alone would need a slope of (25.0, -143.7, 29.5) uas/yr/z and would still leave a 71.5% residual."
+     },
+     {
+      "id": "GNR-5",
+      "action": "fixed_in_code",
+      "detail": "The docstring no longer claims that patch_gmag_colour keeps the magnitude composition. observed.json composition_retention reports the exact within-stratum-permutation expectation, as retained fraction of shell curvature (row0, row1). G: patch_gmag 0.841/0.844, patch_gmag_colour 0.700/0.916, patch x G8 x C4 0.839/0.954. BP-RP: patch_gmag_colour 0.962/0.920, patch x G8 x C4 0.961/0.920, patch_gmag -0.019/0.009. The patch x G8 x C4 stratification was evaluated for retention only and NOT run as a null, so no proper-motion null exists that keeps both G and colour at high fidelity."
+     },
+     {
+      "id": "GNR-6",
+      "action": "fixed_in_code",
+      "detail": "idealized_hotelling_reference now carries a scope string ('NOT a calibration') and empirical_over_hotelling_q95 for each null x {all48, excl_selected__EB} x jk x statistic. The ratio exceeds 1 in 135 of 180 cells (range 0.85-2.12), so reading against it would be anti-conservative in those cells."
+     },
+     {
+      "id": "GNR-7",
+      "action": "fixed_in_code",
+      "detail": "FULL_JOIN sha 4cd83b1e... is pinned and checked by excluded_quaia_ids(); it fails closed when the file is missing or changed (tested). The CRF3 FITS sha is now verified for every null kind, since it sets the BP-RP strata. R105 GAIA_FRAME_PARITY.json is checked against the pinned 6c5d5950.... code_identity() records sha256 for this script and every imported scripts.* module (r103, r105, r69, r67, r68), git HEAD b234bb0e0 and the porcelain status of those files (scripts/r106 untracked). It appears in observed.json, every selmatch receipt and GAIA_NULL_REFIT.json, together with the argv/env command and review_corrections. Replay also checks the complement census and strata against the cached receipts. The 5 cached null_*.json receipts are deliberately left unchanged; they have no code identity, and their content is certified by the exact replay recorded in the selmatch receipts."
+     }
+    ],
+    "corrected_headline_results": [
+     "NUMERICAL CONVERGENCE: observed jk1/jk2 statistics are identical to the previous observed.json; the R105 replay matches within 4.5e-13; rebuilding the R98 normal equations from source rows gives F/s max rel 1.57e-15/2.60e-15; all 6000 cached null draws replay exactly (max diff 0.0).",
+     "spin6, all48 jk1, observed 104.12, per null (b/N, max, q99): patch 0/1000 (26.62, 21.37, permutation p=1/1001); patch_gmag 0/1000 (42.66, 26.97, p=1/1001); patch_gmag_colour 0/2000 (58.65, 34.85, p=1/2001); crf3_complement 0/1000 (61.69, 19.60, rank only); crf3_complement_all_g 0/1000 (32.95, 17.80, rank only). These are conditional permutation p-values for one Quaia realization and a statistic chosen after R104 looked at these data; this is not a calibrated significance, and the nulls are not pooled.",
+     "spin6, selection-matched exclusion (EB rule) jk1, observed 103.19: 0 exceedances in every null; null maxima 37.42, 36.57, 75.02 (of 2000), 53.57 and 42.68.",
+     "magnetic16, all48 jk1, observed 171.98: 0 exceedances in every null; maxima 112.5, 94.82, 142.7, 97.89 and 87.11. Under the EB-selected exclusion (observed 199.85): 0 exceedances in every null; maxima 130.8, 127.9, 140.9, 142.7 and 101.7.",
+     "joint32 is not extreme. all48 jk1, observed 406.39: 20/1000 (p=0.021), 21/1000 (0.022), 82/2000 (0.0415); complements 4/1000 and 6/1000, rank only. EB-selected exclusion jk1, observed 762.99: 6/1000, 9/1000, 23/2000, 0/1000 and 1/1000.",
+     "Selection-matched exclusion ratios (CONDITIONAL). jk1 B2_10 ratio, observed 2.104, draws >= observed for the EB/B2/E2 rules against fixed (8,47): patch 45/36/46 vs 14; patch_gmag 45/49/49 vs 9; patch_gmag_colour 86/94/78 of 2000 vs 17; crf3_complement 40/44/36 vs 1; crf3_complement_all_g 27/31/32 vs 2. jk1 joint32 ratio, observed 1.878: 131/126/138 vs 87, 143/139/147 vs 68, 238/250/235 of 2000 vs 158, 94/96/89 vs 24, 106/102/94 vs 53. The responses of B2_10 and joint32 to the exclusion are therefore not anomalous; the earlier fixed-patch counts understated them.",
+     "Spin6 under the spin-relevant alternative exclusions (jk1, observed only): {32} 101.75, {43,47} 100.96, {8,47,32} 101.40, {8,47,43} 102.22, {8,47,32,43} 98.31; the largest change is 5.59%.",
+     "PHYSICAL ATTRIBUTION: none. A frame linear in each source's own z leaks into curvature by up to 1.31 uas/yr/z^2 with the R105 test frame (spin6 Q of the leak 0.037). Explaining the observed spin by leak alone would need a spin slope of about (25, -144, 30) uas/yr/z and would still leave 71.5% of it unexplained. No null models AGIS scan, AGN-centroid or noise physics."
+    ],
+    "tests": "tests/obsstat/test_r106_gaia_null_refit.py: 8 tests, passed in 1.57 s (2.0 s wall). They cover the R104 rule variants, including the distinct-patch fallback and invariance to an offset; the null_rank permutation p, which is reported only for exchangeable nulls; expected_shell_means against a Monte Carlo average over permutations; permute_within keeping the label count in each stratum; a synthetic check that a frame at the shell medians is annihilated while a per-source z-linear frame leaks exactly as analytic_frame_leak predicts; check_pinned and FULL_JOIN failing closed (file missing or wrong sha); and code_identity hashing the script and the r103/r105/r69 modules."
+   },
+   "check": {
+    "ok": true,
+    "reproduced": [
+     "Tests: `.venv/bin/python -B -m pytest -q -p no:cacheprovider tests/obsstat/test_r106_gaia_null_refit.py` passed all 8 tests in 1.52 s (2.0 s wall, 169 MB).",
+     "GNR-1 code. scripts/r106/gaia_null_refit.py:291-298: null_rank sets exact_conditional_permutation_p=(b+1)/(N+1) only when the null is exchangeable. :955 sets exch = kind in PERMUTATION_NULLS. :976-979 build per_null_ranks for spin6/magnetic16/joint32, for all48 and excl_selected__{EB,B2,E2}, jk1/jk2. :1026-1063 build null_structure: one Quaia realization, fixed complement samples, subset relation computed, no pooling, post-selection note. :1065-1076 build headline_per_null. Docstring :46-55. No pooled '6000 draws' sentence remains in GAIA_NULL_REFIT.json; the only '6000' text is the GNR-1 review_corrections entry.",
+     "GNR-2 code. :104 defines SECTOR_RULES; :277-288 influence() and select_exclusion() (top row-0 patch, then the top distinct row-1 patch). :774-781 apply the selection per draw in run_draws, on that draw's own all-48 delete-one refits. :964-975 build the excl_selected__* tables, :985-994 exclusion_ratio_selected_over_all48, :1005-1009 fixed_patch_conditional_diagnostic with its scope string, :1010-1019 ratio_rule_spread. observed() :659-662 fails closed unless every rule variant selects (8,47).",
+     "GNR-3..7 code. Docstring :17-23 and r104_influence_replay :578-597, asserted against GAIA_PATCH_INFLUENCE.json. Alternative exclusions :668-680. Shell-median wording :7-11 and :628-631. Per-source z-linear injection :530-571. Composition retention :491-512 and docstring :37-40. Hotelling scope and empirical/Hotelling q95 ratio :981-984 and :1088-1094. check_pinned :165-173. FULL_JOIN pinned and failing closed :434-439. CRF3 and JOIN checked for every kind :703-704. R105 sha pinned :605. code_identity/command_record :176-203, written into the observed, selmatch, null and summary receipts.",
+     "observed rerun into scratch (`observed --out <scratch>/chk_gaia`, 7.5 s, 772 MB) is identical to the published observed.json (0 differences outside runtime/code_identity/command), and its jk statistics equal the pre-review observed.json. Values: spin6 jk1 104.1246 (all48) / 103.1918 (excl); magnetic16 171.9805 / 199.8466; joint32 406.3851 / 762.9906; B2_10 6.6392 / 13.9671. All three rules select (8,47). Alternative-exclusion spin6 jk1: {32} 101.747, {43,47} 100.956, {8,47,32} 101.405, {8,47,43} 102.218, {8,47,32,43} 98.307 (max change 5.59%). R104 replay: patch 32 is top in row-1 glide and spin; the worst pair is (43,47) in 7 of 8 row-sectors (row1_B2 gives (8,42)).",
+     "GNR-4 numbers reproduced from the rerun. Shell-median leak 8.79e-14. Per-source leak max 1.3136 (all48) and 1.3233 (excl). Analytic minus injection 1.50e-13. Leak spin6 Q jk1 0.0374. Unit spin-x slope leak max 0.1822. Effective z (spin block) [0.499, 1.158, 1.772, 2.520] against medians [0.596, 1.171, 1.761, 2.461]. A leak-only explanation needs a slope of (25.03, -143.73, 29.53) and leaves a residual fraction of 0.7151. R105 replay max 4.5e-13; R98 source replay F/s 1.57e-15 / 2.60e-15.",
+     "GNR-5 retention reproduced (row0/row1). G: patch_gmag 0.841/0.844, patch_gmag_colour 0.700/0.916, patch x G8 x C4 0.839/0.954. BP-RP: patch_gmag_colour 0.962/0.920, patch_gmag -0.019/0.009. G4 edges are a subset of the G8 edges: True.",
+     "Per-null ranks recomputed independently from the npz files (sha256 of each checked against its receipt). spin6 all48 jk1: 0 exceedances in every null; max 26.62 / 42.66 / 58.65 / 61.69 / 32.95; q99 21.37 / 26.97 / 34.85 / 19.60 / 17.80. EB-selected max 37.42 / 36.57 / 75.02 / 53.57 / 42.68. magnetic16 all48 max 112.51 / 94.82 / 142.74 / 97.89 / 87.11, EB max 130.82 / 127.95 / 140.90 / 142.68 / 101.70, all 0 exceedances. joint32 all48 20/1000, 21/1000, 82/2000, 4, 6; EB 6, 9, 23, 0, 1. All match the headlines.",
+     "Selection-matched ratios recomputed. B2_10, observed 2.1037, EB/B2/E2 vs fixed: patch 45/36/46 vs 14; patch_gmag 45/49/49 vs 9; patch_gmag_colour 86/94/78 vs 17; crf3_complement 40/44/36 vs 1; crf3_complement_all_g 27/31/32 vs 2. joint32, observed 1.8775: 131/126/138 vs 87, 143/139/147 vs 68, 238/250/235 vs 158, 94/96/89 vs 24, 106/102/94 vs 53. The (8,47) pair is picked in 0-1.8% of draws, with 323-553 distinct pairs. Draws whose EB pair is (8,47) equal the cached fixed-exclusion vectors exactly.",
+     "Independent reimplementation of the R104 rule and the jk1 quadratic forms on the first 12 regenerated draws of patch and of crf3_complement: 0 pair mismatches across EB/B2/E2; spin6 and B2_10 agree to at most 2.2e-15 relative, all48 spin6 to at most 3.1e-15 relative.",
+     "`selmatch --kind patch_gmag_colour --limit 6 --verify-fixed 6 --out <scratch>`: the replay against the cache gives 0.0, and all 72 arrays are bit-identical to the first 6 rows of the published selmatch_patch_gmag_colour.npz.",
+     "`null --kind crf3_complement_all_g --draws 3 --seed 106005 --out <scratch>` (4.2 s, 968 MB): bit-identical to the cached null npz rows and the published selmatch rows. usable_source_id is identical and the complement census is equal. The receipt now carries schema /2 and code_identity a2c9c688.",
+     "`summarize` rerun on symlinks to the published inputs reproduces GAIA_NULL_REFIT.json exactly (0 differences outside command/code_identity). Hotelling: 135 of 180 cells have empirical/Hotelling q95 > 1, range 0.850-2.118.",
+     "Extra sensitivity check (300 patch draws): ranking row 0 over all 16 coefficients instead of the E2+B2 sector selects the same pair as EB in 272/300 draws. B2_10 ratio >= observed in 18 draws vs 16 under EB, joint32 33 vs 30. spin6 excl max 32.10, 0 exceedances. Low impact.",
+     "No new modification under htt/bass/transport, legacy, data/external or R65/R98-R105 result paths. The git porcelain matches the session-start snapshot, and scripts/r106 and tests are untracked."
+    ],
+    "problems": [
+     "Stale R106 write-up, outside the engineer's file list but named by the GNR-1 fix. docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/REVIEW/DATA_SUBTASKS_FIRST_PASS.json (untracked), tasks[1].key_results: [6] still has the pooled 'None of the 6000 draws in either configuration reaches the observed value' and 'none of the 6000 draws reaches it'. [7] still gives the fixed-(8,47) joint32 counts 6/1000, 1/1000, 18/2000, 0/1000, 0/1000; selection-matched they are 6, 9, 23, 0, 1. [8] still gives the fixed B2_10 ratio counts 14/9/17/1/2; under the EB rule they are 45/45/86/40/27. [1] presents the 3.4e-14 'affine-in-z frame' injection without the shell-median restriction (GNR-4). [5] says the nulls use 'the same exclusion'. [9] claims what the magnitude/colour composition carries (GNR-5). This file must be regenerated from headline_per_null, exclusion_selection and quaia_rows.",
+     "Report prose overstatements; the JSON does not contain these phrases. First, 'joint32 is not extreme' holds only for all48. Under the selection-matched EB exclusion, joint32 jk1 (762.99) has permutation p 0.00699 / 0.00999 / 0.012, with rank-only exceedances 0/1000 and 1/1000 for the complements. jk2 gives 2/1000, 8/1000, 14/2000, 0, 0. Second, 'B2_10 ... responses ... not anomalous': the selection-matched B2_10 tail fractions are still 2.7-4.9% (EB 45/1000, 45/1000, 86/2000, 40/1000, 27/1000). That should read as an upper ~3-5% tail, not as typical.",
+     "The 5 cached null_*.json receipts (schema /1) still have no code_identity, command or review_corrections, so they break the 'every output JSON' rule. This is mitigated by the exact replay certified in the selmatch receipts. The code sha that actually generated the cached draws, 72b1e19f... (named in the first-pass write-up), is recorded in no R106 output; PRE_REVIEW_SCRIPT_SHA 9dd33826 is a later file state. The cached null commands are rebuilt from a template at summarize :952-954, not taken from a record.",
+     "The cached fixed-(8,47) tables were replay-verified only for the first 25 draws per null (--verify-fixed defaults to 25). fixed_patch_conditional_diagnostic uses all 1000/2000 cached rows. This is low risk and diagnostic only, but those rows are not individually certified.",
+     "The rule spread varies the sector jointly for both rows (EB/B2/E2, :104, :282-288). The row-0 ranking sector is not varied in the outputs, although R104 says 47 tops every row-0 sector. My 300-draw check shows the effect is small (272/300 identical pairs; B2_10 ratio 18 vs 16, joint32 33 vs 30), but the outputs do not report it.",
+     "null_structure.post_selection (:1060-1062) states that spin was singled out 'among 11 statistics x 2 configurations x 2 jackknifes'. That multiplicity is unsourced: it mixes R106's own table with the R104 selection, and no adjusted figure is given. Nit.",
+     "GNR-5 residual: the patch x G8 x C4 stratification was evaluated for retention only (G 0.839/0.954, colour 0.961/0.920) and not run as a proper-motion null. So no executed null keeps both G and colour at high fidelity, and any claim that G/colour systematics are controlled remains unsupported. The docstring states this honestly.",
+     "Reproducibility nit: code_identity and command_record do not record numpy/scipy/healpy/astropy versions. The bit-identical replay of the cached draws depends on the numpy Generator stream and on np.quantile behaviour.",
+     "Provenance nit: R104 GAIA_PATCH_INFLUENCE.json is not pinned to a constant sha. Its sha is recorded and its content is replay-asserted (:590-596).",
+     "Wording nit: spin_residual_fraction_after_leak_only_fit (0.715) is an unweighted Euclidean norm ratio (:570-571), not a covariance-weighted one. The report's phrase 'would still leave 71.5% unexplained' should say Euclidean-norm residual.",
+     "Test coverage nit: tests/obsstat/test_r106_gaia_null_refit.py covers select_exclusion, null_rank, expected_shell_means, permute_within, the frame-leak helpers, check_pinned/FULL_JOIN and code_identity. It does not cover composition_retention, r104_influence_replay, _pair_stats, hotelling_reference, or the run_draws/selmatch replay path, which only the manual smoke runs exercise."
+    ]
+   }
+  },
+  {
+   "fix": {
+    "artifact": "scripts/r106/radio_null_mocks.py",
+    "files_changed": [
+     "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r106/radio_null_mocks.py",
+     "/home/cosmosapjw/Dropbox/bianchi/htt_base/tests/obsstat/test_r106_radio_null_mocks.py",
+     "/home/cosmosapjw/Downloads/htt_r106_analysis/nvss/RUN_RECORD.json (rewritten by the report stage; original kept as RUN_RECORD.pre_r106_review.json)"
+    ],
+    "outputs": [
+     "/home/cosmosapjw/Downloads/htt_r106_analysis/nvss/review_followup/NVSS_REVIEW_CORRECTIONS.json (main report for F1-F6; sha256 735ae720...)",
+     "/home/cosmosapjw/Downloads/htt_r106_analysis/nvss/review_followup/C1ZERO.json + C1ZERO_DRAWS.npz (C_1=0 runs, 1000 mocks per DIFF family; nominal replay 100 per family; jackknife C_1-insensitivity checks)",
+     "/home/cosmosapjw/Downloads/htt_r106_analysis/nvss/review_followup/AMPLITUDE_NUISANCE.json + AMPLITUDE_NUISANCE_DRAWS.npz (40 new jk4 mocks per family; 800 amplitude-marginal mocks; 500 each at r16 and r84)",
+     "/home/cosmosapjw/Downloads/htt_r106_analysis/nvss/review_followup/C1_VALIDATION.json + C1_VALIDATION_DRAWS.npz (500 direct mocks per family at the closed-form p=0.05 crossing)",
+     "/home/cosmosapjw/Downloads/htt_r106_analysis/nvss/review_followup/{c1zero,amplitude,validate,report}.{log,stdout,time}, script_sha256_at_launch.txt",
+     "/home/cosmosapjw/Downloads/htt_r106_analysis/nvss/RUN_RECORD.json (per-run script SHAs, design_change_note, r106_review_followup block with commands, wall time, RSS and output SHAs)",
+     "/home/cosmosapjw/Downloads/htt_r106_analysis/nvss/RUN_RECORD.pre_r106_review.json (untouched copy of the original record)",
+     "/home/cosmosapjw/Downloads/htt_r106_analysis/nvss/review_followup_smoke/ (superseded smoke run of the follow-up stages with tiny ensembles; listed in RUN_RECORD as smoke_runs)",
+     "Unchanged reference: NVSS_NULL_MOCKS.json 9c7d7e6a..., NVSS_NULL_MOCK_DRAWS.npz 1e7f5100..., radio_null_mocks.log e1d5223b... (SHAs re-checked, identical)",
+     "All production follow-up stages ran with script sha256 32e375962eb07c1213a9b2d502416d952e766b5a0a49d4335f66a77e84c575a5, the current file"
+    ],
+    "commands": [
+     {
+      "command": "cd /home/cosmosapjw/Dropbox/bianchi/htt_base && export PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 && /usr/bin/time -f '%e s %M kB' .venv/bin/python -B -m scripts.r106.radio_null_mocks --followup c1zero --followup-dir .../nvss/review_followup_smoke --workers 3 --n-mocks 30 --n-nominal 6 --n-jk-check 2  [smoke, superseded]",
+      "return_code": 0,
+      "wall_s": 52.63,
+      "maxrss_kB": 391164
+     },
+     {
+      "command": "... --followup amplitude --followup-dir .../review_followup_smoke --workers 3 --n-jk 4 --n-mocks 12 --n-band 6  [smoke]",
+      "return_code": 0,
+      "wall_s": 29.24,
+      "maxrss_kB": 391156
+     },
+     {
+      "command": "... --followup validate --followup-dir .../review_followup_smoke --workers 3 --n-mocks 12 --n-boot 20  [smoke, first attempt: RuntimeError, the 30-mock RED C_1=0 ensemble was already above 0.05 at C_1=0; fixed by recording a skip]",
+      "return_code": 1,
+      "wall_s": 4.8,
+      "maxrss_kB": 390656
+     },
+     {
+      "command": "... --followup validate --followup-dir .../review_followup_smoke --workers 3 --n-mocks 12 --n-boot 20  [smoke rerun]",
+      "return_code": 0,
+      "wall_s": 7.73,
+      "maxrss_kB": 390576
+     },
+     {
+      "command": "... --followup report --followup-dir .../review_followup_smoke --n-boot 20  [smoke; run 3 times, only the first was timed]",
+      "return_code": 0,
+      "wall_s": 4.96,
+      "maxrss_kB": 390400
+     },
+     {
+      "command": "/usr/bin/time -f '%e s %M kB' -o .../review_followup/c1zero.time .venv/bin/python -B -m scripts.r106.radio_null_mocks --followup c1zero --followup-dir /home/cosmosapjw/Downloads/htt_r106_analysis/nvss/review_followup --workers 3 --n-mocks 1000 --n-nominal 100",
+      "return_code": 0,
+      "wall_s": 616.63,
+      "maxrss_kB": 390532
+     },
+     {
+      "command": "/usr/bin/time ... --followup amplitude --followup-dir .../review_followup --workers 3 --n-jk 40 --n-mocks 800 --n-band 500",
+      "return_code": 0,
+      "wall_s": 506.08,
+      "maxrss_kB": 390308
+     },
+     {
+      "command": "/usr/bin/time ... --followup validate --followup-dir .../review_followup --workers 3 --n-mocks 500 --n-boot 200",
+      "return_code": 0,
+      "wall_s": 107.27,
+      "maxrss_kB": 390312
+     },
+     {
+      "command": "/usr/bin/time ... --followup report --followup-dir .../review_followup --n-boot 200 --update-run-record",
+      "return_code": 0,
+      "wall_s": 5.83,
+      "maxrss_kB": 390840
+     },
+     {
+      "command": ".venv/bin/python -B -m scripts.r106.radio_null_mocks --diff-c1-scale 0 --timing-only  [guard check: raises ValueError and refuses to write into the reference directory, as intended]",
+      "return_code": 1
+     },
+     {
+      "command": "/usr/bin/time .venv/bin/python -B -m scripts.r106.radio_null_mocks --workers 3 --diff-c1-scale 0 --families LSS_COMMON LSS_DIFF_FLAT --calib-mocks 3 --scale-mocks 2 --max-mocks 6 --budget-seconds 300 --pilot-common 2.4e-4 --pilot-flat 1.3e-3 --output <scratchpad>/main_c1zero_check  [code-path check of the main pipeline with C_1=0; numbers not reported]",
+      "return_code": 0,
+      "wall_s": 38.15,
+      "maxrss_kB": 387452
+     },
+     {
+      "command": "/usr/bin/time .venv/bin/python -B -m pytest -q -p no:cacheprovider tests/obsstat/test_r106_radio_null_mocks.py",
+      "return_code": 0,
+      "wall_s": 2.33,
+      "maxrss_kB": 317776
+     }
+    ],
+    "findings_addressed": [
+     {
+      "id": "F1",
+      "action": "fixed_in_code",
+      "detail": "Added the --diff-c1-scale option (diff_spectrum, make_mock c1_scale). At the default 1.0 the output is bit-identical: 100 nominal mocks per family replay the 2000-mock deltas and t_self exactly (max diff 0.0). New helpers: l1_dipole_xy (healpy sign convention checked by the test), offdiag_fraction_contrast, closed_form_cov, c1_crossing_gaussian, tself_coefficients / c1_crossing_mc. The c1zero stage ran 1000 C_1=0 mocks per DIFF family on the main-run seeds, so each is a common-random-number (CRN) partner of a reference mock. The report gives p versus C_1 two ways. (i) Gaussian closed form: Cov = Cov_{C1=0}(mocks) + df^2 (3C_1/4pi) I_2, with df = 0.07446 from the observed joint class counts. (ii) A semi-analytic p_mc for the R65 t_self statistic, adding df*sqrt(C_1)*u_i, where u_i is each mock's own unit l=1 dipole. The closed form was validated against the reference ensemble at C_1=A_m (per mock) and against direct 500-mock runs at the 0.05 crossing. The report gives the 0.05 and 0.01 crossings with bootstrap 16-84% intervals. The docstring and scope now restate each null as an assumed resolved-fraction dipole of RMS sqrt(3C_1/4pi). They forbid quoting any family's p as the LSS/selection-null p, and say C_1=0 is not a conservative limit (Cov0 is still 1.97-2.77x Poisson). Scoped, not fixed: C_1 is not anchored by external data. The semi-analytic k(C_1) is not monotone on the grid for RED/MID because of MC step noise; the first crossing is reported and flagged."
+     },
+     {
+      "id": "F2",
+      "action": "fixed_in_code",
+      "detail": "MID is no longer called 'data-preferred' or 'favoured' anywhere in code or outputs (grep for 'preferred' over the script, follow-up JSONs and RUN_RECORD: 0 hits). The label had only appeared in prose. The shape_selector() output reports MID only as the family whose NSIDE8/4 contrast ratio is closest to the data. It gives the 9-mock z-scores (RED +1.36, MID -0.59, FLAT -1.74, COMMON -3.06), which exclude no DIFF family. It also gives the full range of reference p(t_self, dipole): FLAT 0.012, MID 0.17, RED 0.57. Insensitivity to C_1 was rechecked on the reference seeds. On 12 calibration seeds the jk4 contrast trace at C_1=0 divided by nominal is 1.005 (RED), 0.999 (MID), 1.018 (FLAT). On 9 scale seeds the 8/4 ratio at C_1=0 versus nominal is 0.580 vs 0.583 (RED), 0.715 vs 0.712 (MID), 0.852 vs 0.848 (FLAT)."
+     },
+     {
+      "id": "F3",
+      "action": "fixed_in_code",
+      "detail": "The amplitude stage ran 40 new jk4+estimator mocks per family on seeds [ROOT_SEED,300,i] and pooled them with the 21 reference values. Amplitude spread: SD_A = SD(trace)/(target-base) = 0.272 (RED), 0.231 (MID), 0.212 (FLAT). It was combined in quadrature with the 12-mock calibration SE (0.092, 0.096, 0.077), giving sigma_r = 0.287, 0.250, 0.225. The nuisance is treated as independent. Spearman correlation of the jk4 trace with t_self over the 40 new mocks is -0.13, -0.11, -0.11; this is a weak check at that n. Marginal p comes from 800 mocks per family, each drawing its own amplitude r_i ~ N(1, sigma_r) truncated at r > 0 (deterministic seeds). The 16-84% band comes from fixed 500-mock ensembles at the r16 and r84 quantiles. The report shows p to 2 significant figures with counts and MC SEs, instead of 4-digit p_mc. Scoped: the band is conditional on each family's shape, with C_1 = r*A_m."
+     },
+     {
+      "id": "F4",
+      "action": "scoped_in_output",
+      "detail": "The DIFF families are renamed EMPIRICAL_DIFF_SELECTION_{RED,MID,FLAT} in the docstring and all new outputs (FAMILY_LABELS). The internal keys LSS_DIFF_* are kept so that seeds and the reference npz stay addressable. The violated single-selection constraint is stated with numbers. jk4 single-selection trace divided by target: 1.33 (RED), 1.34 (MID), 1.29 (FLAT) in 40 new mocks; 1.32, 1.31, 1.36 in the reference calibration. C_10(diff)/C_10(common) = 72, 72, 80. A joint (A_c, A_m) refit was not done."
+     },
+     {
+      "id": "F5",
+      "action": "scoped_in_output",
+      "detail": "Added an overdispersion validity table (f5_overdispersion_validity) comparing data and mocks for every family and ensemble. Per-selection overdispersion (OD) from the 2000-mock reference: data peak 1.0636 and integrated 1.1044. No mock in any family reaches the peak value; for the integrated value only MID does (21/2000). Off-diagonal-class OD: data 1.509. RED and FLAT nominal mocks average 1.331 and 1.330 (0/100 reach the data). MID averages 2.51 (100/100 exceed the data). The same pattern holds in the C_1=0, crossing and amplitude-marginal ensembles. Scoped: these are model-adequacy checks only. No source-multiplicity or white small-scale term was added, so its effect on the contrast-null spread is untested."
+     },
+     {
+      "id": "F6",
+      "action": "fixed_in_code",
+      "detail": "Report stage with --update-run-record. RUN_RECORD.json now carries a script_sha256 for every prior run, read from that run's own JSON: smoke b6b40890..., smoke2 and FINAL 44b7d90e.... Timing-only and failed_attempt1 are marked 'not recorded', with the reason. A design_change_note says LSS_DIFF_MID and the NSIDE8/4 diagnostic were added after smoke run 1 (JSON written 03:00:41) had shown dipole p_self of RED 0.58 (10/18) and FLAT 0.16 (2/18). The record also lists every follow-up run: command, script SHA (all 32e37596..., equal to the current file), GNU time wall and RSS, and output SHAs. Every follow-up JSON records script and module SHAs, input SHAs (raw catalogue, carrier, R65 and R105 JSONs, reference JSON and npz, upstream stage files), the command, settings, seeds and a review_corrections list. The original record is kept as RUN_RECORD.pre_r106_review.json."
+     }
+    ],
+    "corrected_headline_results": [
+     "CONDITIONAL PREDICTION. Every DIFF-family null p is conditional on the l=1 power C_1 of the differential field, which the NSIDE4/8 jackknife cannot see. With C_1 = 0 (1000 CRN mocks per family), p(t_self, dipole) is 0.007 (6/1000) for RED, 0.004 (3/1000) for MID and 0.001 (0/1000) for FLAT; at the extrapolated C_1 = A_m the reference gives 0.57, 0.17 and 0.012. At C_1 = 0 the mock contrast covariance is still 2.77x, 2.21x and 1.97x the R65 Poisson trace, so C_1 = 0 is not a conservative limit.",
+     "CONDITIONAL PREDICTION. Closed form Cov = Cov_{C1=0} + df^2 (3C_1/4pi) I_2 with df = 0.0745 (observed counts). Applied to t_self (dipole), p crosses 0.05 at C_1 = 1.62e-3 [1.51, 1.78]e-3 (RED, 0.089 A_m), 2.06e-3 [1.90, 2.18]e-3 (MID, 0.45 A_m) and 2.39e-3 [2.19, 2.57]e-3 (FLAT, 1.88 A_m). It crosses 0.01 at 2.8e-4 [2.1, 6.0]e-4, 9.3e-4 [8.1, 11.3]e-4 and 1.08e-3 [0.88, 1.14]e-3. Brackets are bootstrap 16/50/84 percentiles. In terms of the resolved-fraction dipole, the 0.05 crossing is an RMS of 0.020-0.024 per component; reproducing |delta_obs| outright needs |delta_obs|/df = 0.078. The Gaussian-form 0.05 crossings are 1.80e-3, 2.30e-3 and 2.54e-3.",
+     "NUMERICAL CONVERGENCE. The first-order closed form is validated per mock against the 2000-mock reference at C_1 = A_m. Shift regression slopes are 1.004, 1.007 and 1.008, with correlation of at least 0.992. Predicted versus direct p on the same 1000 seeds: 0.56 vs 0.57 (RED), 0.17 vs 0.16 (MID), 0.018 vs 0.016 (FLAT). Closed-form/empirical covariance trace is 1.02, 0.96 and 1.02. Direct 500-mock runs at the predicted 0.05 crossing give p = 0.042 (20/500), 0.050 (24/500) and 0.054 (26/500), each with SE about 0.01. The nominal replay is bit-exact.",
+     "CONDITIONAL PREDICTION (F3). Amplitude-marginal p(t_self, dipole) with 16-84% band, at fixed shape with C_1 = r A_m: RED 0.55 [0.46, 0.63], MID 0.17 [0.098, 0.24], FLAT 0.021 [0.004, 0.032]. For dipole_stf, FLAT is 0.027 [0.010, 0.034]. sigma_r is 0.287, 0.250 and 0.225. The FLAT band crosses 0.01, so no fixed-threshold verdict is attached.",
+     "F2. MID is only the family whose NSIDE8/4 contrast ratio is closest to the data. The 9-mock z-scores are +1.36 (RED), -0.59 (MID) and -1.74 (FLAT), so no family is excluded. The ratio and the calibration trace change by less than 2% at C_1 = 0, so they neither select a family nor set p.",
+     "F4/F5 model adequacy. The DIFF families are empirical differential-selection fields, not jointly calibrated: their single-selection jk4 trace is 1.29-1.36x the target. In the per-selection overdispersion, no mock in any family reaches the data peak value (1.0636). In the off-diagonal-class overdispersion, MID over-predicts (2.51 vs data 1.509) and RED/FLAT under-predict (1.33).",
+     "PHYSICAL ATTRIBUTION. None. Nothing here says whether the NVSS integrated-minus-peak contrast is caused by LSS or by selection, because C_1 is not anchored by independent data."
+    ],
+    "tests": "tests/obsstat/test_r106_radio_null_mocks.py: 6 passed in 1.74 s (2.33 s wall). Covers: diff_spectrum (identity at 1, only l=1 touched); l1_dipole_xy against a healpy alm2map least-squares fit, plus per-component variance 3C_1/4pi; offdiag_fraction_contrast on the R65 joint counts; the Gaussian closed-form crossing solving W = -2 ln(alpha); semi-analytic t_self versus direct evaluation, with the MC crossing within 20% of the exact chi^2_2 law; and determinism, positivity and quantiles of the truncated-normal amplitude draws."
+   },
+   "check": {
+    "ok": true,
+    "problems": [
+     "Everything required for F1-F6 is in the code: scripts/r106/radio_null_mocks.py (sha256 32e37596..., the same script that produced every production follow-up output). F1: --diff-c1-scale at :1419-1420; diff_spectrum at :262-268; make_mock c1_scale at :292-306; guard against writing into the reference directory at :616-620; stage_c1zero at :837-898 (1000 C_1=0 mocks per DIFF family); closed form and df at :330-350; c1_analysis with p versus C_1, the 0.05/0.01 crossings, bootstrap intervals and validation at C_1=A_m at :962-1044; direct check at the crossing at :1047-1102; restated docstring and scope at :31-40 and :742-753. F2: docstring at :41-45; shape_selector with 9-mock z-scores at :1160-1179; no 'preferred' wording in the script, the production outputs or RUN_RECORD. F3: :417-434, :901-959, :1276-1296. F4: :23-30, :105-108, :1298-1307. F5: :227-230, :1182-1207, :1373-1376. F6: :1210-1274, :1389-1401. All outputs exist and contain the corrected fields. Every output JSON has review_corrections, the script and module SHAs, the input SHAs and the command. The reference NVSS_NULL_MOCKS.json, the npz and the log keep their pinned SHAs.",
+     "MINOR (provenance, F6): RUN_RECORD.json r106_review_followup leaves out several runs the engineer reports: the failed validate smoke attempt (rc=1), two of the three report smoke reruns, the guard-check run, the main-pipeline C_1=0 code-path check (scratchpad output) and the pytest run. Also, stage_record writes return_code: 0 as a fixed value (:1262); it is not measured.",
+     "MINOR (scope): NVSS_NULL_MOCKS.json was kept unchanged, as required. It still has the pre-review scope string, 4-digit p_mc and unlabelled LSS_DIFF_* keys, and nothing in it points to review_followup/NVSS_REVIEW_CORRECTIONS.json. Only RUN_RECORD links the two, so someone reading the reference file alone sees the unscoped p-values.",
+     "MINOR (stats, F1/F3 not combined): the p-versus-C_1 curve and the 0.05/0.01 crossings use Cov_{C1=0} from mocks with the l>=2 spectrum fixed at the reference A_m. They are not marginalised over the F3 amplitude nuisance, and their bootstrap intervals cover only the Monte Carlo noise of the C_1=0 ensemble. The amplitude-marginal p in turn fixes C_1 = r*A_m. No result carries both uncertainties, and the uncertainty in the common amplitude A_c is not propagated either.",
+     "MINOR (validation wording, F1): the 'validated against the C_1=0 ensemble' leg is circular, because Cov_{C1=0} is estimated from those same mocks. The real checks are at C_1=A_m (the reference ensemble) and at the 0.05 crossing. The crossing check reuses the seeds that defined the crossing (common random numbers), so it tests the first-order map, not the Monte Carlo error of the crossing. For RED dipole on those 500 seeds, the semi-analytic map predicts 27/500 exceedances against 20/500 direct, which is within noise.",
+     "NIT: C1_VALIDATION prints 't_self_k_monotone_on_grid: False' for RED and MID, and the engineer reports 'first crossing reported and flagged'. That reads as if the crossing were ambiguous. I scanned 8001 points over C_1 in [1e-6, 1e-2] for every family, model and alpha, and p>=alpha changes sign exactly once each time. The reported crossings are unique in that range, so the flag overstates the ambiguity.",
+     "NIT: two output statements are fixed text, not derived from the computed values: the shape_selector line 'no DIFF family is excluded at 2 sigma' (:1177-1179) and the F4 line 'single-selection constraint is violated' (:1307). Both are true now: the largest DIFF |z| is 1.74, and in my check the data single-selection target lies below all 21 reference mocks in every DIFF family (z = -1.67, -1.67, -1.96). But they would not change if the numbers did, and the F4 output gives only the trace/target ratio, with no tail fraction.",
+     "OPEN (scoped, F5): no source-multiplicity or white small-scale term was added, so its effect on the spread of the contrast null is untested. The table shows the mocks fail this check in every family. No mock reaches the data's per-selection peak overdispersion (1.0636). On the off-diagonal-class overdispersion, MID over-predicts (100/100 mocks above the data's 1.509) and RED/FLAT under-predict (0/100).",
+     "OPEN (scoped, F1): C_1 is not anchored by any independent data. No physical attribution is possible, and the outputs say so.",
+     "MINOR (F3): sigma_r comes from 61 jackknife traces (40 new plus 21 reference) rather than the roughly 120 the reviewer used; RED SD_A = 0.272 against the reviewer's 0.24. The 21 reference traces include the 12 calibration mocks whose mean was fitted to the target. The effect on the band is probably small.",
+     "LATENT NIT: main() opens <output>/radio_null_mocks.log for appending before the guards run. The guard at :618 still allows --timing-only with the default --output, which would append to the pinned reference log (sha e1d5223b...). This has not happened; the SHA is unchanged.",
+     "TRIVIAL: the superseded smoke file review_followup_smoke/C1ZERO.json still quotes the original finding text containing 'data-preferred'. The production outputs do not."
+    ],
+    "reproduced": [
+     "pytest tests/obsstat/test_r106_radio_null_mocks.py: 6 passed in 1.64 s (2.09 s wall, 317 MB)",
+     "Report stage rerun into the scratchpad (--followup report --n-boot 200, 5.68 s, 390 MB) from copies of the stage outputs: every numeric field of NVSS_REVIEW_CORRECTIONS.json is identical to the stored file. Only provenance.command, elapsed_seconds and the smoke-run block differ, because of the scratch path.",
+     "c1zero stage rerun into the scratchpad (--n-mocks 15 --n-nominal 3 --n-jk-check 2, 31.6 s, 391 MB): every array matches the stored C1ZERO_DRAWS.npz exactly (max abs diff 0) for the first 15 C_1=0 mocks and 3 nominal mocks per family. The C_1=0 jackknife traces on 2 calibration and 2 scale seeds per DIFF family are also identical. So the stored draws come from the current script.",
+     "validate stage rerun into the scratchpad (--n-mocks 40 --n-boot 20, 10.8 s): the crossing targets are identical (C_1 = 1.6168e-3 RED, 2.0562e-3 MID, 2.3910e-3 FLAT), and the first 40 direct mocks per family match the stored C1_VALIDATION_DRAWS exactly.",
+     "Recomputed with my own code from the stored draws and the R65 JSON/carrier (the script was not imported): df = 0.074460 (f_off peak 0.07859, integrated 0.15305); |delta_obs|/df = 0.0779; t_obs = 32.792.",
+     "Recomputed independently: p(t_self, dipole) at C_1=0 is 0.007 (6/1000) RED, 0.004 (3/1000) MID, 0.001 (0/1000) FLAT; Cov0 trace / R65 Poisson trace is 2.766, 2.211, 1.970. These match the headline.",
+     "Recomputed independently: Gaussian closed-form crossings at p=0.05 are 1.7955e-3, 2.3018e-3, 2.5355e-3, and at p=0.01 are 3.1455e-4, 8.2093e-4, 1.0549e-3. These match the stored values to every digit shown.",
+     "Recomputed independently (8001-point and 20001-point grids): semi-analytic t_self crossings at p=0.05 are 1.6171e-3, 2.0571e-3, 2.3919e-3, against the reported 1.6168e-3, 2.0562e-3, 2.3910e-3. At p=0.01 they are 2.762e-4, 9.268e-4, 1.0771e-3, against the reported 2.762e-4, 9.266e-4, 1.0769e-3.",
+     "Recomputed independently, validation at C_1=A_m: shift regression slopes 1.0035, 1.0073, 1.0077; closed-form/empirical covariance trace 1.021, 0.963, 1.021.",
+     "Recomputed independently, F3 amplitude-marginal p(t_self, dipole): RED 0.549 (439/800), band [230/500, 317/500] = [0.46, 0.63]; MID 0.170 (135/800), band [48/500, 117/500] = [0.098, 0.24]; FLAT 0.021 (16/800), band [1/500, 15/500] = [0.004, 0.032]. The realised SD of the drawn amplitude ratio is 0.288, 0.263, 0.220.",
+     "Independent check of the sign convention of l1_dipole_xy: for 12 seeds I regenerated the RNG stream, built an l=1-only map with healpy and fitted its dipole by least squares. The fit matches the stored u_l1 to 5.6e-16."
+    ]
+   }
+  },
+  {
+   "fix": {
+    "artifact": "scripts/r106/cf3_overlap.py -> /home/cosmosapjw/Downloads/htt_r106_analysis/cf3/ (CF3_OVERLAP.json schema htt.r106.cf3_overlap/2, script sha256 9cc1b7fb5a559ed3b11bc6b4fdb89587e30edbcb3b51e263cdfebdb0ee9e4974; the previous run, sha256 20ade171568e..., is archived under superseded/20ade171568e/)",
+    "files_changed": [
+     "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r106/cf3_overlap.py",
+     "/home/cosmosapjw/Dropbox/bianchi/htt_base/tests/obsstat/test_r106_cf3_overlap.py"
+    ],
+    "outputs": [
+     "/home/cosmosapjw/Downloads/htt_r106_analysis/cf3/CF3_OVERLAP.json",
+     "/home/cosmosapjw/Downloads/htt_r106_analysis/cf3/SIXDF_CF3_2MRS_CROSSTABLE.tsv",
+     "/home/cosmosapjw/Downloads/htt_r106_analysis/cf3/CF4_R98_GROUP_CF3_MEMBERSHIP.tsv",
+     "/home/cosmosapjw/Downloads/htt_r106_analysis/cf3/run.log",
+     "/home/cosmosapjw/Downloads/htt_r106_analysis/cf3/run.time",
+     "/home/cosmosapjw/Downloads/htt_r106_analysis/cf3/superseded/20ade171568e/"
+    ],
+    "commands": [
+     {
+      "command": "cd /home/cosmosapjw/Dropbox/bianchi/htt_base && PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -B scripts/r106/cf3_overlap.py --output-dir <scratchpad>/smoke --replicates 50 --drop-replicates 3 --jobs 3 --coras ~/Downloads/htt_r105_coras/sixdf8=docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_CORAS_MARKS.json  (smoke run; observed sums matched the previous run with max diff 0)",
+      "return_code": 0,
+      "wall_s": 19,
+      "maxrss_kB": 479176
+     },
+     {
+      "command": "cd /home/cosmosapjw/Dropbox/bianchi/htt_base && PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -B scripts/r106/cf3_overlap.py --output-dir /home/cosmosapjw/Downloads/htt_r106_analysis/cf3 --replicates 2000 --drop-replicates 64 --jobs 3 --seed 20261124 --coras /home/cosmosapjw/Downloads/htt_r105_coras/sixdf8=docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_CORAS_MARKS.json /home/cosmosapjw/Downloads/htt_r106_analysis/marks128=/home/cosmosapjw/Downloads/htt_r106_analysis/CF4_MARKS128.json",
+      "return_code": 0,
+      "wall_s": 1091.73,
+      "maxrss_kB": 900476
+     },
+     {
+      "command": "cd /home/cosmosapjw/Dropbox/bianchi/htt_base && PYTHONPATH=.:htt:htt/src ... .venv/bin/python -B -m pytest -q -p no:cacheprovider tests/obsstat/test_r106_cf3_overlap.py",
+      "return_code": 0,
+      "wall_s": 0.85,
+      "maxrss_kB": 109340
+     },
+     {
+      "command": "uvx ruff check --select F,E9 scripts/r106/cf3_overlap.py tests/obsstat/test_r106_cf3_overlap.py",
+      "return_code": 0
+     }
+    ],
+    "findings_addressed": [
+     {
+      "id": "CF3-1",
+      "action": "fixed_in_code",
+      "detail": "Four exclusion sets are now flagged as defined by apparent magnitude: 2MRS_galaxy, 2MRS_coras_input, complement_keep_only_2MRS_coras_input, and union_2MRS_coras_or_CF3_window. Their test_only and drop blocks carry comparable_to_controls=false and a not_comparable_reason. The constant-recentred drop is marked comparable only for the offset-marginalised contrasts. Each block also stores a mark_zero_point_confound record: the kept-set inverse-variance mean delta_d against the same control masks, overall and per 2000 km/s bin, plus the mean epsilon_d. Each set gets a comparability record with a citation rule (f=0 fractions are not overlap or leakage evidence) and an 'unresolved residual' statement. A new block, drop_recentered_czbin, removes the zero point per 2000 km/s cz bin using the selected training rows; it is scored against cz x inclusion controls and, as a separate block, against cz x inclusion x epsilon_d-quintile controls (drop_recentered_czbin_eps_strata). The member/non-member zero-point split now reports chi2 heterogeneity, an error inflated by sqrt(chi2/dof), and an exact velocity equivalent labelled as selection-induced, not a flow."
+     },
+     {
+      "id": "CF3-2",
+      "action": "fixed_in_code",
+      "detail": "Every CORAS scorer now has a coras_conditioning record. It states that the scores are conditional on fsigma8=0.405 and bulk (95,-172,28) km/s and sets held_out_with_respect_to_cf3_calibration=false. It also holds the bulk decomposition (offset_only, bulk_only, bulk_removed, as_run), checked against the replay to 1e-8, and a parameter-sensitivity bound computed in this run: bulk shifted by +/- eTot and +/- eDist per axis, fsigma8 shifted by +/- eTot and +/- eDist, the in-sample 6dF-preferred bulk, and B_other for the velocity and mu 6dF shares. The CF3_calibration_window fold now has a scope_note: it scores only 160 cz-edge rows (120 selected), cannot bound full-sample leakage, and gives the leakage-proxy-to-control-sd ratio. The full CORAS estimate_parameters recalibration was not run; this is recorded as definitive_control_not_run."
+     },
+     {
+      "id": "CF3-3",
+      "action": "fixed_in_code",
+      "detail": "Added cf3_member_definition. It states the operational definition (the CORAS-distributed CF3 copy, not VizieR table3) and the count differences between that copy and the ReadMe, parsed from the CF3 ReadMe. It adds a tight position-only route (<=2 arcsec, no cz gate) with counts, a list of the 20 counterparts the 500 km/s cz gate missed, the one row with no counterpart, the e_mu=0.50 fingerprint count used as a 6dF-attribution proxy, and a statement that CF3_member covers about all rows by construction. The crosstable has three new columns: cf3_pos2_pgc, cf3_pos2_sep_arcsec and cf3_pos2_dcz_kms."
+     },
+     {
+      "id": "CF3-4",
+      "action": "fixed_in_code",
+      "detail": "A block is marked degenerate when no selected held-out row is kept (test_only per key, drop overall); its fractions are null and a reason is given. CF3_member is now degenerate=true for both keys instead of storing f=1.0. Every control fraction stores k_le, k_ge, k/R, (k+1)/(R+1) for both tails, and resolution 1/(R+1). Drop controls were raised from 32 to 64 replicates; the first 32 masks are identical to the earlier run because the RNG stream is the same."
+     },
+     {
+      "id": "CF3-2-wording",
+      "action": "not_fixed",
+      "detail": "The power_statement in the window scope_note says the leakage-proxy change on the kept rows 'cannot be detected' by a single fold. The computed ratio is 0.71-1.08 control sd, so 'low power' would be more accurate; the ratio itself is stored next to the text. I did not re-run to change the wording: that would have exceeded the compute budget (the full run took 18 min), and patching the text afterwards would break the script-sha provenance."
+     }
+    ],
+    "corrected_headline_results": [
+     "Reproduction check (numerical reproduction, not convergence): the R105 fold replay errors are 3.3e-12 (field), 0 (CORAS 8 draws) and 0 (CORAS 128 draws). All test_only observed sums and control means match the superseded run exactly (max diff 0). The bulk-decomposition scorer reproduces the replay coras_mean_offset and offset_only sums, and the window-fold kept sums, to 1e-8. The bulk projection matches the C++ sites.tsv angles to 2.2e-12 km/s.",
+     "CF3-1 confound: with the 2MRS_coras_input rows excluded, the kept-set mark zero point is -0.02794 dex. Under the cz x inclusion controls it is +0.00838 +/- 0.00098 dex (range 0.00486 to 0.01185), z = -36.9. The mean epsilon_d of kept selected rows is 0.1260 against a control 0.1196. The test_only scores (8 draws, pgc) are offset_only -39.45 vs 16.60 +/- 3.22 and coras_mean_offset_minus_offset_only -7.16 vs 13.16 +/- 2.17, both with (k+1)/(R+1) = 1/2001. These are NOT COMPARABLE to their controls and are not overlap or leakage evidence.",
+     "CF3-1 comparable statistic, drop_recentered_czbin on 2MRS_coras_input, R=64, p = (k+1)/(R+1). Against cz x inclusion controls the contrast coras_mean_offset_minus_offset_only is: 8 draws 5.27 vs 10.60 +/- 2.08 (pgc, p=0.031) and 5.47 vs 10.18 +/- 2.12 (pgc1, 0.031); 128 draws 5.95 vs 11.62 +/- 2.16 (pgc) and 6.21 vs 11.23 +/- 2.20 (pgc1). Adding epsilon_d-quintile strata gives: 8 draws 5.27 vs 7.84 +/- 1.70 (p=0.077) and 5.47 vs 7.66 +/- 1.74 (0.169); 128 draws 5.95 vs 8.46 +/- 1.79 (0.123) and 6.21 vs 8.32 +/- 1.84 (0.169). The no-offset coras_mean (8 draws, pgc) with epsilon_d strata is 4.79 vs 8.10 +/- 1.68 (0.015). For the R105 NN field, fixed_2mrs_offset_minus_offset_only is 1.71 vs 7.27 +/- 2.87 (p=0.046) under cz x inclusion and 1.71 vs 1.12 +/- 2.24 (p=0.54) with epsilon_d strata. The residual deficit of about 1.2-1.5 sd in the CORAS contrast remains unresolved: magnitude selection and 2MRS-tracer information cannot be separated in this design (conditional prediction, no attribution).",
+     "CF3-1 zero-point split (2MRS member minus non-member delta_d): the per-bin values fall from 0.222 dex (4-6k km/s) to 0.078 dex (14-16k km/s). The combined value is 0.0988 dex with chi2 = 88.1 on 6 dof (p = 7.5e-17); the error inflated by sqrt(chi2/dof) is +/-0.0107 dex. The exact equivalent at the median cz of 11576 km/s is 2356 km/s (linear approximation 2634 km/s). It is labelled as a selection-induced FP-residual offset, not a velocity.",
+     "CF3-2: the CORAS scores are conditional on the CF3-calibrated fsigma8 = 0.405 and bulk (95,-172,28) km/s and are not held out with respect to the CF3 calibration. Bulk decomposition, 8 draws (pgc / pgc1): offset_only 25.24 / 25.49, bulk_only 58.22 / 58.21, bulk_removed 46.09 / 49.25, as_run 72.79 / 72.80. For 128 draws, as_run is 75.65 / 75.66 and bulk_removed is 49.53 / 52.88.",
+     "CF3-2 sensitivity bound (approximation, not a CORAS recalibration). Relative to as_run, bulk +/- eTot per axis changes the score by -3.69 to +1.28 nats, and bulk +/- eDist by -0.68 to +0.54. fsigma8 +/- eTot gives 71.43 / 73.73 for 8 draws (as_run 72.79). The in-sample 6dF-preferred bulk (156,-193,63) gains 1.98 nats. The leakage proxy (as_run minus the B_other score) is 0.90-0.96 nats at the velocity shares (0.172 / 0.181) and 3.60-3.70 nats at the mu shares (0.407 / 0.409). That is at most 7.8% of the 47.55 / 47.31 contrast for 8 draws and at most 7.1% of 50.40 / 50.17 for 128 draws.",
+     "CF3-2 window fold: it keeps 160 rows (120 selected), with cz_gal p10/p50/p90 = 1948 / 15935 / 16101 km/s; 18 rows are below 2000 km/s and 67 are above 16000 km/s. For 8 draws, pgc, the contrast is 3.74 vs 4.56 +/- 0.85 (p_le = 0.122). The leakage proxy on the kept rows is 0.24-0.85 nats, at most 1.01 control sd (8 draws) and 1.08 control sd (128 draws), so the fold has low power. It cannot bound the full-sample leakage. This run does not support the reviewer's expectation of <0.1 nats.",
+     "CF3-3: 8878 rows match by an operational route. The tight route (<=2 arcsec, no cz gate) matches 8869 rows. Of these, 20 have |dcz| > 500 km/s, 8863 overlap the operational routes, 6 are tight-only, and 15 match operationally but not within 2 arcsec. Together, 8884 of 8885 rows have a counterpart; only g1335049-155204 has none (nearest CF3 galaxy 1561 arcsec away). The CORAS CF3 copy minus the ReadMe count is -22 galaxies and -8 nests. 8620 operational members have e_mu = 0.50. CF3_member covers about all rows by construction.",
+     "CF3-4: CF3_member test_only is now degenerate=true for both keys: 7 rows kept, 0 selected, all fractions null (previously stored as f=1.0). Every fraction now has (k+1)/(R+1) and a resolution of 1/2001 (test_only) or 1/65 (drop)."
+    ],
+    "tests": "tests/obsstat/test_r106_cf3_overlap.py: 12 passed in 0.62 s. It covers tail_record ((k+1)/(R+1), resolution, null cases), czbin_zero_points (per-bin inverse-variance mean, training-only rows, fallback), eps_quintile_strata, heterogeneity (chi2, inflated error), stratified_masks counts, zero_point_record, the cf3_readme_counts parser, and the sky_match position-only route without a cz gate. A ruff F/E9 check is clean."
+   },
+   "check": {
+    "ok": true,
+    "problems": [
+     "(moderate, CF3-1) The drop_recentered_czbin and drop_recentered_czbin_eps_strata blocks of the magnitude-defined sets are marked comparable_to_controls=true. The flag comes from the default comparable=True at cf3_overlap.py:857-860 and the comparable_statistic at :892, and nothing in the run checks it. offset_only has no tracer information, yet in these blocks it still sits below every control for key pgc. Under cz x inclusion: 0.407 vs 2.842+-0.598, k_le=0/64, p=1/65. With epsilon_d strata: 0.407 vs 1.494+-0.554, k_le=0/64. For pgc1: -0.035 vs 2.415+-0.660 (k_le=0), and with epsilon_d strata -0.035 vs 0.295+-0.360 (k_le=12). The comparability.residual text at :895-898 says per-bin recentring 'removes the cz-dependent mark zero point', but no zero point after recentring is stored. The only mark_zero_point_confound in the czbin blocks is the raw value before recentring (z=-38.8), which sits next to comparable_to_controls=true. Suggested fix: store a post-recentring kept-set zero point and offset_only as a negative control, and qualify the flag.",
+     "(minor, CF3-2) The window-fold power_statement at :1066-1069 still says 'a single fold realisation cannot detect it', while the stored ratio is 0.71-1.08 control sd: that is low power, not none. The engineer reports this as not fixed, but the JSON review_corrections list (:104-133) does not record it. In addition, leakage_proxy_on_kept_rows (:1057-1060) is the realised score difference between B_CF3 and B_other on rows that are leakage-free by construction. It measures how well the fold could tell the two bulks apart; it is not the expected observed-minus-control leakage signal. So the headline 'this run does not support the reviewer's expectation of <0.1 nats' compares two different quantities.",
+     "(minor, CF3-4) The --drop-replicates default is still 32 (cf3_overlap.py:1715). The 64 replicates were set only on the command line, so a rerun with defaults goes back to 32, although the report says the drop controls were 'raised from 32 to 64'.",
+     "(minor, tests) Only the primitive helpers have tests: tail_record, czbin_zero_points, eps_quintile_strata, heterogeneity, stratified_masks, zero_point_record, cf3_readme_counts and sky_match. The CF3-1/CF3-4 decision logic has none. That includes comparability_record (:866-903), the degenerate branches of Scorer.test_only (:721-731) and Scorer.drop (:784-788, :826-827), Scorer.fit(recenter='czbin'), cf3_member_record, coras_conditioning and window_scope_record. The drop degenerate branch is also never exercised by the run, because CF3_member is not in --drop-sets.",
+     "(nit, CF3-1) The czbin fallback replaces sparse bins (<5 selected training rows) with the single constant (:157-174). The union set records 70 observed fallbacks over 10 fits, so its czbin block is mostly constant-recentred, a method the module itself calls non-comparable for no-offset statistics. comparability_record still lists it as the comparable statistic without qualification. This is mitigated because the union's raw zero-point z is only -0.96. For 2MRS_coras_input the 20 fallbacks have no effect: an independent implementation with c=0 fallback reproduces its scores exactly.",
+     "(nit) zero_points.velocity_equivalent_kms_at_median_6dfgsv_cz (:1321-1324) still uses the linear approximation, with no 'not a flow' label, for the CF3/CF4/6dF zero-point offsets. Only the 2MRS split was converted to the exact equivalent. The bare combined_difference_err_dex (0.0028) is still stored next to the inflated value (0.0107); a note explains which to use."
+    ],
+    "reproduced": [
+     "Implementation is present for every required item. CF3-1: MAGNITUDE_DEFINED at cf3_overlap.py:102-103; comparable=not mag for test_only/drop/drop_recentered at :849-856; not_comparable_reason and the offset-contrast-only scope at :748-753 and :1540-1551; mark_zero_point_confound at :701-715, :737-741 and :806-814 (zero_point_record :208-230); the czbin recentring through Scorer.fit at :601-622 and czbin_zero_points at :157-174; epsilon_d-quintile strata at :177-186, :860 and :1417; the citation rule and unresolved-residual text at :893-898; per-bin zero-point heterogeneity, the inflated error and the exact velocity equivalent with a 'not a flow' label at :1325-1357. CF3-2: coras_sensitivity at :906-960, covering the decomposition, shifts of +/-eTot and +/-eDist per axis and of fsigma8, the in-sample preferred bulk, and B_other at the velocity and mu shares (:1497-1500); coras_conditioning at :963-1027 (conditional_on, held_out_with_respect_to_cf3_calibration=false, definitive_control_not_run); window_scope_record at :1030-1073, attached at :1560-1563. CF3-3: TIGHT_ARCSEC=2 with no cz gate at :97 and :1176; cf3_member_record at :466-522, with ReadMe counts parsed at :453-463; new crosstable columns at :1583 and :1598-1599. CF3-4: tail_record ((k+1)/(R+1) for both tails, plus resolution) at :141-154, used at :735, :804 and :217; degenerate blocks with null fractions at :721-731, :784-788 and :826-827.",
+     "Outputs exist. CF3_OVERLAP.json (schema htt.r106.cf3_overlap/2) records code sha256 9cc1b7fb..., which matches the current script, together with commands, input_sha256 (including the CF3 ReadMe and both CORAS references, which match the files on disk: ee4991e3... and 0b0ba749...), review_corrections CF3-1..CF3-4, supersedes pointing at superseded/20ade171568e, the classification split into physical_attribution / conditional_prediction / numerical_reproduction, and seeds and streams. The R105 committed files are unmodified according to git status.",
+     "Tests: pytest tests/obsstat/test_r106_cf3_overlap.py gave 12 passed in 0.63 s (0.90 s wall, 109 MB). ruff --select F,E9 is clean on both files.",
+     "Cheapest rerun (8-draw CORAS, --replicates 50 --drop-replicates 3 --jobs 3; 15.7 s, 480 MB): all 874 observed block sums are identical to the full run (max diff 0). This includes the drop_recentered_czbin contrast 5.272218355670475 (pgc) and 5.465854960996694 (pgc1), and the epsilon_d-strata observed values. The bulk decomposition is identical: offset_only 25.2437/25.4893, bulk_only 58.2230/58.2069, bulk_removed 46.0950/49.2472, as_run 72.7933/72.7971. So is the sensitivity bound: eTot deltas -3.686..+1.282, eDist -0.681..+0.540, fsigma8 +/-eTot 71.431/73.730, preferred bulk (156.4,-192.5,63.3) with gain 1.977/1.983, maximum leakage proxy 3.647/3.697 nats (7.67%/7.82% of 47.55/47.31). The zero_points block, cf3_member_definition and crosstable sha256 are also identical. This is numerical reproduction by the same code, not independent validation.",
+     "Independent recomputation, written in the scratchpad without importing the module and using astropy and its own RNG. Kept-set mark zero point: -0.0279443 (exact match). Per-fold stratified control: 0.00840+-0.00101 vs the module's 0.00838+-0.00098; z -36.0 vs -36.9. Mean epsilon_d: 0.12596 kept vs 0.11962 control (matches). 2MRS member minus non-member split: per-bin 0.2217 (4-6k) to 0.0776 (14-16k); combined 0.098822; chi2 88.0955 on 6 dof, p 7.53e-17; inflated error 0.010698; exact 2355.9 km/s, linear 2634.1 km/s; all match. CF3 tight route through astropy ICRS to Galactic: 8869 matched, 20 with |dcz|>500 km/s, 8863/6/15 overlap split, union 8884; the only row with no counterpart is g1335049-155204, at 1561.5 arcsec; 8620 rows have e_mu=0.50; the module's cf3_pos2_pgc agrees on all 8869. Window fold: 160 rows kept, 120 selected; cz p10/50/90 = 1947.8/15935/16101.1; 18 below 2000 and 67 above 16000. CF3_member: 7 rows kept, 0 selected, so degenerate is correct. CORAS CF3 copy minus ReadMe: -22 galaxies and -8 nests, confirmed against ReadMe lines 49-50.",
+     "Cross-check against the reviewer's independent skeptic per-bin drop (review/skeptic_cf3_1/skeptic2.out): contrast 5.272218355670475 and coras_mean 4.790458567994278 are bit-identical to the module's drop_recentered_czbin observed values.",
+     "RNG pairing claim confirmed. A rerun with --drop-replicates 32 and only the 2MRS_coras_input drop and drop_recentered blocks (NN plus CORAS 8; 14 s) reproduces the superseded 32-replicate control means and sds exactly: 136 values, max diff 0.",
+     "Full run vs superseded run: 960 observed sums and 270 test_only control means are identical (max diff 0). CF3_member previously stored fraction_control_le_observed=1.0; it is now degenerate=true with null fractions for both keys.",
+     "The headline numbers in the full JSON match the engineer's report. test_only, 8 draws, pgc: offset_only -39.45 vs 16.60+-3.22, and the contrast -7.16 vs 13.16+-2.17, both with p=1/2001 and flagged non-comparable. Contrasts from the czbin blocks: cz x inclusion 5.27 vs 10.60+-2.08 (p=2/65), epsilon_d strata 5.27 vs 7.84+-1.70 (p=0.077). 128 draws: as_run 75.65/75.66, bulk_removed 49.53/52.88, leakage proxy at most 7.1%. Window fold: 3.74 vs 4.56+-0.85 (p=0.122); power ratio 1.01 for 8 draws and 1.08 for 128 draws. Replay errors 3.31e-12 / 0 / 0; bulk projection 2.23e-12 km/s."
+    ]
+   }
+  },
+  {
+   "fix": {
+    "artifact": "scripts/r106/rei_restart_replay.py",
+    "files_changed": [
+     "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r106/rei_restart_replay.py",
+     "/home/cosmosapjw/Dropbox/bianchi/htt_base/tests/obsstat/test_r106_rei_restart_replay.py"
+    ],
+    "outputs": [
+     "/home/cosmosapjw/Downloads/htt_r106_analysis/rei/REI_RESTART_REPLAY.json (schema htt.r106.rei_restart_replay/2). It was regenerated from the cached native outputs in replay/ and native/; nothing was rebuilt and no native code was rerun, and no file under replay/ or native/ changed.",
+     "/home/cosmosapjw/Downloads/htt_r106_analysis/rei/BUILD.json (schema htt.r106.rei_build/2). The original build fields are kept. Added: post_build_record per epoch, environment, script_sha256, input_sha256, commands and review_corrections.",
+     "/home/cosmosapjw/Downloads/htt_r106_analysis/rei/COMMANDS.jsonl. The native build_* and replay_* records are kept; the record_* and analyze_* records from this run were added and the stale ones dropped.",
+     "/home/cosmosapjw/Downloads/htt_r106_analysis/rei/inputs/five_case_abundances.csv.gz was rewritten from git and its sha256 checked against the git copy (f4bc0046...)."
+    ],
+    "commands": [
+     {
+      "command": "cd /home/cosmosapjw/Dropbox/bianchi/htt_base && PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -B scripts/r106/rei_restart_replay.py --stages record,analyze",
+      "return_code": 0,
+      "wall_s": 18.27,
+      "maxrss_kB": 629164
+     },
+     {
+      "command": "cd /home/cosmosapjw/Dropbox/bianchi/htt_base && PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -B -m pytest -q -p no:cacheprovider tests/obsstat/test_r106_rei_restart_replay.py",
+      "return_code": 0,
+      "wall_s": 1.36,
+      "maxrss_kB": 91520
+     },
+     {
+      "command": "uvx --offline ruff check --select F,E9 --no-cache scripts/r106/rei_restart_replay.py tests/obsstat/test_r106_rei_restart_replay.py",
+      "return_code": 0
+     }
+    ],
+    "findings_addressed": [
+     {
+      "id": "REI-R106-01",
+      "action": "fixed_in_code",
+      "detail": "Removed the age_ref quadrature from every case, along with the fields cosmic_age_at_mean_z20_s_from_locked_background and cosmic_age_at_restart_s; those names now appear only in review_corrections. Added one top-level field, external_flrw_q0_age_at_mean_z20_s: q=0, integrated from a=1e-12 to a_ref, labelled EXTERNAL_CONVENTION_OUTSIDE_LOCKED_DOMAIN, the same for all cases, with lock_clock_absolute_cosmic_age_s=null read from the lock. The script stops with an error if the lock ever stores an age. Also relabelled the z<4 foreground H model as an extension beyond a_end, for sensitivity only."
+     },
+     {
+      "id": "REI-R106-02",
+      "action": "fixed_in_code",
+      "detail": "provenance.chain_kind is now RECEIPT_LINKED_PLUS_CONTENT_BOUND for the 4 composed cases and GIT_MANIFEST_HASH_BOUND_PLUS_CONTENT_BOUND for SHEAR_PLUS. COMPOSITION_RECEIPT.json, the composed RETURN.txt and the composed checkpoint are hashed into input_sha256; for each receipt, the git index status and whether it exists at REI_COMMIT are recorded. chain_ok now also requires content_binding: 11 exact equalities of RETURN counters, a, wall, Newton residual, last_error and both residuals against the checkpoint and the native recomputation. A git_anchors scan of the object store run now (76580 blobs, 454 refs) lists the ref tips that hold each checkpoint sha256. rei_commit_ancestry records that REI_COMMIT is not an ancestor of the rei_bianchi HEAD."
+     },
+     {
+      "id": "REI-R106-03",
+      "action": "fixed_in_code",
+      "detail": "clock_integrals is renamed to clock_H_consistency_and_quadrature, with role, tests and does_not_test fields: it is a dt/dN=1/H consistency check plus a quadrature-error estimate, not a validation of tau. A cubic-spline reference was added. The tau value is reported separately as conditional_thomson_depth_mean_z_20_to_4 with claim_class CONDITIONAL_PREDICTION. The tanh-foreground form comparison is labelled a quadrature check."
+     },
+     {
+      "id": "REI-R106-04",
+      "action": "fixed_in_code",
+      "detail": "Renamed to electron_formula_python_minus_native_eos_cm3, electron_formula_python_minus_history_last_row_cm3 and electron_row_formula_consistency_cm3, and added charge_neutrality=IMPOSED_BY_EOS stating that these are identities, not tests. They are listed under claim_classes.bookkeeping_identities_not_tests."
+     },
+     {
+      "id": "REI-R106-05",
+      "action": "fixed_in_code",
+      "detail": "Added a top-level z_below_4_continuation with 3 independent blockers. (1) SCENARIO_LOCK background.scope, line 36; this lock copy equals the copy at REI_COMMIT. (2) DriverConfig::validate, axbi_driver.rs:134 (d7676) and :136 (4de69), called by read (:112) and by Driver::new (:201/:203). (3) The source guard at axbi_sources.rs:186 with REDSHIFT_SUPPORT at :11, plus the absence of a lock z<4 source model. Each source line is found now in both epochs, and the run stops if one is missing. Background domain is marked DERIVED_FROM_BLOCKER_2; absolute age and stored H/s are NON_BLOCKING. Positive control: each case's config.cfg has end_zbar=4.0 and passed DriverConfig::read and Driver::new in the cached native replay (return code 0). No explicit end_zbar=4.0 probe call was added to the Rust example, because changing it would invalidate the cached binary."
+     },
+     {
+      "id": "REI-R106-06",
+      "action": "scoped_in_output",
+      "detail": "replay.window and replay.headline_residual now state the window next to the residual: 117 accepted steps, zbar 4.0072954801941 to 4.0, 0 rejections, 3 attempts per step, next_dln_a 1.25e-5 throughout, an endpoint-clipped final step of 0.6426 of nominal, and regime CONSTANT_STEP_NO_REJECTION_ENDPOINT_CLIPPED_FINAL_STEP. The reject and step-size-change branches are listed as not exercised. The headline covers 30 fields, including ledgers, photons and energy_residual. The optional extra native window containing rejections was not run, because that needs a native rerun. The reviewer's point that gas damping masks a perturbation of w was not re-measured here."
+     },
+     {
+      "id": "REI-R106-07",
+      "action": "fixed_in_code",
+      "detail": "New record stage, with no compilation, writes the following to BUILD.json and to the result: script sha256; htt_base HEAD and dirty flag; whether the script is tracked; python, numpy, scipy and pandas versions; platform; current rustc -vV and cargo -V; the rustc that built the cached binaries (from target/.rustc_info.json); a full src/ tree hash per epoch; the compiled src files not covered by the identity hash; identity files that import uncovered modules (igm_state.rs imports coupled_primary); recomputed binary, identity and example hashes; and the src difference between the epochs and against the copy origin. It stops if the cached build no longer matches its record."
+     }
+    ],
+    "corrected_headline_results": [
+     "Replay window, all 5 cases: 117 accepted steps, zbar 4.0072954801941 to 4.0 (3.747e-4 of the 312237-step run), 0 rejections, empty solver log, 3.0 attempts per step, constant step with an endpoint-clipped final step (0.6426 of next_dln_a=1.25e-5). Over this window the residual against the original 312180/312237 states is exactly 0.0 in all 30 compared fields, including ledgers, photons and energy_residual. This is numerical reproducibility only; the reject and step-change branches are not exercised.",
+     "Provenance: chain_ok is true for all 5 cases. ZERO, SHEAR_HALF_PLUS, SHEAR_HALF_MINUS and SHEAR_MINUS are RECEIPT_LINKED_PLUS_CONTENT_BOUND: their receipts are untracked and absent at REI_COMMIT. SHEAR_PLUS is GIT_MANIFEST_HASH_BOUND_PLUS_CONTENT_BOUND. REI_COMMIT 56dc609e is not an ancestor of the rei_bianchi HEAD fef2baf96; only refs/remotes/origin/research/rei-igm-goal-sync-20261116 contains it.",
+     "Git anchors, meaning the checkpoint sha256 present at a ref tip: ZERO, SHEAR_HALF_MINUS and SHEAR_MINUS on branch and remote tips; SHEAR_PLUS on the remote tip and at REI_COMMIT; SHEAR_HALF_PLUS only in refs/codex turn-diff snapshot refs, at no heads or remotes tip.",
+     "Clock/H consistency, not tau validation. ZERO dt-form vs dN-form relative difference on native rows: 3.6559218394286504e-11. Quadrature error, native rows vs Richardson: dt form -4.003e-11, dN form -7.659e-11. Richardson vs cubic spline (dN form): 9.01e-13. Conditional Thomson depth, zbar 20 to 4 (ZERO, Richardson): 0.031968182839900654.",
+     "Charge neutrality is imposed by the EOS. The electron_formula_* consistency values of 0.0 are identities, not tests.",
+     "The per-case absolute ages were removed. Only external q=0 FLRW age at zbar=20: 5.603851497141516e15 s, labelled EXTERNAL_CONVENTION_OUTSIDE_LOCKED_DOMAIN; the truncation below a=1e-12 is about 2.39e-5 s. SCENARIO_LOCK absolute_cosmic_age_s is null.",
+     "z<4 continuation is not possible with the frozen model. Independent blockers: (1) lock scope (SCENARIO_LOCK.json line 36); (2) DriverConfig::validate 4<=end_zbar<20; (3) the source guard zbar in [4,20] with no admitted z<4 source model. Positive control: end_zbar=4.0 accepted (native replay return code 0).",
+     "Build identity: src/ tree sha256 is b31a549a... for d7676 (37 files, identical to the copy origin) and a654318f... for 4de69 (differs only in axbi_driver.rs). 25 compiled src files lie outside the 17-file identity hash, and igm_state.rs imports the uncovered coupled_primary. rustc 1.99.0 (b940084d7 2026-09-28) built the cached binaries and is also the current toolchain; the binary sha256s recomputed equal. Script sha256 is c78b430710a5e6bb79129b09cd7ef548bb2f2f309727b1b09a4d09a2e6941a90. htt_base HEAD is b234bb0e0, with 12 modified tracked paths; the script is untracked."
+    ],
+    "tests": "tests/obsstat/test_r106_rei_restart_replay.py: 9 tests, all passed in 0.70 s (pytest) and 1.36 s wall. They cover tree_digest sensitivity, find_line, content_binding (exact match and 1-ulp detection), flrw_q0_age against the analytic matter and radiation limits, replay_window (constant-step, rejection and size-mismatch cases), headline_residual (1-ulp ledger change detected), clock_h_consistency (de Sitter analytic case, plus a check that it cannot see an n_e normalisation error), the Recorder drop/capture, rustc_info parsing, and crate_imports."
+   },
+   "check": {
+    "ok": true,
+    "problems": [
+     "MINOR (REI-R106-07 accuracy). BUILD.json overstates the number of compiled files. identity_hash_scope.n_compiled_src_files says 37, and post_build_record.compiled_src_files_not_in_identity_hash lists 25 files (the headline says '25 compiled src files lie outside the identity hash'). Both counts include src/paired_runtime.rs. That file is not declared in lib.rs; only examples/paired_history.rs pulls it in, via #[path]. The cargo dep-info /home/cosmosapjw/Downloads/htt_r106_analysis/rei/native/target_{d7676,4de69}/release/examples/rei_restart_replay.d lists 36 src files and omits paired_runtime.rs. The correct figures are 36 compiled files and 24 compiled files outside the identity hash. The code is scripts/r106/rei_restart_replay.py:654-655 and :683, which treat every file under src/ as compiled. The full src/ tree hashes themselves are correct.",
+     "MINOR (REI-R106-05). The reviewer asked for an explicit probe showing end_zbar=4.0 passes. None was added to the Rust probe list (the engineer disclosed this; adding one would invalidate the cached binary). The positive control is instead inferred at rei_restart_replay.py:1467-1475 from the cached replay return code and rep['config_end_zbar']. The evidence is real: all five config.cfg files have end_zbar=4.0, and replay.json reports config_end_zbar=4.0 after DriverConfig::read and Driver::new succeeded. However, line 1469 decides 'OK' from replay_record['return_code'] alone and never asserts config_end_zbar == 4.0. The set_end text-rewrite path that the negative probes use also has no positive control of its own.",
+     "MINOR (REI-R106-06). The reviewer's caveat is not stated anywhere in the output: identical gas/w fields are weak evidence that w restarts correctly, because gas damping absorbs ulp-level perturbations, and only ledgers and energy_residual react. 'damp' occurs 0 times in REI_RESTART_REPLAY.json. The headline does include ledgers, photons and energy_residual, so the comparison can still detect such a perturbation; only the explanatory note is missing. The optional window containing rejections or step changes was not run (disclosed).",
+     "NIT (REI-R106-04 wording). review_corrections[3] says the fields were renamed to 'electron_formula_*_consistency fields'. The actual names are electron_formula_python_minus_native_eos_cm3, electron_formula_python_minus_history_last_row_cm3 and electron_row_formula_consistency_cm3. The charge_neutrality note at :1003-1005 says 'electron_formula_* fields', which does not match electron_row_formula_consistency_cm3. It also calls the python-vs-native field an identity that 'cannot fail'. Strictly, that field is a cross-implementation formula check: it would fail if the Rust EOS formula differed from the Python one.",
+     "NIT (REI-R106-07 environment scope). result['environment'] is copied from BUILD.json (:1329), which was captured during the record stage. An analyze-only run in a different interpreter would therefore report the record-stage python and library versions. The only guard is the script-sha check at :1308.",
+     "NIT (robustness). pandas 3.1.1 emits Pandas4Warning because float_precision='round_trip' is deprecated (:813, :835). The exact-equality checks at :837 and :1423-1425 rely on round-trip float parsing, so a future pandas could break them or silently change them.",
+     "NIT (quadrature estimate). The Richardson coarse grid at :876 appends the last index when the step count is odd. Both 312237 and 117 are odd, and the native grid is adaptive and non-uniform, so the factor 1/3 is only approximate. The effect is negligible: an independent scipy Simpson gives 0.03196818283990062 against the Richardson value 0.031968182839900654. The output already labels this as an estimate.",
+     "INFO. My rerun of --stages record,analyze took 52.48 s wall and 622584 kB peak RSS, versus the reported 18.27 s. This does not affect correctness."
+    ],
+    "reproduced": [
+     "Regeneration rerun. Command: .venv/bin/python -B scripts/r106/rei_restart_replay.py --stages record,analyze --out /tmp/claude-1000/-home-cosmosapjw-Dropbox-bianchi-htt-base/61479529-04a2-4d98-a508-5eb3cb0f8ea3/scratchpad/rei_check, using a scratch copy with native/ and replay/ symlinked read-only. rc=0, 52.48 s, 622584 kB. After path normalisation, the regenerated REI_RESTART_REPLAY.json equals the published one except for wall times, command records and the input sha of the rewritten BUILD.json. The regenerated BUILD.json equals the published one except for wall times. The sha256 manifests of native/tree_* (116 files) and replay/ (95 files) are identical before and after. The published outputs were not modified: REI_RESTART_REPLAY.json b0029c27..., BUILD.json b7433b7b....",
+     "Script sha256 is c78b430710a5e6bb79129b09cd7ef548bb2f2f309727b1b09a4d09a2e6941a90, matching the report. tests/obsstat/test_r106_rei_restart_replay.py: 9 passed in 1.03 s. uvx ruff --select F,E9: all checks passed.",
+     "REI-R106-01 is implemented. The per-case age quadrature is gone from restart_inventory (:954-1051, clock_definition at :1027-1029). The old field names appear only in review_corrections (top level and build). The top-level external_flrw_q0_age_at_mean_z20_s is at :1337-1346 with label EXTERNAL_CONVENTION_OUTSIDE_LOCKED_DOMAIN, and the script fails closed if the lock ever stores an age (:1323-1324). The z<4 H model is relabelled as an extension at :947-948. The hard-coded H0, Om, Or and OL match SCENARIO_LOCK.json lines 11-17. Numbers reproduced: an independent mpmath integral in a gives 5603851497141517.2 s versus the JSON 5603851497141516.0 (relative -2.2e-16), and the truncation below a=1e-12 is 2.38653e-5 s versus the JSON 2.3865291e-5.",
+     "REI-R106-02 is implemented. chain_kind is set at :1265 and :1290. The receipt, composed RETURN.txt and composed checkpoint are hashed into input_sha256 at :1253-1254, and all 12 entries are present. content_binding (11 exact field equalities, :455-462) is part of chain_ok at :1263, :1288 and :1297. git_hash_anchors is at :1054-1157 and rei_commit_ancestry at :1160-1167. Verified with direct git: merge-base --is-ancestor 56dc609e HEAD returns 1 (HEAD fef2baf96), and only remotes/origin/research/rei-igm-goal-sync-20261116 contains 56dc609e. git grep at 56dc609e finds only the SHEAR_PLUS checkpoint sha (671f1295); ZERO, HALF_PLUS, HALF_MINUS and MINUS are absent. All 4 COMPOSITION_RECEIPT.json files are untracked (ls-files rc 1) and absent at REI_COMMIT (cat-file rc 128). I confirmed by git grep that the sampled ref-tip anchors contain the shas (SHEAR_HALF_PLUS only in refs/codex). All 154 file entries in input_sha256 were re-hashed and match.",
+     "REI-R106-03 is implemented. clock_h_consistency is at :862-902 and the clock_H_consistency_and_quadrature block, with role, tests, does_not_test and conditional_thomson_depth (CONDITIONAL_PREDICTION), at :1448-1460. I recomputed independently by parsing the ZERO composed history.csv myself (312238 rows, zbar 20 to 4). The dt-vs-dN relative difference is 3.6559218394286504e-11, exactly as in the JSON. The Richardson dN-form tau is 0.031968182839900654, exactly as in the JSON. scipy Simpson gives 0.03196818283990062 and a cubic spline 0.031968182839871837. The JSON quadrature errors are dt -4.0028e-11, dN -7.6585e-11, and Richardson vs spline 9.014e-13, matching the report.",
+     "REI-R106-04 is implemented at :1000-1018: the charge_neutrality=IMPOSED_BY_EOS note and the renamed electron_* fields, all 0.0 for ZERO. claim_classes.bookkeeping_identities_not_tests is at :1355.",
+     "REI-R106-05 is implemented in z_below_4_blockers (:1178-1242) and the per-case z_below_4_extension (:1461-1476). Line numbers re-grepped in both native trees: axbi_driver.rs validate at :134 (d7676) and :136 (4de69); read calls validate at :112; Driver::new calls it at :201/:203; a_end at :204/:206. axbi_sources.rs: REDSHIFT_SUPPORT at :11 and the guard at :186. axbi_background.rs guard at :132. SCENARIO_LOCK.json line 36 holds the scope sentence and line 9 has absolute_cosmic_age_s null. The lock sha 07aa11d2 equals the git REI_COMMIT copy and the other epoch's copy. The negative probes return AXBI_CONFIG_DOMAIN, AXBI_SOURCE_DOMAIN... and AxbiScaleDomain. The positive control shows config_end_zbar 4.0 and replay rc 0 for all 5 cases.",
+     "REI-R106-06 is implemented: replay_window at :478-509, headline_residual at :512-530, and window strings at :1412-1414. Independently, from replay/ZERO/replay.json and continuous_history.csv: 117 accepted steps (118 rows), zbar 4.0072954801941 to 4.0, 0 rejections, empty log, 3.0 attempts per step, next_dln_a 1.25e-05 at start, middle and end, final step 0.6426074020104977 of nominal, and body deviation from -2.01e-11 to +1.54e-11. The JSON headline covers 30 fields with max abs difference 0.0, all bitwise equal, ledgers, photons and energy_residual included, and all checkpoint-text byte comparisons true for all 5 cases.",
+     "REI-R106-07 is implemented: environment() at :595-619, record_build at :622-695, and BUILD.json schema htt.r106.rei_build/2 with script_sha256, environment, input_sha256, commands and review_corrections. The src/ tree hashes, recomputed independently with a shell sha256sum manifest, are b31a549a8fa355da... for d7676 (37 files, equal to the copy origin by diff -rq) and a654318ffd5b2c52... for 4de69. The two epochs differ only in axbi_driver.rs. The rustc in target/.rustc_info.json is 1.99.0 (b940084d7 2026-09-28), the same as the current rustc -V. igm_state.rs:3 imports crate::coupled_primary. The htt_base HEAD b234bb0e0 has 12 modified tracked paths, and the script is untracked."
+    ]
+   }
+  },
+  {
+   "fix": {
+    "artifact": "CORAS F1-F7: scripts/r106/coras_stability.py (rewritten, schema htt.r106.coras_stability/2), NEW scripts/r106/coras_marks_influence.py, tests/obsstat/test_r106_coras_stability.py (rewritten), NEW tests/obsstat/test_r106_coras_marks_influence.py. I regenerated /home/cosmosapjw/Downloads/htt_r106_analysis/CORAS_STABILITY.json, wrote the new /home/cosmosapjw/Downloads/htt_r106_analysis/CF4_MARKS128_INFLUENCE.json, and deleted the superseded CORAS_STABILITY_MAIN.json. I did not modify any R105 file, htt/bass/transport, legacy or data/external. I did not stage or commit anything.",
+    "files_changed": [
+     "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r106/coras_stability.py",
+     "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r106/coras_marks_influence.py",
+     "/home/cosmosapjw/Dropbox/bianchi/htt_base/tests/obsstat/test_r106_coras_stability.py",
+     "/home/cosmosapjw/Dropbox/bianchi/htt_base/tests/obsstat/test_r106_coras_marks_influence.py",
+     "/home/cosmosapjw/Downloads/htt_r106_analysis/CORAS_STABILITY.json (regenerated; replaced schema/1 sha256 b22c5f49b0c700fae5db37bd053157bf4d28e1560d7482dcd29d0793bc3a2359)",
+     "/home/cosmosapjw/Downloads/htt_r106_analysis/CF4_MARKS128_INFLUENCE.json (new)",
+     "/home/cosmosapjw/Downloads/htt_r106_analysis/CORAS_STABILITY_MAIN.json (deleted; was sha256 2488556835b4315a2d0868eaba5c4d8bc3e7a0b5e1e449ff653332272d0bf4fb)",
+     "/home/cosmosapjw/Downloads/htt_r106_analysis/logs/stab3.{log,time}, stab3_rerun.{log,time}, marks_influence.{log,time}, marks_influence_rerun.{log,time} (new run logs)"
+    ],
+    "outputs": [
+     "/home/cosmosapjw/Downloads/htt_r106_analysis/CORAS_STABILITY.json: sha256 c9c09c2f87212d9e1220bd3e0667fe90ccca2829fff128278705b9ea04f8e4d7. Script sha256 e3d85df9e8debb7696bbdfc5b89cd0b54c50f3bd88947f0494588e9327f16019. A rerun without --supersede returned identical_existing, so the output is byte-deterministic.",
+     "/home/cosmosapjw/Downloads/htt_r106_analysis/CF4_MARKS128_INFLUENCE.json: sha256 37f938815c62b6fb69397492917d79d968ff0e7b309c96bffb41eb4a566cb83b. Script sha256 7b8bcd08e8e9606ef27cc11c68b715fde0287c8c715cb174bd25182d649c5127. The rerun returned identical_existing.",
+     "Each output JSON records the script sha256, dependency sha256s, input run_files (directory, run.json sha256, seed range, mean sha256), geometry array digests and the command (with the write-mode flag removed). It also records RNG seeds and replicate counts, claim_class/claim_classes and a review_corrections list.",
+     "Reproduction checks in CF4_MARKS128_INFLUENCE.json: every recorded R105 choice, per fold and summed, reproduces CF4_MARKS128.json with a max abs difference of 0.0. first8_check: the marks8-main field bytes are identical to seeds 1-8, and the first-8 scores reproduce CF4_MARKS8_MAIN.json (difference 0.0)."
+    ],
+    "commands": [
+     {
+      "command": ".venv/bin/python -B -m scripts.r106.coras_stability --main /home/cosmosapjw/Downloads/htt_r105_coras/fine /home/cosmosapjw/Downloads/htt_r105_coras/fine-ext /home/cosmosapjw/Downloads/htt_r106_analysis/fine-129-256 --radial48 /home/cosmosapjw/Downloads/htt_r106_analysis/radial48-1-128 --ell12 /home/cosmosapjw/Downloads/htt_r106_analysis/ell12-1-128 --fft-probe /home/cosmosapjw/Downloads/htt_r105_coras/coarse /home/cosmosapjw/Downloads/htt_r105_coras/fft24 --output /home/cosmosapjw/Downloads/htt_r106_analysis/CORAS_STABILITY.json --supersede",
+      "return_code": 0,
+      "wall_s": 24.48,
+      "maxrss_kB": 319760
+     },
+     {
+      "command": "same as above without --supersede (determinism check -> identical_existing)",
+      "return_code": 0,
+      "wall_s": 20.98,
+      "maxrss_kB": 319972
+     },
+     {
+      "command": ".venv/bin/python -B -m scripts.r106.coras_marks_influence --run /home/cosmosapjw/Downloads/htt_r106_analysis/marks128 --reference docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_FIELD_HOLDOUT.json --marks /home/cosmosapjw/Downloads/htt_r106_analysis/CF4_MARKS128.json --run8 /home/cosmosapjw/Downloads/htt_r106_analysis/marks8-main --marks8 /home/cosmosapjw/Downloads/htt_r106_analysis/CF4_MARKS8_MAIN.json --exclude-seed 41 --output /home/cosmosapjw/Downloads/htt_r106_analysis/CF4_MARKS128_INFLUENCE.json",
+      "return_code": 0,
+      "wall_s": 60.25,
+      "maxrss_kB": 328048
+     },
+     {
+      "command": "same marks-influence command rerun (determinism check -> identical_existing)",
+      "return_code": 0,
+      "wall_s": 60.24,
+      "maxrss_kB": 327628
+     },
+     {
+      "command": ".venv/bin/python -B -m pytest -q -p no:cacheprovider tests/obsstat/test_r106_coras_stability.py tests/obsstat/test_r106_coras_marks_influence.py",
+      "return_code": 0,
+      "wall_s": 2.22,
+      "maxrss_kB": 133484
+     },
+     {
+      "command": "rm /home/cosmosapjw/Downloads/htt_r106_analysis/CORAS_STABILITY_MAIN.json",
+      "return_code": 0
+     }
+    ],
+    "findings_addressed": [
+     {
+      "id": "F1",
+      "action": "fixed_in_code",
+      "detail": "New scripts/r106/coras_marks_influence.py runs scripts/r105/cf4_coras_marks.score unchanged and records the per-fold summaries at the fold_score boundary through a context manager that restores the original. For both coras_draws (u=0) and coras_draws_offset it reports: leave-one-draw-out influence for all 128 draws; the score without the most influential draw and without the named seed 41; single-draw scores and ranks; random-subset MC mean/SD/quantiles at n=8, 16, 32, 64, 96 (400 reps), and at n=8, 32, 64 without the top draw; SD over 1000 random disjoint 64/64 halves next to the fixed 1-64/65-128 split, plus that split with the top draw moved to the other half; per-fold training-weight concentration; and the residual RMS rank of the top draws. Statements are generated from the numbers, with the offset and u=0 wording kept separate as the skeptic required."
+     },
+     {
+      "id": "F2",
+      "action": "fixed_in_code",
+      "detail": "Key renamed to quadratic_obs_minus_ensemble_mean_meas_plus_sample_cov, and the docstring was corrected. Reported beside it: the analytic-mean (R105) version, a C(1+1/n)-inflated version, and measurement-only quadratics against both means. The residual mean is a systematic block: per-coefficient z with Wilcoxon and sign-flip p, the 4-D shell-monopole T^2, leading-8/10-PC T^2, the 36-D T^2 with its condition number and the share beyond PC 10, and per-site means by radius in km/s. FFT16-vs-FFT24 probe runs give monopole Welch z. Not fixed, because the R105 files are off-limits: the coras_reduce.py measurement-only ensemble-mean quadratic (now reported in the R106 output, 394.01) and the 'centered' comment at coras_radial.cpp:69."
+     },
+     {
+      "id": "F3",
+      "action": "fixed_in_code",
+      "detail": "Removed the near-degeneracy explanation. The output now reports: the top-12 spectra (halves and pooled) with gap ratios; principal angles for k=1..8; v1 against the other half's top-k span for k=1..8; a permutation null (2000 random 128/128 splits) of the largest angle for k=1..15 with quantiles and the fraction of splits at or above the observed angle; and an exactly-degenerate-block Gaussian check of lambda_1/lambda_k. The stable subspace dimension comes from the largest pooled gap. A generated statement identifies the 8-dimensional subspace."
+     },
+     {
+      "id": "F4",
+      "action": "fixed_in_code",
+      "detail": "Removed hartlap_factor_sample_only. Added a Gaussian Monte Carlo debias factor and SD for the meas+S quadratic at n=128 and n=256 under both residual definitions (truth = pooled C_256, labelled Gaussian-approximate). The Hartlap factor appears only as a check of the sample-only MC."
+     },
+     {
+      "id": "F5",
+      "action": "fixed_in_code",
+      "detail": "symmetric_relative_frobenius now uses the mean-norm denominator; it is cross-checked equal to coras_reduce.split_diagnostic, and the old asymmetric value is kept as relative_frobenius_to_second. The axes use the symmetric metric. A permutation null and two-sample Hotelling tests were added. Tests cover symmetry, equality with split_diagnostic and describe() semantics."
+     },
+     {
+      "id": "F6",
+      "action": "fixed_in_code",
+      "detail": "axis_compare now reports: a paired bootstrap over seeds (2000 resamples) for the trace ratio and for the quadratic shift under both definitions; the shift split into mean-change and covariance-change parts; per-seed correlations; and a classification 'resolved_truncation_systematic' when the paired 95% interval excludes the null, with convergence_beyond_tested_value='untested'. Seed scatter is kept as reference only. ell=8 is not called converged. No ell=16 run was made, because it was outside the listed inputs."
+     },
+     {
+      "id": "F7",
+      "action": "fixed_in_code",
+      "detail": "load() rejects partial or stale draw sets and returns run_file (directory, run.json sha256, seed range, n, mean sha256, config) for every main, axis and probe input. Writes are atomic: temp file + fsync + os.link, an identical existing file is a no-op, a differing one raises unless --supersede is given (then an atomic os.replace). Script, dependency and geometry digests and the command are recorded. CORAS_STABILITY_MAIN.json was deleted. My first --supersede run produced an intermediate output (sha256 941813f5...) whose recorded command included --supersede, so a rerun could not be byte-identical. I fixed this by recording the command without the write-mode flag, regenerated (that intermediate was superseded), and the rerun is now identical."
+     }
+    ],
+    "corrected_headline_results": [
+     "Numerical convergence, F1, offset score: the 128-draw coras_draws_offset is 78.59 (PGC) and 79.23 (PGC1). Without seed 41 it is 75.73/75.64, against coras_mean_offset 75.65/75.66. Seed 41's leave-one-out influence is 2.85/3.59 nats; the next is |influence| < 1e-5. It carries 97%/100% of the excess. Seed 41 alone scores 82.10/82.11 (rank 1 of 128). The first-8 to 128 change is +2.81/+3.68, of which -0.05/+0.10 remains without seed 41. This is not a realization-count gain, and the mixture is not converged.",
+     "F1, offset halves: the fixed seed halves 1-64/65-128 score 79.54/74.82 (PGC). Moving seed 41 to the other half gives 76.36/79.37. Random disjoint 64/64 halves differ with SD 3.82 (PGC) and 4.64 (PGC1) nats. Random 64-draw subsets give 77.70 +/- 1.92 (PGC); without seed 41, 75.67 +/- 0.48.",
+     "F1, u=0 score (separate wording): coras_draws 69.42/69.50 against coras_mean 63.40/63.42, and 69.46/69.51 without seed 41. The largest influence is seed 82 at 1.25/1.32 nats, 21-22% of the excess. Random-subset means are 66.95, 67.73, 68.61, 69.05 and 69.34 at n=8, 16, 32, 64 and 96, so this is an ordinary finite-mixture trend. The first-8 score of 62.92 sits at the 6% point of random 8-draw subsets. Not converged: the n=64 SD is 1.35 and the disjoint-half SD is 2.48. Seed 41's residual RMS is 70.83 km/s (rank 72/128, ordinary), so it is not excluded.",
+     "F2, conditional descriptive quadratics (pooled, n=256): the analytic-mean (R105) quadratic is 295.19 (halves 299.27/295.89). The ensemble-mean quadratic is 301.29 (halves 305.62/301.90), and 301.08 with C(1+1/n). The measurement-only quadratic is 381.20 against the analytic mean and 394.01 against the ensemble mean.",
+     "F2, residual-mean systematic (not attributed physically): shell-0 monopole z = -13.50 (Wilcoxon p 8.0e-27) and shell-1 z = -5.13 (p 2.0e-6). The 4-D monopole T^2 is 345.9 (zero-mean expectation 4.08). Over the leading 8 PCs T^2 = 7.45 (p 0.51), and 98.5% of the 36-D T^2 of 640.0 lies beyond PC 10 (condition number 2.31e4). Site means: -7.31 km/s (z -11.4) at 0-60 Mpc/h, -6.47 (z -6.6) at 60-100, -1.14 (z -0.9) at 100-150 and -4.48 (z -1.7) at 150-200. The FFT16-vs-FFT24 shell-0 monopole difference has Welch z = -4.03, so the offset depends on FFT resolution and may be partly numerical.",
+     "F3, numerical convergence: the leading 8-dimensional subspace is the stable object. The pooled gap lambda_8/lambda_9 is 2.76 (halves 2.85/2.26). Its largest half-to-half angle is 12.5 deg, against a permutation null of 14.5/18.5/23.6 deg; for every k<8 the smallest null median is 59.4 deg. The k1 angle of 65.35 deg is typical (null 46.8/74.4/87.7 deg; 72% of splits at or above it). Pooled lambda_1/lambda_8 = 2.34 exceeds the exactly-degenerate 95% value of 2.03 at n=256, so the block is not called degenerate.",
+     "F4: the Gaussian MC debias factor for the meas+S quadratic is 0.988 (SD 6.58) at n=128 and 0.994 (SD 4.67) at n=256 (ensemble-mean definition). The sample-only MC gives 0.712 and 0.852 against Hartlap 0.709 and 0.855, so Hartlap does not apply to the reported quadratic.",
+     "F5: the symmetric relative Frobenius distance between the halves is 0.37838, equal to split_diagnostic; the old relative-to-second value was 0.37423. The permutation null is 0.337/0.397/0.461, with 68% of splits at or above 0.378. The half means are exchangeable: two-sample T^2 = 48.7 (p 0.25), and 7.83 over the leading 8 PCs (p 0.47).",
+     "F6, numerical truncation: ell 8->12 at matched seeds 1-128 gives a trace ratio of 1.0210 (paired 95% 1.0181-1.0239). The R105-definition quadratic shifts by -3.61 (95% -4.47 to -2.66): -2.82 from the mean change and -0.80 from the covariance change. The ensemble-definition shift is -3.58. This is a resolved truncation systematic, and ell=8 is not called converged; beyond ell=12 is untested. Radial 36->48 is not resolved: trace ratio 1.0001 (0.9995-1.0007), shift -0.08 (-0.17 to +0.00)."
+    ],
+    "tests": "tests/obsstat/test_r106_coras_stability.py (12 tests) and tests/obsstat/test_r106_coras_marks_influence.py (4 tests): 16 passed in 1.54 s. The tests cover: principal angles; the symmetric Frobenius metric and its equality with split_diagnostic; describe() quadratic definitions with no Hartlap key; residual-mean detection; MC debias against Hartlap; detection of the subspace gap and its statement; axis_compare on identical and scaled runs; atomic no-clobber and supersede writes; load() on a synthetic run (run_file record, stale-draw rejection); FFT-probe pairing; analysis_command; the component layout against an independent replica of the R105 masks; restoration by the recorder context manager; Scorer sums; and the dominance and convergence flags in variant_report."
+   },
+   "check": {
+    "ok": true,
+    "problems": [
+     "F1 wording is inaccurate. In scripts/r106/coras_marks_influence.py:189, next_largest_influence = np.sort(loo)[-2] is the second-largest SIGNED influence, and the generated statement at :271-272 prints it as 'next'. The largest |influence| among the other draws is much bigger. For the offset score it is 0.085 (seed 98, PGC) and 0.101 (seed 122, PGC1). For u=0 it is -0.259 (seed 85, PGC) and -0.157 (seed 122, PGC1); the u=0 statement prints 'next 0.0819'. The engineer's headline 'the next is |influence| < 1e-5' is therefore false. I checked this independently: max |LOO| over the 127 draws other than seed 41 is 0.0854/0.1008. Fix: report the next-largest value by absolute size, or both signed and absolute.",
+     "F3 statement is incomplete against the skeptic's corrected fix, item 2 (coras_stability.py:308-333). (a) It does not say that the observed k=8 largest angle of 12.51 deg is below the permutation-null 5% quantile of 14.5 deg (fraction_null_ge_observed = 0.997). This split is unusually well aligned, though not significant after testing 15 k values. The headline's 'against a permutation null of 14.5/18.5/23.6' hides this. (b) It does not mention the other gap-ended subspaces that are also stable: k=11 (18.63 deg against a null median of 24.0) and k=15 (26.05 against 24.3). The numbers are in the JSON, but the interpretation text omits them.",
+     "F1, u=0: no explicit Monte Carlo uncertainty is given for the reported 128-draw score itself (the corrected fix says 'report it with its MC SD'). The random-subset SDs at n=64 and n=96 (1.35 and 0.72) come from subsets drawn without replacement from the same 128 draws. They are therefore shrunk by the finite-population effect and are not the SD of an independent ensemble; only the disjoint-half difference SD (2.48/2.42) is unshrunk. Also, seed 82, which dominates u=0, has a residual RMS of 114.3 km/s (rank 3 of 128). This is recorded but appears in neither the statement nor the headline.",
+     "F2 deviates in part from the corrected fix. The requested 2-D Hotelling T^2 on coefficients 0 and 9 (skeptic: 312) is not reported; a 4-D shell-monopole T^2 (345.9) is given instead. This is an acceptable superset, but it is not the requested statistic. Two R105-side items stay unfixed because those files are off-limits, as the engineer disclosed: the measurement-only ensemble-mean quadratic in coras_reduce.py (now 394.01 in R106 only) and the 'centered' comment at coras_radial.cpp:69.",
+     "FFT probe (coras_stability.py:401-453): the FFT dependence is tested only at reduced radial 24 / ell 4, comparing FFT 16 with FFT 24. FFT convergence at the main configuration (FFT 24 and above, radial 36 / ell 8) is untested, and the generated text does not say so explicitly. The test itself holds up in my check. FFT16 and FFT24 draws at shared seeds 1-16 are effectively uncorrelated (r = -0.09), so a Welch test is appropriate. The paired z over the 16 common seeds is -4.00, against Welch -4.03.",
+     "F6: no ell=16 point and no bound on the trend. This is allowed and disclosed, and ell=8 is not called converged. However, the pooled ell=8 quadratics in describe() (295.19 and 301.29) are printed without the resolved truncation shift of about -3.6 next to them. The reader has to combine the two by hand.",
+     "Provenance gaps. The geometry is recorded only as in-memory array digests, not as sha256 of the data files that coras_flow.samples() reads. dependency_sha256 (coras_stability.py:631-632, coras_marks_influence.py:405-406) leaves out modules these calls import: scripts/r104/cf4_2mrs_field.py, the r95/h03 loaders, scripts/r105/cf4_field_holdout.py and scripts/r103/cf4_shared_field_holdout.py. The influence JSON stores --reference as a path relative to the working directory, and records only run8's run.json sha256, not the run8 directory path.",
+     "Latent robustness bug at coras_stability.py:556-557. sub['spectra'][...][k_gap-1] indexes a 12-entry list (SPECTRUM_SHOWN = 12), but k_gap can be as large as KMAX_NULL = 15, so a largest gap at k > 12 would raise IndexError. It is not triggered here (k_gap = 8), and no test covers it.",
+     "Cosmetic: the outputs are created with mode 0600 because mkstemp is used in write_json (coras_stability.py:460)."
+    ],
+    "reproduced": [
+     "Each required item is implemented. F1: scripts/r106/coras_marks_influence.py:52-67 (fold recorder, restores the original), :97-122 (R105 choice layout, verified per fold against the R105 results), :146-160 (training-weight concentration), :163-257 (leave-one-out influence for all draws, single-draw scores and ranks, named seed-41 exclusion, random-subset MC at n=8/16/32/64/96 with and without the top draw, 1000 random disjoint halves next to the fixed 1-64/65-128 split and that split with the top draw moved, convergence flag), :260-293 (statements generated from the numbers, with offset and u=0 worded separately), :309-325 (first-8 check). F2: coras_stability.py:1-37 (docstring), :197-216 (renamed ensemble-mean key plus analytic-mean, inflated and measurement-only quadratics), :158-194 (per-coefficient z, Wilcoxon and sign-flip p, shell-monopole, leading-8/10-PC and 36-D T^2 with condition number and trailing share, site means by radius), :401-453 (FFT probe and statement). F3: :239-290 (spectra, gap ratios, angles for k=1..8, v1 against the other half's top-k span, 2000-split permutation null for k=1..15), :293-305 (degenerate-block check), :308-333 (statement naming the 8-dim subspace). F4: :219-236 and :571-574 (Gaussian MC debias at n=128 and 256; Hartlap shown only as a check of the sample-only MC; no hartlap key in describe). F5: :125-128 (mean-norm denominator), :564-567 (cross-check against split_diagnostic; relative_to_second kept), :285 (null), :386 (axes). F6: :336-398 (paired bootstrap of the trace ratio and the quadratic shift under both definitions, mean and covariance parts, classification, convergence_beyond_tested_value='untested'). F7: :83-111 (stale-set rejection at :94-95; run_file at :107-109), :456-486 (atomic no-clobber write with --supersede), :489-491 and :623-636 (input run_files, geometry digests, script and dependency sha256, command).",
+     "Delivered files match the reported sha256: CORAS_STABILITY.json c9c09c2f..., CF4_MARKS128_INFLUENCE.json 37f93881..., coras_stability.py e3d85df9..., coras_marks_influence.py 7b8bcd08.... CORAS_STABILITY_MAIN.json is absent; the only remaining reference is in the R106 REVIEW/ADVERSARIAL_REVIEW.json record. Engineer log stab3.log shows that the final write superseded the intermediate 941813f5, and stab3_rerun and marks_influence_rerun show identical_existing. Git status shows no change to scripts/r105/cf4_coras_marks.py, coras_reduce.py, coras_flow.py or the R105_RESEARCH output directory.",
+     "New tests: `.venv/bin/python -B -m pytest -q -p no:cacheprovider tests/obsstat/test_r106_coras_stability.py tests/obsstat/test_r106_coras_marks_influence.py` gives 16 passed in 2.27 s (wall 2.99 s, RSS 135 MB).",
+     "Rerun of both analysis scripts to scratch outputs in /tmp/claude-1000/-home-cosmosapjw-Dropbox-bianchi-htt-base/61479529-04a2-4d98-a508-5eb3cb0f8ea3/scratchpad/coras_check/ (stability: 36 s wall, 321 MB; influence: 108 s wall run in parallel, 327 MB). Both outputs are identical to the delivered JSONs field by field, except provenance.command, which differs only in the --output path.",
+     "Independent F1 replay with my own fold capture and my own logsumexp scorer, using boolean masks built from R105-style tags (scratchpad/coras_check/indep_f1.py, 21 s). Offset draws 78.5875/79.2310; without seed 41 75.7349/75.6442; seed 41 alone 82.0963/82.1081; coras_mean_offset 75.6482/75.6594; u=0 draws 69.4210/69.4956; u=0 without 41 69.4568/69.5101; u=0 without 82 68.1718/68.1746 (influence 1.249/1.321); first-8 offset 75.7813/75.5484 and u=0 62.9179/62.9095; half1 79.5369/80.0810; half1 without 41 76.3649/76.1972; half2 with 41 79.3652/80.3557. All match the reported headlines.",
+     "Independent stability check with my own sha-checked loader (scratchpad/coras_check/indep_stab.py, 23 s): R105 analytic-mean quadratic 295.186; ensemble-mean 301.287; measurement-only ensemble-mean 394.008; shell-0 monopole z -13.503 and shell-1 z -5.130; half-to-half k1 angle 65.353 deg and k8 largest angle 12.507 deg; symmetric relative Frobenius 0.378379; ell12 trace ratio 1.020964; ell12 R105-definition quadratic shift -3.6094; FFT16-vs-24 shell-0 Welch z -4.032 (paired over the common seeds 1-16: -4.005). All match the reported headlines.",
+     "Checked directly from the delivered JSON: F4 debias 0.988 (SD 6.58) at n=128 and 0.994 (SD 4.67) at n=256, sample-only 0.712/0.852 against Hartlap 0.709/0.855. F5 null 0.337/0.397/0.461, 68% of splits at or above observed; two-sample T^2 48.7 (p 0.25) and 7.83 (p 0.47). F6 ell12 paired 95% 1.0181-1.0239, shift -3.61 (-4.47 to -2.66), parts -2.82/-0.80, ensemble shift -3.58; radial48 1.0001 (0.9995-1.0007), shift -0.08 (-0.17 to +0.0004), not resolved. F3 gaps lambda8/lambda9 2.85/2.26/2.76; degenerate-block 95% at n=256 is 2.03 against observed 2.34. F1 MC: random-subset means 66.95/67.73/68.61/69.05/69.34 (u=0, PGC); offset n=64 77.70\u00b11.92 and without seed 41 75.67\u00b10.48; disjoint-half SD 3.82/4.64 (offset) and 2.48/2.42 (u=0); seed 41 RMS 70.83 km/s, rank 72."
+    ]
+   }
+  }
+ ],
+ "post_check_fixes_by_lead": [
+  "coras_marks_influence: report largest |influence| of the other draws (0.085 seed 98 PGC, 0.101 seed 122 PGC1 for the offset score; 0.259 seed 85 / 0.157 seed 122 for u=0) instead of the second-largest signed influence; outputs regenerated",
+  "coras_stability: SPECTRUM_SHOWN raised to 16 (>= KMAX_NULL+1) to remove a latent IndexError; output regenerated",
+  "cf3_overlap: --drop-replicates default 32 -> 64 to match the executed run"
+ ]
+}

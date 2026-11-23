@@ -1,0 +1,2753 @@
+{
+ "schema": "htt.r106.solver_hypotheses/1",
+ "workflow_run": "wf_8de2fec4-dda",
+ "lanes": [
+  {
+   "hypothesis": "H1 (collision substep depth): with max_substep_depth capped, refining e-fold cells does not refine the opaque-era Thomson scattering substeps. A fixed-cap SDIRK(2,2) collision discretization error then sets the nonzero cells->infinity limit of the first-common sky-minus-fluid photon q/E residual in VI_-1/9: 3.19e-6, 3.54e-6, 3.63e-6 at 48/96/192 cells, Richardson limit about 3.66e-6. Test: change only max_substep_depth (1.0 -> 0.5 -> 0.25, plus 0.125 and 0.0625, and 0.03125 at 192 cells) at the same cells and initial conditions, using the unmodified repo solver.",
+   "runs": [
+    {
+     "label": "c48_cap1.0",
+     "n_cells": 48,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.1935484771574664e-06,
+     "first_sky_minus_fluid": [
+      -6.5317928e-11,
+      3.3994942e-11,
+      -1.672502e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.936623490941116e-05,
+     "second_sky_minus_fluid": [
+      -9.8164803e-10,
+      4.9465697e-10,
+      -2.4703503e-10
+     ],
+     "worst_cell": "idx=5 ln_a=-6.456086 rel=2.2051e-03 delta_tau=1.1894e-02 photon_substeps=2",
+     "extra": "cap=1.0 (R105 control, bitwise equal to SOLVER_COMMON_TIMES.json); ell4 GL16 picard4 eps2e-4 minsub2 fnu0; first: signed_par=-3.1931e-06 perp=5.170e-08, endpoint-cell substeps=31 depth 0.5036-0.9698, dtau_cell=20.8148; pi/E sky diag=(1.201714e-06,-3.607871e-07,-8.409273e-07) fluid diag=(1.201714e-06,-3.607871e-07,-8.409272e-07); maxHam=1.043e-09 maxCod=1.187e-09 StokesReality=6.78e-19; C2T=2.9849542e-07 C2E=1.036247e-11 C2B=5.952330e-14; total substeps=137; solve=41.5 s, cmd wall=42.60 s, peak RSS=142896 kB"
+    },
+    {
+     "label": "c96_cap1.0",
+     "n_cells": 96,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.539700455541186e-06,
+     "first_sky_minus_fluid": [
+      -7.2810308e-11,
+      3.6950781e-11,
+      -1.8388969e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.984600386296121e-05,
+     "second_sky_minus_fluid": [
+      -9.9226339e-10,
+      4.9765262e-10,
+      -2.4876514e-10
+     ],
+     "worst_cell": "idx=10 ln_a=-6.532944 rel=6.2963e-04 delta_tau=7.1744e-03 photon_substeps=2",
+     "extra": "cap=1.0 (R105 control, bitwise equal); first: signed_par=-3.5396e-06 perp=2.137e-08, endpoint-cell substeps=15 depth 0.5050-0.9711, dtau_cell=9.1633; pi/E sky diag=(1.140639e-06,-3.425944e-07,-7.980447e-07) fluid diag=(1.140639e-06,-3.425944e-07,-7.980447e-07); maxHam=8.078e-10 maxCod=8.017e-10 StokesReality=1.19e-18; C2T=2.9825204e-07 C2E=1.008173e-11 C2B=5.768543e-14; total substeps=228; solve=49.9 s, cmd wall=51.06 s, peak RSS=142932 kB"
+    },
+    {
+     "label": "c192_cap1.0",
+     "n_cells": 192,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.6292782170005017e-06,
+     "first_sky_minus_fluid": [
+      -7.481582e-11,
+      3.7602041e-11,
+      -1.8776616e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.991118148921352e-05,
+     "second_sky_minus_fluid": [
+      -9.9406834e-10,
+      4.9747499e-10,
+      -2.4871895e-10
+     ],
+     "worst_cell": "idx=191 ln_a=0.000000 rel=1.8298e-04 delta_tau=8.1391e-05 photon_substeps=2",
+     "extra": "cap=1.0 (R105 control, bitwise equal); first: signed_par=-3.6293e-06 perp=7.685e-09, endpoint-cell substeps=7 depth 0.5051-0.9713, dtau_cell=4.1937; pi/E sky diag=(1.115516e-06,-3.351148e-07,-7.804015e-07) fluid diag=(1.115516e-06,-3.351148e-07,-7.804015e-07); maxHam=1.316e-09 maxCod=1.459e-09 StokesReality=1.20e-18; C2T=2.9818290e-07 C2E=1.001809e-11 C2B=5.726391e-14; total substeps=412; solve=61.0 s, cmd wall=62.51 s, peak RSS=143728 kB"
+    },
+    {
+     "label": "c48_cap0.5",
+     "n_cells": 48,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 6.677979823345319e-07,
+     "first_sky_minus_fluid": [
+      -1.3160169e-11,
+      7.9094074e-12,
+      -3.6838442e-12
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 1.23616021647263e-05,
+     "second_sky_minus_fluid": [
+      -2.4447769e-10,
+      1.2604522e-10,
+      -6.2731194e-11
+     ],
+     "worst_cell": "idx=6 ln_a=-6.302369 rel=1.4548e-03 delta_tau=5.8967e-03 photon_substeps=2",
+     "extra": "cap=0.5; first: signed_par=-6.6581e-07 perp=5.143e-08, endpoint-cell substeps=62 depth 0.2502-0.4911; pi/E sky diag=(1.202790e-06,-3.611101e-07,-8.416802e-07) fluid same to 8 digits; maxHam=8.354e-10 maxCod=8.161e-10 StokesReality=5.97e-19; C2T=2.9841817e-07 C2E=1.025457e-11 C2B=5.880672e-14; total substeps=185; solve=52.7 s, cmd wall=53.81 s, peak RSS=142960 kB"
+    },
+    {
+     "label": "c96_cap0.5",
+     "n_cells": 96,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 8.570370897284161e-07,
+     "first_sky_minus_fluid": [
+      -1.7441702e-11,
+      9.2610665e-12,
+      -4.5457216e-12
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 1.2872630847498619e-05,
+     "second_sky_minus_fluid": [
+      -2.557276e-10,
+      1.2936413e-10,
+      -6.4625084e-11
+     ],
+     "worst_cell": "idx=11 ln_a=-6.456086 rel=5.3823e-04 delta_tau=4.7162e-03 photon_substeps=2",
+     "extra": "cap=0.5; first: signed_par=-8.5678e-07 perp=2.115e-08, endpoint-cell substeps=30 depth 0.2509-0.4920; pi/E sky diag=(1.141730e-06,-3.429220e-07,-7.988079e-07) fluid same; maxHam=7.953e-10 maxCod=1.187e-09 StokesReality=3.78e-19; C2T=2.9823851e-07 C2E=1.009467e-11 C2B=5.776444e-14; total substeps=274; solve=50.2 s, cmd wall=51.40 s, peak RSS=143268 kB"
+    },
+    {
+     "label": "c192_cap0.5",
+     "n_cells": 192,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 9.119189616817402e-07,
+     "first_sky_minus_fluid": [
+      -1.8734435e-11,
+      9.5564777e-12,
+      -4.7555492e-12
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 1.2870321938780075e-05,
+     "second_sky_minus_fluid": [
+      -2.5618298e-10,
+      1.2852709e-10,
+      -6.4250444e-11
+     ],
+     "worst_cell": "idx=191 ln_a=0.000000 rel=1.7753e-04 delta_tau=8.1391e-05 photon_substeps=2",
+     "extra": "cap=0.5; first: signed_par=-9.1189e-07 perp=7.491e-09, endpoint-cell substeps=14 depth 0.2509-0.4921; pi/E sky diag=(1.116625e-06,-3.354479e-07,-7.811776e-07) fluid same; maxHam=1.093e-09 maxCod=1.358e-09 StokesReality=1.82e-18; C2T=2.9818165e-07 C2E=1.002732e-11 C2B=5.732301e-14; total substeps=456; solve=57.1 s, cmd wall=58.23 s, peak RSS=143612 kB"
+    },
+    {
+     "label": "c48_cap0.25",
+     "n_cells": 48,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 5.6360072908661635e-08,
+     "first_sky_minus_fluid": [
+      1.0135542e-13,
+      1.2768958e-12,
+      -3.6759475e-13
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 3.090767225124215e-06,
+     "second_sky_minus_fluid": [
+      -5.9734552e-11,
+      3.3670528e-11,
+      -1.6545565e-11
+     ],
+     "worst_cell": "idx=7 ln_a=-6.148653 rel=1.3603e-03 delta_tau=3.5281e-03 photon_substeps=2",
+     "extra": "cap=0.25; first: signed_par=-2.3220e-08 perp=5.135e-08 (near sign crossing of cap^2 term vs cell term), endpoint-cell substeps=124 depth 0.1247-0.2471; pi/E sky diag=(1.203064e-06,-3.611922e-07,-8.418715e-07) fluid same; maxHam=7.089e-10 maxCod=8.572e-10 StokesReality=9.93e-19; C2T=2.9840740e-07 C2E=1.024355e-11 C2B=5.873263e-14; total substeps=277; solve=51.7 s, cmd wall=53.00 s, peak RSS=143572 kB"
+    },
+    {
+     "label": "c96_cap0.25",
+     "n_cells": 96,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 1.7732676776419203e-07,
+     "first_sky_minus_fluid": [
+      -3.3932483e-12,
+      2.2354348e-12,
+      -1.0336975e-12
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 3.2122151070300567e-06,
+     "second_sky_minus_fluid": [
+      -6.3277048e-11,
+      3.3132603e-11,
+      -1.651053e-11
+     ],
+     "worst_cell": "idx=84 ln_a=-0.845440 rel=4.4251e-04 delta_tau=9.7012e-04 photon_substeps=2",
+     "extra": "cap=0.25; first: signed_par=-1.7607e-07 perp=2.109e-08, endpoint-cell substeps=60 depth 0.1250-0.2476; pi/E sky diag=(1.142007e-06,-3.430052e-07,-7.990017e-07) fluid same; maxHam=7.752e-10 maxCod=8.213e-10 StokesReality=1.05e-18; C2T=2.9822773e-07 C2E=1.008391e-11 C2B=5.769200e-14; total substeps=367; solve=55.6 s, cmd wall=56.98 s, peak RSS=143168 kB"
+    },
+    {
+     "label": "c192_cap0.25",
+     "n_cells": 192,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 2.217201358881905e-07,
+     "first_sky_minus_fluid": [
+      -4.4882725e-12,
+      2.4320612e-12,
+      -1.1934297e-12
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 3.202379895288081e-06,
+     "second_sky_minus_fluid": [
+      -6.3589103e-11,
+      3.2227947e-11,
+      -1.6101941e-11
+     ],
+     "worst_cell": "idx=191 ln_a=0.000000 rel=1.6000e-04 delta_tau=8.1391e-05 photon_substeps=2",
+     "extra": "cap=0.25; first: signed_par=-2.2160e-07 perp=7.434e-09, endpoint-cell substeps=28 depth 0.1251-0.2477; pi/E sky diag=(1.116907e-06,-3.355324e-07,-7.813745e-07) fluid same; maxHam=1.046e-09 maxCod=1.586e-09 StokesReality=1.83e-18; C2T=2.9817889e-07 C2E=1.002935e-11 C2B=5.733516e-14; total substeps=548; solve=59.6 s, cmd wall=60.81 s, peak RSS=143924 kB"
+    },
+    {
+     "label": "c48_cap0.125",
+     "n_cells": 48,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 1.4547269583202493e-07,
+     "first_sky_minus_fluid": [
+      3.3896369e-12,
+      -3.676664e-13,
+      4.5430011e-13
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 7.293998306377004e-07,
+     "second_sky_minus_fluid": [
+      -1.2432674e-11,
+      1.00143e-11,
+      -4.7171571e-12
+     ],
+     "worst_cell": "idx=12 ln_a=-5.380071 rel=6.4022e-04 delta_tau=5.9865e-04 photon_substeps=2",
+     "extra": "cap=0.125; first: signed_par=+1.3611e-07 (sign flipped: cell term dominates) perp=5.134e-08, endpoint-cell substeps=247 depth 0.0627-0.1247; pi/E sky diag=(1.203132e-06,-3.612126e-07,-8.419191e-07) fluid same; maxHam=6.651e-10 maxCod=9.096e-10 StokesReality=5.64e-19; C2T=2.9835735e-07 C2E=1.013142e-11 C2B=5.799965e-14; total substeps=467; solve=50.6 s, cmd wall=51.87 s, peak RSS=142620 kB"
+    },
+    {
+     "label": "c96_cap0.125",
+     "n_cells": 96,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 2.1325572357199532e-08,
+     "first_sky_minus_fluid": [
+      1.7330675e-13,
+      4.5177407e-13,
+      -1.4184083e-13
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 8.239498149805203e-07,
+     "second_sky_minus_fluid": [
+      -1.5665933e-11,
+      9.3253489e-12,
+      -4.6066685e-12
+     ],
+     "worst_cell": "idx=95 ln_a=0.000000 rel=2.6586e-04 delta_tau=1.7096e-04 photon_substeps=2",
+     "extra": "cap=0.125; first: signed_par=-3.2500e-09 perp=2.108e-08, endpoint-cell substeps=120 depth 0.0624-0.1242; pi/E sky diag=(1.142077e-06,-3.430263e-07,-7.990508e-07) fluid same; maxHam=8.433e-10 maxCod=7.448e-10 StokesReality=1.50e-18; C2T=2.9821160e-07 C2E=1.005229e-11 C2B=5.748433e-14; total substeps=557; solve=61.0 s, cmd wall=62.63 s, peak RSS=142672 kB"
+    },
+    {
+     "label": "c192_cap0.125",
+     "n_cells": 192,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 4.7245913812870494e-08,
+     "first_sky_minus_fluid": [
+      -8.7790057e-13,
+      6.265626e-13,
+      -2.909519e-13
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 8.119262461334173e-07,
+     "second_sky_minus_fluid": [
+      -1.5966233e-11,
+      8.4158959e-12,
+      -4.1966725e-12
+     ],
+     "worst_cell": "idx=191 ln_a=0.000000 rel=1.2882e-04 delta_tau=8.1391e-05 photon_substeps=2",
+     "extra": "cap=0.125; first: signed_par=-4.6659e-08 perp=7.423e-09, endpoint-cell substeps=56 depth 0.0624-0.1243; pi/E sky diag=(1.116978e-06,-3.355538e-07,-7.814243e-07) fluid same; maxHam=1.184e-09 maxCod=1.864e-09 StokesReality=8.55e-19; C2T=2.9817518e-07 C2E=1.002490e-11 C2B=5.730551e-14; total substeps=736; solve=64.4 s, cmd wall=65.59 s, peak RSS=143916 kB"
+    },
+    {
+     "label": "c48_cap0.0625",
+     "n_cells": 48,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 1.8627635544904315e-07,
+     "first_sky_minus_fluid": [
+      4.2760201e-12,
+      -8.1095521e-13,
+      6.7609141e-13
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 1.9617435999900574e-07,
+     "second_sky_minus_fluid": [
+      -5.6869167e-13,
+      4.0813206e-12,
+      -1.7505199e-12
+     ],
+     "worst_cell": "idx=41 ln_a=-0.922298 rel=3.2493e-04 delta_tau=2.3566e-03 photon_substeps=2",
+     "extra": "cap=0.0625 (extension); first: signed_par=+1.7906e-07 perp=5.133e-08, endpoint-cell substeps=494 depth 0.0313-0.0625; pi/E sky diag=(1.203150e-06,-3.612181e-07,-8.419319e-07) fluid same; maxHam=8.235e-10 maxCod=9.410e-10 StokesReality=3.98e-19; C2T=2.9833815e-07 C2E=1.008468e-11 C2B=5.769530e-14; total substeps=843; solve=62.3 s, cmd wall=63.76 s, peak RSS=142408 kB"
+    },
+    {
+     "label": "c96_cap0.0625",
+     "n_cells": 96,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 4.561916348425077e-08,
+     "first_sky_minus_fluid": [
+      1.0754085e-12,
+      6.2636392e-16,
+      8.3553635e-14
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 2.3599145502875303e-07,
+     "second_sky_minus_fluid": [
+      -3.8313207e-12,
+      3.4076648e-12,
+      -1.6481028e-12
+     ],
+     "worst_cell": "idx=95 ln_a=0.000000 rel=1.8872e-04 delta_tau=1.7096e-04 photon_substeps=2",
+     "extra": "cap=0.0625 (extension); first: signed_par=+4.0460e-08 perp=2.107e-08, endpoint-cell substeps=239 depth 0.0313-0.0624; pi/E sky diag=(1.142095e-06,-3.430315e-07,-7.990630e-07) fluid same; maxHam=8.156e-10 maxCod=7.732e-10 StokesReality=6.51e-19; C2T=2.9820560e-07 C2E=1.003905e-11 C2B=5.739770e-14; total substeps=933; solve=67.9 s, cmd wall=69.22 s, peak RSS=143544 kB"
+    },
+    {
+     "label": "c192_cap0.0625",
+     "n_cells": 192,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 8.0728546195685e-09,
+     "first_sky_minus_fluid": [
+      1.9233242e-14,
+      1.779086e-13,
+      -6.6436131e-14
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 2.1279327829448238e-07,
+     "second_sky_minus_fluid": [
+      -4.0194789e-12,
+      2.4423461e-12,
+      -1.2097685e-12
+     ],
+     "worst_cell": "idx=191 ln_a=0.000000 rel=1.0352e-04 delta_tau=8.1391e-05 photon_substeps=2",
+     "extra": "cap=0.0625 (extension); first: signed_par=-3.1869e-09 perp=7.417e-09, endpoint-cell substeps=111 depth 0.0313-0.0624; pi/E sky diag=(1.116996e-06,-3.355591e-07,-7.814367e-07) fluid same; maxHam=8.630e-10 maxCod=1.076e-09 StokesReality=8.06e-19; C2T=2.9817270e-07 C2E=1.002032e-11 C2B=5.727533e-14; total substeps=1111; solve=75.5 s, cmd wall=76.75 s, peak RSS=143916 kB"
+    },
+    {
+     "label": "c192_cap0.03125",
+     "n_cells": 192,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 1.0995708045260553e-08,
+     "first_sky_minus_fluid": [
+      2.5254921e-13,
+      6.1198683e-14,
+      -8.2659599e-15
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 6.508881383689258e-08,
+     "second_sky_minus_fluid": [
+      -1.0403352e-12,
+      9.5275618e-13,
+      -4.6538878e-13
+     ],
+     "worst_cell": "idx=191 ln_a=0.000000 rel=7.6590e-05 delta_tau=8.1391e-05 photon_substeps=2",
+     "extra": "cap=0.03125 (floor check, 192 only); first: signed_par=+8.1173e-09 perp=7.417e-09 (now at the 192-cell cell-term floor B(192)~+1.1e-8), endpoint-cell substeps=222 depth 0.0156-0.0312; pi/E sky diag=(1.117000e-06,-3.355605e-07,-7.814400e-07) fluid same; maxHam=9.631e-10 maxCod=9.260e-10 StokesReality=1.47e-18; C2T=2.9817056e-07 C2E=1.001550e-11 C2B=5.724383e-14; total substeps=1865; solve=96.4 s, cmd wall=97.82 s, peak RSS=144044 kB"
+    }
+   ],
+   "reproduced_r105_baseline": true,
+   "residual_reduced": true,
+   "conclusion": "H1 is confirmed. The nonzero cells->infinity limit of the first-common residual in R105 comes from the numerical collision-substep error at a fixed depth cap. No physics term is implicated; this is a purely numerical-convergence result. All runs use the unmodified repo solver (sha256 f3e00c689509a425a9d6b8be44c8f92d7d795ea90501bd4b86763023c2de3dcf, clean against HEAD b234bb0e0). Only the config changed.\n\n(1) R105 reproduced bitwise. With cap 1.0, all 48 common endpoints match SOLVER_COMMON_TIMES.json exactly at 48, 96 and 192 cells (max abs diff 0.0 for sky and fluid).\n\n(2) Mechanism. At fixed cap, cell refinement does not refine the scattering substeps. In the cell ending at the first common time, realized substep depths are 0.504-0.970 at 48 cells, 0.505-0.971 at 96 and 0.505-0.971 at 192. Every cap halving halves them exactly (cap 0.0625 gives 0.031-0.062).\n\n(3) Cap order at fixed cells is about 2 at both endpoints. First endpoint: 1.976, 2.012, 1.891 (48 cells); 1.979, 1.978, 1.983 (96); 1.977, 1.980, 2.009, 1.943 (192). Second endpoint: 1.94-2.02. This matches the second order of SDIRK(2,2).\n\n(4) Decomposition of the signed parallel component, e(N,c) = A(N)c^2 + B(N):\n- First endpoint: A = -3.388e-6, -3.595e-6, -3.640e-6 (A at infinite cells about -3.65e-6); B = +1.95e-7, +5.53e-8, +1.12e-8. B is the cell term, has opposite sign, and goes to 0 at order about 1.66.\n- The growth with refinement seen in R105 is the shrinking positive B unmasking the fixed-cap negative A c^2, plus a 7% growth of |A| as the bisection layout changes with cell edges. With cap 0.25 or 0.125 at 48 cells the two terms cross zero, which is why those norms are non-monotonic.\n- The perpendicular component does not depend on cap (within 1%): 5.13e-8, 2.11e-8, 7.42e-9, falling to about 0 with cells.\n\n(5) Limits as cap -> 0. The first-common residual goes from 3.66e-6 (R105 cells-limit at cap 1) to about 9e-9 in the double limit. Both extrapolation orders agree (-9.13e-9 and -9.16e-9), which is consistent with zero at the 1e-8 level and about 400x smaller. The second endpoint goes from 4.992e-5 to -1.39e-8.\n\n(6) The 96->192 trend reverses at small cap. At cap 0.0625 the norms are 1.86e-7, 4.56e-8, 8.07e-9 (r = 3.75). At cap 1.0 they grow, as in R105.\n\n(7) Picard lag is excluded as a cause. Between Picard iterations 3 and 4, the first-common q/E moves by at most 1.2e-9 relative.\n\n(8) Effect on other observables:\n- Constraints are unaffected by cap: max Hamiltonian 6.7e-10 to 1.3e-9, max Codazzi 7.4e-10 to 1.9e-9, Stokes reality error at most 1.8e-18.\n- At 192 cells, going from cap 1 to cap 0.03125 changes C2T by -4.1e-5, C2E by -2.6e-4 and C2B by -3.5e-4 (all relative; E and B are non-monotonic). The remaining cell error at cap 1 (96->192) is larger: C2T -2.3e-4, C2E -6.3e-3, C2B -7.3e-3.\n- The worst cell over the whole run sits in the late, nearly transparent era, where it is not cap-limited (2 substeps per cell). It is mainly a cell effect (2.2e-3, 6.3e-4, 1.83e-4 at cap 1). At 192 cells it still falls with cap but not yet at a clean order: 1.83e-4 at cap 1 down to 7.66e-5 at cap 0.03125.\n\n(9) Separate observation, outside H1. pi/E at the first common endpoint is not cell-converged. Sky and fluid agree to at most 2.2e-8, but the value moves 5.5% (48->96) and 2.25% (96->192) at order 1.28. The Richardson estimate is |pi/E|_F = 1.614e-6 against 1.640e-6 at 192 cells, and it does not depend on cap (1.3e-3). This fits an endpoint error from the shear source being frozen at the cell midpoint. It is a lead for the geometry/shear-source stage-time axis, not yet tested.\n\n(10) Possible next steps (no code changed): set max_substep_depth to 0.0625 or below, or tie the cap to cell width so that a cells convergence study also refines the collision. Cost at 192 cells: solve 61.0 s at cap 1, 75.5 s at 0.0625 and 96.4 s at 0.03125, under shared machine load. A residual below 1e-7 would need cap below about 0.17 at the first endpoint and about 0.045 at the second.",
+   "variant_description": "Config-only change, no code variant: max_substep_depth set to 1.0 (R105 control), 0.5, 0.25, 0.125 and 0.0625 at 48/96/192 cells, plus 0.03125 at 192 cells only. Everything else matches R105 common_time_moments: family VI_-1/9, epsilon 2e-4, ell_max 4, angular_basis(4,16), n_picard 4, substeps_per_cell 2, f_nu 0, record_history. The repo solver is unmodified, with no monkeypatching. Per-substep depths of the final sweep were recomputed after each run with coupled._optical_substeps on result.recombination.opacity_history(). The substep counts match history['photon_substeps'] in all 16 runs.",
+   "limit_estimates": "Richardson in cells at fixed cap, first endpoint, relative norm, r=(e96-e48)/(e192-e96):\n- cap 1.0: r=3.8643, limit 3.6606e-6\n- cap 0.5: r=3.4481, limit 9.343e-7\n- cap 0.25: r=2.7249, limit 2.475e-7\n- cap 0.125: norm-based r=-4.79 is invalid because of a sign crossing; signed parallel r=3.210, limit -6.630e-8\n- cap 0.0625: norm r=3.746; signed r=3.176, limit -2.325e-8\n\nSigned cells-limits by cap: -3.6605e-6, -9.3425e-7, -2.4091e-7, -6.6297e-8, -2.3249e-8. Cap orders between them: 1.975, 1.989, 2.020. Extrapolated cap -> 0 limit: -9.16e-9.\n\nOther order (cap -> 0 first at each cell count): +1.949e-7 (48), +5.526e-8 (96), +1.119e-8 (192; +1.209e-8 including 0.03125). Cells Richardson of these: r=3.169, limit -9.13e-9.\n\nPerpendicular component: 5.13e-8, 2.11e-8, 7.42e-9; r=2.22, limit about 0 (-3.8e-9).\n\nSecond endpoint, cells-limits by cap: -4.9921e-5, -1.2870e-5, -3.2030e-6, -8.125e-7, -2.139e-7. Cap orders 1.94-2.02; double limit -1.39e-8. Per-cell cap -> 0 limits: +8.29e-8, -3.09e-8, -1.12e-8. At caps of 0.5 and below the cells Richardson r is negative because the cell term is tiny next to A c^2.\n\nCoefficient of cap^2 (relative, per unit cap^2): about -3.65e-6 at the first endpoint and about -4.99e-5 at the second.",
+   "output_json": "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/collision_depth/COLLISION_DEPTH_H1.json (sha256 613deba2c04a536d94cf9c6ca51a509442f2ee111101059e3d1cebd1e3eb990c). Per-case receipts are in /home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/collision_depth/runs/c{48,96,192}_cap{...}.json; each holds full per-cell arrays, per-Picard first-two-common q/E, input SHA-256s from scripts.r105.solver_axes.identity(), git HEAD and a solver-clean flag. Script hashes: run_case.py 62c3b1649b8fee53bebfda49d68a1167a43d55b1b47bfb0abf4e49dbe37ae036, analyze.py e7b9e11897522f23b1b2560b2865dafa8eb0bef3e91f50664ab63c6a73a640cc, run_grid.sh 916cbf0a30c706daba7e57fec56f5210b473224088a11e6ac6bfddfd84d1f4a9. R105 reference SOLVER_COMMON_TIMES.json sha256: dbd76d3a59067799457c01d3bf1fb27e93d542f15dbd7f12d9e7c8dd9eac2104.",
+   "files_created": [
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/collision_depth/run_case.py",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/collision_depth/run_grid.sh",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/collision_depth/analyze.py",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/collision_depth/COLLISION_DEPTH_H1.json",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/collision_depth/runs/ (16 case JSONs c48/c96/c192 x cap 1.0/0.5/0.25/0.125/0.0625 + c192_cap0.03125)",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/collision_depth/logs/ (per-case .log and .time, grid_A.time, grid_B.time, grid_status.txt)"
+   ],
+   "commands": [
+    {
+     "command": "cd /home/cosmosapjw/Dropbox/bianchi/htt_base && export PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1; /usr/bin/time -f '%e s %M kB' .venv/bin/python -B /home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/collision_depth/run_case.py --cells 48 --cap 1.0 --output .../runs/c48_cap1.0.json",
+     "return_code": 0,
+     "wall_s": 42.6,
+     "maxrss_kB": 142896
+    },
+    {
+     "command": "run_grid.sh (xargs -P 3; each case = /usr/bin/time .venv/bin/python -B run_case.py --cells N --cap C) for 192:0.125 192:0.25 192:0.5 192:1.0 96:0.125 96:0.25 96:0.5 96:1.0 48:0.125 48:0.25 48:0.5 [driver total]",
+     "return_code": 0,
+     "wall_s": 227.48,
+     "maxrss_kB": 143924
+    },
+    {
+     "command": "run_case.py --cells 192 --cap 0.5",
+     "return_code": 0,
+     "wall_s": 58.23,
+     "maxrss_kB": 143612
+    },
+    {
+     "command": "run_case.py --cells 192 --cap 0.25",
+     "return_code": 0,
+     "wall_s": 60.81,
+     "maxrss_kB": 143924
+    },
+    {
+     "command": "run_case.py --cells 192 --cap 0.125",
+     "return_code": 0,
+     "wall_s": 65.59,
+     "maxrss_kB": 143916
+    },
+    {
+     "command": "run_case.py --cells 192 --cap 1.0",
+     "return_code": 0,
+     "wall_s": 62.51,
+     "maxrss_kB": 143728
+    },
+    {
+     "command": "run_case.py --cells 96 --cap 0.25",
+     "return_code": 0,
+     "wall_s": 56.98,
+     "maxrss_kB": 143168
+    },
+    {
+     "command": "run_case.py --cells 96 --cap 0.125",
+     "return_code": 0,
+     "wall_s": 62.63,
+     "maxrss_kB": 142672
+    },
+    {
+     "command": "run_case.py --cells 96 --cap 0.5",
+     "return_code": 0,
+     "wall_s": 51.4,
+     "maxrss_kB": 143268
+    },
+    {
+     "command": "run_case.py --cells 96 --cap 1.0",
+     "return_code": 0,
+     "wall_s": 51.06,
+     "maxrss_kB": 142932
+    },
+    {
+     "command": "run_case.py --cells 48 --cap 0.125",
+     "return_code": 0,
+     "wall_s": 51.87,
+     "maxrss_kB": 142620
+    },
+    {
+     "command": "run_case.py --cells 48 --cap 0.25",
+     "return_code": 0,
+     "wall_s": 53,
+     "maxrss_kB": 143572
+    },
+    {
+     "command": "run_case.py --cells 48 --cap 0.5",
+     "return_code": 0,
+     "wall_s": 53.81,
+     "maxrss_kB": 142960
+    },
+    {
+     "command": "run_grid.sh 192:0.0625 192:0.03125 96:0.0625 48:0.0625 [driver total, extension]",
+     "return_code": 0,
+     "wall_s": 133.01,
+     "maxrss_kB": 144044
+    },
+    {
+     "command": "run_case.py --cells 96 --cap 0.0625",
+     "return_code": 0,
+     "wall_s": 69.22,
+     "maxrss_kB": 143544
+    },
+    {
+     "command": "run_case.py --cells 192 --cap 0.0625",
+     "return_code": 0,
+     "wall_s": 76.75,
+     "maxrss_kB": 143916
+    },
+    {
+     "command": "run_case.py --cells 192 --cap 0.03125",
+     "return_code": 0,
+     "wall_s": 97.82,
+     "maxrss_kB": 144044
+    },
+    {
+     "command": "run_case.py --cells 48 --cap 0.0625",
+     "return_code": 0,
+     "wall_s": 63.76,
+     "maxrss_kB": 142408
+    },
+    {
+     "command": "/usr/bin/time -f '%e s %M kB' .venv/bin/python -B .../analyze.py --output .../COLLISION_DEPTH_H1_partial.json (interim, 12 runs; file later deleted)",
+     "return_code": 0,
+     "wall_s": 1.76,
+     "maxrss_kB": 132276
+    },
+    {
+     "command": "/usr/bin/time -f '%e s %M kB' .venv/bin/python -B .../analyze.py --output .../COLLISION_DEPTH_H1.json (final, 16 runs)",
+     "return_code": 0,
+     "wall_s": 1.91,
+     "maxrss_kB": 131716
+    },
+    {
+     "command": "Failed queue helper (until ... && ! pgrep -f 'run_case.py --cells' ...; run_grid.sh extension): pgrep matched the helper's own command line, so it waited forever and never launched anything. Stopped with TaskStop after about 11 min; no solver output. The extension was then run directly (row above).",
+     "return_code": -1
+    }
+   ]
+  },
+  {
+   "hypothesis": "H2 (geometry/shear-source timing): the photon cell holds LieGeometry(sigma_N, a_N, n_N) and the uniform shear source at the cell midpoint for every optical substep, while the collision term uses baryon velocities at the SDIRK stage times. The hypothesis is that this mismatch causes the nonzero first-common sky-minus-fluid q/E residual in VI_-1/9 (R105: 3.19355e-6, 3.53970e-6, 3.62928e-6 at 48/96/192 cells), which grows as the grid is refined. Test: evaluate both geometry and shear source at each SDIRK stage time from sol.sol, keeping collision, REC clock, baryon model and Delta-tau cap identical.",
+   "variant_description": "Variant file /home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/geometry_stage/coupled_geometry_stage.py (sha256 b878d0c3...4109). It is a copy of the repo solver (sha256 f3e00c68...dcf, equal to git blob at b234bb0e0). The full diff is variant.diff (sha256 840a65bd...d248). Changes:\n(1) New CoupledSolverConfig.geometry_timing field with values \"midpoint\" (R105 code path, kept unchanged), \"midpoint_dense\" and \"stage\".\n(2) New _normalized_lie_geometry(). It copies the cell loop exactly: pstf(sig/H), a/H, n/H, the 1e-24 scale filters, the 1e-8 Jacobi abort and the P N P projection above 5e-12.\n(3) New _advance_moving_photon_cell_stage_geometry(). It uses the same SDIRK(2,2) tableau, _optical_substeps edges and depths, stage-time baryon velocity and MovingCollisionStage. For each stage u = edges[j] + c*h with c in {gamma, 1}, it rebuilds m_total = dN*(base_operator + bolometric_redshift_operator) from the stage geometry. Each stage adds gamma*h*shear_source_vector(sigma_N(u), amplitude=dN). Stage geometry comes from sol.sol(n0 + u*dN): H = exp(y0), sigma from orthonormal_to_stf_matrix(y[1:6], 'kinematic_response'), a = y[6:9], n = _unpack_sym6(y[9:15]).\n(4) The cell-loop call site dispatches on geometry_timing. The neutrino path is unchanged (f_nu = 0 here).\nThe variant is loaded with importlib under the name htt_r106_h2_coupled_geometry_stage. It is placed in sys.modules before exec_module, and HYREC_REF_CSV is reset to the repo value. Every run uses: VI_-1/9, epsilon 2e-4, ell_max 4, angular_basis(4,16), n_picard 4, substeps_per_cell 2, f_nu 0.",
+   "runs": [
+    {
+     "label": "repo_N48_d1",
+     "n_cells": 48,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.1935484771574664e-06,
+     "first_sky_minus_fluid": [
+      -6.531792794966661e-11,
+      3.399494170694829e-11,
+      -1.672501989299338e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.936623490941116e-05,
+     "second_sky_minus_fluid": [
+      -9.816480252737645e-10,
+      4.946569671611997e-10,
+      -2.4703503014427146e-10
+     ],
+     "worst_cell": "idx=5 ln_a=-6.456085749 rel=2.205080e-03 delta_tau=0.01189 substeps=2 sky-fluid=[-4.1329e-08, 2.0726e-08, -1.0363e-08]",
+     "extra": "repo midpoint cap=1.0; piE_sky_first[xx,yy,zz,xy,xz,yz]=[1.201714e-06,-3.607871e-07,-8.409273e-07,-4.809239e-07,3.606246e-07,-2.403541e-07], piE_fluid identical to <=4e-14; |piE|_F=1.766256e-06; max_ham=1.043e-09 max_cod=1.187e-09 stokes_reality=6.78e-19; C2 T=2.98495419e-07 E=1.03624673e-11 B=5.95233012e-14; substeps=137; parallel/|q|=-3.193130e-06 perp/|q|=5.170e-08; solve 47.0 s; time 48.12 s 142228 kB"
+    },
+    {
+     "label": "varmid_N48_d1 (control: variant code, midpoint timing)",
+     "n_cells": 48,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.1935484771574664e-06,
+     "first_sky_minus_fluid": [
+      -6.531792794966661e-11,
+      3.399494170694829e-11,
+      -1.672501989299338e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.936623490941116e-05,
+     "second_sky_minus_fluid": [
+      -9.816480252737645e-10,
+      4.946569671611997e-10,
+      -2.4703503014427146e-10
+     ],
+     "worst_cell": "idx=5 identical to repo",
+     "extra": "q_sky, q_fluid and final Stokes state bit-identical to repo_N48_d1; time 49.64 s 139860 kB"
+    },
+    {
+     "label": "vardense_N48_d1 (control: stage code path, all stages at u=1/2 from sol.sol)",
+     "n_cells": 48,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.1935500104109714e-06,
+     "first_sky_minus_fluid": [
+      -6.531793852741405e-11,
+      3.399492424790518e-11,
+      -1.6725177739277167e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.9366232640931504e-05,
+     "second_sky_minus_fluid": [
+      -9.81648019347922e-10,
+      4.946569700478879e-10,
+      -2.4703481174529634e-10
+     ],
+     "worst_cell": "idx=5 ln_a=-6.456085749 rel=2.205080e-03 delta_tau=0.01189 substeps=2",
+     "extra": "first rel minus repo = +1.53e-12; max over cells |dq_sky|/|q| = 4.1e-11 (dense vs t_eval sampling plus Radau adaptivity noise); C2 matches repo to 1e-8 relative; time 51.25 s 143884 kB"
+    },
+    {
+     "label": "repo_N96_d1",
+     "n_cells": 96,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.539700455541186e-06,
+     "first_sky_minus_fluid": [
+      -7.281030845853798e-11,
+      3.695078143405007e-11,
+      -1.8388969465840818e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.984600386296121e-05,
+     "second_sky_minus_fluid": [
+      -9.922633931724325e-10,
+      4.976526248720776e-10,
+      -2.487651405212694e-10
+     ],
+     "worst_cell": "idx=10 ln_a=-6.532943913 rel=6.296308e-04 delta_tau=0.00717 substeps=2 sky-fluid=[-1.1820e-08, 5.9242e-09, -2.9622e-09]",
+     "extra": "piE_sky_first diag/off=[1.140639e-06,-3.425944e-07,-7.980447e-07,-4.565679e-07,3.423570e-07,-2.281038e-07]; |piE|_F=1.676512e-06 (fluid equal); max_ham=8.078e-10 max_cod=8.017e-10 reality=1.19e-18; C2 T=2.98252039e-07 E=1.00817303e-11 B=5.76854298e-14; perp/|q|=2.137e-08; time 51.97 s 141960 kB"
+    },
+    {
+     "label": "repo_N192_d1",
+     "n_cells": 192,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.6292782170005017e-06,
+     "first_sky_minus_fluid": [
+      -7.481582011426295e-11,
+      3.760204141464588e-11,
+      -1.877661612110159e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.991118148921352e-05,
+     "second_sky_minus_fluid": [
+      -9.94068338078534e-10,
+      4.974749898572936e-10,
+      -2.4871895428375666e-10
+     ],
+     "worst_cell": "idx=191 ln_a=0.0 rel=1.829813e-04 delta_tau=0.00008 substeps=2 sky-fluid=[-3.1769e-09, 2.1637e-09, -1.0825e-09]",
+     "extra": "piE_sky_first=[1.115516e-06,-3.351148e-07,-7.804015e-07,-4.465515e-07,3.348443e-07,-2.230638e-07]; |piE|_F=1.639597e-06; max_ham=1.316e-09 max_cod=1.459e-09 reality=1.20e-18; C2 T=2.98182902e-07 E=1.00180854e-11 B=5.72639086e-14; perp/|q|=7.685e-09; time 58.75 s 143368 kB"
+    },
+    {
+     "label": "repo_N384_d1",
+     "n_cells": 384,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.6465812493841566e-06,
+     "first_sky_minus_fluid": [
+      -7.52342448966613e-11,
+      3.7675882745102744e-11,
+      -1.8830904423572392e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 1.3282583674305857e-05,
+     "second_sky_minus_fluid": [
+      -2.6454767397570593e-10,
+      1.3238722637132043e-10,
+      -6.618892522760353e-11
+     ],
+     "worst_cell": "idx=0 ln_a=-7.359169172 rel=1.288611e-03 delta_tau=3.08048 substeps=4 sky-fluid=[-2.7368e-08, 1.3684e-08, -6.8420e-09]",
+     "extra": "Second endpoint drops because that cell has delta_tau=0.6226 and gets only the 2 minimum substeps (mean 0.311 vs ~0.66-0.71 at 48-192 cells). piE_sky_first=[1.106396e-06,-3.324001e-07,-7.739963e-07,-4.429157e-07,3.321174e-07,-2.212341e-07]; |piE|_F=1.626196e-06; max_ham=1.066e-09 max_cod=8.678e-10 reality=1.17e-18; C2 T=2.98165485e-07 E=1.00087062e-11 B=5.72005692e-14; perp/|q|=2.344e-09; time 71.59 s 143088 kB"
+    },
+    {
+     "label": "stage_N48_d1",
+     "n_cells": 48,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.339856309718462e-06,
+     "first_sky_minus_fluid": [
+      -6.892129982978795e-11,
+      3.4500880034409086e-11,
+      -1.7197787535254666e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.950770393197261e-05,
+     "second_sky_minus_fluid": [
+      -9.860932325646743e-10,
+      4.933388482463336e-10,
+      -2.467094011009564e-10
+     ],
+     "worst_cell": "idx=5 ln_a=-6.456085749 rel=2.201777e-03 delta_tau=0.01189 substeps=2 sky-fluid=[-4.1294e-08, 2.0651e-08, -1.0326e-08]",
+     "extra": "piE_sky_first=[1.105289e-06,-3.320764e-07,-7.732128e-07,-4.424777e-07,3.317888e-07,-2.210105e-07]; |piE|_F=1.624570e-06; max_ham=7.955e-10 max_cod=7.712e-10 reality=6.13e-19; C2 T=2.98304604e-07 E=1.03066845e-11 B=5.91592520e-14; parallel/|q|=-3.339856e-06 perp/|q|=2.156e-09; A/B vs repo: dRel=+1.463e-07 (+4.58%); time 48.50 s 142816 kB"
+    },
+    {
+     "label": "stage_N96_d1",
+     "n_cells": 96,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.5965891664737344e-06,
+     "first_sky_minus_fluid": [
+      -7.42259606033367e-11,
+      3.7120720276982125e-11,
+      -1.8557509003567748e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.985880379257279e-05,
+     "second_sky_minus_fluid": [
+      -9.931002393965313e-10,
+      4.968172804526409e-10,
+      -2.484300279175059e-10
+     ],
+     "worst_cell": "idx=10 ln_a=-6.532943913 rel=6.289195e-04 delta_tau=0.00717 substeps=2",
+     "extra": "piE_sky_first=[1.103335e-06,-3.314894e-07,-7.718453e-07,-4.416954e-07,3.312022e-07,-2.206197e-07]; |piE|_F=1.621698e-06; max_ham=9.395e-10 max_cod=8.707e-10 reality=1.82e-19; C2 T=2.98202831e-07 E=1.00694591e-11 B=5.76046980e-14; perp/|q|=3.14e-10; A/B dRel=+5.69e-08 (+1.61%); time 54.12 s 143900 kB"
+    },
+    {
+     "label": "stage_N192_d1",
+     "n_cells": 192,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.6361313197894174e-06,
+     "first_sky_minus_fluid": [
+      -7.50418801805184e-11,
+      3.752779820432499e-11,
+      -1.876427988158877e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.9908014666911807e-05,
+     "second_sky_minus_fluid": [
+      -9.94154508996754e-10,
+      4.971975824250767e-10,
+      -2.485977974802609e-10
+     ],
+     "worst_cell": "idx=191 ln_a=0.0 rel=1.834474e-04 delta_tau=0.00008 substeps=2",
+     "extra": "piE_sky_first=[1.103150e-06,-3.314339e-07,-7.717160e-07,-4.416215e-07,3.311467e-07,-2.205827e-07]; |piE|_F=1.621426e-06; max_ham=9.828e-10 max_cod=1.647e-09 reality=8.69e-19; C2 T=2.98170383e-07 E=1.00160819e-11 B=5.72505314e-14; perp/|q|=3.09e-10; A/B dRel=+6.85e-09, which is below the last-Picard change of 7.53e-09 in this run, so not resolved; time 67.53 s 144212 kB"
+    },
+    {
+     "label": "stage_N384_d1",
+     "n_cells": 384,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.6499692403014675e-06,
+     "first_sky_minus_fluid": [
+      -7.532718104670219e-11,
+      3.767185721593872e-11,
+      -1.8834385877216373e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 1.3281030429108772e-05,
+     "second_sky_minus_fluid": [
+      -2.645546017497613e-10,
+      1.3230954610289343e-10,
+      -6.615418145229613e-11
+     ],
+     "worst_cell": "idx=0 ln_a=-7.359169172 rel=1.288616e-03 delta_tau=3.08048 substeps=4",
+     "extra": "|piE|_F=1.621371e-06; max_ham=8.431e-10 max_cod=5.404e-10 reality=1.33e-18; C2 T=2.98162336e-07 E=1.00084285e-11 B=5.71986605e-14; perp/|q|=3.41e-10; A/B dRel=+3.39e-09 (unresolved); time 77.21 s 144680 kB"
+    },
+    {
+     "label": "repo_N48_d0.5",
+     "n_cells": 48,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 6.677979823345319e-07,
+     "first_sky_minus_fluid": [
+      -1.3160169345060018e-11,
+      7.909407419244346e-12,
+      -3.683844196994358e-12
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 1.23616021647263e-05,
+     "second_sky_minus_fluid": [
+      -2.4447768775167906e-10,
+      1.2604522208244518e-10,
+      -6.273119410757458e-11
+     ],
+     "worst_cell": "idx=6 ln_a=-6.302369422 rel=1.454844e-03 delta_tau=0.00590 substeps=2",
+     "extra": "|piE|_F=1.767837e-06; max_ham=8.354e-10 max_cod=8.161e-10 reality=5.97e-19; C2 T=2.98418169e-07 E=1.02545662e-11 B=5.88067176e-14; substeps=185; perp/|q|=5.143e-08; vs repo cap 1: dsky=[5.218e-11,-2.613e-11,1.306e-11], dfluid ~2e-14 (only the sky changes); time 48.37 s 143284 kB"
+    },
+    {
+     "label": "repo_N96_d0.5",
+     "n_cells": 96,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 8.570370897284161e-07,
+     "first_sky_minus_fluid": [
+      -1.7441702226792975e-11,
+      9.261066499316678e-12,
+      -4.545721579608407e-12
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 1.2872630847498619e-05,
+     "second_sky_minus_fluid": [
+      -2.5572760076387644e-10,
+      1.2936412516056375e-10,
+      -6.462508429768224e-11
+     ],
+     "worst_cell": "idx=11 ln_a=-6.456085749 rel=5.382328e-04 delta_tau=0.00472 substeps=2",
+     "extra": "|piE|_F=1.678115e-06; max_ham=7.953e-10 max_cod=1.187e-09 reality=3.78e-19; C2 T=2.98238507e-07 E=1.00946719e-11 B=5.77644431e-14; perp/|q|=2.115e-08; time 52.06 s 143552 kB"
+    },
+    {
+     "label": "repo_N192_d0.5",
+     "n_cells": 192,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 9.119189616817402e-07,
+     "first_sky_minus_fluid": [
+      -1.8734435471056202e-11,
+      9.556477662567243e-12,
+      -4.755549159825745e-12
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 1.2870321938780075e-05,
+     "second_sky_minus_fluid": [
+      -2.561829842500588e-10,
+      1.2852708614329586e-10,
+      -6.425044365544963e-11
+     ],
+     "worst_cell": "idx=191 ln_a=0.0 rel=1.775259e-04 delta_tau=0.00008 substeps=2",
+     "extra": "|piE|_F=1.641227e-06; max_ham=1.093e-09 max_cod=1.358e-09 reality=1.82e-18; C2 T=2.98181650e-07 E=1.00273248e-11 B=5.73230123e-14; perp/|q|=7.49e-09; time 65.78 s 144172 kB"
+    },
+    {
+     "label": "stage_N48_d0.5",
+     "n_cells": 48,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 8.127276163758776e-07,
+     "first_sky_minus_fluid": [
+      -1.6768060132402434e-11,
+      8.416122091364818e-12,
+      -4.157060768411754e-12
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 1.250357535222757e-05,
+     "second_sky_minus_fluid": [
+      -2.4895823993854416e-10,
+      1.247229305918014e-10,
+      -6.240633432094748e-11
+     ],
+     "worst_cell": "idx=6 ln_a=-6.302369422 rel=1.450673e-03 delta_tau=0.00590 substeps=2",
+     "extra": "|piE|_F=1.625959e-06; max_ham=8.480e-10 max_cod=3.733e-09 reality=1.09e-19; C2 T=2.98235521e-07 E=1.02127467e-11 B=5.85358408e-14; perp/|q|=1.99e-09; A/B vs repo cap 0.5: dRel=+1.449e-07; time 48.68 s 143584 kB"
+    },
+    {
+     "label": "stage_N96_d0.5",
+     "n_cells": 96,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 9.128398459032825e-07,
+     "first_sky_minus_fluid": [
+      -1.8839413993540282e-11,
+      9.421007224531429e-12,
+      -4.709663161611493e-12
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 1.2884045855494336e-05,
+     "second_sky_minus_fluid": [
+      -2.5654781091191355e-10,
+      1.2850183172383634e-10,
+      -6.427814446022083e-11
+     ],
+     "worst_cell": "idx=10 ln_a=-6.532943913 rel=5.374537e-04 delta_tau=0.00717 substeps=2",
+     "extra": "|piE|_F=1.623173e-06; max_ham=8.174e-10 max_cod=7.605e-10 reality=9.72e-19; C2 T=2.98190575e-07 E=1.00821098e-11 B=5.76822825e-14; perp/|q|=5.6e-11; A/B dRel=+5.58e-08; time 52.63 s 144952 kB"
+    },
+    {
+     "label": "stage_N192_d0.5",
+     "n_cells": 192,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 9.263386525102845e-07,
+     "first_sky_minus_fluid": [
+      -1.9117711147470908e-11,
+      9.559574289661529e-12,
+      -4.782001925923663e-12
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 1.2872195335569944e-05,
+     "second_sky_minus_fluid": [
+      -2.5638321631663605e-10,
+      1.2827780147039503e-10,
+      -6.414522726493814e-11
+     ],
+     "worst_cell": "idx=191 ln_a=0.0 rel=1.779807e-04 delta_tau=0.00008 substeps=2",
+     "extra": "|piE|_F=1.622916e-06; max_ham=9.511e-10 max_cod=1.795e-09 reality=1.26e-18; C2 T=2.98169257e-07 E=1.00244916e-11 B=5.73043150e-14; perp/|q|=1.09e-10; A/B dRel=+1.44e-08; time 62.23 s 143812 kB"
+    },
+    {
+     "label": "flrw_repo_N48_d1 (FLRW null)",
+     "n_cells": 48,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 0,
+     "first_sky_minus_fluid": [
+      3.672857334795511e-17,
+      -1.1267915619551181e-17,
+      2.3467634368437372e-18
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "worst_cell": "relative undefined (fluid q/E == 0 everywhere); largest absolute at idx=0, 3.67e-17",
+     "extra": "first_relative 0.0 is a placeholder: the relative is undefined. Fluid q/E = 0 exactly; final Stokes state = 0 exactly; C2 T/E/B = 0; sky q/E 3.67e-17 is round-off of the GL sky tensor of a zero state; max_ham=1.387e-09 cod=0 reality=0. The first attempt returned rc=1 only because the runner wrote NaN into JSON; the rerun returned rc=0 in 28.54 s using 133840 kB"
+    },
+    {
+     "label": "flrw_stage_N48_d1 (FLRW null, variant)",
+     "n_cells": 48,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 0,
+     "first_sky_minus_fluid": [
+      3.672857334795511e-17,
+      -1.1267915619551181e-17,
+      2.3467634368437372e-18
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "worst_cell": "relative undefined; identical to repo FLRW",
+     "extra": "Identical to the repo FLRW run: fluid q/E 0, final state 0, C2 0; reruns rc=0 in 28.10 s using 135984 kB"
+    }
+   ],
+   "reproduced_r105_baseline": true,
+   "residual_reduced": false,
+   "conclusion": "H2 is refuted as the cause of the nonzero, refinement-growing first-common q/E residual. Stage-time geometry and shear source fix two real but smaller errors: the sideways (transverse) part of the q/E residual, and a first-order error in the radiation stress pi/E. This is numerical convergence only; no physical attribution is made.\n\n**Baseline reproduction.** The unmodified repo solver (sha256 f3e00c68...dcf, equal to b234bb0e0) reproduces R105 bit-for-bit:\n- First common endpoint, relative residual: 3.1935484771574664e-6 (48 cells), 3.539700455541186e-6 (96), 3.6292782170005017e-6 (192).\n- Second common endpoint: 4.936623490941116e-5, 4.984600386296121e-5, 4.991118148921352e-5.\n\n**Controls.**\n- The variant in midpoint mode is bit-identical to the repo.\n- The dense-output path forced to u=1/2 changes the first relative residual by 1.5e-12. The largest change over all cells is |dq_sky|/|q| = 4.1e-11.\n- Noise floor: the last Picard iteration changes the first relative residual by up to 7.5e-9. The fluid ODE absolute tolerance (1e-13 on q/E, which is about 2.3e-5) gives about 4e-9. A/B differences below about 1e-8 are therefore unresolved.\n\n**First common endpoint, ln a = -7.224667385642617, Delta-tau cap 1.0.**\n\n| Cells | Repo | Stage variant | Stage minus repo |\n|---|---|---|---|\n| 48 | 3.193548e-6 | 3.339856e-6 | +1.463e-7 (+4.6%) |\n| 96 | 3.539700e-6 | 3.596589e-6 | +5.69e-8 (+1.6%) |\n| 192 | 3.629278e-6 | 3.636131e-6 | +6.9e-9 (unresolved) |\n| 384 | 3.646581e-6 | 3.649969e-6 | +3.4e-9 (unresolved) |\n\n- So the variant increases the coarse-grid residual. The 96->192 growth falls from +8.96e-8 to +3.95e-8, but it keeps the same sign.\n- Richardson, r=(e96-e48)/(e192-e96):\n  - Repo: r=3.864 (order 1.95), limit 3.6606e-6.\n  - Stage: r=6.493 (order 2.70), limit 3.6433e-6.\n  - Using 96/192/384 instead: repo limit 3.6507e-6, stage limit 3.6574e-6.\n- Both variants share the limit 3.65e-6 +/- 0.01e-6, so H2 does not explain the nonzero limit.\n- The signed residual points almost exactly against fluid q/E: sky = (1 - delta) fluid.\n  - The parallel (magnitude) part, as a fraction of |q|: repo -3.1931e-6, stage -3.3399e-6 at 48 cells.\n  - The transverse part, as a fraction of |q|, is what H2 removes:\n    - Repo: 5.17e-8 (48), 2.14e-8 (96), 7.7e-9 (192), 2.3e-9 (384).\n    - Stage: 2.2e-9 (48), 3.1e-10 (96), 3.1e-10 (192), 3.4e-10 (384).\n\n**Second common endpoint, ln a = -7.070951058288518.**\n- Repo: 4.9366e-5, 4.9846e-5, 4.9911e-5. Stage: 4.9508e-5, 4.9859e-5, 4.9908e-5.\n- Richardson limits: 4.9921e-5 (repo) and 4.9916e-5 (stage).\n- At 384 cells both drop to 1.328e-5. The cell ending there has Delta-tau=0.623 and gets only the 2 minimum substeps (mean depth 0.31 instead of about 0.66-0.71). The residual follows substep optical depth, not cell width.\n\n**What H2 does fix: pi/E.** Frobenius norm of pi/E at the first common endpoint:\n- Repo: 1.766256e-6, 1.676512e-6, 1.639597e-6, 1.626196e-6. That is +8.94%, +3.40%, +1.12%, +0.30% from 1.621371e-6; the observed order rises from 1.4 toward 1.9.\n- Stage: 1.624570e-6, 1.621698e-6, 1.621426e-6, 1.621371e-6. That is +0.20% at 48 cells and +0.02% at 96.\n- The midpoint-frozen shear source causes a first-order endpoint error in the tightly coupled quadrupole; the stage variant removes it. Sky and fluid pi/E agree to 4e-14 in every run, but only because of the Picard feedback, so that agreement is not an independent check.\n- C2 changes are small. At 48 cells, C2_E error against the 384-cell value: 3.53% (repo) vs 2.98% (stage).\n- Worst cells are almost unchanged: 2.2051e-3 -> 2.2018e-3 (48, cell 5, ln a -6.456, Delta-tau 0.0119); 6.2963e-4 -> 6.2892e-4 (96); 1.8298e-4 -> 1.8345e-4 (192, last cell); 1.28861e-3 in both at 384 (cell 0, Delta-tau 3.08).\n\n**Delta-tau cap 0.5 (mandated A/B controls).**\n- Repo: 6.678e-7, 8.570e-7, 9.119e-7; Richardson r=3.45, limit 9.343e-7.\n- Stage: 8.127e-7, 9.128e-7, 9.263e-7; r=7.42, limit 9.284e-7.\n- The H2 offset is the same as at cap 1.0 (+1.449e-7 at 48 cells), i.e. additive and independent of the cap.\n- Ratio of the cap-1.0 limit to the cap-0.5 limit: 3.92 for both variants. The change acts only on the sky: dsky about 5.2-5.6e-11 vs dfluid at most 4e-14.\n- So the dominant residual scales as (Delta-tau cap)^2: a second-order truncation error of the optical-depth substepping, which is the collision lane, not geometry.\n- Some cell-count dependence remains with stage geometry: 48->192 growth of 2.96e-7 at cap 1.0 and 1.14e-7 at cap 0.5. It scales with the cap; its source is not identified here. Candidates are matter feedback and substep partition.\n\n**Other checks.**\n- FLRW null holds in both variants: fluid q/E = 0, final Stokes state = 0, C2 = 0.\n- Constraints in every VI_-1/9 run: Hamiltonian at most 1.32e-9, Codazzi at most 3.73e-9, Jacobi at most 2.5e-19, Stokes reality at most 1.8e-18.\n\n**Recommendation.** Stage-time geometry is a valid accuracy improvement for pi/E and for the direction of q/E. It is not the fix for the first-common residual; that residual should be pursued in the Delta-tau/collision lane.\n\n**Housekeeping.** No repo file was edited. scripts/r106/ is untracked and comes from another agent. After the main batch, run_case.py had two output-only fixes (JSON NaN handling and the .json naming for cap 0.5); the d0.5 outputs were renamed by hand. The solver numbers are not affected.",
+   "limit_estimates": "Richardson limit for cells -> infinity at the first common endpoint, r=(e96-e48)/(e192-e96):\n\n| Series | Points | r | Order | Limit |\n|---|---|---|---|---|\n| Repo, cap 1.0 | 48/96/192 | 3.864 | 1.95 | 3.6606e-6 |\n| Repo, cap 1.0 | 96/192/384 | 5.177 | \u2014 | 3.6507e-6 |\n| Stage, cap 1.0 | 48/96/192 | 6.493 | 2.70 | 3.6433e-6 |\n| Stage, cap 1.0 | 96/192/384 | 2.858 | \u2014 | 3.6574e-6 |\n| Repo, cap 0.5 | 48/96/192 | 3.448 | 1.79 | 9.343e-7 |\n| Stage, cap 0.5 | 48/96/192 | 7.416 | 2.89 | 9.284e-7 |\n\nSecond common endpoint, cap 1.0 (48/96/192): repo r=7.36, limit 4.9921e-5; stage r=7.13, limit 4.9916e-5. The 384-cell value of 1.328e-5 breaks the sequence because the minimum-substep rule changes the substep depth there.\n\npi/E Frobenius norm at the first endpoint:\n- Repo limits 1.6138e-6 (48/96/192) and 1.6186e-6 (96/192/384); r=2.43 and 2.75.\n- Stage: r=10.6 and 4.94, limit 1.62136e-6.\n\nTwo-point extrapolation to Delta-tau cap -> 0, assuming exactly second order in the cap (not verified with a third cap value): about 2.3e-8 (stage) and 2.6e-8 (repo). Both are near the about 4-8e-9 Picard/ODE noise floor.",
+   "output_json": "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/geometry_stage/SUMMARY_H2.json",
+   "files_created": [
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/geometry_stage/coupled_geometry_stage.py",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/geometry_stage/coupled_repo_R105_copy.py",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/geometry_stage/variant.diff",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/geometry_stage/run_case.py",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/geometry_stage/run_one.sh",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/geometry_stage/analyze.py",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/geometry_stage/batch1.txt",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/geometry_stage/batch2.txt",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/geometry_stage/batch3.txt",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/geometry_stage/SUMMARY_H2.json",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/geometry_stage/runs/ (18 cases x .json + .npz)",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/geometry_stage/logs/commands.tsv",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/geometry_stage/logs/*.log, *.time"
+   ],
+   "commands": [
+    {
+     "command": "cd $W && /usr/bin/time -f 'batch1 %e s %M kB' xargs -P 3 -L 1 $W/run_one.sh < $W/batch1.txt   (W=/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/geometry_stage)",
+     "return_code": 0,
+     "wall_s": 51.26,
+     "maxrss_kB": 143884
+    },
+    {
+     "command": "cd $W && /usr/bin/time -f 'batch2 %e s %M kB' xargs -P 3 -L 1 $W/run_one.sh < $W/batch2.txt (15 cases; 3 workers)",
+     "return_code": 0
+    },
+    {
+     "command": "cd $W && xargs -P 2 -L 1 $W/run_one.sh < $W/batch3.txt (FLRW reruns)",
+     "return_code": 0
+    },
+    {
+     "command": "cd /home/cosmosapjw/Dropbox/bianchi/htt_base && PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -B $W/run_case.py --impl repo --family VI_-1/9 --cells 48 --depth 1.0 --timing midpoint --out $W/runs/repo_N48_d1",
+     "return_code": 0,
+     "wall_s": 48.12,
+     "maxrss_kB": 142228
+    },
+    {
+     "command": "... run_case.py --impl variant --family VI_-1/9 --cells 48 --depth 1.0 --timing midpoint --out $W/runs/varmid_N48_d1",
+     "return_code": 0,
+     "wall_s": 49.64,
+     "maxrss_kB": 139860
+    },
+    {
+     "command": "... run_case.py --impl variant --family VI_-1/9 --cells 48 --depth 1.0 --timing midpoint_dense --out $W/runs/vardense_N48_d1",
+     "return_code": 0,
+     "wall_s": 51.25,
+     "maxrss_kB": 143884
+    },
+    {
+     "command": "... run_case.py --impl variant --family VI_-1/9 --cells 48 --depth 1.0 --timing stage --out $W/runs/stage_N48_d1",
+     "return_code": 0,
+     "wall_s": 48.5,
+     "maxrss_kB": 142816
+    },
+    {
+     "command": "... run_case.py --impl repo --family VI_-1/9 --cells 96 --depth 1.0 --timing midpoint --out $W/runs/repo_N96_d1",
+     "return_code": 0,
+     "wall_s": 51.97,
+     "maxrss_kB": 141960
+    },
+    {
+     "command": "... run_case.py --impl repo --family VI_-1/9 --cells 192 --depth 1.0 --timing midpoint --out $W/runs/repo_N192_d1",
+     "return_code": 0,
+     "wall_s": 58.75,
+     "maxrss_kB": 143368
+    },
+    {
+     "command": "... run_case.py --impl variant --family VI_-1/9 --cells 96 --depth 1.0 --timing stage --out $W/runs/stage_N96_d1",
+     "return_code": 0,
+     "wall_s": 54.12,
+     "maxrss_kB": 143900
+    },
+    {
+     "command": "... run_case.py --impl repo --family VI_-1/9 --cells 48 --depth 0.5 --timing midpoint --out $W/runs/repo_N48_d0.5",
+     "return_code": 0,
+     "wall_s": 48.37,
+     "maxrss_kB": 143284
+    },
+    {
+     "command": "... run_case.py --impl variant --family VI_-1/9 --cells 192 --depth 1.0 --timing stage --out $W/runs/stage_N192_d1",
+     "return_code": 0,
+     "wall_s": 67.53,
+     "maxrss_kB": 144212
+    },
+    {
+     "command": "... run_case.py --impl repo --family VI_-1/9 --cells 96 --depth 0.5 --timing midpoint --out $W/runs/repo_N96_d0.5",
+     "return_code": 0,
+     "wall_s": 52.06,
+     "maxrss_kB": 143552
+    },
+    {
+     "command": "... run_case.py --impl variant --family VI_-1/9 --cells 48 --depth 0.5 --timing stage --out $W/runs/stage_N48_d0.5",
+     "return_code": 0,
+     "wall_s": 48.68,
+     "maxrss_kB": 143584
+    },
+    {
+     "command": "... run_case.py --impl repo --family VI_-1/9 --cells 192 --depth 0.5 --timing midpoint --out $W/runs/repo_N192_d0.5",
+     "return_code": 0,
+     "wall_s": 65.78,
+     "maxrss_kB": 144172
+    },
+    {
+     "command": "... run_case.py --impl variant --family VI_-1/9 --cells 96 --depth 0.5 --timing stage --out $W/runs/stage_N96_d0.5",
+     "return_code": 0,
+     "wall_s": 52.63,
+     "maxrss_kB": 144952
+    },
+    {
+     "command": "... run_case.py --impl variant --family VI_-1/9 --cells 192 --depth 0.5 --timing stage --out $W/runs/stage_N192_d0.5",
+     "return_code": 0,
+     "wall_s": 62.23,
+     "maxrss_kB": 143812
+    },
+    {
+     "command": "... run_case.py --impl repo --family VI_-1/9 --cells 384 --depth 1.0 --timing midpoint --out $W/runs/repo_N384_d1",
+     "return_code": 0,
+     "wall_s": 71.59,
+     "maxrss_kB": 143088
+    },
+    {
+     "command": "... run_case.py --impl variant --family VI_-1/9 --cells 384 --depth 1.0 --timing stage --out $W/runs/stage_N384_d1",
+     "return_code": 0,
+     "wall_s": 77.21,
+     "maxrss_kB": 144680
+    },
+    {
+     "command": "... run_case.py --impl repo --family FLRW --cells 48 --depth 1.0 --timing midpoint --out $W/runs/flrw_repo_N48_d1 (first attempt; solver finished, runner json.dumps raised ValueError: Out of range float values are not JSON compliant: nan)",
+     "return_code": 1,
+     "wall_s": 24.77,
+     "maxrss_kB": 135284
+    },
+    {
+     "command": "... run_case.py --impl variant --family FLRW --cells 48 --depth 1.0 --timing stage --out $W/runs/flrw_stage_N48_d1 (first attempt; same runner NaN-JSON error)",
+     "return_code": 1,
+     "wall_s": 26.9,
+     "maxrss_kB": 136752
+    },
+    {
+     "command": "... run_case.py --impl variant --family FLRW --cells 48 --depth 1.0 --timing stage --out $W/runs/flrw_stage_N48_d1 (rerun after NaN->None fix)",
+     "return_code": 0,
+     "wall_s": 28.1,
+     "maxrss_kB": 135984
+    },
+    {
+     "command": "... run_case.py --impl repo --family FLRW --cells 48 --depth 1.0 --timing midpoint --out $W/runs/flrw_repo_N48_d1 (rerun)",
+     "return_code": 0,
+     "wall_s": 28.54,
+     "maxrss_kB": 133840
+    },
+    {
+     "command": "cd /home/cosmosapjw/Dropbox/bianchi/htt_base && /usr/bin/time -f 'analyze %e s %M kB' .venv/bin/python -B $W/analyze.py",
+     "return_code": 0,
+     "wall_s": 0.25,
+     "maxrss_kB": 34460
+    }
+   ]
+  },
+  {
+   "hypothesis": "H3 (matter feedback): the fluid Einstein-Euler photon q/E uses the previous Picard iteration's radiation STF pi/E (cubic spline in N, midpoint knot = mean of the two cell ends), while the sky evolves the current pi. If this lag or the midpoint averaging were responsible, then three changes should alter the first-common q/E residual and its cells->infinity limit: (a) n_picard 4->8, (b) removing the pi feedback, (c) taking the midpoint pi/E from a half-cell sky state. Setup: VI_-1/9, eps 2e-4, ell_max 4, GL16, substeps_per_cell 2, max_substep_depth 1.0, f_nu 0.",
+   "runs": [
+    {
+     "label": "ctrl_48",
+     "n_cells": 48,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.1935484771574664e-06,
+     "first_sky_minus_fluid": [
+      -6.531792794966661e-11,
+      3.399494170694829e-11,
+      -1.672501989299338e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.936623490941116e-05,
+     "second_sky_minus_fluid": [
+      -9.816480252737645e-10,
+      4.946569671611997e-10,
+      -2.4703503014427146e-10
+     ],
+     "worst_cell": "cell 5 ln_a=-6.456086 delta_tau=1.1894e-02 photon_substeps=2 rel=2.2051e-03",
+     "extra": "repo solver (unmodified), n_picard 4; endpoint cell dtau=20.81 substeps=31; pi/E sky diag=[1.20171e-06,-3.60787e-07,-8.40927e-07] fluid diag identical to 6 digits; sky offdiag(xy,xz,yz)=[-4.80924e-07,3.60625e-07,-2.40354e-07]; max Ham=1.043e-09 Cod=1.187e-09 Stokes reality=6.776e-19; picard_pi_rel_change=7.910e-07; C2 T=2.9849541949e-07 E=1.036247e-11 B=5.952330e-14; process 53.18 s, 144712 kB"
+    },
+    {
+     "label": "ctrl_96",
+     "n_cells": 96,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.539700455541186e-06,
+     "first_sky_minus_fluid": [
+      -7.281030845853798e-11,
+      3.695078143405007e-11,
+      -1.8388969465840818e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.984600386296121e-05,
+     "second_sky_minus_fluid": [
+      -9.922633931724325e-10,
+      4.976526248720776e-10,
+      -2.487651405212694e-10
+     ],
+     "worst_cell": "cell 10 ln_a=-6.532944 delta_tau=7.1744e-03 photon_substeps=2 rel=6.2963e-04",
+     "extra": "repo, n_picard 4; endpoint cell dtau=9.163 substeps=15; pi/E sky diag=[1.14064e-06,-3.42594e-07,-7.98045e-07] = fluid; Ham=8.078e-10 Cod=8.017e-10 reality=1.195e-18; C2 T=2.9825203916e-07 E=1.008173e-11 B=5.768543e-14; 57.56 s, 144832 kB"
+    },
+    {
+     "label": "ctrl_192",
+     "n_cells": 192,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.6292782170005017e-06,
+     "first_sky_minus_fluid": [
+      -7.481582011426295e-11,
+      3.760204141464588e-11,
+      -1.877661612110159e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.991118148921352e-05,
+     "second_sky_minus_fluid": [
+      -9.94068338078534e-10,
+      4.974749898572936e-10,
+      -2.4871895428375666e-10
+     ],
+     "worst_cell": "cell 191 ln_a=0.000000 delta_tau=8.1391e-05 photon_substeps=2 rel=1.8298e-04",
+     "extra": "repo, n_picard 4; endpoint cell dtau=4.194 substeps=7; pi/E sky diag=[1.11552e-06,-3.35115e-07,-7.80401e-07] = fluid; Ham=1.316e-09 Cod=1.459e-09 reality=1.203e-18; C2 T=2.9818290161e-07 E=1.001809e-11 B=5.726391e-14; 64.68 s, 144308 kB"
+    },
+    {
+     "label": "ctrl_384",
+     "n_cells": 384,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.6465812493841566e-06,
+     "first_sky_minus_fluid": [
+      -7.52342448966613e-11,
+      3.7675882745102744e-11,
+      -1.8830904423572392e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 1.3282583674305857e-05,
+     "second_sky_minus_fluid": [
+      -2.6454767397570593e-10,
+      1.3238722637132043e-10,
+      -6.618892522760353e-11
+     ],
+     "worst_cell": "cell 0 ln_a=-7.359169 delta_tau=3.0805e+00 photon_substeps=4 rel=1.2886e-03 (initial transient)",
+     "extra": "repo, n_picard 4; endpoint cell dtau=1.994 substeps=3; pi/E sky diag=[1.10640e-06,-3.32400e-07,-7.73996e-07] = fluid; Ham=1.066e-09 Cod=8.678e-10 reality=1.166e-18; C2 T=2.9816548513e-07 E=1.000871e-11 B=5.720057e-14; 81.52 s, 143984 kB"
+    },
+    {
+     "label": "ctrl_768",
+     "n_cells": 768,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 1.2493006657162284e-06,
+     "first_sky_minus_fluid": [
+      -2.577705812405076e-11,
+      1.2903911986722884e-11,
+      -6.449992980953653e-12
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 3.3357230683199094e-06,
+     "second_sky_minus_fluid": [
+      -6.643717572409774e-11,
+      3.3247172676143595e-11,
+      -1.6622315877589376e-11
+     ],
+     "worst_cell": "cell 0 ln_a=-7.368776 delta_tau=1.5521e+00 photon_substeps=2 rel=6.1609e-03 (initial transient)",
+     "extra": "repo, n_picard 4; endpoint cell dtau=0.9713 substeps=2; pi/E sky diag=[1.10476e-06,-3.31916e-07,-7.72846e-07] = fluid; Ham=1.079e-09 Cod=9.845e-10 reality=1.612e-18; C2 T=2.9816119881e-07 E=1.000792e-11 B=5.719481e-14; 97.28 s, 146068 kB"
+    },
+    {
+     "label": "ctrl_1536",
+     "n_cells": 1536,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.1689443752826033e-07,
+     "first_sky_minus_fluid": [
+      -6.538518722764772e-12,
+      3.2731698194264592e-12,
+      -1.6361943335038882e-12
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 8.358007897600967e-07,
+     "second_sky_minus_fluid": [
+      -1.664656085908654e-11,
+      8.330457876724244e-12,
+      -4.164758087146303e-12
+     ],
+     "worst_cell": "cell 0 ln_a=-7.373580 delta_tau=7.7899e-01 photon_substeps=2 rel=5.4565e-03 (initial transient)",
+     "extra": "repo, n_picard 4; endpoint cell dtau=0.4792 substeps=2; pi/E sky diag=[1.10453e-06,-3.31849e-07,-7.72684e-07] = fluid; Ham=9.568e-10 Cod=6.711e-10 reality=1.340e-17; C2 T=2.9816012779e-07 E=1.000775e-11 B=5.719353e-14; 155.67 s, 150552 kB"
+    },
+    {
+     "label": "varid_48",
+     "n_cells": 48,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.1935484771574664e-06,
+     "first_sky_minus_fluid": [
+      -6.531792794966661e-11,
+      3.399494170694829e-11,
+      -1.672501989299338e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.936623490941116e-05,
+     "second_sky_minus_fluid": [
+      -9.816480252737645e-10,
+      4.946569671611997e-10,
+      -2.4703503014427146e-10
+     ],
+     "worst_cell": "cell 5 ln_a=-6.456086 delta_tau=1.1894e-02 photon_substeps=2 rel=2.2051e-03",
+     "extra": "variant copy with default switches; every recorded array (N_end, delta_tau, substeps, q/E and pi/E sky/fluid, Ham, Cod) is bit-identical to ctrl_48, and so is C2; 49.49 s, 142860 kB"
+    },
+    {
+     "label": "a_picard8_48",
+     "n_cells": 48,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.193514673335133e-06,
+     "first_sky_minus_fluid": [
+      -6.531724276099865e-11,
+      3.399460167573601e-11,
+      -1.6724778360701438e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.936460270108138e-05,
+     "second_sky_minus_fluid": [
+      -9.816155429730883e-10,
+      4.946407464887301e-10,
+      -2.4702668951333083e-10
+     ],
+     "worst_cell": "cell 5 ln_a=-6.456086 delta_tau=1.1894e-02 photon_substeps=2 rel=2.2051e-03",
+     "extra": "repo, n_picard 8; change vs ctrl=[6.85e-16,-3.40e-16,2.42e-16]; pi/E as ctrl; Ham=1.028e-09 Cod=1.169e-09 reality=4.548e-19; picard_pi_rel_change=7.678e-09; C2 T=2.9849492092e-07 E=1.036251e-11 B=5.952345e-14; 91.29 s, 143380 kB"
+    },
+    {
+     "label": "a_picard8_96",
+     "n_cells": 96,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.539688959597338e-06,
+     "first_sky_minus_fluid": [
+      -7.280999726540943e-11,
+      3.695064231227661e-11,
+      -1.8389244020559242e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.98460022516664e-05,
+     "second_sky_minus_fluid": [
+      -9.922633822694244e-10,
+      4.976526291343474e-10,
+      -2.4876500726943426e-10
+     ],
+     "worst_cell": "cell 10 ln_a=-6.532944 delta_tau=7.1744e-03 photon_substeps=2 rel=6.2963e-04",
+     "extra": "repo, n_picard 8; change vs ctrl=[3.11e-16,-1.39e-16,-2.75e-16]; Ham=9.946e-10 Cod=2.087e-09 reality=4.359e-19; picard_pi_rel_change=2.867e-09; C2 T=2.9825154328e-07 E=1.008177e-11 B=5.768558e-14; 100.79 s, 144684 kB"
+    },
+    {
+     "label": "a_picard8_192",
+     "n_cells": 192,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.629279584285338e-06,
+     "first_sky_minus_fluid": [
+      -7.481581795263487e-11,
+      3.760205758619891e-11,
+      -1.8776740103008146e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.991118327818088e-05,
+     "second_sky_minus_fluid": [
+      -9.94068369235794e-10,
+      4.974750121207076e-10,
+      -2.4871897224424327e-10
+     ],
+     "worst_cell": "cell 21 ln_a=-6.532944 delta_tau=3.1657e-03 photon_substeps=2 rel=1.5970e-04",
+     "extra": "repo, n_picard 8; change vs ctrl=[2.2e-18,1.6e-17,-1.24e-16]; Ham=9.195e-10 Cod=9.453e-10 reality=1.064e-18; picard_pi_rel_change=7.426e-09; C2 T=2.9818240539e-07 E=1.001813e-11 B=5.726406e-14; 119.08 s, 145108 kB"
+    },
+    {
+     "label": "b_zeropi_48",
+     "n_cells": 48,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 1.9434340474377837e-06,
+     "first_sky_minus_fluid": [
+      -3.951676591745605e-11,
+      2.1567025451635488e-11,
+      -9.211423223037633e-12
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.556413061987476e-05,
+     "second_sky_minus_fluid": [
+      -9.166588512345857e-10,
+      4.4027420822463767e-10,
+      -2.1731182255054296e-10
+     ],
+     "worst_cell": "cell 47 ln_a=0.000000 delta_tau=3.7733e-04 photon_substeps=2 rel=1.1990e-01",
+     "extra": "variant: no pi correction in _unpack (Einstein-Euler AND Thomson); change vs ctrl=[2.580e-11,-1.243e-11,7.51e-12]; pi/E sky diag=[1.20186e-06,-3.60830e-07,-8.41027e-07], fluid diag=[1.797e-10,-5.99e-11,-1.198e-10]; Ham=1.051e-09 Cod=6.643e-10 reality=7.834e-19; C2 T=2.9109106372e-07 (-2.48%) E=1.136891e-11 (+9.7%) B=6.316449e-14; 46.54 s, 140312 kB"
+    },
+    {
+     "label": "b_zeropi_96",
+     "n_cells": 96,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 2.3126131065078704e-06,
+     "first_sky_minus_fluid": [
+      -4.7482848544982276e-11,
+      2.477857966349411e-11,
+      -1.101779868986001e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.623372768684898e-05,
+     "second_sky_minus_fluid": [
+      -9.305190220039298e-10,
+      4.459286718078566e-10,
+      -2.2049909415231277e-10
+     ],
+     "worst_cell": "cell 95 ln_a=0.000000 delta_tau=1.7096e-04 photon_substeps=2 rel=1.2139e-01",
+     "extra": "variant zero pi; change vs ctrl=[2.533e-11,-1.217e-11,7.37e-12]; Ham=9.080e-10 Cod=2.269e-09 reality=7.398e-19; C2 T=2.9083386991e-07 E=1.106804e-11 B=6.123960e-14; 50.7 s, 143408 kB"
+    },
+    {
+     "label": "b_zeropi_192",
+     "n_cells": 192,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 2.424634193234561e-06,
+     "first_sky_minus_fluid": [
+      -4.995344851606081e-11,
+      2.5653871618702175e-11,
+      -1.1541370107912583e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.638970295144829e-05,
+     "second_sky_minus_fluid": [
+      -9.338880385225995e-10,
+      4.4700399988720425e-10,
+      -2.2113810440341176e-10
+     ],
+     "worst_cell": "cell 191 ln_a=0.000000 delta_tau=8.1391e-05 photon_substeps=2 rel=1.2187e-01",
+     "extra": "variant zero pi; change vs ctrl=[2.486e-11,-1.195e-11,7.24e-12]; Ham=1.443e-09 Cod=1.216e-09 reality=4.546e-19; C2 T=2.9075669145e-07 E=1.100100e-11 B=6.080384e-14; 61.37 s, 143308 kB"
+    },
+    {
+     "label": "b_zeropi_384",
+     "n_cells": 384,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 2.4555207359138664e-06,
+     "first_sky_minus_fluid": [
+      -5.0652988320941134e-11,
+      2.5863215857355854e-11,
+      -1.1675141207273792e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 9.803620894220734e-06,
+     "second_sky_minus_fluid": [
+      -2.0455365360398789e-10,
+      8.199086956688615e-11,
+      -3.8655558107610543e-11
+     ],
+     "worst_cell": "cell 383 ln_a=0.000000 delta_tau=3.9714e-05 photon_substeps=2 rel=1.2199e-01",
+     "extra": "variant zero pi; change vs ctrl=[2.458e-11,-1.181e-11,7.16e-12]; Ham=1.066e-09 Cod=8.361e-10 reality=1.815e-18; C2 T=2.9073650431e-07 E=1.099150e-11 B=6.074017e-14; 74.98 s, 143904 kB"
+    },
+    {
+     "label": "b_zeropi_768",
+     "n_cells": 768,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 7.611583136096252e-08,
+     "first_sky_minus_fluid": [
+      -1.2373622092221037e-12,
+      1.1072062541030723e-12,
+      6.942985123864443e-13
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 9.343632860035307e-07,
+     "second_sky_minus_fluid": [
+      -6.488931032175857e-12,
+      -1.713812684500074e-11,
+      1.0903871468423128e-11
+     ],
+     "worst_cell": "cell 767 ln_a=0.000000 delta_tau=1.9617e-05 photon_substeps=2 rel=1.2202e-01",
+     "extra": "variant zero pi; the small value is an accidental crossing (change vs ctrl=[2.454e-11,-1.180e-11,7.14e-12] cancels ctrl residual); Ham=1.171e-09 Cod=6.964e-10 reality=1.826e-18; C2 T=2.9073135953e-07 E=1.099087e-11 B=6.073515e-14; 101.68 s, 145184 kB"
+    },
+    {
+     "label": "b_zeropi_1536",
+     "n_cells": 1536,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 8.735353030821974e-07,
+     "first_sky_minus_fluid": [
+      1.7991456052426262e-11,
+      -8.520088638175826e-12,
+      5.506307414794044e-12
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 2.8369369185674996e-06,
+     "second_sky_minus_fluid": [
+      4.3317188191564293e-11,
+      -4.2065530043167436e-11,
+      2.3366325160123307e-11
+     ],
+     "worst_cell": "cell 1535 ln_a=0.000000 delta_tau=9.7489e-06 photon_substeps=2 rel=1.2203e-01",
+     "extra": "variant zero pi; sign has flipped relative to ctrl and the result is now dominated by the constant offset [2.453e-11,-1.179e-11,7.14e-12] (|offset|/|q_fluid|=1.193e-06); Ham=1.123e-09 Cod=6.831e-10 reality=1.957e-17; C2 T=2.9073007194e-07 E=1.099074e-11 B=6.073407e-14; 159.94 s, 150120 kB"
+    },
+    {
+     "label": "b2_nothomson_48",
+     "n_cells": 48,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 2.263032814605589e-06,
+     "first_sky_minus_fluid": [
+      -4.3235235206042335e-11,
+      2.8798788571224505e-11,
+      -1.2826411353655202e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.7465109672133836e-05,
+     "second_sky_minus_fluid": [
+      -9.387849410471888e-10,
+      4.845643688275274e-10,
+      -2.394569530895119e-10
+     ],
+     "worst_cell": "cell 5 ln_a=-6.456086 delta_tau=1.1894e-02 photon_substeps=2 rel=2.2005e-03",
+     "extra": "variant: pi removed from the Thomson force only; change vs ctrl=[2.208e-11,-5.20e-12,3.90e-12], close to (pi/E).v_b=[2.367e-11,-5.57e-12,4.18e-12]; Ham=7.360e-10 Cod=8.842e-10 reality=1.084e-18; C2 T=2.9849541891e-07 E=1.036247e-11 B=5.952330e-14; 49.19 s, 140280 kB"
+    },
+    {
+     "label": "b2_nothomson_96",
+     "n_cells": 96,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 2.6183616915685055e-06,
+     "first_sky_minus_fluid": [
+      -5.1058576129288467e-11,
+      3.1845904157064395e-11,
+      -1.4551302163707321e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.804455686189017e-05,
+     "second_sky_minus_fluid": [
+      -9.516690976251905e-10,
+      4.880979608273291e-10,
+      -2.4158640444414063e-10
+     ],
+     "worst_cell": "cell 10 ln_a=-6.532944 delta_tau=7.1744e-03 photon_substeps=2 rel=6.2523e-04",
+     "extra": "variant Thomson-only removal; change vs ctrl=[2.175e-11,-5.10e-12,3.84e-12]; Ham=8.689e-10 Cod=7.559e-10 reality=1.194e-18; C2 T=2.9825203867e-07; 50.5 s, 140960 kB"
+    },
+    {
+     "label": "b2_nothomson_192",
+     "n_cells": 192,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 2.7220942097226794e-06,
+     "first_sky_minus_fluid": [
+      -5.3445081395426045e-11,
+      3.257513631566369e-11,
+      -1.50026019270211e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.815580434261829e-05,
+     "second_sky_minus_fluid": [
+      -9.545177245415465e-10,
+      4.881753198432643e-10,
+      -2.417264234719731e-10
+     ],
+     "worst_cell": "cell 191 ln_a=0.000000 delta_tau=8.1391e-05 photon_substeps=2 rel=1.7894e-04",
+     "extra": "variant Thomson-only removal; change vs ctrl=[2.137e-11,-5.03e-12,3.77e-12]; Ham=9.008e-10 Cod=1.331e-09 reality=1.020e-18; C2 T=2.9818290133e-07; 61.83 s, 144552 kB"
+    },
+    {
+     "label": "b3_noeinsteuler_48",
+     "n_cells": 48,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 2.8982622324385437e-06,
+     "first_sky_minus_fluid": [
+      -6.168571287990844e-11,
+      2.6806064273748637e-11,
+      -1.3131391952942535e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.747678232645856e-05,
+     "second_sky_minus_fluid": [
+      -9.594974898192532e-10,
+      4.503452925262312e-10,
+      -2.2488164729533432e-10
+     ],
+     "worst_cell": "cell 47 ln_a=0.000000 delta_tau=3.7733e-04 photon_substeps=2 rel=1.1989e-01",
+     "extra": "variant: pi removed from the Einstein-Euler sources, Gamma4 transport and recorded fluid only; change vs ctrl=[3.63e-12,-7.19e-12,3.59e-12]; Ham=5.991e-10 Cod=2.970e-10 reality=4.265e-19; C2 T=2.9109106429e-07; 48.4 s, 143480 kB"
+    },
+    {
+     "label": "b3_noeinsteuler_96",
+     "n_cells": 96,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.2555452387939392e-06,
+     "first_sky_minus_fluid": [
+      -6.933865099453753e-11,
+      2.993363290900309e-11,
+      -1.4881044840318425e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.804962447377247e-05,
+     "second_sky_minus_fluid": [
+      -9.71178350352229e-10,
+      4.5550211880651637e-10,
+      -2.2769038857454565e-10
+     ],
+     "worst_cell": "cell 95 ln_a=0.000000 delta_tau=1.7096e-04 photon_substeps=2 rel=1.2139e-01",
+     "extra": "variant EE-only removal; change vs ctrl=[3.47e-12,-7.02e-12,3.51e-12]; Ham=1.115e-09 Cod=5.713e-10 reality=3.233e-19; C2 T=2.9083387040e-07; 54.42 s, 141548 kB"
+    },
+    {
+     "label": "b3_noeinsteuler_192",
+     "n_cells": 192,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.347691002899773e-06,
+     "first_sky_minus_fluid": [
+      -7.13388657568319e-11,
+      3.0685508364006403e-11,
+      -1.5318339849820762e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.815931660024005e-05,
+     "second_sky_minus_fluid": [
+      -9.735118542528631e-10,
+      4.563254657835255e-10,
+      -2.2814422146612116e-10
+     ],
+     "worst_cell": "cell 191 ln_a=0.000000 delta_tau=8.1391e-05 photon_substeps=2 rel=1.2186e-01",
+     "extra": "variant EE-only removal; change vs ctrl=[3.48e-12,-6.92e-12,3.46e-12]; Ham=1.299e-09 Cod=1.194e-09 reality=1.417e-18; C2 T=2.9075669191e-07; 65.38 s, 143444 kB"
+    },
+    {
+     "label": "c_halfcell_48",
+     "n_cells": 48,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.252593376503345e-06,
+     "first_sky_minus_fluid": [
+      -6.65438752108546e-11,
+      3.456704435628741e-11,
+      -1.707755702920233e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.9274811928004054e-05,
+     "second_sky_minus_fluid": [
+      -9.800143545597305e-10,
+      4.934770583345103e-10,
+      -2.4637416871911084e-10
+     ],
+     "worst_cell": "cell 5 ln_a=-6.456086 delta_tau=1.1894e-02 photon_substeps=2 rel=2.2051e-03",
+     "extra": "variant: midpoint pi/E taken from a half-cell sky state (quarter-point dense geometry, same capped SDIRK substeps); change vs ctrl=[-1.23e-12,5.72e-13,-3.53e-13]; pi/E sky diag=[1.20160e-06,-3.60753e-07,-8.40847e-07] = fluid; Ham=8.807e-10 Cod=9.924e-10 reality=5.442e-19; C2 T=2.9849857707e-07 (+1.06e-5 rel) E=1.036280e-11 B=5.952570e-14; 50.75 s, 140532 kB"
+    },
+    {
+     "label": "c_halfcell_96",
+     "n_cells": 96,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.5409816910353452e-06,
+     "first_sky_minus_fluid": [
+      -7.283536153148969e-11,
+      3.696734130255745e-11,
+      -1.839450250866898e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.978232816631446e-05,
+     "second_sky_minus_fluid": [
+      -9.911621460305885e-10,
+      4.967701101635903e-10,
+      -2.482783741780941e-10
+     ],
+     "worst_cell": "cell 10 ln_a=-6.532944 delta_tau=7.1744e-03 photon_substeps=2 rel=6.2960e-04",
+     "extra": "variant half-cell; change vs ctrl=[-2.5e-14,1.7e-14,-5.5e-15]; Ham=9.169e-10 Cod=1.130e-09 reality=8.737e-19; C2 T=2.9825457589e-07 E=1.008076e-11 B=5.767977e-14; 60.68 s, 142144 kB"
+    },
+    {
+     "label": "c_halfcell_192",
+     "n_cells": 192,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.622524167985659e-06,
+     "first_sky_minus_fluid": [
+      -7.467562053204042e-11,
+      3.753605970121252e-11,
+      -1.8737581949427565e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.990035228772843e-05,
+     "second_sky_minus_fluid": [
+      -9.938899455774319e-10,
+      4.973113661887785e-10,
+      -2.486278744013375e-10
+     ],
+     "worst_cell": "cell 191 ln_a=0.000000 delta_tau=8.1391e-05 photon_substeps=2 rel=1.8313e-04",
+     "extra": "variant half-cell; change vs ctrl=[1.40e-13,-6.6e-14,3.9e-14]; Ham=1.323e-09 Cod=1.609e-09 reality=1.650e-18; C2 T=2.9818414613e-07 E=1.001747e-11 B=5.726028e-14; 72.97 s, 143952 kB"
+    },
+    {
+     "label": "c_halfcell_384",
+     "n_cells": 384,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.6459236678156738e-06,
+     "first_sky_minus_fluid": [
+      -7.522058918733973e-11,
+      3.7669990023286057e-11,
+      -1.8826079136063966e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 1.3277858511695164e-05,
+     "second_sky_minus_fluid": [
+      -2.6446318173109777e-10,
+      1.3232568364754957e-10,
+      -6.61558855614603e-11
+     ],
+     "worst_cell": "cell 0 ln_a=-7.359169 delta_tau=3.0805e+00 photon_substeps=4 rel=1.2887e-03",
+     "extra": "variant half-cell; change vs ctrl=[1.37e-14,-5.9e-15,4.8e-15]; Ham=9.857e-10 Cod=7.655e-10 reality=3.350e-18; C2 T=2.9816594466e-07 E=1.000846e-11 B=5.719913e-14; 103.09 s, 144176 kB"
+    },
+    {
+     "label": "c_halfcell_1536",
+     "n_cells": 1536,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.1688898147419026e-07,
+     "first_sky_minus_fluid": [
+      -6.538426785808677e-12,
+      3.273134593020249e-12,
+      -1.6360415262191047e-12
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 8.3559857229819e-07,
+     "second_sky_minus_fluid": [
+      -1.6643130406143345e-11,
+      8.32748024420652e-12,
+      -4.163288390115127e-12
+     ],
+     "worst_cell": "cell 0 ln_a=-7.373580 delta_tau=7.7899e-01 photon_substeps=2 rel=5.4565e-03",
+     "extra": "variant half-cell; change vs ctrl=[9.2e-17,-3.5e-17,1.5e-16]; Ham=1.147e-09 Cod=1.104e-09 reality=1.551e-17; C2 T=2.9816015727e-07 E=1.000773e-11 B=5.719344e-14; 246.71 s, 148472 kB"
+    }
+   ],
+   "reproduced_r105_baseline": true,
+   "residual_reduced": false,
+   "conclusion": "I tested H3 and it is refuted. Matter feedback does not cause the first-common residual or its apparent nonzero limit. The R105 'nonzero limit' itself does not hold up.\n\n1. **R105 numbers reproduced.** The unmodified repo solver gives the same first and second common-endpoint values as SOLVER_COMMON_TIMES.json at 48, 96 and 192 cells, digit for digit. First: 3.1935484771574664e-06, 3.539700455541186e-06, 3.6292782170005017e-06. Second: 4.936623e-05, 4.984600e-05, 4.991118e-05. The variant copy with default switches is bit-identical to the repo solver at 48 cells (all recorded arrays and C2).\n\n2. **(a) n_picard 4 to 8: no effect.** The first-common signed vector changes by at most 6.9e-16 in absolute value (at most 1e-5 of the residual). The 48/96/192 Richardson value is 3.660562e-06, against 3.660553e-06 for the control. Within each control run, Picard iterations 1 to 3 change the first residual by less than 1e-10 relative.\n\n3. **(b) Zeroing the pi feedback lowers the norm only by cancellation.** The first-common norm drops to 1.943e-06, 2.313e-06, 2.425e-06 and 2.456e-06 (48 to 384 cells), but it does so by adding a near-constant signed offset of about [+2.45 to 2.58e-11, -1.18 to -1.24e-11, +7.1 to 7.5e-12]. That offset is 1.19e-06 of |q_fluid|.\n   - Removing pi from the Thomson force only (b2) moves the vector by [2.21e-11, -5.20e-12, 3.90e-12]. This is close to (pi/E)\u00b7v_b = [2.37e-11, -5.57e-12, 4.18e-12], the real shift of the tight-coupling equilibrium.\n   - Removing pi from Einstein-Euler/Gamma4 only (b3) moves it by [3.6e-12, -7.2e-12, 3.6e-12].\n   - The 48 to 192 growth is still there without feedback (+0.48e-6, against +0.44e-6 for the control).\n   - Removing feedback is not a fix. The late-time worst residual goes from 2.2e-3 / 6.3e-4 / 1.8e-4 to 0.120 / 0.121 / 0.122 in the last cell, C2T moves by -2.48% and C2E by +9.7% (48 cells).\n   - At 1536 cells, zero-pi gives 8.735e-07 against 3.169e-07 for the control. The vector has changed sign and is now dominated by the offset, so zero-pi converges to a nonzero limit of about 1.19e-06. The 7.6e-08 at 768 cells is an accidental crossing.\n\n4. **(c) Half-cell midpoint pi/E: negligible.** This was feasible and is implemented. The first-common vector changes by -1.2e-12 at 48 cells (+1.8% in norm) and by at most 1.4e-13 at 96 to 1536 cells (at most 0.2%). Richardson gives 3.6547e-06 (48/96/192) and 3.6553e-06 (96/192/384), the same as the control. At 1536 cells it equals the control to 1.7e-5 relative.\n\n5. **Where the residual sits (physical attribution).** At the first common endpoint, the equilibrium part q_eq = (4/3)v_b + (pi/E)\u00b7v_b is the same in sky and fluid. (pi/E)_sky\u00b7v_b and (pi/E)_fluid\u00b7v_b agree to about 5e-19 absolute.\n   - The residual is anti-parallel to the tight-coupling slip, q/E - q_eq. The cosine is -0.99987, -0.99998, -0.999998, -0.9999998, -0.9999999 and -0.9999999 for 48 to 1536 cells.\n   - |residual|/|slip| is 1.409e-3, 1.563e-3, 1.603e-3, 1.610e-3, 5.52e-4 and 1.40e-4. In other words, the sky's slip is that fraction smaller than the fluid's (Radau) slip.\n\n6. **Numerical convergence beyond R105.** I refined the control past R105's 192 cells with the cap fixed at 1.0.\n   - First common endpoint: 3.6466e-06 (384), 1.2493e-06 (768), 3.169e-07 (1536).\n   - Second common endpoint: 1.328e-05 (384), 3.336e-06 (768), 8.358e-07 (1536). Successive ratios are 3.76, 3.98 and 3.99, so second order.\n   - I rebuilt the Picard-0 opacity on each grid (SUBSTEP_GEOMETRY_PICARD0.json). The capped bisection in N nests, so the last photon substep before the first common endpoint is the same interval at 48/96/192/384 cells: \u0394N = 0.0096073, depth 0.970 to 0.971. It halves to depth 0.479 at 768 and 0.238 at 1536, once the two-substep minimum takes over. For the second endpoint the last substep has depth 0.621 to 0.623 (\u0394N 0.0192) at 48 to 192 cells, then 0.297, 0.145 and 0.072.\n   - The plateau in 48 to 384 is therefore the fixed final substep. The R105 increase from 3.19e-6 to 3.65e-6 is a pre-asymptotic change, about second order in cell size, that sits on top of that plateau.\n\n7. **Conditional prediction (for the collision-depth lane, not run here).**\n   - The residual stays flat while cell size shrinks 8 times (48 to 384) and only falls once the final substep shrinks. That strongly suggests the photon collision substep is the controlling term, although the direct test belongs to the other lane.\n   - d ln(tau')/dN at the endpoints is -5.3 to -5.7 (first) and -9.4 to -9.9 (second). Lead to check there: the sky uses a constant rate per substep (depth/h) while the fluid uses the instantaneous opacity.rate.\n   - Prediction: changing the cap from 1 to 0.5 at 48 to 384 cells should take the first-common residual down to about 1.2e-6. That is an estimate from ctrl_768, whose last substep has depth 0.479.\n\n**Code fix.** None is recommended. No H3 term is the cause, so the repo solver was not changed and the FLRW and analytic-solution checks for a fix were not needed. No tracked file was edited. The repo is still at HEAD b234bb0e0; `git status` shows an untracked scripts/r106/ created by another agent, not by this work.\n\nAll files are under /home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/matter_feedback/.\n- Variant solver: variants/coupled_matter_feedback_variant.py (sha256 e1167a23\u20263bab90); its diff against the repo is variants/coupled_matter_feedback_variant.diff (eab2344f\u2026233b78).\n- Per-run results: runs/*.json and runs/*.npz.\n- Run log: logs/commands.tsv (exact command, return code, time, RSS for every run).\n- Summary with input SHAs: MATTER_FEEDBACK_SUMMARY.json.",
+   "variant_description": "The variant is a copy of the R105 solver (repo sha256 f3e00c689509\u20262de3dcf, unmodified), loaded with importlib under the module name r106_matter_feedback_variant. It is inserted into sys.modules before exec_module, and HYREC_REF_CSV is reset to the repo path. It adds three module switches; their defaults reproduce R105 bit for bit.\n- PI_FEEDBACK_EINSTEIN_EULER: whether the previous-Picard STF correction enters T4 for the rho/p/q/pi sources, the Gamma4 transport and the recorded fluid moments.\n- PI_FEEDBACK_THOMSON: whether the same correction enters the photon stress passed to covariant_thomson_four_force. _unpack now also returns T4_th.\n- MIDPOINT_PI: \"average\" (R105 behaviour) or \"half_cell\". In half_cell mode, each cell also advances a separate copy of the start-of-cell sky over [N0, N_mid]. That copy uses LieGeometry at the quarter point from the dense sol.sol (with the same Jacobi filtering), a shear source with amplitude dN/2, _optical_substeps over [N0, N_mid] (minimum 2, cap 1.0) and the stage-time baryon velocity from sol.sol. The midpoint pi knot is _stress_feedback_ratio of that half-cell state. The full-cell sky update is unchanged.\n\nRun groups (all VI_-1/9, eps 2e-4, ell 4, GL16, 2 substeps per cell, cap 1.0, f_nu 0):\n- ctrl: repo solver, n_picard 4.\n- a_picard8: repo solver, n_picard 8.\n- b_zeropi: both pi switches off (task item b).\n- b2_nothomson: Thomson switch off only.\n- b3_noeinsteuler: Einstein-Euler switch off only.\n- c_halfcell: MIDPOINT_PI = half_cell.\n\nThe \"endpoint cell dtau/substeps\" in each run's extra refers to the cell that ends at the first common endpoint.",
+   "limit_estimates": "Richardson uses r = (e96-e48)/(e192-e96) and limit = e192 + (e192-e96)/(r-1). Values are the relative norm at the first common endpoint.\n- ctrl: r=3.8643, p=1.950, limit 3.6606e-06. Over 96/192/384: r=5.177, limit 3.6507e-06.\n- a_picard8: r=3.8640, limit 3.6606e-06.\n- c_halfcell: r=3.5367, limit 3.6547e-06. Over 96/192/384: r=3.485, limit 3.6553e-06.\n- b_zeropi: r=3.2956, limit 2.4734e-06. Over 96/192/384: limit 2.4673e-06.\n- b2_nothomson: r=3.4254, limit 2.7649e-06.\n- b3_noeinsteuler: r=3.8774, limit 3.3797e-06.\n\nThese 48\u2013384 'limits' are a plateau set by the identical last photon substep (depth 0.97). They are not the cells->infinity limit.\n- Control at 768 and 1536 cells: 1.2493e-06 and 3.169e-07, a ratio of 3.94. Assuming p=2, the extrapolated limit is about 6e-09, i.e. consistent with 0. The three-level Richardson over 384/768/1536 gives -2.8e-07, which is also consistent with 0 (the 384\u2192768 step still mixes in the plateau exit).\n- Second common endpoint, control: 48/96/192 gives 4.9921e-05 (a plateau). 384/768/1536 gives r=3.979 and limit -3.4e-09, i.e. about 0.\n- Zero-pi variant: tends to a nonzero limit of about 1.19e-06 relative (constant offset ~[2.45e-11, -1.18e-11, 7.14e-12]; 1536 cells already 8.735e-07 with the sign flipped). So the pi feedback is required for the residual to vanish.\n- Half-cell variant: limit equals the control's (1536 cells: 3.1689e-07, against 3.1689e-07).",
+   "output_json": "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/matter_feedback/MATTER_FEEDBACK_SUMMARY.json",
+   "files_created": [
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/matter_feedback/variants/coupled_matter_feedback_variant.py",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/matter_feedback/variants/coupled_matter_feedback_variant.diff",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/matter_feedback/run_case.py",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/matter_feedback/run_task.sh",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/matter_feedback/summarize.py",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/matter_feedback/substep_geometry.py",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/matter_feedback/tasks_smoke.txt",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/matter_feedback/tasks_main.txt",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/matter_feedback/tasks_extra.txt",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/matter_feedback/tasks_extra2.txt",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/matter_feedback/MATTER_FEEDBACK_SUMMARY.json",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/matter_feedback/SUBSTEP_GEOMETRY_PICARD0.json",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/matter_feedback/runs/ (27 run .json + .npz: ctrl_{48,96,192,384,768,1536}, varid_48, a_picard8_{48,96,192}, b_zeropi_{48,96,192,384,768,1536}, b2_nothomson_{48,96,192}, b3_noeinsteuler_{48,96,192}, c_halfcell_{48,96,192,384,1536})",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/matter_feedback/logs/commands.tsv",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/matter_feedback/logs/*.log, *.time, batch_*.time"
+   ],
+   "commands": [
+    {
+     "command": "cd /home/cosmosapjw/Dropbox/bianchi/htt_base && PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 /usr/bin/time -f '%e s %M kB' .venv/bin/python -B /home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/matter_feedback/run_case.py --label varid_48 --solver variant --n-cells 48 --n-picard 4 --pi-einstein-euler 1 --pi-thomson 1 --midpoint-pi average --output /home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/matter_feedback/runs/varid_48.json",
+     "return_code": 0,
+     "wall_s": 49.49,
+     "maxrss_kB": 142860
+    },
+    {
+     "command": "[same prefix] run_case.py --label ctrl_48 --solver repo --n-cells 48 --n-picard 4 --pi-einstein-euler 1 --pi-thomson 1 --midpoint-pi average --output .../runs/ctrl_48.json",
+     "return_code": 0,
+     "wall_s": 53.18,
+     "maxrss_kB": 144712
+    },
+    {
+     "command": "[same prefix] run_case.py --label ctrl_96 --solver repo --n-cells 96 --n-picard 4 --pi-einstein-euler 1 --pi-thomson 1 --midpoint-pi average --output .../runs/ctrl_96.json",
+     "return_code": 0,
+     "wall_s": 57.56,
+     "maxrss_kB": 144832
+    },
+    {
+     "command": "[same prefix] run_case.py --label ctrl_192 --solver repo --n-cells 192 --n-picard 4 --pi-einstein-euler 1 --pi-thomson 1 --midpoint-pi average --output .../runs/ctrl_192.json",
+     "return_code": 0,
+     "wall_s": 64.68,
+     "maxrss_kB": 144308
+    },
+    {
+     "command": "[same prefix] run_case.py --label a_picard8_48 --solver repo --n-cells 48 --n-picard 8 --pi-einstein-euler 1 --pi-thomson 1 --midpoint-pi average --output .../runs/a_picard8_48.json",
+     "return_code": 0,
+     "wall_s": 91.29,
+     "maxrss_kB": 143380
+    },
+    {
+     "command": "[same prefix] run_case.py --label a_picard8_96 --solver repo --n-cells 96 --n-picard 8 --pi-einstein-euler 1 --pi-thomson 1 --midpoint-pi average --output .../runs/a_picard8_96.json",
+     "return_code": 0,
+     "wall_s": 100.79,
+     "maxrss_kB": 144684
+    },
+    {
+     "command": "[same prefix] run_case.py --label a_picard8_192 --solver repo --n-cells 192 --n-picard 8 --pi-einstein-euler 1 --pi-thomson 1 --midpoint-pi average --output .../runs/a_picard8_192.json",
+     "return_code": 0,
+     "wall_s": 119.08,
+     "maxrss_kB": 145108
+    },
+    {
+     "command": "[same prefix] run_case.py --label b_zeropi_48 --solver variant --n-cells 48 --n-picard 4 --pi-einstein-euler 0 --pi-thomson 0 --midpoint-pi average --output .../runs/b_zeropi_48.json",
+     "return_code": 0,
+     "wall_s": 46.54,
+     "maxrss_kB": 140312
+    },
+    {
+     "command": "[same prefix] run_case.py --label b_zeropi_96 --solver variant --n-cells 96 --n-picard 4 --pi-einstein-euler 0 --pi-thomson 0 --midpoint-pi average --output .../runs/b_zeropi_96.json",
+     "return_code": 0,
+     "wall_s": 50.7,
+     "maxrss_kB": 143408
+    },
+    {
+     "command": "[same prefix] run_case.py --label c_halfcell_48 --solver variant --n-cells 48 --n-picard 4 --pi-einstein-euler 1 --pi-thomson 1 --midpoint-pi half_cell --output .../runs/c_halfcell_48.json",
+     "return_code": 0,
+     "wall_s": 50.75,
+     "maxrss_kB": 140532
+    },
+    {
+     "command": "[same prefix] run_case.py --label b_zeropi_192 --solver variant --n-cells 192 --n-picard 4 --pi-einstein-euler 0 --pi-thomson 0 --midpoint-pi average --output .../runs/b_zeropi_192.json",
+     "return_code": 0,
+     "wall_s": 61.37,
+     "maxrss_kB": 143308
+    },
+    {
+     "command": "[same prefix] run_case.py --label c_halfcell_96 --solver variant --n-cells 96 --n-picard 4 --pi-einstein-euler 1 --pi-thomson 1 --midpoint-pi half_cell --output .../runs/c_halfcell_96.json",
+     "return_code": 0,
+     "wall_s": 60.68,
+     "maxrss_kB": 142144
+    },
+    {
+     "command": "[same prefix] run_case.py --label b2_nothomson_48 --solver variant --n-cells 48 --n-picard 4 --pi-einstein-euler 1 --pi-thomson 0 --midpoint-pi average --output .../runs/b2_nothomson_48.json",
+     "return_code": 0,
+     "wall_s": 49.19,
+     "maxrss_kB": 140280
+    },
+    {
+     "command": "[same prefix] run_case.py --label c_halfcell_192 --solver variant --n-cells 192 --n-picard 4 --pi-einstein-euler 1 --pi-thomson 1 --midpoint-pi half_cell --output .../runs/c_halfcell_192.json",
+     "return_code": 0,
+     "wall_s": 72.97,
+     "maxrss_kB": 143952
+    },
+    {
+     "command": "[same prefix] run_case.py --label b2_nothomson_96 --solver variant --n-cells 96 --n-picard 4 --pi-einstein-euler 1 --pi-thomson 0 --midpoint-pi average --output .../runs/b2_nothomson_96.json",
+     "return_code": 0,
+     "wall_s": 50.5,
+     "maxrss_kB": 140960
+    },
+    {
+     "command": "[same prefix] run_case.py --label b2_nothomson_192 --solver variant --n-cells 192 --n-picard 4 --pi-einstein-euler 1 --pi-thomson 0 --midpoint-pi average --output .../runs/b2_nothomson_192.json",
+     "return_code": 0,
+     "wall_s": 61.83,
+     "maxrss_kB": 144552
+    },
+    {
+     "command": "[same prefix] run_case.py --label b3_noeinsteuler_48 --solver variant --n-cells 48 --n-picard 4 --pi-einstein-euler 0 --pi-thomson 1 --midpoint-pi average --output .../runs/b3_noeinsteuler_48.json",
+     "return_code": 0,
+     "wall_s": 48.4,
+     "maxrss_kB": 143480
+    },
+    {
+     "command": "[same prefix] run_case.py --label b3_noeinsteuler_96 --solver variant --n-cells 96 --n-picard 4 --pi-einstein-euler 0 --pi-thomson 1 --midpoint-pi average --output .../runs/b3_noeinsteuler_96.json",
+     "return_code": 0,
+     "wall_s": 54.42,
+     "maxrss_kB": 141548
+    },
+    {
+     "command": "[same prefix] run_case.py --label b3_noeinsteuler_192 --solver variant --n-cells 192 --n-picard 4 --pi-einstein-euler 0 --pi-thomson 1 --midpoint-pi average --output .../runs/b3_noeinsteuler_192.json",
+     "return_code": 0,
+     "wall_s": 65.38,
+     "maxrss_kB": 143444
+    },
+    {
+     "command": "[same prefix] run_case.py --label ctrl_384 --solver repo --n-cells 384 --n-picard 4 --pi-einstein-euler 1 --pi-thomson 1 --midpoint-pi average --output .../runs/ctrl_384.json",
+     "return_code": 0,
+     "wall_s": 81.52,
+     "maxrss_kB": 143984
+    },
+    {
+     "command": "[same prefix] run_case.py --label c_halfcell_384 --solver variant --n-cells 384 --n-picard 4 --pi-einstein-euler 1 --pi-thomson 1 --midpoint-pi half_cell --output .../runs/c_halfcell_384.json",
+     "return_code": 0,
+     "wall_s": 103.09,
+     "maxrss_kB": 144176
+    },
+    {
+     "command": "[same prefix] run_case.py --label b_zeropi_384 --solver variant --n-cells 384 --n-picard 4 --pi-einstein-euler 0 --pi-thomson 0 --midpoint-pi average --output .../runs/b_zeropi_384.json",
+     "return_code": 0,
+     "wall_s": 74.98,
+     "maxrss_kB": 143904
+    },
+    {
+     "command": "[same prefix] run_case.py --label ctrl_768 --solver repo --n-cells 768 --n-picard 4 --pi-einstein-euler 1 --pi-thomson 1 --midpoint-pi average --output .../runs/ctrl_768.json",
+     "return_code": 0,
+     "wall_s": 97.28,
+     "maxrss_kB": 146068
+    },
+    {
+     "command": "[same prefix] run_case.py --label ctrl_1536 --solver repo --n-cells 1536 --n-picard 4 --pi-einstein-euler 1 --pi-thomson 1 --midpoint-pi average --output .../runs/ctrl_1536.json",
+     "return_code": 0,
+     "wall_s": 155.67,
+     "maxrss_kB": 150552
+    },
+    {
+     "command": "[same prefix] run_case.py --label b_zeropi_768 --solver variant --n-cells 768 --n-picard 4 --pi-einstein-euler 0 --pi-thomson 0 --midpoint-pi average --output .../runs/b_zeropi_768.json",
+     "return_code": 0,
+     "wall_s": 101.68,
+     "maxrss_kB": 145184
+    },
+    {
+     "command": "[same prefix] run_case.py --label b_zeropi_1536 --solver variant --n-cells 1536 --n-picard 4 --pi-einstein-euler 0 --pi-thomson 0 --midpoint-pi average --output .../runs/b_zeropi_1536.json",
+     "return_code": 0,
+     "wall_s": 159.94,
+     "maxrss_kB": 150120
+    },
+    {
+     "command": "[same prefix] run_case.py --label c_halfcell_1536 --solver variant --n-cells 1536 --n-picard 4 --pi-einstein-euler 1 --pi-thomson 1 --midpoint-pi half_cell --output .../runs/c_halfcell_1536.json",
+     "return_code": 0,
+     "wall_s": 246.71,
+     "maxrss_kB": 148472
+    },
+    {
+     "command": "cd /home/cosmosapjw/Dropbox/bianchi/htt_base && PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 /usr/bin/time -f '%e s %M kB' .venv/bin/python -B /home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/matter_feedback/substep_geometry.py /home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/matter_feedback/SUBSTEP_GEOMETRY_PICARD0.json",
+     "return_code": 0,
+     "wall_s": 6.45,
+     "maxrss_kB": 131736
+    },
+    {
+     "command": "cd /home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/matter_feedback && /usr/bin/time -f '%e s %M kB' xargs -P 3 -L 1 ./run_task.sh < tasks_main.txt  (batch wrapper, 3 workers)",
+     "return_code": 0,
+     "wall_s": 496.59,
+     "maxrss_kB": 145108
+    },
+    {
+     "command": "cd /home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/matter_feedback && /usr/bin/time -f '%e s %M kB' xargs -P 2 -L 1 ./run_task.sh < tasks_extra.txt",
+     "return_code": 0,
+     "wall_s": 155.68,
+     "maxrss_kB": 150552
+    },
+    {
+     "command": "cd /home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/matter_feedback && /usr/bin/time -f '%e s %M kB' xargs -P 3 -L 1 ./run_task.sh < tasks_extra2.txt",
+     "return_code": 0,
+     "wall_s": 246.72,
+     "maxrss_kB": 150120
+    },
+    {
+     "command": "cd /home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/matter_feedback && /usr/bin/time -f '%e s %M kB' /home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python -B summarize.py",
+     "return_code": 0,
+     "wall_s": 0.1,
+     "maxrss_kB": 33200
+    }
+   ]
+  },
+  {
+   "hypothesis": "H4 (angular truncation / quadrature): the nonzero cells->infinity limit of the VI_-1/9 first-common sky-vs-fluid photon q/E residual comes from the sky dipole equation departing from the exact conservation law. The suspected routes were ell_max truncation, GL quadrature of the moving-Thomson kernel, or the bolometric redshift. Test: vary ell_max 4->6->8 (rings max(16, ell+8)=16) and GL rings 16->24->32 at ell 4, at 48/96/192 cells, using config only on the unmodified repo solver. Then a code VARIANT projects the moving-Thomson kernel on a decoupled 64-ring grid. The executed MovingCollisionStage has no fixed n_theta_rest: it projects on the transport grid op._grid. The only fixed rest-frame order, MovingFrameThomsonOperator(n_theta_rest=12), appears only in tests and in a docstring and is not on the executed path. A direct structural audit also compares the Galerkin ell<=1 moment rates with the exact conservation law.",
+   "runs": [
+    {
+     "label": "control_l4_r16@48",
+     "n_cells": 48,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.1935484771574664e-06,
+     "first_sky_minus_fluid": [
+      -6.531792794966661e-11,
+      3.399494170694829e-11,
+      -1.672501989299338e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.936623490941116e-05,
+     "second_sky_minus_fluid": [
+      -9.816480252737645e-10,
+      4.946569671611997e-10,
+      -2.4703503014427146e-10
+     ],
+     "worst_cell": "idx 5, ln a=-6.456085749, rel=2.205080e-03, cell delta_tau=1.1894e-02, photon_substeps=2",
+     "extra": "repo R105 unmodified (A/B control); ell 4 rings 16; first-common cell delta_tau=20.815 with 31 substeps (0.671/substep); parallel(d.qf/|qf|^2)=-3.19313e-06, perp_rel=5.170e-08; pi/E_sky_first row0=[1.201714372e-06,-4.8092393e-07,3.60624562e-07], pi/E_fluid_first row0=[1.201714345e-06,-4.8092392e-07,3.60624554e-07], |pi_sky-pi_fluid|_F=3.940e-14; max_ham=1.043e-09 max_cod=1.187e-09 stokes_reality=6.776e-19; C2T=2.9849541949e-07 C2E=1.0362467282e-11 C2B=5.9523301169e-14; wall=45.3 s; worker maxRSS=141284 kB"
+    },
+    {
+     "label": "control_l4_r16@96",
+     "n_cells": 96,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.539700455541186e-06,
+     "first_sky_minus_fluid": [
+      -7.281030845853798e-11,
+      3.695078143405007e-11,
+      -1.8388969465840818e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.984600386296121e-05,
+     "second_sky_minus_fluid": [
+      -9.922633931724325e-10,
+      4.976526248720776e-10,
+      -2.487651405212694e-10
+     ],
+     "worst_cell": "idx 10, ln a=-6.532943913, rel=6.296308e-04, cell delta_tau=7.1744e-03, photon_substeps=2",
+     "extra": "control; first-common cell idx1 delta_tau=9.163, 15 substeps (0.611/substep); parallel=-3.53964e-06, perp_rel=2.137e-08; pi/E_sky_first row0=[1.140639058e-06,-4.56567939e-07,3.42356972e-07], fluid row0=[1.14063905e-06,-4.56567936e-07,3.4235697e-07], |dpi|_F=1.217e-14; max_ham=8.078e-10 max_cod=8.017e-10 stokes=1.195e-18; C2T=2.9825203916e-07 C2E=1.0081730334e-11 C2B=5.7685429810e-14; wall=50.3 s; RSS=141604 kB"
+    },
+    {
+     "label": "control_l4_r16@192",
+     "n_cells": 192,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.6292782170005017e-06,
+     "first_sky_minus_fluid": [
+      -7.481582011426295e-11,
+      3.760204141464588e-11,
+      -1.877661612110159e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.991118148921352e-05,
+     "second_sky_minus_fluid": [
+      -9.94068338078534e-10,
+      4.974749898572936e-10,
+      -2.4871895428375666e-10
+     ],
+     "worst_cell": "idx 191, ln a=0.000000000, rel=1.829813e-04, cell delta_tau=8.1391e-05, photon_substeps=2",
+     "extra": "control; first-common cell idx3 delta_tau=4.194, 7 substeps (0.599/substep); parallel=-3.62927e-06, perp_rel=7.685e-09; pi/E_sky_first row0=[1.115516228e-06,-4.46551466e-07,3.34844334e-07], fluid row0=[1.11551625e-06,-4.46551475e-07,3.3484434e-07], |dpi|_F=3.284e-14; max_ham=1.316e-09 max_cod=1.459e-09 stokes=1.203e-18; C2T=2.9818290161e-07 C2E=1.0018085406e-11 C2B=5.7263908613e-14; wall=60.4 s; RSS=142216 kB. Richardson first: r=3.8643 (order 1.95), limit 3.66055e-06; second: r=7.361, limit 4.99214e-05"
+    },
+    {
+     "label": "ell6_r16@48",
+     "n_cells": 48,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.193550710282779e-06,
+     "first_sky_minus_fluid": [
+      -6.5317918035993e-11,
+      3.399492856269101e-11,
+      -1.6725323708464968e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.9366231599539596e-05,
+     "second_sky_minus_fluid": [
+      -9.816480177351713e-10,
+      4.946569991722688e-10,
+      -2.470346514476992e-10
+     ],
+     "worst_cell": "idx 5, ln a=-6.456085749, rel=2.205080e-03, cell delta_tau=1.1894e-02, photon_substeps=2",
+     "extra": "repo unmodified ell 6 rings 16; |dpi|_F=7.233e-16; max_ham=8.910e-10 max_cod=1.306e-09 stokes=9.773e-19; C2T=2.9849541944e-07 C2E=1.0362467200e-11 C2B=5.9523300777e-14; wall=47.6 s; RSS=149384 kB; vs control: d(first rel)=+2.23e-12, |d sky q/E|=4.6e-16, |d fluid q/E|=3.0e-16"
+    },
+    {
+     "label": "ell6_r16@96",
+     "n_cells": 96,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.5397022957466864e-06,
+     "first_sky_minus_fluid": [
+      -7.281029961212588e-11,
+      3.6950801361347184e-11,
+      -1.838916248262664e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.9846002146727535e-05,
+     "second_sky_minus_fluid": [
+      -9.922634059829588e-10,
+      4.976526412875761e-10,
+      -2.4876487745570586e-10
+     ],
+     "worst_cell": "idx 10, ln a=-6.532943913, rel=6.296271e-04, cell delta_tau=7.1744e-03, photon_substeps=2",
+     "extra": "ell 6; |dpi|_F=4.154e-15; max_ham=1.035e-09 max_cod=9.523e-10 stokes=2.711e-18; C2T=2.9825203914e-07 C2E=1.0081730275e-11 C2B=5.7685429568e-14; wall=58.4 s; RSS=147508 kB; vs control d(first rel)=+1.84e-12"
+    },
+    {
+     "label": "ell6_r16@192",
+     "n_cells": 192,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.629280511137933e-06,
+     "first_sky_minus_fluid": [
+      -7.48158523387844e-11,
+      3.7602057211810346e-11,
+      -1.8776704002463934e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.991138246095347e-05,
+     "second_sky_minus_fluid": [
+      -9.940723264788558e-10,
+      4.97476959388467e-10,
+      -2.487200792849651e-10
+     ],
+     "worst_cell": "idx 191, ln a=0.000000000, rel=1.829828e-04, cell delta_tau=8.1391e-05, photon_substeps=2",
+     "extra": "ell 6; |dpi|_F=2.604e-14; max_ham=1.228e-09 max_cod=1.218e-09 stokes=6.625e-19; C2T=2.9818290169e-07 C2E=1.0018085433e-11 C2B=5.7263908917e-14; wall=70.2 s; RSS=147668 kB; vs control d(first rel)=+2.29e-12. Richardson first r=3.8642 limit 3.66056e-06"
+    },
+    {
+     "label": "ell8_r16@48",
+     "n_cells": 48,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.1935495784457156e-06,
+     "first_sky_minus_fluid": [
+      -6.531795029778389e-11,
+      3.399492400057156e-11,
+      -1.6725086161463042e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.936623540451811e-05,
+     "second_sky_minus_fluid": [
+      -9.81648048729801e-10,
+      4.946569794652002e-10,
+      -2.4703496379194554e-10
+     ],
+     "worst_cell": "idx 5, ln a=-6.456085749, rel=2.205080e-03, cell delta_tau=1.1894e-02, photon_substeps=2",
+     "extra": "repo unmodified ell 8 rings 16; |dpi|_F=1.730e-14; max_ham=7.277e-10 max_cod=8.955e-10 stokes=1.632e-19; C2T=2.9849541949e-07 C2E=1.0362467169e-11 C2B=5.9523300586e-14; wall=53.4 s; RSS=155100 kB; vs control d(first rel)=+1.10e-12"
+    },
+    {
+     "label": "ell8_r16@96",
+     "n_cells": 96,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.5396957242044224e-06,
+     "first_sky_minus_fluid": [
+      -7.281019051428228e-11,
+      3.6950734469461274e-11,
+      -1.838902166085806e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.984599980490394e-05,
+     "second_sky_minus_fluid": [
+      -9.922633907363657e-10,
+      4.976526141029007e-10,
+      -2.4876474818661965e-10
+     ],
+     "worst_cell": "idx 10, ln a=-6.532943913, rel=6.296227e-04, cell delta_tau=7.1744e-03, photon_substeps=2",
+     "extra": "ell 8; |dpi|_F=9.091e-15; max_ham=7.927e-10 max_cod=1.014e-09 stokes=5.967e-19; C2T=2.9825203918e-07 C2E=1.0081730309e-11 C2B=5.7685429792e-14; wall=63.4 s; RSS=150364 kB; vs control d(first rel)=-4.73e-12"
+    },
+    {
+     "label": "ell8_r16@192",
+     "n_cells": 192,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.629280238191459e-06,
+     "first_sky_minus_fluid": [
+      -7.481584078864313e-11,
+      3.760206487576445e-11,
+      -1.8776705180686764e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.991137912088163e-05,
+     "second_sky_minus_fluid": [
+      -9.940723254895213e-10,
+      4.974769439775495e-10,
+      -2.487197650594586e-10
+     ],
+     "worst_cell": "idx 191, ln a=0.000000000, rel=1.829880e-04, cell delta_tau=8.1391e-05, photon_substeps=2",
+     "extra": "ell 8; |dpi|_F=1.592e-15; max_ham=1.001e-09 max_cod=9.247e-10 stokes=1.733e-18; C2T=2.9818290180e-07 C2E=1.0018085477e-11 C2B=5.7263909234e-14; wall=76.6 s; RSS=144656 kB; vs control d(first rel)=+2.02e-12. Richardson first r=3.8639 limit 3.66056e-06"
+    },
+    {
+     "label": "l4_r24@48",
+     "n_cells": 48,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.19354722209824e-06,
+     "first_sky_minus_fluid": [
+      -6.531788777997612e-11,
+      3.399493021440526e-11,
+      -1.672506614692153e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.9366235198775394e-05,
+     "second_sky_minus_fluid": [
+      -9.816479708705324e-10,
+      4.946569978237923e-10,
+      -2.4703521499057747e-10
+     ],
+     "worst_cell": "idx 5, ln a=-6.456085749, rel=2.205080e-03, cell delta_tau=1.1894e-02, photon_substeps=2",
+     "extra": "repo unmodified ell 4 rings 24; |dpi|_F=3.188e-15; max_ham=7.685e-10 max_cod=9.140e-10 stokes=5.973e-19; C2T=2.9849541951e-07 C2E=1.0362467203e-11 C2B=5.9523300667e-14; wall=46.5 s; RSS=141936 kB; vs control d(first rel)=-1.26e-12"
+    },
+    {
+     "label": "l4_r24@96",
+     "n_cells": 96,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.5397000379572927e-06,
+     "first_sky_minus_fluid": [
+      -7.28102323712624e-11,
+      3.695077244533643e-11,
+      -1.838924385030562e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.984599989319525e-05,
+     "second_sky_minus_fluid": [
+      -9.922633499805285e-10,
+      4.976526335592475e-10,
+      -2.4876488111065303e-10
+     ],
+     "worst_cell": "idx 10, ln a=-6.532943913, rel=6.296287e-04, cell delta_tau=7.1744e-03, photon_substeps=2",
+     "extra": "rings 24; |dpi|_F=1.359e-14; max_ham=9.866e-10 max_cod=1.245e-09 stokes=2.872e-19; C2T=2.9825203920e-07 C2E=1.0081730313e-11 C2B=5.7685429685e-14; wall=51.4 s; RSS=142900 kB; vs control d(first rel)=-4.18e-13"
+    },
+    {
+     "label": "l4_r24@192",
+     "n_cells": 192,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.629275281005524e-06,
+     "first_sky_minus_fluid": [
+      -7.481578441013016e-11,
+      3.760206574651432e-11,
+      -1.8776392397677364e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.991117878236145e-05,
+     "second_sky_minus_fluid": [
+      -9.94068306968708e-10,
+      4.974749928642606e-10,
+      -2.487187897179605e-10
+     ],
+     "worst_cell": "idx 191, ln a=0.000000000, rel=1.829841e-04, cell delta_tau=8.1391e-05, photon_substeps=2",
+     "extra": "rings 24; |dpi|_F=3.214e-15; max_ham=9.270e-10 max_cod=9.665e-10 stokes=1.221e-18; C2T=2.9818290179e-07 C2E=1.0018085460e-11 C2B=5.7263908981e-14; wall=62.8 s; RSS=142712 kB; vs control d(first rel)=-2.94e-12. Richardson first r=3.8644 limit 3.66055e-06"
+    },
+    {
+     "label": "l4_r32@48",
+     "n_cells": 48,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.1935520156271283e-06,
+     "first_sky_minus_fluid": [
+      -6.531791856454155e-11,
+      3.399494574051918e-11,
+      -1.672542607154961e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.936623540951931e-05,
+     "second_sky_minus_fluid": [
+      -9.816480404424306e-10,
+      4.946569769986403e-10,
+      -2.470350021583029e-10
+     ],
+     "worst_cell": "idx 5, ln a=-6.456085749, rel=2.205080e-03, cell delta_tau=1.1894e-02, photon_substeps=2",
+     "extra": "repo unmodified ell 4 rings 32; |dpi|_F=5.114e-15; max_ham=6.266e-10 max_cod=4.955e-10 stokes=4.964e-19; C2T=2.9849541949e-07 C2E=1.0362467176e-11 C2B=5.9523300481e-14; wall=48.7 s; RSS=144892 kB; vs control d(first rel)=+3.54e-12"
+    },
+    {
+     "label": "l4_r32@96",
+     "n_cells": 96,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.539691121787015e-06,
+     "first_sky_minus_fluid": [
+      -7.281017904206804e-11,
+      3.695072191812706e-11,
+      -1.8388597009360284e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.984599813047477e-05,
+     "second_sky_minus_fluid": [
+      -9.922633824557717e-10,
+      4.976526268338059e-10,
+      -2.4876458104160817e-10
+     ],
+     "worst_cell": "idx 10, ln a=-6.532943913, rel=6.296224e-04, cell delta_tau=7.1744e-03, photon_substeps=2",
+     "extra": "rings 32; |dpi|_F=1.464e-14; max_ham=8.676e-10 max_cod=7.465e-10 stokes=1.573e-18; C2T=2.9825203918e-07 C2E=1.0081730345e-11 C2B=5.7685429882e-14; wall=57.0 s; RSS=144636 kB; vs control d(first rel)=-9.33e-12"
+    },
+    {
+     "label": "l4_r32@192",
+     "n_cells": 192,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.629285779192822e-06,
+     "first_sky_minus_fluid": [
+      -7.481585491715269e-11,
+      3.760208199599438e-11,
+      -1.877721335810347e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.991138581568157e-05,
+     "second_sky_minus_fluid": [
+      -9.940723162839673e-10,
+      4.974769462187987e-10,
+      -2.4872049712208283e-10
+     ],
+     "worst_cell": "idx 191, ln a=0.000000000, rel=1.829837e-04, cell delta_tau=8.1391e-05, photon_substeps=2",
+     "extra": "rings 32; |dpi|_F=1.215e-14; max_ham=9.890e-10 max_cod=1.793e-09 stokes=1.947e-18; C2T=2.9818290138e-07 C2E=1.0018085499e-11 C2B=5.7263909190e-14; wall=75.8 s; RSS=145088 kB; vs control d(first rel)=+7.56e-12. Richardson first r=3.8634 limit 3.66058e-06"
+    },
+    {
+     "label": "variant_kernel_r64@48",
+     "n_cells": 48,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.1935500769656116e-06,
+     "first_sky_minus_fluid": [
+      -6.531793384840405e-11,
+      3.3994926899118304e-11,
+      -1.6725197727560656e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.9366234417638046e-05,
+     "second_sky_minus_fluid": [
+      -9.81648044647102e-10,
+      4.946569643659909e-10,
+      -2.470349075404875e-10
+     ],
+     "worst_cell": "idx 5, ln a=-6.456085749, rel=2.205080e-03, cell delta_tau=1.1894e-02, photon_substeps=2",
+     "extra": "VARIANT: transport ell 4 rings 16, moving-Thomson kernel on 64-ring GL grid; |dpi|_F=6.139e-15; max_ham=7.339e-10 max_cod=8.903e-10 stokes=6.497e-19; C2T=2.9849541950e-07 C2E=1.0362467199e-11 C2B=5.9523300636e-14; wall=71.8 s; RSS=158996 kB; vs control d(first rel)=+1.60e-12"
+    },
+    {
+     "label": "variant_kernel_r64@96",
+     "n_cells": 96,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.539644594769108e-06,
+     "first_sky_minus_fluid": [
+      -7.280914625140732e-11,
+      3.6950196806827674e-11,
+      -1.8388734420974218e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.984599283964265e-05,
+     "second_sky_minus_fluid": [
+      -9.922632560445746e-10,
+      4.976525689492684e-10,
+      -2.487646488228787e-10
+     ],
+     "worst_cell": "idx 10, ln a=-6.532943913, rel=6.296408e-04, cell delta_tau=7.1744e-03, photon_substeps=2",
+     "extra": "VARIANT kernel r64; |dpi|_F=1.402e-14; max_ham=7.642e-10 max_cod=1.382e-09 stokes=1.038e-18; C2T=2.9825203921e-07 C2E=1.0081730311e-11 C2B=5.7685429652e-14; wall=92.2 s; RSS=159468 kB; vs control d(first rel)=-5.59e-11 (largest shift of any H4 run, 1.6e-5 of the residual itself)"
+    },
+    {
+     "label": "variant_kernel_r64@192",
+     "n_cells": 192,
+     "first_common_ln_a": -7.224667385642617,
+     "first_relative": 3.629278064029374e-06,
+     "first_sky_minus_fluid": [
+      -7.481584624353531e-11,
+      3.760206823170899e-11,
+      -1.8776441782239288e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.9911379679791056e-05,
+     "second_sky_minus_fluid": [
+      -9.940723173207356e-10,
+      4.974769399761659e-10,
+      -2.4871986407845717e-10
+     ],
+     "worst_cell": "idx 191, ln a=0.000000000, rel=1.829794e-04, cell delta_tau=8.1391e-05, photon_substeps=2",
+     "extra": "VARIANT kernel r64; |dpi|_F=7.872e-16; max_ham=1.117e-09 max_cod=1.362e-09 stokes=1.561e-18; C2T=2.9818290195e-07 C2E=1.0018085449e-11 C2B=5.7263908933e-14; wall=144.2 s; RSS=159560 kB; vs control d(first rel)=-1.53e-13. Richardson first r=3.8612 limit 3.66061e-06"
+    },
+    {
+     "label": "FLRW_null_control@48",
+     "n_cells": 48,
+     "first_relative": 0,
+     "extra": "FLRW, repo unmodified ell 4 rings 16: fluid q/E exactly 0, max|sky q/E|=3.67e-17, max|sky pi/E|=1.11e-16, C2 T/E/B=0/0/0, max_ham=1.387e-09, max_cod=0, stokes reality 0; wall 23.4 s. Relative norm undefined (zero reference); first_relative reported as 0 placeholder"
+    },
+    {
+     "label": "FLRW_null_variant_kernel_r64@48",
+     "n_cells": 48,
+     "first_relative": 0,
+     "extra": "FLRW, VARIANT kernel r64: identical to control (q/E sky 3.67e-17, fluid 0, C2=0, ham 1.387e-09); the moving stage is never built because v_b=0; wall 24.4 s"
+    },
+    {
+     "label": "plumbing_variant_kernel_r16@48",
+     "n_cells": 48,
+     "first_relative": 3.1935484771574664e-06,
+     "extra": "VARIANT loader with kernel rings=16 (= transport grid): q_sky, q_fluid, pi_sky, pi_fluid, thomson_sky and C2 are bit-identical to the control run (np.array_equal True). This validates the copy+importlib variant plumbing; wall 48.9 s"
+    }
+   ],
+   "reproduced_r105_baseline": true,
+   "residual_reduced": false,
+   "conclusion": "H4 is REFUTED, both empirically and structurally.\n\n(1) Reproduction. The unmodified repo solver (SHA f3e00c68\u2026) reproduces R105 at the first common endpoint ln a = -7.224667385642617: relative 3.1935484771574664e-06 at 48 cells, 3.539700455541186e-06 at 96 and 3.6292782170005017e-06 at 192. All three equal the SOLVER_COMMON_TIMES.json values exactly.\n\n(2) Config sweeps (ell_max 6 and 8; GL rings 24 and 32) and the variant (kernel quadrature 64 rings) leave the residual unchanged.\n- At the first common endpoint, the shift in relative norm is at most 9.3e-12 absolute for every config sweep. For the kernel variant it is at most 5.6e-11, i.e. at most 1.6e-5 of the residual itself.\n- |\u0394 sky q/E| and |\u0394 fluid q/E| relative to control are at most 7.2e-16, which is roundoff.\n- The 96\u2192192 trend is +8.958e-08 in all six groups (range 8.9575e-08 to 8.9633e-08), so it still grows in every case.\n- Second common endpoint (ln a = -7.070951058288518): 4.9366e-05, 4.9846e-05, 4.9911e-05 in every group.\n- C2 relative changes are at most 1.1e-9 for T and at most 1.2e-8 for E and B.\n\n(3) Structural audit (H4_RATE_AUDIT.json). At a fixed state and geometry, the Galerkin ell\u22641 moment rate of the sky equation was compared with the exact law used by the fluid ODE.\n- Two parts were compared separately:\n  - geometry + bolometric + shear source vs -(\u0393^a_ca R^cb + \u0393^b_ca R^ac)/H;\n  - moving kernel + emission vs covariant_thomson_four_force.\n- The states carried random ell\u2264L content at 1e-3, and the VI_-1/9 geometry was tested at scale 1 and 1e3, with |\u03b2| of 1.3e-5 and 8.6e-3.\n- Agreement is to 1e-16 to 3e-16 absolute in d(q/E)/dN (relative at most 2.8e-11). This holds for L 4/6/8/12, rings 16/20/24/32/64, and the 64-ring kernel.\n- So the truncated dipole equation is exactly the conservation law, and ell\u22653 content does not leak into it.\n\n(4) Convergence. Richardson on the first-common relative norm gives r = (e96-e48)/(e192-e96) = 3.864 (observed order 1.95) in every group. The limit is 3.6606e-06 (spread 3.66055e-06 to 3.66061e-06), so the residual is converging at second order to a nonzero limit that angular resolution does not affect. For the second common endpoint, r = 7.34\u20137.36 and the limit is 4.9921e-05 to 4.9922e-05.\n\n(5) Pointers for the other lanes (measured here but not tested as hypotheses):\n- The residual is almost purely along fluid q. The parallel fraction d\u00b7qf/|qf|\u00b2 is -3.1931e-06, -3.5396e-06 and -3.6293e-06 at 48/96/192. The perpendicular part is 5.2e-08, 2.1e-08 and 7.7e-09 relative and goes to zero. So the nonzero limit is a magnitude mismatch: sky |q/E| is smaller than fluid |q/E|.\n- Sky and fluid \u03c0/E agree to |\u0394\u03c0|_F \u2264 4e-14 against \u03c0 ~ 1e-6, so this is not a Picard stress lag.\n- In the cell ending at the first common endpoint, the \u0394\u03c4 per photon substep is 0.671, 0.611 and 0.599 (31, 15 and 7 substeps at 48/96/192). Because the depth cap sets these steps, cell refinement barely refines the photon SDIRK step in opaque cells. This is consistent with a limit that is fixed by the \u0394\u03c4 cap; the collision-depth lane should check it (cap 1\u21920.5).\n- Worst cell over all cells: idx 5 at 48 cells (ln a -6.456, rel 2.205e-3, \u0394\u03c4 1.19e-2, 2 substeps); idx 10 at 96 (rel 6.296e-4); idx 191 at 192 (ln a 0, rel 1.830e-4). These fall by about 3.5x per doubling.\n- FLRW null holds for both control and variant: sky q/E \u2264 3.7e-17, fluid 0, C2 = 0.\n- Stokes reality is \u2264 2.7e-18 in every run, max Hamiltonian \u2264 1.32e-9, max Codazzi \u2264 1.79e-9.\n\nNo repo file was edited. All new files are under /home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/angular_resolution/.",
+   "commands": [
+    {
+     "command": "cd /home/cosmosapjw/Dropbox/bianchi/htt_base && export PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1; /usr/bin/time -f '%e s %M kB' .venv/bin/python -B /home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/angular_resolution/h4_angular.py --groups control_l4_r16@48 variant_kernel_r16_plumbing@48 --workers 2 --output /home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/angular_resolution/raw/smoke_48.json",
+     "return_code": 0,
+     "wall_s": 50.28,
+     "maxrss_kB": 142556
+    },
+    {
+     "command": "(same env) /usr/bin/time -f '%e s %M kB' .venv/bin/python -B .../angular_resolution/h4_angular.py --groups control_l4_r16 ell6_r16 ell8_r16 --workers 3 --output .../angular_resolution/raw/ell_sweep.json",
+     "return_code": 0,
+     "wall_s": 211.22,
+     "maxrss_kB": 155100
+    },
+    {
+     "command": "(same env) /usr/bin/time -f '%e s %M kB' .venv/bin/python -B .../angular_resolution/h4_angular.py --groups l4_r24 l4_r32 variant_kernel_r64 FLRW:control_l4_r16 FLRW:variant_kernel_r64 --workers 3 --output .../angular_resolution/raw/rings_kernel_sweep.json",
+     "return_code": 0,
+     "wall_s": 287.47,
+     "maxrss_kB": 159560
+    },
+    {
+     "command": "(same env) /usr/bin/time -f '%e s %M kB' .venv/bin/python -B .../angular_resolution/h4_analyze.py --raw .../raw/ell_sweep.json .../raw/rings_kernel_sweep.json --output .../angular_resolution/H4_ANGULAR_SUMMARY.json",
+     "return_code": 0,
+     "wall_s": 2.17,
+     "maxrss_kB": 135048
+    },
+    {
+     "command": "(same env) /usr/bin/time -f '%e s %M kB' .venv/bin/python -B .../angular_resolution/h4_rate_audit.py --output .../angular_resolution/H4_RATE_AUDIT.json",
+     "return_code": 0,
+     "wall_s": 7.87,
+     "maxrss_kB": 181808
+    }
+   ],
+   "files_created": [
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/angular_resolution/h4_angular.py",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/angular_resolution/h4_analyze.py",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/angular_resolution/h4_rate_audit.py",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/angular_resolution/variant/coupled_hiquad.py",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/angular_resolution/variant/moving_collision_stage_hiquad.py",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/angular_resolution/raw/smoke_48.json",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/angular_resolution/raw/ell_sweep.json",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/angular_resolution/raw/rings_kernel_sweep.json",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/angular_resolution/H4_ANGULAR_SUMMARY.json",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/angular_resolution/H4_RATE_AUDIT.json",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/angular_resolution/logs/smoke_48.log",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/angular_resolution/logs/ell_sweep.log",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/angular_resolution/logs/rings_kernel_sweep.log",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/angular_resolution/logs/analyze.log",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/angular_resolution/logs/rate_audit.log"
+   ],
+   "limit_estimates": "Richardson uses r = (e96-e48)/(e192-e96) and limit = e192 + (e192-e96)/(r-1). It is applied to the first-common relative norm |sky-fluid|/|fluid| at ln a = -7.224667385642617.\n- control l4 r16: r=3.86426, observed order 1.950, limit 3.660553e-06\n- ell6: r=3.86424, limit 3.660555e-06\n- ell8: r=3.86391, limit 3.660561e-06\n- rings24: r=3.86438, limit 3.660547e-06\n- rings32: r=3.86339, limit 3.660575e-06\n- kernel variant r64: r=3.86122, limit 3.660605e-06\n\nSigned components (control): r = 3.736, 4.539, 4.292; limits -7.5549e-11, +3.7786e-11, -1.8894e-11.\n\nSecond common endpoint (ln a = -7.070951058288518): r = 7.338 to 7.361, limits 4.99214e-05 to 4.99217e-05 in all groups.\n\nSo the cells\u2192\u221e residual is about 3.66e-6 (first) and 4.99e-5 (second), independent of ell_max (4\u20138), GL rings (16\u201332) and kernel quadrature (64 rings). Measured sensitivity is below 6e-11 absolute.",
+   "output_json": "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/angular_resolution/H4_ANGULAR_SUMMARY.json (sha256 7d68633a95fca9189cfec1aadc2fbbc6e2343519988eefa4e90bed46e422ed79); structural audit /home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/angular_resolution/H4_RATE_AUDIT.json (sha256 f718ca851b08307c096590a6a9aaf77fc942a4fdb1be628208df95e2407a38c2); raw per-cell data raw/ell_sweep.json (b6da98e3\u2026), raw/rings_kernel_sweep.json (504d2887\u2026), raw/smoke_48.json (ab28ea40\u2026). Input SHA-256: repo solver f3e00c689509a425a9d6b8be44c8f92d7d795ea90501bd4b86763023c2de3dcf, moving_collision_stage e2d2e94f98f3fab70d0030ef8781b91a1019bcdff9075cd21f16e585db2c1504, general_lie_stokes 1d0b5e94d41f4d9aba806ceb4b9ce087ee4a0ccec6dcdc92f9345a5221676357, common_time_moments 933198a2\u2026, native_optical_refinement 6b884553\u2026; variant solver copy dcb8559f\u2026, variant moving stage 60d1189b\u2026. Environment: Python 3.12.3, numpy 2.5.4, scipy 1.18.1, OPENBLAS/OMP/MKL threads 1, at most 3 worker processes (spawn, max_tasks_per_child=1), each worker 133\u2013160 MB peak RSS.",
+   "variant_description": "This variant is code, not configuration. I copied the repo moving_collision_stage.py into variant/moving_collision_stage_hiquad.py and changed only MovingCollisionStage.__init__. It now builds a cached auxiliary GeneralLieStokesOperator with the same L, the same m_values and RINGS=64 Gauss-Legendre rings; the code asserts that the idx table and dim are identical. The Lorentz boost, D, mu, the screen columns and the boosted-isotropic emission are evaluated on that finer grid, and left, right and emission are projected with _project_columns(aux, ...). The loss term -(I + i M_stream(beta)) still uses the transport operator.\n\nI copied the repo coupled_einstein_boltzmann.py into variant/coupled_hiquad.py and changed one import line so that MovingCollisionStage comes from the variant module. Both modules are loaded with importlib.util.spec_from_file_location under unique names and placed in sys.modules before exec_module. After loading I set HYREC_REF_CSV from the repo module.\n\nPlumbing check: with RINGS=16 the variant output is bit-identical to the repo solver. The config sweeps change only the lie_op passed in: angular_basis(ell, rings) from scripts/r105/native_optical_refinement.py, with CoupledSolverConfig(ell_max=ell). Every other setting is the same as in R105 common_time_moments."
+  },
+  {
+   "hypothesis": "H5: the R105 VI_-1/9 first-common sky-vs-fluid photon q/E residual (3.19355e-6 -> 3.53970e-6 -> 3.62928e-6 for 48/96/192 cells) is set either by the fluid Einstein-Euler Radau tolerance (rtol 1e-10, atol 1e-13) or by how sky and fluid q/E are recorded (sol.y vs dense output, conserved-ratio vs T4 path). Control (c) asks whether the residual is a fixed fraction of the photon-baryon tight-coupling slip, which would make it a collision-step error, or is independent of it.",
+   "runs": [
+    {
+     "label": "repo_c48",
+     "n_cells": 48,
+     "first_relative": 3.1935484771574664e-06,
+     "first_common_ln_a": -7.224667385642617,
+     "first_sky_minus_fluid": [
+      -6.531792794966661e-11,
+      3.399494170694829e-11,
+      -1.672501989299338e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.936623490941116e-05,
+     "second_sky_minus_fluid": [
+      -9.816480252737645e-10,
+      4.946569671611997e-10,
+      -2.4703503014427146e-10
+     ],
+     "worst_cell": "idx 5 ln_a=-6.45608574887 rel=2.205080e-03 dtau=0.011894 substeps=2",
+     "extra": "UNMODIFIED repo solver; rtol 1e-10 atol 1e-13; first-common cell 0 dtau=20.8148 substeps=31 (mean depth 0.671); pi/E_xx sky=1.2017143720e-06 fluid=1.2017143452e-06; maxHam=1.043e-09 maxCod=1.187e-09 stokes=6.776e-19; C2 T=2.9849541949e-07 E=1.0362467282e-11 B=5.9523301169e-14; solve 47.2 s, process 48.85 s, 142456 kB"
+    },
+    {
+     "label": "repo_c96",
+     "n_cells": 96,
+     "first_relative": 3.539700455541186e-06,
+     "first_common_ln_a": -7.224667385642617,
+     "first_sky_minus_fluid": [
+      -7.281030845853798e-11,
+      3.695078143405007e-11,
+      -1.8388969465840818e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.984600386296121e-05,
+     "second_sky_minus_fluid": [
+      -9.922633931724325e-10,
+      4.976526248720776e-10,
+      -2.487651405212694e-10
+     ],
+     "worst_cell": "idx 10 ln_a=-6.53294391255 rel=6.296308e-04 dtau=0.00717441 substeps=2",
+     "extra": "UNMODIFIED repo solver; first-common cell 1 dtau=9.16334 substeps=15 (mean 0.611); pi/E_xx sky=1.1406390583e-06 fluid=1.1406390502e-06; maxHam=8.078e-10 maxCod=8.017e-10 stokes=1.195e-18; C2 T=2.9825203916e-07 E=1.0081730334e-11 B=5.7685429810e-14; solve 49.0 s, process 50.11 s, 143096 kB"
+    },
+    {
+     "label": "repo_c192",
+     "n_cells": 192,
+     "first_relative": 3.6292782170005017e-06,
+     "first_common_ln_a": -7.224667385642617,
+     "first_sky_minus_fluid": [
+      -7.481582011426295e-11,
+      3.760204141464588e-11,
+      -1.877661612110159e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.991118148921352e-05,
+     "second_sky_minus_fluid": [
+      -9.94068338078534e-10,
+      4.974749898572936e-10,
+      -2.4871895428375666e-10
+     ],
+     "worst_cell": "idx 191 ln_a=0 rel=1.829813e-04 dtau=8.13907e-05 substeps=2",
+     "extra": "UNMODIFIED repo solver; first-common cell 3 dtau=4.19372 substeps=7 (mean 0.599); pi/E_xx sky=1.1155162279e-06 fluid=1.1155162504e-06; maxHam=1.316e-09 maxCod=1.459e-09 stokes=1.203e-18; C2 T=2.9818290161e-07 E=1.0018085406e-11 B=5.7263908613e-14; solve 56.7 s, process 57.92 s, 143740 kB"
+    },
+    {
+     "label": "varbase_c48 (instrumented variant, R105 tolerances)",
+     "n_cells": 48,
+     "first_relative": 3.1935484771574664e-06,
+     "first_common_ln_a": -7.224667385642617,
+     "first_sky_minus_fluid": [
+      -6.531792794966661e-11,
+      3.399494170694829e-11,
+      -1.672501989299338e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.936623490941116e-05,
+     "second_sky_minus_fluid": [
+      -9.816480252737645e-10,
+      4.946569671611997e-10,
+      -2.4703503014427146e-10
+     ],
+     "worst_cell": "idx 5 ln_a=-6.45608574887 rel=2.205080e-03 dtau=0.011894 substeps=2",
+     "extra": "bit-identical to repo_c48 (all history arrays, final Stokes state SHA, C2); C2 T=2.9849541949e-07 E=1.0362467282e-11 B=5.9523301169e-14; maxHam=1.043e-09 maxCod=1.187e-09 stokes=6.776e-19; process 49.0 s, 141672 kB"
+    },
+    {
+     "label": "varbase_c96",
+     "n_cells": 96,
+     "first_relative": 3.539700455541186e-06,
+     "first_common_ln_a": -7.224667385642617,
+     "first_sky_minus_fluid": [
+      -7.281030845853798e-11,
+      3.695078143405007e-11,
+      -1.8388969465840818e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.984600386296121e-05,
+     "second_sky_minus_fluid": [
+      -9.922633931724325e-10,
+      4.976526248720776e-10,
+      -2.487651405212694e-10
+     ],
+     "worst_cell": "idx 10 ln_a=-6.53294391255 rel=6.296308e-04 dtau=0.00717441 substeps=2",
+     "extra": "bit-identical to repo_c96; process 49.8 s, 144076 kB"
+    },
+    {
+     "label": "varbase_c192",
+     "n_cells": 192,
+     "first_relative": 3.6292782170005017e-06,
+     "first_common_ln_a": -7.224667385642617,
+     "first_sky_minus_fluid": [
+      -7.481582011426295e-11,
+      3.760204141464588e-11,
+      -1.877661612110159e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.991118148921352e-05,
+     "second_sky_minus_fluid": [
+      -9.94068338078534e-10,
+      4.974749898572936e-10,
+      -2.4871895428375666e-10
+     ],
+     "worst_cell": "idx 191 ln_a=0 rel=1.829813e-04 dtau=8.13907e-05 substeps=2",
+     "extra": "bit-identical to repo_c192; process 63.83 s, 144432 kB"
+    },
+    {
+     "label": "vartight_c48 (H5a: Radau rtol 1e-12, atol 1e-15)",
+     "n_cells": 48,
+     "first_relative": 3.1934840935849146e-06,
+     "first_common_ln_a": -7.224667385642617,
+     "first_sky_minus_fluid": [
+      -6.531662175709931e-11,
+      3.399428962541011e-11,
+      -1.672457348121919e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.9365090122921556e-05,
+     "second_sky_minus_fluid": [
+      -9.81625252471105e-10,
+      4.946455968602722e-10,
+      -2.4702912875053146e-10
+     ],
+     "worst_cell": "idx 5 ln_a=-6.45608574887 rel=2.205077e-03 dtau=0.011894 substeps=2",
+     "extra": "first-common change vs base -2.02e-5 (fractional); fluid q/E moved by <=6.4e-17; first-common cell 0 dtau=20.8148 substeps=31; pi/E_xx sky=1.2017143456e-06 fluid=1.2017143368e-06; maxHam=9.780e-12 maxCod=1.019e-08 stokes=4.195e-19; C2 T=2.9849541944e-07 E=1.0362467190e-11 B=5.9523300562e-14; solve 76.9 s, process 78.6 s, 145324 kB"
+    },
+    {
+     "label": "vartight_c96",
+     "n_cells": 96,
+     "first_relative": 3.5426150457362267e-06,
+     "first_common_ln_a": -7.224667385642617,
+     "first_sky_minus_fluid": [
+      -7.28704290986937e-11,
+      3.698085426141642e-11,
+      -1.8404152182442777e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.984494537227201e-05,
+     "second_sky_minus_fluid": [
+      -9.922424197049222e-10,
+      4.976421224546604e-10,
+      -2.4875933958309584e-10
+     ],
+     "worst_cell": "idx 10 ln_a=-6.53294391255 rel=6.296237e-04 dtau=0.00717441 substeps=2",
+     "extra": "first-common change vs base +8.23e-4 (fractional); fluid q/E moved by <=3.9e-14 (4.7e-4 of residual); pi/E_xx sky=1.1406390601e-06 fluid=1.1406390627e-06; maxHam=1.070e-11 maxCod=1.089e-08 stokes=1.492e-18; C2 T=2.9825203923e-07 E=1.0081730335e-11 B=5.7685429824e-14; solve 86.8 s, process 88.01 s, 143876 kB"
+    },
+    {
+     "label": "vartight_c192",
+     "n_cells": 192,
+     "first_relative": 3.629368812813353e-06,
+     "first_common_ln_a": -7.224667385642617,
+     "first_sky_minus_fluid": [
+      -7.481771756632062e-11,
+      3.7603010189944577e-11,
+      -1.8776905551412635e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.991186560277838e-05,
+     "second_sky_minus_fluid": [
+      -9.940819641959125e-10,
+      4.97481793664689e-10,
+      -2.4872239005860786e-10
+     ],
+     "worst_cell": "idx 191 ln_a=0 rel=1.829776e-04 dtau=8.13907e-05 substeps=2",
+     "extra": "first-common change vs base +2.50e-5 (fractional); pi/E_xx sky=1.1155162450e-06 fluid=1.1155162458e-06; maxHam=1.165e-11 maxCod=2.138e-11 stokes=2.336e-18; C2 T=2.9818290208e-07 E=1.0018085474e-11 B=5.7263909130e-14; solve 93.3 s, process 94.48 s, 145644 kB"
+    },
+    {
+     "label": "stash_variant_c384 (sky vs Radau fluid, R105 settings; variant bit-identical to repo at 48/96/192)",
+     "n_cells": 384,
+     "first_relative": 3.6465812493841566e-06,
+     "first_common_ln_a": -7.224667385642617,
+     "first_sky_minus_fluid": [
+      -7.52342448966613e-11,
+      3.7675882745102744e-11,
+      -1.8830904423572392e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 1.3282583674305857e-05,
+     "second_sky_minus_fluid": [
+      -2.6454767397570593e-10,
+      1.3238722637132043e-10,
+      -6.618892522760353e-11
+     ],
+     "worst_cell": "idx 0 ln_a=-7.35916917208 rel=1.288611e-03 dtau=3.08048 substeps=4",
+     "extra": "first-common cell 7 dtau=1.9944 substeps=3; second-common cell 15 dtau=0.6226 substeps=2 (depth 0.311, so the min-2-substep rule rather than the cap sets the depth -> residual 3.76x lower than 192); pi/E_xx sky=1.1063963429e-06 fluid=1.1063963464e-06; maxHam=1.066e-09 maxCod=8.678e-10 stokes=1.166e-18; C2 T=2.9816548513e-07 E=1.0008706244e-11 B=5.7200569207e-14; solve 80.4 s, process incl. mimics 339.36 s, 144748 kB"
+    },
+    {
+     "label": "fluid-eq SDIRK replica cap1.0 c48 (mimic minus Radau fluid)",
+     "n_cells": 48,
+     "first_relative": 3.363937519889706e-06,
+     "first_common_ln_a": -7.224667385642617,
+     "first_sky_minus_fluid": [
+      -6.764615576338741e-11,
+      3.75147565430682e-11,
+      -1.852340886233895e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.9535434716412504e-05,
+     "second_sky_minus_fluid": [
+      -9.826238338563292e-10,
+      5.001732776158195e-10,
+      -2.496755435328941e-10
+     ],
+     "worst_cell": "max over all cells rel(sky-mimic)=4.475e-05 (idx 47) vs max rel(sky-fluid)=2.205e-03",
+     "extra": "sky-mimic rel first=1.940e-07 second=2.714e-07; fraction of residual explained 0.9392 / 0.9945; stage-geometry option gives 3.389e-06 / 4.946e-05"
+    },
+    {
+     "label": "fluid-eq SDIRK replica cap1.0 c96",
+     "n_cells": 96,
+     "first_relative": 3.545560155333043e-06,
+     "first_common_ln_a": -7.224667385642617,
+     "first_sky_minus_fluid": [
+      -7.277699957567796e-11,
+      3.72584387828116e-11,
+      -1.853061584725286e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.989308698953966e-05,
+     "second_sky_minus_fluid": [
+      -9.922808858054799e-10,
+      4.996126123303944e-10,
+      -2.496812020102903e-10
+     ],
+     "worst_cell": "max rel(sky-mimic)=4.381e-05 (idx 95)",
+     "extra": "sky-mimic rel first=1.439e-08 second=9.480e-08; explained 0.9959 / 0.9981"
+    },
+    {
+     "label": "fluid-eq SDIRK replica cap1.0 c192",
+     "n_cells": 192,
+     "first_relative": 3.6273885696281047e-06,
+     "first_common_ln_a": -7.224667385642617,
+     "first_sky_minus_fluid": [
+      -7.470379248872413e-11,
+      3.770284240451542e-11,
+      -1.881633761257847e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 4.993050665584641e-05,
+     "second_sky_minus_fluid": [
+      -9.941960300944306e-10,
+      4.980831633928331e-10,
+      -2.4901150016832775e-10
+     ],
+     "worst_cell": "max rel(sky-mimic)=4.369e-05 (idx 191)",
+     "extra": "sky-mimic rel first=6.591e-09 second=3.010e-08; explained 0.9982 / 0.9994"
+    },
+    {
+     "label": "fluid-eq SDIRK replica cap1.0 c384",
+     "n_cells": 384,
+     "first_relative": 3.6462563542437545e-06,
+     "first_common_ln_a": -7.224667385642617,
+     "first_sky_minus_fluid": [
+      -7.520575308000792e-11,
+      3.770851945819121e-11,
+      -1.8844211472110017e-11
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 1.3287925672586385e-05,
+     "second_sky_minus_fluid": [
+      -2.645872461962606e-10,
+      1.3254835780124232e-10,
+      -6.626669771420156e-11
+     ],
+     "worst_cell": "max rel(sky-mimic)=4.368e-05 (idx 383)",
+     "extra": "sky-mimic rel first=1.917e-09 second=8.029e-09; explained 0.9995 / 0.9994"
+    },
+    {
+     "label": "fluid-eq SDIRK replica cap0.5 c48 (prediction for the \u0394\u03c4 cap 1 -> 0.5 run)",
+     "n_cells": 48,
+     "first_relative": 8.456842408544379e-07,
+     "first_common_ln_a": -7.224667385642617,
+     "first_sky_minus_fluid": [
+      -1.5469822065060715e-11,
+      1.1424100482607374e-11,
+      -5.478237988907502e-12
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 1.2528947855214647e-05,
+     "second_sky_minus_fluid": [
+      -2.4534430150875306e-10,
+      1.3152008897678437e-10,
+      -6.53461703041056e-11
+     ],
+     "worst_cell": "n/a (diagnostic replica)",
+     "extra": "predicted solver sky-fluid residual at cap 0.5 (cap-1 model part held fixed): first 6.670e-07, second 1.2356e-05; cap0.25: 2.410e-07 / 3.270e-06; cap0.125: 1.515e-07 / 9.498e-07; cap None (2 fixed substeps): 1.028e-02 / 5.800e-04"
+    },
+    {
+     "label": "fluid-eq SDIRK replica cap0.5 c96",
+     "n_cells": 96,
+     "first_relative": 8.618287478607889e-07,
+     "first_common_ln_a": -7.224667385642617,
+     "first_sky_minus_fluid": [
+      -1.7378940280409708e-11,
+      9.556191072357671e-12,
+      -4.6797629765004474e-12
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 1.2913151420935105e-05,
+     "second_sky_minus_fluid": [
+      -2.5561031813576846e-10,
+      1.3124728396415495e-10,
+      -6.54966788786896e-11
+     ],
+     "worst_cell": "n/a",
+     "extra": "predicted solver residual at cap 0.5: first 8.557e-07, second 1.2866e-05; cap0.25 mimic: 1.824e-07 / 3.258e-06"
+    },
+    {
+     "label": "fluid-eq SDIRK replica cap0.5 c192",
+     "n_cells": 192,
+     "first_relative": 9.08887419047329e-07,
+     "first_common_ln_a": -7.224667385642617,
+     "first_sky_minus_fluid": [
+      -1.859730667125867e-11,
+      9.646106020200088e-12,
+      -4.78825892357668e-12
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 1.2883651576293722e-05,
+     "second_sky_minus_fluid": [
+      -2.561962595399431e-10,
+      1.290689934080715e-10,
+      -6.450214259671387e-11
+     ],
+     "worst_cell": "n/a",
+     "extra": "predicted solver residual at cap 0.5: first 9.107e-07, second 1.2864e-05; cap0.25 mimic: 2.185e-07 / 3.214e-06"
+    },
+    {
+     "label": "fluid-eq SDIRK replica cap0.5 c384",
+     "n_cells": 384,
+     "first_relative": 9.21155740569327e-07,
+     "first_common_ln_a": -7.224667385642617,
+     "first_sky_minus_fluid": [
+      -1.8963533671698726e-11,
+      9.586092319648033e-12,
+      -4.783083915646091e-12
+     ],
+     "second_common_ln_a": -7.070951058288518,
+     "second_relative": 1.2871307246207893e-05,
+     "second_sky_minus_fluid": [
+      -2.5628773934896834e-10,
+      1.2839882499918577e-10,
+      -6.419188917243713e-11
+     ],
+     "worst_cell": "n/a",
+     "extra": "first-common mimic-fluid vs cap at 384 cells: 3.646e-06 (1.0), 9.212e-07 (0.5), 2.292e-07 (0.25), 5.407e-08 (0.125): about 4x per halving, i.e. second order in substep depth"
+    }
+   ],
+   "reproduced_r105_baseline": true,
+   "residual_reduced": false,
+   "conclusion": "This is a numerical-convergence finding only, with no physical attribution, and no repo file was edited. The fluid Radau tolerance and the recording of sky/fluid q/E are both ruled out. The residual is the photon cell's SDIRK(2,2) collision-substep error acting on the physical tight-coupling slip.\n\nR105 baseline: the unmodified repo solver (sha f3e00c68, identical to b234bb0e0) reproduces the R105 first-common values exactly: 3.1935484771574664e-6, 3.539700455541186e-6 and 3.6292782170005017e-6. The instrumented variants are bit-identical to repo at 48, 96 and 192 cells (all history arrays, final Stokes SHA, C2).\n\n(a) Radau rtol 1e-12, atol 1e-15:\n- First-common residual: 3.193484e-6, 3.542615e-6 and 3.629369e-6 (fractional change \u22122.0e-5, +8.2e-4, +2.5e-5).\n- 96\u2192192 change: 8.675e-8, against 8.958e-8 at R105 tolerances.\n- Fluid q/E moves by at most 3.9e-14, which is at most 4.7e-4 of the residual.\n- Second-common residual is unchanged to within 2.3e-5.\n- Max Hamiltonian improves from about 1e-9 to about 1e-11. Max Codazzi rises to 1.02e-8 and 1.09e-8 at 48 and 96 cells (2.1e-11 at 192); this is unexplained but far below the 1e-6 abort level.\n- Not reduced.\n\n(b) Recording:\n- sol.sol(N_end) equals sol.y[:, i1] exactly at 48 and 96 cells; at 192 cells the largest difference is 1.3e-23 absolute (9.0e-16 relative).\n- Fluid q/E recomputed from the dense output equals the recorded value with zero difference.\n- The raw conserved ratio r and the T4-derived q/E differ by at most 1.4e-20.\n- opacity.rate(N_end) and opacity_per_efold[i1] differ by at most 1.7e-18.\n- The opacity rate is the exact derivative of the cell depths (same PCHIP), so there is no clock mismatch.\n\n(c) Slip:\n- First common endpoint (rate 98.40 per e-fold): fluid slip q/E \u2212 4v_b/(3+v_b\u00b2) has magnitude 5.36e-8, which is 2.27e-3 of |q/E|. The residual equals \u22121.408e-3, \u22121.562e-3 and \u22121.602e-3 times the slip at 48, 96 and 192 cells, with cos(residual, slip) between \u22120.99987 and \u22120.999998.\n- Second common endpoint (rate 29.46): slip 1.81e-7 (7.94e-3 of |q/E|); residual/slip is \u22126.217e-3, \u22126.287e-3 and \u22126.296e-3.\n- The fluid slip matches the zeroth-order tight-coupling prediction (G \u2212 dr_eq/dN)/rate at a ratio of 0.945 (first) and 0.76 (second), as expected from the neglected ds/dN/rate term.\n- So the residual is a stable fraction of a physical slip, not Radau noise.\n\nDecisive replica: I integrated the fluid's own photon-momentum equation with the photon cell's exact SDIRK(2,2) scheme (same substep edges and depths, stage-time v_b, midpoint geometry).\n- With cap 1, replica \u2212 Radau at the first endpoint is 3.364e-6, 3.546e-6, 3.627e-6 and 3.646e-6 for 48, 96, 192 and 384 cells, against sky \u2212 fluid of 3.194e-6, 3.540e-6, 3.629e-6 and 3.647e-6.\n- It explains 93.9%, 99.6%, 99.8% and 99.95% of the first-endpoint residual and 99.45\u201399.97% at the second endpoint.\n- Over all cells, sky \u2212 replica stays at or below 4.5e-5 relative, while sky \u2212 fluid peaks at 2.2e-3.\n- Halving the cap cuts the error about 4\u00d7 per halving: at 384 cells, 3.646e-6 (cap 1), 9.21e-7 (0.5), 2.29e-7 (0.25), 5.4e-8 (0.125). This is second order in substep depth.\n\nWhy the residual grows with refinement: the cap keeps the substep depth at about 0.6\u20130.7 (mean 0.671, 0.611, 0.599, 0.665 at the first endpoint), so cell refinement does not shrink it. Once \u0394\u03c4_cell/2 falls below the cap, the error falls as depth\u00b2. This is seen at the second endpoint, where 384 cells (2 substeps of 0.311) give 1.328e-5 against 4.991e-5 at 192 cells.\n\nMechanism (offline scalar toy, no solver calls): sampling stage velocities at uniform-N fractions of a substep whose rate is frozen at its average (rate falls about 5% per substep) gives residual/slip of \u22121.61e-3 to \u22121.65e-3 and \u22126.293e-3, matching the solver within 1\u20133%. The 48-cell first-endpoint case agrees only within 14%, because its toy start uses extrapolated inputs. Placing stages at \u03c4 fractions gives +9.6e-4 and +1.56e-3, the opposite sign. The exact SDIRK steady lag for uniform-\u03c4 quadratic forcing is \u03b4 = a\u00b7h\u00b2(7\u22125\u221a2)/(2(10h\u22127\u221a2h+4\u22122\u221a2)). It gets the magnitude right (0.47\u20131.30 of measured) but not the sign.\n\nRemaining sky \u2212 replica (angular vs fluid model plus geometry): 1.9e-7, 1.4e-8, 6.6e-9 and 1.9e-9 relative at the first endpoint for 48, 96, 192 and 384 cells, so it converges with cells.\n\nPredictions for the cap 1\u21920.5 run, assuming the cap-1 model part stays fixed: first endpoint 6.67e-7, 8.56e-7 and 9.11e-7; second endpoint 1.236e-5, 1.287e-5 and 1.286e-5, at 48, 96 and 192 cells.\n\nCandidate fixes for the solver owner (I made no fix): place stage velocities by \u03c4 fraction or carry rate variation inside each substep, and/or tighten the cap, since the error scales as cap\u00b2.",
+   "limit_estimates": "Richardson with r = (e96 \u2212 e48)/(e192 \u2212 e96), limit = e192 + (e192 \u2212 e96)/(r \u2212 1), on the first-common relative residual:\n- Repo/varbase: r = 3.8643 (log2 r = 1.95), limit 3.66055e-6.\n- Tight tolerance: r = 4.0244, limit 3.65805e-6.\n- Second common: repo r = 7.361, limit 4.99214e-5; tight r = 7.171, limit 4.99227e-5.\n- 96/192/384 (stash variant): r = 5.177, limit 3.65072e-6.\n- Replica (cap 1) 48/96/192: r = 2.22, limit 3.694e-6.\n\nThese limits are pre-asymptotic. They hold only while the depth cap, rather than the minimum of 2 substeps, sets the substep depth. Once \u0394\u03c4_cell < 2\u00b7cap near an endpoint, the residual falls as (\u0394\u03c4_cell/2)\u00b2. At the second endpoint, 384 cells already give 1.328e-5 against 4.991e-5 at 192 cells, which breaks the three-level fit (r = \u22120.0018). The cells\u2192\u221e limit at fixed cap is therefore not a constant. Its true limit is controlled by substep depth, about 0.0303\u00b7h\u00b2\u00b7|g''| at leading order.",
+   "variant_description": "Copies only, outside the repo; htt/bass/transport/coupled_einstein_boltzmann.py untouched (sha f3e00c68\u2026).\n(1) coupled_h5_variant.py (sha fbc9c140\u2026, built by make_variant.py with asserted single-occurrence patches; diff in variant.diff): Radau rtol/atol read from module globals RADAU_RTOL/RADAU_ATOL (defaults 1e-10/1e-13), plus read-only per-cell diagnostics in record_history: fluid q/E from sol.sol(N_end) via _unpack, raw conserved ratio, max |sol.sol \u2212 sol.y|, v_b(N_end), opacity.rate(N_end) and opacity_per_efold[i1], full d r_gamma/dN from ode_rhs, its Thomson part (F[1:] \u2212 r F[0])/E, and d v_b/dN. H5a uses rtol 1e-12, atol 1e-15.\n(2) coupled_h5_variant_stash.py (sha b28367dd\u2026, diff in variant_stash.diff): v1 plus a module-level stash of the final-Picard OdeSolution, opacity, ode_rhs and _unpack.\nmimic_case.py integrates the fluid photon-ratio equation dr/dN = G + rate\u00b7c(r, v_b) with the photon cell's SDIRK(2,2) stage structure (_optical_substeps edges and depths for caps 1/0.5/0.25/0.125/None; collision at stage times; geometry at the midpoint or at stage times), using Newton with stage residuals at or below 2.8e-20.\nBoth variants are loaded with spec_from_file_location under unique names, registered in sys.modules before exec_module, with HYREC_REF_CSV reset to the repo path. Settings for all runs: VI_-1/9, epsilon 2e-4, ell_max 4, GL rings 16 (angular_basis(4,16)), n_picard 4, substeps_per_cell 2, max_substep_depth 1.0, f_nu 0.",
+   "commands": [
+    {
+     "command": "run_one.sh repo_c48: .venv/bin/python -B ode_control/run_case.py --solver repo --cells 48 --rtol 1e-10 --atol 1e-13",
+     "return_code": 0,
+     "wall_s": 48.85,
+     "maxrss_kB": 142456
+    },
+    {
+     "command": "run_one.sh varbase_c48: run_case.py --solver variant --cells 48 --rtol 1e-10 --atol 1e-13",
+     "return_code": 0,
+     "wall_s": 49,
+     "maxrss_kB": 141672
+    },
+    {
+     "command": "run_one.sh vartight_c48: run_case.py --solver variant --cells 48 --rtol 1e-12 --atol 1e-15",
+     "return_code": 0,
+     "wall_s": 78.6,
+     "maxrss_kB": 145324
+    },
+    {
+     "command": "run_one.sh repo_c96: run_case.py --solver repo --cells 96",
+     "return_code": 0,
+     "wall_s": 50.11,
+     "maxrss_kB": 143096
+    },
+    {
+     "command": "run_one.sh varbase_c96: run_case.py --solver variant --cells 96 --rtol 1e-10 --atol 1e-13",
+     "return_code": 0,
+     "wall_s": 49.8,
+     "maxrss_kB": 144076
+    },
+    {
+     "command": "run_one.sh vartight_c96: run_case.py --solver variant --cells 96 --rtol 1e-12 --atol 1e-15",
+     "return_code": 0,
+     "wall_s": 88.01,
+     "maxrss_kB": 143876
+    },
+    {
+     "command": "run_one.sh repo_c192: run_case.py --solver repo --cells 192",
+     "return_code": 0,
+     "wall_s": 57.92,
+     "maxrss_kB": 143740
+    },
+    {
+     "command": "run_one.sh varbase_c192: run_case.py --solver variant --cells 192 --rtol 1e-10 --atol 1e-13",
+     "return_code": 0,
+     "wall_s": 63.83,
+     "maxrss_kB": 144432
+    },
+    {
+     "command": "run_one.sh vartight_c192: run_case.py --solver variant --cells 192 --rtol 1e-12 --atol 1e-15",
+     "return_code": 0,
+     "wall_s": 94.48,
+     "maxrss_kB": 145644
+    },
+    {
+     "command": "run_mimic.sh 48: .venv/bin/python -B ode_control/mimic_case.py --cells 48",
+     "return_code": 0,
+     "wall_s": 117.78,
+     "maxrss_kB": 143068
+    },
+    {
+     "command": "run_mimic.sh 96: mimic_case.py --cells 96",
+     "return_code": 0,
+     "wall_s": 161.92,
+     "maxrss_kB": 143200
+    },
+    {
+     "command": "run_mimic.sh 192: mimic_case.py --cells 192",
+     "return_code": 0,
+     "wall_s": 223.14,
+     "maxrss_kB": 144444
+    },
+    {
+     "command": "run_mimic.sh 384: mimic_case.py --cells 384",
+     "return_code": 0,
+     "wall_s": 339.36,
+     "maxrss_kB": 144748
+    },
+    {
+     "command": ".venv/bin/python -B make_variant.py",
+     "return_code": 0,
+     "wall_s": 0.02,
+     "maxrss_kB": 15928
+    },
+    {
+     "command": ".venv/bin/python -B make_variant_stash.py",
+     "return_code": 0,
+     "wall_s": 0.03,
+     "maxrss_kB": 16360
+    },
+    {
+     "command": ".venv/bin/python -B analyze.py (first attempt; ValueError: nested_samples needs the full coarse grid, fixed)",
+     "return_code": 1,
+     "wall_s": 1.92,
+     "maxrss_kB": 130076
+    },
+    {
+     "command": ".venv/bin/python -B analyze.py (final)",
+     "return_code": 0,
+     "wall_s": 1.38,
+     "maxrss_kB": 132044
+    },
+    {
+     "command": ".venv/bin/python -B analytic_lag.py",
+     "return_code": 0,
+     "wall_s": 1.23,
+     "maxrss_kB": 129392
+    },
+    {
+     "command": ".venv/bin/python -B toy_stage_placement.py (final)",
+     "return_code": 0,
+     "wall_s": 0.96,
+     "maxrss_kB": 83772
+    },
+    {
+     "command": "xargs -P 3 -L 1 ./run_one.sh < batch1.txt",
+     "return_code": 0,
+     "wall_s": 78.61,
+     "maxrss_kB": 145324
+    },
+    {
+     "command": "xargs -P 3 -L 1 ./run_one.sh < batch2.txt",
+     "return_code": 0,
+     "wall_s": 144.33,
+     "maxrss_kB": 145644
+    }
+   ],
+   "files_created": [
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/ode_control/make_variant.py",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/ode_control/coupled_h5_variant.py",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/ode_control/variant.diff",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/ode_control/make_variant_stash.py",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/ode_control/coupled_h5_variant_stash.py",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/ode_control/variant_stash.diff",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/ode_control/run_case.py",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/ode_control/run_one.sh",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/ode_control/mimic_case.py",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/ode_control/run_mimic.sh",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/ode_control/analyze.py",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/ode_control/analytic_lag.py",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/ode_control/toy_stage_placement.py",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/ode_control/H5_ODE_CONTROL.json",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/ode_control/ANALYTIC_LAG.json",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/ode_control/TOY_STAGE_PLACEMENT.json",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/ode_control/COMMANDS.json",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/ode_control/runs/ (repo|varbase|vartight)_c(48|96|192).{json,npz}, mimic_c(48|96|192|384).{json,npz}",
+    "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/ode_control/logs/ (*.cmd, *.rc, *.time, *.log per run)"
+   ],
+   "output_json": "/home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/ode_control/H5_ODE_CONTROL.json"
+  }
+ ],
+ "synthesis": {
+  "causal_terms": [
+   "CAUSE (numerical convergence; no physical attribution): the Thomson collision substep in the photon cell, `_advance_moving_photon_cell` (htt/bass/transport/coupled_einstein_boltzmann.py lines 342-377). SDIRK(2,2) freezes the collision rate at the substep average, `rate = depth/h` (and emission `gamma*depth*moving.emission`), at both stages. The electron velocity, by contrast, is sampled at the stage times u_j+gamma*h and u_{j+1}. The stages therefore evaluate an inconsistent non-autonomous right-hand side, and the error is O(depth^2) per substep.",
+   "WHY CELLS DO NOT REMOVE IT: `_optical_substeps(..., max_substep_depth=1.0)` sets the substep depth in opaque cells to 0.50-0.97 regardless of n_cells. The error is A*cap^2 with A = -3.388e-6, -3.595e-6, -3.640e-6 at the first endpoint (48/96/192 cells) and about -4.99e-5 at the second. The 48-384-cell plateau, and the R105 Richardson 'nonzero limit' of 3.66e-6, is this cap term. It is not a true cells->infinity limit: at fixed cap, once dtau_cell/2 < cap, the 2-substep minimum takes over and the residual falls (H3: 1.249e-6 at 768 cells, 3.169e-7 at 1536).",
+   "WHY IT GROWS WITH REFINEMENT (same cause, no physics): the opposite-sign cell term B(N) = +1.95e-7, +5.53e-8, +1.12e-8 decays at order about 1.7-1.9 and unmasks the fixed-cap term. On top of that, |A| grows 7% because the substep layout changes with the cell edges: 3.193e-6 = 3.388e-6 - 0.195e-6; 3.540e-6 = 3.595e-6 - 0.055e-6; 3.629e-6 = 3.640e-6 - 0.011e-6."
+  ],
+  "non_causal_terms": [
+   "Picard lag, n_picard 4->8 (H3a): the first-common signed vector changes by at most 6.9e-16 absolute; the Richardson value is 3.660562e-6 vs 3.660553e-6.",
+   "Midpoint pi/E averaging, half-cell midpoint stress (H3c): changes of -1.2e-12 at 48 cells and at most 1.4e-13 at 96-1536 cells; same plateau (3.6547e-6 vs 3.6606e-6). At 1536 cells it equals the control to 1.7e-5 relative.",
+   "pi feedback (H3b/b2/b3): physically required, not causal. Removing it adds a near-constant signed offset [+2.45e-11, -1.18e-11, +7.14e-12] (1.19e-6 of |q|), which is the (pi/E)\u00b7v_b equilibrium shift [2.37e-11, -5.57e-12, 4.18e-12]. That creates a new nonzero limit (8.735e-7 at 1536 cells with the sign flipped), and the 48->192 growth persists (+0.48e-6). It shifts the result additively and does not scale the cap term.",
+   "Stage-time geometry and shear source (H2): same limit, 3.6433e-6 vs repo 3.6606e-6 (96/192/384: 3.6574e-6 vs 3.6507e-6). Same additive offset at cap 0.5 (+1.449e-7 vs +1.463e-7 at 48 cells). Not causal for the parallel residual. It does fix two real, separate errors: the transverse part (5.17e-8 -> 2.2e-9 at 48 cells) and a first-order pi/E endpoint error (|pi/E|_F +8.94% -> +0.20% at 48 cells).",
+   "Angular truncation and quadrature (H4): ell_max 6/8, GL rings 24/32 and a 64-ring kernel shift the first-common relative norm by at most 9.3e-12 (configs) and 5.6e-11 (kernel). The 96->192 trend stays +8.958e-8 in all six groups. A structural audit shows the ell<=1 Galerkin rates equal the exact four-force to 1e-16 to 3e-16.",
+   "Fluid Radau tolerance (H5a, rtol 1e-12 / atol 1e-15): fluid q/E moves by at most 3.9e-14 (at most 4.7e-4 of the residual); the residual is 3.193484e-6, 3.542615e-6, 3.629369e-6.",
+   "Recording path (H5b): sol.sol vs sol.y differ by at most 1.3e-23; the conserved-ratio and T4 paths by at most 1.4e-20; opacity.rate(N_end) vs opacity_per_efold[i1] by at most 1.7e-18.",
+   "Judge variant 'stage_norm' (stage-time shape rescaled to reproduce the exact substep depth): at 48 cells, first 4.251e-7 vs 3.840e-7 for the plain stage rate, but second 1.518e-6 vs 5.478e-7. It is worse, so do not adopt it."
+  ],
+  "evidence": [
+   "**A/B control reproduced R105.** All five lanes reproduce the R105 values bit for bit: 3.1935484771574664e-6, 3.539700455541186e-6, 3.6292782170005017e-6 (second endpoint: 4.936623e-5, 4.984600e-5, 4.991118e-5). The repo solver sha256 is f3e00c68...dcf at HEAD b234bb0e0, and SOLVER_COMMON_TIMES.json sha256 is dbd76d3a...2104. The lanes also agree with each other: the 384-cell control is 3.6465812493841566e-6 in H2, H3 and H5. My own control repo_c48 and the variant in frozen mode give identical q_sky, q_fluid and C2 (np.array_equal True).",
+   "**H1 cap scan (only the sky moves).** The cap order at fixed cells is 1.89-2.02 at the first endpoint and 1.94-2.02 at the second. The signed cells-limits by cap 1, 0.5, 0.25, 0.125, 0.0625 are -3.6605e-6, -9.3425e-7, -2.4091e-7, -6.6297e-8, -2.3249e-8. Both orders of the double limit give about -9.1e-9, consistent with zero. Going from cap 1.0 to 0.5 changes the sky by about 5.2e-11 and the fluid by at most 4e-14 (H2 repo_N48_d0.5). The change is one-sided, so the term is causal and not a common-mode shift. At cap 0.0625 the 96->192 trend reverses: 1.86e-7, 4.56e-8, 8.07e-9 (r = 3.75).",
+   "**H3 and H5 independently confirm the plateau mechanism.**\n- H3: the last photon substep before the first endpoint is the same N interval at 48-384 cells (depth 0.970-0.971). The residual then falls to 1.2493e-6 and 3.169e-7 at 768 and 1536 cells, once the substep depth halves to 0.479 and 0.238.\n- H5: integrating the fluid's own photon-momentum equation with the photon cell's SDIRK substeps reproduces 93.9%, 99.6%, 99.8% and 99.95% of the first-endpoint residual (48-384 cells).\n- The residual is antiparallel to the tight-coupling slip (cosine -0.99987 to -0.9999999), with residual/slip = -1.408e-3, -1.562e-3, -1.602e-3 (first) and -6.217e-3, -6.287e-3, -6.296e-3 (second).",
+   "**Judge scalar toy** (dy/dN = -R(N)(y - g), repo partition rule; /home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/judge/TOY_SCHEMES.json and TOY_SCHEMES2.json):\n- The repo scheme gives error/slip -1.637e-3 (R = 98.4, d ln R/dN = -5.5) and -6.529e-3 (R = 29.46, -9.6), the same plateau through 384 cells and drop factors of 2.84 and 3.93 at 768 and 1536 cells. The solver's own factors are 2.92 and 3.94.\n- Evaluating the instantaneous rate at the same stage times as the velocity gives -7.18e-6 and -3.709e-4, i.e. 228x and 17.6x smaller.\n- tau-fraction stage placement only gives +9.31e-4 and +1.668e-3.",
+   "**Judge analytic tight-coupled ramp** (real GeneralLieStokesOperator(2,8), zero geometry, R = R0\u00b7e^{-ku}, beta = vf\u00b7u, closed form with E1; ANALYTIC_RAMP_TC.json):\n- First-endpoint analogue (end rate 98.4 per e-fold, k = 5.5 per e-fold), caps 1/0.5/0.25/0.125: R105 scheme -1.976e-3, -4.667e-4, -1.183e-4, -3.054e-5; stage-time rate -5.49e-5, -1.32e-5, -3.35e-6, -8.67e-7 (36x lower, order 2.0).\n- Second-endpoint analogue: -6.247e-3 vs -4.148e-4 at cap 1.\n- With a constant rate the two schemes are bitwise identical (max diff 0.0).",
+   "**Judge full-solver fix variant** (stage-time rate; variant sha256 a66b5ac5...e5d7, diff 38ba9f11...2729), VI_-1/9, eps 2e-4, ell 4, GL16, picard 4, 2 substeps, f_nu 0, cap 1.0:\n- First-common relative residual: 3.8400e-7, 2.3025e-7, 1.7957e-7, 1.7089e-7 at 48/96/192/384 cells (repo 3.1935e-6, 3.5397e-6, 3.6293e-6, 3.6466e-6). That is 8.3x, 15.4x, 20.2x and 21.3x lower, and it now decreases with refinement (96->192 change -5.07e-8 vs repo +8.96e-8).\n- Signed first-common sky-minus-fluid at 192 cells: [+3.790e-12, -1.702e-12, +8.745e-13] (repo [-7.482e-11, +3.760e-11, -1.878e-11]).\n- Second common endpoint: 5.478e-7, 5.294e-7, 4.485e-7, 1.037e-7 (repo 4.937e-5, 4.985e-5, 4.991e-5, 1.328e-5), about 90-128x lower. Signed at 192: [-8.712e-12, +4.812e-12, -2.393e-12].\n- Worst cell: 48 cells, cell 32 (ln a -2.306, rel 2.90e-4, dtau 1.26e-5, 2 substeps) vs repo cell 5 at 2.205e-3; 96 cells, cell 66 at 6.66e-5 vs 6.30e-4; 192 cells, cell 0 (initial transient, dtau 6.06, 8 substeps) at 6.18e-5 vs repo cell 191 at 1.83e-4. At 384 cells the worst is cell 0 at 1.312e-3, the same pre-existing initial transient as the repo (1.2886e-3).",
+   "**Fix: cap decomposition** (signed parallel component, e = A\u00b7cap^2 + B, caps 1.0 and 0.5):\n- First endpoint: A = +1.860e-7, +1.746e-7, +1.662e-7 (repo -3.388e-6, -3.595e-6, -3.640e-6), so about 20x smaller with the sign flipped. B = +1.945e-7, +5.46e-8, +1.32e-8, unchanged from the repo (+1.95e-7, +5.53e-8, +1.12e-8).\n- Second endpoint: A = -6.22e-7, -5.05e-7, -4.32e-7 (repo about -4.99e-5), about 100x smaller.\n- Cap 0.25 at 192 cells: model prediction 2.36e-8, measured 2.28e-8 (relative 2.396e-8; second endpoint 4.364e-8). For comparison, the repo gives 2.217e-7 / 3.202e-6 at cap 0.25 and 1.10e-8 / 6.51e-8 at cap 0.03125, which needs 1865 substeps against 548.\n- Richardson: cap 1 r = 3.03, limit 1.55e-7; cap 0.5 r = 3.22, limit 3.49e-8. The ratio is 4.4, roughly cap^2. These are plateau values, not true cells->infinity limits.",
+   "**Fix: one-sided, all checks pass.**\n- The sky moves by 3.58e-6 to 4.95e-5 relative, the fluid by at most 2.9e-8 (only through Picard feedback).\n- FLRW null with the fix: max |sky q/E| = 3.673e-17, fluid 0, C2 T/E/B = 0/0/0, Codazzi 0, reality 0, Hamiltonian 1.387e-9 (identical to the repo).\n- VI_-1/9 constraints: max Hamiltonian at most 1.38e-9, Codazzi at most 1.59e-9, Stokes reality at most 2.5e-18.\n- pi/E is unchanged (the separate H2 issue); sky and fluid agree to at most 4.8e-14.\n- C2 at 48/96/192/384 cells: E = 1.009969e-11, 1.002541e-11, 1.001060e-11, 1.000813e-11 (repo 1.036247e-11, 1.008173e-11, 1.001809e-11, 1.000871e-11); T = 2.983759e-7, 2.982105e-7, 2.981715e-7, 2.981626e-7. The error against the repo's 1536-cell C2E (1.000775e-11) falls from 3.55%, 0.74%, 0.10% to 0.92%, 0.18%, 0.03%.\n- Cost: identical substep counts (137/228/412/783); solve 38-59 s vs repo 39-61 s.",
+   "**Judge commands.** All ran from htt_base with PYTHONPATH=.:htt:htt/src, single-threaded BLAS, .venv/bin/python -B, under /usr/bin/time; at most 3 workers; every rc = 0.\n\n| Run | Wall | Peak RSS |\n|---|---|---|\n| toy_schemes.py | 18.01 s | 82068 kB |\n| toy_schemes2.py | 1.53 s | 81712 kB |\n| analytic_ramp.py | 2.57 s | 134036 kB |\n| analytic_ramp_tc.py | 13.92 s | 133452 kB |\n| repo_c48 | 40.07 s | 142208 kB |\n| varfrozen_c48 | 39.81 s | 140432 kB |\n| stage_c48 | 39.24 s | 141396 kB |\n| stage_c96 | 43.72 s | 141728 kB |\n| stage_c192 | 50.75 s | 143768 kB |\n| stage_c384 | 60.08 s | 144516 kB |\n| stagenorm_c48 | 40.57 s | 142192 kB |\n| stage_c48_cap0.5 | 40.87 s | 140052 kB |\n| stage_c96_cap0.5 | 45.00 s | 142724 kB |\n| stage_c192_cap0.5 | 52.60 s | 143928 kB |\n| stage_c192_cap0.25 | 52.21 s | 144224 kB |\n| flrw_stage_c48 | 21.47 s | 136336 kB |\n| analyze.py | 0.08 s | 32372 kB |\n\n- Exact per-run commands are in /home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/judge/logs/*.cmd, with return codes in *.rc and timings in *.time.\n- One background helper (grep plus side check) was stopped because its grep had an empty file list and scanned the whole tree. Its side-check output was complete and is saved in logs/sides_check.log.\n- No repo file was edited: git status shows no change under htt/, HEAD is still b234bb0e0."
+  ],
+  "inconclusive": [
+   "**Residual cap^2 term after the fix.** About +1.66e-7\u00b7cap^2 remains at the first endpoint and about -4.3e-7\u00b7cap^2 at the second. This is consistent with the stage-order-1 SDIRK(2,2) error on the curvature of the equilibrium forcing (toy and analytic tests show the same order 2.0). I did not test whether a stage-order-2 collision scheme removes it; at cap 0.25 it is already at most 1.1e-8 and 2.7e-8.",
+   "**Initial transient in cell 0.** Rel 1.2886e-3 (repo) and 1.312e-3 (fix) at 384 cells; repo 6.16e-3 at 768 and 5.46e-3 at 1536. This comes from the initial conditions not starting in tight-coupled slip equilibrium. It is a separate issue that neither lane addressed.",
+   "**First-order pi/E endpoint error** from the midpoint-frozen geometry and shear source (H2: |pi/E|_F +8.94% / +3.40% / +1.12% / +0.30% at 48-384 cells). This is a real error, but it is separate from the q/E residual and the fix proposed here does not touch it. The H2 stage-geometry variant addresses it and should be validated as its own change.",
+   "**Second endpoint at 384 cells** (1.04e-7 with the fix, 1.328e-5 for the repo). The cell ending there drops to the 2-substep minimum at depth 0.311, so this point mixes in a substep-layout change and is not a clean cells-convergence point.",
+   "**Size of the fix in C2.** Its effect on C2 shrinks with cells (C2E 192-cell error 0.03% vs 0.10%). I did not quantify its effect on observables beyond C2 or on other Bianchi families. Only VI_-1/9 and FLRW were run."
+  ],
+  "next_experiment_if_needed": "The cause is settled and no further diagnosis is needed. The most useful single confirmation is a run with the fix applied to the repo function, at the recommended cap 0.25, at 96/192/384/768 cells, next to the unmodified repo at cap 0.25 as the A/B control, for VI_-1/9 with R105 settings. The conditional prediction is first-common residual \u2248 A'(N)\u00b70.0625 + B(N) \u2248 1.04e-8 + 3e-9 \u2248 1.3e-8 at 384 cells, falling at about second order with no plateau at 768 cells, and second-common at most 3e-8. If 384 or 768 cells show a plateau above about 2e-8, the remaining stage-order-1 term needs a higher stage-order collision scheme; test that next with an ESDIRK3 or Radau-IIA collision stage at cap 1, holding everything else fixed.",
+  "proposed_fix": "This is a numerical-convergence fix with no physical attribution. It is a minimal direct change to htt/bass/transport/coupled_einstein_boltzmann.py, already prototyped bit-for-bit as /home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/judge/variant/coupled_stage_rate.py (diff: variant/variant.diff). Apply its RATE_MODE='stage' path unconditionally.\n\n(1) **`_advance_moving_photon_cell(op, state, delta_N, geometry, shear_source, sub_depths, baryon_velocity_at, *, sub_edges=None, opacity_rate_at=None)`**\n\nFor substep j with u-edges [u_j, u_{j+1}], h = u_{j+1} - u_j and gamma = 1 - 1/sqrt(2):\n- Stage abscissae: u_1 = u_j + gamma\u00b7h and u_2 = u_{j+1}. These are the same times at which `baryon_velocity_at` is already sampled.\n- Stage rates per unit u: r_c = opacity_rate_at(u_c) = delta_N \u00b7 kappa'(N_0 + u_c\u00b7delta_N). Here kappa' is `opacity.rate`, the same PCHIP dtau/dN that the fluid ODE uses as `op_val` in `_unpack`.\n- Stage solves, with M = delta_N\u00b7(base_operator + bolometric_redshift_operator), s = shear_source, and C[v], e[v] the MovingCollisionStage operator and emission:\n  - (I - gamma\u00b7h\u00b7(M + r_1\u00b7C[v_1])) Y_1 = y + gamma\u00b7h\u00b7s + gamma\u00b7h\u00b7r_1\u00b7e[v_1]\n  - (I - gamma\u00b7h\u00b7(M + r_2\u00b7C[v_2])) y_new = y + ((1-gamma)/gamma)\u00b7(Y_1 - y) + gamma\u00b7h\u00b7s + gamma\u00b7h\u00b7r_2\u00b7e[v_2]\n- In code:\n  - `moving.factor_sdirk_stage(m_total, gamma*h, r_c)` and `inc += gamma*h*r_c*moving.emission` replace `rate = depth/h` and `gamma*float(depth)*moving.emission`.\n  - The `op.factor_sdirk_stage(m_total, gamma*h, r_c)` branch for v = 0 also uses r_c.\n  - When `opacity_rate_at is None`, keep the old frozen depth/h path, so existing constant-rate unit-test callers keep working. For a constant rate the two paths are bitwise identical (measured 0.0).\n\n(2) **Call site in `solve_coupled_einstein_boltzmann`** (the `stage_velocity_collision` branch):\n- Define `def _opacity_rate_at(u, n0=n0, dn=dN_cell): return dn*float(opacity.rate(min(n0+u*dn, float(N_eval[i1]))))`.\n- Pass `opacity_rate_at=_opacity_rate_at`.\n- `_optical_substeps` (exact PCHIP depth) is still used, but only for partitioning. The substep count and cost are unchanged.\n\n(3) **What not to do.** Do not renormalize the stage rates to reproduce the exact substep depth ('stage_norm' is 2.8x worse at the second endpoint). Do not change the pi feedback. Do not mix in the H2 stage-geometry change: it fixes the pi/E first-order error and belongs in a separate, separately validated commit.\n\n(4) **Optional config default** (labelled as a convergence setting, not a code fix): `max_substep_depth` 1.0 -> 0.25. With the fix this measured 2.396e-8 / 4.364e-8 at 192 cells with 548 substeps (52 s), against 412 substeps (50 s) at cap 1. Convergence studies should report cap and n_cells as separate axes, fit e = A\u00b7cap^2 + B, and say whether a value is a plateau or a true cells->infinity limit. Record in R106 that the R105 'nonzero cells->infinity limit 3.66e-6' was a pre-asymptotic plateau set by the collision substep cap.",
+  "validation_plan": [
+   "**FLRW zero response.** Keep `test_flrw_null_all_zero_constraints_and_signal` and add the R106 check: FLRW at 48 cells with the fix must give fluid q/E = 0 exactly, max |sky q/E| <= 1e-16 (measured 3.673e-17), C2 T/E/B = 0, Codazzi 0, Stokes reality 0, Hamiltonian <= 1.4e-9 (measured 1.387e-9).",
+   "**Analytic special solution** (new test in htt/bass/transport/test_optical_substeps.py).\n- Setup: GeneralLieStokesOperator(2, n_gl_theta=8), zero LieGeometry, delta_N = 1, OpacityHistory(linspace(0,1,4001), R0\u00b7exp(-k\u00b7u)), beta(u) = (0, 0, vf\u00b7u) with vf = 1e-8, cap in {1, 0.5, 0.25, 0.125}, measured a = -T_10/sqrt(4\u00b7pi/3).\n- Exact answer: a(1) = vf\u00b7[1 - e^{-tau(1)}\u00b7e^{R0/k}/k\u00b7(E1(w(1)) - E1(R0/k))], with tau(u) = (R0/k)(1 - e^{-ku}) and w(u) = (R0/k)e^{-ku}.\n- Case A, R0 = 0.3\u00b798.4\u00b7e^{1.65}, k = 1.65: require |err/slip| <= 1e-4 at cap 1 (measured 5.49e-5; old scheme 1.976e-3) and cap order 1.9-2.1 (measured 2.06, 1.97, 1.95).\n- Case B, R0 = 0.3\u00b729.46\u00b7e^{2.88}, k = 2.88: require <= 1e-3 at cap 1 (measured 4.148e-4; old 6.247e-3).\n- Constant rate: the fix must equal the old scheme bitwise.",
+   "**96/192/384-cell convergence** (VI_-1/9, eps 2e-4, ell 4, angular_basis(4,16), picard 4, 2 substeps, f_nu 0; always run the unmodified solver in the same environment as the A/B control).\n- At cap 1, expect first-common 2.30e-7, 1.80e-7, 1.71e-7 and second-common 5.29e-7, 4.49e-7, 1.04e-7 at 96/192/384, with no growth from 96 to 192.\n- Rerun at caps 0.5 and 0.25 and fit e = A\u00b7cap^2 + B per cell count. Require:\n  - |A_first| <= 2e-7 (measured 1.75e-7, 1.66e-7);\n  - |A_second| <= 6e-7 (measured 5.05e-7, 4.32e-7);\n  - B within 20% of the repo cell term (measured +5.46e-8 / +1.32e-8 vs repo +5.53e-8 / +1.12e-8);\n  - cap-0.25 residual at 192 cells <= 3e-8 first and <= 5e-8 second (measured 2.40e-8 / 4.36e-8).\n- Add 768 cells at cap 0.25 to confirm there is no plateau (conditional prediction about 1.3e-8 at 384).",
+   "**Observables and constraints.**\n- Report C2 T/E/B at 96/192/384 against a 768-cell reference. Fix values: C2E 1.002541e-11, 1.001060e-11, 1.000813e-11; C2T 2.982105e-7, 2.981715e-7, 2.981626e-7.\n- The C2 change between 192 and 384 cells must shrink relative to the repo (repo C2E -6.3e-3 from 96 to 192; fix -1.5e-3).\n- Constraints must stay within the repo envelope: max Hamiltonian <= 1.4e-9, Codazzi <= 1.6e-9, Stokes reality <= 1e-17.\n- Sky and fluid pi/E must agree to <= 1e-13; their absolute value changes only under the separate H2 fix.",
+   "**Regression tests to keep, all expected unchanged because they use a constant rate or the FLRW null.**\n- htt/bass/transport/test_optical_substeps.py: `test_piecewise_optical_integral_and_nested_midpoint`, `test_nonuniform_stages_resolve_analytic_baryon_layer`, and `test_nonuniform_abscissae_and_shared_clock`. Extend the last one so it asserts that opacity_rate_at is called at the same abscissae as the velocity: edges[:-1] + g\u00b7diff, then edges[1:].\n- htt/bass/transport/test_moving_photon_stage_velocity.py (constant velocity matches the cell integrator; opaque cell relaxes to the end-of-cell baryon frame).\n- htt/bass/transport/test_moving_collision_stage.py.\n- htt/bass/transport/test_coupled_einstein_boltzmann.py (FLRW null, constraints across the seven families and VIIh handedness parity, Picard pi backreaction).\n- htt/bass/transport/test_massless_neutrino_split.py.\n- test_tca_switch_smoothness.py.\n- The fix is a consistent Runge-Kutta stage evaluation, not a tight-coupling approximation, so it does not introduce a TCA, UFA or RSA.",
+   "**Records.** Keep the R105 SOLVER_COMMON_TIMES.json (sha256 dbd76d3a...2104) as a historical receipt and write new R106 receipts covering: code diff, variant and solver SHA-256, per-run command, return code, wall time and RSS (as in /home/cosmosapjw/Downloads/htt_r106_analysis/solver_exp/judge/logs/), and the A\u00b7cap^2 + B table. Label everything as numerical convergence, with no physical attribution. The 384-cell cap-0.25 value is a conditional prediction until it has been run."
+  ]
+ },
+ "classification": "numerical convergence; no physical attribution"
+}

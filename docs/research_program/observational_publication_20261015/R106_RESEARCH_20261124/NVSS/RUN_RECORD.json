@@ -1,0 +1,198 @@
+{
+ "schema": "htt.r106.run_record/1",
+ "task": "D3 NVSS independent LSS/selection null with the R65 estimator",
+ "repo_head": "b234bb0e0a9388d735bfa60a3b08041fc86e3cc5",
+ "shell_setup": "cd /home/cosmosapjw/Dropbox/bianchi/htt_base && export PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1",
+ "script": "scripts/r106/radio_null_mocks.py",
+ "script_sha256": "44b7d90e38c2721711d84f14cf105494806ca22991c41095409a3a7740b6b3a9",
+ "runs": [
+  {
+   "command": "/usr/bin/time -f '%e s %M kB' .venv/bin/python -B -m scripts.r106.radio_null_mocks --timing-only --output /home/cosmosapjw/Downloads/htt_r106_analysis/nvss/timing",
+   "return_code": 0,
+   "wall_s": 8.47,
+   "maxrss_kB": 387584,
+   "note": "R65 replay + per-mock timing (0.23 s main mock, 2.48 s NSIDE4 jackknife mock)",
+   "script_sha256": null,
+   "script_sha256_source": "not recorded: the run wrote no JSON (timing-only run, log only)"
+  },
+  {
+   "command": "/usr/bin/time -f '%e s %M kB' .venv/bin/python -B -m scripts.r106.radio_null_mocks --workers 3 --calib-mocks 12 --max-mocks 2000 --budget-seconds 1320 --output /home/cosmosapjw/Downloads/htt_r106_analysis/nvss",
+   "return_code": 1,
+   "wall_s": 88.69,
+   "maxrss_kB": 387092,
+   "note": "IndexError in budget loop (tuple index 4 instead of 3) after calibration; logs in failed_attempt1/; superseded",
+   "script_sha256": null,
+   "script_sha256_source": "not recorded: the run crashed before writing JSON (logs moved to failed_attempt1/)"
+  },
+  {
+   "command": "/usr/bin/time -f '%e s %M kB' .venv/bin/python -B -m scripts.r106.radio_null_mocks --workers 3 --calib-mocks 4 --max-mocks 18 --budget-seconds 300 --output /home/cosmosapjw/Downloads/htt_r106_analysis/nvss/smoke",
+   "return_code": 0,
+   "wall_s": 52.26,
+   "maxrss_kB": 386352,
+   "note": "smoke test, 3 families, superseded",
+   "script_sha256": "b6b40890d7d536c6cd90a23b7fd3b79d18434ba6b501fc6a66ab9eaa593dee12",
+   "script_sha256_source": "/home/cosmosapjw/Downloads/htt_r106_analysis/nvss/smoke/NVSS_NULL_MOCKS.json (script_sha256 written by that run)",
+   "families_in_run": [
+    "LSS_COMMON",
+    "LSS_DIFF_RED",
+    "LSS_DIFF_FLAT"
+   ],
+   "output_json_mtime": "2026-11-24 03:00:41 +0900",
+   "p_self_dipole_shown": {
+    "LSS_COMMON": "0.053 (0/18)",
+    "EMPIRICAL_DIFF_SELECTION_RED": "0.58 (10/18)",
+    "EMPIRICAL_DIFF_SELECTION_FLAT": "0.16 (2/18)"
+   }
+  },
+  {
+   "command": "/usr/bin/time -f '%e s %M kB' .venv/bin/python -B -m scripts.r106.radio_null_mocks --workers 3 --calib-mocks 3 --scale-mocks 3 --max-mocks 18 --budget-seconds 400 --pilot-common 2.4e-4 --pilot-red 2e-2 --pilot-flat 1.3e-3 --output /home/cosmosapjw/Downloads/htt_r106_analysis/nvss/smoke2",
+   "return_code": 0,
+   "wall_s": 98.25,
+   "maxrss_kB": 388028,
+   "note": "smoke test, 4 families + scale diagnostic, superseded",
+   "script_sha256": "44b7d90e38c2721711d84f14cf105494806ca22991c41095409a3a7740b6b3a9",
+   "script_sha256_source": "/home/cosmosapjw/Downloads/htt_r106_analysis/nvss/smoke2/NVSS_NULL_MOCKS.json (script_sha256 written by that run)",
+   "families_in_run": [
+    "LSS_COMMON",
+    "LSS_DIFF_RED",
+    "LSS_DIFF_FLAT",
+    "LSS_DIFF_MID"
+   ],
+   "output_json_mtime": "2026-11-24 03:03:47 +0900",
+   "p_self_dipole_shown": {
+    "LSS_COMMON": "0.053 (0/18)",
+    "EMPIRICAL_DIFF_SELECTION_RED": "0.58 (10/18)",
+    "EMPIRICAL_DIFF_SELECTION_FLAT": "0.16 (2/18)",
+    "EMPIRICAL_DIFF_SELECTION_MID": "0.26 (4/18)"
+   }
+  },
+  {
+   "command": "/usr/bin/time -f '%e s %M kB' .venv/bin/python -B -m scripts.r106.radio_null_mocks --workers 3 --calib-mocks 12 --scale-mocks 9 --max-mocks 2000 --budget-seconds 930 --pilot-common 2.4e-4 --pilot-red 2e-2 --pilot-mid 5e-3 --pilot-flat 1.3e-3 --output /home/cosmosapjw/Downloads/htt_r106_analysis/nvss",
+   "return_code": 0,
+   "wall_s": 785.66,
+   "maxrss_kB": 387348,
+   "note": "FINAL: 2000 mocks x 4 families; 108 NSIDE4-jackknife calibration mocks; 36 NSIDE4+8 shape-diagnostic mocks",
+   "script_sha256": "44b7d90e38c2721711d84f14cf105494806ca22991c41095409a3a7740b6b3a9",
+   "script_sha256_source": "/home/cosmosapjw/Downloads/htt_r106_analysis/nvss/NVSS_NULL_MOCKS.json (script_sha256 written by that run)",
+   "families_in_run": [
+    "LSS_COMMON",
+    "LSS_DIFF_RED",
+    "LSS_DIFF_FLAT",
+    "LSS_DIFF_MID"
+   ],
+   "output_json_mtime": "2026-11-24 03:17:02 +0900",
+   "p_self_dipole_shown": {
+    "LSS_COMMON": "0.0005 (0/2000)",
+    "EMPIRICAL_DIFF_SELECTION_RED": "0.57 (1134/2000)",
+    "EMPIRICAL_DIFF_SELECTION_FLAT": "0.012 (23/2000)",
+    "EMPIRICAL_DIFF_SELECTION_MID": "0.17 (335/2000)"
+   }
+  }
+ ],
+ "total_compute_wall_s": 1033.33,
+ "outputs_sha256": {
+  "NVSS_NULL_MOCKS.json": "9c7d7e6a9b26136605a3ac1efa4c0af73cc9265be2e13f9dda5c7391f75abeed",
+  "NVSS_NULL_MOCK_DRAWS.npz": "1e7f5100331a57e38d6ca2c0aba843943e6c0a03aa80143ab07bffe1837da88d",
+  "radio_null_mocks.log": "e1d5223b9a78e19b07b8a5d4c251c94da9b19bb4cf5b888a99bf3d5a081420c3"
+ },
+ "workers": 3,
+ "maxrss_note": "GNU time %M = largest single process (parent or one forked worker); 4 processes total",
+ "script_sha256_note": "script_sha256 above is the script of smoke2 and the FINAL run; see per-run script_sha256",
+ "design_change_note": "LSS_DIFF_MID (MID_SLOPE=-0.6) and the NSIDE8/4 jackknife shape diagnostic were introduced after smoke run 1 (script b6b40890d7d5..., JSON written 2026-11-24 03:00:41 +0900) had displayed RED/FLAT dipole p_self values ({\"LSS_COMMON\": \"0.053 (0/18)\", \"EMPIRICAL_DIFF_SELECTION_RED\": \"0.58 (10/18)\", \"EMPIRICAL_DIFF_SELECTION_FLAT\": \"0.16 (2/18)\"}); smoke2 and the FINAL run used script 44b7d90e38c2....",
+ "r106_review_followup": {
+  "current_script_sha256": "32e375962eb07c1213a9b2d502416d952e766b5a0a49d4335f66a77e84c575a5",
+  "outputs_dir": "/home/cosmosapjw/Downloads/htt_r106_analysis/nvss/review_followup",
+  "runs": {
+   "C1ZERO": {
+    "stage": "c1zero",
+    "command": "python -B -m scripts.r106.radio_null_mocks --followup c1zero --followup-dir /home/cosmosapjw/Downloads/htt_r106_analysis/nvss/review_followup --workers 3 --n-mocks 1000 --n-nominal 100",
+    "script_sha256": "32e375962eb07c1213a9b2d502416d952e766b5a0a49d4335f66a77e84c575a5",
+    "script_sha256_equals_current": true,
+    "json_sha256": "469622dc363ea83c48cd99a54da4f8332554fd1a81f01d2c21bc9fff697053ed",
+    "npz_sha256": "cf288192ba5bb953c4905b91285b870dcaeb9b2addd9c151949a0b5470e310f0",
+    "elapsed_seconds": 613.3471164703369,
+    "wall_s_gnu_time": 616.63,
+    "maxrss_kB_gnu_time": 390532,
+    "return_code": 0
+   },
+   "AMPLITUDE_NUISANCE": {
+    "stage": "amplitude",
+    "command": "python -B -m scripts.r106.radio_null_mocks --followup amplitude --followup-dir /home/cosmosapjw/Downloads/htt_r106_analysis/nvss/review_followup --workers 3 --n-jk 40 --n-mocks 800 --n-band 500",
+    "script_sha256": "32e375962eb07c1213a9b2d502416d952e766b5a0a49d4335f66a77e84c575a5",
+    "script_sha256_equals_current": true,
+    "json_sha256": "ae9004154f5869686ea8c98f3d594d883f68b338278cc08d61a0c35bbae316c2",
+    "npz_sha256": "f96630c700e7f8e19bd20bf9ab1a5b95c22df697465b28bbba4aefebcd2e72d1",
+    "elapsed_seconds": 503.57270550727844,
+    "wall_s_gnu_time": 506.08,
+    "maxrss_kB_gnu_time": 390308,
+    "return_code": 0
+   },
+   "C1_VALIDATION": {
+    "stage": "validate",
+    "command": "python -B -m scripts.r106.radio_null_mocks --followup validate --followup-dir /home/cosmosapjw/Downloads/htt_r106_analysis/nvss/review_followup --workers 3 --n-mocks 500 --n-boot 200",
+    "script_sha256": "32e375962eb07c1213a9b2d502416d952e766b5a0a49d4335f66a77e84c575a5",
+    "script_sha256_equals_current": true,
+    "json_sha256": "bc713fec3db3d3af01cd2e689800a99d11aee0852c0499f92aecf118cff280f2",
+    "npz_sha256": "f5bf1fd248260eb42bda9e0c84065de797f3e4143e475fe9f1ed372e1302f355",
+    "elapsed_seconds": 105.5986738204956,
+    "wall_s_gnu_time": 107.27,
+    "maxrss_kB_gnu_time": 390312,
+    "return_code": 0
+   }
+  },
+  "smoke_runs": {
+   "C1ZERO": {
+    "stage": "c1zero",
+    "command": "python -B -m scripts.r106.radio_null_mocks --followup c1zero --followup-dir /home/cosmosapjw/Downloads/htt_r106_analysis/nvss/review_followup_smoke --workers 3 --n-mocks 30 --n-nominal 6 --n-jk-check 2",
+    "script_sha256": "d2f9cb46900307f2dc1994d416ee88610b3dfa1aa28934d378192805c0315b97",
+    "script_sha256_equals_current": false,
+    "json_sha256": "a131513d999dacb4b17855cefe1c9faf8938987c158bbd56ec03ac9d56496b31",
+    "npz_sha256": "31618396901937709af4cb68f7ac18f35419fa37016d88b5669fb0b37ad391e5",
+    "elapsed_seconds": 49.668957471847534,
+    "wall_s_gnu_time": 52.63,
+    "maxrss_kB_gnu_time": 391164,
+    "return_code": 0,
+    "note": "smoke test of the follow-up stages, tiny ensembles, superseded"
+   },
+   "AMPLITUDE_NUISANCE": {
+    "stage": "amplitude",
+    "command": "python -B -m scripts.r106.radio_null_mocks --followup amplitude --followup-dir /home/cosmosapjw/Downloads/htt_r106_analysis/nvss/review_followup_smoke --workers 3 --n-jk 4 --n-mocks 12 --n-band 6",
+    "script_sha256": "d2f9cb46900307f2dc1994d416ee88610b3dfa1aa28934d378192805c0315b97",
+    "script_sha256_equals_current": false,
+    "json_sha256": "6013dbb471381a066b46fbe69b040de28a7991949b7012bfaeb9756ab1df99ae",
+    "npz_sha256": "8e81019526ce0d1dbf603a07777a98cc0dbd1f6cef5537a83311ec3dd5e6b6b3",
+    "elapsed_seconds": 24.931877613067627,
+    "wall_s_gnu_time": 29.24,
+    "maxrss_kB_gnu_time": 391156,
+    "return_code": 0,
+    "note": "smoke test of the follow-up stages, tiny ensembles, superseded"
+   },
+   "C1_VALIDATION": {
+    "stage": "validate",
+    "command": "python -B -m scripts.r106.radio_null_mocks --followup validate --followup-dir /home/cosmosapjw/Downloads/htt_r106_analysis/nvss/review_followup_smoke --workers 3 --n-mocks 12 --n-boot 20",
+    "script_sha256": "bfb60d6494f491b82f1f3efa73d40951fdfc3ac609ecf530d144471fe96c78fe",
+    "script_sha256_equals_current": false,
+    "json_sha256": "6e29cb30efaba56e639db1441153b7094c3d940b0992d5d0e19dad286cc36d61",
+    "npz_sha256": "b6701f2745e4f62a88e99a743d93c652c89b753005c4c6274cf183352a565c40",
+    "elapsed_seconds": 4.343383073806763,
+    "wall_s_gnu_time": 7.73,
+    "maxrss_kB_gnu_time": 390576,
+    "return_code": 0,
+    "note": "smoke test of the follow-up stages, tiny ensembles, superseded"
+   }
+  },
+  "report": {
+   "command": "python -B -m scripts.r106.radio_null_mocks --followup report --followup-dir /home/cosmosapjw/Downloads/htt_r106_analysis/nvss/review_followup --n-boot 200 --update-run-record",
+   "json_sha256": "735ae72014af311e7bfa0649adce4584b136aaa15feecb551360e0123feaae0d"
+  },
+  "outputs_sha256": {
+   "AMPLITUDE_NUISANCE.json": "ae9004154f5869686ea8c98f3d594d883f68b338278cc08d61a0c35bbae316c2",
+   "C1ZERO.json": "469622dc363ea83c48cd99a54da4f8332554fd1a81f01d2c21bc9fff697053ed",
+   "C1_VALIDATION.json": "bc713fec3db3d3af01cd2e689800a99d11aee0852c0499f92aecf118cff280f2",
+   "NVSS_REVIEW_CORRECTIONS.json": "735ae72014af311e7bfa0649adce4584b136aaa15feecb551360e0123feaae0d",
+   "AMPLITUDE_NUISANCE_DRAWS.npz": "f96630c700e7f8e19bd20bf9ab1a5b95c22df697465b28bbba4aefebcd2e72d1",
+   "C1ZERO_DRAWS.npz": "cf288192ba5bb953c4905b91285b870dcaeb9b2addd9c151949a0b5470e310f0",
+   "C1_VALIDATION_DRAWS.npz": "f5bf1fd248260eb42bda9e0c84065de797f3e4143e475fe9f1ed372e1302f355"
+  }
+ }
+}

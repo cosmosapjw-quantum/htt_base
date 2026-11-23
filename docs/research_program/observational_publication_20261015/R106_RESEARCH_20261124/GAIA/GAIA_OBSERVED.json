@@ -1,0 +1,1314 @@
+{
+ "schema": "htt.r106.gaia_null_refit.observed/2",
+ "units": "microarcsec/yr per unit z^2; Q dimensionless",
+ "code_identity": {
+  "script": "scripts/r106/gaia_null_refit.py",
+  "script_sha256": "a2c9c68893addeba9f356359aa7e74193e46116d3d0f9501b22c9228342a6e03",
+  "pre_review_script_sha256": "9dd338268206c950caff6fbc6a234a505a4ad2de5e58b44b26628cc0e612189b",
+  "module_sha256": {
+   "scripts/r103/__init__.py": "2301c8001a3b6a41b931c9bf2fcc80982397576f56ba34b38306567a723d8c90",
+   "scripts/r103/gaia_frame_curvature.py": "175203c431e9d3354f7dc7c558aa311d2cb338c01b2e9d4419f877f05e906273",
+   "scripts/r105/gaia_frame_parity.py": "4e2bce871cc35e4337825afe21cc61891621dbc799dbed42c3bf1a12a35e303f",
+   "scripts/r106/__init__.py": "7c828d52fe4f58253704c5cb4e362dcf6ec24f901de7acb04a47b5c3ee89dc0d",
+   "scripts/r67/gaia_frame.py": "79d0dc0db2af66c85594c58846e7920f30eccc6acc744874e1aa5cedb756124f",
+   "scripts/r68/fiveview_geometry.py": "2c76a29f9b920dc8b50ac52347774cdd049c8abf6b6a0b9261be34ddc2d0a44d",
+   "scripts/r69/gaia_e2_b2.py": "4396f6e32f773e0162c053856595a89ebbd4bf9ad0a877e96299a65e133d23a5",
+   "scripts/r106/gaia_null_refit.py": "a2c9c68893addeba9f356359aa7e74193e46116d3d0f9501b22c9228342a6e03"
+  },
+  "git": {
+   "head": "b234bb0e0a9388d735bfa60a3b08041fc86e3cc5",
+   "status_porcelain_of_code_files": [
+    "?? scripts/r106/__init__.py",
+    "?? scripts/r106/gaia_null_refit.py"
+   ]
+  }
+ },
+ "command": {
+  "argv": [
+   "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+   "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r106/gaia_null_refit.py",
+   "observed",
+   "--out",
+   "/home/cosmosapjw/Downloads/htt_r106_analysis/gaia"
+  ],
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "env": {
+   "PYTHONPATH": ".:htt:htt/src",
+   "OPENBLAS_NUM_THREADS": "1",
+   "OMP_NUM_THREADS": "1",
+   "MKL_NUM_THREADS": "1"
+  }
+ },
+ "review_corrections": [
+  {
+   "id": "GNR-1",
+   "change": "Pooled '6000 draws' statements withdrawn; draws of different nulls are never pooled. per_null_ranks gives, for every null separately, draws_ge_observed, rank, max, q95 and q99 for spin6, magnetic16 and joint32 (all48 and the selection-matched exclusion, jk1 and jk2). null_structure states that the three permutation nulls relabel one Quaia realization and the two complement nulls relabel fixed complement samples (subset relation computed). (b+1)/(N+1) is reported only for the within-stratum permutation nulls, as an exact conditional permutation p-value; complement nulls get the rank only. Spin is flagged as selected after R104."
+  },
+  {
+   "id": "GNR-2",
+   "change": "Each null draw applies the R104 influence rule (top delete-one shift-norm patch in curvature row 0, top distinct patch in row 1) to its own all-48 delete-one refits in three sector variants (E2+B2 primary, B2, E2). The excluded-configuration null tables and exclusion ratios use that per-draw selection; the rule spread is reported; the fixed-(8,47) tables survive only under fixed_patch_conditional_diagnostic."
+  },
+  {
+   "id": "GNR-3",
+   "change": "Docstring describes 8/47 as the top row-0 (every sector) and row-1 E2/B2 patches. observed.json replays the R104 per-row/sector delete-one top-5 and worst delete-two pair from the R98 cache (checked against GAIA_PATCH_INFLUENCE.json) and reports observed statistics after the alternative exclusions {32}, {43,47}, {8,47,32}, {8,47,43}, {8,47,32,43} with the largest relative spin6 change."
+  },
+  {
+   "id": "GNR-4",
+   "change": "Docstring restricted to frames evaluated at the shell medians. observed.json adds a direct per-source z-linear frame injection (R105 test frame), its curvature leak, the precision-weighted effective shell redshifts, the leak's own spin6 quadratic form, and the spin slope that a leak-only explanation would need."
+  },
+  {
+   "id": "GNR-5",
+   "change": "Docstring no longer says patch_gmag_colour keeps the magnitude composition. observed.json reports the exact within-stratum-permutation expectation of the shell G and BP-RP curvature and the retained fraction for each permutation null, plus a patch x G8 x C4 stratification that is evaluated but not run as a null."
+  },
+  {
+   "id": "GNR-6",
+   "change": "idealized_hotelling_reference carries a scope string and the empirical/Hotelling q95 ratio for every null, configuration and statistic."
+  },
+  {
+   "id": "GNR-7",
+   "change": "FULL_JOIN sha256 pinned, fail closed if missing or changed, and recorded; the CRF3 FITS sha is verified for every null kind (it sets the BP-RP strata); the R105 parity JSON is checked against a pinned sha; every output JSON records the sha256 of this script and of every imported scripts.* module, git HEAD, the git status of those files, and the command."
+  }
+ ],
+ "input_sha256": {
+  "r98_receipt": "0a56bc358b6048f4b018d93d2b55be2f2ac5526e22191a44ca6a9f1148a9d800",
+  "r98_patch_cache": "70d1bc9c959ccfa0197923fc7d7e950ac790eaa1345ca0aca507ade446464c92",
+  "r105_gaia_frame_parity_json": "6c5d595048d4eb2ac25a780a8d23812b04b571419675423b4d89dfc389375cda",
+  "quaia_crf3_join": "2fbaa40a8afe58066064efa8a7784ac508c5b2c67b41c779676eab7df8cf9ef4",
+  "gaia_crf3_fits": "e69cfff82f762c00d1d6a259c6d003fd20f805f3b1fcd4acc81d847c485120c0"
+ },
+ "median_redshifts": [
+  0.5958884954452515,
+  1.1713351011276245,
+  1.7612881064414978,
+  2.4607839584350586
+ ],
+ "curvature_rows": [
+  [
+   2.9822915238775165,
+   -5.891251253064054,
+   2.9089597291865372,
+   0.0
+  ],
+  [
+   0.0,
+   2.629108178727448,
+   -4.846491265296231,
+   2.2173830865687822
+  ]
+ ],
+ "excluded_patches": [
+  8,
+  47
+ ],
+ "configs": {
+  "all48": {
+   "n_patches": 48,
+   "n_sources_per_shell": [
+    92686,
+    238552,
+    174944,
+    128051
+   ],
+   "curvature_vector_row0_row1": [
+    0.9389244372060171,
+    -10.888937512082135,
+    -2.4889928541538393,
+    -11.071999030757977,
+    29.21593478228075,
+    -4.4531287627978005,
+    0.5048815028233749,
+    2.149054394275576,
+    2.0803992079515616,
+    -6.753333290698958,
+    -22.238042869754317,
+    4.544882352556183,
+    3.8886976390007217,
+    10.457668288419589,
+    -2.0158063556382566,
+    7.51149091639259,
+    3.4146341165634952,
+    9.688037122569668,
+    -0.7500547359824703,
+    -25.452810447860582,
+    0.26847886242368313,
+    8.495108053521824,
+    2.529581675670534,
+    2.0076449532924303,
+    1.2253422145830504,
+    7.1693550172623075,
+    9.126515861411612,
+    -7.1806172855879025,
+    -5.609748310902495,
+    -7.745849707046138,
+    10.876364369033192,
+    -10.181466793706777
+   ],
+   "shell_fit_coefficients_microasyr": [
+    [
+     -0.7614893559287198,
+     -4.116285964889502,
+     -2.262937631919673,
+     -6.625358484061528,
+     4.555792638242961,
+     1.4070987254909668,
+     -1.7350651450786014,
+     0.23023719292265596,
+     -4.311194991983586,
+     -4.174358154361842,
+     -0.3398701811930406,
+     -0.4955288753361735,
+     3.931658166940245,
+     1.9268601032669466,
+     0.7196676360798437,
+     -2.679234347611087
+    ],
+    [
+     -0.9345536191435282,
+     -3.342245613760586,
+     -1.7713935603276243,
+     2.129858700095492,
+     -2.382740634877132,
+     0.0416959872977185,
+     -2.5816217780862787,
+     1.1968785384416567,
+     -3.708818404612993,
+     -3.1198483069965715,
+     4.939614815831757,
+     0.4512835502681799,
+     2.251628903253891,
+     0.34575884280557784,
+     0.45098798217148045,
+     -2.7631681173727447
+    ],
+    [
+     -0.7892108192098153,
+     -6.291933589046051,
+     -2.1230880597625545,
+     7.299614340358578,
+     0.5472434856304449,
+     -2.888959150363694,
+     -3.275958364465399,
+     2.9266586502665675,
+     -2.37608706435024,
+     -4.3603183880537655,
+     2.7075180812013078,
+     2.9843378755676584,
+     1.8660479745447363,
+     2.3197852768392275,
+     -0.5174294839978723,
+     -0.26702632709233104
+    ],
+    [
+     0.9230580636847205,
+     -5.420190517782808,
+     -2.8783466485938414,
+     1.9505324952470007,
+     4.142348059791912,
+     -2.532638825358781,
+     -2.958423842850092,
+     5.883037289753425,
+     -0.2432859665334657,
+     -2.597869217515767,
+     4.176859170893435,
+     2.749401727214411,
+     -1.1210237336562814,
+     1.1671109014523535,
+     3.2393819297643174,
+     -1.8990582567743708
+    ]
+   ],
+   "shell_median_affine_frame_rhs_injection_max_abs": 3.375077994860476e-14,
+   "shell_median_affine_frame_scope": "R105 frame injected at the shell MEDIAN redshifts, which the curvature rows annihilate by construction; see quaia_rows.z_linear_frame_leak for a per-source z-linear frame.",
+   "jk1": {
+    "joint32": 406.385070538911,
+    "electric16": 16.825550148206105,
+    "magnetic16": 171.9805476095276,
+    "glide6": 8.28462266634794,
+    "spin6": 104.12458235777473,
+    "E2_10": 5.377160412370987,
+    "B2_10": 6.639231142377476,
+    "row0_16": 37.959783834278504,
+    "row1_16": 75.35740243001108,
+    "magnetic_given_electric": 389.5595203907049,
+    "magnetic16_rows_without_crosscov": 52.13066604401159
+   },
+   "jk2": {
+    "joint32": 396.614882560647,
+    "electric16": 16.65254225306255,
+    "magnetic16": 169.83443757949405,
+    "glide6": 8.227942687262777,
+    "spin6": 103.55299053686419,
+    "E2_10": 5.345948814776607,
+    "B2_10": 6.60573373591024,
+    "row0_16": 37.439876951673156,
+    "row1_16": 74.33030411810984,
+    "magnetic_given_electric": 379.96234030758444,
+    "magnetic16_rows_without_crosscov": 51.815570740004986
+   },
+   "jk1_r105_joint_modes": {
+    "electric_working_quadratic": 16.82555014820611,
+    "magnetic_marginal_working_quadratic": 171.9805476095275,
+    "magnetic_given_zero_mean_electric_working_quadratic": 389.5595203907053,
+    "joint_working_quadratic": 406.38507053891146,
+    "factorization_abs_residual": 5.684341886080802e-14,
+    "magnetic_row_0_plus_row_1_discarding_crosscov": 52.130666044011605,
+    "largest_cross_curvature_magnetic_canonical_correlation": 0.8938152702384797,
+    "largest_electric_magnetic_canonical_correlation": 0.9578468435835469,
+    "joint_covariance_eigenvalue_ratio": 722.9353296444596
+   },
+   "jk1_eigenvalues_microasyr2": [
+    0.6540032866846375,
+    0.9424825168636226,
+    1.6653301245151797,
+    1.9358311642893076,
+    2.979345034977624,
+    4.21461836514656,
+    4.832137860034375,
+    7.4155897526559995,
+    10.610004452496412,
+    11.268649287914828,
+    12.664040760002147,
+    16.266888070925617,
+    19.14982002979837,
+    21.4588470416773,
+    23.588466793621798,
+    27.173181697548657,
+    38.949193809329344,
+    42.63950586948607,
+    48.86834464387926,
+    56.11346845741848,
+    72.06947284823106,
+    89.85060275898914,
+    97.31275167244678,
+    107.60443818068269,
+    130.3179218812489,
+    150.4508826816124,
+    184.43299743017067,
+    212.40297194737366,
+    310.32951187348164,
+    355.4518030237579,
+    375.6572375579765,
+    472.80208164791065
+   ],
+   "jk1_rank": 32,
+   "sector_norms": {
+    "glide": [
+     11.209175913903795,
+     10.29953258867882
+    ],
+    "spin": [
+     31.55931500393576,
+     26.83439027507986
+    ],
+    "E2": [
+     23.437991855067008,
+     12.108832659978003
+    ],
+    "B2": [
+     14.3396904432154,
+     19.104614530453958
+    ]
+   },
+   "sector_jk1_rms": {
+    "glide": [
+     11.65906194049254,
+     9.022368867383808
+    ],
+    "spin": [
+     12.18566276290628,
+     9.107590637677497
+    ],
+    "E2": [
+     27.552450782622003,
+     20.46114705870259
+    ],
+    "B2": [
+     28.647831391729625,
+     21.559282142069282
+    ]
+   }
+  },
+  "excl_8_47": {
+   "n_patches": 46,
+   "n_sources_per_shell": [
+    87403,
+    224704,
+    164465,
+    119991
+   ],
+   "curvature_vector_row0_row1": [
+    -4.884206839821391,
+    -10.710307743754093,
+    -3.2613481295413513,
+    -10.920811710445296,
+    31.23443332668133,
+    -7.588288414175353,
+    4.4090619981935415,
+    5.021084170369423,
+    8.529795165933654,
+    0.7692672472850469,
+    -19.09213374912316,
+    2.662939903740385,
+    7.334296480163333,
+    5.899149925982953,
+    -2.941504476307183,
+    15.547507946587535,
+    7.039128698487258,
+    9.74716874494917,
+    -0.2611856018330405,
+    -25.68761593684657,
+    -0.14587219041172655,
+    10.587729208431039,
+    -2.020818968833815,
+    -1.0474119437119247,
+    -1.5382393792320674,
+    3.720990617809176,
+    6.714628402697451,
+    -6.575590500452191,
+    -5.334358699527786,
+    -3.4070896310056025,
+    13.96351415104087,
+    -16.368209938221124
+   ],
+   "shell_fit_coefficients_microasyr": [
+    [
+     -0.9789329721408223,
+     -4.056590831477758,
+     -2.6011107305735495,
+     -6.389596266175856,
+     4.5262442444340225,
+     1.2903231321892155,
+     -1.7221709978590916,
+     0.4473094121226334,
+     -3.619048832860745,
+     -3.6835245163132213,
+     -0.23391160715274395,
+     -0.2905022120172704,
+     4.233254145275069,
+     1.7754176522610463,
+     1.3531090116142939,
+     -2.204695573709521
+    ],
+    [
+     -0.2401623498213789,
+     -3.4100985725265747,
+     -1.8657392841238107,
+     2.2574463865060386,
+     -2.7920923120397148,
+     0.44396139105223825,
+     -3.0380330760676637,
+     1.0860806314638125,
+     -4.243432980672656,
+     -4.071063475583615,
+     4.6016081508153555,
+     0.9123602763920179,
+     1.693129739919029,
+     0.7145877620784903,
+     0.7487038449556238,
+     -3.3488981494494086
+    ],
+    [
+     -1.1617899158166314,
+     -6.429143240459269,
+     -2.2329688772923193,
+     7.3682735148735885,
+     0.4424042507772178,
+     -3.032328005270965,
+     -2.871383235268449,
+     3.4670301145439173,
+     -1.951307879258735,
+     -4.203924340669375,
+     2.9958093099015644,
+     3.0609725258511875,
+     1.6102495951355118,
+     1.6549397060294437,
+     -0.8821254973081593,
+     0.8227520049352064
+    ],
+    [
+     0.9199749154157821,
+     -5.612967755264104,
+     -2.786175914963602,
+     1.843428210605361,
+     4.211698437055764,
+     -2.37922104612339,
+     -3.5851428553321334,
+     5.817711801873179,
+     0.07270208940507976,
+     -2.683354867941592,
+     4.120021698712271,
+     2.6430670822234776,
+     -0.8937198811645489,
+     1.2333604805251916,
+     3.4815261638755164,
+     -1.6127722990296653
+    ]
+   ],
+   "shell_median_affine_frame_rhs_injection_max_abs": 3.197442310920451e-14,
+   "shell_median_affine_frame_scope": "R105 frame injected at the shell MEDIAN redshifts, which the curvature rows annihilate by construction; see quaia_rows.z_linear_frame_leak for a per-source z-linear frame.",
+   "jk1": {
+    "joint32": 762.9905563786845,
+    "electric16": 17.273175356238003,
+    "magnetic16": 199.84655511871495,
+    "glide6": 7.602979576699212,
+    "spin6": 103.19179235460663,
+    "E2_10": 3.8555588445741424,
+    "B2_10": 13.967141558792568,
+    "row0_16": 39.57716820608866,
+    "row1_16": 69.47041631579367,
+    "magnetic_given_electric": 745.7173810224465,
+    "magnetic16_rows_without_crosscov": 61.9443517899564
+   },
+   "jk2": {
+    "joint32": 694.5285411488791,
+    "electric16": 17.04564521526883,
+    "magnetic16": 195.85319190563902,
+    "glide6": 7.558269335316517,
+    "spin6": 102.58190465652973,
+    "E2_10": 3.832180531745695,
+    "B2_10": 13.851910433557698,
+    "row0_16": 38.95943926333763,
+    "row1_16": 68.43559187689597,
+    "magnetic_given_electric": 677.4828959336103,
+    "magnetic16_rows_without_crosscov": 61.510437648973436
+   },
+   "jk1_r105_joint_modes": {
+    "electric_working_quadratic": 17.273175356238,
+    "magnetic_marginal_working_quadratic": 199.846555118715,
+    "magnetic_given_zero_mean_electric_working_quadratic": 745.71738102245,
+    "joint_working_quadratic": 762.9905563786863,
+    "factorization_abs_residual": 1.7053025658242404e-12,
+    "magnetic_row_0_plus_row_1_discarding_crosscov": 61.9443517899564,
+    "largest_cross_curvature_magnetic_canonical_correlation": 0.908611150234773,
+    "largest_electric_magnetic_canonical_correlation": 0.9680990533933055,
+    "joint_covariance_eigenvalue_ratio": 1107.3691159208274
+   },
+   "jk1_eigenvalues_microasyr2": [
+    0.41814959737884644,
+    0.8558624553468345,
+    1.3536526944133256,
+    1.9287598547104094,
+    2.6739002093037283,
+    3.473321164752593,
+    5.093070757032434,
+    6.8347215673842285,
+    7.530908788287634,
+    12.523670167295526,
+    14.164121258610418,
+    16.03692955876618,
+    19.023697266456683,
+    20.579152337690893,
+    24.15555641978154,
+    28.167863013492894,
+    36.861635853932434,
+    39.97258837987079,
+    56.92840219407638,
+    63.07631204940298,
+    73.91423670340839,
+    91.34222263984444,
+    94.68232935753342,
+    117.26628600422676,
+    140.31398661190502,
+    151.56435785457452,
+    168.18772222485575,
+    250.6626737141589,
+    271.5598658574934,
+    299.2955058005114,
+    396.70688790294724,
+    463.04594997207937
+   ],
+   "jk1_rank": 32,
+   "sector_norms": {
+    "glide": [
+     12.214849980337041,
+     12.026007205011387
+    ],
+    "spin": [
+     33.94754887632696,
+     27.78443630894701
+    ],
+    "E2": [
+     21.966107136103727,
+     8.153463511697618
+    ],
+    "B2": [
+     18.602703447951633,
+     23.370923322508467
+    ]
+   },
+   "sector_jk1_rms": {
+    "glide": [
+     11.718818904732187,
+     9.053001876619643
+    ],
+    "spin": [
+     12.027302496170115,
+     9.174636851687328
+    ],
+    "E2": [
+     27.533506151529135,
+     19.96312775325916
+    ],
+    "B2": [
+     28.651991648728856,
+     21.3194680493851
+    ]
+   }
+  }
+ },
+ "excluded_patch_icrs_centres_deg": {
+  "8": [
+   202.49999999999997,
+   41.81031489577859
+  ],
+  "47": [
+   315.0,
+   -66.44353569089876
+  ]
+ },
+ "excluded_patch_source_counts_per_shell": {
+  "8": [
+   2843,
+   7710,
+   5952,
+   4898
+  ],
+  "47": [
+   2440,
+   6138,
+   4527,
+   3162
+  ]
+ },
+ "r105_replay_abs_diff": {
+  "jk1_joint32": 4.547473508864641e-13,
+  "jk1_magnetic16": 1.1368683772161603e-13,
+  "jk1_electric16": 3.552713678800501e-15,
+  "jk1_magnetic_rows_without_crosscov": 1.4210854715202004e-14,
+  "jk2_joint32": 3.979039320256561e-13,
+  "jk2_magnetic16": 2.842170943040401e-14,
+  "magnetic_vector_max_abs": 0.0
+ },
+ "exclusion_selection": {
+  "rule": "Top delete-one shift-norm patch in curvature row 0, then the top patch in row 1 that differs from it, on the data set's own all-48 delete-one refits; shift norm over the sector variant's coefficients.",
+  "variants": {
+   "EB": [
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+   ],
+   "B2": [
+    11,
+    12,
+    13,
+    14,
+    15
+   ],
+   "E2": [
+    6,
+    7,
+    8,
+    9,
+    10
+   ]
+  },
+  "primary_variant": "EB",
+  "observed_pairs": {
+   "EB": [
+    8,
+    47
+   ],
+   "B2": [
+    8,
+    47
+   ],
+   "E2": [
+    8,
+    47
+   ]
+  },
+  "r104_influence_replay": {
+   "rows": {
+    "row0_glide": {
+     "delete_one_top5_patches": [
+      47,
+      35,
+      42,
+      9,
+      21
+     ],
+     "delete_one_top5_shift_norm": [
+      4.747677401766974,
+      3.3330123387534454,
+      3.0251974624968683,
+      2.6720327256089345,
+      2.6609949496813363
+     ],
+     "delete_two_worst_pair": [
+      43,
+      47
+     ]
+    },
+    "row0_spin": {
+     "delete_one_top5_patches": [
+      47,
+      35,
+      42,
+      21,
+      9
+     ],
+     "delete_one_top5_shift_norm": [
+      4.701186613803645,
+      4.039859894419754,
+      3.088608102194553,
+      2.910818891255444,
+      2.584872553775858
+     ],
+     "delete_two_worst_pair": [
+      43,
+      47
+     ]
+    },
+    "row0_E2": {
+     "delete_one_top5_patches": [
+      47,
+      35,
+      21,
+      36,
+      8
+     ],
+     "delete_one_top5_shift_norm": [
+      9.623132601399865,
+      8.284559468625593,
+      6.5244539016840015,
+      6.423670305734719,
+      6.034306726494241
+     ],
+     "delete_two_worst_pair": [
+      43,
+      47
+     ]
+    },
+    "row0_B2": {
+     "delete_one_top5_patches": [
+      47,
+      35,
+      28,
+      8,
+      21
+     ],
+     "delete_one_top5_shift_norm": [
+      8.183433070107633,
+      7.695437236197485,
+      7.157276360019245,
+      7.070217105971281,
+      6.553552858710266
+     ],
+     "delete_two_worst_pair": [
+      43,
+      47
+     ]
+    },
+    "row1_glide": {
+     "delete_one_top5_patches": [
+      32,
+      47,
+      42,
+      1,
+      29
+     ],
+     "delete_one_top5_shift_norm": [
+      2.6386047644200965,
+      2.474536006504529,
+      2.3552370893157892,
+      2.105534067029551,
+      2.0455349841109616
+     ],
+     "delete_two_worst_pair": [
+      43,
+      47
+     ]
+    },
+    "row1_spin": {
+     "delete_one_top5_patches": [
+      32,
+      1,
+      47,
+      29,
+      35
+     ],
+     "delete_one_top5_shift_norm": [
+      2.687713990539078,
+      2.4190809590587596,
+      2.406379821162259,
+      2.0729987589290055,
+      2.0045173608889155
+     ],
+     "delete_two_worst_pair": [
+      43,
+      47
+     ]
+    },
+    "row1_E2": {
+     "delete_one_top5_patches": [
+      8,
+      32,
+      47,
+      9,
+      1
+     ],
+     "delete_one_top5_shift_norm": [
+      6.400074365600393,
+      5.236127332099835,
+      5.1545049581583555,
+      4.821005574644904,
+      4.65818669291106
+     ],
+     "delete_two_worst_pair": [
+      43,
+      47
+     ]
+    },
+    "row1_B2": {
+     "delete_one_top5_patches": [
+      8,
+      32,
+      9,
+      42,
+      29
+     ],
+     "delete_one_top5_shift_norm": [
+      7.255145977878991,
+      5.767605795007512,
+      5.216032047675123,
+      4.7524673641507365,
+      4.738364051817122
+     ],
+     "delete_two_worst_pair": [
+      8,
+      42
+     ]
+    }
+   },
+   "matches_r104_gaia_patch_influence_json": true,
+   "r104_json_sha256": "e941c21f1682fbc27f901dc11ca01a9532573ec853d1e2bfb668f03b39ca0378"
+  }
+ },
+ "alternative_exclusions_observed_only": {
+  "scope": "Observed statistics only (no null tables): patch 32 is the top row-1 glide/spin patch and (43,47) the worst delete-two pair in 7 of 8 row-sectors (r104_influence_replay).",
+  "sets": {
+   "32": {
+    "excluded": [
+     32
+    ],
+    "jk1__spin6": 101.74650740124483,
+    "jk1__magnetic16": 163.33538544556964,
+    "jk1__joint32": 345.8444165711885,
+    "jk2__spin6": 101.13237568276824,
+    "jk2__magnetic16": 161.16804069323393,
+    "jk2__joint32": 337.55950771326,
+    "spin6_jk1_relative_change_vs_all48": -0.022838746650226893,
+    "spin6_jk1_relative_change_vs_excl_8_47": -0.014005813063070471
+   },
+   "43_47": {
+    "excluded": [
+     43,
+     47
+    ],
+    "jk1__spin6": 100.95579364735148,
+    "jk1__magnetic16": 160.99506097283037,
+    "jk1__joint32": 411.61348589287655,
+    "jk2__spin6": 100.27117737019185,
+    "jk2__magnetic16": 158.88638017215376,
+    "jk2__joint32": 400.0373136584883,
+    "spin6_jk1_relative_change_vs_all48": -0.03043266670242384,
+    "spin6_jk1_relative_change_vs_excl_8_47": -0.021668377457495835
+   },
+   "8_47_32": {
+    "excluded": [
+     8,
+     47,
+     32
+    ],
+    "jk1__spin6": 101.40473548351751,
+    "jk1__magnetic16": 191.69209954501474,
+    "jk1__joint32": 660.5599515425504,
+    "jk2__spin6": 100.72924872811187,
+    "jk2__magnetic16": 187.67451139870042,
+    "jk2__joint32": 599.9042498675194,
+    "spin6_jk1_relative_change_vs_all48": -0.026121083155097313,
+    "spin6_jk1_relative_change_vs_excl_8_47": -0.017317819860596106
+   },
+   "8_47_43": {
+    "excluded": [
+     8,
+     47,
+     43
+    ],
+    "jk1__spin6": 102.21791329680434,
+    "jk1__magnetic16": 178.51684086344198,
+    "jk1__joint32": 850.3500647543301,
+    "jk2__spin6": 101.45280856842012,
+    "jk2__magnetic16": 175.37929422453817,
+    "jk2__joint32": 741.2759023781231,
+    "spin6_jk1_relative_change_vs_all48": -0.01831142097088101,
+    "spin6_jk1_relative_change_vs_excl_8_47": -0.009437563158663509
+   },
+   "8_47_32_43": {
+    "excluded": [
+     8,
+     47,
+     32,
+     43
+    ],
+    "jk1__spin6": 98.30673966042902,
+    "jk1__magnetic16": 171.44409120073084,
+    "jk1__joint32": 858.4198363149465,
+    "jk2__spin6": 97.52944016746984,
+    "jk2__magnetic16": 168.1491710576666,
+    "jk2__joint32": 719.5386270130141,
+    "spin6_jk1_relative_change_vs_all48": -0.0558738634586351,
+    "spin6_jk1_relative_change_vs_excl_8_47": -0.04733954690302011
+   }
+  },
+  "max_abs_spin6_jk1_relative_change_vs_all48": 0.0558738634586351
+ },
+ "exclusion_shift": {
+  "delta_curvature_vector": [
+   -5.823131277027408,
+   0.178629768328042,
+   -0.772355275387512,
+   0.15118732031268145,
+   2.018498544400579,
+   -3.1351596513775526,
+   3.9041804953701664,
+   2.8720297760938465,
+   6.449395957982093,
+   7.522600537984005,
+   3.1459091206311562,
+   -1.8819424488157979,
+   3.4455988411626115,
+   -4.558518362436636,
+   -0.9256981206689265,
+   8.036017030194945,
+   3.624494581923763,
+   0.059131622379501536,
+   0.4888691341494298,
+   -0.2348054889859874,
+   -0.4143510528354097,
+   2.0926211549092155,
+   -4.550400644504349,
+   -3.055056897004355,
+   -2.763581593815118,
+   -3.4483643994531317,
+   -2.411887458714161,
+   0.6050267851357116,
+   0.27538961137470874,
+   4.338760076040535,
+   3.0871497820076783,
+   -6.186743144514347
+  ],
+  "delta_norm_per_sector_row": {
+   "glide": [
+    5.876844317747978,
+    3.6577931261190755
+   ],
+   "spin": [
+    3.731811894937418,
+    2.146132267735924
+   ],
+   "E2": [
+    11.470490471090667,
+    7.442131417815167
+   ],
+   "B2": [
+    10.081092953432236,
+    8.189811985569227
+   ]
+  },
+  "delta_quadratic_in_all48_jk1_cov": 1.9262234203104696,
+  "note": "the 46-patch vector is a subset refit of the same data, so delta is not independent of the 48-patch vector"
+ },
+ "quaia_rows": {
+  "source_replay_vs_r98_cache": {
+   "F_max_rel": 1.5694575697426271e-15,
+   "s_max_rel": 2.6001891934845985e-15
+  },
+  "strata": {
+   "quaia_in_crf3_fits_by_source_id": 634233,
+   "quaia_bp_rp_finite": 634233,
+   "G_edges_8": [
+    18.550243377685547,
+    18.95856475830078,
+    19.222259521484375,
+    19.425840377807617,
+    19.59541893005371,
+    19.74456214904785,
+    19.877450942993164
+   ],
+   "G_edges_4": [
+    18.95856475830078,
+    19.425840377807617,
+    19.74456214904785
+   ],
+   "bp_rp_edges_4": [
+    0.5238037109375,
+    0.6288528442382812,
+    0.7541980743408203
+   ],
+   "G_range_quaia": [
+    13.882390022277832,
+    19.999998092651367
+   ]
+  },
+  "quaia_pmra_error_median_mas_per_yr": 0.3035767078399658,
+  "z_linear_frame_leak": {
+   "scope": "Frame injected into each qualified Quaia proper motion before the shell fits. 'shell_median' evaluates base+slope*z at the source's shell median redshift (what the curvature rows annihilate); 'per_source' evaluates it at the source's own redshift. The leak is the change of the curvature vector. Frame: R105 test frame base [8,-3,2,-4,5,6] uas/yr, slope [-3,4,5,2,-7,1] uas/yr per z on glide+spin.",
+   "frame_base_microasyr": [
+    8.0,
+    -3.0,
+    2.0,
+    -4.0,
+    5.0,
+    6.0
+   ],
+   "frame_slope_microasyr_per_z": [
+    -3.0,
+    4.0,
+    5.0,
+    2.0,
+    -7.0,
+    1.0
+   ],
+   "configs": {
+    "all48": {
+     "shell_median_injection_leak_max_abs": 8.79296635503124e-14,
+     "per_source_injection_leak_max_abs": 1.3136087168229658,
+     "per_source_injection_leak_vector": [
+      0.62595085496215,
+      -0.7383965936084032,
+      -0.913479591881643,
+      -0.38938131001899734,
+      1.3136087168229658,
+      -0.24155718296717055,
+      0.2262125372117808,
+      0.23091164685890142,
+      0.08356669887883195,
+      0.1813353003661735,
+      -0.08076757183076211,
+      0.07629235777339183,
+      -0.139578702103353,
+      -0.02282676304348108,
+      -0.028812904487294677,
+      -0.15043237792221653,
+      -0.2307523394733475,
+      0.08982558872129687,
+      0.2381653152786829,
+      0.11230568437134991,
+      -0.3155617174444091,
+      0.05200713506691734,
+      0.16516539407018627,
+      0.08440537997183828,
+      -0.12592134903335794,
+      0.19132329914372992,
+      0.23308824936789563,
+      -0.29030620911086746,
+      -0.03902410211341856,
+      -0.028015300480768168,
+      -0.25508153405927025,
+      0.0793215642179721
+     ],
+     "per_source_injection_spin6_leak": [
+      -0.38938131001899734,
+      1.3136087168229658,
+      -0.24155718296717055,
+      0.11230568437134991,
+      -0.3155617174444091,
+      0.05200713506691734
+     ],
+     "per_source_injection_spin6_Q_jk1": 0.03742181601670911,
+     "analytic_leak_minus_injection_max_abs": 1.5011603071712898e-13,
+     "unit_spin_x_slope_per_source_leak_max_abs": 0.1821753349877664,
+     "unit_spin_x_slope_spin6_Q_jk1": 0.0011285960571749232,
+     "precision_weighted_effective_z_spin_block": [
+      0.49911662661555,
+      1.157781197914707,
+      1.771516258941209,
+      2.519917872649108
+     ],
+     "precision_weighted_effective_z_glide_block": [
+      0.49909581575197554,
+      1.1576748942046933,
+      1.7715092113819813,
+      2.520192484807009
+     ],
+     "shell_median_z": [
+      0.5958884954452515,
+      1.1713351011276245,
+      1.7612881064414978,
+      2.4607839584350586
+     ],
+     "spin_slope_for_leak_only_explanation_microasyr_per_z": [
+      25.034506854967216,
+      -143.73395504056376,
+      29.525762072837935
+     ],
+     "spin_residual_fraction_after_leak_only_fit": 0.7151165490702935
+    },
+    "excl_8_47": {
+     "shell_median_injection_leak_max_abs": 9.059419880941277e-14,
+     "per_source_injection_leak_max_abs": 1.3233026417828917,
+     "per_source_injection_leak_vector": [
+      0.6138753573983387,
+      -0.7496662599834973,
+      -0.9024193360078012,
+      -0.40349277530687644,
+      1.3233026417828917,
+      -0.2472553151584762,
+      0.20655990316074835,
+      0.22336646136906513,
+      0.08794631786749818,
+      0.18188997503383808,
+      -0.0520443132205024,
+      0.06663235059463402,
+      -0.12465491840012533,
+      -0.031739443249525934,
+      -0.05797916680152415,
+      -0.15167446305747845,
+      -0.2033312540264438,
+      0.09545644803947617,
+      0.24096765904819595,
+      0.1144212129611688,
+      -0.31983669252459646,
+      0.06357269801210563,
+      0.16032475169797644,
+      0.0757380202346627,
+      -0.15165001945458,
+      0.16942314150798365,
+      0.2050486335525159,
+      -0.29390121607805586,
+      -0.05167216999461033,
+      0.006266264152274381,
+      -0.25051246897322343,
+      0.029401558865597366
+     ],
+     "per_source_injection_spin6_leak": [
+      -0.40349277530687644,
+      1.3233026417828917,
+      -0.2472553151584762,
+      0.1144212129611688,
+      -0.31983669252459646,
+      0.06357269801210563
+     ],
+     "per_source_injection_spin6_Q_jk1": 0.03820723755987537,
+     "analytic_leak_minus_injection_max_abs": 9.831024883055761e-14,
+     "unit_spin_x_slope_per_source_leak_max_abs": 0.18349172927051605,
+     "unit_spin_x_slope_spin6_Q_jk1": 0.0011631476118797459,
+     "precision_weighted_effective_z_spin_block": [
+      0.49908774336006334,
+      1.1579443255662396,
+      1.7713927916543735,
+      2.5195057226047393
+     ],
+     "precision_weighted_effective_z_glide_block": [
+      0.4990608755305832,
+      1.1578612046736716,
+      1.7713987269155043,
+      2.5198561356713443
+     ],
+     "shell_median_z": [
+      0.5958884954452515,
+      1.1713351011276245,
+      1.7612881064414978,
+      2.4607839584350586
+     ],
+     "spin_slope_for_leak_only_explanation_microasyr_per_z": [
+      23.366072654176847,
+      -152.69297829196583,
+      46.785368351780235
+     ],
+     "spin_residual_fraction_after_leak_only_fit": 0.6870898307176041
+    }
+   }
+  },
+  "composition_retention": {
+   "scope": "Exact expectation of the shell means of a source property under a uniform within-stratum permutation of the shell labels, pushed through the curvature rows; retained fraction = expected curvature / observed curvature per row. Property curvature only, not a proper-motion statistic.",
+   "G4_edges_subset_of_G8_edges": true,
+   "properties": {
+    "G": {
+     "observed_shell_means": [
+      19.034433930357956,
+      19.290207450420805,
+      19.321201116680683,
+      19.341156942389286
+     ],
+     "observed_curvature_rows": [
+      -0.672631873905928,
+      -0.03723599104782238
+     ],
+     "strata": {
+      "patch": {
+       "n_strata": 48,
+       "expected_shell_means": [
+        19.27092146864361,
+        19.271489361093273,
+        19.27182733516751,
+        19.272307815906544
+       ],
+       "expected_curvature_rows": [
+        -0.0007104678676341791,
+        0.00017683946137481144
+       ],
+       "retained_fraction_rows": [
+        0.001056250670234433,
+        -0.004749154148944111
+       ]
+      },
+      "patch_gmag": {
+       "n_strata": 384,
+       "expected_shell_means": [
+        19.07051449410411,
+        19.286666731379224,
+        19.31378483409486,
+        19.33176940631479
+       ],
+       "expected_curvature_rows": [
+        -0.5657435163610103,
+        -0.03141773938160952
+       ],
+       "retained_fraction_rows": [
+        0.8410893659793072,
+        0.8437465607202331
+       ]
+      },
+      "patch_gmag_colour": {
+       "n_strata": 768,
+       "expected_shell_means": [
+        19.10128521303359,
+        19.283460092267454,
+        19.308465176421887,
+        19.32273845388673
+       ],
+       "expected_curvature_rows": [
+        -0.4705598153723969,
+        -0.034091747219747504
+       ],
+       "retained_fraction_rows": [
+        0.699580013417871,
+        0.9155590132128696
+       ]
+      },
+      "patch_gmag8_colour4__evaluated_not_run_as_null": {
+       "n_strata": 1535,
+       "expected_shell_means": [
+        19.06935653444077,
+        19.28628270801663,
+        19.314614092570658,
+        19.33219003868596
+       ],
+       "expected_curvature_rows": [
+        -0.5645222320226821,
+        -0.03551366919916177
+       ],
+       "retained_fraction_rows": [
+        0.8392736858343324,
+        0.9537457765942465
+       ]
+      }
+     }
+    },
+    "bp_rp": {
+     "observed_shell_means": [
+      0.6357306854691392,
+      0.6084160817901175,
+      0.6952776165751667,
+      0.6725694741632346
+     ],
+     "observed_curvature_rows": [
+      0.3341368177350641,
+      -0.2787210224318053
+     ],
+     "strata": {
+      "patch": {
+       "n_strata": 48,
+       "expected_shell_means": [
+        0.6523918560666995,
+        0.650153555634432,
+        0.648783709552912,
+        0.6462753800256407
+       ],
+       "expected_curvature_rows": [
+        0.002690437320716832,
+        -0.0019604539327913173
+       ],
+       "retained_fraction_rows": [
+        0.008051903226210978,
+        0.007033749789257399
+       ]
+      },
+      "patch_gmag": {
+       "n_strata": 384,
+       "expected_shell_means": [
+        0.6489899924211875,
+        0.6503457599979565,
+        0.6495241960252859,
+        0.6473679972882738
+       ],
+       "expected_curvature_rows": [
+        -0.006433190663995614,
+        -0.0026211380508356363
+       ],
+       "retained_fraction_rows": [
+        -0.01925316314317828,
+        0.009404163446181927
+       ]
+      },
+      "patch_gmag_colour": {
+       "n_strata": 768,
+       "expected_shell_means": [
+        0.6445453628299598,
+        0.6123695181292473,
+        0.6899006787380292,
+        0.6661701932637735
+       ],
+       "expected_curvature_rows": [
+        0.32149277289257405,
+        -0.2564573855894605
+       ],
+       "retained_fraction_rows": [
+        0.9621590792412602,
+        0.9201221470555131
+       ]
+      },
+      "patch_gmag8_colour4__evaluated_not_run_as_null": {
+       "n_strata": 1535,
+       "expected_shell_means": [
+        0.6443865595753292,
+        0.6123877256651837,
+        0.6899359310147298,
+        0.6662030568888202
+       ],
+       "expected_curvature_rows": [
+        0.3210144575767093,
+        -0.2565074946125856
+       ],
+       "retained_fraction_rows": [
+        0.960727583846329,
+        0.9203019290564827
+       ]
+      }
+     }
+    }
+   }
+  }
+ },
+ "runtime_seconds": 2.8954369659768417,
+ "maxrss_kib": 772836
+}

@@ -1,0 +1,2647 @@
+{
+ "schema": "htt.r106.radio_null_mocks.followup.amplitude/1",
+ "stage": "amplitude",
+ "provenance": {
+  "script": "scripts/r106/radio_null_mocks.py",
+  "script_sha256": "32e375962eb07c1213a9b2d502416d952e766b5a0a49d4335f66a77e84c575a5",
+  "modules_sha256": {
+   "r65_count_quotient": "3cfa8dc552f4399cf77e8dd4cf744c59a065c831f5cd3f71485369b9c9832b91",
+   "r65_overlap": "764050b1b39b3d8934f66135f707e8b88457f49311c29f847a1026332bfacef1",
+   "r105_radio_matched_refits": "d8788e3821d22258887f294e76b21700d4bc2603603dfbbc43af2c41b270c88b"
+  },
+  "command": "python -B -m scripts.r106.radio_null_mocks --followup amplitude --followup-dir /home/cosmosapjw/Downloads/htt_r106_analysis/nvss/review_followup --workers 3 --n-jk 40 --n-mocks 800 --n-band 500",
+  "shell_setup": "cd <repo> && export PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1",
+  "repo_head": "b234bb0e0a9388d735bfa60a3b08041fc86e3cc5",
+  "script_git_status": "?? scripts/r106/radio_null_mocks.py",
+  "python": "3.12.3",
+  "platform": "Linux-7.0.0-43-generic-x86_64-with-glibc2.39",
+  "numpy": "2.5.4",
+  "healpy": "1.19.0",
+  "scipy": "1.18.1",
+  "root_seed": 20261124,
+  "input_sha256": {
+   "raw_catalogue": "52eb576c1e3e71837f2fca26121789ccc0b316152cca3f25ea2f37ea8ef5a38e",
+   "r65_carrier": "a51da9a98c3d0563446eb61f21aceff69fbfeed5446ec74471177170b8664e89",
+   "r65_result": "60735aa244272fc4d295813ab644c429c19cedca122bd9b308dcb7da0053806a",
+   "r105_matched_refits": "5a2eca905b85890ba8d06f8df43fe2e57a9aa1f3bbfb837075519ca8888d3124",
+   "reference_json": "9c7d7e6a9b26136605a3ac1efa4c0af73cc9265be2e13f9dda5c7391f75abeed",
+   "reference_npz": "1e7f5100331a57e38d6ca2c0aba843943e6c0a03aa80143ab07bffe1837da88d"
+  },
+  "output_npz_sha256": "f96630c700e7f8e19bd20bf9ab1a5b95c22df697465b28bbba4aefebcd2e72d1"
+ },
+ "family_labels": {
+  "LSS_COMMON": "LSS_COMMON",
+  "LSS_DIFF_RED": "EMPIRICAL_DIFF_SELECTION_RED",
+  "LSS_DIFF_MID": "EMPIRICAL_DIFF_SELECTION_MID",
+  "LSS_DIFF_FLAT": "EMPIRICAL_DIFF_SELECTION_FLAT"
+ },
+ "reference_amplitudes": {
+  "LSS_COMMON": [
+   0.00025172548585177836,
+   0.0,
+   "red"
+  ],
+  "LSS_DIFF_RED": [
+   0.00025172548585177836,
+   0.018223709796973776,
+   "red"
+  ],
+  "LSS_DIFF_FLAT": [
+   0.00025172548585177836,
+   0.0012695624620731579,
+   "flat"
+  ],
+  "LSS_DIFF_MID": [
+   0.00025172548585177836,
+   0.0045617338045644065,
+   "mid"
+  ]
+ },
+ "settings": {
+  "output": "/home/cosmosapjw/Downloads/htt_r106_analysis/nvss",
+  "workers": 3,
+  "calib_mocks": 8,
+  "max_mocks": 2000,
+  "budget_seconds": 1200.0,
+  "families": [
+   "LSS_COMMON",
+   "LSS_DIFF_RED",
+   "LSS_DIFF_FLAT",
+   "LSS_DIFF_MID"
+  ],
+  "pilot_common": 0.0001,
+  "pilot_red": 0.001,
+  "pilot_flat": 0.001,
+  "pilot_mid": 0.005,
+  "scale_mocks": 8,
+  "timing_only": false,
+  "overwrite": false,
+  "diff_c1_scale": 1.0,
+  "followup": "amplitude",
+  "reference": "/home/cosmosapjw/Downloads/htt_r106_analysis/nvss/NVSS_NULL_MOCKS.json",
+  "followup_dir": "/home/cosmosapjw/Downloads/htt_r106_analysis/nvss/review_followup",
+  "n_mocks": 800,
+  "n_nominal": 100,
+  "n_jk_check": null,
+  "n_jk": 40,
+  "n_band": 500,
+  "n_boot": 200,
+  "c1_hi": 0.1,
+  "update_run_record": false
+ },
+ "review_corrections": [
+  {
+   "id": "F3",
+   "finding": "amplitude calibration uncertainty not propagated; p quoted to 4 digits",
+   "change": "amplitude nuisance sigma_r = hypot(jk4-trace scatter / excess, calibration SE / excess); per-mock truncated-normal amplitude draws give the marginal p; fixed 16%/84% amplitude ensembles give the band"
+  },
+  {
+   "id": "F4",
+   "finding": "DIFF families not jointly calibrated; they are empirical differential-selection fields, not LSS",
+   "change": "single-selection jackknife trace of the DIFF families measured against its data target in fresh mocks"
+  }
+ ],
+ "result": {
+  "nuisance": {
+   "LSS_DIFF_RED": {
+    "n_new_jk_mocks": 40,
+    "n_reference_jk_mocks": 21,
+    "jk4_contrast_trace_new": [
+     9.4173021474612e-06,
+     8.005113404925335e-06,
+     5.88085461527423e-06,
+     9.390308115748264e-06,
+     7.152391507419297e-06,
+     7.32147374153023e-06,
+     7.770537272934487e-06,
+     7.472671886005531e-06,
+     7.841051681392965e-06,
+     6.008655351450705e-06,
+     6.489372314030011e-06,
+     6.411152196056407e-06,
+     7.31045490743583e-06,
+     6.297425798695552e-06,
+     6.678811052619541e-06,
+     6.47841687611979e-06,
+     7.972741777550856e-06,
+     8.266658411618891e-06,
+     7.426610142321974e-06,
+     9.43777733545288e-06,
+     5.4176271966339275e-06,
+     7.387692929961117e-06,
+     6.165427621698498e-06,
+     6.060194815886333e-06,
+     5.879416133037841e-06,
+     7.453945703257991e-06,
+     9.302370300794336e-06,
+     7.581717584868217e-06,
+     6.722614830552665e-06,
+     5.376355986438939e-06,
+     5.684615778576779e-06,
+     6.6683560502834215e-06,
+     5.7395883236636005e-06,
+     4.3888239514930456e-06,
+     4.875749150993591e-06,
+     6.4193062544442295e-06,
+     7.609339324222313e-06,
+     6.14358719145476e-06,
+     6.333235497699519e-06,
+     8.454774572253655e-06
+    ],
+    "jk4_contrast_trace_new_mean": 6.96736299335647e-06,
+    "jk4_contrast_trace_new_rel_sd": 0.1772339168803578,
+    "jk4_contrast_trace_pooled_mean": 7.0189266325757205e-06,
+    "jk4_contrast_trace_pooled_sd": 1.3107536833112573e-06,
+    "jk4_contrast_trace_pooled_rel_sd": 0.18674560255807274,
+    "data_target": 6.815403047930258e-06,
+    "common_only_base": 1.992451173120672e-06,
+    "excess": 4.8229518748095856e-06,
+    "amplitude_rel_sd_from_trace_scatter": 0.2717741576807683,
+    "calibration_mc_rel_se": 0.09165448279221662,
+    "sigma_r": 0.2868130697841363,
+    "calibration_relative_excess_miss": 0.00883799797273753,
+    "r_quantiles_16_50_84": [
+     0.7150185876644577,
+     1.0000879288466757,
+     1.2852696567136737
+    ],
+    "spearman_jk4_trace_vs_t_self_dipole": {
+     "rho": -0.13377110694183866,
+     "p": 0.4105518475792776,
+     "n": 40
+    },
+    "single_selection_jk4_trace_new_mean": 9.546841324244513e-05,
+    "single_selection_target": 7.16583037529342e-05,
+    "single_selection_ratio_to_target": 1.3322728594246966
+   },
+   "LSS_DIFF_MID": {
+    "n_new_jk_mocks": 40,
+    "n_reference_jk_mocks": 21,
+    "jk4_contrast_trace_new": [
+     7.914346839056274e-06,
+     6.8977686199697494e-06,
+     6.007740172224705e-06,
+     9.121533397460965e-06,
+     6.009523893152133e-06,
+     7.483744101892176e-06,
+     6.443708149673184e-06,
+     6.867056546605357e-06,
+     7.316916393497126e-06,
+     5.676624052077041e-06,
+     6.64466540726459e-06,
+     6.3406913700197875e-06,
+     7.07463348560414e-06,
+     6.063175471494971e-06,
+     6.469979899968232e-06,
+     5.71604150686153e-06,
+     7.930840702584356e-06,
+     7.555842791632335e-06,
+     6.4979900626046765e-06,
+     7.841850142134792e-06,
+     4.857134789109732e-06,
+     7.120382502658924e-06,
+     5.537780272244921e-06,
+     5.508457923035488e-06,
+     6.783689202740759e-06,
+     7.3570343142692e-06,
+     8.138880034078625e-06,
+     6.01743354518855e-06,
+     5.7023644528815386e-06,
+     6.197039033834116e-06,
+     6.135776547384289e-06,
+     7.065525071226354e-06,
+     6.712857721987466e-06,
+     4.983712389758457e-06,
+     5.078657649697732e-06,
+     6.996650621037862e-06,
+     8.089835999607014e-06,
+     6.433540520024001e-06,
+     6.060797515712449e-06,
+     7.421048606841309e-06
+    ],
+    "jk4_contrast_trace_new_mean": 6.651831792977422e-06,
+    "jk4_contrast_trace_new_rel_sd": 0.14298500355990593,
+    "jk4_contrast_trace_pooled_mean": 6.7542401903945335e-06,
+    "jk4_contrast_trace_pooled_sd": 1.1133574374545133e-06,
+    "jk4_contrast_trace_pooled_rel_sd": 0.16483829506653644,
+    "data_target": 6.815403047930258e-06,
+    "common_only_base": 1.992451173120672e-06,
+    "excess": 4.8229518748095856e-06,
+    "amplitude_rel_sd_from_trace_scatter": 0.23084564523017756,
+    "calibration_mc_rel_se": 0.09595188107743552,
+    "sigma_r": 0.24999295070868563,
+    "calibration_relative_excess_miss": 0.039840302637032636,
+    "r_quantiles_16_50_84": [
+     0.7514198592817628,
+     1.0000099184954911,
+     1.2486126646987772
+    ],
+    "spearman_jk4_trace_vs_t_self_dipole": {
+     "rho": -0.10825515947467168,
+     "p": 0.5061059433086323,
+     "n": 40
+    },
+    "single_selection_jk4_trace_new_mean": 9.569535475619072e-05,
+    "single_selection_target": 7.16583037529342e-05,
+    "single_selection_ratio_to_target": 1.335439854760339
+   },
+   "LSS_DIFF_FLAT": {
+    "n_new_jk_mocks": 40,
+    "n_reference_jk_mocks": 21,
+    "jk4_contrast_trace_new": [
+     8.097409353397534e-06,
+     6.149397171856809e-06,
+     5.842777173807466e-06,
+     8.041967211134097e-06,
+     6.746060581148628e-06,
+     7.317293836863198e-06,
+     5.857604055450636e-06,
+     6.195883195290127e-06,
+     8.07427156575456e-06,
+     5.866426151429777e-06,
+     7.187075771260842e-06,
+     5.778627658035605e-06,
+     7.644416867655809e-06,
+     5.338570256218721e-06,
+     5.914088234604994e-06,
+     6.504826774477769e-06,
+     7.146338504120158e-06,
+     8.113635245259114e-06,
+     5.52394059104457e-06,
+     8.188875294697854e-06,
+     5.83344630111243e-06,
+     7.409303352552025e-06,
+     5.106787296389745e-06,
+     6.2008037803390585e-06,
+     6.257390897529651e-06,
+     6.248924604845461e-06,
+     7.942912268690382e-06,
+     7.304475081998464e-06,
+     5.821942306535783e-06,
+     5.809185059254055e-06,
+     6.750520747904492e-06,
+     7.13800751292416e-06,
+     5.742202922815494e-06,
+     5.519354378478774e-06,
+     5.636439817943968e-06,
+     7.069045799457315e-06,
+     7.439106497271137e-06,
+     5.769538994881786e-06,
+     5.918216002627263e-06,
+     6.6799949931845765e-06
+    ],
+    "jk4_contrast_trace_new_mean": 6.5781771027561075e-06,
+    "jk4_contrast_trace_new_rel_sd": 0.1379708489307415,
+    "jk4_contrast_trace_pooled_mean": 6.681831919293911e-06,
+    "jk4_contrast_trace_pooled_sd": 1.021504962180161e-06,
+    "jk4_contrast_trace_pooled_rel_sd": 0.1528779793503256,
+    "data_target": 6.815403047930258e-06,
+    "common_only_base": 1.992451173120672e-06,
+    "excess": 4.8229518748095856e-06,
+    "amplitude_rel_sd_from_trace_scatter": 0.21180077858862958,
+    "calibration_mc_rel_se": 0.07663855354565208,
+    "sigma_r": 0.22523995582560274,
+    "calibration_relative_excess_miss": 0.007242307318349959,
+    "r_quantiles_16_50_84": [
+     0.7760118526553296,
+     1.0000012714678115,
+     1.2239923168030926
+    ],
+    "spearman_jk4_trace_vs_t_self_dipole": {
+     "rho": -0.10881801125703565,
+     "p": 0.5038840003394047,
+     "n": 40
+    },
+    "single_selection_jk4_trace_new_mean": 9.27508577959071e-05,
+    "single_selection_target": 7.16583037529342e-05,
+    "single_selection_ratio_to_target": 1.2943490557032509
+   }
+  },
+  "ensembles": {
+   "marginal_LSS_DIFF_RED": {
+    "label": "EMPIRICAL_DIFF_SELECTION_RED amplitude marginal",
+    "n_mocks": 800,
+    "mean_seconds_per_mock": 0.25094239085912706,
+    "offdiag_overdispersion": {
+     "n": 800,
+     "mean": 1.3314255951442937,
+     "sd": 0.10598876565471886,
+     "min": 1.035846446074696,
+     "max": 1.6524339776444532,
+     "data": 1.5092073635389898,
+     "frac_ge_data": 0.0475
+    },
+    "models": {
+     "dipole": {
+      "wald_self_R65_estimator": {
+       "observed": 32.792386268357376,
+       "n_mocks": 800,
+       "mocks_ge_observed": 439,
+       "rank_descending": 440,
+       "p_mc": 0.5493133583021224,
+       "resolution": 0.0012484394506866417,
+       "mean": 58.630506015860334,
+       "p_display": "0.55 (439/800)",
+       "p_mc_binomial_se": 0.017591482054284343,
+       "quantiles_50_90_95_99": [
+        37.61403335512813,
+        141.55933261078582,
+        176.46226144737042,
+        292.80351399402156
+       ],
+       "max": 380.0033698003458
+      },
+      "wald_fixed_R65_poisson_cov": {
+       "observed": 32.79238626835715,
+       "n_mocks": 800,
+       "mocks_ge_observed": 441,
+       "rank_descending": 442,
+       "p_mc": 0.5518102372034956,
+       "resolution": 0.0012484394506866417,
+       "mean": 59.04663677238889,
+       "p_display": "0.55 (441/800)",
+       "p_mc_binomial_se": 0.017582509040269166,
+       "quantiles_50_90_95_99": [
+        37.3864028112483,
+        141.79398296762633,
+        176.3302826567285,
+        299.30351089520883
+       ],
+       "max": 401.82988021009993
+      },
+      "wald_fixed_R105_jk4_cov": {
+       "observed": 7.867511051001548,
+       "n_mocks": 800,
+       "mocks_ge_observed": 524,
+       "rank_descending": 525,
+       "p_mc": 0.6554307116104869,
+       "resolution": 0.0012484394506866417,
+       "mean": 21.653130249678934,
+       "p_display": "0.66 (524/800)",
+       "p_mc_binomial_se": 0.01680183374993105,
+       "quantiles_50_90_95_99": [
+        13.784763466588318,
+        55.26284576841176,
+        70.92704948214998,
+        107.20162052374897
+       ],
+       "max": 185.02013571674732
+      },
+      "wald_fixed_R105_jk8_cov": {
+       "observed": 11.57532209732367,
+       "n_mocks": 800,
+       "mocks_ge_observed": 502,
+       "rank_descending": 503,
+       "p_mc": 0.6279650436953808,
+       "resolution": 0.0012484394506866417,
+       "mean": 27.859027413157783,
+       "p_display": "0.63 (502/800)",
+       "p_mc_binomial_se": 0.017088919933396878,
+       "quantiles_50_90_95_99": [
+        17.771287885367887,
+        68.89781928209415,
+        86.95333141517995,
+        129.83411085650687
+       ],
+       "max": 228.15974187600006
+      },
+      "mock_delta_mean": [
+       3.283848633775788e-05,
+       -0.00024888888561666405
+      ],
+      "mock_delta_mean_se": [
+       0.00017827187257023693,
+       0.0001854422375218077
+      ],
+      "mock_delta_covariance": [
+       [
+        2.5424688439759047e-05,
+        -5.620687544984729e-07
+       ],
+       [
+        -5.620687544984729e-07,
+        2.7511058765675656e-05
+       ]
+      ],
+      "mock_cov_trace_over_r65_poisson": 29.18922261567063,
+      "observed_wald_under_mock_covariance": 1.2155179034137538,
+      "gaussian_p_exp_minus_w_over_2": 0.5445699100668749,
+      "overdispersion_peak": {
+       "n": 800,
+       "mean": 1.013527299994089,
+       "sd": 0.004914140810783339,
+       "min": 1.0004115467488195,
+       "max": 1.0302402572453628,
+       "data": 1.0635569327189316,
+       "frac_ge_data": 0.0
+      },
+      "overdispersion_integrated": {
+       "n": 800,
+       "mean": 1.0262671632729363,
+       "sd": 0.007456877720272769,
+       "min": 1.0071185864051293,
+       "max": 1.0516329310391666,
+       "data": 1.1044088343927705,
+       "frac_ge_data": 0.0
+      }
+     },
+     "dipole_stf": {
+      "wald_self_R65_estimator": {
+       "observed": 30.989468960483375,
+       "n_mocks": 800,
+       "mocks_ge_observed": 444,
+       "rank_descending": 445,
+       "p_mc": 0.5555555555555556,
+       "resolution": 0.0012484394506866417,
+       "mean": 56.451329776090354,
+       "p_display": "0.56 (444/800)",
+       "p_mc_binomial_se": 0.017568209223157664,
+       "quantiles_50_90_95_99": [
+        37.17390120460245,
+        134.21113944697552,
+        171.8818027649547,
+        263.8192343394051
+       ],
+       "max": 377.70789013442754
+      },
+      "wald_fixed_R65_poisson_cov": {
+       "observed": 30.989468960483375,
+       "n_mocks": 800,
+       "mocks_ge_observed": 443,
+       "rank_descending": 444,
+       "p_mc": 0.5543071161048689,
+       "resolution": 0.0012484394506866417,
+       "mean": 57.351005228303904,
+       "p_display": "0.55 (443/800)",
+       "p_mc_binomial_se": 0.017573087987757453,
+       "quantiles_50_90_95_99": [
+        37.630746036822075,
+        138.248004540917,
+        175.99062449376743,
+        266.2490742529699
+       ],
+       "max": 378.7061538616023
+      },
+      "wald_fixed_R105_jk4_cov": {
+       "observed": 7.384603639907028,
+       "n_mocks": 800,
+       "mocks_ge_observed": 517,
+       "rank_descending": 518,
+       "p_mc": 0.6466916354556804,
+       "resolution": 0.0012484394506866417,
+       "mean": 20.34469538966007,
+       "p_display": "0.65 (517/800)",
+       "p_mc_binomial_se": 0.016899761983802383,
+       "quantiles_50_90_95_99": [
+        12.316989981564461,
+        50.44995773969525,
+        66.26003382372542,
+        109.82273294190121
+       ],
+       "max": 160.8945788244045
+      },
+      "wald_fixed_R105_jk8_cov": {
+       "observed": 10.757994045693213,
+       "n_mocks": 800,
+       "mocks_ge_observed": 503,
+       "rank_descending": 504,
+       "p_mc": 0.6292134831460674,
+       "resolution": 0.0012484394506866417,
+       "mean": 26.937490647505356,
+       "p_display": "0.63 (503/800)",
+       "p_mc_binomial_se": 0.017077173206259174,
+       "quantiles_50_90_95_99": [
+        16.903646357755427,
+        65.46997002291006,
+        86.2823810105938,
+        136.13959988120487
+       ],
+       "max": 206.32127433684997
+      },
+      "mock_delta_mean": [
+       3.2630043739447364e-05,
+       -0.00020839848518586647
+      ],
+      "mock_delta_mean_se": [
+       0.00017831009021206925,
+       0.00018457817857562913
+      ],
+      "mock_delta_covariance": [
+       [
+        2.5435590617149012e-05,
+        -4.811772535532262e-07
+       ],
+       [
+        -4.811772535532262e-07,
+        2.7255283205037444e-05
+       ]
+      ],
+      "mock_cov_trace_over_r65_poisson": 28.210179308166442,
+      "observed_wald_under_mock_covariance": 1.2139144897719658,
+      "gaussian_p_exp_minus_w_over_2": 0.5450066705317577,
+      "overdispersion_peak": {
+       "n": 800,
+       "mean": 1.0133701416314127,
+       "sd": 0.004910682073623063,
+       "min": 1.00037637495765,
+       "max": 1.030176413687953,
+       "data": 1.0635607751362608,
+       "frac_ge_data": 0.0
+      },
+      "overdispersion_integrated": {
+       "n": 800,
+       "mean": 1.0259573259718722,
+       "sd": 0.007414536240821658,
+       "min": 1.006876700603764,
+       "max": 1.0507184237601814,
+       "data": 1.1043439789403715,
+       "frac_ge_data": 0.0
+      }
+     }
+    },
+    "amp_ratio_mean": 0.9918063724829884,
+    "amp_ratio_sd": 0.2880529744555783
+   },
+   "r16_LSS_DIFF_RED": {
+    "label": "EMPIRICAL_DIFF_SELECTION_RED amplitude r16",
+    "n_mocks": 500,
+    "mean_seconds_per_mock": 0.22974656867980958,
+    "offdiag_overdispersion": {
+     "n": 500,
+     "mean": 1.2301551696115525,
+     "sd": 0.01209527248126498,
+     "min": 1.1968901055495125,
+     "max": 1.2626521706169715,
+     "data": 1.5092073635389898,
+     "frac_ge_data": 0.0
+    },
+    "models": {
+     "dipole": {
+      "wald_self_R65_estimator": {
+       "observed": 32.792386268357376,
+       "n_mocks": 500,
+       "mocks_ge_observed": 230,
+       "rank_descending": 231,
+       "p_mc": 0.46107784431137727,
+       "resolution": 0.001996007984031936,
+       "mean": 42.64887052919088,
+       "p_display": "0.46 (230/500)",
+       "p_mc_binomial_se": 0.02229282690896561,
+       "quantiles_50_90_95_99": [
+        28.374001832040943,
+        97.02481716489696,
+        135.18169331406006,
+        182.76015682189814
+       ],
+       "max": 283.90715613002965
+      },
+      "wald_fixed_R65_poisson_cov": {
+       "observed": 32.79238626835715,
+       "n_mocks": 500,
+       "mocks_ge_observed": 230,
+       "rank_descending": 231,
+       "p_mc": 0.46107784431137727,
+       "resolution": 0.001996007984031936,
+       "mean": 42.92873196682668,
+       "p_display": "0.46 (230/500)",
+       "p_mc_binomial_se": 0.02229282690896561,
+       "quantiles_50_90_95_99": [
+        28.49988591770641,
+        96.95275976921491,
+        132.9953323362282,
+        187.68379366885682
+       ],
+       "max": 281.6539686074686
+      },
+      "wald_fixed_R105_jk4_cov": {
+       "observed": 7.867511051001548,
+       "n_mocks": 500,
+       "mocks_ge_observed": 289,
+       "rank_descending": 290,
+       "p_mc": 0.5788423153692615,
+       "resolution": 0.001996007984031936,
+       "mean": 15.717395226857661,
+       "p_display": "0.58 (289/500)",
+       "p_mc_binomial_se": 0.0220809369958439,
+       "quantiles_50_90_95_99": [
+        9.96479465100349,
+        37.61393509938577,
+        45.70112303815159,
+        74.90058348290341
+       ],
+       "max": 114.20598405549816
+      },
+      "wald_fixed_R105_jk8_cov": {
+       "observed": 11.57532209732367,
+       "n_mocks": 500,
+       "mocks_ge_observed": 269,
+       "rank_descending": 270,
+       "p_mc": 0.5389221556886228,
+       "resolution": 0.001996007984031936,
+       "mean": 20.2423761148661,
+       "p_display": "0.54 (269/500)",
+       "p_mc_binomial_se": 0.02229282690896561,
+       "quantiles_50_90_95_99": [
+        13.539763027378093,
+        49.20033288802165,
+        56.256497678336494,
+        91.080901988333
+       ],
+       "max": 136.91794941974152
+      },
+      "mock_delta_mean": [
+       9.962434229495411e-06,
+       -0.0002496870874287262
+      ],
+      "mock_delta_mean_se": [
+       0.00019099315254034747,
+       0.00020213045198935864
+      ],
+      "mock_delta_covariance": [
+       [
+        1.8239192158650224e-05,
+        -1.3017440482746005e-06
+       ],
+       [
+        -1.3017440482746005e-06,
+        2.0428359810711223e-05
+       ]
+      ],
+      "mock_cov_trace_over_r65_poisson": 21.32161803736338,
+      "observed_wald_under_mock_covariance": 1.6092625556998215,
+      "gaussian_p_exp_minus_w_over_2": 0.4472528081768006,
+      "overdispersion_peak": {
+       "n": 500,
+       "mean": 1.0120113824361154,
+       "sd": 0.00481207892004025,
+       "min": 0.9998355912813122,
+       "max": 1.0287658659243388,
+       "data": 1.0635569327189316,
+       "frac_ge_data": 0.0
+      },
+      "overdispersion_integrated": {
+       "n": 500,
+       "mean": 1.0209161218156935,
+       "sd": 0.004747545383609415,
+       "min": 1.005620066648066,
+       "max": 1.0342649218499524,
+       "data": 1.1044088343927705,
+       "frac_ge_data": 0.0
+      }
+     },
+     "dipole_stf": {
+      "wald_self_R65_estimator": {
+       "observed": 30.989468960483375,
+       "n_mocks": 500,
+       "mocks_ge_observed": 229,
+       "rank_descending": 230,
+       "p_mc": 0.4590818363273453,
+       "resolution": 0.001996007984031936,
+       "mean": 41.03257040098563,
+       "p_display": "0.46 (229/500)",
+       "p_mc_binomial_se": 0.022285677188798092,
+       "quantiles_50_90_95_99": [
+        27.36182762745389,
+        96.28475997416776,
+        127.9343277234825,
+        165.3745172351531
+       ],
+       "max": 295.2234697516472
+      },
+      "wald_fixed_R65_poisson_cov": {
+       "observed": 30.989468960483375,
+       "n_mocks": 500,
+       "mocks_ge_observed": 229,
+       "rank_descending": 230,
+       "p_mc": 0.4590818363273453,
+       "resolution": 0.001996007984031936,
+       "mean": 41.7136335291238,
+       "p_display": "0.46 (229/500)",
+       "p_mc_binomial_se": 0.022285677188798092,
+       "quantiles_50_90_95_99": [
+        27.68016026465822,
+        98.25997926166984,
+        128.54330413329433,
+        167.30943078872158
+       ],
+       "max": 295.1856653121692
+      },
+      "wald_fixed_R105_jk4_cov": {
+       "observed": 7.384603639907028,
+       "n_mocks": 500,
+       "mocks_ge_observed": 284,
+       "rank_descending": 285,
+       "p_mc": 0.5688622754491018,
+       "resolution": 0.001996007984031936,
+       "mean": 14.72675561820934,
+       "p_display": "0.57 (284/500)",
+       "p_mc_binomial_se": 0.02214759522024782,
+       "quantiles_50_90_95_99": [
+        9.88678438228124,
+        35.2487220659223,
+        45.13546617773411,
+        69.94724781950997
+       ],
+       "max": 109.41541506425892
+      },
+      "wald_fixed_R105_jk8_cov": {
+       "observed": 10.757994045693213,
+       "n_mocks": 500,
+       "mocks_ge_observed": 276,
+       "rank_descending": 277,
+       "p_mc": 0.5528942115768463,
+       "resolution": 0.001996007984031936,
+       "mean": 19.511531477417336,
+       "p_display": "0.55 (276/500)",
+       "p_mc_binomial_se": 0.02223520642502173,
+       "quantiles_50_90_95_99": [
+        13.168892084391775,
+        46.07788564246309,
+        58.30418908742222,
+        87.19758163709223
+       ],
+       "max": 137.84810017981138
+      },
+      "mock_delta_mean": [
+       2.5926345424778626e-05,
+       -0.00023605459049206738
+      ],
+      "mock_delta_mean_se": [
+       0.00019061722335501975,
+       0.00020191990759413497
+      ],
+      "mock_delta_covariance": [
+       [
+        1.8167462919788735e-05,
+        -1.1322378223591027e-06
+       ],
+       [
+        -1.1322378223591027e-06,
+        2.0385824541412008e-05
+       ]
+      ],
+      "mock_cov_trace_over_r65_poisson": 20.641053626668192,
+      "observed_wald_under_mock_covariance": 1.5959793241186273,
+      "gaussian_p_exp_minus_w_over_2": 0.45023317576259647,
+      "overdispersion_peak": {
+       "n": 500,
+       "mean": 1.0118686524615998,
+       "sd": 0.004816410538486384,
+       "min": 0.9998547133794214,
+       "max": 1.028569808185776,
+       "data": 1.0635607751362608,
+       "frac_ge_data": 0.0
+      },
+      "overdispersion_integrated": {
+       "n": 500,
+       "mean": 1.020660463893633,
+       "sd": 0.004761234716657772,
+       "min": 1.0053230117105714,
+       "max": 1.0335923755157628,
+       "data": 1.1043439789403715,
+       "frac_ge_data": 0.0
+      }
+     }
+    },
+    "amp_ratio_mean": 0.7150185876644578,
+    "amp_ratio_sd": 9.52858021351265e-17
+   },
+   "r84_LSS_DIFF_RED": {
+    "label": "EMPIRICAL_DIFF_SELECTION_RED amplitude r84",
+    "n_mocks": 500,
+    "mean_seconds_per_mock": 0.2167057900428772,
+    "offdiag_overdispersion": {
+     "n": 500,
+     "mean": 1.4384663558437698,
+     "sd": 0.01715002909663838,
+     "min": 1.3888744650889677,
+     "max": 1.4878541265387617,
+     "data": 1.5092073635389898,
+     "frac_ge_data": 0.0
+    },
+    "models": {
+     "dipole": {
+      "wald_self_R65_estimator": {
+       "observed": 32.792386268357376,
+       "n_mocks": 500,
+       "mocks_ge_observed": 317,
+       "rank_descending": 318,
+       "p_mc": 0.6347305389221557,
+       "resolution": 0.001996007984031936,
+       "mean": 75.73169241136458,
+       "p_display": "0.63 (317/500)",
+       "p_mc_binomial_se": 0.021533586876400574,
+       "quantiles_50_90_95_99": [
+        51.94093855967287,
+        171.73268815420798,
+        231.6734864205558,
+        347.17238228365613
+       ],
+       "max": 492.01435769014495
+      },
+      "wald_fixed_R65_poisson_cov": {
+       "observed": 32.79238626835715,
+       "n_mocks": 500,
+       "mocks_ge_observed": 317,
+       "rank_descending": 318,
+       "p_mc": 0.6347305389221557,
+       "resolution": 0.001996007984031936,
+       "mean": 76.36092804702781,
+       "p_display": "0.63 (317/500)",
+       "p_mc_binomial_se": 0.021533586876400574,
+       "quantiles_50_90_95_99": [
+        52.07506740509385,
+        172.6222329366611,
+        235.51739797553702,
+        355.6577310067551
+       ],
+       "max": 489.18882874181867
+      },
+      "wald_fixed_R105_jk4_cov": {
+       "observed": 7.867511051001548,
+       "n_mocks": 500,
+       "mocks_ge_observed": 361,
+       "rank_descending": 362,
+       "p_mc": 0.7225548902195609,
+       "resolution": 0.001996007984031936,
+       "mean": 27.971309332522342,
+       "p_display": "0.72 (361/500)",
+       "p_mc_binomial_se": 0.02002345229171829,
+       "quantiles_50_90_95_99": [
+        18.19168428141466,
+        65.13405497417695,
+        80.71282346881371,
+        130.2795670825257
+       ],
+       "max": 202.22265459343697
+      },
+      "wald_fixed_R105_jk8_cov": {
+       "observed": 11.57532209732367,
+       "n_mocks": 500,
+       "mocks_ge_observed": 348,
+       "rank_descending": 349,
+       "p_mc": 0.6966067864271457,
+       "resolution": 0.001996007984031936,
+       "mean": 36.026281402285406,
+       "p_display": "0.7 (348/500)",
+       "p_mc_binomial_se": 0.020559463588858087,
+       "quantiles_50_90_95_99": [
+        24.86658192294695,
+        85.82682262894366,
+        102.69378161423498,
+        165.539613972429
+       ],
+       "max": 242.28030393458891
+      },
+      "mock_delta_mean": [
+       4.4073358821031464e-05,
+       -0.000357387684650265
+      ],
+      "mock_delta_mean_se": [
+       0.0002544419373614169,
+       0.0002700523394215241
+      ],
+      "mock_delta_covariance": [
+       [
+        3.237034974411558e-05,
+        -2.7816515362511672e-06
+       ],
+       [
+        -2.7816515362511672e-06,
+        3.646413301351904e-05
+       ]
+      ],
+      "mock_cov_trace_over_r65_poisson": 37.95592103479101,
+      "observed_wald_under_mock_covariance": 0.8974126150827395,
+      "gaussian_p_exp_minus_w_over_2": 0.6384535801631538,
+      "overdispersion_peak": {
+       "n": 500,
+       "mean": 1.0153330282225892,
+       "sd": 0.004895725757892845,
+       "min": 1.0018839118937175,
+       "max": 1.0322709876107463,
+       "data": 1.0635569327189316,
+       "frac_ge_data": 0.0
+      },
+      "overdispersion_integrated": {
+       "n": 500,
+       "mean": 1.031857055978565,
+       "sd": 0.004908491876666124,
+       "min": 1.0177261355480507,
+       "max": 1.0449249961814322,
+       "data": 1.1044088343927705,
+       "frac_ge_data": 0.0
+      }
+     },
+     "dipole_stf": {
+      "wald_self_R65_estimator": {
+       "observed": 30.989468960483375,
+       "n_mocks": 500,
+       "mocks_ge_observed": 325,
+       "rank_descending": 326,
+       "p_mc": 0.6506986027944112,
+       "resolution": 0.001996007984031936,
+       "mean": 72.6703948282011,
+       "p_display": "0.65 (325/500)",
+       "p_mc_binomial_se": 0.021320878552058418,
+       "quantiles_50_90_95_99": [
+        48.93658413114812,
+        168.8505996244276,
+        216.02742386153218,
+        309.58263220825336
+       ],
+       "max": 511.59095469925364
+      },
+      "wald_fixed_R65_poisson_cov": {
+       "observed": 30.989468960483375,
+       "n_mocks": 500,
+       "mocks_ge_observed": 325,
+       "rank_descending": 326,
+       "p_mc": 0.6506986027944112,
+       "resolution": 0.001996007984031936,
+       "mean": 73.92066562705654,
+       "p_display": "0.65 (325/500)",
+       "p_mc_binomial_se": 0.021320878552058418,
+       "quantiles_50_90_95_99": [
+        48.92266342569384,
+        172.62716422714578,
+        219.25823801868404,
+        323.67145014124685
+       ],
+       "max": 510.9492164475457
+      },
+      "wald_fixed_R105_jk4_cov": {
+       "observed": 7.384603639907028,
+       "n_mocks": 500,
+       "mocks_ge_observed": 369,
+       "rank_descending": 370,
+       "p_mc": 0.7385229540918163,
+       "resolution": 0.001996007984031936,
+       "mean": 26.158078328306356,
+       "p_display": "0.74 (369/500)",
+       "p_mc_binomial_se": 0.019652317948339493,
+       "quantiles_50_90_95_99": [
+        16.697267171881947,
+        62.37523910421899,
+        77.94681938567618,
+        111.42734441116667
+       ],
+       "max": 197.78778036339168
+      },
+      "wald_fixed_R105_jk8_cov": {
+       "observed": 10.757994045693213,
+       "n_mocks": 500,
+       "mocks_ge_observed": 361,
+       "rank_descending": 362,
+       "p_mc": 0.7225548902195609,
+       "resolution": 0.001996007984031936,
+       "mean": 34.63344733577336,
+       "p_display": "0.72 (361/500)",
+       "p_mc_binomial_se": 0.02002345229171829,
+       "quantiles_50_90_95_99": [
+        23.09747373730604,
+        83.84299931994852,
+        102.58064679064177,
+        139.28291377531013
+       ],
+       "max": 243.65473082830312
+      },
+      "mock_delta_mean": [
+       6.422289551560106e-05,
+       -0.00033830077530115177
+      ],
+      "mock_delta_mean_se": [
+       0.00025394380403073264,
+       0.0002687450327164885
+      ],
+      "mock_delta_covariance": [
+       [
+        3.224372780279958e-05,
+        -2.474066763391947e-06
+       ],
+       [
+        -2.474066763391947e-06,
+        3.6111946304893245e-05
+       ]
+      ],
+      "mock_cov_trace_over_r65_poisson": 36.59696041132359,
+      "observed_wald_under_mock_covariance": 0.8951376101337698,
+      "gaussian_p_exp_minus_w_over_2": 0.6391802358984292,
+      "overdispersion_peak": {
+       "n": 500,
+       "mean": 1.0151524900698068,
+       "sd": 0.004896462435092675,
+       "min": 1.001568427696575,
+       "max": 1.0320309250119388,
+       "data": 1.0635607751362608,
+       "frac_ge_data": 0.0
+      },
+      "overdispersion_integrated": {
+       "n": 500,
+       "mean": 1.0314751839217395,
+       "sd": 0.004900609075045832,
+       "min": 1.0173125515307946,
+       "max": 1.0443837930759756,
+       "data": 1.1043439789403715,
+       "frac_ge_data": 0.0
+      }
+     }
+    },
+    "amp_ratio_mean": 1.285269656713674,
+    "amp_ratio_sd": 3.81143208540506e-16
+   },
+   "marginal_LSS_DIFF_MID": {
+    "label": "EMPIRICAL_DIFF_SELECTION_MID amplitude marginal",
+    "n_mocks": 800,
+    "mean_seconds_per_mock": 0.19805790692567826,
+    "offdiag_overdispersion": {
+     "n": 800,
+     "mean": 2.549500230264997,
+     "sd": 0.5692676247529334,
+     "min": 1.2332866275718386,
+     "max": 4.459451374627475,
+     "data": 1.5092073635389898,
+     "frac_ge_data": 0.98375
+    },
+    "models": {
+     "dipole": {
+      "wald_self_R65_estimator": {
+       "observed": 32.792386268357376,
+       "n_mocks": 800,
+       "mocks_ge_observed": 135,
+       "rank_descending": 136,
+       "p_mc": 0.16978776529338327,
+       "resolution": 0.0012484394506866417,
+       "mean": 18.29544624552971,
+       "p_display": "0.17 (135/800)",
+       "p_mc_binomial_se": 0.013274029157063723,
+       "quantiles_50_90_95_99": [
+        11.326329858964023,
+        42.722414523228935,
+        60.688514760860045,
+        90.04473564023809
+       ],
+       "max": 174.25770360711545
+      },
+      "wald_fixed_R65_poisson_cov": {
+       "observed": 32.79238626835715,
+       "n_mocks": 800,
+       "mocks_ge_observed": 134,
+       "rank_descending": 135,
+       "p_mc": 0.16853932584269662,
+       "resolution": 0.0012484394506866417,
+       "mean": 18.36093460385414,
+       "p_display": "0.17 (134/800)",
+       "p_mc_binomial_se": 0.013235077516168254,
+       "quantiles_50_90_95_99": [
+        11.412643733195356,
+        43.191065562974,
+        60.89280689759882,
+        90.22442632804716
+       ],
+       "max": 172.0024994278392
+      },
+      "wald_fixed_R105_jk4_cov": {
+       "observed": 7.867511051001548,
+       "n_mocks": 800,
+       "mocks_ge_observed": 224,
+       "rank_descending": 225,
+       "p_mc": 0.2808988764044944,
+       "resolution": 0.0012484394506866417,
+       "mean": 6.8535502973731335,
+       "p_display": "0.28 (224/800)",
+       "p_mc_binomial_se": 0.01589004002666399,
+       "quantiles_50_90_95_99": [
+        3.6950591784418783,
+        17.13210866234656,
+        23.55078250549196,
+        40.25389540462191
+       ],
+       "max": 85.42082027136173
+      },
+      "wald_fixed_R105_jk8_cov": {
+       "observed": 11.57532209732367,
+       "n_mocks": 800,
+       "mocks_ge_observed": 197,
+       "rank_descending": 198,
+       "p_mc": 0.24719101123595505,
+       "resolution": 0.0012484394506866417,
+       "mean": 8.78243433437513,
+       "p_display": "0.25 (197/800)",
+       "p_mc_binomial_se": 0.015251541528649694,
+       "quantiles_50_90_95_99": [
+        4.890197359814303,
+        21.707071778604238,
+        29.43858510268837,
+        48.08633903981556
+       ],
+       "max": 103.45313539307863
+      },
+      "mock_delta_mean": [
+       -6.342989940360822e-05,
+       -4.69186847801275e-05
+      ],
+      "mock_delta_mean_se": [
+       0.00010091174277922926,
+       0.000101788632791989
+      ],
+      "mock_delta_covariance": [
+       [
+        8.146543864593072e-06,
+        -4.507576574217837e-07
+       ],
+       [
+        -4.507576574217837e-07,
+        8.288740612529894e-06
+       ]
+      ],
+      "mock_cov_trace_over_r65_poisson": 9.062556073740767,
+      "observed_wald_under_mock_covariance": 3.9663570696308703,
+      "gaussian_p_exp_minus_w_over_2": 0.13763107615729847,
+      "overdispersion_peak": {
+       "n": 800,
+       "mean": 1.0337092798233394,
+       "sd": 0.010670738743896653,
+       "min": 1.0043015628915974,
+       "max": 1.0833845595059233,
+       "data": 1.0635569327189316,
+       "frac_ge_data": 0.0075
+      },
+      "overdispersion_integrated": {
+       "n": 800,
+       "mean": 1.0917110279574178,
+       "sd": 0.031530802358222434,
+       "min": 1.0205657027773698,
+       "max": 1.2096474866275069,
+       "data": 1.1044088343927705,
+       "frac_ge_data": 0.305
+      }
+     },
+     "dipole_stf": {
+      "wald_self_R65_estimator": {
+       "observed": 30.989468960483375,
+       "n_mocks": 800,
+       "mocks_ge_observed": 143,
+       "rank_descending": 144,
+       "p_mc": 0.1797752808988764,
+       "resolution": 0.0012484394506866417,
+       "mean": 17.879335088745645,
+       "p_display": "0.18 (143/800)",
+       "p_mc_binomial_se": 0.01357645615010626,
+       "quantiles_50_90_95_99": [
+        11.255732234876454,
+        43.52881838267383,
+        58.75536312597616,
+        87.71355832032839
+       ],
+       "max": 163.58213097416464
+      },
+      "wald_fixed_R65_poisson_cov": {
+       "observed": 30.989468960483375,
+       "n_mocks": 800,
+       "mocks_ge_observed": 149,
+       "rank_descending": 150,
+       "p_mc": 0.18726591760299627,
+       "resolution": 0.0012484394506866417,
+       "mean": 18.15363777605039,
+       "p_display": "0.19 (149/800)",
+       "p_mc_binomial_se": 0.013792996126082618,
+       "quantiles_50_90_95_99": [
+        11.48875692404217,
+        44.48904250055662,
+        59.303640780999345,
+        89.53509859987473
+       ],
+       "max": 166.39051341992038
+      },
+      "wald_fixed_R105_jk4_cov": {
+       "observed": 7.384603639907028,
+       "n_mocks": 800,
+       "mocks_ge_observed": 227,
+       "rank_descending": 228,
+       "p_mc": 0.2846441947565543,
+       "resolution": 0.0012484394506866417,
+       "mean": 6.54954996467636,
+       "p_display": "0.28 (227/800)",
+       "p_mc_binomial_se": 0.01595391320131001,
+       "quantiles_50_90_95_99": [
+        3.4523933660766595,
+        16.10597388917477,
+        22.2830031377035,
+        40.663270488810916
+       ],
+       "max": 82.48852196892614
+      },
+      "wald_fixed_R105_jk8_cov": {
+       "observed": 10.757994045693213,
+       "n_mocks": 800,
+       "mocks_ge_observed": 211,
+       "rank_descending": 212,
+       "p_mc": 0.264669163545568,
+       "resolution": 0.0012484394506866417,
+       "mean": 8.63627551242468,
+       "p_display": "0.26 (211/800)",
+       "p_mc_binomial_se": 0.015597251256778284,
+       "quantiles_50_90_95_99": [
+        4.785833168084466,
+        21.05567375685381,
+        28.730067714919624,
+        50.36603747707823
+       ],
+       "max": 102.23743679506713
+      },
+      "mock_delta_mean": [
+       -5.098971304431375e-05,
+       -6.391479556455935e-05
+      ],
+      "mock_delta_mean_se": [
+       0.00010167813823239401,
+       0.00010237487456553684
+      ],
+      "mock_delta_covariance": [
+       [
+        8.270755035524654e-06,
+        -4.2240824633719357e-07
+       ],
+       [
+        -4.2240824633719357e-07,
+        8.384491953847528e-06
+       ]
+      ],
+      "mock_cov_trace_over_r65_poisson": 8.91705659650971,
+      "observed_wald_under_mock_covariance": 3.866381138496492,
+      "gaussian_p_exp_minus_w_over_2": 0.1446858311049048,
+      "overdispersion_peak": {
+       "n": 800,
+       "mean": 1.0335798295384735,
+       "sd": 0.010655024727474021,
+       "min": 1.0041839614293147,
+       "max": 1.0831262116691147,
+       "data": 1.0635607751362608,
+       "frac_ge_data": 0.0075
+      },
+      "overdispersion_integrated": {
+       "n": 800,
+       "mean": 1.091477459389266,
+       "sd": 0.03147515328545736,
+       "min": 1.020437857262615,
+       "max": 1.2089193543664885,
+       "data": 1.1043439789403715,
+       "frac_ge_data": 0.30375
+      }
+     }
+    },
+    "amp_ratio_mean": 0.9946278435830584,
+    "amp_ratio_sd": 0.2627331606347502
+   },
+   "r16_LSS_DIFF_MID": {
+    "label": "EMPIRICAL_DIFF_SELECTION_MID amplitude r16",
+    "n_mocks": 500,
+    "mean_seconds_per_mock": 0.1957908000946045,
+    "offdiag_overdispersion": {
+     "n": 500,
+     "mean": 2.0234919202558057,
+     "sd": 0.03571846075244649,
+     "min": 1.9148116601075547,
+     "max": 2.166008942756918,
+     "data": 1.5092073635389898,
+     "frac_ge_data": 1.0
+    },
+    "models": {
+     "dipole": {
+      "wald_self_R65_estimator": {
+       "observed": 32.792386268357376,
+       "n_mocks": 500,
+       "mocks_ge_observed": 48,
+       "rank_descending": 49,
+       "p_mc": 0.09780439121756487,
+       "resolution": 0.001996007984031936,
+       "mean": 13.50050173829053,
+       "p_display": "0.098 (48/500)",
+       "p_mc_binomial_se": 0.013284479084715847,
+       "quantiles_50_90_95_99": [
+        8.899705687736414,
+        32.04291497626897,
+        42.601655263309546,
+        63.1283848839223
+       ],
+       "max": 106.52562753487143
+      },
+      "wald_fixed_R65_poisson_cov": {
+       "observed": 32.79238626835715,
+       "n_mocks": 500,
+       "mocks_ge_observed": 48,
+       "rank_descending": 49,
+       "p_mc": 0.09780439121756487,
+       "resolution": 0.001996007984031936,
+       "mean": 13.553421116375892,
+       "p_display": "0.098 (48/500)",
+       "p_mc_binomial_se": 0.013284479084715847,
+       "quantiles_50_90_95_99": [
+        8.768453428867149,
+        32.036164885827105,
+        43.069601399200316,
+        63.76962682774873
+       ],
+       "max": 107.61718341219246
+      },
+      "wald_fixed_R105_jk4_cov": {
+       "observed": 7.867511051001548,
+       "n_mocks": 500,
+       "mocks_ge_observed": 94,
+       "rank_descending": 95,
+       "p_mc": 0.18962075848303392,
+       "resolution": 0.001996007984031936,
+       "mean": 5.021736061953644,
+       "p_display": "0.19 (94/500)",
+       "p_mc_binomial_se": 0.01753081438127464,
+       "quantiles_50_90_95_99": [
+        2.967885984794587,
+        11.931293748063725,
+        16.909155140902918,
+        28.24430671913659
+       ],
+       "max": 55.40706486017957
+      },
+      "wald_fixed_R105_jk8_cov": {
+       "observed": 11.57532209732367,
+       "n_mocks": 500,
+       "mocks_ge_observed": 81,
+       "rank_descending": 82,
+       "p_mc": 0.16367265469061876,
+       "resolution": 0.001996007984031936,
+       "mean": 6.449520767078831,
+       "p_display": "0.16 (81/500)",
+       "p_mc_binomial_se": 0.016545931028331056,
+       "quantiles_50_90_95_99": [
+        3.9402059787040207,
+        15.680501249725303,
+        21.412325675800115,
+        33.815992681741896
+       ],
+       "max": 66.16586765459891
+      },
+      "mock_delta_mean": [
+       -4.370302862022343e-05,
+       0.00012710428202380615
+      ],
+      "mock_delta_mean_se": [
+       0.00010847901287778523,
+       0.0001122645316390942
+      ],
+      "mock_delta_covariance": [
+       [
+        5.883848117469344e-06,
+        -5.103426842592646e-07
+       ],
+       [
+        -5.103426842592646e-07,
+        6.301662532072593e-06
+       ]
+      ],
+      "mock_cov_trace_over_r65_poisson": 6.719194529449997,
+      "observed_wald_under_mock_covariance": 5.17597723543763,
+      "gaussian_p_exp_minus_w_over_2": 0.07517108591922203,
+      "overdispersion_peak": {
+       "n": 500,
+       "mean": 1.0249456265993344,
+       "sd": 0.004938298813004389,
+       "min": 1.0100116014799625,
+       "max": 1.0399295037259446,
+       "data": 1.0635569327189316,
+       "frac_ge_data": 0.0
+      },
+      "overdispersion_integrated": {
+       "n": 500,
+       "mean": 1.0631365256657246,
+       "sd": 0.005471385271270727,
+       "min": 1.0459866552834367,
+       "max": 1.079357024200812,
+       "data": 1.1044088343927705,
+       "frac_ge_data": 0.0
+      }
+     },
+     "dipole_stf": {
+      "wald_self_R65_estimator": {
+       "observed": 30.989468960483375,
+       "n_mocks": 500,
+       "mocks_ge_observed": 53,
+       "rank_descending": 54,
+       "p_mc": 0.10778443113772455,
+       "resolution": 0.001996007984031936,
+       "mean": 13.304917638565534,
+       "p_display": "0.11 (53/500)",
+       "p_mc_binomial_se": 0.013868449627989545,
+       "quantiles_50_90_95_99": [
+        9.00645549491291,
+        31.83362972611211,
+        40.92705142420673,
+        63.45664859570327
+       ],
+       "max": 111.3795664766053
+      },
+      "wald_fixed_R65_poisson_cov": {
+       "observed": 30.989468960483375,
+       "n_mocks": 500,
+       "mocks_ge_observed": 56,
+       "rank_descending": 57,
+       "p_mc": 0.11377245508982035,
+       "resolution": 0.001996007984031936,
+       "mean": 13.507616320958583,
+       "p_display": "0.11 (56/500)",
+       "p_mc_binomial_se": 0.014200583336796777,
+       "quantiles_50_90_95_99": [
+        9.189433881377813,
+        32.11873931274069,
+        42.1092614991296,
+        64.14960234170864
+       ],
+       "max": 113.70196107516834
+      },
+      "wald_fixed_R105_jk4_cov": {
+       "observed": 7.384603639907028,
+       "n_mocks": 500,
+       "mocks_ge_observed": 99,
+       "rank_descending": 100,
+       "p_mc": 0.1996007984031936,
+       "resolution": 0.001996007984031936,
+       "mean": 4.837791358217049,
+       "p_display": "0.2 (99/500)",
+       "p_mc_binomial_se": 0.017875140261267953,
+       "quantiles_50_90_95_99": [
+        2.790396230022221,
+        11.145939630211656,
+        15.737404626919682,
+        26.65125331175088
+       ],
+       "max": 56.626546436276215
+      },
+      "wald_fixed_R105_jk8_cov": {
+       "observed": 10.757994045693213,
+       "n_mocks": 500,
+       "mocks_ge_observed": 89,
+       "rank_descending": 90,
+       "p_mc": 0.17964071856287425,
+       "resolution": 0.001996007984031936,
+       "mean": 6.38767989327069,
+       "p_display": "0.18 (89/500)",
+       "p_mc_binomial_se": 0.01716798944530713,
+       "quantiles_50_90_95_99": [
+        3.8991324754920766,
+        14.674583015262687,
+        20.232236043283407,
+        33.78800165692045
+       ],
+       "max": 70.10574124065243
+      },
+      "mock_delta_mean": [
+       -2.0338817385233267e-05,
+       0.00010085797361866914
+      ],
+      "mock_delta_mean_se": [
+       0.00010984943195677944,
+       0.00011338408050113359
+      ],
+      "mock_delta_covariance": [
+       [
+        6.033448850613558e-06,
+        -4.810018236398295e-07
+       ],
+       [
+        -4.810018236398295e-07,
+        6.427974855543777e-06
+       ]
+      ],
+      "mock_cov_trace_over_r65_poisson": 6.671724564144777,
+      "observed_wald_under_mock_covariance": 5.000816800518685,
+      "gaussian_p_exp_minus_w_over_2": 0.08205148193375102,
+      "overdispersion_peak": {
+       "n": 500,
+       "mean": 1.0248222778544867,
+       "sd": 0.004931606708362822,
+       "min": 1.010011149239827,
+       "max": 1.0394938131339464,
+       "data": 1.0635607751362608,
+       "frac_ge_data": 0.0
+      },
+      "overdispersion_integrated": {
+       "n": 500,
+       "mean": 1.0629403117838576,
+       "sd": 0.0054700714454103665,
+       "min": 1.0457183077513823,
+       "max": 1.0792720702458884,
+       "data": 1.1043439789403715,
+       "frac_ge_data": 0.0
+      }
+     }
+    },
+    "amp_ratio_mean": 0.7514198592817628,
+    "amp_ratio_sd": 0.0
+   },
+   "r84_LSS_DIFF_MID": {
+    "label": "EMPIRICAL_DIFF_SELECTION_MID amplitude r84",
+    "n_mocks": 500,
+    "mean_seconds_per_mock": 0.1975925087928772,
+    "offdiag_overdispersion": {
+     "n": 500,
+     "mean": 3.0916305361550256,
+     "sd": 0.10260215393983493,
+     "min": 2.8529980660141407,
+     "max": 3.488663235140766,
+     "data": 1.5092073635389898,
+     "frac_ge_data": 1.0
+    },
+    "models": {
+     "dipole": {
+      "wald_self_R65_estimator": {
+       "observed": 32.792386268357376,
+       "n_mocks": 500,
+       "mocks_ge_observed": 117,
+       "rank_descending": 118,
+       "p_mc": 0.23552894211576847,
+       "resolution": 0.001996007984031936,
+       "mean": 22.2894640656467,
+       "p_display": "0.24 (117/500)",
+       "p_mc_binomial_se": 0.01897656763177132,
+       "quantiles_50_90_95_99": [
+        14.185070846128319,
+        51.957348127826755,
+        68.66003114499276,
+        107.98616866318427
+       ],
+       "max": 178.46221846278303
+      },
+      "wald_fixed_R65_poisson_cov": {
+       "observed": 32.79238626835715,
+       "n_mocks": 500,
+       "mocks_ge_observed": 115,
+       "rank_descending": 116,
+       "p_mc": 0.2315369261477046,
+       "resolution": 0.001996007984031936,
+       "mean": 22.373237192723998,
+       "p_display": "0.23 (115/500)",
+       "p_mc_binomial_se": 0.01886412351410884,
+       "quantiles_50_90_95_99": [
+        14.292748149451285,
+        51.279329770510046,
+        67.48467512554876,
+        109.51970231832047
+       ],
+       "max": 178.4338987343312
+      },
+      "wald_fixed_R105_jk4_cov": {
+       "observed": 7.867511051001548,
+       "n_mocks": 500,
+       "mocks_ge_observed": 172,
+       "rank_descending": 173,
+       "p_mc": 0.34530938123752497,
+       "resolution": 0.001996007984031936,
+       "mean": 8.306189738090673,
+       "p_display": "0.35 (172/500)",
+       "p_mc_binomial_se": 0.021263622102872436,
+       "quantiles_50_90_95_99": [
+        4.84198661308454,
+        20.373593357500607,
+        26.922705234898743,
+        46.56164489815188
+       ],
+       "max": 91.38770411088554
+      },
+      "wald_fixed_R105_jk8_cov": {
+       "observed": 11.57532209732367,
+       "n_mocks": 500,
+       "mocks_ge_observed": 156,
+       "rank_descending": 157,
+       "p_mc": 0.313373253493014,
+       "resolution": 0.001996007984031936,
+       "mean": 10.660101546478257,
+       "p_display": "0.31 (156/500)",
+       "p_mc_binomial_se": 0.020744659914696945,
+       "quantiles_50_90_95_99": [
+        6.366683454959695,
+        26.074752282263724,
+        33.712580069457026,
+        55.953394543115614
+       ],
+       "max": 109.17612139344484
+      },
+      "mock_delta_mean": [
+       -6.597632651230474e-05,
+       0.00013945635070766835
+      ],
+      "mock_delta_mean_se": [
+       0.00013994078336800614,
+       0.000143445090638896
+      ],
+      "mock_delta_covariance": [
+       [
+        9.791711424825617e-06,
+        -6.692298645015498e-07
+       ],
+       [
+        -6.692298645015498e-07,
+        1.0288247014200534e-05
+       ]
+      ],
+      "mock_cov_trace_over_r65_poisson": 11.072260389855686,
+      "observed_wald_under_mock_covariance": 3.186476035243375,
+      "gaussian_p_exp_minus_w_over_2": 0.2032663649123213,
+      "overdispersion_peak": {
+       "n": 500,
+       "mean": 1.0431389873301,
+       "sd": 0.005327330111335338,
+       "min": 1.0263640080083312,
+       "max": 1.0613309277704166,
+       "data": 1.0635569327189316,
+       "frac_ge_data": 0.0
+      },
+      "overdispersion_integrated": {
+       "n": 500,
+       "mean": 1.1217766378795577,
+       "sd": 0.008065633468106058,
+       "min": 1.0991105042989437,
+       "max": 1.1583411867823319,
+       "data": 1.1044088343927705,
+       "frac_ge_data": 0.986
+      }
+     },
+     "dipole_stf": {
+      "wald_self_R65_estimator": {
+       "observed": 30.989468960483375,
+       "n_mocks": 500,
+       "mocks_ge_observed": 128,
+       "rank_descending": 129,
+       "p_mc": 0.25748502994011974,
+       "resolution": 0.001996007984031936,
+       "mean": 21.95840214021682,
+       "p_display": "0.26 (128/500)",
+       "p_mc_binomial_se": 0.019554359580249894,
+       "quantiles_50_90_95_99": [
+        13.88455932305436,
+        50.47365328446224,
+        65.58648463087269,
+        96.29774202898305
+       ],
+       "max": 193.5544115584968
+      },
+      "wald_fixed_R65_poisson_cov": {
+       "observed": 30.989468960483375,
+       "n_mocks": 500,
+       "mocks_ge_observed": 131,
+       "rank_descending": 132,
+       "p_mc": 0.2634730538922156,
+       "resolution": 0.001996007984031936,
+       "mean": 22.29051922640305,
+       "p_display": "0.26 (131/500)",
+       "p_mc_binomial_se": 0.019700507798781495,
+       "quantiles_50_90_95_99": [
+        14.090286576576712,
+        51.854048696047016,
+        66.62818673692182,
+        99.56284900189698
+       ],
+       "max": 196.67516260879015
+      },
+      "wald_fixed_R105_jk4_cov": {
+       "observed": 7.384603639907028,
+       "n_mocks": 500,
+       "mocks_ge_observed": 176,
+       "rank_descending": 177,
+       "p_mc": 0.3532934131736527,
+       "resolution": 0.001996007984031936,
+       "mean": 8.005599397463781,
+       "p_display": "0.35 (176/500)",
+       "p_mc_binomial_se": 0.021376490702721223,
+       "quantiles_50_90_95_99": [
+        4.513939195033453,
+        18.955163112420646,
+        25.97697731999038,
+        43.44204136548466
+       ],
+       "max": 97.48367065458237
+      },
+      "wald_fixed_R105_jk8_cov": {
+       "observed": 10.757994045693213,
+       "n_mocks": 500,
+       "mocks_ge_observed": 166,
+       "rank_descending": 167,
+       "p_mc": 0.3333333333333333,
+       "resolution": 0.001996007984031936,
+       "mean": 10.565501267542881,
+       "p_display": "0.33 (166/500)",
+       "p_mc_binomial_se": 0.021081851067789197,
+       "quantiles_50_90_95_99": [
+        6.171192482334041,
+        25.262360079012673,
+        32.13920692630327,
+        54.83216202826964
+       ],
+       "max": 120.828144506545
+      },
+      "mock_delta_mean": [
+       -4.105094641501083e-05,
+       0.00010539191909574792
+      ],
+      "mock_delta_mean_se": [
+       0.00014173543853490816,
+       0.00014473288998637126
+      ],
+      "mock_delta_covariance": [
+       [
+        1.0044467268341366e-05,
+        -6.399672458093349e-07
+       ],
+       [
+        -6.399672458093349e-07,
+        1.0473804721903532e-05
+       ]
+      ],
+      "mock_cov_trace_over_r65_poisson": 10.985282458815727,
+      "observed_wald_under_mock_covariance": 3.0847187123322626,
+      "gaussian_p_exp_minus_w_over_2": 0.21387589626723322,
+      "overdispersion_peak": {
+       "n": 500,
+       "mean": 1.0429846370080704,
+       "sd": 0.005311989836891469,
+       "min": 1.026293956610425,
+       "max": 1.0612510636346848,
+       "data": 1.0635607751362608,
+       "frac_ge_data": 0.0
+      },
+      "overdispersion_integrated": {
+       "n": 500,
+       "mean": 1.1214774650167487,
+       "sd": 0.00804194270546309,
+       "min": 1.0990459527296692,
+       "max": 1.157662243730815,
+       "data": 1.1043439789403715,
+       "frac_ge_data": 0.982
+      }
+     }
+    },
+    "amp_ratio_mean": 1.2486126646987767,
+    "amp_ratio_sd": 3.806580743806075e-16
+   },
+   "marginal_LSS_DIFF_FLAT": {
+    "label": "EMPIRICAL_DIFF_SELECTION_FLAT amplitude marginal",
+    "n_mocks": 800,
+    "mean_seconds_per_mock": 0.1969234663248062,
+    "offdiag_overdispersion": {
+     "n": 800,
+     "mean": 1.3350521101188937,
+     "sd": 0.08199277735141028,
+     "min": 1.1125314114690663,
+     "max": 1.632926601595046,
+     "data": 1.5092073635389898,
+     "frac_ge_data": 0.01625
+    },
+    "models": {
+     "dipole": {
+      "wald_self_R65_estimator": {
+       "observed": 32.792386268357376,
+       "n_mocks": 800,
+       "mocks_ge_observed": 16,
+       "rank_descending": 17,
+       "p_mc": 0.02122347066167291,
+       "resolution": 0.0012484394506866417,
+       "mean": 7.782882841767437,
+       "p_display": "0.021 (16/800)",
+       "p_mc_binomial_se": 0.005095713266406629,
+       "quantiles_50_90_95_99": [
+        4.983472358355007,
+        18.463846441985815,
+        22.541506584681027,
+        39.68029268637417
+       ],
+       "max": 70.98496414209248
+      },
+      "wald_fixed_R65_poisson_cov": {
+       "observed": 32.79238626835715,
+       "n_mocks": 800,
+       "mocks_ge_observed": 17,
+       "rank_descending": 18,
+       "p_mc": 0.02247191011235955,
+       "resolution": 0.0012484394506866417,
+       "mean": 7.797888985112516,
+       "p_display": "0.022 (17/800)",
+       "p_mc_binomial_se": 0.00524010059162293,
+       "quantiles_50_90_95_99": [
+        4.999610086650309,
+        18.377755633255678,
+        22.620694443307688,
+        39.90137892299219
+       ],
+       "max": 69.84900555483304
+      },
+      "wald_fixed_R105_jk4_cov": {
+       "observed": 7.867511051001548,
+       "n_mocks": 800,
+       "mocks_ge_observed": 47,
+       "rank_descending": 48,
+       "p_mc": 0.0599250936329588,
+       "resolution": 0.0012484394506866417,
+       "mean": 2.7364108856255536,
+       "p_display": "0.06 (47/800)",
+       "p_mc_binomial_se": 0.008391519289291416,
+       "quantiles_50_90_95_99": [
+        1.6266400706070951,
+        6.442383030025247,
+        8.290033280126991,
+        14.266879438861672
+       ],
+       "max": 31.598203363542194
+      },
+      "wald_fixed_R105_jk8_cov": {
+       "observed": 11.57532209732367,
+       "n_mocks": 800,
+       "mocks_ge_observed": 33,
+       "rank_descending": 34,
+       "p_mc": 0.04244694132334582,
+       "resolution": 0.0012484394506866417,
+       "mean": 3.5659679301811233,
+       "p_display": "0.042 (33/800)",
+       "p_mc_binomial_se": 0.007127867711984266,
+       "quantiles_50_90_95_99": [
+        2.2324937531275006,
+        8.261961359758406,
+        10.444363124362916,
+        17.75365662670532
+       ],
+       "max": 37.93919329456077
+      },
+      "mock_delta_mean": [
+       -8.53585148851039e-06,
+       4.118857358660603e-06
+      ],
+      "mock_delta_mean_se": [
+       6.083722813274784e-05,
+       7.238120974943836e-05
+      ],
+      "mock_delta_covariance": [
+       [
+        2.960934661500807e-06,
+        -4.6322680589679825e-07
+       ],
+       [
+        -4.6322680589679825e-07,
+        4.191231619833754e-06
+       ]
+      ],
+      "mock_cov_trace_over_r65_poisson": 3.9437655042438786,
+      "observed_wald_under_mock_covariance": 7.760664998162629,
+      "gaussian_p_exp_minus_w_over_2": 0.020643959942717335,
+      "overdispersion_peak": {
+       "n": 800,
+       "mean": 1.0135082804550462,
+       "sd": 0.0050405092259423745,
+       "min": 0.9959917261071379,
+       "max": 1.0283581003525515,
+       "data": 1.0635569327189316,
+       "frac_ge_data": 0.0
+      },
+      "overdispersion_integrated": {
+       "n": 800,
+       "mean": 1.0263093538624097,
+       "sd": 0.0064460904908301,
+       "min": 1.0052254323123389,
+       "max": 1.0494789172169336,
+       "data": 1.1044088343927705,
+       "frac_ge_data": 0.0
+      }
+     },
+     "dipole_stf": {
+      "wald_self_R65_estimator": {
+       "observed": 30.989468960483375,
+       "n_mocks": 800,
+       "mocks_ge_observed": 21,
+       "rank_descending": 22,
+       "p_mc": 0.02746566791510612,
+       "resolution": 0.0012484394506866417,
+       "mean": 7.769258372622059,
+       "p_display": "0.027 (21/800)",
+       "p_mc_binomial_se": 0.005778332912817851,
+       "quantiles_50_90_95_99": [
+        5.08599769925778,
+        17.441990648372695,
+        22.90674041706323,
+        42.285147944638396
+       ],
+       "max": 86.49982010954491
+      },
+      "wald_fixed_R65_poisson_cov": {
+       "observed": 30.989468960483375,
+       "n_mocks": 800,
+       "mocks_ge_observed": 22,
+       "rank_descending": 23,
+       "p_mc": 0.02871410736579276,
+       "resolution": 0.0012484394506866417,
+       "mean": 7.865885372646314,
+       "p_display": "0.029 (22/800)",
+       "p_mc_binomial_se": 0.005904405918885753,
+       "quantiles_50_90_95_99": [
+        5.139485350037102,
+        17.773721765458657,
+        23.13636883577812,
+        42.21583760982502
+       ],
+       "max": 86.0985809796427
+      },
+      "wald_fixed_R105_jk4_cov": {
+       "observed": 7.384603639907028,
+       "n_mocks": 800,
+       "mocks_ge_observed": 56,
+       "rank_descending": 57,
+       "p_mc": 0.07116104868913857,
+       "resolution": 0.0012484394506866417,
+       "mean": 2.644074301101854,
+       "p_display": "0.071 (56/800)",
+       "p_mc_binomial_se": 0.00908963378240569,
+       "quantiles_50_90_95_99": [
+        1.5247671852888736,
+        6.311819377756173,
+        7.95898573318582,
+        15.240766260836669
+       ],
+       "max": 32.297037018648794
+      },
+      "wald_fixed_R105_jk8_cov": {
+       "observed": 10.757994045693213,
+       "n_mocks": 800,
+       "mocks_ge_observed": 36,
+       "rank_descending": 37,
+       "p_mc": 0.046192259675405745,
+       "resolution": 0.0012484394506866417,
+       "mean": 3.540114316231453,
+       "p_display": "0.046 (36/800)",
+       "p_mc_binomial_se": 0.007421129868615495,
+       "quantiles_50_90_95_99": [
+        2.1977291397620102,
+        8.10021178421321,
+        10.534088333423892,
+        19.778112781045923
+       ],
+       "max": 39.74863349322217
+      },
+      "mock_delta_mean": [
+       -5.2123581304395565e-06,
+       -5.9332986273446406e-06
+      ],
+      "mock_delta_mean_se": [
+       6.155415327227264e-05,
+       7.420589922001983e-05
+      ],
+      "mock_delta_covariance": [
+       [
+        3.0311310280531483e-06,
+        -4.723421344160771e-07
+       ],
+       [
+        -4.723421344160771e-07,
+        4.405212383241393e-06
+       ]
+      ],
+      "mock_cov_trace_over_r65_poisson": 3.9813456451236373,
+      "observed_wald_under_mock_covariance": 7.299679536253697,
+      "gaussian_p_exp_minus_w_over_2": 0.025995293719674118,
+      "overdispersion_peak": {
+       "n": 800,
+       "mean": 1.0133959275510822,
+       "sd": 0.005042527925610118,
+       "min": 0.9959983991442851,
+       "max": 1.0282127769985747,
+       "data": 1.0635607751362608,
+       "frac_ge_data": 0.0
+      },
+      "overdispersion_integrated": {
+       "n": 800,
+       "mean": 1.0261560735262678,
+       "sd": 0.006433246233890997,
+       "min": 1.004982816440479,
+       "max": 1.0494291868600794,
+       "data": 1.1043439789403715,
+       "frac_ge_data": 0.0
+      }
+     }
+    },
+    "amp_ratio_mean": 1.0090683753775829,
+    "amp_ratio_sd": 0.22037491115306565
+   },
+   "r16_LSS_DIFF_FLAT": {
+    "label": "EMPIRICAL_DIFF_SELECTION_FLAT amplitude r16",
+    "n_mocks": 500,
+    "mean_seconds_per_mock": 0.19572332906723022,
+    "offdiag_overdispersion": {
+     "n": 500,
+     "mean": 1.2513621860381103,
+     "sd": 0.01606997361114349,
+     "min": 1.2060178523583556,
+     "max": 1.305799784871707,
+     "data": 1.5092073635389898,
+     "frac_ge_data": 0.0
+    },
+    "models": {
+     "dipole": {
+      "wald_self_R65_estimator": {
+       "observed": 32.792386268357376,
+       "n_mocks": 500,
+       "mocks_ge_observed": 1,
+       "rank_descending": 2,
+       "p_mc": 0.003992015968063872,
+       "resolution": 0.001996007984031936,
+       "mean": 6.126763380373548,
+       "p_display": "0.004 (1/500)",
+       "p_mc_binomial_se": 0.002819957367257383,
+       "quantiles_50_90_95_99": [
+        3.91783932800291,
+        13.63446414226571,
+        18.64181894935662,
+        30.548551808256168
+       ],
+       "max": 54.80161602587441
+      },
+      "wald_fixed_R65_poisson_cov": {
+       "observed": 32.79238626835715,
+       "n_mocks": 500,
+       "mocks_ge_observed": 1,
+       "rank_descending": 2,
+       "p_mc": 0.003992015968063872,
+       "resolution": 0.001996007984031936,
+       "mean": 6.142212182038307,
+       "p_display": "0.004 (1/500)",
+       "p_mc_binomial_se": 0.002819957367257383,
+       "quantiles_50_90_95_99": [
+        3.9403367101104942,
+        13.829689804101806,
+        18.804344847093496,
+        30.307684707718767
+       ],
+       "max": 56.41007975804264
+      },
+      "wald_fixed_R105_jk4_cov": {
+       "observed": 7.867511051001548,
+       "n_mocks": 500,
+       "mocks_ge_observed": 18,
+       "rank_descending": 19,
+       "p_mc": 0.03792415169660679,
+       "resolution": 0.001996007984031936,
+       "mean": 2.1319480941194815,
+       "p_display": "0.038 (18/500)",
+       "p_mc_binomial_se": 0.008542354524918706,
+       "quantiles_50_90_95_99": [
+        1.2341687995186992,
+        5.010724337905424,
+        6.517686644433275,
+        10.948070769409991
+       ],
+       "max": 25.88177376715739
+      },
+      "wald_fixed_R105_jk8_cov": {
+       "observed": 11.57532209732367,
+       "n_mocks": 500,
+       "mocks_ge_observed": 11,
+       "rank_descending": 12,
+       "p_mc": 0.023952095808383235,
+       "resolution": 0.001996007984031936,
+       "mean": 2.785330680165565,
+       "p_display": "0.024 (11/500)",
+       "p_mc_binomial_se": 0.006837893376584526,
+       "quantiles_50_90_95_99": [
+        1.6324393527917116,
+        6.586771150655854,
+        8.501274593643087,
+        13.073066183146157
+       ],
+       "max": 31.94307483268195
+      },
+      "mock_delta_mean": [
+       -1.229898143581176e-05,
+       -8.05028612054178e-06
+      ],
+      "mock_delta_mean_se": [
+       6.767119938122259e-05,
+       8.188916061206441e-05
+      ],
+      "mock_delta_covariance": [
+       [
+        2.289695612846592e-06,
+        -2.970573074891696e-07
+       ],
+       [
+        -2.970573074891696e-07,
+        3.3529173128742386e-06
+       ]
+      ],
+      "mock_cov_trace_over_r65_poisson": 3.111384905624161,
+      "observed_wald_under_mock_covariance": 9.799471992789675,
+      "gaussian_p_exp_minus_w_over_2": 0.007448549255229659,
+      "overdispersion_peak": {
+       "n": 500,
+       "mean": 1.012240602157754,
+       "sd": 0.004901349039454577,
+       "min": 0.9934823941743,
+       "max": 1.0295623699762002,
+       "data": 1.0635569327189316,
+       "frac_ge_data": 0.0
+      },
+      "overdispersion_integrated": {
+       "n": 500,
+       "mean": 1.021983302985868,
+       "sd": 0.004740709718734306,
+       "min": 1.0054810751198708,
+       "max": 1.035235899311719,
+       "data": 1.1044088343927705,
+       "frac_ge_data": 0.0
+      }
+     },
+     "dipole_stf": {
+      "wald_self_R65_estimator": {
+       "observed": 30.989468960483375,
+       "n_mocks": 500,
+       "mocks_ge_observed": 4,
+       "rank_descending": 5,
+       "p_mc": 0.00998003992015968,
+       "resolution": 0.001996007984031936,
+       "mean": 6.051566878215019,
+       "p_display": "0.01 (4/500)",
+       "p_mc_binomial_se": 0.004445320848566884,
+       "quantiles_50_90_95_99": [
+        3.803374702259175,
+        13.937644476771398,
+        18.660569341565683,
+        30.257184435819614
+       ],
+       "max": 53.40403546448497
+      },
+      "wald_fixed_R65_poisson_cov": {
+       "observed": 30.989468960483375,
+       "n_mocks": 500,
+       "mocks_ge_observed": 4,
+       "rank_descending": 5,
+       "p_mc": 0.00998003992015968,
+       "resolution": 0.001996007984031936,
+       "mean": 6.124470533039933,
+       "p_display": "0.01 (4/500)",
+       "p_mc_binomial_se": 0.004445320848566884,
+       "quantiles_50_90_95_99": [
+        3.893043762819048,
+        14.021663874189443,
+        18.760869391520163,
+        30.751354370385112
+       ],
+       "max": 54.45779465356151
+      },
+      "wald_fixed_R105_jk4_cov": {
+       "observed": 7.384603639907028,
+       "n_mocks": 500,
+       "mocks_ge_observed": 19,
+       "rank_descending": 20,
+       "p_mc": 0.03992015968063872,
+       "resolution": 0.001996007984031936,
+       "mean": 2.0310266279957565,
+       "p_display": "0.04 (19/500)",
+       "p_mc_binomial_se": 0.008755174530723078,
+       "quantiles_50_90_95_99": [
+        1.2286178799813874,
+        4.524907431853292,
+        6.2598811344710565,
+        9.873813307051845
+       ],
+       "max": 24.602200934856718
+      },
+      "wald_fixed_R105_jk8_cov": {
+       "observed": 10.757994045693213,
+       "n_mocks": 500,
+       "mocks_ge_observed": 14,
+       "rank_descending": 15,
+       "p_mc": 0.029940119760479042,
+       "resolution": 0.001996007984031936,
+       "mean": 2.7284745649193693,
+       "p_display": "0.03 (14/500)",
+       "p_mc_binomial_se": 0.007621510216381949,
+       "quantiles_50_90_95_99": [
+        1.6607176507008912,
+        6.02479016523995,
+        8.39604718142968,
+        12.491542644818669
+       ],
+       "max": 30.73097242348514
+      },
+      "mock_delta_mean": [
+       -1.0585793829128186e-05,
+       -1.574392159161775e-05
+      ],
+      "mock_delta_mean_se": [
+       6.783640270107227e-05,
+       8.373567647132649e-05
+      ],
+      "mock_delta_covariance": [
+       [
+        2.3008887657110224e-06,
+        -3.2424440343316474e-07
+       ],
+       [
+        -3.2424440343316474e-07,
+        3.505831757055332e-06
+       ]
+      ],
+      "mock_cov_trace_over_r65_poisson": 3.108861464177772,
+      "observed_wald_under_mock_covariance": 9.271405253178248,
+      "gaussian_p_exp_minus_w_over_2": 0.009699289664782005,
+      "overdispersion_peak": {
+       "n": 500,
+       "mean": 1.0121348714208023,
+       "sd": 0.004903665014980583,
+       "min": 0.9934957424574362,
+       "max": 1.029416087341331,
+       "data": 1.0635607751362608,
+       "frac_ge_data": 0.0
+      },
+      "overdispersion_integrated": {
+       "n": 500,
+       "mean": 1.0218489929814523,
+       "sd": 0.004740787650307857,
+       "min": 1.0052413155571172,
+       "max": 1.0350447744414033,
+       "data": 1.1043439789403715,
+       "frac_ge_data": 0.0
+      }
+     }
+    },
+    "amp_ratio_mean": 0.7760118526553295,
+    "amp_ratio_sd": 0.0
+   },
+   "r84_LSS_DIFF_FLAT": {
+    "label": "EMPIRICAL_DIFF_SELECTION_FLAT amplitude r84",
+    "n_mocks": 500,
+    "mean_seconds_per_mock": 0.19460612964630128,
+    "offdiag_overdispersion": {
+     "n": 500,
+     "mean": 1.4132902295798568,
+     "sd": 0.02494280994397679,
+     "min": 1.339619271284066,
+     "max": 1.5134404935518009,
+     "data": 1.5092073635389898,
+     "frac_ge_data": 0.002
+    },
+    "models": {
+     "dipole": {
+      "wald_self_R65_estimator": {
+       "observed": 32.792386268357376,
+       "n_mocks": 500,
+       "mocks_ge_observed": 15,
+       "rank_descending": 16,
+       "p_mc": 0.031936127744510975,
+       "resolution": 0.001996007984031936,
+       "mean": 9.018532992452728,
+       "p_display": "0.032 (15/500)",
+       "p_mc_binomial_se": 0.0078633595223921,
+       "quantiles_50_90_95_99": [
+        6.068452507563505,
+        20.0684558822959,
+        27.24341540032135,
+        42.46125403106964
+       ],
+       "max": 83.21890655529393
+      },
+      "wald_fixed_R65_poisson_cov": {
+       "observed": 32.79238626835715,
+       "n_mocks": 500,
+       "mocks_ge_observed": 15,
+       "rank_descending": 16,
+       "p_mc": 0.031936127744510975,
+       "resolution": 0.001996007984031936,
+       "mean": 9.039477387862158,
+       "p_display": "0.032 (15/500)",
+       "p_mc_binomial_se": 0.0078633595223921,
+       "quantiles_50_90_95_99": [
+        6.090055263322607,
+        19.960150339419503,
+        27.247328418583603,
+        42.327175869704654
+       ],
+       "max": 85.76373832282557
+      },
+      "wald_fixed_R105_jk4_cov": {
+       "observed": 7.867511051001548,
+       "n_mocks": 500,
+       "mocks_ge_observed": 42,
+       "rank_descending": 43,
+       "p_mc": 0.08582834331337326,
+       "resolution": 0.001996007984031936,
+       "mean": 3.115970397586893,
+       "p_display": "0.086 (42/500)",
+       "p_mc_binomial_se": 0.01252691812038819,
+       "quantiles_50_90_95_99": [
+        1.8360189487040142,
+        7.106830144511402,
+        9.278321836306276,
+        15.218702410136116
+       ],
+       "max": 37.98108935454131
+      },
+      "wald_fixed_R105_jk8_cov": {
+       "observed": 11.57532209732367,
+       "n_mocks": 500,
+       "mocks_ge_observed": 29,
+       "rank_descending": 30,
+       "p_mc": 0.059880239520958084,
+       "resolution": 0.001996007984031936,
+       "mean": 4.077332649133388,
+       "p_display": "0.06 (29/500)",
+       "p_mc_binomial_se": 0.010610805477047515,
+       "quantiles_50_90_95_99": [
+        2.4635862100067536,
+        9.320003315235528,
+        12.616816806560804,
+        20.44421125113152
+       ],
+       "max": 47.26920531993622
+      },
+      "mock_delta_mean": [
+       -2.189798734997644e-05,
+       3.0215830033596137e-05
+      ],
+      "mock_delta_mean_se": [
+       8.162955135065888e-05,
+       9.973682375675997e-05
+      ],
+      "mock_delta_covariance": [
+       [
+        3.3316918268549248e-06,
+        -3.6016076362952746e-07
+       ],
+       [
+        -3.6016076362952746e-07,
+        4.973717006543493e-06
+       ]
+      ],
+      "mock_cov_trace_over_r65_poisson": 4.579673286019746,
+      "observed_wald_under_mock_covariance": 6.6618151491406605,
+      "gaussian_p_exp_minus_w_over_2": 0.03576063489248416,
+      "overdispersion_peak": {
+       "n": 500,
+       "mean": 1.0148527236252687,
+       "sd": 0.004894344424879208,
+       "min": 0.9985772986753246,
+       "max": 1.030308815907088,
+       "data": 1.0635569327189316,
+       "frac_ge_data": 0.0
+      },
+      "overdispersion_integrated": {
+       "n": 500,
+       "mean": 1.0306904832765884,
+       "sd": 0.004874672366833437,
+       "min": 1.0158869968676345,
+       "max": 1.0441564680582132,
+       "data": 1.1044088343927705,
+       "frac_ge_data": 0.0
+      }
+     },
+     "dipole_stf": {
+      "wald_self_R65_estimator": {
+       "observed": 30.989468960483375,
+       "n_mocks": 500,
+       "mocks_ge_observed": 16,
+       "rank_descending": 17,
+       "p_mc": 0.033932135728542916,
+       "resolution": 0.001996007984031936,
+       "mean": 8.917084152632064,
+       "p_display": "0.034 (16/500)",
+       "p_mc_binomial_se": 0.008097005112193354,
+       "quantiles_50_90_95_99": [
+        5.90944521107221,
+        20.650231651569722,
+        26.169059575140647,
+        41.54413077588855
+       ],
+       "max": 79.90735796502611
+      },
+      "wald_fixed_R65_poisson_cov": {
+       "observed": 30.989468960483375,
+       "n_mocks": 500,
+       "mocks_ge_observed": 17,
+       "rank_descending": 18,
+       "p_mc": 0.03592814371257485,
+       "resolution": 0.001996007984031936,
+       "mean": 9.02661021392577,
+       "p_display": "0.036 (17/500)",
+       "p_mc_binomial_se": 0.008323137894080984,
+       "quantiles_50_90_95_99": [
+        5.942711960692541,
+        20.741955172265165,
+        26.0418213129597,
+        41.68949354711101
+       ],
+       "max": 81.36998189184767
+      },
+      "wald_fixed_R105_jk4_cov": {
+       "observed": 7.384603639907028,
+       "n_mocks": 500,
+       "mocks_ge_observed": 41,
+       "rank_descending": 42,
+       "p_mc": 0.08383233532934131,
+       "resolution": 0.001996007984031936,
+       "mean": 2.9734877533334165,
+       "p_display": "0.084 (41/500)",
+       "p_mc_binomial_se": 0.012393907768139166,
+       "quantiles_50_90_95_99": [
+        1.85303113517481,
+        6.948572625379734,
+        9.05774610274479,
+        14.681747788814022
+       ],
+       "max": 35.51151569535085
+      },
+      "wald_fixed_R105_jk8_cov": {
+       "observed": 10.757994045693213,
+       "n_mocks": 500,
+       "mocks_ge_observed": 33,
+       "rank_descending": 34,
+       "p_mc": 0.06786427145708583,
+       "resolution": 0.001996007984031936,
+       "mean": 4.001757962551187,
+       "p_display": "0.068 (33/500)",
+       "p_mc_binomial_se": 0.0112479964541855,
+       "quantiles_50_90_95_99": [
+        2.5999659310833527,
+        9.415534378584875,
+        11.855426567744626,
+        19.91294044752939
+       ],
+       "max": 44.6196700458718
+      },
+      "mock_delta_mean": [
+       -1.5649633818992508e-05,
+       1.9030305699686884e-05
+      ],
+      "mock_delta_mean_se": [
+       8.193510224426109e-05,
+       0.00010199173541300006
+      ],
+      "mock_delta_covariance": [
+       [
+        3.3566804898887585e-06,
+        -4.0134926041433834e-07
+       ],
+       [
+        -4.0134926041433834e-07,
+        5.201157046277705e-06
+       ]
+      ],
+      "mock_cov_trace_over_r65_poisson": 4.581782647980298,
+      "observed_wald_under_mock_covariance": 6.314174873373554,
+      "gaussian_p_exp_minus_w_over_2": 0.0425494888616629,
+      "overdispersion_peak": {
+       "n": 500,
+       "mean": 1.0147394742143194,
+       "sd": 0.0048978848565944914,
+       "min": 0.9983545812443725,
+       "max": 1.0301293181460747,
+       "data": 1.0635607751362608,
+       "frac_ge_data": 0.0
+      },
+      "overdispersion_integrated": {
+       "n": 500,
+       "mean": 1.0305301222727665,
+       "sd": 0.004879845237784802,
+       "min": 1.015648655264839,
+       "max": 1.0440585990669278,
+       "data": 1.1043439789403715,
+       "frac_ge_data": 0.0
+      }
+     }
+    },
+    "amp_ratio_mean": 1.2239923168030922,
+    "amp_ratio_sd": 3.4194079806180243e-16
+   }
+  },
+  "jk_seconds": [
+   2.8356010913848877,
+   3.0881941318511963,
+   3.117586851119995,
+   3.3842556476593018,
+   2.91890287399292,
+   3.1799116134643555,
+   3.2937088012695312,
+   3.3183164596557617,
+   2.6082513332366943,
+   2.758262872695923,
+   3.2621381282806396,
+   3.339226484298706,
+   3.11864972114563,
+   3.286040782928467,
+   3.298227071762085,
+   2.854680299758911,
+   3.388965368270874,
+   3.187613010406494,
+   3.2946584224700928,
+   3.2162206172943115,
+   2.960092544555664,
+   3.396282196044922,
+   2.7201993465423584,
+   3.18776273727417,
+   3.1446664333343506,
+   3.062145471572876,
+   3.1526196002960205,
+   3.27384352684021,
+   3.0040056705474854,
+   3.143566846847534,
+   3.222649574279785,
+   2.960285186767578,
+   3.27946138381958,
+   3.0784294605255127,
+   3.078361749649048,
+   3.1425936222076416,
+   3.140108108520508,
+   3.1112284660339355,
+   3.253419876098633,
+   3.127718687057495,
+   3.0471105575561523,
+   3.166945219039917,
+   2.8703420162200928,
+   3.355786085128784,
+   3.104079008102417,
+   2.998601198196411,
+   3.3155722618103027,
+   2.906470537185669,
+   3.228053092956543,
+   3.360766649246216,
+   2.6309492588043213,
+   3.286909580230713,
+   3.441272020339966,
+   2.490823745727539,
+   2.7836248874664307,
+   2.9397377967834473,
+   3.3887557983398438,
+   2.831075668334961,
+   3.072364568710327,
+   3.1739425659179688,
+   2.929990291595459,
+   3.0862371921539307,
+   3.1697726249694824,
+   3.031132221221924,
+   3.0408756732940674,
+   3.128228187561035,
+   3.0114216804504395,
+   2.971893787384033,
+   2.8851218223571777,
+   2.9108495712280273,
+   2.946648120880127,
+   2.7834839820861816,
+   2.929169178009033,
+   2.8732640743255615,
+   2.87882661819458,
+   2.8169922828674316,
+   2.902710199356079,
+   2.9759459495544434,
+   2.99611234664917,
+   2.898418664932251,
+   2.885826826095581,
+   2.968864679336548,
+   2.9647152423858643,
+   3.0197644233703613,
+   2.9696195125579834,
+   3.0507824420928955,
+   2.9736666679382324,
+   2.9559879302978516,
+   2.851846694946289,
+   2.9209821224212646,
+   2.99049711227417,
+   2.987281084060669,
+   3.0290794372558594,
+   2.9370949268341064,
+   2.8806777000427246,
+   2.9370813369750977,
+   2.905498504638672,
+   2.8960061073303223,
+   2.9014430046081543,
+   2.8485329151153564,
+   2.9650495052337646,
+   2.918428659439087,
+   2.8597326278686523,
+   2.888690948486328,
+   2.9076571464538574,
+   2.9814484119415283,
+   2.987351894378662,
+   2.935082197189331,
+   2.9626641273498535,
+   2.960212469100952,
+   2.9422476291656494,
+   2.808096408843994,
+   3.0328774452209473,
+   2.868434190750122,
+   2.954230546951294,
+   2.888643980026245,
+   2.9718897342681885,
+   2.983060121536255,
+   2.962947130203247,
+   2.8373119831085205
+  ]
+ },
+ "scope": "Null mocks are Cox processes with positions independent of the flux pair; the common dipole cancels in the contrast by construction. Clustering amplitudes are fitted to the data's own NSIDE=4 delete-one jackknife traces (one sky); the angular shape of each field is assumed, not fitted. The DIFF families are empirical differential-selection (excess-variance) fields on the resolved/migrating classes, not large-scale structure, and are not jointly calibrated (their single-selection jackknife trace exceeds the data target). Their C_1 is the power law extrapolated to l=1; the NSIDE=4/8 jackknife traces and the NSIDE8/4 ratio are insensitive to the transverse l=1 mode, which lies inside the fitted log-linear model, while that mode sets most of the null contrast covariance. Every p_mc is therefore conditional on an assumed C_1 (a random resolved-fraction dipole of per-component RMS sqrt(3 C_1/4pi)); no family's p_mc is the LSS/selection-null p-value, and C_1 = 0 is not a conservative limit. The mocks do not model source multiplicity, spatially varying flux calibration or a physical redshift-dependent bias, and they under-predict the data's per-selection pixel overdispersion. No physical Pi or Bianchi inference is made.",
+ "elapsed_seconds": 503.57270550727844,
+ "peak_rss_kB": {
+  "parent": 390308,
+  "largest_child": 390308
+ }
+}
