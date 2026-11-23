@@ -1,0 +1,77 @@
+{
+  "schema": "htt.r100.source_intake_receipt/1",
+  "owner": "obsstat",
+  "status": "SOURCE_QUALIFIED_UPSTREAM_CATALOG_INTAKE",
+  "budget_cap_bytes": 22000000,
+  "total_verified_bytes": 20927710,
+  "remaining_budget_bytes": 1072290,
+  "storage_root": "/home/cosmosapjw/Downloads/htt_r100/source_intake",
+  "r99_acquisition_plan_sha256": "012ebc7a87a4c5ef8a6c37307232a4c8ad733411163944428aea1cf29df3cdb9",
+  "products": {
+    "sdss_pv_v1_1": {
+      "product_id": "sdss_pv_v1_1",
+      "url": "https://zenodo.org/api/records/6824749/files/SDSS_PV_public.dat/content",
+      "local_path": "/home/cosmosapjw/Downloads/htt_r100/source_intake/SDSS_PV_public.dat",
+      "release": "Howlett et al. 2022, Zenodo 10.5281/zenodo.6824749 v1.1.0",
+      "download_performed": true,
+      "reused_verified_local": false,
+      "fetched_at_utc": "2026-11-23T06:02:48.261519+00:00",
+      "elapsed_seconds": 135.99946762100444,
+      "http_status": 200,
+      "headers": {
+        "content-type": "application/octet-stream",
+        "content-length": "20231640",
+        "accept-ranges": "bytes"
+      },
+      "expected_bytes": 20231640,
+      "bytes": 20231640,
+      "expected_md5": "b5b6e31caf7ea469c2ac2cb775fa8d14",
+      "actual_md5": "b5b6e31caf7ea469c2ac2cb775fa8d14",
+      "sha256": "a48cfd9a9a3c27ff908f98972b2e26536e514b6635f9ed14c656dff3e5075485",
+      "verified": true
+    },
+    "sixdf_pv_table1": {
+      "product_id": "sixdf_pv_table1",
+      "url": "https://www.mso.anu.edu.au/6dfgs/vfield/table1.txt",
+      "local_path": "/home/cosmosapjw/Downloads/htt_r100/source_intake/table1.txt",
+      "release": "Springob et al. 2014, 6dFGSv table1.txt",
+      "download_performed": true,
+      "reused_verified_local": false,
+      "fetched_at_utc": "2026-11-23T06:05:04.261238+00:00",
+      "elapsed_seconds": 1.6045436919957865,
+      "http_status": 200,
+      "headers": {
+        "content-type": "text/plain; charset=UTF-8",
+        "content-length": "696070",
+        "etag": "\"a9f06-50366407c78c0\"",
+        "last-modified": "Fri, 19 Sep 2014 07:43:07 GMT",
+        "accept-ranges": "bytes"
+      },
+      "expected_bytes": 696070,
+      "bytes": 696070,
+      "expected_md5": null,
+      "actual_md5": "2cf556179ef4ae089e8e4669c76a5633",
+      "sha256": "08f3d4b264e28efcb574bea4efa370d66e4f299f8254e21bd04979fb8301a14d",
+      "verified": true
+    }
+  },
+  "tabular_sanity": {
+    "sdss_pv_v1_1": {
+      "header_columns": 46,
+      "data_rows": 34059,
+      "unique_pgc": 34059,
+      "unique_idgroupt17_incl_0": 15440,
+      "exact_integer_objids_parsed": 34059,
+      "specobjid_raw_tokens_retained": 34059,
+      "specobjid_format_note": "Scientific notation (e.g. 1.95125...E18) retained as verbatim string; objid retained as exact int64."
+    },
+    "sixdf_pv_table1": {
+      "data_rows": 8885,
+      "ungrouped_sentinel_minus1_rows": 6219,
+      "grouped_rows": 2666
+    }
+  },
+  "producer_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r100/source_intake.py",
+  "producer_sha256": "792d1f74716991bb71b5a7ca988200290b3e89b68d3968f61958847e0903e022",
+  "verified_at_utc": "2026-11-23T06:05:06.006750+00:00"
+}

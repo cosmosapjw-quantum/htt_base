@@ -1,0 +1,894 @@
+{
+  "schema": "htt.r100.cf4_upstream_kband/1",
+  "owner": "obsstat",
+  "status": "SOURCE_QUALIFIED_FP_PARTIAL_BLOCKED_FULL_UNION",
+  "physical_Pi": null,
+  "physical_GF": null,
+  "inputs": {
+    "sdss_pv_v1_1": {
+      "path": "/home/cosmosapjw/Downloads/htt_r100/source_intake/SDSS_PV_public.dat",
+      "sha256": "a48cfd9a9a3c27ff908f98972b2e26536e514b6635f9ed14c656dff3e5075485"
+    },
+    "sixdf_pv_table1": {
+      "path": "/home/cosmosapjw/Downloads/htt_r100/source_intake/table1.txt",
+      "sha256": "08f3d4b264e28efcb574bea4efa370d66e4f299f8254e21bd04979fb8301a14d"
+    },
+    "cf4_table2": {
+      "path": "/mnt/extdrive/workdir/raw/cf4_full/table2.dat",
+      "sha256": "8e908928e68352b59292cf67020a4d70aaa6d30f278dfa6aa3e41a9df808332f"
+    },
+    "cf4_table3": {
+      "path": "/mnt/extdrive/workdir/raw/cf4_full/table3.dat",
+      "sha256": "c2351c52de3e38a7fd80256b6f0818c550dd9f105b91e84fbcc1eb7234160b4d"
+    },
+    "cf4_table4": {
+      "path": "/mnt/extdrive/workdir/raw/cf4_full/table4.dat",
+      "sha256": "b6edfec68bdfddeada8f3b8f11938f3bbda98a8e2894ff136a369c2ad6594e94"
+    },
+    "code": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r100/cf4_upstream_and_kband.py",
+      "sha256": "108f4340a39583a88ae00881a61e17e270b20c5cceccc8f5e47d33b2029e1acb"
+    }
+  },
+  "A2_upstream_genealogy_and_sign_audit": {
+    "cf4_readme_header": [
+      "J/ApJ/944/94                    Cosmicflows-4                     (Tully+, 2023)",
+      "================================================================================",
+      "Cosmicflows-4.",
+      "    Tully R.B., Kourkchi E., Courtois H.M., Anand G.S., Blakeslee J.P.,",
+      "    Brout D., de Jaeger T., Dupuy A., Guinet D., Howlett C., Jensen J.B.,",
+      "    Pomarede D., Rizzi L., Rubin D., Said K., Scolnic D., Stahl B.E."
+    ],
+    "sdss_pv_census": {
+      "total_rows": 34059,
+      "unique_pgc": 34059,
+      "in_mask_1_rows": 33121,
+      "in_mask_0_rows": 938,
+      "idgroupt17_nonzero_grouped": 23953,
+      "exact_pgc_matches_table2": 34045,
+      "unmapped_pgc_count": 14,
+      "unmapped_nearest_table2_arcsec": 115.62306160153744,
+      "matched_separation_arcsec_q50_q99_max": [
+        0.22798461409794774,
+        0.7280746165412045,
+        3.341375802895636
+      ],
+      "selected_35970_groups_with_sdss": 22653,
+      "specobjid_format_note": "E18 scientific notation string tokens retained verbatim; objid/PGC/IDgroupT17 parsed as exact int64."
+    },
+    "sixdf_pv_census": {
+      "total_rows": 8885,
+      "grouped_valid_rows": 2666,
+      "ungrouped_sentinel_minus1_rows": 6219,
+      "unique_match_15arcsec_500kms": 7190,
+      "with_finite_dmfp": 7107,
+      "ambiguous_multi_matches": 4,
+      "unmapped_excluded_rows": 1691,
+      "selected_35970_groups_with_6df": 4979,
+      "selection_bias_matched_vs_excluded_delta_d_mean": [
+        9.596662030598022e-05,
+        0.023911413364872854
+      ],
+      "selection_bias_matched_vs_excluded_cz_mean": [
+        11096.737969401947,
+        11493.314606741573
+      ]
+    },
+    "shared_sdss_sixdf_overlap": {
+      "n_shared_galaxies": 45,
+      "corr_sdss_ldc_vs_6df_delta_d": 0.7732951443374076,
+      "std_sdss_minus_6df": 0.05439013348808181,
+      "std_sdss_plus_6df": 0.14911188671635342
+    },
+    "native_fp_radius_sign_verification_sdss": {
+      "r_fit_s_i_const": [
+        0.9405444272222111,
+        -0.7441471521386126,
+        0.16582896754474685
+      ],
+      "corr_r_minus_rFP_with_logdist": 0.9310817729248848,
+      "corr_r_minus_rFP_with_logdist_corr": 0.9058703736192535,
+      "slope_logdist_on_r_resid": 1.0658695331789827,
+      "slope_logdist_corr_on_r_resid": 1.0200674217216834,
+      "proven_physical_definition": "eta = log10(D_z / D_H) > 0 when D_H < D_z, i.e., mu_H = mu_fid(z) - 5*eta (IDENTICAL for both SDSS logdist_corr and 6dFGSv delta_d)."
+    },
+    "cf4_intercalibration_and_sign_decomposition": {
+      "sdss_slope_DMfp_wrt_ldc": 4.977896416493203,
+      "sdss_intercept_mag": 0.6359346736785388,
+      "sdss_diff_plus5_mean_std": [
+        0.6360953641394921,
+        0.033459562095525815
+      ],
+      "sdss_implied_H0_kms_Mpc": 74.60723193578842,
+      "sdss_e_DMfp_minus_5_err_mean_std": [
+        -2.0932736084584235e-05,
+        0.003214140961807128
+      ],
+      "sixdf_slope_DMfp_wrt_delta_d": -5.02679377618313,
+      "sixdf_intercept_mag": 0.5792741346073534,
+      "sixdf_diff_minus5_mean_std": [
+        0.5792947609516447,
+        0.08881055294524094
+      ],
+      "sixdf_implied_H0_kms_Mpc": 76.5845293612112,
+      "table3_vs_table2_invvar_DMfp_max_abs_mag": 0.31901428349635097,
+      "shared_calibrator_galaxies": {
+        "sdss_with_trgb_ceph_mas": 0,
+        "sdss_with_snia": 17,
+        "sixdf_with_trgb_ceph_mas": 1,
+        "sixdf_with_snia": 36,
+        "sixdf_with_tf": 133
+      }
+    },
+    "dec_positive_sky_dipole_consistency": {
+      "CF4_table3_TF_DecPos": {
+        "n": 5978,
+        "monopole_mufid_minus_dm": -0.5837331210583147,
+        "dipole_vec": [
+          -0.01180805422194392,
+          0.019155766968577022,
+          -0.13279085840864516
+        ]
+      },
+      "CF4_table3_SNIa_DecPos": {
+        "n": 544,
+        "monopole_mufid_minus_dm": -0.7666428524539521,
+        "dipole_vec": [
+          -0.03712725790304014,
+          -0.005395042560919899,
+          -0.014889939917141059
+        ]
+      },
+      "CF4_table3_FP_DecPos": {
+        "n": 14106,
+        "monopole_mufid_minus_dm": -0.5810961068440257,
+        "dipole_vec": [
+          0.10801866512490915,
+          0.010085084163604466,
+          0.02086986412272747
+        ]
+      },
+      "SDSS_native_sign_consistent_pos5ldc_dipole": [
+        -0.10158753170759276,
+        -0.012250997959290206,
+        0.017096013330356145
+      ],
+      "SixDF_native_pos5deltad_dipole": [
+        -0.04800710316901659,
+        -0.008051003212912095,
+        -0.09383746761983963
+      ]
+    },
+    "tomography_4x9_sign_reconciled_sensitivity": {
+      "note": "Published CF4 4x9 retains table4 DMzp as released; sensitivity flips SDSS DMfp contribution from +5*ldc back to -5*ldc+0.6361 to measure outer-window dipole impact.",
+      "published_4x9": [
+        [
+          0.018373171129972336,
+          -0.021478075401225233,
+          0.007116717570584379,
+          -0.037480550943185136,
+          -0.009395305355760959,
+          -0.016378223177196293,
+          0.012502268127160262,
+          0.014146222417927927,
+          0.002920099462323987
+        ],
+        [
+          0.026854190224713383,
+          -0.012065900988501422,
+          0.001089317404677752,
+          -0.03591319108576634,
+          -0.012115127331254381,
+          -0.03432760139721821,
+          0.0018149491079881533,
+          0.015923610307820128,
+          -0.0011625707808008026
+        ],
+        [
+          0.030045667920308983,
+          0.009424686030374987,
+          -0.006675118977213183,
+          -0.027779131388943036,
+          -0.019703845372972185,
+          -0.03732029187594225,
+          -0.006310692762097811,
+          0.015353272612815983,
+          0.006528889961595125
+        ],
+        [
+          0.017083235523902604,
+          0.021165611262644567,
+          0.0010876394870658389,
+          -0.01910507973590503,
+          -0.01688228770689738,
+          -0.01661837909273143,
+          -0.004998712049078971,
+          0.0015133316963363052,
+          -0.0024780844513232576
+        ]
+      ],
+      "sdss_sign_reconciled_4x9": [
+        [
+          0.01848251136749649,
+          -0.022445797630155778,
+          0.005785297368306327,
+          -0.037300772048853105,
+          -0.007828497958428693,
+          -0.01566476728484942,
+          0.016107109747291484,
+          0.012796208443945533,
+          0.0023886126552366722
+        ],
+        [
+          0.026842625036509707,
+          -0.012519661515663855,
+          0.0012325505575675536,
+          -0.03569645000734162,
+          -0.011514195198839549,
+          -0.033795375846434245,
+          0.003058027704167479,
+          0.014716166478943667,
+          -0.000736302571982123
+        ],
+        [
+          0.02994696898414777,
+          0.009502906526392695,
+          -0.006580111826904956,
+          -0.027651538703866597,
+          -0.019780498142471868,
+          -0.037162003663589724,
+          -0.00599272086574255,
+          0.014663452625059484,
+          0.007081126113854729
+        ],
+        [
+          0.0170592585551719,
+          0.021195164073616983,
+          0.0010811147913516756,
+          -0.019093148836890766,
+          -0.016877151525709615,
+          -0.01662439398430493,
+          -0.004990979255460867,
+          0.0014293271704885124,
+          -0.0023908675584469177
+        ]
+      ],
+      "max_abs_diff_4x9": 0.0036048416201312217,
+      "dipole_norms_published": [
+        0.043780670288665946,
+        0.03790158140546672,
+        0.03008424938161591,
+        0.02853366663242739
+      ],
+      "dipole_norms_sign_reconciled": [
+        0.04391618257925135,
+        0.03784835067041091,
+        0.029970163442920424,
+        0.028547366284953267
+      ]
+    },
+    "remaining_blocked_upstream": [
+      "CF4 pre-intercalibration SNIa/TF/SBF/TRGB/Cepheid/maser unshifted tables & zero-point covariance",
+      "Authoritative CF4 pipeline sign provenance for SDSS (+4.98*ldc vs 6dF -5.03*delta_d)"
+    ]
+  },
+  "A3_full_kband_correlated_pv": {
+    "one_point_variance_decomposition": {
+      "5": {
+        "var_low_kms2": 1.4645772408787676,
+        "var_inherited_kms2": 30.719438742556655,
+        "var_high_kms2": 22.90513082476937,
+        "var_total_kms2": 55.08914680820479,
+        "frac_low": 0.02658558583195626,
+        "frac_inherited": 0.5576314123997543,
+        "frac_high": 0.4157830017682895
+      },
+      "10": {
+        "var_low_kms2": 1.4632599339251855,
+        "var_inherited_kms2": 28.967513090432668,
+        "var_high_kms2": 11.705775062447618,
+        "var_total_kms2": 42.136548086805476,
+        "frac_low": 0.034726620958857965,
+        "frac_inherited": 0.687467635715121,
+        "frac_high": 0.27780574332602087
+      },
+      "20": {
+        "var_low_kms2": 1.458006848762961,
+        "var_inherited_kms2": 23.448155177173376,
+        "var_high_kms2": 2.5771004622873224,
+        "var_total_kms2": 27.48326248822366,
+        "frac_low": 0.053050719483820535,
+        "frac_inherited": 0.8531794646731155,
+        "frac_high": 0.09376981584306404
+      }
+    },
+    "quadrature_and_nufft_verification": {
+      "low_k_probe_direct_rel_err": 5.394215037186594e-12,
+      "low_k_rad_CC16_vs_CC32_rel_fro": 3.842226725420472e-13,
+      "high1_probe_direct_rel_err": 2.4320788369947287e-11,
+      "high1_ang_53_vs_65_rel_fro": 4.395134948671558e-05,
+      "high2_probe_direct_rel_err": 3.9050055556748235e-11,
+      "high2_ang_53_vs_65_rel_fro": 0.005573651996629956,
+      "high3_trace_R5_WF": 7.103163225732027e-08,
+      "high_k_vs_uncorrelated_diagonal_ref_rel_fro_R5": 0.972783865110791,
+      "bessel_20source_checks": {
+        "low_k": {
+          "rel_fro": 4.812495745581203e-07,
+          "diag_rel": 2.0070001294225648e-07,
+          "max_abs_kms2": 0.0015164722929057461
+        },
+        "inherited": {
+          "rel_fro": 1.9081919908558495e-06,
+          "diag_rel": 1.847279540445612e-08,
+          "max_abs_kms2": 0.10284362940637948
+        },
+        "high_k": {
+          "rel_fro": 0.0015976861252100939,
+          "diag_rel": 6.72591016215307e-07,
+          "max_abs_kms2": 60.90572542052013
+        }
+      }
+    },
+    "radial_depth_9D_vs_12D_by_window": [
+      {
+        "z_center": 0.025,
+        "beta12_radial_100Mpc_per_r": [
+          -0.014640781525398952,
+          0.002112245490854406,
+          -0.01817252859726284
+        ],
+        "shift_9D_vs_12D_norm": 0.02430071342547383
+      },
+      {
+        "z_center": 0.04,
+        "beta12_radial_100Mpc_per_r": [
+          -0.03256082979603523,
+          0.01842475321461225,
+          -0.017450016907505108
+        ],
+        "shift_9D_vs_12D_norm": 0.029250825714587064
+      },
+      {
+        "z_center": 0.06,
+        "beta12_radial_100Mpc_per_r": [
+          -0.11352500063986548,
+          -0.010491616073125567,
+          -0.04042857219258883
+        ],
+        "shift_9D_vs_12D_norm": 0.05354578680046773
+      },
+      {
+        "z_center": 0.08,
+        "beta12_radial_100Mpc_per_r": [
+          -0.03375169476970331,
+          0.012573275524166757,
+          0.2863706001386719
+        ],
+        "shift_9D_vs_12D_norm": 0.09705253692758087
+      }
+    ],
+    "octant_cv_log_fV_baseline": {
+      "rms_mag": 0.4568577896216072,
+      "mean_standardized_square": 0.876550684389986,
+      "mean_gaussian_nll_mag": 0.5904151654046437,
+      "octants": [
+        {
+          "octant": 0,
+          "n": 2319,
+          "mean_standardized_square": 0.8446683355026092
+        },
+        {
+          "octant": 1,
+          "n": 1786,
+          "mean_standardized_square": 0.6573270656322687
+        },
+        {
+          "octant": 2,
+          "n": 1913,
+          "mean_standardized_square": 0.7045473070678523
+        },
+        {
+          "octant": 3,
+          "n": 2152,
+          "mean_standardized_square": 0.6967272081248793
+        },
+        {
+          "octant": 4,
+          "n": 13491,
+          "mean_standardized_square": 0.8966011750760544
+        },
+        {
+          "octant": 5,
+          "n": 1216,
+          "mean_standardized_square": 1.073462695098143
+        },
+        {
+          "octant": 6,
+          "n": 11508,
+          "mean_standardized_square": 0.9019101891410992
+        },
+        {
+          "octant": 7,
+          "n": 1585,
+          "mean_standardized_square": 1.1161139502374173
+        }
+      ]
+    },
+    "models": {
+      "WF_log_R5": {
+        "S_PV_inherited_diag": {
+          "trace": 0.0031460095894797185,
+          "min_eig": 3.2515478044269303e-07,
+          "max_eig": 0.0004108380074347523,
+          "condition": 1263.5151999776936
+        },
+        "S_PV_full_k_diag": {
+          "trace": 0.0038081016859070243,
+          "min_eig": 7.875504242499574e-07,
+          "max_eig": 0.0004877198169006326,
+          "condition": 619.2870981754905
+        },
+        "S_PV_band_traces": {
+          "low_k": 0.00020808862548646684,
+          "inherited": 0.0031460095894797185,
+          "high_k": 0.00045400347094083957,
+          "full_k": 0.0038081016859070243
+        },
+        "C_tot_inherited": {
+          "trace": 0.012089181634720175,
+          "min_eig": 1.1151320761765587e-06,
+          "max_eig": 0.00692468376494098,
+          "condition": 6209.74314422339
+        },
+        "C_tot_full_k": {
+          "trace": 0.012751273731147478,
+          "min_eig": 1.5495005350661495e-06,
+          "max_eig": 0.006933885251118207,
+          "condition": 4474.916332198745
+        },
+        "total_cov_rel_fro_shift_full_vs_inh": 0.030011256160675688,
+        "cross_window_w0_w2_fro_inh_vs_full": [
+          6.861326661983453e-05,
+          7.694423908250263e-05
+        ],
+        "schur_18dof_inherited": {
+          "chi2": 12.116320633338589,
+          "loglik": 65.69895558803478
+        },
+        "schur_18dof_full_k": {
+          "chi2": 10.927665138389305,
+          "loglik": 64.93084420677023
+        },
+        "shared_9D_beta_H0_inh_vs_full": [
+          76.42645504624542,
+          76.43159514997697
+        ],
+        "shared_9D_stf5_norm_inh_vs_full": [
+          0.0324786266247769,
+          0.03306844355129464
+        ]
+      },
+      "WF_log_R10": {
+        "S_PV_inherited_diag": {
+          "trace": 0.0030166068661893197,
+          "min_eig": 2.886524181168767e-07,
+          "max_eig": 0.00039079343705029283,
+          "condition": 1353.85471426073
+        },
+        "S_PV_full_k_diag": {
+          "trace": 0.003522120858870897,
+          "min_eig": 6.629291570296422e-07,
+          "max_eig": 0.00045057861464843044,
+          "condition": 679.6783787083954
+        },
+        "S_PV_band_traces": {
+          "low_k": 0.00020790053980793187,
+          "inherited": 0.0030166068661893197,
+          "high_k": 0.000297613452873645,
+          "full_k": 0.003522120858870897
+        },
+        "C_tot_inherited": {
+          "trace": 0.011959778911429773,
+          "min_eig": 1.049542516902123e-06,
+          "max_eig": 0.006915192100667306,
+          "condition": 6588.7679529920315
+        },
+        "C_tot_full_k": {
+          "trace": 0.012465292904111351,
+          "min_eig": 1.3803085537114149e-06,
+          "max_eig": 0.0069225758918131704,
+          "condition": 5015.237986607807
+        },
+        "total_cov_rel_fro_shift_full_vs_inh": 0.0244562613864132,
+        "cross_window_w0_w2_fro_inh_vs_full": [
+          6.745045638599636e-05,
+          7.65640841367067e-05
+        ],
+        "schur_18dof_inherited": {
+          "chi2": 12.782911614147437,
+          "loglik": 65.76192434750433
+        },
+        "schur_18dof_full_k": {
+          "chi2": 11.700953657917532,
+          "loglik": 65.2220743504035
+        },
+        "shared_9D_beta_H0_inh_vs_full": [
+          76.42470628217865,
+          76.43056577766913
+        ],
+        "shared_9D_stf5_norm_inh_vs_full": [
+          0.032533354106503036,
+          0.03288189617787739
+        ]
+      },
+      "WF_log_R20": {
+        "S_PV_inherited_diag": {
+          "trace": 0.002589745281914647,
+          "min_eig": 1.8003258708942984e-07,
+          "max_eig": 0.0003276676348686143,
+          "condition": 1820.046249215137
+        },
+        "S_PV_full_k_diag": {
+          "trace": 0.002879347977625073,
+          "min_eig": 3.504827963033697e-07,
+          "max_eig": 0.00037382533168752504,
+          "condition": 1066.6010875008844
+        },
+        "S_PV_band_traces": {
+          "low_k": 0.000207150507297477,
+          "inherited": 0.002589745281914647,
+          "high_k": 8.24521884129485e-05,
+          "full_k": 0.002879347977625073
+        },
+        "C_tot_inherited": {
+          "trace": 0.011532917327155102,
+          "min_eig": 8.392316837928693e-07,
+          "max_eig": 0.006883016661155459,
+          "condition": 8201.569118610942
+        },
+        "C_tot_full_k": {
+          "trace": 0.011822520022865527,
+          "min_eig": 9.610599122936268e-07,
+          "max_eig": 0.00688742061019686,
+          "condition": 7166.484130796404
+        },
+        "total_cov_rel_fro_shift_full_vs_inh": 0.017719602190588837,
+        "cross_window_w0_w2_fro_inh_vs_full": [
+          6.486848734814611e-05,
+          7.665264511570249e-05
+        ],
+        "schur_18dof_inherited": {
+          "chi2": 15.528548933981305,
+          "loglik": 65.78023560173101
+        },
+        "schur_18dof_full_k": {
+          "chi2": 14.752801445136148,
+          "loglik": 65.67336586883674
+        },
+        "shared_9D_beta_H0_inh_vs_full": [
+          76.41019448606947,
+          76.41606902912562
+        ],
+        "shared_9D_stf5_norm_inh_vs_full": [
+          0.032807582832024985,
+          0.03279478314154077
+        ]
+      },
+      "background_proxy_R5": {
+        "S_PV_inherited_diag": {
+          "trace": 0.00348955795471101,
+          "min_eig": 3.7903341811083245e-07,
+          "max_eig": 0.00044340414309424023,
+          "condition": 1169.828626996117
+        },
+        "S_PV_full_k_diag": {
+          "trace": 0.004212461190676239,
+          "min_eig": 9.192804904156703e-07,
+          "max_eig": 0.0005237318600191737,
+          "condition": 569.719324492961
+        },
+        "S_PV_band_traces": {
+          "low_k": 0.0002299089343303376,
+          "inherited": 0.00348955795471101,
+          "high_k": 0.0004929943016348913,
+          "full_k": 0.004212461190676239
+        },
+        "C_tot_inherited": {
+          "trace": 0.01243530404371484,
+          "min_eig": 1.205085283391517e-06,
+          "max_eig": 0.006951888813147374,
+          "condition": 5768.794050477831
+        },
+        "C_tot_full_k": {
+          "trace": 0.013158207279680067,
+          "min_eig": 1.697865870150943e-06,
+          "max_eig": 0.006961961028453749,
+          "condition": 4100.418737927054
+        },
+        "total_cov_rel_fro_shift_full_vs_inh": 0.0322415140203699,
+        "cross_window_w0_w2_fro_inh_vs_full": [
+          7.622262178070856e-05,
+          8.536639642172368e-05
+        ],
+        "schur_18dof_inherited": {
+          "chi2": 11.151521184262831,
+          "loglik": 65.48598670867179
+        },
+        "schur_18dof_full_k": {
+          "chi2": 10.009775007102991,
+          "loglik": 64.63897368297907
+        },
+        "shared_9D_beta_H0_inh_vs_full": [
+          76.41963123978046,
+          76.42517163547916
+        ],
+        "shared_9D_stf5_norm_inh_vs_full": [
+          0.03221790491954017,
+          0.032859339798550685
+        ]
+      },
+      "native_comoving_R5": {
+        "S_PV_inherited_diag": {
+          "trace": 0.003267441623160764,
+          "min_eig": 3.4283505392353915e-07,
+          "max_eig": 0.0004234493128710379,
+          "condition": 1235.1400710776727
+        },
+        "S_PV_full_k_diag": {
+          "trace": 0.003951882030581348,
+          "min_eig": 8.307210398973932e-07,
+          "max_eig": 0.0005020178214413115,
+          "condition": 604.315765859642
+        },
+        "S_PV_band_traces": {
+          "low_k": 0.0002158834220165981,
+          "inherited": 0.003267441623160764,
+          "high_k": 0.0004685569854039855,
+          "full_k": 0.003951882030581348
+        },
+        "C_tot_inherited": {
+          "trace": 0.01221147079667414,
+          "min_eig": 1.1454623395212126e-06,
+          "max_eig": 0.006934361295463648,
+          "condition": 6053.766288258867
+        },
+        "C_tot_full_k": {
+          "trace": 0.012895911204094723,
+          "min_eig": 1.5997174944880924e-06,
+          "max_eig": 0.006943899315507344,
+          "condition": 4340.703492605976
+        },
+        "total_cov_rel_fro_shift_full_vs_inh": 0.030870918757144483,
+        "cross_window_w0_w2_fro_inh_vs_full": [
+          7.127434158706912e-05,
+          7.989081104139731e-05
+        ],
+        "schur_18dof_inherited": {
+          "chi2": 11.780386522725234,
+          "loglik": 65.63204103440056
+        },
+        "schur_18dof_full_k": {
+          "chi2": 10.608169476873933,
+          "loglik": 64.83553220534391
+        },
+        "shared_9D_beta_H0_inh_vs_full": [
+          76.42585185304071,
+          76.43084762065826
+        ],
+        "shared_9D_stf5_norm_inh_vs_full": [
+          0.032393705250387546,
+          0.03299811461125885
+        ]
+      },
+      "bolometric_R5": {
+        "S_PV_inherited_diag": {
+          "trace": 0.0030546476710890448,
+          "min_eig": 3.0791230967483276e-07,
+          "max_eig": 0.00040407169005020696,
+          "condition": 1312.2946935019331
+        },
+        "S_PV_full_k_diag": {
+          "trace": 0.003701981157851877,
+          "min_eig": 7.452268128740936e-07,
+          "max_eig": 0.00048083415307534377,
+          "condition": 645.2185358453828
+        },
+        "S_PV_band_traces": {
+          "low_k": 0.00020237673887830537,
+          "inherited": 0.0030546476710890448,
+          "high_k": 0.0004449567478845257,
+          "full_k": 0.003701981157851877
+        },
+        "C_tot_inherited": {
+          "trace": 0.011997050000372524,
+          "min_eig": 1.0875203661423586e-06,
+          "max_eig": 0.006917449356438867,
+          "condition": 6360.753850501554
+        },
+        "C_tot_full_k": {
+          "trace": 0.012644383487135353,
+          "min_eig": 1.505072372723312e-06,
+          "max_eig": 0.0069264743427886405,
+          "condition": 4602.0872273774585
+        },
+        "total_cov_rel_fro_shift_full_vs_inh": 0.029530965748059433,
+        "cross_window_w0_w2_fro_inh_vs_full": [
+          6.6492717890282e-05,
+          7.460000659001228e-05
+        ],
+        "schur_18dof_inherited": {
+          "chi2": 12.456514158783708,
+          "loglik": 65.75887058028734
+        },
+        "schur_18dof_full_k": {
+          "chi2": 11.252984115791635,
+          "loglik": 65.01497558669695
+        },
+        "shared_9D_beta_H0_inh_vs_full": [
+          76.43166485879888,
+          76.43625580428312
+        ],
+        "shared_9D_stf5_norm_inh_vs_full": [
+          0.0325908352549171,
+          0.03315644426280158
+        ]
+      }
+    },
+    "p1_directcal_slice_full_k_R5": {
+      "radius": 0.5,
+      "threshold": 0.05,
+      "events": [
+        "z025",
+        "z040",
+        "z060",
+        "z080",
+        "any",
+        "all"
+      ],
+      "nominal": [
+        0.27978515625,
+        0.33544921875,
+        0.49462890625,
+        0.0703125,
+        0.68994140625,
+        0.0087890625
+      ],
+      "min_mass": [
+        0.27197265625,
+        0.3203125,
+        0.49365234375,
+        0.0703125,
+        0.6826171875,
+        0.0087890625
+      ],
+      "max_mass": [
+        0.2890625,
+        0.345703125,
+        0.49462890625,
+        0.0703125,
+        0.6943359375,
+        0.0087890625
+      ],
+      "min_at": [
+        0.4979543117072043,
+        0.4904318137836014,
+        0.2750075734229274,
+        0.0,
+        0.4904318137836014,
+        0.0
+      ],
+      "max_at": [
+        -0.5,
+        -0.5,
+        0.0,
+        0.0,
+        -0.5,
+        0.0
+      ],
+      "n_distinct_interior_roots": 101,
+      "n_intervals": 102,
+      "method": "guarded extended-precision roots and open intervals; rational fallback when ill-conditioned"
+    },
+    "covariances_npz": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R100_SOURCE_LAW_OPTICAL_MULTIPROBE_20261123/CF4_FULL_KBAND_COVARIANCES.npz",
+      "sha256": "7d5ecd55b776b8b9b97ae32385fd4573db8916846bb4c0a6dc5eca85eab18093"
+    }
+  },
+  "A4_selection_likelihood_and_4term_cov": {
+    "six_stage_population_ledger": {
+      "sdss_pv_6stage": {
+        "stage1_upstream_release": 34059,
+        "stage2_footprint_in_mask_1": 33121,
+        "stage3_valid_fp_measurement": 34059,
+        "stage4_z_0p01_to_0p10": 34032,
+        "stage5_in_table2_all": 34045,
+        "stage6_in_table2_and_z_0p01_to_0p10": 34018,
+        "in_t2_but_outside_z_0p01_to_0p10": 27,
+        "in_mask_0_yet_in_table2": 938,
+        "unmapped_14_in_mask_and_zcut": 14
+      },
+      "sixdf_6stage": {
+        "stage1_upstream_release": 8885,
+        "stage2_valid_measurement": 8885,
+        "stage3_grouped_not_minus1": 2666,
+        "stage4_matched_table2_unique": 7190,
+        "stage5_matched_and_z_0p01_to_0p10": 7109,
+        "excluded_from_table2": 1695
+      },
+      "missing_union_denominators": [
+        "SNIa pre-CF4 target/rejected census",
+        "TF/SBF/TRGB/Cepheid/maser upstream rejected parent catalogues",
+        "Full-union CF4 cross-survey de-duplication & rejection denominator"
+      ]
+    },
+    "empirical_probit_inclusion_6df": {
+      "features": [
+        "1",
+        "(cz/1e4 - 1.1)",
+        "delta_d",
+        "is_grouped"
+      ],
+      "beta_probit": [
+        0.838969622321192,
+        -0.1749131622690612,
+        -0.9851752444310532,
+        0.18096765014779684
+      ],
+      "loglik": -4277.530311551107,
+      "joint_selected_logpdf_5field_mix": {
+        "fields_kms": [
+          -300.0,
+          -100.0,
+          0.0,
+          100.0,
+          300.0
+        ],
+        "log_density": -7360.941197696482,
+        "log_joint_inclusion": -1356.9161136644468,
+        "included_field_weights": [
+          1.3981866372131351e-226,
+          1.4518081841815974e-144,
+          4.498617761927829e-106,
+          2.835795982383672e-69,
+          1.0
+        ],
+        "zero_field_log_density": -7136.277110923197
+      }
+    },
+    "empirical_probit_in_mask_sdss": {
+      "features": [
+        "1",
+        "(10*zcmb - 0.5)",
+        "Sn",
+        "is_grouped"
+      ],
+      "beta_probit": [
+        1.6326865948470761,
+        -0.1606338524789569,
+        -0.00788434082580077,
+        0.5529039222144043
+      ],
+      "loglik": -4102.23661786274
+    },
+    "four_term_covariance_trace_budget_WF_R5_full_k": {
+      "N_meas_trace": 0.0009176546862927008,
+      "N_nl150_trace": 1.7950333869106856e-05,
+      "S_PV_full_k_trace": 0.0038081016859070243,
+      "J_cal_Sigma_cal_Plus_Cut_trace": 0.006612245345300482,
+      "C_sel_mag_tilt_corrected_trace": 0.001395321679778165,
+      "C_total_trace": 0.012751273731147478,
+      "residual_trace_identity_error": 1.734723475976807e-18
+    }
+  },
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "threads": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1"
+    }
+  },
+  "runtime_seconds": 1496.5927726670052
+}

@@ -1,0 +1,4391 @@
+{
+  "schema": "htt.r100.radio_exposure_selection/1",
+  "owner": "obsstat",
+  "status": "MODEL_CONDITIONAL_EXPOSURE_RESELECTION_EXECUTED",
+  "physical_Pi": null,
+  "physical_GF": null,
+  "inputs": {
+    "maps_path": "/home/cosmosapjw/Downloads/htt_r98_full_data/radio_full_maps.npz",
+    "maps_sha256": "989a0f9a6d5c30b4c2468bf2d159d8b644b137e654104e32714a58201e68f6bd",
+    "source_receipt_path": "/home/cosmosapjw/Downloads/htt_r98_full_data/radio_full_maps_sources.json",
+    "source_receipt_sha256": "156bf2dd62acbadba451d55738a2673a39085b24e1c77e765eb2300541649398",
+    "fingerprint_path": "/home/cosmosapjw/Downloads/htt_r98_full_data/radio_full_maps_fingerprints.json",
+    "fingerprint_sha256": "b683d9db5b0c8b5b78ffe8642f59c42b513bf38ce91c054a6d4385b560b51170",
+    "reader_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R89_EIGHT_ANALYSIS_HANDOFF_20261121/runs/G04_RADIO_FRAME/run_g04_solver_free_research.py",
+    "reader_sha256": "4ced76ad7f56e3832620b374df08cb24d96e432389783896d346dbea1ea5b940",
+    "source_verification": "inherited full hashes plus unchanged storage fingerprints; no raw rescan",
+    "lotss_mosaics_sha256": "8671fa69f744a32f71904a2cc89919a3cf1021d7d030816d0adb218b34227572",
+    "lotss_exposure_npz_sha256": "562c8e0904d506814a50a2dcca1cd95d03dd75a1bc0d05fd77d470e221e4458d",
+    "code_sha256": "222530551cd590ca5900de6fe36924c5f7d0298850ba490a3b2a855b454cde1d"
+  },
+  "C1_lotss_dr3_coverage_audit": {
+    "status": "GEOMETRIC_OUTER_EXPOSURE_AUDITED_INTERNAL_RMS_BLOCKED_EXTERNAL",
+    "mosaic_count": 1580,
+    "center_overlap_multiplicity_on_ns16": {
+      "min_among_hit_centers": 1,
+      "median_among_hit_centers": 5.0,
+      "max_overlap_at_single_center": 5,
+      "fraction_of_support_centers_ge2_mosaics": 0.9401468097120271
+    },
+    "mosaic_pixel_width_min_median_max": [
+      14390,
+      15510.0,
+      17752
+    ],
+    "total_mosaic_image_pixels": 403824243620,
+    "primary_mosaic_fits_total_bytes": 1615309211520,
+    "nside16_support_cells": 1771,
+    "nside16_partial_boundary_cells": 184,
+    "nside16_full_interior_cells": 1587,
+    "nside16_legacy_density_mask_cells": 966,
+    "area_sq_deg_fine64_128_256": [
+      22480.480286981106,
+      22464.533707722094,
+      22475.129789992887
+    ],
+    "fraction_max_abs_diff_fine128_vs_256": 0.046875,
+    "surf_datalink_tape_audit": {
+      "hp264_datalink_auxiliary_tar_bytes": 6450000000,
+      "hp355_misc_tar_bytes": 6025820160,
+      "hp355_storage_class": "M",
+      "hp1078_misc_tar_bytes": 4507238400,
+      "hp1078_storage_class": "M",
+      "prior_http202_deferred_confirmed_without_tape_staging": true
+    },
+    "blocked_metadata": [
+      "Per-pixel valid-weight holes inside outer rectangles (inside HP-misc-*.tar on SURF tape)",
+      "Per-mosaic local PyBDSF RMS noise map & flux-size completeness curve",
+      "Source association / multi-component grouping uncertainties"
+    ]
+  },
+  "C2_offset_count_models": {
+    "NVSS": {
+      "survey": "NVSS",
+      "active_cells": 1731,
+      "total_exposure_sr": 7.080855316880115,
+      "min_cell_exposure_frac": 0.9999999999999998,
+      "observed_empty_cells_lowest_cut_retained": 0,
+      "cuts": {
+        "15.0": {
+          "n_sources": 282144,
+          "observed_empty_cells": 0,
+          "models": {
+            "Poisson4_offset": {
+              "family": "poisson",
+              "dispersion": 0.0,
+              "nll": 4.153658932165262,
+              "sum_loglik": -7189.983611578069,
+              "max_mean_raw_score_abs": 9.850928571484222e-11,
+              "whitened_max_grad_abs": 1.4196611432482108e-10,
+              "iterations": 10,
+              "design_condition": 2.335290723383228,
+              "beta_log_intensity": [
+                10.589651764658964,
+                -0.011591637588095683,
+                0.009530182531560003,
+                0.015540704433745708
+              ],
+              "exact_fullsky_dipole": [
+                -0.011591276946611039,
+                0.009529886026501852,
+                0.015540220928056646
+              ],
+              "dipole_amp": 0.02160265945257578,
+              "heldout_sum_loglik": -7198.619538522198
+            },
+            "NB1_4_Pearson_offset": {
+              "family": "nb1",
+              "dispersion": 0.2750108589089446,
+              "nll": 4.125244446771902,
+              "sum_loglik": -7140.7981373621615,
+              "max_mean_raw_score_abs": 1.08627452766981e-07,
+              "whitened_max_grad_abs": 2.4743469600425203e-07,
+              "iterations": 9,
+              "design_condition": 2.335290723383228,
+              "beta_log_intensity": [
+                10.589590964501292,
+                -0.011529866303659644,
+                0.009646050238635693,
+                0.015942105390705973
+              ],
+              "exact_fullsky_dipole": [
+                -0.011529497261179498,
+                0.00964574149244472,
+                0.0159415951233744
+              ],
+              "dipole_amp": 0.021911277715190636,
+              "heldout_sum_loglik": -7148.130133142818
+            },
+            "NB1_4_MLE_offset": {
+              "family": "nb1",
+              "dispersion": 0.27349217557558825,
+              "nll": 4.1252433567059335,
+              "sum_loglik": -7140.796250457971,
+              "max_mean_raw_score_abs": 2.06095869454549e-09,
+              "whitened_max_grad_abs": 3.9360666199498545e-09,
+              "iterations": 9,
+              "design_condition": 2.335290723383228,
+              "beta_log_intensity": [
+                10.589588896087566,
+                -0.011530200099767107,
+                0.009645434584828735,
+                0.015939858615633122
+              ],
+              "exact_fullsky_dipole": [
+                -0.011529831104870911,
+                0.00964512590708658,
+                0.015939348500767433
+              ],
+              "dipole_amp": 0.02190954791179678,
+              "heldout_sum_loglik": -7148.133821100912
+            },
+            "NB2_CoxLSS_4_offset": {
+              "family": "nb2",
+              "dispersion": 0.002304288988858979,
+              "nll": 4.1254077486633856,
+              "sum_loglik": -7141.08081293632,
+              "max_mean_raw_score_abs": 3.348464655880696e-08,
+              "whitened_max_grad_abs": 6.370877161465364e-08,
+              "iterations": 9,
+              "design_condition": 2.335290723383228,
+              "beta_log_intensity": [
+                10.589642606493019,
+                -0.011587377301384495,
+                0.009540405496996047,
+                0.01559691371298769
+              ],
+              "exact_fullsky_dipole": [
+                -0.011587015366210285,
+                0.009540107499594584,
+                0.01559642653875188
+              ],
+              "dipole_amp": 0.021645348160269865,
+              "heldout_sum_loglik": -7148.37535363171
+            },
+            "NB1_9_offset": {
+              "family": "nb1",
+              "dispersion": 0.2667055864361588,
+              "nll": 4.117711861044319,
+              "sum_loglik": -7127.759231467717,
+              "max_mean_raw_score_abs": 6.52678759680226e-07,
+              "whitened_max_grad_abs": 1.663461583590791e-06,
+              "iterations": 6,
+              "design_condition": 5.17311602428763,
+              "beta_log_intensity": [
+                10.580538473345722,
+                -0.01160138962780451,
+                0.010980190008568404,
+                0.03742640731248292,
+                0.0018070751776055765,
+                0.04447778818165753,
+                0.007023107530478929,
+                0.0038195287193082458,
+                -0.0008325503475430132
+              ],
+              "exact_fullsky_dipole": [
+                -0.011600109119254735,
+                0.01097897806520341,
+                0.037422276356098516
+              ],
+              "dipole_amp": 0.04068817099117438,
+              "heldout_sum_loglik": -7145.917652198287
+            }
+          },
+          "cv_loglik_gain_nb1_mle_minus_poisson": 50.4857174212857,
+          "cv_loglik_gain_nb2_coxlss_minus_poisson": 50.244184890488214,
+          "cv_loglik_gain_nb2_minus_nb1_mle": -0.24153253079748538
+        },
+        "20.0": {
+          "n_sources": 219886,
+          "observed_empty_cells": 0,
+          "models": {
+            "Poisson4_offset": {
+              "family": "poisson",
+              "dispersion": 0.0,
+              "nll": 3.973442721408891,
+              "sum_loglik": -6878.02935075879,
+              "max_mean_raw_score_abs": 2.3618385189039895e-07,
+              "whitened_max_grad_abs": 2.3618384621755056e-07,
+              "iterations": 10,
+              "design_condition": 2.335290723383228,
+              "beta_log_intensity": [
+                10.341019893577368,
+                -0.014266165958444816,
+                0.009268921750277123,
+                0.010632008666036218
+              ],
+              "exact_fullsky_dipole": [
+                -0.01426578318715915,
+                0.009268673058574992,
+                0.010631723401751603
+              ],
+              "dipole_amp": 0.020061266477995332,
+              "heldout_sum_loglik": -6888.592594105335
+            },
+            "NB1_4_Pearson_offset": {
+              "family": "nb1",
+              "dispersion": 0.2128365522834883,
+              "nll": 3.958273794421106,
+              "sum_loglik": -6851.771938142934,
+              "max_mean_raw_score_abs": 2.301603074422914e-06,
+              "whitened_max_grad_abs": 4.956990216911792e-06,
+              "iterations": 3,
+              "design_condition": 2.335290723383228,
+              "beta_log_intensity": [
+                10.340973718640733,
+                -0.014285562352380947,
+                0.009312385584658394,
+                0.010915448737183968
+              ],
+              "exact_fullsky_dipole": [
+                -0.014285171948120817,
+                0.009312131090301465,
+                0.010915150433373232
+              ],
+              "dipole_amp": 0.02024654123581371,
+              "heldout_sum_loglik": -6860.541727300677
+            },
+            "NB1_4_MLE_offset": {
+              "family": "nb1",
+              "dispersion": 0.21060056483322773,
+              "nll": 3.9582717862188894,
+              "sum_loglik": -6851.768461944897,
+              "max_mean_raw_score_abs": 9.183585910475924e-10,
+              "whitened_max_grad_abs": 9.183895515824536e-10,
+              "iterations": 10,
+              "design_condition": 2.335290723383228,
+              "beta_log_intensity": [
+                10.34097121083632,
+                -0.014285349808611817,
+                0.00931196873541241,
+                0.010912554626965942
+              ],
+              "exact_fullsky_dipole": [
+                -0.014284959483491554,
+                0.009311714300248746,
+                0.010912256458264845
+              ],
+              "dipole_amp": 0.02024463957855005,
+              "heldout_sum_loglik": -6860.535257961026
+            },
+            "NB2_CoxLSS_4_offset": {
+              "family": "nb2",
+              "dispersion": 0.0020939650527673935,
+              "nll": 3.9583750430134064,
+              "sum_loglik": -6851.947199456206,
+              "max_mean_raw_score_abs": 1.1516572459144028e-09,
+              "whitened_max_grad_abs": 2.20513554062844e-09,
+              "iterations": 9,
+              "design_condition": 2.335290723383228,
+              "beta_log_intensity": [
+                10.341014221513111,
+                -0.014266245787755965,
+                0.009283936703293362,
+                0.010667170814598989
+              ],
+              "exact_fullsky_dipole": [
+                -0.01426586203499515,
+                0.009283686971416166,
+                0.01066688387462115
+              ],
+              "dipole_amp": 0.020086913027625997,
+              "heldout_sum_loglik": -6860.724440802956
+            },
+            "NB1_9_offset": {
+              "family": "nb1",
+              "dispersion": 0.20616864815591374,
+              "nll": 3.9526118230451717,
+              "sum_loglik": -6841.971065691192,
+              "max_mean_raw_score_abs": 1.4339065712448096e-07,
+              "whitened_max_grad_abs": 3.145305030684985e-07,
+              "iterations": 13,
+              "design_condition": 5.17311602428763,
+              "beta_log_intensity": [
+                10.334337477680881,
+                -0.014670783518730897,
+                0.010316164216810414,
+                0.02842700042310078,
+                0.0022409502403196386,
+                0.033398522462631926,
+                0.012562146945963935,
+                0.009946734322570677,
+                0.004269498634425843
+              ],
+              "exact_fullsky_dipole": [
+                -0.014669678683589907,
+                0.010315387321647836,
+                0.028424859627486133
+              ],
+              "dipole_amp": 0.03360921500299696,
+              "heldout_sum_loglik": -6865.0333239836455
+            }
+          },
+          "cv_loglik_gain_nb1_mle_minus_poisson": 28.057336144308465,
+          "cv_loglik_gain_nb2_coxlss_minus_poisson": 27.868153302378232,
+          "cv_loglik_gain_nb2_minus_nb1_mle": -0.18918284193023283
+        },
+        "30.0": {
+          "n_sources": 150986,
+          "observed_empty_cells": 0,
+          "models": {
+            "Poisson4_offset": {
+              "family": "poisson",
+              "dispersion": 0.0,
+              "nll": 3.76202908947801,
+              "sum_loglik": -6512.072353886435,
+              "max_mean_raw_score_abs": 3.8429402159997045e-12,
+              "whitened_max_grad_abs": 3.7853702456413254e-12,
+              "iterations": 9,
+              "design_condition": 2.335290723383228,
+              "beta_log_intensity": [
+                9.965200164011796,
+                -0.01607002777486466,
+                0.009610501677975681,
+                0.009420177582916923
+              ],
+              "exact_fullsky_dipole": [
+                -0.016069557106362625,
+                0.009610220199904086,
+                0.009419901679170273
+              ],
+              "dipole_amp": 0.02095999870063281,
+              "heldout_sum_loglik": -6523.6323951697095
+            },
+            "NB1_4_Pearson_offset": {
+              "family": "nb1",
+              "dispersion": 0.18284750253209736,
+              "nll": 3.7514058841013256,
+              "sum_loglik": -6493.683585379395,
+              "max_mean_raw_score_abs": 3.689142733836169e-09,
+              "whitened_max_grad_abs": 6.600510737500566e-09,
+              "iterations": 7,
+              "design_condition": 2.335290723383228,
+              "beta_log_intensity": [
+                9.965140413453906,
+                -0.01610543050920439,
+                0.00960847541054907,
+                0.009773187979784471
+              ],
+              "exact_fullsky_dipole": [
+                -0.016104950348511154,
+                0.00960818894740787,
+                0.009772896605970352
+              ],
+              "dipole_amp": 0.021147014650964024,
+              "heldout_sum_loglik": -6503.798183690381
+            },
+            "NB1_4_MLE_offset": {
+              "family": "nb1",
+              "dispersion": 0.18063486686889899,
+              "nll": 3.7514040601347287,
+              "sum_loglik": -6493.680428093216,
+              "max_mean_raw_score_abs": 5.055356918241614e-09,
+              "whitened_max_grad_abs": 9.378468370347094e-09,
+              "iterations": 9,
+              "design_condition": 2.335290723383228,
+              "beta_log_intensity": [
+                9.965137731964633,
+                -0.016104996962918762,
+                0.009608543254984638,
+                0.009768850688224272
+              ],
+              "exact_fullsky_dipole": [
+                -0.0161045169197274,
+                0.009608256852212935,
+                0.009768559507153508
+              ],
+              "dipole_amp": 0.021144711390810755,
+              "heldout_sum_loglik": -6503.808766619211
+            },
+            "NB2_CoxLSS_4_offset": {
+              "family": "nb2",
+              "dispersion": 0.002518116387774581,
+              "nll": 3.7514899487256512,
+              "sum_loglik": -6493.829101244102,
+              "max_mean_raw_score_abs": 3.0199032552509947e-09,
+              "whitened_max_grad_abs": 4.238483686882426e-09,
+              "iterations": 8,
+              "design_condition": 2.335290723383228,
+              "beta_log_intensity": [
+                9.965196043702203,
+                -0.01607318536998131,
+                0.00963642528866919,
+                0.00944673491507808
+              ],
+              "exact_fullsky_dipole": [
+                -0.016072713428775982,
+                0.009636142343748124,
+                0.009446457539849734
+              ],
+              "dipole_amp": 0.020986255413596666,
+              "heldout_sum_loglik": -6503.872268692085
+            },
+            "NB1_9_offset": {
+              "family": "nb1",
+              "dispersion": 0.1786577916708243,
+              "nll": 3.7474657321494576,
+              "sum_loglik": -6486.863182350711,
+              "max_mean_raw_score_abs": 2.9991867005144735e-07,
+              "whitened_max_grad_abs": 4.307936629977421e-07,
+              "iterations": 6,
+              "design_condition": 5.17311602428763,
+              "beta_log_intensity": [
+                9.959840870102205,
+                -0.016431988398982113,
+                0.01101016158126551,
+                0.022627491921257684,
+                0.00486036422229377,
+                0.022774607392291677,
+                0.01908394649942372,
+                0.008414389240126838,
+                0.0021216631890427795
+              ],
+              "exact_fullsky_dipole": [
+                -0.016430999018444407,
+                0.01100949865239038,
+                0.022626129505487882
+              ],
+              "dipole_amp": 0.030052096860622157,
+              "heldout_sum_loglik": -6511.98862295684
+            }
+          },
+          "cv_loglik_gain_nb1_mle_minus_poisson": 19.823628550498142,
+          "cv_loglik_gain_nb2_coxlss_minus_poisson": 19.760126477624908,
+          "cv_loglik_gain_nb2_minus_nb1_mle": -0.06350207287323428
+        },
+        "50.0": {
+          "n_sources": 90261,
+          "observed_empty_cells": 0,
+          "models": {
+            "Poisson4_offset": {
+              "family": "poisson",
+              "dispersion": 0.0,
+              "nll": 3.4909810845435127,
+              "sum_loglik": -6042.888257344821,
+              "max_mean_raw_score_abs": 4.951527568886875e-08,
+              "whitened_max_grad_abs": 7.22742680625984e-08,
+              "iterations": 6,
+              "design_condition": 2.335290723383228,
+              "beta_log_intensity": [
+                9.453175157442821,
+                -0.01767933109084616,
+                0.006524949154431418,
+                -0.0059652875522050635
+              ],
+              "exact_fullsky_dipole": [
+                -0.0176788705986771,
+                0.006524779199585632,
+                -0.00596513217482173
+              ],
+              "dipole_amp": 0.019766082341000413,
+              "heldout_sum_loglik": -6051.6632904782655
+            },
+            "NB1_4_Pearson_offset": {
+              "family": "nb1",
+              "dispersion": 0.1701498271181776,
+              "nll": 3.4821290016524915,
+              "sum_loglik": -6027.565301860463,
+              "max_mean_raw_score_abs": 8.130966033752278e-08,
+              "whitened_max_grad_abs": 1.9154061351366262e-07,
+              "iterations": 3,
+              "design_condition": 2.335290723383228,
+              "beta_log_intensity": [
+                9.453112849837002,
+                -0.017489541532362925,
+                0.006563278685399593,
+                -0.005459312700678198
+              ],
+              "exact_fullsky_dipole": [
+                -0.017489099920138494,
+                0.006563112962124659,
+                -0.005459174852626483
+              ],
+              "dipole_amp": 0.019461388898065483,
+              "heldout_sum_loglik": -6036.8067388585805
+            },
+            "NB1_4_MLE_offset": {
+              "family": "nb1",
+              "dispersion": 0.165767302849875,
+              "nll": 3.482122016345879,
+              "sum_loglik": -6027.553210294716,
+              "max_mean_raw_score_abs": 1.4650418828918846e-08,
+              "whitened_max_grad_abs": 2.0647060611194148e-08,
+              "iterations": 12,
+              "design_condition": 2.335290723383228,
+              "beta_log_intensity": [
+                9.453104368296769,
+                -0.017494196666590554,
+                0.0065624202983789355,
+                -0.005472619333481398
+              ],
+              "exact_fullsky_dipole": [
+                -0.01749375459037382,
+                0.006562254466818138,
+                -0.005472481041058106
+              ],
+              "dipole_amp": 0.019469018519181702,
+              "heldout_sum_loglik": -6036.7219161153
+            },
+            "NB2_CoxLSS_4_offset": {
+              "family": "nb2",
+              "dispersion": 0.003821826733918278,
+              "nll": 3.4820524471362964,
+              "sum_loglik": -6027.432785992929,
+              "max_mean_raw_score_abs": 5.518003435525127e-09,
+              "whitened_max_grad_abs": 8.394750631845262e-09,
+              "iterations": 12,
+              "design_condition": 2.335290723383228,
+              "beta_log_intensity": [
+                9.453174042580342,
+                -0.01767899980460976,
+                0.006549089771200287,
+                -0.005955175825702781
+              ],
+              "exact_fullsky_dipole": [
+                -0.017678539104993896,
+                0.006548919107521616,
+                -0.0059550206389136166
+              ],
+              "dipole_amp": 0.019770719692857597,
+              "heldout_sum_loglik": -6036.485474859522
+            },
+            "NB1_9_offset": {
+              "family": "nb1",
+              "dispersion": 0.16951867147428312,
+              "nll": 3.48042347560226,
+              "sum_loglik": -6024.613036267512,
+              "max_mean_raw_score_abs": 1.1705629840204469e-07,
+              "whitened_max_grad_abs": 2.8516319938367856e-07,
+              "iterations": 12,
+              "design_condition": 5.17311602428763,
+              "beta_log_intensity": [
+                9.451617998835822,
+                -0.017685535192399272,
+                0.006631492112907631,
+                -7.242045671291724e-05,
+                0.001813154209976303,
+                0.006862753024373345,
+                0.019217694100661833,
+                0.008185139612525219,
+                0.011702472420654845
+              ],
+              "exact_fullsky_dipole": [
+                -0.01768511457380717,
+                0.006631334394815093,
+                -7.24187343228278e-05
+              ],
+              "dipole_amp": 0.018887644580985352,
+              "heldout_sum_loglik": -6041.923800799768
+            }
+          },
+          "cv_loglik_gain_nb1_mle_minus_poisson": 14.94137436296569,
+          "cv_loglik_gain_nb2_coxlss_minus_poisson": 15.177815618743807,
+          "cv_loglik_gain_nb2_minus_nb1_mle": 0.23644125577811792
+        }
+      }
+    },
+    "RACS_DR1": {
+      "survey": "RACS_DR1",
+      "active_cells": 1202,
+      "total_exposure_sr": 4.916919752102773,
+      "min_cell_exposure_frac": 0.9999999999999998,
+      "observed_empty_cells_lowest_cut_retained": 0,
+      "cuts": {
+        "15.0": {
+          "n_sources": 274195,
+          "observed_empty_cells": 0,
+          "models": {
+            "Poisson4_offset": {
+              "family": "poisson",
+              "dispersion": 0.0,
+              "nll": 4.32467442520738,
+              "sum_loglik": -5198.258659099271,
+              "max_mean_raw_score_abs": 3.416133289620544e-07,
+              "whitened_max_grad_abs": 3.416134806757856e-07,
+              "iterations": 11,
+              "design_condition": 2.8674162945024158,
+              "beta_log_intensity": [
+                10.92734604546435,
+                -0.018249343753285442,
+                -0.001398327981201209,
+                -0.005890559887522822
+              ],
+              "exact_fullsky_dipole": [
+                -0.018248893992696393,
+                -0.0013982935189857445,
+                -0.005890414712895138
+              ],
+              "dipole_amp": 0.01922691712708513,
+              "heldout_sum_loglik": -5203.111424017216
+            },
+            "NB1_4_Pearson_offset": {
+              "family": "nb1",
+              "dispersion": 0.2781944416548683,
+              "nll": 4.295522527340759,
+              "sum_loglik": -5163.218077863592,
+              "max_mean_raw_score_abs": 5.05003595323029e-07,
+              "whitened_max_grad_abs": 8.875066432464704e-07,
+              "iterations": 3,
+              "design_condition": 2.8674162945024158,
+              "beta_log_intensity": [
+                10.927288594142519,
+                -0.018370947062605482,
+                -0.00143268017696193,
+                -0.006095574446372932
+              ],
+              "exact_fullsky_dipole": [
+                -0.01837048572308671,
+                -0.001432644198850342,
+                -0.006095421371554734
+              ],
+              "dipole_amp": 0.019408281139746467,
+              "heldout_sum_loglik": -5168.790291151709
+            },
+            "NB1_4_MLE_offset": {
+              "family": "nb1",
+              "dispersion": 0.27653314990374406,
+              "nll": 4.295521212301023,
+              "sum_loglik": -5163.216497185829,
+              "max_mean_raw_score_abs": 2.355862987035514e-09,
+              "whitened_max_grad_abs": 2.3558927827613934e-09,
+              "iterations": 10,
+              "design_condition": 2.8674162945024158,
+              "beta_log_intensity": [
+                10.927287021081378,
+                -0.018370233287348662,
+                -0.0014324747704425858,
+                -0.006094334151383606
+              ],
+              "exact_fullsky_dipole": [
+                -0.01836977201708235,
+                -0.0014324388014917014,
+                -0.006094181124740284
+              ],
+              "dipole_amp": 0.01940720094348336,
+              "heldout_sum_loglik": -5168.756152351831
+            },
+            "NB2_CoxLSS_4_offset": {
+              "family": "nb2",
+              "dispersion": 0.0016722147302162562,
+              "nll": 4.295683686118467,
+              "sum_loglik": -5163.411790714397,
+              "max_mean_raw_score_abs": 9.773486242906392e-10,
+              "whitened_max_grad_abs": 1.799010919897505e-09,
+              "iterations": 9,
+              "design_condition": 2.8674162945024158,
+              "beta_log_intensity": [
+                10.927346211059575,
+                -0.018239319220586903,
+                -0.0013846948521596984,
+                -0.00589132701792654
+              ],
+              "exact_fullsky_dipole": [
+                -0.018238870186917323,
+                -0.001384660762367026,
+                -0.005891181979388776
+              ],
+              "dipole_amp": 0.019216651535487014,
+              "heldout_sum_loglik": -5168.976193219811
+            },
+            "NB1_9_offset": {
+              "family": "nb1",
+              "dispersion": 0.2745618114785391,
+              "nll": 4.291053730111926,
+              "sum_loglik": -5157.846583594535,
+              "max_mean_raw_score_abs": 4.918500036827523e-07,
+              "whitened_max_grad_abs": 1.4935353767279183e-06,
+              "iterations": 4,
+              "design_condition": 7.338049269059814,
+              "beta_log_intensity": [
+                10.91989069515333,
+                -0.017541912864882943,
+                -0.007103765912667005,
+                -0.01779833548176431,
+                0.010532811365021856,
+                0.01580959742461787,
+                0.0072858484375444505,
+                -0.0018089996077184263,
+                -0.017352952354765677
+              ],
+              "exact_fullsky_dipole": [
+                -0.01754112357288434,
+                -0.007103446281299662,
+                -0.017797534652123186
+              ],
+              "dipole_amp": 0.02597887997901438,
+              "heldout_sum_loglik": -5171.796079714851
+            }
+          },
+          "cv_loglik_gain_nb1_mle_minus_poisson": 34.35527166538577,
+          "cv_loglik_gain_nb2_coxlss_minus_poisson": 34.13523079740571,
+          "cv_loglik_gain_nb2_minus_nb1_mle": -0.22004086798006028
+        },
+        "20.0": {
+          "n_sources": 215882,
+          "observed_empty_cells": 0,
+          "models": {
+            "Poisson4_offset": {
+              "family": "poisson",
+              "dispersion": 0.0,
+              "nll": 4.1697808432487165,
+              "sum_loglik": -5012.076573584957,
+              "max_mean_raw_score_abs": 8.117404515247272e-10,
+              "whitened_max_grad_abs": 1.1952016823094726e-09,
+              "iterations": 8,
+              "design_condition": 2.8674162945024158,
+              "beta_log_intensity": [
+                10.687544272098368,
+                -0.023839170827465898,
+                -0.0010891941444390626,
+                -0.008430128270484382
+              ],
+              "exact_fullsky_dipole": [
+                -0.023838152862450335,
+                -0.0010891476343677928,
+                -0.008429768292542272
+              ],
+              "dipole_amp": 0.025308195667193445,
+              "heldout_sum_loglik": -5020.983194451797
+            },
+            "NB1_4_Pearson_offset": {
+              "family": "nb1",
+              "dispersion": 0.23899302552220758,
+              "nll": 4.149747551252419,
+              "sum_loglik": -4987.996556605408,
+              "max_mean_raw_score_abs": 6.294569079380916e-08,
+              "whitened_max_grad_abs": 1.196902967863024e-07,
+              "iterations": 5,
+              "design_condition": 2.8674162945024158,
+              "beta_log_intensity": [
+                10.68749122313363,
+                -0.023918426096952744,
+                -0.0011138904142724147,
+                -0.008619093429224574
+              ],
+              "exact_fullsky_dipole": [
+                -0.0239173934895691,
+                -0.0011138423253445862,
+                -0.008618721325329473
+              ],
+              "dipole_amp": 0.025447292849030138,
+              "heldout_sum_loglik": -4996.571986124427
+            },
+            "NB1_4_MLE_offset": {
+              "family": "nb1",
+              "dispersion": 0.23739919107510923,
+              "nll": 4.149746463465146,
+              "sum_loglik": -4987.995249085106,
+              "max_mean_raw_score_abs": 2.331880804877444e-09,
+              "whitened_max_grad_abs": 4.5979457843270526e-09,
+              "iterations": 9,
+              "design_condition": 2.8674162945024158,
+              "beta_log_intensity": [
+                10.687489769295379,
+                -0.023917937254339893,
+                -0.0011137244855263014,
+                -0.0086178414437053
+              ],
+              "exact_fullsky_dipole": [
+                -0.023916904740320998,
+                -0.0011136764071267193,
+                -0.008617469419897033
+              ],
+              "dipole_amp": 0.025446402234898358,
+              "heldout_sum_loglik": -4996.554005437267
+            },
+            "NB2_CoxLSS_4_offset": {
+              "family": "nb2",
+              "dispersion": 0.0017293372235352132,
+              "nll": 4.149862647608661,
+              "sum_loglik": -4988.13490242561,
+              "max_mean_raw_score_abs": 9.020474413642773e-10,
+              "whitened_max_grad_abs": 1.1541271166712962e-09,
+              "iterations": 10,
+              "design_condition": 2.8674162945024158,
+              "beta_log_intensity": [
+                10.687545846285033,
+                -0.023828271453148097,
+                -0.0010742769420173204,
+                -0.008426166768553438
+              ],
+              "exact_fullsky_dipole": [
+                -0.02382725493609543,
+                -0.0010742311132280608,
+                -0.008425807307220892
+              ],
+              "dipole_amp": 0.02529597357392532,
+              "heldout_sum_loglik": -4996.710505828706
+            },
+            "NB1_9_offset": {
+              "family": "nb1",
+              "dispersion": 0.23482738298736927,
+              "nll": 4.145062642558803,
+              "sum_loglik": -4982.365296355681,
+              "max_mean_raw_score_abs": 1.90164289664536e-07,
+              "whitened_max_grad_abs": 4.5068008462594115e-07,
+              "iterations": 3,
+              "design_condition": 7.338049269059814,
+              "beta_log_intensity": [
+                10.67992600625527,
+                -0.022639487130825454,
+                -0.008249501149366512,
+                -0.020981384122583685,
+                0.010187013997258179,
+                0.01624524810179343,
+                0.0068776114157053396,
+                0.00030532791007302864,
+                -0.022338573278687355
+              ],
+              "exact_fullsky_dipole": [
+                -0.022637946559161785,
+                -0.008248939787369366,
+                -0.02097995638150205
+              ],
+              "dipole_amp": 0.03194808604284205,
+              "heldout_sum_loglik": -4995.043964604515
+            }
+          },
+          "cv_loglik_gain_nb1_mle_minus_poisson": 24.429189014530493,
+          "cv_loglik_gain_nb2_coxlss_minus_poisson": 24.2726886230912,
+          "cv_loglik_gain_nb2_minus_nb1_mle": -0.15650039143929462
+        },
+        "30.0": {
+          "n_sources": 151510,
+          "observed_empty_cells": 0,
+          "models": {
+            "Poisson4_offset": {
+              "family": "poisson",
+              "dispersion": 0.0,
+              "nll": 3.9685603278309762,
+              "sum_loglik": -4770.209514052834,
+              "max_mean_raw_score_abs": 1.3585588930407587e-11,
+              "whitened_max_grad_abs": 1.3438621264047624e-11,
+              "iterations": 9,
+              "design_condition": 2.8674162945024158,
+              "beta_log_intensity": [
+                10.331835985968153,
+                -0.026893971568984106,
+                -0.0049479426685291985,
+                -0.013638416090926708
+              ],
+              "exact_fullsky_dipole": [
+                -0.026892297524659478,
+                -0.004947634678490554,
+                -0.013637567152978092
+              ],
+              "dipole_amp": 0.030555817660776082,
+              "heldout_sum_loglik": -4784.418530165321
+            },
+            "NB1_4_Pearson_offset": {
+              "family": "nb1",
+              "dispersion": 0.20857958695223167,
+              "nll": 3.9540610076968945,
+              "sum_loglik": -4752.781331251667,
+              "max_mean_raw_score_abs": 4.977037577582311e-07,
+              "whitened_max_grad_abs": 7.29067082437836e-07,
+              "iterations": 2,
+              "design_condition": 2.8674162945024158,
+              "beta_log_intensity": [
+                10.331802599250441,
+                -0.02694759235537116,
+                -0.004963143591155214,
+                -0.01375765987754282
+              ],
+              "exact_fullsky_dipole": [
+                -0.026945903649338875,
+                -0.004962832569286879,
+                -0.013756797735837581
+              ],
+              "dipole_amp": 0.030658782013233576,
+              "heldout_sum_loglik": -4764.108470294184
+            },
+            "NB1_4_MLE_offset": {
+              "family": "nb1",
+              "dispersion": 0.20754297065693023,
+              "nll": 3.9540605834455804,
+              "sum_loglik": -4752.780821301588,
+              "max_mean_raw_score_abs": 4.672853145764776e-08,
+              "whitened_max_grad_abs": 6.8348103002006e-08,
+              "iterations": 10,
+              "design_condition": 2.8674162945024158,
+              "beta_log_intensity": [
+                10.331801417110789,
+                -0.0269473682284188,
+                -0.004963072620204098,
+                -0.013757068370617367
+              ],
+              "exact_fullsky_dipole": [
+                -0.02694567958861445,
+                -0.004962761612394084,
+                -0.013756206292619809
+              ],
+              "dipole_amp": 0.030658308219450703,
+              "heldout_sum_loglik": -4764.1356058477195
+            },
+            "NB2_CoxLSS_4_offset": {
+              "family": "nb2",
+              "dispersion": 0.0020732837882644958,
+              "nll": 3.9541338828511776,
+              "sum_loglik": -4752.868927187115,
+              "max_mean_raw_score_abs": 2.4376497038318543e-09,
+              "whitened_max_grad_abs": 2.43764526183138e-09,
+              "iterations": 9,
+              "design_condition": 2.8674162945024158,
+              "beta_log_intensity": [
+                10.331840408347718,
+                -0.026881856938819105,
+                -0.00492574246735032,
+                -0.0136254695470505
+              ],
+              "exact_fullsky_dipole": [
+                -0.026880185841139097,
+                -0.00492543626094396,
+                -0.01362462252630335
+              ],
+              "dipole_amp": 0.030535792968237274,
+              "heldout_sum_loglik": -4764.266077847791
+            },
+            "NB1_9_offset": {
+              "family": "nb1",
+              "dispersion": 0.2065340101394878,
+              "nll": 3.9507469750714237,
+              "sum_loglik": -4748.7978640358515,
+              "max_mean_raw_score_abs": 4.308959626389455e-08,
+              "whitened_max_grad_abs": 1.348165223075117e-07,
+              "iterations": 3,
+              "design_condition": 7.338049269059814,
+              "beta_log_intensity": [
+                10.327280241528126,
+                -0.024444426907374174,
+                -0.010787257172787142,
+                -0.021862618118325183,
+                0.006113631131163584,
+                0.009381124355477182,
+                0.011345938443703995,
+                0.006060708089779149,
+                -0.01798996324755693
+              ],
+              "exact_fullsky_dipole": [
+                -0.024442484824192905,
+                -0.010786400136915257,
+                -0.021860881157049428
+              ],
+              "dipole_amp": 0.03452071287295766,
+              "heldout_sum_loglik": -4763.768178464439
+            }
+          },
+          "cv_loglik_gain_nb1_mle_minus_poisson": 20.2829243176011,
+          "cv_loglik_gain_nb2_coxlss_minus_poisson": 20.152452317529423,
+          "cv_loglik_gain_nb2_minus_nb1_mle": -0.13047200007167703
+        },
+        "50.0": {
+          "n_sources": 93594,
+          "observed_empty_cells": 0,
+          "models": {
+            "Poisson4_offset": {
+              "family": "poisson",
+              "dispersion": 0.0,
+              "nll": 3.695494946065106,
+              "sum_loglik": -4441.984925170257,
+              "max_mean_raw_score_abs": 1.861668076121903e-11,
+              "whitened_max_grad_abs": 1.8458330076094104e-11,
+              "iterations": 9,
+              "design_condition": 2.8674162945024158,
+              "beta_log_intensity": [
+                9.84792434543526,
+                -0.029235817171314245,
+                -0.011374802807897417,
+                -0.02054660636352992
+              ],
+              "exact_fullsky_dipole": [
+                -0.02923307661777358,
+                -0.011373736538535871,
+                -0.020544680333055444
+              ],
+              "dipole_amp": 0.03749691375801589,
+              "heldout_sum_loglik": -4453.893989975144
+            },
+            "NB1_4_Pearson_offset": {
+              "family": "nb1",
+              "dispersion": 0.16691240920942274,
+              "nll": 3.6868833191084542,
+              "sum_loglik": -4431.633749568362,
+              "max_mean_raw_score_abs": 3.27344224228252e-08,
+              "whitened_max_grad_abs": 6.525157110957971e-08,
+              "iterations": 4,
+              "design_condition": 2.8674162945024158,
+              "beta_log_intensity": [
+                9.84794322976578,
+                -0.029179929415489476,
+                -0.011441890553615873,
+                -0.020479456287153433
+              ],
+              "exact_fullsky_dipole": [
+                -0.02917720283091519,
+                -0.011440821418669042,
+                -0.02047754267835722
+              ],
+              "dipole_amp": 0.03743703131812381,
+              "heldout_sum_loglik": -4442.278550730008
+            },
+            "NB1_4_MLE_offset": {
+              "family": "nb1",
+              "dispersion": 0.16549857185902012,
+              "nll": 3.6868826080405466,
+              "sum_loglik": -4431.632894864737,
+              "max_mean_raw_score_abs": 3.619775212054376e-09,
+              "whitened_max_grad_abs": 4.387812950610917e-09,
+              "iterations": 9,
+              "design_condition": 2.8674162945024158,
+              "beta_log_intensity": [
+                9.847940915804301,
+                -0.02918046912919595,
+                -0.01144135608546449,
+                -0.020480071141033653
+              ],
+              "exact_fullsky_dipole": [
+                -0.029177742407750493,
+                -0.011440286966566324,
+                -0.02047815741411797
+              ],
+              "dipole_amp": 0.037437624777325595,
+              "heldout_sum_loglik": -4442.32325021891
+            },
+            "NB2_CoxLSS_4_offset": {
+              "family": "nb2",
+              "dispersion": 0.002550844808534658,
+              "nll": 3.68684990350589,
+              "sum_loglik": -4431.59358401408,
+              "max_mean_raw_score_abs": 4.132721005123888e-09,
+              "whitened_max_grad_abs": 8.235449339301571e-09,
+              "iterations": 9,
+              "design_condition": 2.8674162945024158,
+              "beta_log_intensity": [
+                9.847927945668792,
+                -0.029221533340278195,
+                -0.011339803630978187,
+                -0.020538196609767398
+              ],
+              "exact_fullsky_dipole": [
+                -0.029218797973152008,
+                -0.011338742135480726,
+                -0.020536274071782025
+              ],
+              "dipole_amp": 0.037470572199556074,
+              "heldout_sum_loglik": -4442.226455846058
+            },
+            "NB1_9_offset": {
+              "family": "nb1",
+              "dispersion": 0.16533595306501392,
+              "nll": 3.6839959226561634,
+              "sum_loglik": -4428.1630990327085,
+              "max_mean_raw_score_abs": 2.3245643447354178e-07,
+              "whitened_max_grad_abs": 5.209406256536002e-07,
+              "iterations": 7,
+              "design_condition": 7.338049269059814,
+              "beta_log_intensity": [
+                9.844670287247684,
+                -0.026562900632137353,
+                -0.014398409636708897,
+                -0.026500511573472902,
+                0.002706080964556869,
+                0.007411236384796174,
+                0.020063447632922057,
+                0.004993661699906336,
+                -0.008199296197313513
+              ],
+              "exact_fullsky_dipole": [
+                -0.026560040816091642,
+                -0.014396859474568022,
+                -0.026497658474360464
+              ],
+              "dipole_amp": 0.0401849628033517,
+              "heldout_sum_loglik": -4445.282809795557
+            }
+          },
+          "cv_loglik_gain_nb1_mle_minus_poisson": 11.570739756233706,
+          "cv_loglik_gain_nb2_coxlss_minus_poisson": 11.667534129085652,
+          "cv_loglik_gain_nb2_minus_nb1_mle": 0.09679437285194581
+        },
+        "100.0": {
+          "n_sources": 45175,
+          "observed_empty_cells": 0,
+          "models": {
+            "Poisson4_offset": {
+              "family": "poisson",
+              "dispersion": 0.0,
+              "nll": 3.277865581263499,
+              "sum_loglik": -3939.994428678726,
+              "max_mean_raw_score_abs": 3.2789844790204674e-11,
+              "whitened_max_grad_abs": 3.274557700239618e-11,
+              "iterations": 10,
+              "design_condition": 2.8674162945024158,
+              "beta_log_intensity": [
+                9.117088343950178,
+                -0.03243759046464714,
+                -0.015953412166904008,
+                -0.028293936209182472
+              ],
+              "exact_fullsky_dipole": [
+                -0.032433034426351814,
+                -0.015951171422270007,
+                -0.02828996216995674
+              ],
+              "dipole_amp": 0.045898404671852695,
+              "heldout_sum_loglik": -3950.0502688830284
+            },
+            "NB1_4_Pearson_offset": {
+              "family": "nb1",
+              "dispersion": 0.0874317310150502,
+              "nll": 3.275846898413334,
+              "sum_loglik": -3937.5679718928272,
+              "max_mean_raw_score_abs": 3.41909994635409e-08,
+              "whitened_max_grad_abs": 5.577124314219854e-08,
+              "iterations": 3,
+              "design_condition": 2.8674162945024158,
+              "beta_log_intensity": [
+                9.117096786436903,
+                -0.03240670786040861,
+                -0.015990736094270125,
+                -0.02827031427154164
+              ],
+              "exact_fullsky_dipole": [
+                -0.03240216079514271,
+                -0.01598849239457117,
+                -0.02826634759388237
+              ],
+              "dipole_amp": 0.04587502936831456,
+              "heldout_sum_loglik": -3947.7033457106336
+            },
+            "NB1_4_MLE_offset": {
+              "family": "nb1",
+              "dispersion": 0.08519217340521287,
+              "nll": 3.275845415136633,
+              "sum_loglik": -3937.566188994233,
+              "max_mean_raw_score_abs": 7.411696732409578e-10,
+              "whitened_max_grad_abs": 7.410987475389666e-10,
+              "iterations": 10,
+              "design_condition": 2.8674162945024158,
+              "beta_log_intensity": [
+                9.11709352904106,
+                -0.032407583776364046,
+                -0.015989801413315807,
+                -0.02827104202896567
+              ],
+              "exact_fullsky_dipole": [
+                -0.03240303644128171,
+                -0.01598755777227709,
+                -0.0282670751210308
+              ],
+              "dipole_amp": 0.04587577040263113,
+              "heldout_sum_loglik": -3947.7315296261067
+            },
+            "NB2_CoxLSS_4_offset": {
+              "family": "nb2",
+              "dispersion": 0.0024822957944248586,
+              "nll": 3.2758363584268597,
+              "sum_loglik": -3937.5553028290856,
+              "max_mean_raw_score_abs": 8.7208889350143e-09,
+              "whitened_max_grad_abs": 1.2793806212629139e-08,
+              "iterations": 10,
+              "design_condition": 2.8674162945024158,
+              "beta_log_intensity": [
+                9.117090332946594,
+                -0.03243020693423964,
+                -0.015941497697814062,
+                -0.028288402609207928
+              ],
+              "exact_fullsky_dipole": [
+                -0.032425654466015315,
+                -0.015939259871769206,
+                -0.02828443155671799
+              ],
+              "dipole_amp": 0.04588564199502798,
+              "heldout_sum_loglik": -3947.7486848371354
+            },
+            "NB1_9_offset": {
+              "family": "nb1",
+              "dispersion": 0.08993216494781575,
+              "nll": 3.275125648806191,
+              "sum_loglik": -3936.7010298650416,
+              "max_mean_raw_score_abs": 2.703822086690734e-08,
+              "whitened_max_grad_abs": 2.994261409864838e-08,
+              "iterations": 7,
+              "design_condition": 7.338049269059814,
+              "beta_log_intensity": [
+                9.114206361186898,
+                -0.029776297200356155,
+                -0.018077367019944453,
+                -0.03589710118952411,
+                -0.0022699560606310445,
+                0.010958562105002774,
+                0.01107787313179332,
+                0.00816765610321058,
+                -0.006458820157223914
+              ],
+              "exact_fullsky_dipole": [
+                -0.02977133165561761,
+                -0.018074352408218603,
+                -0.03589111492935411
+              ],
+              "dipole_amp": 0.050011863936443746,
+              "heldout_sum_loglik": -3957.5130487651204
+            }
+          },
+          "cv_loglik_gain_nb1_mle_minus_poisson": 2.318739256921617,
+          "cv_loglik_gain_nb2_coxlss_minus_poisson": 2.3015840458929233,
+          "cv_loglik_gain_nb2_minus_nb1_mle": -0.017155211028693884
+        }
+      }
+    },
+    "SPICE_RACS": {
+      "survey": "SPICE_RACS",
+      "active_cells": 1872,
+      "total_exposure_sr": 7.657632093125116,
+      "min_cell_exposure_frac": 0.9999999999999998,
+      "observed_empty_cells_lowest_cut_retained": 0,
+      "cuts": {
+        "20.0": {
+          "n_sources": 328100,
+          "observed_empty_cells": 0,
+          "models": {
+            "Poisson4_offset": {
+              "family": "poisson",
+              "dispersion": 0.0,
+              "nll": 4.26359365956169,
+              "sum_loglik": -7981.447330699483,
+              "max_mean_raw_score_abs": 6.528989694566513e-10,
+              "whitened_max_grad_abs": 6.529845372867757e-10,
+              "iterations": 10,
+              "design_condition": 2.164032112467308,
+              "beta_log_intensity": [
+                10.665144574473594,
+                -0.03965501879597681,
+                0.01697900523285086,
+                -0.006398727131874865
+              ],
+              "exact_fullsky_dipole": [
+                -0.03964999210869521,
+                0.01697685296682629,
+                -0.006397916026464533
+              ],
+              "dipole_amp": 0.04360354045669368,
+              "heldout_sum_loglik": -8007.037956795916
+            },
+            "NB1_4_Pearson_offset": {
+              "family": "nb1",
+              "dispersion": 0.33659141134894544,
+              "nll": 4.214498091793682,
+              "sum_loglik": -7889.540427837773,
+              "max_mean_raw_score_abs": 8.980918583351672e-07,
+              "whitened_max_grad_abs": 1.8697648660204939e-06,
+              "iterations": 4,
+              "design_condition": 2.164032112467308,
+              "beta_log_intensity": [
+                10.665068422766595,
+                -0.03969211549863,
+                0.01702088818714972,
+                -0.007070876953117089
+              ],
+              "exact_fullsky_dipole": [
+                -0.03968704860768463,
+                0.01701871538826626,
+                -0.0070699743213989375
+              ],
+              "dipole_amp": 0.04375709128313688,
+              "heldout_sum_loglik": -7912.972241614923
+            },
+            "NB1_4_MLE_offset": {
+              "family": "nb1",
+              "dispersion": 0.3414731424805033,
+              "nll": 4.214484709520421,
+              "sum_loglik": -7889.515376222228,
+              "max_mean_raw_score_abs": 2.9473349095118618e-08,
+              "whitened_max_grad_abs": 5.409692159899575e-08,
+              "iterations": 9,
+              "design_condition": 2.164032112467308,
+              "beta_log_intensity": [
+                10.665077929380711,
+                -0.0396921384301933,
+                0.017021276890569783,
+                -0.007081060333120425
+              ],
+              "exact_fullsky_dipole": [
+                -0.039687071115288595,
+                0.017019103861514256,
+                -0.007080156326332525
+              ],
+              "dipole_amp": 0.04375890907648739,
+              "heldout_sum_loglik": -7913.116637963441
+            },
+            "NB2_CoxLSS_4_offset": {
+              "family": "nb2",
+              "dispersion": 0.0029577360648255094,
+              "nll": 4.214550011072708,
+              "sum_loglik": -7889.637620728109,
+              "max_mean_raw_score_abs": 3.2628913851730164e-08,
+              "whitened_max_grad_abs": 6.126630482568747e-08,
+              "iterations": 10,
+              "design_condition": 2.164032112467308,
+              "beta_log_intensity": [
+                10.665167305008163,
+                -0.03960159288221002,
+                0.01711450974623789,
+                -0.006176388961131014
+              ],
+              "exact_fullsky_dipole": [
+                -0.039596579328790536,
+                0.01711234305286482,
+                -0.0061756070315735784
+              ],
+              "dipole_amp": 0.04357590505667729,
+              "heldout_sum_loglik": -7913.1079539428965
+            },
+            "NB1_9_offset": {
+              "family": "nb1",
+              "dispersion": 0.30873111558063593,
+              "nll": 4.190074931966081,
+              "sum_loglik": -7843.820272640504,
+              "max_mean_raw_score_abs": 2.7210475854497516e-06,
+              "whitened_max_grad_abs": 4.8918037441142185e-06,
+              "iterations": 12,
+              "design_condition": 4.250347072373105,
+              "beta_log_intensity": [
+                10.661855919280253,
+                -0.03859149638582142,
+                0.017283864095260525,
+                -0.018238643304724567,
+                -0.0020217840422508543,
+                0.040077250413765225,
+                0.024352861905440632,
+                0.029844642084266237,
+                -0.0027297554276621626
+              ],
+              "exact_fullsky_dipole": [
+                -0.038586041463815265,
+                0.017281421014804094,
+                -0.01823606526588071
+              ],
+              "dipole_amp": 0.04604437190927513,
+              "heldout_sum_loglik": -7870.617890010417
+            }
+          },
+          "cv_loglik_gain_nb1_mle_minus_poisson": 93.92131883247566,
+          "cv_loglik_gain_nb2_coxlss_minus_poisson": 93.93000285301969,
+          "cv_loglik_gain_nb2_minus_nb1_mle": 0.008684020544023952
+        },
+        "30.0": {
+          "n_sources": 231069,
+          "observed_empty_cells": 0,
+          "models": {
+            "Poisson4_offset": {
+              "family": "poisson",
+              "dispersion": 0.0,
+              "nll": 4.032733073182412,
+              "sum_loglik": -7549.276312997475,
+              "max_mean_raw_score_abs": 3.0530935310777195e-08,
+              "whitened_max_grad_abs": 3.0530963970662675e-08,
+              "iterations": 11,
+              "design_condition": 2.164032112467308,
+              "beta_log_intensity": [
+                10.31451242806877,
+                -0.04179860145141162,
+                0.016323155386590828,
+                -0.006591602150705175
+              ],
+              "exact_fullsky_dipole": [
+                -0.04179287054325077,
+                0.016320917357059515,
+                -0.006590698391602075
+              ],
+              "dipole_amp": 0.045348138626739136,
+              "heldout_sum_loglik": -7572.882878013646
+            },
+            "NB1_4_Pearson_offset": {
+              "family": "nb1",
+              "dispersion": 0.2862224629344675,
+              "nll": 4.000593214305109,
+              "sum_loglik": -7489.110497179164,
+              "max_mean_raw_score_abs": 3.26305972251969e-08,
+              "whitened_max_grad_abs": 6.422721612862762e-08,
+              "iterations": 5,
+              "design_condition": 2.164032112467308,
+              "beta_log_intensity": [
+                10.314462571640501,
+                -0.041812150524096925,
+                0.01635326489090713,
+                -0.007023003278333023
+              ],
+              "exact_fullsky_dipole": [
+                -0.04180639549484226,
+                0.016351014025628094,
+                -0.007022036631346065
+              ],
+              "dipole_amp": 0.045436101971773724,
+              "heldout_sum_loglik": -7507.598179461896
+            },
+            "NB1_4_MLE_offset": {
+              "family": "nb1",
+              "dispersion": 0.28971263556385385,
+              "nll": 4.000587318431893,
+              "sum_loglik": -7489.099460104503,
+              "max_mean_raw_score_abs": 2.2003415572949532e-08,
+              "whitened_max_grad_abs": 4.116681695175969e-08,
+              "iterations": 10,
+              "design_condition": 2.164032112467308,
+              "beta_log_intensity": [
+                10.314469859703834,
+                -0.041811925627555105,
+                0.016353485634712544,
+                -0.0070284727959803
+              ],
+              "exact_fullsky_dipole": [
+                -0.041806170447398885,
+                0.01635123466792263,
+                -0.007027505365598732
+              ],
+              "dipole_amp": 0.04543681980845449,
+              "heldout_sum_loglik": -7507.572022538447
+            },
+            "NB2_CoxLSS_4_offset": {
+              "family": "nb2",
+              "dispersion": 0.0033038654937156005,
+              "nll": 4.000606317056403,
+              "sum_loglik": -7489.135025529586,
+              "max_mean_raw_score_abs": 2.8604080357880346e-10,
+              "whitened_max_grad_abs": 2.8605460640283437e-10,
+              "iterations": 10,
+              "design_condition": 2.164032112467308,
+              "beta_log_intensity": [
+                10.31453387310932,
+                -0.04176522949766311,
+                0.01647459280389597,
+                -0.006385316105008534
+              ],
+              "exact_fullsky_dipole": [
+                -0.041759504553448644,
+                0.016472334558798485,
+                -0.006384440841567327
+              ],
+              "dipole_amp": 0.04534264120258058,
+              "heldout_sum_loglik": -7507.657107058232
+            },
+            "NB1_9_offset": {
+              "family": "nb1",
+              "dispersion": 0.25963129705077514,
+              "nll": 3.9793404288831216,
+              "sum_loglik": -7449.325282869204,
+              "max_mean_raw_score_abs": 1.247026237362277e-07,
+              "whitened_max_grad_abs": 4.435789423978393e-07,
+              "iterations": 13,
+              "design_condition": 4.250347072373105,
+              "beta_log_intensity": [
+                10.312638183527989,
+                -0.040570089303728234,
+                0.0174425047603066,
+                -0.016922882718927387,
+                -0.006321152766988711,
+                0.035917433948214575,
+                0.031157218149139482,
+                0.03316023364183294,
+                0.004574554440780411
+              ],
+              "exact_fullsky_dipole": [
+                -0.04056404143725079,
+                0.017439904570323465,
+                -0.01692035999006842
+              ],
+              "dipole_amp": 0.04728520182190721,
+              "heldout_sum_loglik": -7471.538918234246
+            }
+          },
+          "cv_loglik_gain_nb1_mle_minus_poisson": 65.31085547519979,
+          "cv_loglik_gain_nb2_coxlss_minus_poisson": 65.22577095541419,
+          "cv_loglik_gain_nb2_minus_nb1_mle": -0.08508451978559606
+        },
+        "50.0": {
+          "n_sources": 142923,
+          "observed_empty_cells": 0,
+          "models": {
+            "Poisson4_offset": {
+              "family": "poisson",
+              "dispersion": 0.0,
+              "nll": 3.7162551922086213,
+              "sum_loglik": -6956.829719814539,
+              "max_mean_raw_score_abs": 3.1105526511607273e-12,
+              "whitened_max_grad_abs": 3.1297566627610384e-12,
+              "iterations": 9,
+              "design_condition": 2.164032112467308,
+              "beta_log_intensity": [
+                9.833446026072322,
+                -0.04506384402297666,
+                0.01630937712169506,
+                -0.013118170663297188
+              ],
+              "exact_fullsky_dipole": [
+                -0.0450564287618072,
+                0.01630669341165011,
+                -0.013116012066674045
+              ],
+              "dipole_amp": 0.04967916862551646,
+              "heldout_sum_loglik": -6979.665555901962
+            },
+            "NB1_4_Pearson_offset": {
+              "family": "nb1",
+              "dispersion": 0.20551471413517652,
+              "nll": 3.7020641204815443,
+              "sum_loglik": -6930.264033541451,
+              "max_mean_raw_score_abs": 2.5347283648071194e-08,
+              "whitened_max_grad_abs": 5.2795968522010995e-08,
+              "iterations": 3,
+              "design_condition": 2.164032112467308,
+              "beta_log_intensity": [
+                9.833421388153337,
+                -0.04506903553044364,
+                0.01625887194061682,
+                -0.013353499564658486
+              ],
+              "exact_fullsky_dipole": [
+                -0.04506160424107434,
+                0.016256191067134905,
+                -0.01335129774875118
+              ],
+              "dipole_amp": 0.049729961556050035,
+              "heldout_sum_loglik": -6949.157355248922
+            },
+            "NB1_4_MLE_offset": {
+              "family": "nb1",
+              "dispersion": 0.2059532262075729,
+              "nll": 3.7020640452532825,
+              "sum_loglik": -6930.263892714145,
+              "max_mean_raw_score_abs": 2.062678901376443e-09,
+              "whitened_max_grad_abs": 2.062648681485276e-09,
+              "iterations": 8,
+              "design_condition": 2.164032112467308,
+              "beta_log_intensity": [
+                9.833422261508524,
+                -0.04506899778087183,
+                0.016258749286943132,
+                -0.01335399764447002
+              ],
+              "exact_fullsky_dipole": [
+                -0.04506156647997829,
+                0.01625606842728232,
+                -0.01335179574117698
+              ],
+              "dipole_amp": 0.049730020951695764,
+              "heldout_sum_loglik": -6949.172967837126
+            },
+            "NB2_CoxLSS_4_offset": {
+              "family": "nb2",
+              "dispersion": 0.003395758259340161,
+              "nll": 3.7020761732066156,
+              "sum_loglik": -6930.286596242784,
+              "max_mean_raw_score_abs": 8.940668674542154e-09,
+              "whitened_max_grad_abs": 8.940668735272302e-09,
+              "iterations": 9,
+              "design_condition": 2.164032112467308,
+              "beta_log_intensity": [
+                9.833460653199747,
+                -0.04502791114425667,
+                0.016432999931870116,
+                -0.012979698720989797
+              ],
+              "exact_fullsky_dipole": [
+                -0.04502051020724309,
+                0.01643029894942724,
+                -0.012977565334602372
+              ],
+              "dipole_amp": 0.0496509643904517,
+              "heldout_sum_loglik": -6949.2610081495195
+            },
+            "NB1_9_offset": {
+              "family": "nb1",
+              "dispersion": 0.1834462008417277,
+              "nll": 3.686009795063735,
+              "sum_loglik": -6900.210336359312,
+              "max_mean_raw_score_abs": 8.363887280006662e-08,
+              "whitened_max_grad_abs": 2.7611869754363056e-07,
+              "iterations": 4,
+              "design_condition": 4.250347072373105,
+              "beta_log_intensity": [
+                9.831226724927904,
+                -0.04375914971765,
+                0.017895503606820268,
+                -0.024034110349261464,
+                -0.007344449599137155,
+                0.03958073446135752,
+                0.03443730024518079,
+                0.03204407155492588,
+                0.010978333740512299
+              ],
+              "exact_fullsky_dipole": [
+                -0.04375094634323523,
+                0.017892148799485693,
+                -0.02402960475883768
+              ],
+              "dipole_amp": 0.0530254297432613,
+              "heldout_sum_loglik": -6917.033286740673
+            }
+          },
+          "cv_loglik_gain_nb1_mle_minus_poisson": 30.492588064836127,
+          "cv_loglik_gain_nb2_coxlss_minus_poisson": 30.40454775244234,
+          "cv_loglik_gain_nb2_minus_nb1_mle": -0.08804031239378673
+        }
+      }
+    },
+    "SUMSS": {
+      "survey": "SUMSS",
+      "active_cells": 477,
+      "total_exposure_sr": 1.9512235621905345,
+      "min_cell_exposure_frac": 0.9999999999999998,
+      "observed_empty_cells_lowest_cut_retained": 0,
+      "cuts": {
+        "15.0": {
+          "n_sources": 110562,
+          "observed_empty_cells": 0,
+          "models": {
+            "Poisson4_offset": {
+              "family": "poisson",
+              "dispersion": 0.0,
+              "nll": 4.329649848815683,
+              "sum_loglik": -2065.242977885081,
+              "max_mean_raw_score_abs": 5.671624937319585e-08,
+              "whitened_max_grad_abs": 1.2320042637502868e-07,
+              "iterations": 9,
+              "design_condition": 11.092860539710744,
+              "beta_log_intensity": [
+                10.880411458621575,
+                -0.008561813191358486,
+                0.030318121039398148,
+                -0.08630082750455971
+              ],
+              "exact_fullsky_dipole": [
+                -0.008556999427771907,
+                0.030301075086185777,
+                -0.08625230603233787
+              ],
+              "dipole_amp": 0.0918195931513619,
+              "heldout_sum_loglik": -2070.156611133252
+            },
+            "NB1_4_Pearson_offset": {
+              "family": "nb1",
+              "dispersion": 0.27874491767856013,
+              "nll": 4.301319090765168,
+              "sum_loglik": -2051.729206294985,
+              "max_mean_raw_score_abs": 2.883064565875004e-07,
+              "whitened_max_grad_abs": 1.2798633739495176e-06,
+              "iterations": 8,
+              "design_condition": 11.092860539710744,
+              "beta_log_intensity": [
+                10.880812657606356,
+                -0.008655256762224695,
+                0.030267975834892914,
+                -0.08580268315456774
+              ],
+              "exact_fullsky_dipole": [
+                -0.00865044067469253,
+                0.03025113367468358,
+                -0.08575493954118696
+              ],
+              "dipole_amp": 0.09134479113875395,
+              "heldout_sum_loglik": -2057.1928490260934
+            },
+            "NB1_4_MLE_offset": {
+              "family": "nb1",
+              "dispersion": 0.27345061090048267,
+              "nll": 4.301305804708312,
+              "sum_loglik": -2051.7228688458645,
+              "max_mean_raw_score_abs": 1.4202897675562661e-08,
+              "whitened_max_grad_abs": 1.4202944665228487e-08,
+              "iterations": 11,
+              "design_condition": 11.092860539710744,
+              "beta_log_intensity": [
+                10.88079896665617,
+                -0.008653474105669147,
+                0.030269141079849772,
+                -0.08581231432179522
+              ],
+              "exact_fullsky_dipole": [
+                -0.008648658035199127,
+                0.03025229486124122,
+                -0.08576455568197927
+              ],
+              "dipole_amp": 0.09135403462085634,
+              "heldout_sum_loglik": -2057.091731294453
+            },
+            "NB2_CoxLSS_4_offset": {
+              "family": "nb2",
+              "dispersion": 0.0016266720946700312,
+              "nll": 4.301147346642187,
+              "sum_loglik": -2051.6472843483234,
+              "max_mean_raw_score_abs": 7.110908611253688e-08,
+              "whitened_max_grad_abs": 7.110910724261801e-08,
+              "iterations": 8,
+              "design_condition": 11.092860539710744,
+              "beta_log_intensity": [
+                10.880190768677952,
+                -0.008572768153504889,
+                0.030263424942770886,
+                -0.08659811537313461
+              ],
+              "exact_fullsky_dipole": [
+                -0.008567920685101718,
+                0.030246312500960378,
+                -0.08654914850262921
+              ],
+              "dipole_amp": 0.09208150623932099,
+              "heldout_sum_loglik": -2056.9813738258817
+            },
+            "NB1_9_offset": {
+              "family": "nb1",
+              "dispersion": 0.25190689682376977,
+              "nll": 4.277284913059927,
+              "sum_loglik": -2040.2649035295851,
+              "max_mean_raw_score_abs": 1.575483279825304e-13,
+              "whitened_max_grad_abs": 1.4820011046449166e-13,
+              "iterations": 17,
+              "design_condition": 165.58577082858855,
+              "beta_log_intensity": [
+                10.043324097819667,
+                -0.0008408512967544511,
+                0.024187399034769772,
+                -1.5187381431008147,
+                -0.015567717110705013,
+                0.7675894829804862,
+                -0.007172870029980289,
+                0.017029697411517778,
+                -0.004006994744553446
+              ],
+              "exact_fullsky_dipole": [
+                -0.0007346199344504464,
+                0.021131614545916798,
+                -1.326864000137141
+              ],
+              "dipole_amp": 1.3270324636796569,
+              "heldout_sum_loglik": -2054.7756459274547
+            }
+          },
+          "cv_loglik_gain_nb1_mle_minus_poisson": 13.064879838799243,
+          "cv_loglik_gain_nb2_coxlss_minus_poisson": 13.17523730737048,
+          "cv_loglik_gain_nb2_minus_nb1_mle": 0.1103574685712374
+        },
+        "20.0": {
+          "n_sources": 87297,
+          "observed_empty_cells": 0,
+          "models": {
+            "Poisson4_offset": {
+              "family": "poisson",
+              "dispersion": 0.0,
+              "nll": 4.254350045399667,
+              "sum_loglik": -2029.324971655641,
+              "max_mean_raw_score_abs": 8.398584748693169e-10,
+              "whitened_max_grad_abs": 1.0639679996576785e-09,
+              "iterations": 9,
+              "design_condition": 11.092860539710744,
+              "beta_log_intensity": [
+                10.700944872203502,
+                -0.017176459719922862,
+                0.03675527175295602,
+                -0.012852617600935323
+              ],
+              "exact_fullsky_dipole": [
+                -0.017174386111070333,
+                0.03675083451395993,
+                -0.012851065983077508
+              ],
+              "dipole_amp": 0.04255271169580155,
+              "heldout_sum_loglik": -2034.4189149785661
+            },
+            "NB1_4_Pearson_offset": {
+              "family": "nb1",
+              "dispersion": 0.321399640290274,
+              "nll": 4.213277935066442,
+              "sum_loglik": -2009.7335750266927,
+              "max_mean_raw_score_abs": 2.1211696736371735e-09,
+              "whitened_max_grad_abs": 2.90469162815208e-09,
+              "iterations": 7,
+              "design_condition": 11.092860539710744,
+              "beta_log_intensity": [
+                10.701081749786058,
+                -0.017268262561112812,
+                0.03676865014639134,
+                -0.012704984432041941
+              ],
+              "exact_fullsky_dipole": [
+                -0.01726617744066027,
+                0.03676421037926588,
+                -0.012703450321543288
+              ],
+              "dipole_amp": 0.0425570875212955,
+              "heldout_sum_loglik": -2014.8180612150231
+            },
+            "NB1_4_MLE_offset": {
+              "family": "nb1",
+              "dispersion": 0.31644963847520885,
+              "nll": 4.213264817111867,
+              "sum_loglik": -2009.7273177623604,
+              "max_mean_raw_score_abs": 1.7286452958559322e-12,
+              "whitened_max_grad_abs": 3.998782670002233e-12,
+              "iterations": 11,
+              "design_condition": 11.092860539710744,
+              "beta_log_intensity": [
+                10.701070626631113,
+                -0.01726688173557862,
+                0.03676882519796797,
+                -0.01270702109708078
+              ],
+              "exact_fullsky_dipole": [
+                -0.017264796762363616,
+                0.03676438536819101,
+                -0.012705486726310444
+              ],
+              "dipole_amp": 0.04255728647011025,
+              "heldout_sum_loglik": -2014.694692398158
+            },
+            "NB2_CoxLSS_4_offset": {
+              "family": "nb2",
+              "dispersion": 0.0025284946040785247,
+              "nll": 4.213315932552673,
+              "sum_loglik": -2009.751699827625,
+              "max_mean_raw_score_abs": 1.269090391508619e-07,
+              "whitened_max_grad_abs": 3.098591951054565e-07,
+              "iterations": 10,
+              "design_condition": 11.092860539710744,
+              "beta_log_intensity": [
+                10.70093086666396,
+                -0.017183615142854713,
+                0.036653778930707544,
+                -0.01287707452056088
+              ],
+              "exact_fullsky_dipole": [
+                -0.017181548200142928,
+                0.0366493700062414,
+                -0.012875525592986088
+              ],
+              "dipole_amp": 0.04247541735761829,
+              "heldout_sum_loglik": -2014.656557154296
+            },
+            "NB1_9_offset": {
+              "family": "nb1",
+              "dispersion": 0.2846748889762726,
+              "nll": 4.181167373365093,
+              "sum_loglik": -1994.4168370951493,
+              "max_mean_raw_score_abs": 4.586650183813259e-13,
+              "whitened_max_grad_abs": 1.8634737359061204e-12,
+              "iterations": 16,
+              "design_condition": 165.58577082858855,
+              "beta_log_intensity": [
+                9.611418669959567,
+                -0.01459020400639566,
+                0.00808426552449144,
+                -1.8777111715225114,
+                -0.02542033020152275,
+                1.0012028949610976,
+                -0.004511295818540206,
+                0.013257249360841432,
+                -0.02459927759601381
+              ],
+              "exact_fullsky_dipole": [
+                -0.012012702192378067,
+                0.0066561011859227305,
+                -1.5459951825837115
+              ],
+              "dipole_amp": 1.5460561805021846,
+              "heldout_sum_loglik": -2007.0353326432053
+            }
+          },
+          "cv_loglik_gain_nb1_mle_minus_poisson": 19.724222580408195,
+          "cv_loglik_gain_nb2_coxlss_minus_poisson": 19.76235782427011,
+          "cv_loglik_gain_nb2_minus_nb1_mle": 0.038135243861916024
+        },
+        "30.0": {
+          "n_sources": 61426,
+          "observed_empty_cells": 0,
+          "models": {
+            "Poisson4_offset": {
+              "family": "poisson",
+              "dispersion": 0.0,
+              "nll": 4.110853368242779,
+              "sum_loglik": -1960.8770566518056,
+              "max_mean_raw_score_abs": 6.97587322172149e-11,
+              "whitened_max_grad_abs": 1.4965020417836093e-10,
+              "iterations": 10,
+              "design_condition": 11.092860539710744,
+              "beta_log_intensity": [
+                10.364381837114331,
+                -0.019411495731302682,
+                0.030328322688974788,
+                0.006116289224877871
+              ],
+              "exact_fullsky_dipole": [
+                -0.01940976959271099,
+                0.03032562578766747,
+                0.00611574534289087
+              ],
+              "dipole_amp": 0.036521022386494906,
+              "heldout_sum_loglik": -1968.7840732601683
+            },
+            "NB1_4_Pearson_offset": {
+              "family": "nb1",
+              "dispersion": 0.34913180183221004,
+              "nll": 4.059277462595607,
+              "sum_loglik": -1936.2753496581045,
+              "max_mean_raw_score_abs": 3.709122457112473e-14,
+              "whitened_max_grad_abs": 6.063446972560771e-14,
+              "iterations": 7,
+              "design_condition": 11.092860539710744,
+              "beta_log_intensity": [
+                10.36454840034941,
+                -0.019263743635375558,
+                0.030292316578442887,
+                0.0063563336297095185
+              ],
+              "exact_fullsky_dipole": [
+                -0.019262036930589983,
+                0.030289632778105362,
+                0.006355770479304806
+              ],
+              "dipole_amp": 0.03645385766875009,
+              "heldout_sum_loglik": -1941.6608911894325
+            },
+            "NB1_4_MLE_offset": {
+              "family": "nb1",
+              "dispersion": 0.3455600769842754,
+              "nll": 4.059270049139947,
+              "sum_loglik": -1936.2718134397546,
+              "max_mean_raw_score_abs": 5.18920673493899e-10,
+              "whitened_max_grad_abs": 5.189551243893316e-10,
+              "iterations": 11,
+              "design_condition": 11.092860539710744,
+              "beta_log_intensity": [
+                10.364535920369518,
+                -0.019265518329011827,
+                0.03029300964286438,
+                0.006354337953646473
+              ],
+              "exact_fullsky_dipole": [
+                -0.019263811357852746,
+                0.030290325609510123,
+                0.006353774944054066
+              ],
+              "dipole_amp": 0.036455023105201434,
+              "heldout_sum_loglik": -1941.6708742855874
+            },
+            "NB2_CoxLSS_4_offset": {
+              "family": "nb2",
+              "dispersion": 0.004101303086499108,
+              "nll": 4.059220967914771,
+              "sum_loglik": -1936.2484016953458,
+              "max_mean_raw_score_abs": 2.397884583649294e-10,
+              "whitened_max_grad_abs": 4.4990291669188154e-10,
+              "iterations": 10,
+              "design_condition": 11.092860539710744,
+              "beta_log_intensity": [
+                10.364374292942378,
+                -0.01945197261694905,
+                0.030239852764190042,
+                0.006092905664797618
+              ],
+              "exact_fullsky_dipole": [
+                -0.0194502481567832,
+                0.03023717193471635,
+                0.0060923655153063494
+              ],
+              "dipole_amp": 0.03646526617950485,
+              "heldout_sum_loglik": -1941.5950374317467
+            },
+            "NB1_9_offset": {
+              "family": "nb1",
+              "dispersion": 0.3246576070083622,
+              "nll": 4.035784718536623,
+              "sum_loglik": -1925.069310741969,
+              "max_mean_raw_score_abs": 4.0766186016365625e-07,
+              "whitened_max_grad_abs": 5.94482418944344e-07,
+              "iterations": 9,
+              "design_condition": 165.58577082858855,
+              "beta_log_intensity": [
+                9.282858273597716,
+                -0.05237035401440172,
+                0.017472324274576793,
+                -1.8451944797575688,
+                -0.03487395472521667,
+                0.9980715645028878,
+                0.011592401031180572,
+                -0.026795132988821146,
+                -0.0036685181603835666
+              ],
+              "exact_fullsky_dipole": [
+                -0.043354875406911686,
+                0.014464489619167402,
+                -1.527546992510521
+              ],
+              "dipole_amp": 1.5282305719391396,
+              "heldout_sum_loglik": -1942.7339069306156
+            }
+          },
+          "cv_loglik_gain_nb1_mle_minus_poisson": 27.113198974580882,
+          "cv_loglik_gain_nb2_coxlss_minus_poisson": 27.189035828421538,
+          "cv_loglik_gain_nb2_minus_nb1_mle": 0.07583685384065575
+        },
+        "50.0": {
+          "n_sources": 38268,
+          "observed_empty_cells": 0,
+          "models": {
+            "Poisson4_offset": {
+              "family": "poisson",
+              "dispersion": 0.0,
+              "nll": 3.7867164595199165,
+              "sum_loglik": -1806.2637511910002,
+              "max_mean_raw_score_abs": 5.1315058325088246e-08,
+              "whitened_max_grad_abs": 5.1315165599166056e-08,
+              "iterations": 8,
+              "design_condition": 11.092860539710744,
+              "beta_log_intensity": [
+                9.915325809086262,
+                -0.007421427754544161,
+                0.02466759190514586,
+                0.04085473979189628
+              ],
+              "exact_fullsky_dipole": [
+                -0.007420273891075896,
+                0.0246637566548287,
+                0.040848387807708
+              ],
+              "dipole_amp": 0.04829029036396548,
+              "heldout_sum_loglik": -1811.0100221374826
+            },
+            "NB1_4_Pearson_offset": {
+              "family": "nb1",
+              "dispersion": 0.26790221525864466,
+              "nll": 3.7611886352610084,
+              "sum_loglik": -1794.086979019501,
+              "max_mean_raw_score_abs": 3.075756447187042e-07,
+              "whitened_max_grad_abs": 3.075757212025968e-07,
+              "iterations": 3,
+              "design_condition": 11.092860539710744,
+              "beta_log_intensity": [
+                9.91532448684345,
+                -0.007437177224253407,
+                0.024667259854014044,
+                0.04082532155471387
+              ],
+              "exact_fullsky_dipole": [
+                -0.007436021995091582,
+                0.024663428247335,
+                0.0408189800893193
+              ],
+              "dipole_amp": 0.04826767294530754,
+              "heldout_sum_loglik": -1799.8149581461648
+            },
+            "NB1_4_MLE_offset": {
+              "family": "nb1",
+              "dispersion": 0.2620734169621728,
+              "nll": 3.7611730265499945,
+              "sum_loglik": -1794.0795336643473,
+              "max_mean_raw_score_abs": 9.148511556685488e-08,
+              "whitened_max_grad_abs": 2.094322411809111e-07,
+              "iterations": 10,
+              "design_condition": 11.092860539710744,
+              "beta_log_intensity": [
+                9.915308173079277,
+                -0.007437021391149231,
+                0.024667539674305176,
+                0.040827514061578384
+              ],
+              "exact_fullsky_dipole": [
+                -0.007435866091777619,
+                0.024663707710998083,
+                0.0408211717372984
+              ],
+              "dipole_amp": 0.04826964516747978,
+              "heldout_sum_loglik": -1799.7378442807992
+            },
+            "NB2_CoxLSS_4_offset": {
+              "family": "nb2",
+              "dispersion": 0.004426544068366098,
+              "nll": 3.761175586927041,
+              "sum_loglik": -1794.0807549641986,
+              "max_mean_raw_score_abs": 2.248868395487886e-09,
+              "whitened_max_grad_abs": 2.2488431056780403e-09,
+              "iterations": 9,
+              "design_condition": 11.092860539710744,
+              "beta_log_intensity": [
+                9.915468802948835,
+                -0.007400849174318647,
+                0.02462168976862572,
+                0.04104777321092863
+              ],
+              "exact_fullsky_dipole": [
+                -0.0073996919795846355,
+                0.024617839928009918,
+                0.041041354992439945
+              ],
+              "dipole_amp": 0.04842712363675261,
+              "heldout_sum_loglik": -1799.7492402056318
+            },
+            "NB1_9_offset": {
+              "family": "nb1",
+              "dispersion": 0.24219653154595788,
+              "nll": 3.738255683501497,
+              "sum_loglik": -1783.147961030214,
+              "max_mean_raw_score_abs": 2.5685453391510993e-08,
+              "whitened_max_grad_abs": 3.356335890788643e-08,
+              "iterations": 12,
+              "design_condition": 165.58577082858855,
+              "beta_log_intensity": [
+                8.607296301704265,
+                -0.07796512612264589,
+                0.044244656197775865,
+                -2.1960520394799157,
+                -0.02319463545867652,
+                1.2063766224379844,
+                0.009769621005495463,
+                -0.06490842965181709,
+                0.027575458024572858
+              ],
+              "exact_fullsky_dipole": [
+                -0.06065679390648403,
+                0.03442230040428561,
+                -1.7085263962390496
+              ],
+              "dipole_amp": 1.7099492940019392,
+              "heldout_sum_loglik": -1798.4255572831337
+            }
+          },
+          "cv_loglik_gain_nb1_mle_minus_poisson": 11.272177856683356,
+          "cv_loglik_gain_nb2_coxlss_minus_poisson": 11.260781931850715,
+          "cv_loglik_gain_nb2_minus_nb1_mle": -0.011395924832640958
+        }
+      }
+    },
+    "LoTSS_DR3_legacy966": {
+      "survey": "LoTSS_DR3",
+      "active_cells": 966,
+      "total_exposure_sr": 3.951534509593409,
+      "min_cell_exposure_frac": 0.9999999999999998,
+      "observed_empty_cells_lowest_cut_retained": 0,
+      "cuts": {
+        "20.0": {
+          "n_sources": 438806,
+          "observed_empty_cells": 0,
+          "models": {
+            "Poisson4_offset": {
+              "family": "poisson",
+              "dispersion": 0.0,
+              "nll": 5.406446772346432,
+              "sum_loglik": -5222.627582086653,
+              "max_mean_raw_score_abs": 4.60850314983285e-08,
+              "whitened_max_grad_abs": 7.629637098594633e-08,
+              "iterations": 9,
+              "design_condition": 4.31974505645162,
+              "beta_log_intensity": [
+                11.606813306097894,
+                -0.01533669053630659,
+                0.003974196475854578,
+                0.01876242429178432
+              ],
+              "exact_fullsky_dipole": [
+                -0.015336073999043253,
+                0.003974036712559271,
+                0.01876167003950942
+              ],
+              "dipole_amp": 0.024555822042202635,
+              "heldout_sum_loglik": -5304.056672625149
+            },
+            "NB1_4_Pearson_offset": {
+              "family": "nb1",
+              "dispersion": 0.6510627466303837,
+              "nll": 5.003262777294058,
+              "sum_loglik": -4833.15184286606,
+              "max_mean_raw_score_abs": 2.9474283607290865e-13,
+              "whitened_max_grad_abs": 7.518071741411992e-14,
+              "iterations": 8,
+              "design_condition": 4.31974505645162,
+              "beta_log_intensity": [
+                11.60595065291094,
+                -0.015130711650900429,
+                0.004548427096808224,
+                0.020699115264110696
+              ],
+              "exact_fullsky_dipole": [
+                -0.015130027706195098,
+                0.004548221496919585,
+                0.020698179614115072
+              ],
+              "dipole_amp": 0.026038792147744516,
+              "heldout_sum_loglik": -4872.0366498068815
+            },
+            "NB1_4_MLE_offset": {
+              "family": "nb1",
+              "dispersion": 0.6505737923422248,
+              "nll": 5.003262289438394,
+              "sum_loglik": -4833.151371597488,
+              "max_mean_raw_score_abs": 6.362736556356776e-07,
+              "whitened_max_grad_abs": 6.362738838699483e-07,
+              "iterations": 9,
+              "design_condition": 4.31974505645162,
+              "beta_log_intensity": [
+                11.605948420463864,
+                -0.01513092997820208,
+                0.004548020382273866,
+                0.020697680728779533
+              ],
+              "exact_fullsky_dipole": [
+                -0.0151302460806041,
+                0.004547814817895505,
+                0.02069674522156652
+              ],
+              "dipole_amp": 0.026037707826226608,
+              "heldout_sum_loglik": -4872.066345653344
+            },
+            "NB2_CoxLSS_4_offset": {
+              "family": "nb2",
+              "dispersion": 0.004101731425266338,
+              "nll": 5.003796062847336,
+              "sum_loglik": -4833.666996710526,
+              "max_mean_raw_score_abs": 1.0998423115428407e-09,
+              "whitened_max_grad_abs": 1.7592856971089007e-09,
+              "iterations": 9,
+              "design_condition": 4.31974505645162,
+              "beta_log_intensity": [
+                11.606713205684708,
+                -0.01534054897231796,
+                0.004017689791744714,
+                0.01897622855027629
+              ],
+              "exact_fullsky_dipole": [
+                -0.01533992355255742,
+                0.00401752599430878,
+                0.01897545490727712
+              ],
+              "dipole_amp": 0.024728963962353134,
+              "heldout_sum_loglik": -4873.394404466144
+            },
+            "NB1_9_offset": {
+              "family": "nb1",
+              "dispersion": 0.613078980419919,
+              "nll": 4.947051731754563,
+              "sum_loglik": -4778.851972874908,
+              "max_mean_raw_score_abs": 9.451696844096784e-12,
+              "whitened_max_grad_abs": 9.124394821483067e-12,
+              "iterations": 17,
+              "design_condition": 19.876326315572303,
+              "beta_log_intensity": [
+                11.472499233766488,
+                -0.0006675809321834094,
+                0.0029141436126668167,
+                0.2928855866343922,
+                -0.024145155792711835,
+                0.23596142323722788,
+                0.020926192950397552,
+                -0.02438900306667029,
+                0.022249487926932116
+              ],
+              "exact_fullsky_dipole": [
+                -0.0006637937051997102,
+                0.002897611499791498,
+                0.2912240289964134
+              ],
+              "dipole_amp": 0.29123920038241874,
+              "heldout_sum_loglik": -4867.092862311829
+            }
+          },
+          "cv_loglik_gain_nb1_mle_minus_poisson": 431.9903269718052,
+          "cv_loglik_gain_nb2_coxlss_minus_poisson": 430.6622681590052,
+          "cv_loglik_gain_nb2_minus_nb1_mle": -1.328058812800009
+        },
+        "50.0": {
+          "n_sources": 226788,
+          "observed_empty_cells": 0,
+          "models": {
+            "Poisson4_offset": {
+              "family": "poisson",
+              "dispersion": 0.0,
+              "nll": 4.58949809215289,
+              "sum_loglik": -4433.455157019692,
+              "max_mean_raw_score_abs": 3.4225769676394036e-10,
+              "whitened_max_grad_abs": 3.4262277303313274e-10,
+              "iterations": 8,
+              "design_condition": 4.31974505645162,
+              "beta_log_intensity": [
+                10.95723123465583,
+                -0.011114826560300823,
+                -0.0003401089244444324,
+                -0.0023977963651439886
+              ],
+              "exact_fullsky_dipole": [
+                -0.011114730674278483,
+                -0.0003401059903732843,
+                -0.0023977756796969792
+              ],
+              "dipole_amp": 0.01137551046136309,
+              "heldout_sum_loglik": -4460.396895248347
+            },
+            "NB1_4_Pearson_offset": {
+              "family": "nb1",
+              "dispersion": 0.46836397156942566,
+              "nll": 4.4656183418961115,
+              "sum_loglik": -4313.787318271644,
+              "max_mean_raw_score_abs": 4.9802341552305866e-08,
+              "whitened_max_grad_abs": 8.411016388000781e-08,
+              "iterations": 7,
+              "design_condition": 4.31974505645162,
+              "beta_log_intensity": [
+                10.95657209296075,
+                -0.010939589183686866,
+                2.1028848839441783e-05,
+                -0.0009259733770357863
+              ],
+              "exact_fullsky_dipole": [
+                -0.010939501279666988,
+                2.1028679864143413e-05,
+                -0.0009259659364655077
+              ],
+              "dipole_amp": 0.010978640324225353,
+              "heldout_sum_loglik": -4336.534283423383
+            },
+            "NB1_4_MLE_offset": {
+              "family": "nb1",
+              "dispersion": 0.4692897327099069,
+              "nll": 4.465617589796025,
+              "sum_loglik": -4313.786591742961,
+              "max_mean_raw_score_abs": 6.337249074491688e-07,
+              "whitened_max_grad_abs": 6.337245898601035e-07,
+              "iterations": 10,
+              "design_condition": 4.31974505645162,
+              "beta_log_intensity": [
+                10.956573997590898,
+                -0.010939167065492136,
+                2.1757776058738443e-05,
+                -0.0009229459392202007
+              ],
+              "exact_fullsky_dipole": [
+                -0.010939079175655064,
+                2.1757601247678206e-05,
+                -0.0009229385238870463
+              ],
+              "dipole_amp": 0.010977966210703016,
+              "heldout_sum_loglik": -4336.57458780583
+            },
+            "NB2_CoxLSS_4_offset": {
+              "family": "nb2",
+              "dispersion": 0.003766561290393284,
+              "nll": 4.465547827901997,
+              "sum_loglik": -4313.719201753329,
+              "max_mean_raw_score_abs": 7.961940106065771e-09,
+              "whitened_max_grad_abs": 1.782323284037888e-08,
+              "iterations": 10,
+              "design_condition": 4.31974505645162,
+              "beta_log_intensity": [
+                10.957251328229805,
+                -0.011127383251353044,
+                -0.0003066159330782107,
+                -0.0024403130814878533
+              ],
+              "exact_fullsky_dipole": [
+                -0.011127286913256032,
+                -0.00030661327847426303,
+                -0.0024402919538684415
+              ],
+              "dipole_amp": 0.011395856728327656,
+              "heldout_sum_loglik": -4336.8006118843205
+            },
+            "NB1_9_offset": {
+              "family": "nb1",
+              "dispersion": 0.45440245388878564,
+              "nll": 4.448957416980325,
+              "sum_loglik": -4297.692864802994,
+              "max_mean_raw_score_abs": 2.443564559345334e-12,
+              "whitened_max_grad_abs": 1.909223182126985e-12,
+              "iterations": 17,
+              "design_condition": 19.876326315572303,
+              "beta_log_intensity": [
+                10.881930538048357,
+                0.0023779395679828516,
+                -0.004423198526238792,
+                0.1511123002990511,
+                -0.0186306730766787,
+                0.13492684408608993,
+                0.015184610668752329,
+                -0.025120415756209137,
+                0.021733551205083815
+              ],
+              "exact_fullsky_dipole": [
+                0.002374323436871449,
+                -0.004416472171196804,
+                0.15088250392500338
+              ],
+              "dipole_amp": 0.15096579953386957,
+              "heldout_sum_loglik": -4362.29039988577
+            }
+          },
+          "cv_loglik_gain_nb1_mle_minus_poisson": 123.82230744251774,
+          "cv_loglik_gain_nb2_coxlss_minus_poisson": 123.59628336402693,
+          "cv_loglik_gain_nb2_minus_nb1_mle": -0.2260240784908092
+        },
+        "100.0": {
+          "n_sources": 130576,
+          "observed_empty_cells": 0,
+          "models": {
+            "Poisson4_offset": {
+              "family": "poisson",
+              "dispersion": 0.0,
+              "nll": 4.0925952215083115,
+              "sum_loglik": -3953.446983977029,
+              "max_mean_raw_score_abs": 8.520216508398525e-12,
+              "whitened_max_grad_abs": 1.4327384459418147e-11,
+              "iterations": 9,
+              "design_condition": 4.31974505645162,
+              "beta_log_intensity": [
+                10.403393253220594,
+                -0.010300943202177787,
+                -0.00872353008098597,
+                0.0006892863931895999
+              ],
+              "exact_fullsky_dipole": [
+                -0.010300817749494836,
+                -0.00872342383923393,
+                0.0006892779985381927
+              ],
+              "dipole_amp": 0.013515919278631827,
+              "heldout_sum_loglik": -3970.8049115479653
+            },
+            "NB1_4_Pearson_offset": {
+              "family": "nb1",
+              "dispersion": 0.30460056382925615,
+              "nll": 4.055642446725134,
+              "sum_loglik": -3917.7506035364795,
+              "max_mean_raw_score_abs": 1.6057088945800194e-13,
+              "whitened_max_grad_abs": 8.153772113441667e-14,
+              "iterations": 7,
+              "design_condition": 4.31974505645162,
+              "beta_log_intensity": [
+                10.402868700340354,
+                -0.010186791131329705,
+                -0.008595168046497965,
+                0.0018394157387876095
+              ],
+              "exact_fullsky_dipole": [
+                -0.010186668191733621,
+                -0.008595064315453099,
+                0.0018393935397432747
+              ],
+              "dipole_amp": 0.013454616606551896,
+              "heldout_sum_loglik": -3932.93545592881
+            },
+            "NB1_4_MLE_offset": {
+              "family": "nb1",
+              "dispersion": 0.3050531463678723,
+              "nll": 4.05564234218943,
+              "sum_loglik": -3917.75050255499,
+              "max_mean_raw_score_abs": 4.323128834441968e-11,
+              "whitened_max_grad_abs": 4.347263933698122e-11,
+              "iterations": 10,
+              "design_condition": 4.31974505645162,
+              "beta_log_intensity": [
+                10.402868946958918,
+                -0.010186599737704322,
+                -0.008594957462802998,
+                0.0018411674165627811
+              ],
+              "exact_fullsky_dipole": [
+                -0.010186476801148555,
+                -0.008594853734915907,
+                0.0018411451965102995
+              ],
+              "dipole_amp": 0.013454576767017556,
+              "heldout_sum_loglik": -3933.010912187245
+            },
+            "NB2_CoxLSS_4_offset": {
+              "family": "nb2",
+              "dispersion": 0.003247929309409761,
+              "nll": 4.055618047863448,
+              "sum_loglik": -3917.727034236091,
+              "max_mean_raw_score_abs": 1.6056731375833919e-09,
+              "whitened_max_grad_abs": 4.928077264416024e-09,
+              "iterations": 9,
+              "design_condition": 4.31974505645162,
+              "beta_log_intensity": [
+                10.40340324657167,
+                -0.010295406195428963,
+                -0.008693195629986657,
+                0.0006731238588538474
+              ],
+              "exact_fullsky_dipole": [
+                -0.010295281266188446,
+                -0.008693090142713295,
+                0.0006731156908563091
+              ],
+              "dipole_amp": 0.013491320073015345,
+              "heldout_sum_loglik": -3933.0761290216296
+            },
+            "NB1_9_offset": {
+              "family": "nb1",
+              "dispersion": 0.29429269959689175,
+              "nll": 4.044647241841857,
+              "sum_loglik": -3907.129235619234,
+              "max_mean_raw_score_abs": 1.0520396709116043e-07,
+              "whitened_max_grad_abs": 2.505231179901551e-07,
+              "iterations": 11,
+              "design_condition": 19.876326315572303,
+              "beta_log_intensity": [
+                10.346844700275822,
+                0.010725437289485155,
+                -0.016432396762324428,
+                0.11139528217711167,
+                -0.013163948905383945,
+                0.1013863963820144,
+                0.017585805390429032,
+                -0.04459968635525619,
+                0.0269051454612716
+              ],
+              "exact_fullsky_dipole": [
+                0.010716300362124218,
+                -0.016418398114853832,
+                0.11130038529093983
+              ],
+              "dipole_amp": 0.11301406397444858,
+              "heldout_sum_loglik": -3948.2030643850553
+            }
+          },
+          "cv_loglik_gain_nb1_mle_minus_poisson": 37.793999360720136,
+          "cv_loglik_gain_nb2_coxlss_minus_poisson": 37.728782526335635,
+          "cv_loglik_gain_nb2_minus_nb1_mle": -0.06521683438450054
+        }
+      }
+    },
+    "LoTSS_DR3_outer_b15": {
+      "survey": "LoTSS_DR3",
+      "active_cells": 1338,
+      "total_exposure_sr": 5.222885003419796,
+      "min_cell_exposure_frac": 0.011718749999999993,
+      "observed_empty_cells_lowest_cut_retained": 112,
+      "cuts": {
+        "20.0": {
+          "n_sources": 525002,
+          "observed_empty_cells": 112,
+          "models": {
+            "Poisson4_offset": {
+              "family": "poisson",
+              "dispersion": 0.0,
+              "nll": 31.05847815712273,
+              "sum_loglik": -41556.24377423021,
+              "max_mean_raw_score_abs": 4.141319765707459e-08,
+              "whitened_max_grad_abs": 5.785159847467488e-08,
+              "iterations": 9,
+              "design_condition": 3.5563434021580154,
+              "beta_log_intensity": [
+                11.331418504940467,
+                -0.0032852101754570705,
+                0.016738109709431747,
+                0.42320456575136395
+              ],
+              "exact_fullsky_dipole": [
+                -0.0032465800185153266,
+                0.016541289484712483,
+                0.4182281843570858
+              ],
+              "dipole_amp": 0.4185677588279563,
+              "heldout_sum_loglik": -42518.25429666556
+            },
+            "NB1_4_Pearson_offset": {
+              "family": "nb1",
+              "dispersion": 0.9719636340876832,
+              "nll": 7.016889257967057,
+              "sum_loglik": -9388.597827159923,
+              "max_mean_raw_score_abs": 9.659120242724194e-09,
+              "whitened_max_grad_abs": 9.659096329615531e-09,
+              "iterations": 9,
+              "design_condition": 3.5563434021580154,
+              "beta_log_intensity": [
+                11.001233670345096,
+                0.0013109874339787496,
+                0.023064727498058164,
+                0.9041560827874714
+              ],
+              "exact_fullsky_dipole": [
+                0.0012446412943727834,
+                0.021897473265944344,
+                0.8583987672408653
+              ],
+              "dipole_amp": 0.858678922571191,
+              "heldout_sum_loglik": -9600.373535034505
+            },
+            "NB1_4_MLE_offset": {
+              "family": "nb1",
+              "dispersion": 0.9930804991004912,
+              "nll": 6.42978111666924,
+              "sum_loglik": -8603.047134103443,
+              "max_mean_raw_score_abs": 2.0830831364002803e-08,
+              "whitened_max_grad_abs": 3.629331211729786e-08,
+              "iterations": 16,
+              "design_condition": 3.5563434021580154,
+              "beta_log_intensity": [
+                11.06844185290849,
+                0.01152989399618545,
+                0.020884801380680024,
+                0.9616003290547503
+              ],
+              "exact_fullsky_dipole": [
+                0.010876062802732248,
+                0.01970047699606029,
+                0.9070704009410256
+              ],
+              "dipole_amp": 0.9073494970513151,
+              "heldout_sum_loglik": -8686.189552021682
+            },
+            "NB2_CoxLSS_4_offset": {
+              "family": "nb2",
+              "dispersion": 0.6512954465666637,
+              "nll": 6.798198392947662,
+              "sum_loglik": -9095.989449763973,
+              "max_mean_raw_score_abs": 3.928635860959546e-07,
+              "whitened_max_grad_abs": 3.92863584185508e-07,
+              "iterations": 14,
+              "design_condition": 3.5563434021580154,
+              "beta_log_intensity": [
+                11.14207767271805,
+                0.012941761410949446,
+                0.02396637137795991,
+                0.7772973784056746
+              ],
+              "exact_fullsky_dipole": [
+                0.012448190078806175,
+                0.023052344803675212,
+                0.7476529049565991
+              ],
+              "dipole_amp": 0.7481117792998764,
+              "heldout_sum_loglik": -9186.525792551467
+            },
+            "NB1_9_offset": {
+              "family": "nb1",
+              "dispersion": 0.9678264876367465,
+              "nll": 6.535221030549561,
+              "sum_loglik": -8744.125738875313,
+              "max_mean_raw_score_abs": 1.0434435424983851e-08,
+              "whitened_max_grad_abs": 1.04344093871838e-08,
+              "iterations": 15,
+              "design_condition": 13.390314075423317,
+              "beta_log_intensity": [
+                9.562676941815994,
+                0.09395701800962647,
+                0.038486239194565584,
+                3.9023020941264526,
+                -0.01695947989362689,
+                2.7172763047185966,
+                -0.028859598999443407,
+                -0.10447340272483717,
+                -0.019406860391579045
+              ],
+              "exact_fullsky_dipole": [
+                0.053768748266526,
+                0.02202450600088101,
+                2.2331689894364777
+              ],
+              "dipole_amp": 2.233924773248972,
+              "heldout_sum_loglik": -9007.626309449886
+            }
+          },
+          "cv_loglik_gain_nb1_mle_minus_poisson": 33832.06474464388,
+          "cv_loglik_gain_nb2_coxlss_minus_poisson": 33331.72850411409,
+          "cv_loglik_gain_nb2_minus_nb1_mle": -500.33624052978485
+        },
+        "50.0": {
+          "n_sources": 271531,
+          "observed_empty_cells": 112,
+          "models": {
+            "Poisson4_offset": {
+              "family": "poisson",
+              "dispersion": 0.0,
+              "nll": 17.847627733613063,
+              "sum_loglik": -23880.12590757428,
+              "max_mean_raw_score_abs": 1.0002959491775173e-08,
+              "whitened_max_grad_abs": 1.517197882491533e-08,
+              "iterations": 10,
+              "design_condition": 3.5563434021580154,
+              "beta_log_intensity": [
+                10.682023282200808,
+                0.00010741910616830365,
+                0.015370654330556826,
+                0.40227261416785876
+              ],
+              "exact_fullsky_dipole": [
+                0.00010627618018756449,
+                0.015207112472855742,
+                0.39799248339343263
+              ],
+              "dipole_amp": 0.398282920048124,
+              "heldout_sum_loglik": -24305.011108116752
+            },
+            "NB1_4_Pearson_offset": {
+              "family": "nb1",
+              "dispersion": 0.9474385943407079,
+              "nll": 6.243096090761353,
+              "sum_loglik": -8353.26256943869,
+              "max_mean_raw_score_abs": 6.627423951569455e-08,
+              "whitened_max_grad_abs": 6.627423141886624e-08,
+              "iterations": 8,
+              "design_condition": 3.5563434021580154,
+              "beta_log_intensity": [
+                10.403360615287038,
+                0.0007330258930690695,
+                0.025367851552153778,
+                0.8173458009172834
+              ],
+              "exact_fullsky_dipole": [
+                0.0007022984541682178,
+                0.02430446604833333,
+                0.7830837872612567
+              ],
+              "dipole_amp": 0.7834611784667103,
+              "heldout_sum_loglik": -8528.90564528942
+            },
+            "NB1_4_MLE_offset": {
+              "family": "nb1",
+              "dispersion": 0.9854163730872804,
+              "nll": 5.787971707721229,
+              "sum_loglik": -7744.306144931004,
+              "max_mean_raw_score_abs": 2.7967910936853046e-09,
+              "whitened_max_grad_abs": 6.0571157619571734e-09,
+              "iterations": 14,
+              "design_condition": 3.5563434021580154,
+              "beta_log_intensity": [
+                10.445496601954934,
+                0.007715644933308623,
+                0.02357793078632742,
+                0.8903425078404383
+              ],
+              "exact_fullsky_dipole": [
+                0.007336144173994584,
+                0.02241822959299787,
+                0.8465502311486544
+              ],
+              "dipole_amp": 0.8468787929138775,
+              "heldout_sum_loglik": -7825.562830972356
+            },
+            "NB2_CoxLSS_4_offset": {
+              "family": "nb2",
+              "dispersion": 0.5376326141474738,
+              "nll": 6.1116738326543905,
+              "sum_loglik": -8177.419588091574,
+              "max_mean_raw_score_abs": 3.879169790611588e-09,
+              "whitened_max_grad_abs": 7.205438094379986e-09,
+              "iterations": 14,
+              "design_condition": 3.5563434021580154,
+              "beta_log_intensity": [
+                10.509762201874338,
+                0.014752312059478155,
+                0.0230822238548499,
+                0.7227032417456889
+              ],
+              "exact_fullsky_dipole": [
+                0.014262250637532753,
+                0.022315448626779654,
+                0.6986955487910855
+              ],
+              "dipole_amp": 0.6991972975785435,
+              "heldout_sum_loglik": -8266.400459313565
+            },
+            "NB1_9_offset": {
+              "family": "nb1",
+              "dispersion": 0.9416024422653649,
+              "nll": 5.834272469233121,
+              "sum_loglik": -7806.2565638339165,
+              "max_mean_raw_score_abs": 7.483400546638083e-09,
+              "whitened_max_grad_abs": 1.4962893632307857e-08,
+              "iterations": 15,
+              "design_condition": 13.390314075423317,
+              "beta_log_intensity": [
+                9.075131106946673,
+                0.07609409342310347,
+                0.04873540935313063,
+                3.576941911361644,
+                -0.005787182201995885,
+                2.4927237716040818,
+                -0.025415594339342738,
+                -0.07870100892389192,
+                -0.040926532021181544
+              ],
+              "exact_fullsky_dipole": [
+                0.04606895073242397,
+                0.02950543296350268,
+                2.16555521295205
+              ],
+              "dipole_amp": 2.166246130784715,
+              "heldout_sum_loglik": -8037.277564607497
+            }
+          },
+          "cv_loglik_gain_nb1_mle_minus_poisson": 16479.448277144395,
+          "cv_loglik_gain_nb2_coxlss_minus_poisson": 16038.610648803187,
+          "cv_loglik_gain_nb2_minus_nb1_mle": -440.837628341209
+        },
+        "100.0": {
+          "n_sources": 156269,
+          "observed_empty_cells": 117,
+          "models": {
+            "Poisson4_offset": {
+              "family": "poisson",
+              "dispersion": 0.0,
+              "nll": 11.599591020154913,
+              "sum_loglik": -15520.252784967273,
+              "max_mean_raw_score_abs": 4.5887623904957156e-09,
+              "whitened_max_grad_abs": 8.049323424040671e-09,
+              "iterations": 10,
+              "design_condition": 3.5563434021580154,
+              "beta_log_intensity": [
+                10.128348705699525,
+                0.0011281286547760276,
+                0.011134549050759265,
+                0.4048896939938514
+              ],
+              "exact_fullsky_dipole": [
+                0.0011159795471089083,
+                0.011014638227937952,
+                0.4005293327311416
+              ],
+              "dipole_amp": 0.4006823106198918,
+              "heldout_sum_loglik": -15754.255027556459
+            },
+            "NB1_4_Pearson_offset": {
+              "family": "nb1",
+              "dispersion": 0.9117191972278179,
+              "nll": 5.585130265598248,
+              "sum_loglik": -7472.904295370456,
+              "max_mean_raw_score_abs": 4.830591186713116e-08,
+              "whitened_max_grad_abs": 4.830591995864898e-08,
+              "iterations": 8,
+              "design_condition": 3.5563434021580154,
+              "beta_log_intensity": [
+                9.897088062677161,
+                -0.0006145802708273523,
+                0.021527504588011746,
+                0.7569640149377396
+              ],
+              "exact_fullsky_dipole": [
+                -0.0005922981889389551,
+                0.020747008299972468,
+                0.7295197005527261
+              ],
+              "dipole_amp": 0.729814896165516,
+              "heldout_sum_loglik": -7614.840080493677
+            },
+            "NB1_4_MLE_offset": {
+              "family": "nb1",
+              "dispersion": 0.9723347072650869,
+              "nll": 5.2443354433718445,
+              "sum_loglik": -7016.920823231528,
+              "max_mean_raw_score_abs": 1.3425961004306087e-08,
+              "whitened_max_grad_abs": 2.5442838533565538e-08,
+              "iterations": 15,
+              "design_condition": 3.5563434021580154,
+              "beta_log_intensity": [
+                9.917065633309445,
+                0.0025513665039873855,
+                0.01953763055436021,
+                0.8420182193095544
+              ],
+              "exact_fullsky_dipole": [
+                0.002438318973053749,
+                0.0186719450908989,
+                0.8047095533278862
+              ],
+              "dipole_amp": 0.8049298429987908,
+              "heldout_sum_loglik": -7094.791544457092
+            },
+            "NB2_CoxLSS_4_offset": {
+              "family": "nb2",
+              "dispersion": 0.44459583604210556,
+              "nll": 5.527376402131188,
+              "sum_loglik": -7395.62962605153,
+              "max_mean_raw_score_abs": 1.1664447045940711e-08,
+              "whitened_max_grad_abs": 3.4876677117159216e-08,
+              "iterations": 15,
+              "design_condition": 3.5563434021580154,
+              "beta_log_intensity": [
+                9.974302068989854,
+                0.015562908248111315,
+                0.018718666251514852,
+                0.6915950997833904
+              ],
+              "exact_fullsky_dipole": [
+                0.015087666775433014,
+                0.01814705801646514,
+                0.670475996047876
+              ],
+              "dipole_amp": 0.6708912092729871,
+              "heldout_sum_loglik": -7480.993207701218
+            },
+            "NB1_9_offset": {
+              "family": "nb1",
+              "dispersion": 0.9032858194182514,
+              "nll": 5.237302965729592,
+              "sum_loglik": -7007.511368146194,
+              "max_mean_raw_score_abs": 8.165061807209679e-10,
+              "whitened_max_grad_abs": 1.3625769926080873e-09,
+              "iterations": 14,
+              "design_condition": 13.390314075423317,
+              "beta_log_intensity": [
+                8.651974685743422,
+                0.06809758911506517,
+                0.046059257764961704,
+                3.3329585322331585,
+                0.006692028279693612,
+                2.316089049399951,
+                -0.015329268272423752,
+                -0.07711304009201238,
+                -0.04541558895802953
+              ],
+              "exact_fullsky_dipole": [
+                0.04305274512008624,
+                0.029119643011510918,
+                2.1071673175035515
+              ],
+              "dipole_amp": 2.107808244700311,
+              "heldout_sum_loglik": -7201.490471034594
+            }
+          },
+          "cv_loglik_gain_nb1_mle_minus_poisson": 8659.463483099367,
+          "cv_loglik_gain_nb2_coxlss_minus_poisson": 8273.26181985524,
+          "cv_loglik_gain_nb2_minus_nb1_mle": -386.2016632441264
+        }
+      }
+    },
+    "LoTSS_DR3_outer_all1771": {
+      "survey": "LoTSS_DR3",
+      "active_cells": 1771,
+      "total_exposure_sr": 6.846316045999017,
+      "min_cell_exposure_frac": 0.011718749999999993,
+      "observed_empty_cells_lowest_cut_retained": 195,
+      "cuts": {
+        "20.0": {
+          "n_sources": 659841,
+          "observed_empty_cells": 195,
+          "models": {
+            "Poisson4_offset": {
+              "family": "poisson",
+              "dispersion": 0.0,
+              "nll": 46.24192043323493,
+              "sum_loglik": -81894.44108725907,
+              "max_mean_raw_score_abs": 3.2327725980823275e-09,
+              "whitened_max_grad_abs": 3.961263829910332e-09,
+              "iterations": 9,
+              "design_condition": 3.58260902185399,
+              "beta_log_intensity": [
+                11.321626291385822,
+                -0.049914470066410595,
+                -0.014960116541829811,
+                0.3316071020853448
+              ],
+              "exact_fullsky_dipole": [
+                -0.04954349635641961,
+                -0.014848930147823501,
+                0.3291425358632395
+              ],
+              "dipole_amp": 0.33318141855787425,
+              "heldout_sum_loglik": -83033.3901767898
+            },
+            "NB1_4_Pearson_offset": {
+              "family": "nb1",
+              "dispersion": 0.982698943508001,
+              "nll": 7.112661436131283,
+              "sum_loglik": -12596.523403388503,
+              "max_mean_raw_score_abs": 2.1259754774746365e-09,
+              "whitened_max_grad_abs": 3.6725868004559455e-09,
+              "iterations": 9,
+              "design_condition": 3.58260902185399,
+              "beta_log_intensity": [
+                10.878492768662628,
+                -0.18830725041855478,
+                0.026759583264991855,
+                0.8424081863226727
+              ],
+              "exact_fullsky_dipole": [
+                -0.17956320740016513,
+                0.02551700260650324,
+                0.8032909807776054
+              ],
+              "dipole_amp": 0.823511058014707,
+              "heldout_sum_loglik": -12730.724322873295
+            },
+            "NB1_4_MLE_offset": {
+              "family": "nb1",
+              "dispersion": 0.9959648955927356,
+              "nll": 6.491529728506225,
+              "sum_loglik": -11496.499149184525,
+              "max_mean_raw_score_abs": 2.0337198596078084e-08,
+              "whitened_max_grad_abs": 2.3939707161393738e-08,
+              "iterations": 13,
+              "design_condition": 3.58260902185399,
+              "beta_log_intensity": [
+                11.068034220067018,
+                -0.16453930326480248,
+                0.03131013818313446,
+                0.825188618676924
+              ],
+              "exact_fullsky_dipole": [
+                -0.15725258019858182,
+                0.029923549680699695,
+                0.7886446390782078
+              ],
+              "dipole_amp": 0.804726139473176,
+              "heldout_sum_loglik": -11559.47513204302
+            },
+            "NB2_CoxLSS_4_offset": {
+              "family": "nb2",
+              "dispersion": 0.9983547517684932,
+              "nll": 6.770484613149134,
+              "sum_loglik": -11990.528249887117,
+              "max_mean_raw_score_abs": 5.61429618586639e-09,
+              "whitened_max_grad_abs": 5.614294904815712e-09,
+              "iterations": 12,
+              "design_condition": 3.58260902185399,
+              "beta_log_intensity": [
+                11.1209887009526,
+                -0.03349930551994143,
+                -0.027575326427096526,
+                0.6647836575013937
+              ],
+              "exact_fullsky_dipole": [
+                -0.03254824426183373,
+                -0.026792449760328817,
+                0.6459101324578268
+              ],
+              "dipole_amp": 0.6472844218582547,
+              "heldout_sum_loglik": -12026.718472450264
+            },
+            "NB1_9_offset": {
+              "family": "nb1",
+              "dispersion": 0.981377319452094,
+              "nll": 6.820969419238424,
+              "sum_loglik": -12079.93684147125,
+              "max_mean_raw_score_abs": 4.596989797480919e-09,
+              "whitened_max_grad_abs": 6.560267764745083e-09,
+              "iterations": 16,
+              "design_condition": 13.777155583684955,
+              "beta_log_intensity": [
+                9.412240155977445,
+                0.21288171034871423,
+                -0.1672373474094224,
+                3.872658967097715,
+                0.3197178299775647,
+                2.7106275947184395,
+                0.16505583497372964,
+                -0.527008229801744,
+                0.3060018197027084
+              ],
+              "exact_fullsky_dipole": [
+                0.12227320104673362,
+                -0.09605637689033272,
+                2.2243451900762814
+              ],
+              "dipole_amp": 2.229773326562815,
+              "heldout_sum_loglik": -12393.194697411647
+            }
+          },
+          "cv_loglik_gain_nb1_mle_minus_poisson": 71473.91504474678,
+          "cv_loglik_gain_nb2_coxlss_minus_poisson": 71006.67170433955,
+          "cv_loglik_gain_nb2_minus_nb1_mle": -467.2433404072435
+        },
+        "50.0": {
+          "n_sources": 339865,
+          "observed_empty_cells": 195,
+          "models": {
+            "Poisson4_offset": {
+              "family": "poisson",
+              "dispersion": 0.0,
+              "nll": 25.46346985180211,
+              "sum_loglik": -45095.805107541535,
+              "max_mean_raw_score_abs": 6.384811037613004e-08,
+              "whitened_max_grad_abs": 6.384838429617222e-08,
+              "iterations": 8,
+              "design_condition": 3.58260902185399,
+              "beta_log_intensity": [
+                10.66801710306761,
+                -0.0492965682383562,
+                -0.014525044964672329,
+                0.311180261093834
+              ],
+              "exact_fullsky_dipole": [
+                -0.04897271880105883,
+                -0.0144296239687161,
+                0.30913598993958197
+              ],
+              "dipole_amp": 0.3133234774327826,
+              "heldout_sum_loglik": -45730.9542209887
+            },
+            "NB1_4_Pearson_offset": {
+              "family": "nb1",
+              "dispersion": 0.9668739760208773,
+              "nll": 6.356913133878327,
+              "sum_loglik": -11258.093160098517,
+              "max_mean_raw_score_abs": 1.6381175898778791e-09,
+              "whitened_max_grad_abs": 3.160020144670028e-09,
+              "iterations": 9,
+              "design_condition": 3.58260902185399,
+              "beta_log_intensity": [
+                10.290347321728651,
+                -0.16880278314544783,
+                0.022997253171443043,
+                0.7594847170026365
+              ],
+              "exact_fullsky_dipole": [
+                -0.16235587226780732,
+                0.02211894276172023,
+                0.7304784992602007
+              ],
+              "dipole_amp": 0.7486304260248656,
+              "heldout_sum_loglik": -11377.737670003306
+            },
+            "NB1_4_MLE_offset": {
+              "family": "nb1",
+              "dispersion": 0.9914044765305386,
+              "nll": 5.857331740864494,
+              "sum_loglik": -10373.334513071019,
+              "max_mean_raw_score_abs": 1.6219161300103535e-08,
+              "whitened_max_grad_abs": 1.6219161718835023e-08,
+              "iterations": 12,
+              "design_condition": 3.58260902185399,
+              "beta_log_intensity": [
+                10.434671059985137,
+                -0.15738561096063086,
+                0.029514277684962925,
+                0.768959744008263
+              ],
+              "exact_fullsky_dipole": [
+                -0.1512706920666183,
+                0.028367556500241288,
+                0.7390832741158062
+              ],
+              "dipole_amp": 0.7549381607905696,
+              "heldout_sum_loglik": -10436.786353391895
+            },
+            "NB2_CoxLSS_4_offset": {
+              "family": "nb2",
+              "dispersion": 0.8536985042831085,
+              "nll": 6.107083929970414,
+              "sum_loglik": -10815.645639977603,
+              "max_mean_raw_score_abs": 4.5995870313023675e-08,
+              "whitened_max_grad_abs": 7.657333647942063e-08,
+              "iterations": 12,
+              "design_condition": 3.58260902185399,
+              "beta_log_intensity": [
+                10.48168969680683,
+                -0.03324910473135269,
+                -0.025888481739411447,
+                0.6180376262952839
+              ],
+              "exact_fullsky_dipole": [
+                -0.03242842933985099,
+                -0.02524948589099566,
+                0.6027828314663458
+              ],
+              "dipole_amp": 0.6041823246982605,
+              "heldout_sum_loglik": -10853.031650407444
+            },
+            "NB1_9_offset": {
+              "family": "nb1",
+              "dispersion": 0.9650063130387456,
+              "nll": 6.096613766225304,
+              "sum_loglik": -10797.102979985013,
+              "max_mean_raw_score_abs": 8.917089831005767e-09,
+              "whitened_max_grad_abs": 8.9170759432504e-09,
+              "iterations": 15,
+              "design_condition": 13.777155583684955,
+              "beta_log_intensity": [
+                8.93787191967147,
+                0.18511831903436865,
+                -0.14150199145289868,
+                3.5472730899424447,
+                0.299522872124405,
+                2.488764351515481,
+                0.15045520587897884,
+                -0.4769769573374357,
+                0.2604546762805727
+              ],
+              "exact_fullsky_dipole": [
+                0.11253188592084808,
+                -0.08601788328033648,
+                2.1563577973792336
+              ],
+              "dipole_amp": 2.161004732042749,
+              "heldout_sum_loglik": -11066.03608853839
+            }
+          },
+          "cv_loglik_gain_nb1_mle_minus_poisson": 35294.16786759681,
+          "cv_loglik_gain_nb2_coxlss_minus_poisson": 34877.92257058126,
+          "cv_loglik_gain_nb2_minus_nb1_mle": -416.2452970155482
+        },
+        "100.0": {
+          "n_sources": 194914,
+          "observed_empty_cells": 204,
+          "models": {
+            "Poisson4_offset": {
+              "family": "poisson",
+              "dispersion": 0.0,
+              "nll": 15.91764605754395,
+              "sum_loglik": -28190.151167910335,
+              "max_mean_raw_score_abs": 2.995894894282389e-08,
+              "whitened_max_grad_abs": 2.995907389413111e-08,
+              "iterations": 8,
+              "design_condition": 3.58260902185399,
+              "beta_log_intensity": [
+                10.110614044117785,
+                -0.05161002317685001,
+                -0.014898620567186684,
+                0.3140655563513321
+              ],
+              "exact_fullsky_dipole": [
+                -0.05126406056415672,
+                -0.014798749158888966,
+                0.311960249402332
+              ],
+              "dipole_amp": 0.3164904486542342,
+              "heldout_sum_loglik": -28589.961690727556
+            },
+            "NB1_4_Pearson_offset": {
+              "family": "nb1",
+              "dispersion": 0.9434802948177206,
+              "nll": 5.716042827514856,
+              "sum_loglik": -10123.11184752881,
+              "max_mean_raw_score_abs": 5.608153775275941e-08,
+              "whitened_max_grad_abs": 5.846470347931802e-08,
+              "iterations": 8,
+              "design_condition": 3.58260902185399,
+              "beta_log_intensity": [
+                9.78925341899479,
+                -0.1564882898455626,
+                0.017457516573928467,
+                0.7060136530145149
+              ],
+              "exact_fullsky_dipole": [
+                -0.15128798191786075,
+                0.016877380757203898,
+                0.6825519077269889
+              ],
+              "dipole_amp": 0.699321103782629,
+              "heldout_sum_loglik": -10227.069219759656
+            },
+            "NB1_4_MLE_offset": {
+              "family": "nb1",
+              "dispersion": 0.9836923958854313,
+              "nll": 5.321406501175539,
+              "sum_loglik": -9424.21091358188,
+              "max_mean_raw_score_abs": 4.545594782619861e-08,
+              "whitened_max_grad_abs": 6.962947331617849e-08,
+              "iterations": 13,
+              "design_condition": 3.58260902185399,
+              "beta_log_intensity": [
+                9.89535020901996,
+                -0.15565947541121183,
+                0.02422585074482923,
+                0.7373742854980689
+              ],
+              "exact_fullsky_dipole": [
+                -0.15006187270499735,
+                0.023354675460887365,
+                0.7108578894669689
+              ],
+              "dipole_amp": 0.7268995429377072,
+              "heldout_sum_loglik": -9485.772562674461
+            },
+            "NB2_CoxLSS_4_offset": {
+              "family": "nb2",
+              "dispersion": 0.7374885900352138,
+              "nll": 5.5438934985470105,
+              "sum_loglik": -9818.235385926755,
+              "max_mean_raw_score_abs": 3.691246483977671e-08,
+              "whitened_max_grad_abs": 6.439932695588245e-08,
+              "iterations": 12,
+              "design_condition": 3.58260902185399,
+              "beta_log_intensity": [
+                9.939239537856626,
+                -0.034577935831024136,
+                -0.02492783958102038,
+                0.5951393959287539
+              ],
+              "exact_fullsky_dipole": [
+                -0.033784136827049005,
+                -0.024355575975484052,
+                0.5814768955983919
+              ],
+              "dipole_amp": 0.5829665016936989,
+              "heldout_sum_loglik": -9855.158175285058
+            },
+            "NB1_9_offset": {
+              "family": "nb1",
+              "dispersion": 0.9406990026162518,
+              "nll": 5.484005623532494,
+              "sum_loglik": -9712.173959276046,
+              "max_mean_raw_score_abs": 8.746727159865854e-10,
+              "whitened_max_grad_abs": 1.4804945740870285e-09,
+              "iterations": 13,
+              "design_condition": 13.777155583684955,
+              "beta_log_intensity": [
+                8.519520033886527,
+                0.16664081884462711,
+                -0.12724060492466763,
+                3.3162440149430115,
+                0.2877112394253758,
+                2.3220084636908016,
+                0.14517510532937145,
+                -0.44858890802211854,
+                0.22929462625084857
+              ],
+              "exact_fullsky_dipole": [
+                0.10556380247739464,
+                -0.08060451321891052,
+                2.100777772141711
+              ],
+              "dipole_amp": 2.104972221163366,
+              "heldout_sum_loglik": -9934.996283041368
+            }
+          },
+          "cv_loglik_gain_nb1_mle_minus_poisson": 19104.189128053094,
+          "cv_loglik_gain_nb2_coxlss_minus_poisson": 18734.803515442498,
+          "cv_loglik_gain_nb2_minus_nb1_mle": -369.3856126105966
+        }
+      }
+    }
+  },
+  "C2_boosted_sample_reselection": {
+    "NVSS": {
+      "reference_cut_mJy": 20.0,
+      "scenarios": {
+        "dirac_0p50__1xCMB": {
+          "x_local_slope": 0.8917313844157588,
+          "x_curvature": 0.17465415686110694,
+          "boosted_nonlinear_dipole_vec": [
+            -0.003996831420527019,
+            0.0008537894611377829,
+            -0.0004977857409412002
+          ],
+          "boosted_nonlinear_dipole_amp": 0.0041172088229705275,
+          "eb_linear_dipole_vec": [
+            -0.003996837889436196,
+            0.0008537908430040314,
+            -0.0004977865466120897
+          ],
+          "eb_linear_dipole_amp": 0.0041172154867116575,
+          "nonlinear_plus_curvature_rel_diff": 1.6185067680315332e-06
+        },
+        "dirac_0p50__3xCMB": {
+          "x_local_slope": 0.8917313844157588,
+          "x_curvature": 0.17465415686110694,
+          "boosted_nonlinear_dipole_vec": [
+            -0.011990339010579974,
+            0.002561335219225328,
+            -0.0014933378870732158
+          ],
+          "boosted_nonlinear_dipole_amp": 0.012351466542028452,
+          "eb_linear_dipole_vec": [
+            -0.011990513668308587,
+            0.002561372529012094,
+            -0.0014933596398362693
+          ],
+          "eb_linear_dipole_amp": 0.012351646460134971,
+          "nonlinear_plus_curvature_rel_diff": 1.4566325801136814e-05
+        },
+        "dirac_0p75__1xCMB": {
+          "x_local_slope": 0.8917313844157588,
+          "x_curvature": 0.17465415686110694,
+          "boosted_nonlinear_dipole_vec": [
+            -0.004263796416373248,
+            0.0009108176106803467,
+            -0.0005310349211743599
+          ],
+          "boosted_nonlinear_dipole_amp": 0.004392214326249286,
+          "eb_linear_dipole_vec": [
+            -0.004263804340344479,
+            0.0009108193033719675,
+            -0.0005310359080660931
+          ],
+          "eb_linear_dipole_amp": 0.004392222488876331,
+          "nonlinear_plus_curvature_rel_diff": 1.8584274968322328e-06
+        },
+        "dirac_0p75__3xCMB": {
+          "x_local_slope": 0.8917313844157588,
+          "x_curvature": 0.17465415686110694,
+          "boosted_nonlinear_dipole_vec": [
+            -0.012791199077815944,
+            0.00273241220829733,
+            -0.001593081078620362
+          ],
+          "boosted_nonlinear_dipole_amp": 0.013176447079825045,
+          "eb_linear_dipole_vec": [
+            -0.012791413021033437,
+            0.002732457910115902,
+            -0.0015931077241982795
+          ],
+          "eb_linear_dipole_amp": 0.013176667466628994,
+          "nonlinear_plus_curvature_rel_diff": 1.672553432089133e-05
+        },
+        "dirac_1p00__1xCMB": {
+          "x_local_slope": 0.8917313844157588,
+          "x_curvature": 0.17465415686110694,
+          "boosted_nonlinear_dipole_vec": [
+            -0.0045307612156835235,
+            0.0009678457182395667,
+            -0.0005642840769299357
+          ],
+          "boosted_nonlinear_dipole_amp": 0.004667219627072779,
+          "eb_linear_dipole_vec": [
+            -0.004530770791252763,
+            0.0009678477637399037,
+            -0.0005642852695200967
+          ],
+          "eb_linear_dipole_amp": 0.004667229491041006,
+          "nonlinear_plus_curvature_rel_diff": 2.1134525837547803e-06
+        },
+        "dirac_1p00__3xCMB": {
+          "x_local_slope": 0.8917313844157588,
+          "x_curvature": 0.17465415686110694,
+          "boosted_nonlinear_dipole_vec": [
+            -0.013592053838937955,
+            0.002903488063895422,
+            -0.0016928236093170551
+          ],
+          "boosted_nonlinear_dipole_amp": 0.014001422151697035,
+          "eb_linear_dipole_vec": [
+            -0.013592312373758287,
+            0.002903543291219711,
+            -0.00169285580856029
+          ],
+          "eb_linear_dipole_amp": 0.014001688473123016,
+          "nonlinear_plus_curvature_rel_diff": 1.9020665007144103e-05
+        },
+        "gaussian_hermite__1xCMB": {
+          "x_local_slope": 0.8917313844157588,
+          "x_curvature": 0.17465415686110694,
+          "boosted_nonlinear_dipole_vec": [
+            -0.0042637964454347674,
+            0.0009108176168883651,
+            -0.0005310349247938278
+          ],
+          "boosted_nonlinear_dipole_amp": 0.004392214356186085,
+          "eb_linear_dipole_vec": [
+            -0.004263804340344479,
+            0.0009108193033719675,
+            -0.0005310359080660931
+          ],
+          "eb_linear_dipole_amp": 0.004392222488876331,
+          "nonlinear_plus_curvature_rel_diff": 1.8516116309219863e-06
+        },
+        "gaussian_hermite__3xCMB": {
+          "x_local_slope": 0.8917313844157588,
+          "x_curvature": 0.17465415686110694,
+          "boosted_nonlinear_dipole_vec": [
+            -0.012791199862448172,
+            0.002732412375907791,
+            -0.0015930811763424655
+          ],
+          "boosted_nonlinear_dipole_amp": 0.013176447888088992,
+          "eb_linear_dipole_vec": [
+            -0.012791413021033437,
+            0.002732457910115902,
+            -0.0015931077241982795
+          ],
+          "eb_linear_dipole_amp": 0.013176667466628994,
+          "nonlinear_plus_curvature_rel_diff": 1.6664193777149293e-05
+        }
+      }
+    },
+    "RACS_DR1": {
+      "reference_cut_mJy": 20.0,
+      "scenarios": {
+        "dirac_0p50__1xCMB": {
+          "x_local_slope": 0.8424475818801385,
+          "x_curvature": 0.1617974818138167,
+          "boosted_nonlinear_dipole_vec": [
+            -0.003908304367574474,
+            0.0008348786147987881,
+            -0.0004867601308989458
+          ],
+          "boosted_nonlinear_dipole_amp": 0.004026015493770834,
+          "eb_linear_dipole_vec": [
+            -0.0039083104107796975,
+            0.0008348799057276098,
+            -0.00048676088355050634
+          ],
+          "eb_linear_dipole_amp": 0.00402602171898657,
+          "nonlinear_plus_curvature_rel_diff": 1.5462449463065915e-06
+        },
+        "dirac_0p50__3xCMB": {
+          "x_local_slope": 0.8424475818801385,
+          "x_curvature": 0.1617974818138167,
+          "boosted_nonlinear_dipole_vec": [
+            -0.011724768068302058,
+            0.00250460486263914,
+            -0.0014602623293713437
+          ],
+          "boosted_nonlinear_dipole_amp": 0.012077897078714168,
+          "eb_linear_dipole_vec": [
+            -0.011724931232339093,
+            0.0025046397171828295,
+            -0.001460282650651519
+          ],
+          "eb_linear_dipole_amp": 0.012078065156959713,
+          "nonlinear_plus_curvature_rel_diff": 1.391599096048867e-05
+        },
+        "dirac_0p75__1xCMB": {
+          "x_local_slope": 0.8424475818801385,
+          "x_curvature": 0.1617974818138167,
+          "boosted_nonlinear_dipole_vec": [
+            -0.0041605149216419664,
+            0.0008887549709404585,
+            -0.0005181717178087472
+          ],
+          "boosted_nonlinear_dipole_amp": 0.004285822177915657,
+          "eb_linear_dipole_vec": [
+            -0.004160522281911898,
+            0.0008887565432161425,
+            -0.0005181726344942459
+          ],
+          "eb_linear_dipole_amp": 0.004285829759863731,
+          "nonlinear_plus_curvature_rel_diff": 1.7690735514207812e-06
+        },
+        "dirac_0p75__3xCMB": {
+          "x_local_slope": 0.8424475818801385,
+          "x_curvature": 0.1617974818138167,
+          "boosted_nonlinear_dipole_vec": [
+            -0.012481368121972322,
+            0.0026662271789576033,
+            -0.001554493153413153
+          ],
+          "boosted_nonlinear_dipole_amp": 0.01285728457062406,
+          "eb_linear_dipole_vec": [
+            -0.012481566845735695,
+            0.0026662696296484273,
+            -0.001554517903482738
+          ],
+          "eb_linear_dipole_amp": 0.012857489279591192,
+          "nonlinear_plus_curvature_rel_diff": 1.5921379569639986e-05
+        },
+        "dirac_1p00__1xCMB": {
+          "x_local_slope": 0.8424475818801385,
+          "x_curvature": 0.1617974818138167,
+          "boosted_nonlinear_dipole_vec": [
+            -0.00441272530288743,
+            0.0009426312901644768,
+            -0.0005495832831944047
+          ],
+          "boosted_nonlinear_dipole_amp": 0.004545628684033359,
+          "eb_linear_dipole_vec": [
+            -0.004412734153044099,
+            0.0009426331807046751,
+            -0.0005495843854379856
+          ],
+          "eb_linear_dipole_amp": 0.004545637800740891,
+          "nonlinear_plus_curvature_rel_diff": 2.0055947991172342e-06
+        },
+        "dirac_1p00__3xCMB": {
+          "x_local_slope": 0.8424475818801385,
+          "x_curvature": 0.1617974818138167,
+          "boosted_nonlinear_dipole_vec": [
+            -0.013237963509745862,
+            0.0028278484985631396,
+            -0.001648723396340404
+          ],
+          "boosted_nonlinear_dipole_amp": 0.013636667256108766,
+          "eb_linear_dipole_vec": [
+            -0.013238202459132296,
+            0.002827899542114025,
+            -0.0016487531563139566
+          ],
+          "eb_linear_dipole_amp": 0.013636913402222672,
+          "nonlinear_plus_curvature_rel_diff": 1.804998731337357e-05
+        },
+        "gaussian_hermite__1xCMB": {
+          "x_local_slope": 0.8424475818801385,
+          "x_curvature": 0.1617974818138167,
+          "boosted_nonlinear_dipole_vec": [
+            -0.004160514946730525,
+            0.0008887549762997876,
+            -0.0005181717209333919
+          ],
+          "boosted_nonlinear_dipole_amp": 0.004285822203759835,
+          "eb_linear_dipole_vec": [
+            -0.004160522281911898,
+            0.0008887565432161425,
+            -0.0005181726344942459
+          ],
+          "eb_linear_dipole_amp": 0.004285829759863731,
+          "nonlinear_plus_curvature_rel_diff": 1.763043405424868e-06
+        },
+        "gaussian_hermite__3xCMB": {
+          "x_local_slope": 0.8424475818801385,
+          "x_curvature": 0.1617974818138167,
+          "boosted_nonlinear_dipole_vec": [
+            -0.012481368799339903,
+            0.002666227323654532,
+            -0.0015544932377759705
+          ],
+          "boosted_nonlinear_dipole_amp": 0.012857285268392736,
+          "eb_linear_dipole_vec": [
+            -0.012481566845735695,
+            0.0026662696296484273,
+            -0.001554517903482738
+          ],
+          "eb_linear_dipole_amp": 0.012857489279591192,
+          "nonlinear_plus_curvature_rel_diff": 1.586711013485022e-05
+        }
+      }
+    },
+    "SPICE_RACS": {
+      "reference_cut_mJy": 20.0,
+      "scenarios": {
+        "dirac_0p50__1xCMB": {
+          "x_local_slope": 0.8311634621578385,
+          "x_curvature": 0.16537868787572424,
+          "boosted_nonlinear_dipole_vec": [
+            -0.003888035014083986,
+            0.0008305487448159407,
+            -0.00048423568238360076
+          ],
+          "boosted_nonlinear_dipole_amp": 0.0040051356636638304,
+          "eb_linear_dipole_vec": [
+            -0.003888040979110921,
+            0.0008305500190445804,
+            -0.0004842364252984321
+          ],
+          "eb_linear_dipole_amp": 0.004005141808346686,
+          "nonlinear_plus_curvature_rel_diff": 1.5341985754050392e-06
+        },
+        "dirac_0p50__3xCMB": {
+          "x_local_slope": 0.8311634621578385,
+          "x_curvature": 0.16537868787572424,
+          "boosted_nonlinear_dipole_vec": [
+            -0.011663961884051846,
+            0.002491615653482567,
+            -0.0014526892174994502
+          ],
+          "boosted_nonlinear_dipole_amp": 0.012015259521122831,
+          "eb_linear_dipole_vec": [
+            -0.011664122937332762,
+            0.0024916500571337406,
+            -0.0014527092758952964
+          ],
+          "eb_linear_dipole_amp": 0.012015425425040058,
+          "nonlinear_plus_curvature_rel_diff": 1.3807577456497663e-05
+        },
+        "dirac_0p75__1xCMB": {
+          "x_local_slope": 0.8311634621578385,
+          "x_curvature": 0.16537868787572424,
+          "boosted_nonlinear_dipole_vec": [
+            -0.004136867352964601,
+            0.0008837034581809856,
+            -0.0005152265291687983
+          ],
+          "boosted_nonlinear_dipole_amp": 0.004261462386832096,
+          "eb_linear_dipole_vec": [
+            -0.004136874611631658,
+            0.0008837050087526079,
+            -0.0005152274332001593
+          ],
+          "eb_linear_dipole_amp": 0.004261469864117198,
+          "nonlinear_plus_curvature_rel_diff": 1.7546258312183324e-06
+        },
+        "dirac_0p75__3xCMB": {
+          "x_local_slope": 0.8311634621578385,
+          "x_curvature": 0.16537868787572424,
+          "boosted_nonlinear_dipole_vec": [
+            -0.012410427854323093,
+            0.0026510731615581873,
+            -0.0015456578911819236
+          ],
+          "boosted_nonlinear_dipole_amp": 0.012784207709195966,
+          "eb_linear_dipole_vec": [
+            -0.012410623834894975,
+            0.002651115026257824,
+            -0.001545682299600478
+          ],
+          "eb_linear_dipole_amp": 0.012784409592351597,
+          "nonlinear_plus_curvature_rel_diff": 1.5791355413941572e-05
+        },
+        "dirac_1p00__1xCMB": {
+          "x_local_slope": 0.8311634621578385,
+          "x_curvature": 0.16537868787572424,
+          "boosted_nonlinear_dipole_vec": [
+            -0.004385699522643158,
+            0.0009368581354016718,
+            -0.000546217354880713
+          ],
+          "boosted_nonlinear_dipole_amp": 0.004517788935702242,
+          "eb_linear_dipole_vec": [
+            -0.004385708244152396,
+            0.0009368599984606355,
+            -0.0005462184411018865
+          ],
+          "eb_linear_dipole_amp": 0.004517797919887711,
+          "nonlinear_plus_curvature_rel_diff": 1.9886204800424055e-06
+        },
+        "dirac_1p00__3xCMB": {
+          "x_local_slope": 0.8311634621578385,
+          "x_curvature": 0.16537868787572424,
+          "boosted_nonlinear_dipole_vec": [
+            -0.013156889256428567,
+            0.0028105296937978573,
+            -0.001638625995921778
+          ],
+          "boosted_nonlinear_dipole_amp": 0.013553151191518361,
+          "eb_linear_dipole_vec": [
+            -0.013157124732457186,
+            0.0028105799953819064,
+            -0.0016386553233056593
+          ],
+          "eb_linear_dipole_amp": 0.013553393759663131,
+          "nonlinear_plus_curvature_rel_diff": 1.7897225526795364e-05
+        },
+        "gaussian_hermite__1xCMB": {
+          "x_local_slope": 0.8311634621578385,
+          "x_curvature": 0.16537868787572424,
+          "boosted_nonlinear_dipole_vec": [
+            -0.004136867376060881,
+            0.000883703463114733,
+            -0.0005152265320453343
+          ],
+          "boosted_nonlinear_dipole_amp": 0.0042614624106239955,
+          "eb_linear_dipole_vec": [
+            -0.004136874611631658,
+            0.0008837050087526079,
+            -0.0005152274332001593
+          ],
+          "eb_linear_dipole_amp": 0.004261469864117198,
+          "nonlinear_plus_curvature_rel_diff": 1.7490428046678522e-06
+        },
+        "gaussian_hermite__3xCMB": {
+          "x_local_slope": 0.8311634621578385,
+          "x_curvature": 0.16537868787572424,
+          "boosted_nonlinear_dipole_vec": [
+            -0.012410428477900833,
+            0.002651073294764739,
+            -0.0015456579688454821
+          ],
+          "boosted_nonlinear_dipole_amp": 0.012784208351554752,
+          "eb_linear_dipole_vec": [
+            -0.012410623834894975,
+            0.002651115026257824,
+            -0.001545682299600478
+          ],
+          "eb_linear_dipole_amp": 0.012784409592351597,
+          "nonlinear_plus_curvature_rel_diff": 1.574110993467952e-05
+        }
+      }
+    },
+    "SUMSS": {
+      "reference_cut_mJy": 20.0,
+      "scenarios": {
+        "dirac_0p50__1xCMB": {
+          "x_local_slope": 0.8402325735692753,
+          "x_curvature": 0.13047050595251158,
+          "boosted_nonlinear_dipole_vec": [
+            -0.003904325692562824,
+            0.0008340287038476247,
+            -0.0004862646064496407
+          ],
+          "boosted_nonlinear_dipole_amp": 0.00402191698819525,
+          "eb_linear_dipole_vec": [
+            -0.0039043316370066684,
+            0.0008340299736793836,
+            -0.00048626534680095194
+          ],
+          "eb_linear_dipole_amp": 0.004021923111675092,
+          "nonlinear_plus_curvature_rel_diff": 1.5225253372964011e-06
+        },
+        "dirac_0p50__3xCMB": {
+          "x_local_slope": 0.8402325735692753,
+          "x_curvature": 0.13047050595251158,
+          "boosted_nonlinear_dipole_vec": [
+            -0.011712834413474513,
+            0.0025020556361012827,
+            -0.0014587760512211254
+          ],
+          "boosted_nonlinear_dipole_amp": 0.012065604003581228,
+          "eb_linear_dipole_vec": [
+            -0.011712994911020005,
+            0.0025020899210381506,
+            -0.0014587960404028558
+          ],
+          "eb_linear_dipole_amp": 0.012065769335025275,
+          "nonlinear_plus_curvature_rel_diff": 1.370251986904053e-05
+        },
+        "dirac_0p75__1xCMB": {
+          "x_local_slope": 0.8402325735692753,
+          "x_curvature": 0.13047050595251158,
+          "boosted_nonlinear_dipole_vec": [
+            -0.004155873157398411,
+            0.0008877634131349711,
+            -0.0005175936088493848
+          ],
+          "boosted_nonlinear_dipole_amp": 0.004281040612048362,
+          "eb_linear_dipole_vec": [
+            -0.004155880379176697,
+            0.000887764955826545,
+            -0.0005175945082864324
+          ],
+          "eb_linear_dipole_amp": 0.004281048051333672,
+          "nonlinear_plus_curvature_rel_diff": 1.7377252530948424e-06
+        },
+        "dirac_0p75__3xCMB": {
+          "x_local_slope": 0.8402325735692753,
+          "x_curvature": 0.13047050595251158,
+          "boosted_nonlinear_dipole_vec": [
+            -0.012467446152934113,
+            0.002663253215536967,
+            -0.0015527592404846623
+          ],
+          "boosted_nonlinear_dipole_amp": 0.012842943296818302,
+          "eb_linear_dipole_vec": [
+            -0.01246764113753009,
+            0.0026632948674796346,
+            -0.0015527835248592972
+          ],
+          "eb_linear_dipole_amp": 0.012843144154001012,
+          "nonlinear_plus_curvature_rel_diff": 1.5639253153625193e-05
+        },
+        "dirac_1p00__1xCMB": {
+          "x_local_slope": 0.8402325735692753,
+          "x_curvature": 0.13047050595251158,
+          "boosted_nonlinear_dipole_vec": [
+            -0.004407420457824,
+            0.0009414980873016308,
+            -0.0005489225907726668
+          ],
+          "boosted_nonlinear_dipole_amp": 0.004540164066539746,
+          "eb_linear_dipole_vec": [
+            -0.004407429121346726,
+            0.0009414999379737065,
+            -0.0005489236697719129
+          ],
+          "eb_linear_dipole_amp": 0.004540172990992252,
+          "nonlinear_plus_curvature_rel_diff": 1.9656635383702836e-06
+        },
+        "dirac_1p00__3xCMB": {
+          "x_local_slope": 0.8402325735692753,
+          "x_curvature": 0.13047050595251158,
+          "boosted_nonlinear_dipole_vec": [
+            -0.013222053453605588,
+            0.002824449846773906,
+            -0.0016467418769189064
+          ],
+          "boosted_nonlinear_dipole_amp": 0.0136202780175789,
+          "eb_linear_dipole_vec": [
+            -0.013222287364040176,
+            0.002824499813921119,
+            -0.0016467710093157387
+          ],
+          "eb_linear_dipole_amp": 0.013620518972976753,
+          "nonlinear_plus_curvature_rel_diff": 1.7690617980979803e-05
+        },
+        "gaussian_hermite__1xCMB": {
+          "x_local_slope": 0.8402325735692753,
+          "x_curvature": 0.13047050595251158,
+          "boosted_nonlinear_dipole_vec": [
+            -0.004155873187728623,
+            0.0008877634196140248,
+            -0.000517593612626863
+          ],
+          "boosted_nonlinear_dipole_amp": 0.00428104064329207,
+          "eb_linear_dipole_vec": [
+            -0.004155880379176697,
+            0.000887764955826545,
+            -0.0005175945082864324
+          ],
+          "eb_linear_dipole_amp": 0.004281048051333672,
+          "nonlinear_plus_curvature_rel_diff": 1.7304271087470747e-06
+        },
+        "gaussian_hermite__3xCMB": {
+          "x_local_slope": 0.8402325735692753,
+          "x_curvature": 0.13047050595251158,
+          "boosted_nonlinear_dipole_vec": [
+            -0.012467446971822897,
+            0.0026632533904651853,
+            -0.001552759342473248
+          ],
+          "boosted_nonlinear_dipole_amp": 0.012842944140370547,
+          "eb_linear_dipole_vec": [
+            -0.01246764113753009,
+            0.0026632948674796346,
+            -0.0015527835248592972
+          ],
+          "eb_linear_dipole_amp": 0.012843144154001012,
+          "nonlinear_plus_curvature_rel_diff": 1.5573572021633777e-05
+        }
+      }
+    },
+    "LoTSS_DR3_legacy966": {
+      "reference_cut_mJy": 50.0,
+      "scenarios": {
+        "dirac_0p50__1xCMB": {
+          "x_local_slope": 0.7636742107731809,
+          "x_curvature": 0.09458407358064663,
+          "boosted_nonlinear_dipole_vec": [
+            -0.0037668061491238566,
+            0.0008046522492176861,
+            -0.00046913722212387583
+          ],
+          "boosted_nonlinear_dipole_amp": 0.0038802556024610654,
+          "eb_linear_dipole_vec": [
+            -0.003766811427937793,
+            0.0008046533768598492,
+            -0.00046913787957424775
+          ],
+          "eb_linear_dipole_amp": 0.003880261040263417,
+          "nonlinear_plus_curvature_rel_diff": 1.4014011673611206e-06
+        },
+        "dirac_0p50__3xCMB": {
+          "x_local_slope": 0.7636742107731809,
+          "x_curvature": 0.09458407358064663,
+          "boosted_nonlinear_dipole_vec": [
+            -0.011300291757821525,
+            0.0024139296846645195,
+            -0.0014073958878098383
+          ],
+          "boosted_nonlinear_dipole_amp": 0.011640636302170845,
+          "eb_linear_dipole_vec": [
+            -0.011300434283813379,
+            0.0024139601305795473,
+            -0.0014074136387227433
+          ],
+          "eb_linear_dipole_amp": 0.011640783120790251,
+          "nonlinear_plus_curvature_rel_diff": 1.261243490961092e-05
+        },
+        "dirac_0p75__1xCMB": {
+          "x_local_slope": 0.7636742107731809,
+          "x_curvature": 0.09458407358064663,
+          "boosted_nonlinear_dipole_vec": [
+            -0.003995433794069761,
+            0.000853490904953072,
+            -0.0004976116734241088
+          ],
+          "boosted_nonlinear_dipole_amp": 0.004115769102508089,
+          "eb_linear_dipole_vec": [
+            -0.003995440135263009,
+            0.0008534922595370884,
+            -0.0004976124631886109
+          ],
+          "eb_linear_dipole_amp": 0.004115775634686718,
+          "nonlinear_plus_curvature_rel_diff": 1.5871075609356427e-06
+        },
+        "dirac_0p75__3xCMB": {
+          "x_local_slope": 0.7636742107731809,
+          "x_curvature": 0.09458407358064663,
+          "boosted_nonlinear_dipole_vec": [
+            -0.011986149196302722,
+            0.0025604402054262305,
+            -0.0014928160662644424
+          ],
+          "boosted_nonlinear_dipole_amp": 0.012347150538050824,
+          "eb_linear_dipole_vec": [
+            -0.011986320405789029,
+            0.0025604767786112648,
+            -0.0014928373895658328
+          ],
+          "eb_linear_dipole_amp": 0.012347326904060154,
+          "nonlinear_plus_curvature_rel_diff": 1.4283740173163161e-05
+        },
+        "dirac_1p00__1xCMB": {
+          "x_local_slope": 0.7636742107731809,
+          "x_curvature": 0.09458407358064663,
+          "boosted_nonlinear_dipole_vec": [
+            -0.004224061311085725,
+            0.0009023295333605277,
+            -0.0005260861087912944
+          ],
+          "boosted_nonlinear_dipole_amp": 0.004351282470772157,
+          "eb_linear_dipole_vec": [
+            -0.004224068842588226,
+            0.0009023311422143275,
+            -0.000526087046802974
+          ],
+          "eb_linear_dipole_amp": 0.004351290229110019,
+          "nonlinear_plus_curvature_rel_diff": 1.7829971004614523e-06
+        },
+        "dirac_1p00__3xCMB": {
+          "x_local_slope": 0.7636742107731809,
+          "x_curvature": 0.09458407358064663,
+          "boosted_nonlinear_dipole_vec": [
+            -0.012672003180876204,
+            0.0027069499883759893,
+            -0.001578235814551784
+          ],
+          "boosted_nonlinear_dipole_amp": 0.013053661215997577,
+          "eb_linear_dipole_vec": [
+            -0.012672206527764676,
+            0.002706993426642982,
+            -0.001578261140408922
+          ],
+          "eb_linear_dipole_amp": 0.013053870687330056,
+          "nonlinear_plus_curvature_rel_diff": 1.60466835849469e-05
+        },
+        "gaussian_hermite__1xCMB": {
+          "x_local_slope": 0.7636742107731809,
+          "x_curvature": 0.09458407358064663,
+          "boosted_nonlinear_dipole_vec": [
+            -0.003995433821318148,
+            0.0008534909107737953,
+            -0.0004976116768177665
+          ],
+          "boosted_nonlinear_dipole_amp": 0.004115769130577152,
+          "eb_linear_dipole_vec": [
+            -0.003995440135263009,
+            0.0008534922595370884,
+            -0.0004976124631886109
+          ],
+          "eb_linear_dipole_amp": 0.004115775634686718,
+          "nonlinear_plus_curvature_rel_diff": 1.5802876888872955e-06
+        },
+        "gaussian_hermite__3xCMB": {
+          "x_local_slope": 0.7636742107731809,
+          "x_curvature": 0.09458407358064663,
+          "boosted_nonlinear_dipole_vec": [
+            -0.011986149931987364,
+            0.0025604403625806653,
+            -0.001492816157890355
+          ],
+          "boosted_nonlinear_dipole_amp": 0.012347151295892969,
+          "eb_linear_dipole_vec": [
+            -0.011986320405789029,
+            0.0025604767786112648,
+            -0.0014928373895658328
+          ],
+          "eb_linear_dipole_amp": 0.012347326904060154,
+          "nonlinear_plus_curvature_rel_diff": 1.4222363152001363e-05
+        }
+      }
+    },
+    "LoTSS_DR3_outer_b15": {
+      "reference_cut_mJy": 50.0,
+      "scenarios": {
+        "dirac_0p50__1xCMB": {
+          "x_local_slope": 0.7636967855845467,
+          "x_curvature": 0.09633890395036313,
+          "boosted_nonlinear_dipole_vec": [
+            -0.003766846695172209,
+            0.000804660910525888,
+            -0.0004691422719352346
+          ],
+          "boosted_nonlinear_dipole_amp": 0.0038802973696837593,
+          "eb_linear_dipole_vec": [
+            -0.003766851978606138,
+            0.0008046620391549605,
+            -0.0004691429299610076
+          ],
+          "eb_linear_dipole_amp": 0.0038803028122452498,
+          "nonlinear_plus_curvature_rel_diff": 1.4026125676245893e-06
+        },
+        "dirac_0p50__3xCMB": {
+          "x_local_slope": 0.7636967855845467,
+          "x_curvature": 0.09633890395036313,
+          "boosted_nonlinear_dipole_vec": [
+            -0.011300413285089714,
+            0.002413955644903988,
+            -0.0014074110234347443
+          ],
+          "boosted_nonlinear_dipole_amp": 0.011640761489622642,
+          "eb_linear_dipole_vec": [
+            -0.011300555935818413,
+            0.0024139861174648815,
+            -0.0014074287898830228
+          ],
+          "eb_linear_dipole_amp": 0.011640908436735747,
+          "nonlinear_plus_curvature_rel_diff": 1.2623337251027617e-05
+        },
+        "dirac_0p75__1xCMB": {
+          "x_local_slope": 0.7636967855845467,
+          "x_curvature": 0.09633890395036313,
+          "boosted_nonlinear_dipole_vec": [
+            -0.003995481096654739,
+            0.0008535010095695385,
+            -0.0004976175647289536
+          ],
+          "boosted_nonlinear_dipole_amp": 0.004115817829762191,
+          "eb_linear_dipole_vec": [
+            -0.003995487444376077,
+            0.0008535023655480515,
+            -0.0004976183553064974
+          ],
+          "eb_linear_dipole_amp": 0.004115824368665522,
+          "nonlinear_plus_curvature_rel_diff": 1.5887226336454285e-06
+        },
+        "dirac_0p75__3xCMB": {
+          "x_local_slope": 0.7636967855845467,
+          "x_curvature": 0.09633890395036313,
+          "boosted_nonlinear_dipole_vec": [
+            -0.01198629094738798,
+            0.0025604704858083584,
+            -0.001492833720666542
+          ],
+          "boosted_nonlinear_dipole_amp": 0.012347296558424838,
+          "eb_linear_dipole_vec": [
+            -0.011986462333128233,
+            0.002560507096644154,
+            -0.001492855065919492
+          ],
+          "eb_linear_dipole_amp": 0.012347473105996567,
+          "nonlinear_plus_curvature_rel_diff": 1.42982754619023e-05
+        },
+        "dirac_1p00__1xCMB": {
+          "x_local_slope": 0.7636967855845467,
+          "x_curvature": 0.09633890395036313,
+          "boosted_nonlinear_dipole_vec": [
+            -0.004224115369799408,
+            0.0009023410811980976,
+            -0.0005260928415388191
+          ],
+          "boosted_nonlinear_dipole_amp": 0.004351338157637456,
+          "eb_linear_dipole_vec": [
+            -0.004224122910146018,
+            0.0009023426919411424,
+            -0.0005260937806519871
+          ],
+          "eb_linear_dipole_amp": 0.004351345925085795,
+          "nonlinear_plus_curvature_rel_diff": 1.7850679933872795e-06
+        },
+        "dirac_1p00__3xCMB": {
+          "x_local_slope": 0.7636967855845467,
+          "x_curvature": 0.09633890395036313,
+          "boosted_nonlinear_dipole_vec": [
+            -0.012672165144765851,
+            0.0027069845865482535,
+            -0.0015782559863594854
+          ],
+          "boosted_nonlinear_dipole_amp": 0.013053828057949435,
+          "eb_linear_dipole_vec": [
+            -0.012672368730438054,
+            0.002707028075823427,
+            -0.0015782813419559613
+          ],
+          "eb_linear_dipole_amp": 0.013054037775257385,
+          "nonlinear_plus_curvature_rel_diff": 1.606532105703918e-05
+        },
+        "gaussian_hermite__1xCMB": {
+          "x_local_slope": 0.7636967855845467,
+          "x_curvature": 0.09633890395036313,
+          "boosted_nonlinear_dipole_vec": [
+            -0.003995481123616538,
+            0.0008535010153290215,
+            -0.0004976175680869094
+          ],
+          "boosted_nonlinear_dipole_amp": 0.00411581785753603,
+          "eb_linear_dipole_vec": [
+            -0.003995487444376077,
+            0.0008535023655480515,
+            -0.0004976183553064974
+          ],
+          "eb_linear_dipole_amp": 0.004115824368665522,
+          "nonlinear_plus_curvature_rel_diff": 1.5819745714517437e-06
+        },
+        "gaussian_hermite__3xCMB": {
+          "x_local_slope": 0.7636967855845467,
+          "x_curvature": 0.09633890395036313,
+          "boosted_nonlinear_dipole_vec": [
+            -0.011986291675335083,
+            0.002560470641309924,
+            -0.0014928338113287787
+          ],
+          "boosted_nonlinear_dipole_amp": 0.012347297308296402,
+          "eb_linear_dipole_vec": [
+            -0.011986462333128233,
+            0.002560507096644154,
+            -0.001492855065919492
+          ],
+          "eb_linear_dipole_amp": 0.012347473105996567,
+          "nonlinear_plus_curvature_rel_diff": 1.4237544690776704e-05
+        }
+      }
+    },
+    "LoTSS_DR3_outer_all1771": {
+      "reference_cut_mJy": 50.0,
+      "scenarios": {
+        "dirac_0p50__1xCMB": {
+          "x_local_slope": 0.7685041568943377,
+          "x_curvature": 0.09700659178172674,
+          "boosted_nonlinear_dipole_vec": [
+            -0.003775482040617441,
+            0.000806505563491876,
+            -0.0004702177618367206
+          ],
+          "boosted_nonlinear_dipole_amp": 0.003889192796264402,
+          "eb_linear_dipole_vec": [
+            -0.003775487360600329,
+            0.0008065066999284106,
+            -0.0004702184244144919
+          ],
+          "eb_linear_dipole_amp": 0.0038891982764756414,
+          "nonlinear_plus_curvature_rel_diff": 1.4090850734972907e-06
+        },
+        "dirac_0p50__3xCMB": {
+          "x_local_slope": 0.7685041568943377,
+          "x_curvature": 0.09700659178172674,
+          "boosted_nonlinear_dipole_vec": [
+            -0.011326318444274433,
+            0.002419489416427954,
+            -0.001410637383894379
+          ],
+          "boosted_nonlinear_dipole_amp": 0.011667446865795381,
+          "eb_linear_dipole_vec": [
+            -0.011326462081800985,
+            0.002419520099785232,
+            -0.0014106552732434758
+          ],
+          "eb_linear_dipole_amp": 0.011667594829426923,
+          "nonlinear_plus_curvature_rel_diff": 1.2681588082569916e-05
+        },
+        "dirac_0p75__1xCMB": {
+          "x_local_slope": 0.7685041568943377,
+          "x_curvature": 0.09700659178172674,
+          "boosted_nonlinear_dipole_vec": [
+            -0.004005555661161037,
+            0.0008556531035900298,
+            -0.0004988723023022486
+          ],
+          "boosted_nonlinear_dipole_amp": 0.004126195822103797,
+          "eb_linear_dipole_vec": [
+            -0.004005562056702635,
+            0.0008556544697837433,
+            -0.0004988730988355624
+          ],
+          "eb_linear_dipole_amp": 0.004126202410267646,
+          "nonlinear_plus_curvature_rel_diff": 1.5966652127440845e-06
+        },
+        "dirac_0p75__3xCMB": {
+          "x_local_slope": 0.7685041568943377,
+          "x_curvature": 0.09700659178172674,
+          "boosted_nonlinear_dipole_vec": [
+            -0.012016513493256248,
+            0.0025669265227126255,
+            -0.0014965977904521468
+          ],
+          "boosted_nonlinear_dipole_amp": 0.012378429353233845,
+          "eb_linear_dipole_vec": [
+            -0.012016686170107902,
+            0.00256696340935123,
+            -0.0014966192965066873
+          ],
+          "eb_linear_dipole_amp": 0.012378607230802937,
+          "nonlinear_plus_curvature_rel_diff": 1.4369756288168129e-05
+        },
+        "dirac_1p00__1xCMB": {
+          "x_local_slope": 0.7685041568943377,
+          "x_curvature": 0.09700659178172674,
+          "boosted_nonlinear_dipole_vec": [
+            -0.0042356291515704345,
+            0.0009048006158893535,
+            -0.0005275268265601772
+          ],
+          "boosted_nonlinear_dipole_amp": 0.00436319871388958,
+          "eb_linear_dipole_vec": [
+            -0.00423563675280494,
+            0.000904802239639076,
+            -0.0005275277732566328
+          ],
+          "eb_linear_dipole_amp": 0.004363206544059651,
+          "nonlinear_plus_curvature_rel_diff": 1.794590742478886e-06
+        },
+        "dirac_1p00__3xCMB": {
+          "x_local_slope": 0.7685041568943377,
+          "x_curvature": 0.09700659178172674,
+          "boosted_nonlinear_dipole_vec": [
+            -0.01270670502882077,
+            0.002714362878473097,
+            -0.001582557759431029
+          ],
+          "boosted_nonlinear_dipole_amp": 0.013089408221437178,
+          "eb_linear_dipole_vec": [
+            -0.01270691025841482,
+            0.0027144067189172278,
+            -0.0015825833197698985
+          ],
+          "eb_linear_dipole_amp": 0.013089619632178954,
+          "nonlinear_plus_curvature_rel_diff": 1.61510225442672e-05
+        },
+        "gaussian_hermite__1xCMB": {
+          "x_local_slope": 0.7685041568943377,
+          "x_curvature": 0.09700659178172674,
+          "boosted_nonlinear_dipole_vec": [
+            -0.004005555688561085,
+            0.0008556531094431421,
+            -0.0004988723057147769
+          ],
+          "boosted_nonlinear_dipole_amp": 0.004126195850329085,
+          "eb_linear_dipole_vec": [
+            -0.004005562056702635,
+            0.0008556544697837433,
+            -0.0004988730988355624
+          ],
+          "eb_linear_dipole_amp": 0.004126202410267646,
+          "nonlinear_plus_curvature_rel_diff": 1.5898247126727956e-06
+        },
+        "gaussian_hermite__3xCMB": {
+          "x_local_slope": 0.7685041568943377,
+          "x_curvature": 0.09700659178172674,
+          "boosted_nonlinear_dipole_vec": [
+            -0.01201651423303601,
+            0.0025669266807418537,
+            -0.0014965978825880798
+          ],
+          "boosted_nonlinear_dipole_amp": 0.012378430115294447,
+          "eb_linear_dipole_vec": [
+            -0.012016686170107902,
+            0.00256696340935123,
+            -0.0014966192965066873
+          ],
+          "eb_linear_dipole_amp": 0.012378607230802937,
+          "nonlinear_plus_curvature_rel_diff": 1.4308193578484674e-05
+        }
+      }
+    }
+  },
+  "C2_five_survey_common_beta_vs_residuals": {
+    "surveys": [
+      "NVSS",
+      "RACS_DR1",
+      "SPICE_RACS",
+      "SUMSS",
+      "LoTSS_DR3_legacy966"
+    ],
+    "jackknife_15d_rank": 15,
+    "common_beta_over_beta_cmb": 5.589440260347895,
+    "common_beta_icrs": [
+      -0.006208005978237061,
+      0.0024819085222007545,
+      0.0016860117437702729
+    ],
+    "chi2_subspace_common_free_beta": 86.02889487045464,
+    "chi2_subspace_fixed_planck_cmb_beta": 117.29442255376073,
+    "calibrated_p": null,
+    "caveat": "Spatial 48-patch jackknife covariance across complete-interior footprints (excludes 112 unmasked LoTSS outer empty cells)."
+  },
+  "C2_five_survey_with_lotss_outer_b15_sensitivity": {
+    "surveys": [
+      "NVSS",
+      "RACS_DR1",
+      "SPICE_RACS",
+      "SUMSS",
+      "LoTSS_DR3_outer_b15"
+    ],
+    "jackknife_15d_rank": 15,
+    "common_beta_over_beta_cmb": 5.667075453198047,
+    "common_beta_icrs": [
+      -0.006677757696595834,
+      -0.0006912434452176902,
+      0.0019497246913750762
+    ],
+    "chi2_subspace_common_free_beta": 119.91954022232814,
+    "chi2_subspace_fixed_planck_cmb_beta": 148.43347063412156,
+    "calibrated_p": null,
+    "caveat": "Sensitivity replacing LoTSS_DR3_legacy966 with unmasked LoTSS_DR3_outer_b15 (1338 cells incl. 112 uncalibrated empty holes missing SURF tape RMS maps; induces boundary gradient dipole)."
+  },
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "threads": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1"
+    }
+  },
+  "runtime_seconds": 7.222251088998746
+}
