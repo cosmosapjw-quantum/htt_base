@@ -111,7 +111,7 @@ def _inverse_mills(t):
 
 
 def selected_probit_field_response(mark, field_means, sigma, intercept, slope, probabilities,
-                                   *, included=None, mean_tangent=None):
+                                   *, included=None, mean_tangent=None, return_field_logs=False):
     """Gaussian marks under one common field, conditional on the observed inclusion pattern.
 
     Positive rows use their marks in the density. Negative rows contribute their
@@ -145,6 +145,10 @@ def selected_probit_field_response(mark, field_means, sigma, intercept, slope, p
     post, incl = np.exp(log_num - ln), np.exp(log_den - ld)
     result = dict(log_density=float(ln - ld), log_inclusion_pattern=float(ld),
                   observed_field_weights=post, included_field_weights=incl)
+    if return_field_logs:
+        # Keep log factors before prior mixing for prediction with a shared field.
+        result["field_log_mark_and_pattern"] = log_num - np.log(p)
+        result["field_log_pattern"] = log_den - np.log(p)
     all_kept = bool(kept.all())
     if all_kept:
         result["log_joint_inclusion"] = float(ld)
@@ -161,3 +165,46 @@ def selected_probit_field_response(mark, field_means, sigma, intercept, slope, p
         if all_kept:
             result["log_joint_inclusion_tangent"] = den_score
     return result
+
+def selected_probit_holdout(mark, field_means, sigma, intercept, slope, probabilities,
+                            *, included, train):
+    """Predict held-out selected marks under one common field and fixed selection law.
+
+    Condition on training marks and all training/test inclusion indicators. Rows
+    are conditionally independent given the finite field; `train` and `included`
+    are disjoint concepts. A training-derived selection fit is a plug-in input.
+    Log weights are retained throughout even for a field with tiny training support.
+    """
+    y = np.asarray(mark, dtype=float)
+    cut = np.asarray(train)
+    keep = np.asarray(included)
+    means = np.asarray(field_means, dtype=float)
+    p = np.asarray(probabilities, dtype=float)
+    if y.ndim != 1 or means.ndim != 2 or means.shape[1] != y.size:
+        raise ValueError("supply a vector of marks and field-by-object means")
+    if cut.dtype != bool or cut.shape != y.shape or not cut.any() or cut.all():
+        raise ValueError("train must be a boolean partition with nonempty train and test")
+    if keep.dtype != bool or keep.shape != y.shape:
+        raise ValueError("supply a boolean inclusion indicator per object")
+    sig, a, b = [np.broadcast_to(np.asarray(x, dtype=float), y.shape)
+                 for x in (sigma, intercept, slope)]
+
+    def block(rows, mu, probs):
+        return selected_probit_field_response(
+            y[rows], mu[:, rows], sig[rows], a[rows], b[rows], probs,
+            included=keep[rows], return_field_logs=True)
+
+    fit = block(cut, means, p)
+    test = block(~cut, means, p)
+    log_post = np.log(p) + fit["field_log_mark_and_pattern"]
+    log_post -= logsumexp(log_post)
+    log_test_pattern = logsumexp(log_post + test["field_log_pattern"])
+    log_density = logsumexp(log_post + test["field_log_mark_and_pattern"]) - log_test_pattern
+    zero = selected_probit_field_response(
+        y[~cut], np.zeros((1, (~cut).sum())), sig[~cut], a[~cut], b[~cut], [1.],
+        included=keep[~cut])["log_density"]
+    return dict(train_field_log_weights=log_post,
+                shared_log_density=float(log_density),
+                fresh_log_density=test["log_density"], zero_log_density=zero,
+                shared_minus_zero=float(log_density - zero),
+                fresh_minus_zero=float(test["log_density"] - zero))

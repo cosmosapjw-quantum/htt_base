@@ -14,6 +14,7 @@ from urllib.request import Request, urlopen
 
 from scripts.r98.acquisition_preflight import (
     COMMANDER_SIZE,
+    PLA,
     archive_filename,
     archive_job,
     validate_payload,
@@ -66,7 +67,7 @@ def _validate_commander_headers(status: int, headers, filename: str, expected_by
             raise ValueError(f"Content-Length {cl} != expected {expected_bytes}")
         return False, cl
 
-    if "chunked" not in te_vals:
+    if te_vals != ["chunked"]:
         raise ValueError("expected either Content-Length or Transfer-Encoding: chunked")
     return True, None
 
@@ -81,6 +82,24 @@ def acquire_commander_noise(
 ) -> dict[str, object]:
     """Download/reuse dx12_v3_commander_noise_mc_00000_raw.fits safely with no-clobber link."""
     job = archive_job(COMMANDER_NOISE_ID)
+    return _acquire(job, R101_PLAN_ID, destination, max_bytes, timeout, opener, payload_validator)
+
+
+def ensemble_job(part: str, index: int) -> dict:
+    """Fullmission matched PR3 products in the 300-realization noise range."""
+    if part not in ("cmb", "noise") or type(index) is not int or not 0 <= index < 300:
+        raise ValueError("expected cmb/noise and a realization in 0..299")
+    name = f"dx12_v3_commander_{part}_mc_{index:05d}_raw.fits"
+    return {"id": name, "url": PLA + name, "bytes": COMMANDER_SIZE}
+
+
+def acquire_commander_product(part: str, index: int, destination: Path, *, max_bytes: int):
+    job = ensemble_job(part, index)
+    return _acquire(job, job["id"], destination, max_bytes, 120.0, urlopen, validate_payload)
+
+
+def _acquire(job, product_id, destination, max_bytes, timeout, opener, payload_validator):
+    filename = job["id"]
     expected_bytes = int(job["bytes"])
     if max_bytes < expected_bytes:
         raise ValueError(f"max_bytes={max_bytes} < required {expected_bytes}")
@@ -91,7 +110,7 @@ def acquire_commander_noise(
     dest = Path(destination).resolve()
     if str(dest).startswith("/mnt/extdrive"):
         raise PermissionError(f"Refusing write under /mnt/extdrive: {dest}")
-    target = dest / COMMANDER_NOISE_ID
+    target = dest / filename
 
     def _inspect_existing() -> dict[str, object]:
         if target.is_symlink() or not target.is_file():
@@ -101,8 +120,8 @@ def acquire_commander_noise(
             raise FileExistsError(f"preserved conflicting product at {target}: bytes={dig['bytes']}")
         fits_info = payload_validator(target, job)
         return {
-            "id": R101_PLAN_ID,
-            "filename": COMMANDER_NOISE_ID,
+            "id": product_id,
+            "filename": filename,
             "path": str(target),
             "url": url,
             "release": "Planck PR3/FFP10 dx12_v3 Commander fullmission",
@@ -134,13 +153,13 @@ def acquire_commander_noise(
     )
 
     with tempfile.TemporaryDirectory(prefix=".r102-cmd-intake-", dir=dest) as work:
-        part = Path(work) / COMMANDER_NOISE_ID
+        part = Path(work) / filename
         h_md5 = hashlib.md5()
         h_sha = hashlib.sha256()
         total = 0
         with opener(req, timeout=timeout) as resp:
             is_chunked, cl = _validate_commander_headers(
-                resp.status, resp.headers, COMMANDER_NOISE_ID, expected_bytes
+                resp.status, resp.headers, filename, expected_bytes
             )
             hdrs_norm = {k.lower(): str(v) for k, v in resp.headers.items()}
             with part.open("wb") as out:
@@ -180,8 +199,8 @@ def acquire_commander_noise(
             return dict(existing, transferred_bytes=total)
 
         return {
-            "id": R101_PLAN_ID,
-            "filename": COMMANDER_NOISE_ID,
+            "id": product_id,
+            "filename": filename,
             "path": str(target),
             "url": url,
             "release": "Planck PR3/FFP10 dx12_v3 Commander fullmission",
