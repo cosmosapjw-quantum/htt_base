@@ -1,0 +1,191 @@
+[
+ {
+  "command": "python -B -m scripts.r103.program --node SQ-CF4",
+  "return_code": 0,
+  "wall_s": 0.07,
+  "maxrss_kB": 34056,
+  "note": "R103 code"
+ },
+ {
+  "command": "python -B -m scripts.r103.cf4_shared_field_holdout --output cf4.json",
+  "return_code": 0,
+  "wall_s": 2.97,
+  "maxrss_kB": 215364,
+  "note": "R103 code; numerically identical to committed (R102 replay abs err 0.0)"
+ },
+ {
+  "command": "python -B -m scripts.r103.p1_joint_patterns --output p1.json",
+  "return_code": 0,
+  "wall_s": 0.57,
+  "maxrss_kB": 81276,
+  "note": "byte-identical"
+ },
+ {
+  "command": "python -B -m scripts.r103.manticore_cf4_pv geometry",
+  "return_code": 0,
+  "wall_s": 1.69,
+  "maxrss_kB": 261124,
+  "note": "35,970 groups, 198,924 stencil vertices"
+ },
+ {
+  "command": "python -B -m [manticore venv] scripts.r103.manticore_cf4_pv fetch --indices 0 1 --max-bytes 800000000",
+  "return_code": 1,
+  "wall_s": 135.77,
+  "maxrss_kB": 73856,
+  "note": "FIRST FAILURE INPUT: ConnectTimeout manticore.web.data-2-osu.iap.fr:443 /public-keys.json; 0 bytes"
+ },
+ {
+  "command": "python -B -m scripts.r103.commander_ensemble plan",
+  "return_code": 0,
+  "wall_s": 1.32,
+  "maxrss_kB": 96456,
+  "note": "pairs available [0]; cmb 0-6, noise 0"
+ },
+ {
+  "command": "python -B -m OMP_NUM_THREADS=4 scripts.r103.commander_ensemble reduce --start 0 --stop 1 --lmax 64",
+  "return_code": 0,
+  "wall_s": 87.98,
+  "maxrss_kB": 4152908,
+  "note": ""
+ },
+ {
+  "command": "python -B -m scripts.r103.compare_commander commander_pr3_00000.json",
+  "return_code": 0,
+  "wall_s": 0.97,
+  "maxrss_kB": 95272,
+  "note": "R102 replay TT max 2.27e-13 uK^2"
+ },
+ {
+  "command": "python -B -m OMP_NUM_THREADS=4 scripts.r103.commander_ensemble reduce --start 1 --stop 2 --lmax 64 --max-download-bytes 603987840",
+  "return_code": 0,
+  "wall_s": 87.74,
+  "maxrss_kB": 4186192,
+  "note": "noise 00001 streamed (603,987,840 B) and released"
+ },
+ {
+  "command": "python -B -m scripts.r103.gaia_frame_curvature",
+  "return_code": 0,
+  "wall_s": 0.11,
+  "maxrss_kB": 37660,
+  "note": "numerically identical"
+ },
+ {
+  "command": "python -B -m scripts.r103.radio_selection",
+  "return_code": 0,
+  "wall_s": 0.08,
+  "maxrss_kB": 34272,
+  "note": "ULP differences only (max rel 6.7e-16)"
+ },
+ {
+  "command": "python -B -m scripts.r103.native_moving_check --workers 3 --cells 48 --ell 6 --picard 3",
+  "return_code": 0,
+  "wall_s": 87.59,
+  "maxrss_kB": 138884,
+  "note": "R103 code; config differs from committed NATIVE_RESULT (ell4/32/2)"
+ },
+ {
+  "command": "python -B -m scripts.r103.massless_neutrino_check --workers 3 --cells 48 --N-eff 3.044",
+  "return_code": 0,
+  "wall_s": 81.42,
+  "maxrss_kB": 130360,
+  "note": "identical"
+ },
+ {
+  "command": "python -B -m scripts.r103.rec_rei_result",
+  "return_code": 0,
+  "wall_s": 27.4,
+  "maxrss_kB": 133816,
+  "note": "identical"
+ },
+ {
+  "command": "python -B -m scripts.r103.signed_reference (AniLoS 9b7a261 / AniCLASS be1e43f)",
+  "return_code": 0,
+  "wall_s": 1.57,
+  "maxrss_kB": 141428,
+  "note": "identical"
+ },
+ {
+  "command": "python -B -m scripts.r103.closed_tensor_history",
+  "return_code": 0,
+  "wall_s": 1.95,
+  "maxrss_kB": 147960,
+  "note": "identical"
+ },
+ {
+  "command": "python -B -m scripts.r103.high_tilt_quadrature",
+  "return_code": 0,
+  "wall_s": 1.52,
+  "maxrss_kB": 136140,
+  "note": "max rel 1.1e-5 on a roundoff-level orthogonality ratio"
+ },
+ {
+  "command": "python -B -m scripts.r103.rei_five_case_optical five_case.csv.gz (rei_bianchi 56dc609e)",
+  "return_code": 0,
+  "wall_s": 1.07,
+  "maxrss_kB": 129672,
+  "note": "identical"
+ },
+ {
+  "command": "python -B -m scripts.r104.gaia_patch_influence",
+  "return_code": 0,
+  "wall_s": 0.18,
+  "maxrss_kB": 38588,
+  "note": ""
+ },
+ {
+  "command": "python -B -m [R65 runner, output redirected] scripts/r65/run_r65_integrated_flux.py",
+  "return_code": 0,
+  "wall_s": 9.99,
+  "maxrss_kB": 703836,
+  "note": "exact replay: contrast/covariance diff 0, carrier sha a51da9a9"
+ },
+ {
+  "command": "python -B -m scripts.r104.radio_block_jackknife --block-nside 4",
+  "return_code": 0,
+  "wall_s": 6.5,
+  "maxrss_kB": 836080,
+  "note": ""
+ },
+ {
+  "command": "python -B -m scripts.r104.radio_block_jackknife --block-nside 8",
+  "return_code": 0,
+  "wall_s": 14.41,
+  "maxrss_kB": 836292,
+  "note": ""
+ },
+ {
+  "command": "python -B -m scripts.r104.solver_axis_sweep --workers 14 --reference-solver <git show 9aceac7d3:...coupled_einstein_boltzmann.py>",
+  "return_code": 1,
+  "wall_s": 172.73,
+  "maxrss_kB": 148868,
+  "note": "attempt 1: dataclass loader (sys.modules) error; attempt 2 rc=1: reference fixture path; both fixed in script"
+ },
+ {
+  "command": "python -B -m scripts.r104.solver_axis_sweep --workers 14 --reference-solver ...",
+  "return_code": 0,
+  "wall_s": 199.22,
+  "maxrss_kB": 148476,
+  "note": "54 runs, 0 errors"
+ },
+ {
+  "command": "python -B -m scripts.r104.solver_axis_sweep --cells-only 24 48 96 192 384 --base-picard 6 --workers 15",
+  "return_code": 0,
+  "wall_s": 150.67,
+  "maxrss_kB": 139008,
+  "note": "15 runs"
+ },
+ {
+  "command": "python -B -m scripts.r104.first_divergence --workers 8",
+  "return_code": 0,
+  "wall_s": 85.71,
+  "maxrss_kB": 130760,
+  "note": "16 runs A/B"
+ },
+ {
+  "command": "python -B -m scripts.r104.cf4_2mrs_field",
+  "return_code": 0,
+  "wall_s": 4.82,
+  "maxrss_kB": 364956,
+  "note": ""
+ }
+]

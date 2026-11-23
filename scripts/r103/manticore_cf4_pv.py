@@ -201,6 +201,14 @@ def project_field(field, n, stencil, mesh_size=256, observer_relative=False):
     return np.einsum("ij,ij->i", values,n)
 
 
+def velocity_growth_ratio(g, g0):
+    """Linear growth transport of a z=0 peculiar velocity: v(z)=v(0) g(z)/g(0), g=aHfD."""
+    g = np.asarray(g, dtype=float)
+    if not np.isfinite(g0) or g0 <= 0 or not np.isfinite(g).all() or np.any(g <= 0):
+        raise ValueError("positive finite velocity growth rates required")
+    return g / float(g0)
+
+
 def geometry():
     from scripts.r98 import cf4_p1 as old
     from scripts.r97 import cf4_genealogy_and_partial_id as r97
@@ -216,10 +224,13 @@ def geometry():
         raise ValueError("selected row/sky alignment drift")
     sci,*_ = old._load_r30_and_bridge()
     r,g,*_ = sci.background(cz[j]/old.C,64)
+    g0 = float(sci.background(np.array([0.]),64)[1][0])
     _,_,_,a,_,_ = old.tomography(H,n[j],cz[j],v[j],mu[j],emu[j])
-    # Manticore supplies v(z=0); g transports it to z under the R100 linear
-    # velocity-growth convention. q_WF converts km/s to a log-distance response.
-    weight = a * (g * (1.+v[j]/old.C)/v[j])
+    # Manticore supplies v(z=0) in km/s. g=aHfD carries km/s/Mpc, so the
+    # linear transport of an existing velocity is g(z)/g(0) (R104 correction;
+    # R103 multiplied by g itself, a factor g(0)=35.52 too large).
+    # q_WF converts km/s to a log-distance response.
+    weight = a * (velocity_growth_ratio(g, g0) * (1.+v[j]/old.C)/v[j])
     return ids[j], n[j], r, weight
 
 

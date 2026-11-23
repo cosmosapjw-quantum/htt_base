@@ -68,6 +68,7 @@ from bass.transport.general_lie_stokes import (
     LieGeometry,
     max_stokes_reality_error,
     vector_to_alm_dict,
+    vector_to_stokes_maps,
 )
 
 __all__ = [
@@ -261,6 +262,11 @@ class CoupledSolverConfig:
     include_moving_correction: bool = True
     constraint_abort_tol: float = 1e-6
     massless_neutrino_fraction: float = 0.0
+    # Store per-cell sky/fluid moment ratios and constraint residuals (diagnostic only).
+    record_history: bool = False
+    # R104: evaluate the moving-Thomson frame at SDIRK stage times (False keeps the
+    # R103 cell-midpoint frozen baryon velocity for A/B diagnostics only).
+    stage_velocity_collision: bool = True
 
 
 @dataclass(frozen=True)
@@ -286,6 +292,59 @@ class CoupledSolverResult:
     picard_pi_rel_change: float
     total_optical_depth: float
     neutrino_final_state: np.ndarray | None = None
+    history: dict | None = None
+
+
+def sky_energy_momentum_ratios(state: np.ndarray, op: GeneralLieStokesOperator) -> np.ndarray:
+    """Return the normal-frame radiation tensor T^{mu nu}/T^{00} carried by a Stokes state.
+
+    The bolometric intensity on the outward sky is proportional to ``1 + 4 Theta(n)``
+    and photon momentum points along ``-n``. Gauss-Legendre quadrature with
+    ``n_gl_theta >= L + 4`` integrates these ell <= 2 moments exactly.
+    """
+    sky = vector_to_stokes_maps(np.asarray(state), op.idx, L=op.L, n_gl_theta=op.n_gl_theta)
+    n = op._grid[2].reshape(-1, 3)
+    weight = op._grid[3].ravel() * (1.0 + 4.0 * sky[..., 0].ravel())
+    k4 = np.column_stack([np.ones(len(n)), -n])
+    tensor = np.einsum("n,ni,nj->ij", weight, k4, k4)
+    if not math.isfinite(tensor[0, 0]) or tensor[0, 0] <= 0.0:
+        raise FloatingPointError("nonpositive sky radiation energy")
+    return tensor / tensor[0, 0]
+
+
+def _advance_moving_photon_cell(op, state, delta_N, geometry, shear_source, sub_depths, baryon_velocity_at):
+    """SDIRK(2,2) photon cell with the electron velocity evaluated at each stage time.
+
+    ``shear_source`` is the cell source per unit cell coordinate u in [0, 1]. Substep j
+    spans ``h = 1/len(sub_depths)`` with exact optical depth ``sub_depths[j]``. The
+    moving-Thomson operator and its emission use ``baryon_velocity_at(u)`` at the
+    stage abscissae ``u_j + gamma h`` and ``u_j + h``. The second stage is the step
+    result, so an opaque step relaxes to the end-of-step baryon frame rather than to
+    a velocity frozen at the cell midpoint.
+    """
+    gamma = 1.0 - 1.0 / math.sqrt(2.0)
+    h = 1.0 / float(len(sub_depths))
+    m_total = delta_N * (op.base_operator(geometry) + op.bolometric_redshift_operator(geometry))
+    y = np.array(state, dtype=np.complex128, copy=True)
+    for j, depth in enumerate(sub_depths):
+        rate = float(depth) / h
+        stages = []
+        for c in (gamma, 1.0):
+            v = np.asarray(baryon_velocity_at((j + c) * h), dtype=np.float64)
+            inc = gamma * h * shear_source
+            if rate > 0.0 and np.any(v):
+                moving = MovingCollisionStage(op, v)
+                solve = moving.factor_sdirk_stage(m_total, gamma * h, rate)
+                inc = inc + gamma * float(depth) * moving.emission
+            else:
+                solve = op.factor_sdirk_stage(m_total, gamma * h, rate)
+            stages.append((solve, inc))
+        (solve1, inc1), (solve2, inc2) = stages
+        y1 = solve1(y + inc1)
+        y = solve2(y + ((1.0 - gamma) / gamma) * (y1 - y) + inc2)
+    if not np.all(np.isfinite(y)):
+        raise FloatingPointError("moving photon cell produced a non-finite state")
+    return y
 
 
 def _power_spectrum_from_alms(alms: dict[str, dict[tuple[int, int], complex]], ell_max: int) -> dict[str, np.ndarray]:
@@ -394,6 +453,7 @@ def solve_coupled_einstein_boltzmann(
     max_ham = 0.0
     max_cod = 0.0
     picard_rel_change = 0.0
+    history_iterations: list[dict] = []
 
     reion_par = (
         ReionizationParameters(z_reion_H=7.67, delta_z_H=0.5, z_reion_HeII=3.5, delta_z_HeII=0.5, include_HeII=True)
@@ -509,6 +569,7 @@ def solve_coupled_einstein_boltzmann(
             y0,
             method="Radau",
             t_eval=N_eval,
+            dense_output=True,
             rtol=1e-10,
             atol=1e-13,
         )
@@ -522,6 +583,8 @@ def solve_coupled_einstein_boltzmann(
         v_grid = {spec.species: np.zeros((n_eval, 3), dtype=np.float64) for spec in species_specs}
         eps_grid = {spec.species: np.zeros(n_eval, dtype=np.float64) for spec in species_specs}
         max_jac = max_ham = max_cod = max_trace = max_orthog_err = max_mom_sum_err = 0.0
+        ham_grid = np.zeros(n_eval, dtype=np.float64)
+        cod_grid = np.zeros(n_eval, dtype=np.float64)
 
         for k in range(n_eval):
             H, sig, a_v, n_m, _, R_sc, _, rho_tot, _, q_tot, _, T4_list, eh_list, vv_list = _unpack(float(N_eval[k]), sol.y[:, k])
@@ -542,6 +605,8 @@ def solve_coupled_einstein_boltzmann(
             div_sig = exact_momentum_divergence(sig, a_v, n_m, a_sign=1)
             q_sum = sum(float(np.linalg.norm(kappa_grav * T4_s[0, 1:])) for T4_s in T4_list)
             cod_k = float(np.linalg.norm(div_sig + kappa_grav * q_tot)) / max(1e-300, float(np.linalg.norm(div_sig)) + q_sum)
+            ham_grid[k] = ham_k
+            cod_grid[k] = cod_k
             max_jac = max(max_jac, jac_k)
             max_ham = max(max_ham, ham_k)
             max_cod = max(max_cod, cod_k)
@@ -596,6 +661,20 @@ def solve_coupled_einstein_boltzmann(
         # The boosted perfect-fluid pressure already contains STF(v_i q_j).
         # The prescribed IC matches that stress, so its initial correction is zero.
         new_pi_tab = np.zeros_like(pi_tab)
+        if cfg.record_history:
+            n_rad, n_c = len(radiation_indices), int(cfg.n_cells)
+            record = {
+                "N_end": N_eval[2::2].copy(),
+                "delta_tau": np.asarray(cell_depths[:n_c], dtype=np.float64).copy(),
+                "hamiltonian": ham_grid[2::2].copy(),
+                "codazzi": cod_grid[2::2].copy(),
+                "q_over_E_sky": np.zeros((n_rad, n_c, 3)),
+                "q_over_E_fluid": np.zeros((n_rad, n_c, 3)),
+                "pi_over_E_sky": np.zeros((n_rad, n_c, 3, 3)),
+                "pi_over_E_fluid": np.zeros((n_rad, n_c, 3, 3)),
+                "thomson_force_over_E_fluid": np.zeros((n_c, 4)),
+                "thomson_force_over_E_sky": np.zeros((n_c, 4)),
+            }
 
         for cell in range(int(cfg.n_cells)):
             i0 = 2 * cell
@@ -637,25 +716,40 @@ def solve_coupled_einstein_boltzmann(
                 nu_vec = op_lie.advance_cell(nu_vec, dN_cell, geom, 0.0,
                                              source_increment=src_vec, substeps=cfg.substeps_per_cell,
                                              bolometric_redshift=True)
-            moving = None
-            if dtau_cell > 0.0 and np.any(vb_mid):
-                if cfg.include_moving_correction:
-                    moving = MovingCollisionStage(op_lie, vb_mid)
-                    src_vec += dtau_cell * moving.emission
-                else:
-                    # Outward sky direction n is opposite photon momentum p in the Lie operator.
-                    src_vec += op_lie.dipole_source_vector(-vb_mid, channel="T", amplitude=dtau_cell)
+            if cfg.include_moving_correction and dtau_cell > 0.0 and cfg.stage_velocity_collision:
+                # The baryon frame relaxes on the Thomson time inside opaque cells;
+                # sample it from the dense Einstein-Euler solution at each stage.
+                n0 = float(N_eval[i0])
+                b_off = 16 + 4 * baryon_idx
 
-            S_vec = op_lie.advance_cell(
-                S_vec,
-                dN_cell,
-                geom,
-                dtau_cell,
-                source_increment=src_vec,
-                substeps=cfg.substeps_per_cell,
-                moving_collision=moving,
-                bolometric_redshift=True,
-            )
+                def _baryon_velocity_at(u, n0=n0, dn=dN_cell, b_off=b_off):
+                    y_u = sol.sol(n0 + u * dn)
+                    return primitive_from_energy_momentum_ratio(y_u[b_off], y_u[b_off + 1:b_off + 4], 0.0)[2]
+
+                sub_edges = np.linspace(n0, float(N_eval[i1]), int(cfg.substeps_per_cell) + 1)
+                sub_edges[-1] = float(N_eval[i1])
+                sub_depths = opacity.cells(sub_edges).delta_tau
+                S_vec = _advance_moving_photon_cell(
+                    op_lie, S_vec, dN_cell, geom, src_vec, sub_depths, _baryon_velocity_at)
+            else:
+                moving = None
+                if dtau_cell > 0.0 and np.any(vb_mid):
+                    if cfg.include_moving_correction:
+                        moving = MovingCollisionStage(op_lie, vb_mid)
+                        src_vec += dtau_cell * moving.emission
+                    else:
+                        # Outward sky direction n is opposite photon momentum p in the Lie operator.
+                        src_vec += op_lie.dipole_source_vector(-vb_mid, channel="T", amplitude=dtau_cell)
+                S_vec = op_lie.advance_cell(
+                    S_vec,
+                    dN_cell,
+                    geom,
+                    dtau_cell,
+                    source_increment=src_vec,
+                    substeps=cfg.substeps_per_cell,
+                    moving_collision=moving,
+                    bolometric_redshift=True,
+                )
             for slot, species_idx in enumerate(radiation_indices):
                 spec_key = species_specs[species_idx].species
                 angular_state = S_vec if species_idx == photon_idx else nu_vec
@@ -663,7 +757,26 @@ def solve_coupled_einstein_boltzmann(
                 new_pi_tab[slot, i1] = _stress_feedback_ratio(
                     angular_state, op_lie, sol.y[offset+1:offset+4, i1], v_grid[spec_key][i1])
                 new_pi_tab[slot, i_mid] = .5*(new_pi_tab[slot, i0] + new_pi_tab[slot, i1])
+            if cfg.record_history:
+                T4_end = _unpack(float(N_eval[i1]), sol.y[:, i1])[11]
+                for slot, species_idx in enumerate(radiation_indices):
+                    angular_state = S_vec if species_idx == photon_idx else nu_vec
+                    sky_t = sky_energy_momentum_ratios(angular_state, op_lie)
+                    fluid_t = T4_end[species_idx] / T4_end[species_idx][0, 0]
+                    record["q_over_E_sky"][slot, cell] = sky_t[0, 1:]
+                    record["q_over_E_fluid"][slot, cell] = fluid_t[0, 1:]
+                    record["pi_over_E_sky"][slot, cell] = pstf_rank2(sky_t[1:, 1:])
+                    record["pi_over_E_fluid"][slot, cell] = pstf_rank2(fluid_t[1:, 1:])
+                    if species_idx == photon_idx:
+                        rate = float(recomb_hist.opacity_per_efold[i1])
+                        vb_end = v_grid["baryon"][i1]
+                        record["thomson_force_over_E_fluid"][cell] = rate * covariant_thomson_four_force(
+                            fluid_t, vb_end, clock="conserved_anchor")
+                        record["thomson_force_over_E_sky"][cell] = rate * covariant_thomson_four_force(
+                            sky_t, vb_end, clock="conserved_anchor")
 
+        if cfg.record_history:
+            history_iterations.append(record)
         neutrino_final = nu_vec
         final_S = S_vec
         # Interpolate the slowly varying pi/E, then restore the dimensional
@@ -704,4 +817,6 @@ def solve_coupled_einstein_boltzmann(
         picard_pi_rel_change=picard_rel_change,
         total_optical_depth=float(recomb_hist.kappa[0]),
         neutrino_final_state=neutrino_final,
+        history=({"radiation_species": [species_specs[i].species for i in radiation_indices],
+                  "picard_iterations": history_iterations} if cfg.record_history else None),
     )

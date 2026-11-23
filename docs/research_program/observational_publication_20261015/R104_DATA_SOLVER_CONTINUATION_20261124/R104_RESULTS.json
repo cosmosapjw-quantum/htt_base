@@ -1,0 +1,338 @@
+{
+ "schema": "htt.r104.results/1",
+ "start_commit": "9aceac7d3436b764dcc1ed240e88b981c08c6762",
+ "artifacts_sha256": {
+  "CF4_2MRS_FIELD.json": "14a95a21ed81f4a9cab6a4f759190bd499594be763359b8e26de18fea1de712d",
+  "COMMANDER_PAIR0_REPLAY.json": "d982a2ba9eb2291d81efe00d0f56a2163ba30c82feb25d8dded465bfbc69ff03",
+  "COMMANDER_PLAN.json": "284b094346729fa425c5558a2822080908120d1d43dac36fe7bcf02c28f02f18",
+  "COMMANDER_PR3_00000.json": "ee8e9d8516135d548491d187706d5701d92b4545beb4f5a3285fff52c9ce2b2d",
+  "COMMANDER_PR3_00001.json": "8fd53d72261dec40020b0d1f0824dce9451dd42e63ba93b5466ca7606a86b030",
+  "EXECUTED_COMMANDS.json": "c75a8e2f16eec7ead6e64759377afd3d41a7ac2997e992e9c675940697f2b2d5",
+  "FIRST_DIVERGENCE.json": "bd134b5feaf6d5e8fa8602501fb0b186cf825bcee16c49007d0d1cd794e8c8cd",
+  "GAIA_PATCH_INFLUENCE.json": "e941c21f1682fbc27f901dc11ca01a9532573ec853d1e2bfb668f03b39ca0378",
+  "MANTICORE_FETCH_FAILURE.json": "9fef1a78eb5a6de73e125aebcc4b1c30216a667ca6a16c0de21c172a90b3d13d",
+  "NATIVE_HANDOFF_CONFIG_R103_CODE.json": "d9af36660d5535a90c41495e56b368d77123efc0e060e1ad896f6aec71cc9567",
+  "RADIO_BLOCK_JACKKNIFE_NSIDE4.json": "cce2b741191d81711bcf87f5ed5756020e810e3621959bc22d471f9503c25c21",
+  "RADIO_BLOCK_JACKKNIFE_NSIDE8.json": "4616526e47690b552b8c301f9caf895ee4e5c94500f8e1be2894cc9354111e8f",
+  "SOLVER_AXIS_SWEEP.json": "edcd855da29dd8adb4f0f188c81aaa3228045efeb52e00ef8b62830055652452",
+  "SOLVER_CELLS_PICARD6.json": "be83efd690852b4b3901f7662fa688278771768849dfc94f03b17b6b95cadedb"
+ },
+ "executed": [
+  {
+   "command": "python -B -m scripts.r103.program --node SQ-CF4",
+   "return_code": 0,
+   "wall_s": 0.07,
+   "maxrss_kB": 34056,
+   "note": "R103 code"
+  },
+  {
+   "command": "python -B -m scripts.r103.cf4_shared_field_holdout --output cf4.json",
+   "return_code": 0,
+   "wall_s": 2.97,
+   "maxrss_kB": 215364,
+   "note": "R103 code; numerically identical to committed (R102 replay abs err 0.0)"
+  },
+  {
+   "command": "python -B -m scripts.r103.p1_joint_patterns --output p1.json",
+   "return_code": 0,
+   "wall_s": 0.57,
+   "maxrss_kB": 81276,
+   "note": "byte-identical"
+  },
+  {
+   "command": "python -B -m scripts.r103.manticore_cf4_pv geometry",
+   "return_code": 0,
+   "wall_s": 1.69,
+   "maxrss_kB": 261124,
+   "note": "35,970 groups, 198,924 stencil vertices"
+  },
+  {
+   "command": "python -B -m [manticore venv] scripts.r103.manticore_cf4_pv fetch --indices 0 1 --max-bytes 800000000",
+   "return_code": 1,
+   "wall_s": 135.77,
+   "maxrss_kB": 73856,
+   "note": "FIRST FAILURE INPUT: ConnectTimeout manticore.web.data-2-osu.iap.fr:443 /public-keys.json; 0 bytes"
+  },
+  {
+   "command": "python -B -m scripts.r103.commander_ensemble plan",
+   "return_code": 0,
+   "wall_s": 1.32,
+   "maxrss_kB": 96456,
+   "note": "pairs available [0]; cmb 0-6, noise 0"
+  },
+  {
+   "command": "python -B -m OMP_NUM_THREADS=4 scripts.r103.commander_ensemble reduce --start 0 --stop 1 --lmax 64",
+   "return_code": 0,
+   "wall_s": 87.98,
+   "maxrss_kB": 4152908,
+   "note": ""
+  },
+  {
+   "command": "python -B -m scripts.r103.compare_commander commander_pr3_00000.json",
+   "return_code": 0,
+   "wall_s": 0.97,
+   "maxrss_kB": 95272,
+   "note": "R102 replay TT max 2.27e-13 uK^2"
+  },
+  {
+   "command": "python -B -m OMP_NUM_THREADS=4 scripts.r103.commander_ensemble reduce --start 1 --stop 2 --lmax 64 --max-download-bytes 603987840",
+   "return_code": 0,
+   "wall_s": 87.74,
+   "maxrss_kB": 4186192,
+   "note": "noise 00001 streamed (603,987,840 B) and released"
+  },
+  {
+   "command": "python -B -m scripts.r103.gaia_frame_curvature",
+   "return_code": 0,
+   "wall_s": 0.11,
+   "maxrss_kB": 37660,
+   "note": "numerically identical"
+  },
+  {
+   "command": "python -B -m scripts.r103.radio_selection",
+   "return_code": 0,
+   "wall_s": 0.08,
+   "maxrss_kB": 34272,
+   "note": "ULP differences only (max rel 6.7e-16)"
+  },
+  {
+   "command": "python -B -m scripts.r103.native_moving_check --workers 3 --cells 48 --ell 6 --picard 3",
+   "return_code": 0,
+   "wall_s": 87.59,
+   "maxrss_kB": 138884,
+   "note": "R103 code; config differs from committed NATIVE_RESULT (ell4/32/2)"
+  },
+  {
+   "command": "python -B -m scripts.r103.massless_neutrino_check --workers 3 --cells 48 --N-eff 3.044",
+   "return_code": 0,
+   "wall_s": 81.42,
+   "maxrss_kB": 130360,
+   "note": "identical"
+  },
+  {
+   "command": "python -B -m scripts.r103.rec_rei_result",
+   "return_code": 0,
+   "wall_s": 27.4,
+   "maxrss_kB": 133816,
+   "note": "identical"
+  },
+  {
+   "command": "python -B -m scripts.r103.signed_reference (AniLoS 9b7a261 / AniCLASS be1e43f)",
+   "return_code": 0,
+   "wall_s": 1.57,
+   "maxrss_kB": 141428,
+   "note": "identical"
+  },
+  {
+   "command": "python -B -m scripts.r103.closed_tensor_history",
+   "return_code": 0,
+   "wall_s": 1.95,
+   "maxrss_kB": 147960,
+   "note": "identical"
+  },
+  {
+   "command": "python -B -m scripts.r103.high_tilt_quadrature",
+   "return_code": 0,
+   "wall_s": 1.52,
+   "maxrss_kB": 136140,
+   "note": "max rel 1.1e-5 on a roundoff-level orthogonality ratio"
+  },
+  {
+   "command": "python -B -m scripts.r103.rei_five_case_optical five_case.csv.gz (rei_bianchi 56dc609e)",
+   "return_code": 0,
+   "wall_s": 1.07,
+   "maxrss_kB": 129672,
+   "note": "identical"
+  },
+  {
+   "command": "python -B -m scripts.r104.gaia_patch_influence",
+   "return_code": 0,
+   "wall_s": 0.18,
+   "maxrss_kB": 38588,
+   "note": ""
+  },
+  {
+   "command": "python -B -m [R65 runner, output redirected] scripts/r65/run_r65_integrated_flux.py",
+   "return_code": 0,
+   "wall_s": 9.99,
+   "maxrss_kB": 703836,
+   "note": "exact replay: contrast/covariance diff 0, carrier sha a51da9a9"
+  },
+  {
+   "command": "python -B -m scripts.r104.radio_block_jackknife --block-nside 4",
+   "return_code": 0,
+   "wall_s": 6.5,
+   "maxrss_kB": 836080,
+   "note": ""
+  },
+  {
+   "command": "python -B -m scripts.r104.radio_block_jackknife --block-nside 8",
+   "return_code": 0,
+   "wall_s": 14.41,
+   "maxrss_kB": 836292,
+   "note": ""
+  },
+  {
+   "command": "python -B -m scripts.r104.solver_axis_sweep --workers 14 --reference-solver <git show 9aceac7d3:...coupled_einstein_boltzmann.py>",
+   "return_code": 1,
+   "wall_s": 172.73,
+   "maxrss_kB": 148868,
+   "note": "attempt 1: dataclass loader (sys.modules) error; attempt 2 rc=1: reference fixture path; both fixed in script"
+  },
+  {
+   "command": "python -B -m scripts.r104.solver_axis_sweep --workers 14 --reference-solver ...",
+   "return_code": 0,
+   "wall_s": 199.22,
+   "maxrss_kB": 148476,
+   "note": "54 runs, 0 errors"
+  },
+  {
+   "command": "python -B -m scripts.r104.solver_axis_sweep --cells-only 24 48 96 192 384 --base-picard 6 --workers 15",
+   "return_code": 0,
+   "wall_s": 150.67,
+   "maxrss_kB": 139008,
+   "note": "15 runs"
+  },
+  {
+   "command": "python -B -m scripts.r104.first_divergence --workers 8",
+   "return_code": 0,
+   "wall_s": 85.71,
+   "maxrss_kB": 130760,
+   "note": "16 runs A/B"
+  },
+  {
+   "command": "python -B -m scripts.r104.cf4_2mrs_field",
+   "return_code": 0,
+   "wall_s": 4.82,
+   "maxrss_kB": 364956,
+   "note": ""
+  }
+ ],
+ "node_links": {
+  "SQ-CF4": {
+   "evidence": [
+    "CF4_2MRS_FIELD.json",
+    "MANTICORE_FETCH_FAILURE.json"
+   ],
+   "raw_sha256": {
+    "cf4_table2": "8e908928e68352b59292cf67020a4d70aaa6d30f278dfa6aa3e41a9df808332f",
+    "sixdf_pv_table1": "08f3d4b264e28efcb574bea4efa370d66e4f299f8254e21bd04979fb8301a14d",
+    "2mrs_neuralnet_zip": "c12efc1063b6c06dda127a9c51aa97926d8666f6a615e9fba8412ba4adbabcd7",
+    "2mrs_vx": "50edf12e9dd8a79959071eda57ccd197f2cfba2bae5233210ab6243541aa4643",
+    "2mrs_vy": "c125f3d97aa8f9ed34110285e018df0849d955b62f0a472cebb34d196e2cb447",
+    "2mrs_vz": "ae1e0dfadf48c27afcf7f30c53c2e978f7edeab3506c9e446ed7f73770b207d6",
+    "courtois_cf4_velocity_fits": "4cd0cc0404ae949fe27297d3b167bfce57ded8539102706d8d92c699f19563d6"
+   },
+   "status": "analysis_extended_scoped",
+   "manticore_real_realizations": 0
+  },
+  "H02": {
+   "evidence": [
+    "CF4_2MRS_FIELD.json"
+   ],
+   "status": "blocked_source",
+   "remaining_input": "posterior field ensemble (Manticore field.h5 or equivalent) for inter-group covariance"
+  },
+  "SQ-CMB-NULL": {
+   "evidence": [
+    "COMMANDER_PR3_00000.json",
+    "COMMANDER_PR3_00001.json",
+    "COMMANDER_PAIR0_REPLAY.json",
+    "COMMANDER_PLAN.json"
+   ],
+   "raw_sha256": {
+    "pair0": {
+     "cmb": "c84d83bf33d6c64287ebc37d1e07c649546fa1f29febf5c4fa7d295243f17a27",
+     "noise": "7c25b9674652e117362c69f57948d4b5346f14c7426486241c39de316c74e3cb"
+    },
+    "pair1": {
+     "cmb": "73b7754d7364184ce3ed3d2d904afc625e3ef55ec52a19fe4e68127cafaf6000",
+     "noise": "fd278b8396f843300add348304cb36d65da2980080114f6c8271707266a61e43"
+    },
+    "masks": [
+     "23f49a3479073408b83a7f1bb2cca490d9be7f934b2e0e891524b6a1d06a5fc4",
+     "c967e45449596c561c940d7ca0d494f1a26d947e6b5a9ef44185fdbf93b036d4"
+    ]
+   },
+   "status": "blocked_source",
+   "pairs_reduced": 2,
+   "pairs_required": 300
+  },
+  "L03": {
+   "evidence": [
+    "COMMANDER_PR3_00001.json"
+   ],
+   "status": "pending",
+   "remaining_input": "release effective beam/pixel window/foreground transfer and 298 further matched pairs"
+  },
+  "SQ-GAIA": {
+   "evidence": [
+    "GAIA_PATCH_INFLUENCE.json"
+   ],
+   "raw_sha256": {
+    "receipt": "0a56bc358b6048f4b018d93d2b55be2f2ac5526e22191a44ca6a9f1148a9d800",
+    "patch_cache": "70d1bc9c959ccfa0197923fc7d7e950ac790eaa1345ca0aca507ade446464c92"
+   },
+   "status": "ready_scoped"
+  },
+  "SQ-RADIO": {
+   "evidence": [
+    "RADIO_BLOCK_JACKKNIFE_NSIDE4.json",
+    "RADIO_BLOCK_JACKKNIFE_NSIDE8.json"
+   ],
+   "raw_sha256": {
+    "nvss_provider": "52eb576c1e3e71837f2fca26121789ccc0b316152cca3f25ea2f37ea8ef5a38e"
+   },
+   "status": "ready_scoped",
+   "jk_over_poisson_trace_ratio_xy": [
+    3.743267899815958,
+    2.557895482103943
+   ]
+  },
+  "SQ-NATIVE": {
+   "evidence": [
+    "SOLVER_AXIS_SWEEP.json",
+    "SOLVER_CELLS_PICARD6.json",
+    "FIRST_DIVERGENCE.json"
+   ],
+   "status": "blocked_external"
+  },
+  "B02": {
+   "evidence": [
+    "SOLVER_AXIS_SWEEP.json",
+    "SOLVER_CELLS_PICARD6.json"
+   ],
+   "status": "pending"
+  },
+  "SQ-PHOTON-FLUX": {
+   "evidence": [
+    "FIRST_DIVERGENCE.json",
+    "SOLVER_CELLS_PICARD6.json"
+   ],
+   "status": "blocked_source",
+   "note": "sky-dipole vs fluid photon q/E now converges at second order; physical source still external"
+  },
+  "B03": {
+   "status": "pending",
+   "reason": "no release-matched beam/transfer and qualified null; no family attribution computed"
+  },
+  "B04": {
+   "status": "pending",
+   "reason": "requires B03"
+  }
+ },
+ "units": {
+  "cf4_window_coefficients": "natural-log distance ratio (R98 basis)",
+  "velocity": "km/s (CMB frame)",
+  "holdout_scores": "nats, held-out log predictive density minus no-flow model",
+  "commander_pseudo_cl": "uK^2 (raw masked pseudo-C_ell, ell>=2)",
+  "gaia_curvature": "microarcsec/yr per unit z^2",
+  "radio_dipole": "dimensionless",
+  "solver_q_over_E": "dimensionless T^{0i}/T^{00}",
+  "solver_cl": "dimensionless bolometric (Delta T/T)^2"
+ },
+ "physical_Pi": null,
+ "physical_GF": null,
+ "Bianchi_family_attribution": null,
+ "calibrated_p": null
+}

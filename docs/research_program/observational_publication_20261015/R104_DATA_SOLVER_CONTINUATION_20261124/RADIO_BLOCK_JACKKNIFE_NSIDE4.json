@@ -1,0 +1,76 @@
+{
+ "schema": "htt.r104.radio_block_jackknife/1",
+ "catalogue_sha256": "52eb576c1e3e71837f2fca26121789ccc0b316152cca3f25ea2f37ea8ef5a38e",
+ "cuts": {
+  "threshold_mJy": 20.0,
+  "abs_b_deg_gt": 10.0,
+  "dec_deg_gt": -40.0,
+  "block_nside": 4
+ },
+ "n_peak": 248435,
+ "n_integrated": 270390,
+ "n_shared": 248435,
+ "n_blocks": 166,
+ "linear_contrast_icrs_xyz": [
+  -0.0014300773885129736,
+  0.006148140748337223,
+  0.001203507632863643
+ ],
+ "poisson_cov": [
+  [
+   1.219959495865781e-06,
+   7.009301838519803e-08,
+   -6.245276674638662e-08
+  ],
+  [
+   7.009301838519803e-08,
+   9.98454418372341e-07,
+   -2.5997496575144004e-08
+  ],
+  [
+   -6.245276674638662e-08,
+   -2.5997496575144004e-08,
+   6.376791279810805e-07
+  ]
+ ],
+ "jackknife_cov": [
+  [
+   2.715699259643112e-06,
+   1.157303595706817e-06,
+   -4.1846311937975535e-07
+  ],
+  [
+   1.1573035957068172e-06,
+   5.588418334029524e-06,
+   -1.3579249516308758e-06
+  ],
+  [
+   -4.1846311937975535e-07,
+   -1.3579249516308758e-06,
+   1.7917871232769388e-06
+  ]
+ ],
+ "jk_over_poisson_trace_ratio_xy": 3.743267899815958,
+ "jk_over_poisson_generalized_eigs_xy": [
+  1.9902651451675393,
+  5.730811257380772
+ ],
+ "linear_wald_xy_poisson": 40.710628775805304,
+ "linear_wald_xy_jackknife": 9.715336157582144,
+ "linear_tail_xy_jackknife": 0.007768578498301344,
+ "r65_wald_inflated_by_jk_ratio": {
+  "dipole": {
+   "r65_poisson_wald": 32.792386268354115,
+   "divided_by_trace_ratio": 8.760363176241377,
+   "tail_df2": 0.012523084371236061
+  },
+  "dipole_stf": {
+   "r65_poisson_wald": 30.989468960483375,
+   "divided_by_trace_ratio": 8.278720569801324,
+   "tail_df2": 0.01593304085183583
+  }
+ },
+ "physical_LSS_calibrated": false,
+ "physical_Pi": null,
+ "scope": "Simple vector-sum estimator, not the R65 common-transverse fit; jackknife blocks share one sky realization. The ratio is an empirical inflation estimate, not a calibrated LSS covariance."
+}

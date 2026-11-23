@@ -1,0 +1,228 @@
+{
+  "status": "pass_scoped",
+  "physics_scope": "cold Thomson in conserved anchor; midpoint geometry, finite harmonic closure; one radiation species",
+  "parent_revision": "664845022a9600ad925d6c1332143395aac5ed90",
+  "modal": {
+    "ell_max": 6,
+    "normal_quadrature_n_theta": 16,
+    "stokes_dimension": 188,
+    "ic_beta": [
+      0.24,
+      -0.19,
+      0.07
+    ],
+    "ic_stress_max_abs_over_energy": 5.536629635856467e-16,
+    "collision_beta": [
+      0.13,
+      -0.11,
+      0.06
+    ],
+    "stage_depth": 1000.0,
+    "stiff_relative_residual": 1.8855881370545538e-14,
+    "Fourier_k": [
+      0.3,
+      0.1,
+      -0.5
+    ],
+    "delta_N": 0.8,
+    "delta_tau": 3.0,
+    "substeps": [
+      4,
+      8,
+      16
+    ],
+    "relative_state_error_vs_expm": [
+      0.03880124829877183,
+      0.00929827726250928,
+      0.0022809018875184555
+    ],
+    "successive_error_ratios": [
+      4.17295023619254,
+      4.076579230957406
+    ]
+  },
+  "coupled_families": [
+    {
+      "family": "FLRW",
+      "handedness": 1,
+      "ell_max": 6,
+      "n_cells": 48,
+      "n_picard": 3,
+      "epsilon": 0.0,
+      "substeps": 2,
+      "max_jacobi": 0.0,
+      "max_hamiltonian": 1.3872218073853763e-09,
+      "max_codazzi": 0.0,
+      "max_ub_dot_F": 0.0,
+      "max_reality": 0.0,
+      "picard_pi_rel_change": 0.0,
+      "Cl2": {
+        "T": 0.0,
+        "E": 0.0,
+        "B": 0.0,
+        "V": 0.0
+      },
+      "tau_anchor": 32.695364217787485
+    },
+    {
+      "family": "I",
+      "handedness": 1,
+      "ell_max": 6,
+      "n_cells": 48,
+      "n_picard": 3,
+      "epsilon": 0.0002,
+      "substeps": 2,
+      "max_jacobi": 0.0,
+      "max_hamiltonian": 5.411491054715437e-10,
+      "max_codazzi": 6.249010566282327e-10,
+      "max_ub_dot_F": 1.3201677036192867e-14,
+      "max_reality": 8.177128148233547e-19,
+      "picard_pi_rel_change": 9.381004226384723e-05,
+      "Cl2": {
+        "T": 2.738025633807022e-09,
+        "E": 1.9963773910055846e-11,
+        "B": 6.483947810174032e-22,
+        "V": 0.0
+      },
+      "tau_anchor": 32.695363910140586
+    },
+    {
+      "family": "V",
+      "handedness": 1,
+      "ell_max": 6,
+      "n_cells": 48,
+      "n_picard": 3,
+      "epsilon": 0.0002,
+      "substeps": 2,
+      "max_jacobi": 5.788088317812337e-21,
+      "max_hamiltonian": 9.153025840720312e-10,
+      "max_codazzi": 1.1877025528628768e-09,
+      "max_ub_dot_F": 1.700637384425387e-14,
+      "max_reality": 5.895446672194885e-19,
+      "picard_pi_rel_change": 9.381026450344895e-05,
+      "Cl2": {
+        "T": 2.7160038789794287e-09,
+        "E": 1.994014069388788e-11,
+        "B": 6.232086215451729e-16,
+        "V": 0.0
+      },
+      "tau_anchor": 32.69536036033915
+    },
+    {
+      "family": "VII_h",
+      "handedness": 1,
+      "ell_max": 6,
+      "n_cells": 48,
+      "n_picard": 3,
+      "epsilon": 0.0002,
+      "substeps": 2,
+      "max_jacobi": 7.682000647795521e-19,
+      "max_hamiltonian": 1.035218741557798e-09,
+      "max_codazzi": 1.10030747501317e-09,
+      "max_ub_dot_F": 2.9351730417753775e-14,
+      "max_reality": 6.3686063528983185e-19,
+      "picard_pi_rel_change": 9.38103146269161e-05,
+      "Cl2": {
+        "T": 2.7283660194099715e-09,
+        "E": 1.9953091072958813e-11,
+        "B": 1.829578166792905e-15,
+        "V": 0.0
+      },
+      "tau_anchor": 32.695362829163095
+    },
+    {
+      "family": "VII_h",
+      "handedness": -1,
+      "ell_max": 6,
+      "n_cells": 48,
+      "n_picard": 3,
+      "epsilon": 0.0002,
+      "substeps": 2,
+      "max_jacobi": 5.376483288193984e-19,
+      "max_hamiltonian": 8.543505389648093e-10,
+      "max_codazzi": 9.09190355580996e-10,
+      "max_ub_dot_F": 2.923899641633634e-14,
+      "max_reality": 3.375402382250268e-19,
+      "picard_pi_rel_change": 9.381018479169732e-05,
+      "Cl2": {
+        "T": 2.7269946536342537e-09,
+        "E": 1.9952243945339497e-11,
+        "B": 1.829600098605997e-15,
+        "V": 0.0
+      },
+      "tau_anchor": 32.695362814065646
+    },
+    {
+      "family": "VI_h",
+      "handedness": 1,
+      "ell_max": 6,
+      "n_cells": 48,
+      "n_picard": 3,
+      "epsilon": 0.0002,
+      "substeps": 2,
+      "max_jacobi": 1.5661677433275306e-19,
+      "max_hamiltonian": 9.867117272196115e-10,
+      "max_codazzi": 1.0338524680197405e-09,
+      "max_ub_dot_F": 2.920731694803823e-14,
+      "max_reality": 9.941496917729751e-19,
+      "picard_pi_rel_change": 9.382642856673189e-05,
+      "Cl2": {
+        "T": 1.958239035839481e-08,
+        "E": 1.5429591832926372e-11,
+        "B": 2.836715818926097e-14,
+        "V": 0.0
+      },
+      "tau_anchor": 32.69536080699168
+    },
+    {
+      "family": "VI_-1/9",
+      "handedness": 1,
+      "ell_max": 6,
+      "n_cells": 48,
+      "n_picard": 3,
+      "epsilon": 0.0002,
+      "substeps": 2,
+      "max_jacobi": 7.805833035192017e-20,
+      "max_hamiltonian": 5.528536094085127e-10,
+      "max_codazzi": 7.974848773282064e-10,
+      "max_ub_dot_F": 2.9421419552086e-14,
+      "max_reality": 2.1885993895744203e-18,
+      "picard_pi_rel_change": 9.385635297205202e-05,
+      "Cl2": {
+        "T": 2.9931606396899137e-07,
+        "E": 1.0135994177878056e-11,
+        "B": 5.832942728299549e-14,
+        "V": 0.0
+      },
+      "tau_anchor": 32.69535630256055
+    },
+    {
+      "family": "IX",
+      "handedness": 1,
+      "ell_max": 6,
+      "n_cells": 48,
+      "n_picard": 3,
+      "epsilon": 0.0002,
+      "substeps": 2,
+      "max_jacobi": 3.449475265738784e-21,
+      "max_hamiltonian": 7.255534675392982e-10,
+      "max_codazzi": 5.988956805521171e-10,
+      "max_ub_dot_F": 1.3175230981919593e-14,
+      "max_reality": 5.944602503245698e-19,
+      "picard_pi_rel_change": 9.38104683599847e-05,
+      "Cl2": {
+        "T": 2.843831982552935e-09,
+        "E": 1.9966902295396923e-11,
+        "B": 9.925247963820954e-15,
+        "V": 0.0
+      },
+      "tau_anchor": 32.69536421535528
+    }
+  ],
+  "python": "3.12.3",
+  "numpy": "2.5.4",
+  "scipy": "1.18.1",
+  "workers": 3,
+  "OPENBLAS_NUM_THREADS": "1",
+  "elapsed_seconds": 86.43952524499036
+}
