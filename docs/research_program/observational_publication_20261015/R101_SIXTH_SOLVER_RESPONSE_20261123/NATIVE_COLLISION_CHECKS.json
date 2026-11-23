@@ -1,0 +1,281 @@
+{
+  "python": "3.12.3",
+  "numpy": "2.5.4",
+  "scipy": "1.18.1",
+  "r100_collision_plus_affine_at_zero_angular_advection": {
+    "ell_max": 6,
+    "number_of_slots": 188,
+    "max_error": {
+      "I": 1.3461454173580023e-15,
+      "E": 1.2232150153568437e-15,
+      "B": 1.0623534945633305e-15,
+      "V": 7.889616961715915e-16
+    }
+  },
+  "resolution_against_analytic_unbandlimited_sky": [
+    {
+      "n_theta": 3,
+      "n_dir": 18,
+      "max_V_error": 0.05515545943940925
+    },
+    {
+      "n_theta": 4,
+      "n_dir": 32,
+      "max_V_error": 0.0016993330604943013
+    },
+    {
+      "n_theta": 6,
+      "n_dir": 72,
+      "max_V_error": 2.492699784584218e-06
+    },
+    {
+      "n_theta": 8,
+      "n_dir": 128,
+      "max_V_error": 3.7067182656613795e-10
+    },
+    {
+      "n_theta": 12,
+      "n_dir": 288,
+      "max_V_error": 1.7763568394002505e-15
+    }
+  ],
+  "stiffness_32_directions": [
+    {
+      "delta_tau": 1e-08,
+      "max_dense_expm_error": 4.440892098500626e-16,
+      "native_step_seconds": 3.0230775882955642e-05,
+      "dense_new_exponential_and_action_seconds": 0.0008229059943308433
+    },
+    {
+      "delta_tau": 0.1,
+      "max_dense_expm_error": 6.661338147750939e-16,
+      "native_step_seconds": 2.8811625088565052e-05,
+      "dense_new_exponential_and_action_seconds": 0.000585949009594818
+    },
+    {
+      "delta_tau": 1,
+      "max_dense_expm_error": 1.4432899320127035e-15,
+      "native_step_seconds": 2.8486223891377448e-05,
+      "dense_new_exponential_and_action_seconds": 0.0009012966766022146
+    },
+    {
+      "delta_tau": 100,
+      "max_dense_expm_error": 1.4918621893400541e-15,
+      "native_step_seconds": 2.870940079446882e-05,
+      "dense_new_exponential_and_action_seconds": 0.0013449873464802902
+    },
+    {
+      "delta_tau": 10000.0,
+      "max_dense_expm_error": 6.404599073306372e-15,
+      "native_step_seconds": 2.9414500750135632e-05,
+      "dense_new_exponential_and_action_seconds": 0.0018754953246874113
+    }
+  ],
+  "cost": [
+    {
+      "n_theta": 4,
+      "n_dir": 32,
+      "cached_operator_array_bytes": 5632,
+      "equivalent_full_dense_float64_bytes": 131072,
+      "exact_step_seconds": 2.9492599423974752e-05
+    },
+    {
+      "n_theta": 8,
+      "n_dir": 128,
+      "cached_operator_array_bytes": 22528,
+      "equivalent_full_dense_float64_bytes": 2097152,
+      "exact_step_seconds": 3.756984951905906e-05
+    },
+    {
+      "n_theta": 16,
+      "n_dir": 512,
+      "cached_operator_array_bytes": 90112,
+      "equivalent_full_dense_float64_bytes": 33554432,
+      "exact_step_seconds": 6.081575120333582e-05
+    },
+    {
+      "n_theta": 32,
+      "n_dir": 2048,
+      "cached_operator_array_bytes": 360448,
+      "equivalent_full_dense_float64_bytes": 536870912,
+      "exact_step_seconds": 0.00014955670048948376
+    },
+    {
+      "n_theta": 64,
+      "n_dir": 8192,
+      "cached_operator_array_bytes": 1441792,
+      "equivalent_full_dense_float64_bytes": 8589934592,
+      "exact_step_seconds": 0.000759678750182502
+    }
+  ],
+  "timing_method": "median of 5 repeated batches, setup excluded, dense comparison recomputes exponential at each requested depth",
+  "HyRec_recombination_case": {
+    "scope": "electron-rest collision plus prescribed linear shear and baryon-dipole forcing",
+    "clock": "HyRec-2 recombination table, forward increments of cumulative kappa",
+    "z_start": 1150.0,
+    "z_end": 950.0,
+    "cells": 200,
+    "total_optical_depth": 1.7710404,
+    "n_directions": 288,
+    "ell_max": 6,
+    "number_of_signed_harmonic_slots": 188,
+    "final_channel_norms": {
+      "I": 5.425290884354949e-05,
+      "E": 1.2809773285015621e-05,
+      "B": 2.3490389413956814e-20,
+      "V": 3.228983286032147e-05
+    },
+    "signed_V_dipole": [
+      [
+        1,
+        -1,
+        1.7909110870452163e-05,
+        -5.3727332611356495e-06
+      ],
+      [
+        1,
+        0,
+        1.772911523812584e-05,
+        0.0
+      ],
+      [
+        1,
+        1,
+        -1.7909110870452163e-05,
+        -5.3727332611356495e-06
+      ]
+    ]
+  },
+  "HyRec_flat_Fourier_case": {
+    "scope": "electron-rest collision plus prescribed linear shear and baryon-dipole forcing",
+    "clock": "HyRec-2 recombination table, forward increments of cumulative kappa",
+    "z_start": 1150.0,
+    "z_end": 950.0,
+    "cells": 200,
+    "total_optical_depth": 1.7710404,
+    "n_directions": 288,
+    "ell_max": 6,
+    "fourier_k_per_mpc": [
+      0.03,
+      -0.015,
+      0.011
+    ],
+    "total_comoving_path_mpc": 41.02159085346622,
+    "substeps_per_cell": 1,
+    "spatial_transport": "flat FLRW single Fourier mode with prescribed source amplitudes",
+    "max_harmonic_change_on_time_refinement": 1.7440240828549155e-10,
+    "final_channel_norms": {
+      "I": 5.5938574197969085e-05,
+      "E": 1.1409819237984936e-05,
+      "B": 4.076739511597105e-06,
+      "V": 2.9595811140245968e-05
+    }
+  },
+  "fourier_streaming_collision": {
+    "n_directions": 18,
+    "k_per_mpc": [
+      0.33,
+      -0.47,
+      0.21
+    ],
+    "delta_chi_mpc": 3.1,
+    "delta_tau": 2.4,
+    "strang_complex_affine_errors": [
+      {
+        "substeps": 1,
+        "max_abs_error": 0.11252168565610242
+      },
+      {
+        "substeps": 2,
+        "max_abs_error": 0.031077060904915358
+      },
+      {
+        "substeps": 4,
+        "max_abs_error": 0.007932769291458001
+      },
+      {
+        "substeps": 8,
+        "max_abs_error": 0.0019933270298898935
+      },
+      {
+        "substeps": 16,
+        "max_abs_error": 0.0004989645887432405
+      },
+      {
+        "substeps": 32,
+        "max_abs_error": 0.00012478069277740606
+      }
+    ],
+    "sdirk2_complex_affine_errors": [
+      {
+        "substeps": 1,
+        "max_abs_error": 0.25552105563497834
+      },
+      {
+        "substeps": 2,
+        "max_abs_error": 0.04992850052745027
+      },
+      {
+        "substeps": 4,
+        "max_abs_error": 0.011161872742782113
+      },
+      {
+        "substeps": 8,
+        "max_abs_error": 0.00267942109174644
+      },
+      {
+        "substeps": 16,
+        "max_abs_error": 0.0006589324311621428
+      },
+      {
+        "substeps": 32,
+        "max_abs_error": 0.000163538344671187
+      }
+    ],
+    "delta_tau_thick": 1000.0,
+    "strang_monopole_thick_errors": [
+      {
+        "substeps": 1,
+        "max_abs_error": 0.8047807435753453
+      },
+      {
+        "substeps": 8,
+        "max_abs_error": 0.12348795446746204
+      },
+      {
+        "substeps": 64,
+        "max_abs_error": 0.0144416755777808
+      },
+      {
+        "substeps": 256,
+        "max_abs_error": 0.0022038345535217423
+      },
+      {
+        "substeps": 1024,
+        "max_abs_error": 0.00016702699608444054
+      }
+    ],
+    "sdirk2_monopole_thick_errors": [
+      {
+        "substeps": 1,
+        "max_abs_error": 8.483542724974913e-06
+      },
+      {
+        "substeps": 8,
+        "max_abs_error": 1.069589231029794e-12
+      },
+      {
+        "substeps": 64,
+        "max_abs_error": 6.449861114797513e-15
+      },
+      {
+        "substeps": 256,
+        "max_abs_error": 2.0652743954867245e-14
+      },
+      {
+        "substeps": 1024,
+        "max_abs_error": 1.640920838943249e-13
+      }
+    ]
+  }
+}

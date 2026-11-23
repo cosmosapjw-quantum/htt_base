@@ -1,0 +1,174 @@
+{
+  "schema": "htt.r101.cf4_predictive_response/1",
+  "scope": "Conditional R100 apparent tomography and release-match sensitivity",
+  "source_qualification": "BLOCKED_INPUT",
+  "physical_Pi": null,
+  "physical_GF": null,
+  "covariance_path": {
+    "input_sha256": "7d5ecd55b776b8b9b97ae32385fd4573db8916846bb4c0a6dc5eca85eab18093",
+    "train_dimensions": 18,
+    "test_dimensions": 18,
+    "shared_mean_dimension": 9,
+    "alpha_rows": [
+      {
+        "alpha": 0.0,
+        "chi2": 12.116320633338582,
+        "log_density": 65.69895558803483,
+        "chi2_tangent": -1.6408170780546047,
+        "chi2_mean_term": 0.3061299620037611,
+        "chi2_covariance_term": -1.946947040058366,
+        "logdet_tangent": 3.319263534975838,
+        "log_density_tangent": -0.8392232284606167
+      },
+      {
+        "alpha": 0.25,
+        "chi2": 11.745669083483735,
+        "log_density": 65.49247126405061,
+        "chi2_tangent": -1.3456222007174223,
+        "chi2_mean_term": 0.35103832181985767,
+        "chi2_covariance_term": -1.69666052253728,
+        "logdet_tangent": 2.965109724997056,
+        "log_density_tangent": -0.8097437621398169
+      },
+      {
+        "alpha": 0.5,
+        "chi2": 11.435438073619373,
+        "log_density": 65.29492465887911,
+        "chi2_tangent": -1.1484813280478858,
+        "chi2_mean_term": 0.359482560720102,
+        "chi2_covariance_term": -1.5079638887679878,
+        "logdet_tangent": 2.6881042299608477,
+        "log_density_tangent": -0.769811450956481
+      },
+      {
+        "alpha": 0.75,
+        "chi2": 11.166627534956252,
+        "log_density": 65.107718349281,
+        "chi2_tangent": -1.0095158772519601,
+        "chi2_mean_term": 0.35021320792501426,
+        "chi2_covariance_term": -1.3597290851769743,
+        "logdet_tangent": 2.4653054417318874,
+        "log_density_tangent": -0.7278947822399636
+      },
+      {
+        "alpha": 1.0,
+        "chi2": 10.92766513838929,
+        "log_density": 64.93084420677022,
+        "chi2_tangent": -0.907018961574738,
+        "chi2_mean_term": 0.3326564754478233,
+        "chi2_covariance_term": -1.2396754370225613,
+        "logdet_tangent": 2.2820361865641243,
+        "log_density_tangent": -0.6875086124946932
+      }
+    ],
+    "max_abs_fd_error_chi2": 5.381036727314381e-09,
+    "max_abs_fd_error_log_density": 3.983296137377579e-09,
+    "endpoint_change": [
+      -1.1886554949492911,
+      -0.7681113812646174
+    ],
+    "integrated_derivative": [
+      -1.1886554949492696,
+      -0.7681113812645726
+    ],
+    "endpoint_integral_abs_errors": [
+      2.1538326677728037e-14,
+      4.4853010194856324e-14
+    ],
+    "r100_replay_max_abs_error": 5.684341886080802e-14
+  },
+  "source_marks": {
+    "parent_rows": 8885,
+    "matched_rows": 7190,
+    "fields_kms": [
+      -300.0,
+      -100.0,
+      0.0,
+      100.0,
+      300.0
+    ],
+    "selection_index_slope_per_mag_fixed": -3.3333333333333335,
+    "selection_index_slope_per_mag_fitted": 0.19703504888621065,
+    "plug_in_beta": [
+      0.838969622321192,
+      -0.1749131622690612,
+      -0.9851752444310532,
+      0.18096765014779684
+    ],
+    "source_sha256": {
+      "cf4_table2": "8e908928e68352b59292cf67020a4d70aaa6d30f278dfa6aa3e41a9df808332f",
+      "sixdf_pv_table1": "08f3d4b264e28efcb574bea4efa370d66e4f299f8254e21bd04979fb8301a14d"
+    },
+    "historic_fixed_cut_replay_max_abs_error": 2.000888343900442e-11,
+    "models": {
+      "historic_fixed_cut": {
+        "dex_logpdf": 4210.9173927047195,
+        "mag_logpdf": -7360.941197696462,
+        "zero_field_mag_logpdf": -7136.277110923183,
+        "log_density_mix_minus_zero": -224.66408677327945,
+        "log_joint_inclusion": -1356.9161136644402,
+        "field_mark_posterior_weights": [
+          1.493061986093957e-73,
+          1.509120463468836e-23,
+          1.672831743874893e-08,
+          0.999999981117526,
+          2.1540672814066964e-09
+        ],
+        "field_inclusion_weights": [
+          1.3981866372328455e-226,
+          1.451808184196122e-144,
+          4.498617761969766e-106,
+          2.8357959823978575e-69,
+          1.0
+        ],
+        "fixed_mean_template_amplitude_score": -211.511894132316
+      },
+      "fitted_match_probit": {
+        "dex_logpdf": 5832.65950173859,
+        "mag_logpdf": -5739.199088662592,
+        "zero_field_mag_logpdf": -5727.256929165458,
+        "log_density_mix_minus_zero": -11.942159497133616,
+        "log_joint_inclusion": -1478.5858771961719,
+        "field_mark_posterior_weights": [
+          1.493061986094636e-73,
+          1.5091204634695223e-23,
+          1.672831743875654e-08,
+          0.9999999811179807,
+          2.154067281407676e-09
+        ],
+        "field_inclusion_weights": [
+          0.9999999972085334,
+          2.791404146249476e-09,
+          1.0890261029121327e-13,
+          3.418065841633529e-18,
+          1.6502600937837007e-27
+        ],
+        "fixed_mean_template_amplitude_score": -20.36031699250327
+      }
+    },
+    "fitted_with_all_parent_match_indicators": {
+      "rejected_status_count": 1695,
+      "mag_logpdf": -5699.915908964017,
+      "zero_field_mag_logpdf": -5727.256929165457,
+      "log_density_mix_minus_zero": 27.341020201440188,
+      "log_inclusion_pattern": -4302.44099778128,
+      "field_inclusion_pattern_weights": [
+        0.29744659531374673,
+        0.2721154184840316,
+        0.22021499996424,
+        0.15745877740663497,
+        0.05276420883128624
+      ],
+      "field_mark_posterior_weights": [
+        3.863835843789278e-91,
+        1.2799298406458178e-32,
+        2.943016483630476e-13,
+        0.40079128358057226,
+        0.5992087164192407
+      ],
+      "fixed_mean_template_amplitude_score": -24.8270223713526,
+      "amplitude_score_fd_abs_error": 1.1190032367380809e-06
+    },
+    "scope": "Same already released 6dFGSv targets; plug-in probability of unique match to CF4 table 2. Gaussian native eta width, correlated finite field, fixed empirical coefficients. Same-cohort sensitivity; no independent calibration."
+  }
+}

@@ -1,0 +1,209 @@
+{
+  "functions": [
+    {
+      "module": "canonical/legacy_exact_helpers.py",
+      "function": "P2",
+      "definition_line": 10,
+      "docstring": null,
+      "module_sha256": "3a7ee138bd7eb530cc020dc26802099ecdbcb7fe080872e644d2accf13b4ff50"
+    },
+    {
+      "module": "canonical/legacy_exact_helpers.py",
+      "function": "source_zeta",
+      "definition_line": 14,
+      "docstring": null,
+      "module_sha256": "3a7ee138bd7eb530cc020dc26802099ecdbcb7fe080872e644d2accf13b4ff50"
+    },
+    {
+      "module": "canonical/research_primitives.py",
+      "function": "legendre_streaming",
+      "definition_line": 13,
+      "docstring": "Free streaming only: I'_l=omega*(l I_(l-1)-(l+1)I_(l+1))/(2l+1).\n\nHard boundary I_(lmax+1)=0. omega has inverse-clock units.\nnormalized=True acts on sqrt(2l+1)*I_l, hence returns a skew matrix.",
+      "module_sha256": "503ea65e84802bc42f2e0117abe0198f96f390f484db85ff3c7287d4000eccf9"
+    },
+    {
+      "module": "canonical/research_primitives.py",
+      "function": "partition_generator",
+      "definition_line": 31,
+      "docstring": "Partition one fixed generator; never rebuild coefficients at a new cutoff.",
+      "module_sha256": "503ea65e84802bc42f2e0117abe0198f96f390f484db85ff3c7287d4000eccf9"
+    },
+    {
+      "module": "canonical/research_primitives.py",
+      "function": "memory_kernel",
+      "definition_line": 43,
+      "docstring": "Exact constant-block kernel B exp(D*lag) C, with the declared clock.",
+      "module_sha256": "503ea65e84802bc42f2e0117abe0198f96f390f484db85ff3c7287d4000eccf9"
+    },
+    {
+      "module": "canonical/research_primitives.py",
+      "function": "schur_resolvent",
+      "definition_line": 49,
+      "docstring": "Resolved block of (z I-G)^-1 for one fixed block generator.",
+      "module_sha256": "503ea65e84802bc42f2e0117abe0198f96f390f484db85ff3c7287d4000eccf9"
+    },
+    {
+      "module": "canonical/research_primitives.py",
+      "function": "normalized_tilt",
+      "definition_line": 55,
+      "docstring": null,
+      "module_sha256": "503ea65e84802bc42f2e0117abe0198f96f390f484db85ff3c7287d4000eccf9"
+    },
+    {
+      "module": "canonical/research_primitives.py",
+      "function": "score_projection",
+      "definition_line": 63,
+      "docstring": "Fisher projection of a centered potential onto retained moment scores.\n\nFinite strictly positive law. The normalization row is implicit in centering.\nColumns are variance-standardized before a numerical pseudoinverse. Modes\nbelow rcond on the correlation matrix are discarded, not regularized. The\nformal exact-span theorem applies only when no true supported mode is lost.",
+      "module_sha256": "503ea65e84802bc42f2e0117abe0198f96f390f484db85ff3c7287d4000eccf9"
+    },
+    {
+      "module": "canonical/research_primitives.py",
+      "function": "joint_fractional_interval",
+      "definition_line": 92,
+      "docstring": "Exact extrema over a finite affine box, strictly positive denominator.\n\nUnlike the legacy two-pair implementation, all four independent reachable\nendpoint combinations are considered, including negative numerators.\nComplexity O(2**k * k). Caller should use LP for large-dimensional polytopes.",
+      "module_sha256": "503ea65e84802bc42f2e0117abe0198f96f390f484db85ff3c7287d4000eccf9"
+    },
+    {
+      "module": "canonical/research_primitives.py",
+      "function": "gaussian_covariance_score",
+      "definition_line": 115,
+      "docstring": "Derivative of log N(y;0,C(alpha)); no claim that this is a selected law.",
+      "module_sha256": "503ea65e84802bc42f2e0117abe0198f96f390f484db85ff3c7287d4000eccf9"
+    },
+    {
+      "module": "canonical/research_primitives.py",
+      "function": "tca_quadrupole_from_declared_equation",
+      "definition_line": 126,
+      "docstring": "Solve exactly the two equations documented in legacy PR13AF.\n\nThis checks that declared matrix convention only, not a complete physical\nderivation of the Thomson operator in every convention.",
+      "module_sha256": "503ea65e84802bc42f2e0117abe0198f96f390f484db85ff3c7287d4000eccf9"
+    },
+    {
+      "module": "canonical/research_primitives.py",
+      "function": "optical_depth_to_endpoint",
+      "definition_line": 137,
+      "docstring": "Positive trapezoid optical depth integral_eta^eta_end gamma d eta.\n\neta strictly increases, gamma>=0. gamma carries inverse-eta units.",
+      "module_sha256": "503ea65e84802bc42f2e0117abe0198f96f390f484db85ff3c7287d4000eccf9"
+    },
+    {
+      "module": "canonical/research_primitives.py",
+      "function": "exchangeable_global_rank",
+      "definition_line": 150,
+      "docstring": "Permutation-equivariant min-local-rank calibration on ALL rows.\n\nOne row is the observation, all others are null realizations. Higher input\nis more extreme. Validity REQUIRES exchangeable rows and one shared,\npermutation-equivariant upstream procedure; it does not create that law.\nIf two-sided centering is estimated, it must treat all rows symmetrically\n(or use a separately fixed center). Cost O(P*n*log(n)), memory O(n*P).",
+      "module_sha256": "503ea65e84802bc42f2e0117abe0198f96f390f484db85ff3c7287d4000eccf9"
+    },
+    {
+      "module": "canonical/research_primitives.py",
+      "function": "conditional_bin_information",
+      "definition_line": 173,
+      "docstring": "Multinomial shape Fisher information conditional on the baseline count.\n\nrates are positive relative bin rates, derivative rows match the bins.\nN is a fixed count or the declared expected count when comparing to a\nPoisson information matrix after amplitude profiling.",
+      "module_sha256": "503ea65e84802bc42f2e0117abe0198f96f390f484db85ff3c7287d4000eccf9"
+    },
+    {
+      "module": "canonical/research_primitives.py",
+      "function": "legendre_power_coefficients",
+      "definition_line": 188,
+      "docstring": "Coefficients of (sum_l c_l P_l(mu))**power, without physical closure.\n\nStandard unnormalised Legendre P_l; real dimensionless coefficients.\nNo angular/grid truncation. Multiplication is exact polynomial algebra\nup to floating-point roundoff; degree <= power*(len(c)-1).",
+      "module_sha256": "503ea65e84802bc42f2e0117abe0198f96f390f484db85ff3c7287d4000eccf9"
+    },
+    {
+      "module": "canonical/research_primitives.py",
+      "function": "legendre_tail_mean_square",
+      "definition_line": 206,
+      "docstring": "(1/2) integral[-1,1] |sum_{l>L} c_l P_l|^2 dmu.\n\nStandard Legendre coefficients, not (2l+1)-weighted brightness moments.",
+      "module_sha256": "503ea65e84802bc42f2e0117abe0198f96f390f484db85ff3c7287d4000eccf9"
+    },
+    {
+      "module": "canonical/response_primitives.py",
+      "function": "schur_memory_coefficients",
+      "definition_line": 21,
+      "docstring": "L0, first memory mass M and physical mass row for finite Markov L.\n\nExact resolvent: zI-A-B(zI-D)^-1 C.\nLow-frequency expansion: zM-L0+O(z^2). M^-1 L0 need not be Metzler.",
+      "module_sha256": "6207a6e13248178b589cc97ca1400f46d3820933c7d4409d28f535d0d76b4fb8"
+    },
+    {
+      "module": "canonical/response_primitives.py",
+      "function": "phase_type_moments",
+      "definition_line": 46,
+      "docstring": "n! ell(-Q)^(-n-1)p, with units time^n times line yield.\n\nQ is a fixed transient column generator, ell a nonnegative reward rate,\nand p a nonnegative injection. The caller specifies its normalization.",
+      "module_sha256": "6207a6e13248178b589cc97ca1400f46d3820933c7d4409d28f535d0d76b4fb8"
+    },
+    {
+      "module": "canonical/response_primitives.py",
+      "function": "phase_type_bin",
+      "definition_line": 72,
+      "docstring": "Finite-bin line yield; augmented exponential avoids inverse subtraction.",
+      "module_sha256": "6207a6e13248178b589cc97ca1400f46d3820933c7d4409d28f535d0d76b4fb8"
+    },
+    {
+      "module": "canonical/response_primitives.py",
+      "function": "moment_direction",
+      "definition_line": 83,
+      "docstring": "Full directional derivative of the nth line-delay moment.",
+      "module_sha256": "6207a6e13248178b589cc97ca1400f46d3820933c7d4409d28f535d0d76b4fb8"
+    },
+    {
+      "module": "canonical/response_primitives.py",
+      "function": "gram_connection",
+      "definition_line": 94,
+      "docstring": "Square invertible passive basis: G=V†V, Gamma=V^-1 V'.\n\nA rectangular moving subspace also has complement leakage and must use\na different construction; silently dropping that leakage is not allowed.",
+      "module_sha256": "6207a6e13248178b589cc97ca1400f46d3820933c7d4409d28f535d0d76b4fb8"
+    },
+    {
+      "module": "canonical/response_primitives.py",
+      "function": "stf_orthonormal_basis",
+      "definition_line": 107,
+      "docstring": "Frobenius-orthonormal 3x3 real STF basis; not the five research views.",
+      "module_sha256": "6207a6e13248178b589cc97ca1400f46d3820933c7d4409d28f535d0d76b4fb8"
+    },
+    {
+      "module": "canonical/response_primitives.py",
+      "function": "lie_jacobi_vector",
+      "definition_line": 114,
+      "docstring": "Symmetric Bianchi structure matrix convention: Jacobi residual N a.",
+      "module_sha256": "6207a6e13248178b589cc97ca1400f46d3820933c7d4409d28f535d0d76b4fb8"
+    },
+    {
+      "module": "canonical/response_primitives.py",
+      "function": "stimulated_axis_law",
+      "definition_line": 122,
+      "docstring": "Normalized dP/dmu for 1+f, f=eta(1+a mu), mu in [-1,1].",
+      "module_sha256": "6207a6e13248178b589cc97ca1400f46d3820933c7d4409d28f535d0d76b4fb8"
+    },
+    {
+      "module": "canonical/response_primitives.py",
+      "function": "stimulated_axis_response",
+      "definition_line": 130,
+      "docstring": null,
+      "module_sha256": "6207a6e13248178b589cc97ca1400f46d3820933c7d4409d28f535d0d76b4fb8"
+    },
+    {
+      "module": "canonical/response_primitives.py",
+      "function": "opacity_per_clock",
+      "definition_line": 137,
+      "docstring": "Positive n_e sigma c / (ds/dt), plus complete fixed-s derivative.\n\nFor N=ln a, clock_rate=physical H, and result is dimensionless. This\nscalar rest-frame expression is not a replacement for the full tilted\nelectron-current contraction along a photon ray.",
+      "module_sha256": "6207a6e13248178b589cc97ca1400f46d3820933c7d4409d28f535d0d76b4fb8"
+    },
+    {
+      "module": "canonical/response_primitives.py",
+      "function": "fold_bin_mass",
+      "definition_line": 149,
+      "docstring": "Pushforward z=t²-eps, density rate exp[-rate(t+1)], t∈[-1,1].\n\nMass in z<=0. eps has units of dimensionless z here; for 0<eps<1,\nresponse is 2 exp(-rate) sinh(rate sqrt(eps)), hence Holder 1/2.",
+      "module_sha256": "6207a6e13248178b589cc97ca1400f46d3820933c7d4409d28f535d0d76b4fb8"
+    },
+    {
+      "module": "canonical/response_primitives.py",
+      "function": "positive_matrix_moments",
+      "definition_line": 161,
+      "docstring": "Kp=sum w x^p v v† for an actual supplied positive finite measure.",
+      "module_sha256": "6207a6e13248178b589cc97ca1400f46d3820933c7d4409d28f535d0d76b4fb8"
+    },
+    {
+      "module": "canonical/response_primitives.py",
+      "function": "spectral_response",
+      "definition_line": 170,
+      "docstring": "Integrate response against the detector contraction of vv† measure.",
+      "module_sha256": "6207a6e13248178b589cc97ca1400f46d3820933c7d4409d28f535d0d76b4fb8"
+    }
+  ],
+  "count": 29,
+  "scope": "research implementations; independent preserved legacy sources remain under consolidated/"
+}

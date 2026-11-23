@@ -1,0 +1,36 @@
+{
+  "revision": "bounded-read correction",
+  "tests": [
+    {
+      "name": "acquisition_tests",
+      "command": [
+        ".venv/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/obsstat/test_r101_acquire.py"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 1.1012021719943732,
+      "log": "docs/research_program/observational_publication_20261015/R101_SIXTH_SOLVER_RESPONSE_20261123/acquisition_tests.log"
+    },
+    {
+      "name": "acquisition_plan",
+      "command": [
+        ".venv/bin/python",
+        "-B",
+        "-m",
+        "scripts.r101.acquire"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.047355488990433514,
+      "log": "docs/research_program/observational_publication_20261015/R101_SIXTH_SOLVER_RESPONSE_20261123/acquisition_plan.log"
+    }
+  ],
+  "sha256": {
+    "scripts/r101/acquire.py": "3fede491101f7d576f1871fec68a45beca4503effa8f5abe4bc54d6890eec2d7",
+    "tests/obsstat/test_r101_acquire.py": "6a6f462b6f09405f221b5ffeeebf5fca920ac102f4377b640b41f47c7cf7184d"
+  },
+  "live_payload_bytes": 0
+}

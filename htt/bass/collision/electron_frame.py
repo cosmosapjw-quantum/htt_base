@@ -786,22 +786,22 @@ def _scattering_plane_basis(
     outgoing_u: np.ndarray,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, float]:
     mu = float(np.clip(np.dot(incoming, outgoing), -1.0, 1.0))
-    sin2 = max(0.0, 1.0 - mu * mu)
-    if sin2 <= 1.0e-24:
-        a_in = incoming_u - float(np.dot(incoming_u, incoming)) * incoming
-        if np.linalg.norm(a_in) <= 1.0e-14:
-            a_in, _ = _default_screen_basis(incoming.reshape(1, 3))
-            a_in = a_in[0]
-        a_in /= np.linalg.norm(a_in)
-        a_out = outgoing_u - float(np.dot(outgoing_u, outgoing)) * outgoing
-        if np.linalg.norm(a_out) <= 1.0e-14:
-            a_out, _ = _default_screen_basis(outgoing.reshape(1, 3))
-            a_out = a_out[0]
-        a_out /= np.linalg.norm(a_out)
+    # In this Mueller convention positive Q is perpendicular to the scattering
+    # plane. A common normal gives the Jones amplitudes (1, mu) and therefore
+    # positive I<->Q entries 1-mu^2 in the formulas used by both callers.
+    # Form the cross product of the small separation and the ray. This
+    # keeps its longitudinal roundoff O(eps*separation) near collinearity.
+    separation = outgoing - np.copysign(1.0, mu)*incoming
+    normal = np.cross(incoming, separation)
+    normal_norm = float(np.linalg.norm(normal))
+    if normal_norm > 32.0 * np.finfo(float).eps:
+        a_in = a_out = normal / normal_norm
     else:
-        sin_theta = float(np.sqrt(sin2))
-        a_in = (outgoing - mu * incoming) / sin_theta
-        a_out = (incoming - mu * outgoing) / sin_theta
+        # At forward/back scattering the plane is undetermined. Use one
+        # physical transverse axis for both rays, including rotated screens.
+        a_in = incoming_u
+        a_out = a_in - float(np.dot(a_in, outgoing)) * outgoing
+        a_out /= np.linalg.norm(a_out)
     b_in = np.cross(incoming, a_in)
     b_in /= np.linalg.norm(b_in)
     b_out = np.cross(outgoing, a_out)

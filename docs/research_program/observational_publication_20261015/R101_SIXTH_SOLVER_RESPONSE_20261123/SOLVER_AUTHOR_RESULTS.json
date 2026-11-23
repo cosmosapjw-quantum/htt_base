@@ -1,0 +1,322 @@
+{
+  "python": "3.12.14",
+  "numpy": "2.3.5",
+  "scipy": "1.17.0",
+  "r100_collision_plus_affine_at_zero_angular_advection": {
+    "ell_max": 6,
+    "number_of_slots": 188,
+    "max_error": {
+      "I": 1.4085954624931674e-15,
+      "E": 1.336885555457667e-15,
+      "B": 8.95090418262362e-16,
+      "V": 8.252325904466732e-16
+    }
+  },
+  "resolution_against_analytic_unbandlimited_sky": [
+    {
+      "n_theta": 3,
+      "n_dir": 18,
+      "max_V_error": 0.05515545943940925
+    },
+    {
+      "n_theta": 4,
+      "n_dir": 32,
+      "max_V_error": 0.0016993330604946344
+    },
+    {
+      "n_theta": 6,
+      "n_dir": 72,
+      "max_V_error": 2.4926997843621734e-06
+    },
+    {
+      "n_theta": 8,
+      "n_dir": 128,
+      "max_V_error": 3.7067160452153303e-10
+    },
+    {
+      "n_theta": 12,
+      "n_dir": 288,
+      "max_V_error": 1.7763568394002505e-15
+    }
+  ],
+  "stiffness_32_directions": [
+    {
+      "delta_tau": 1e-08,
+      "max_dense_expm_error": 4.440892098500626e-16,
+      "native_step_seconds": 2.2361524952430045e-05,
+      "dense_new_exponential_and_action_seconds": 0.0005459659999663321
+    },
+    {
+      "delta_tau": 0.1,
+      "max_dense_expm_error": 6.661338147750939e-16,
+      "native_step_seconds": 2.1251125053822763e-05,
+      "dense_new_exponential_and_action_seconds": 0.0005258896671875846
+    },
+    {
+      "delta_tau": 1,
+      "max_dense_expm_error": 1.4432899320127035e-15,
+      "native_step_seconds": 2.2592124969378348e-05,
+      "dense_new_exponential_and_action_seconds": 0.0008506926666692985
+    },
+    {
+      "delta_tau": 100,
+      "max_dense_expm_error": 1.700029006457271e-15,
+      "native_step_seconds": 2.6369250008428935e-05,
+      "dense_new_exponential_and_action_seconds": 0.0011209083325714648
+    },
+    {
+      "delta_tau": 10000.0,
+      "max_dense_expm_error": 7.076977892594982e-14,
+      "native_step_seconds": 2.04251499781094e-05,
+      "dense_new_exponential_and_action_seconds": 0.0015271996659672975
+    }
+  ],
+  "cost": [
+    {
+      "n_theta": 4,
+      "n_dir": 32,
+      "cached_operator_array_bytes": 5632,
+      "equivalent_full_dense_float64_bytes": 131072,
+      "exact_step_seconds": 1.983955007744953e-05
+    },
+    {
+      "n_theta": 8,
+      "n_dir": 128,
+      "cached_operator_array_bytes": 22528,
+      "equivalent_full_dense_float64_bytes": 2097152,
+      "exact_step_seconds": 2.5671200091892388e-05
+    },
+    {
+      "n_theta": 16,
+      "n_dir": 512,
+      "cached_operator_array_bytes": 90112,
+      "equivalent_full_dense_float64_bytes": 33554432,
+      "exact_step_seconds": 4.621030002454063e-05
+    },
+    {
+      "n_theta": 32,
+      "n_dir": 2048,
+      "cached_operator_array_bytes": 360448,
+      "equivalent_full_dense_float64_bytes": 536870912,
+      "exact_step_seconds": 0.00012878119996457827
+    },
+    {
+      "n_theta": 64,
+      "n_dir": 8192,
+      "cached_operator_array_bytes": 1441792,
+      "equivalent_full_dense_float64_bytes": 8589934592,
+      "exact_step_seconds": 0.0006675170001471997
+    }
+  ],
+  "timing_method": "median of 5 repeated batches, setup excluded, dense comparison recomputes exponential at each requested depth",
+  "HyRec_recombination_case": {
+    "scope": "electron-rest collision plus prescribed linear shear and baryon-dipole forcing",
+    "clock": "HyRec-2 recombination table, forward increments of cumulative kappa",
+    "z_start": 1150.0,
+    "z_end": 950.0,
+    "cells": 200,
+    "total_optical_depth": 1.7710404,
+    "n_directions": 288,
+    "ell_max": 6,
+    "number_of_signed_harmonic_slots": 188,
+    "final_channel_norms": {
+      "I": 5.425290884354946e-05,
+      "E": 1.2809773285015611e-05,
+      "B": 2.1225525967811043e-20,
+      "V": 3.228983286032144e-05
+    },
+    "signed_V_dipole": [
+      [
+        1,
+        -1,
+        1.790911087045215e-05,
+        -5.372733261135645e-06
+      ],
+      [
+        1,
+        0,
+        1.7729115238125824e-05,
+        0.0
+      ],
+      [
+        1,
+        1,
+        -1.790911087045215e-05,
+        -5.372733261135645e-06
+      ]
+    ]
+  },
+  "old_basis_free_polarization": {
+    "sha256": "44a2eb306d8870e70d6cb46c8f481bb30e58f64ffee4b9a055a0157a23e79e95",
+    "commit": "ee298e24a6bac85bb11a81393f37499a8b0ddbe3",
+    "comparisons": [
+      {
+        "delta_tau": 0.0,
+        "max_carrier_error": 0.0
+      },
+      {
+        "delta_tau": 1e-12,
+        "max_carrier_error": 4.440892098500626e-16
+      },
+      {
+        "delta_tau": 0.8,
+        "max_carrier_error": 3.3306690738754696e-16
+      },
+      {
+        "delta_tau": 13.0,
+        "max_carrier_error": 4.85722573273506e-17
+      },
+      {
+        "delta_tau": 10000.0,
+        "max_carrier_error": 4.163336342344337e-17
+      }
+    ]
+  },
+  "physical_regression": {
+    "baseline_HTT_commit": "f8931fbef075d55c2c2a3caee8b8f5db5174b16b",
+    "baseline_electron_frame_git_blob": "83b5580a5ae132ad8563d0d95a788a5519d15878",
+    "original_Q_over_I_90_parallel_screen_x": 1.0,
+    "fixed_Q_over_I_90_parallel_screen_x": -1.0,
+    "original_random_18_ray_sky_generator_max_defect": 0.41182509556189484,
+    "fixed_random_18_ray_sky_generator_max_defect": 4.440892098500626e-16,
+    "random_seed": 96
+  },
+  "execution": {
+    "targeted_unittest_cases": 13,
+    "results": "13 passed",
+    "imports": "Changed implementation and pinned function/class source selections for baseline-dependent imports, NumPy/SciPy runtime. Full repository test suite not run here.",
+    "root_public_pytest": "PYTHONPATH=.:htt:htt/src python -m pytest htt/bass/collision/test_coherency.py htt/bass/collision/test_full_stokes_thomson.py htt/bass/transport/test_stokes_fourier.py -q"
+  },
+  "fourier_streaming_collision": {
+    "n_directions": 18,
+    "k_per_mpc": [
+      0.33,
+      -0.47,
+      0.21
+    ],
+    "delta_chi_mpc": 3.1,
+    "delta_tau": 2.4,
+    "strang_complex_affine_errors": [
+      {
+        "substeps": 1,
+        "max_abs_error": 0.11252168565610271
+      },
+      {
+        "substeps": 2,
+        "max_abs_error": 0.031077060904915705
+      },
+      {
+        "substeps": 4,
+        "max_abs_error": 0.007932769291458395
+      },
+      {
+        "substeps": 8,
+        "max_abs_error": 0.001993327029890166
+      },
+      {
+        "substeps": 16,
+        "max_abs_error": 0.0004989645887435352
+      },
+      {
+        "substeps": 32,
+        "max_abs_error": 0.00012478069277772522
+      }
+    ],
+    "sdirk2_complex_affine_errors": [
+      {
+        "substeps": 1,
+        "max_abs_error": 0.25552105563497834
+      },
+      {
+        "substeps": 2,
+        "max_abs_error": 0.049928500527450306
+      },
+      {
+        "substeps": 4,
+        "max_abs_error": 0.011161872742782188
+      },
+      {
+        "substeps": 8,
+        "max_abs_error": 0.0026794210917465287
+      },
+      {
+        "substeps": 16,
+        "max_abs_error": 0.0006589324311622365
+      },
+      {
+        "substeps": 32,
+        "max_abs_error": 0.00016353834467128302
+      }
+    ],
+    "delta_tau_thick": 1000.0,
+    "strang_monopole_thick_errors": [
+      {
+        "substeps": 1,
+        "max_abs_error": 0.8047807435753311
+      },
+      {
+        "substeps": 8,
+        "max_abs_error": 0.12348795446744784
+      },
+      {
+        "substeps": 64,
+        "max_abs_error": 0.014441675577766763
+      },
+      {
+        "substeps": 256,
+        "max_abs_error": 0.0022038345535076824
+      },
+      {
+        "substeps": 1024,
+        "max_abs_error": 0.0001670269960715553
+      }
+    ],
+    "sdirk2_monopole_thick_errors": [
+      {
+        "substeps": 1,
+        "max_abs_error": 8.483542724776378e-06
+      },
+      {
+        "substeps": 8,
+        "max_abs_error": 1.0454970247299817e-12
+      },
+      {
+        "substeps": 64,
+        "max_abs_error": 3.097601048273138e-14
+      },
+      {
+        "substeps": 256,
+        "max_abs_error": 4.518654864115219e-14
+      },
+      {
+        "substeps": 1024,
+        "max_abs_error": 1.3944409769272653e-13
+      }
+    ]
+  },
+  "HyRec_flat_Fourier_case": {
+    "scope": "electron-rest collision plus prescribed linear shear and baryon-dipole forcing",
+    "clock": "HyRec-2 recombination table, forward increments of cumulative kappa",
+    "z_start": 1150.0,
+    "z_end": 950.0,
+    "cells": 200,
+    "total_optical_depth": 1.7710404,
+    "n_directions": 288,
+    "ell_max": 6,
+    "fourier_k_per_mpc": [
+      0.03,
+      -0.015,
+      0.011
+    ],
+    "total_comoving_path_mpc": 41.02159085346622,
+    "substeps_per_cell": 1,
+    "spatial_transport": "flat FLRW single Fourier mode with prescribed source amplitudes",
+    "max_harmonic_change_on_time_refinement": 1.7440240828886999e-10,
+    "final_channel_norms": {
+      "I": 5.5938574197969085e-05,
+      "E": 1.1409819237984939e-05,
+      "B": 4.076739511597104e-06,
+      "V": 2.9595811140245965e-05
+    }
+  }
+}

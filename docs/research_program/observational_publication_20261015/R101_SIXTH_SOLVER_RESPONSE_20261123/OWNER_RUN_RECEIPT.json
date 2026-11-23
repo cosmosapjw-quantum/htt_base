@@ -1,0 +1,84 @@
+[
+  {
+    "name": "context_pack",
+    "command": [
+      "python3",
+      ".agent-harness/scripts/build_context_pack.py",
+      "--current"
+    ],
+    "returncode": 0,
+    "elapsed_seconds": 0.06445834797341377,
+    "log": "docs/research_program/observational_publication_20261015/R101_SIXTH_SOLVER_RESPONSE_20261123/context_pack.log"
+  },
+  {
+    "name": "prepare",
+    "command": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "-B",
+      "-m",
+      "scripts.r101.program",
+      "prepare"
+    ],
+    "returncode": 0,
+    "elapsed_seconds": 0.06430006999289617,
+    "log": "docs/research_program/observational_publication_20261015/R101_SIXTH_SOLVER_RESPONSE_20261123/prepare.log"
+  },
+  {
+    "name": "analysis_all",
+    "command": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "-B",
+      "-m",
+      "scripts.r101.program",
+      "analysis",
+      "--all"
+    ],
+    "returncode": 0,
+    "elapsed_seconds": 8.980229398002848,
+    "log": "docs/research_program/observational_publication_20261015/R101_SIXTH_SOLVER_RESPONSE_20261123/analysis_all.log"
+  },
+  {
+    "name": "scoped_tests",
+    "command": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "-B",
+      "-m",
+      "pytest",
+      "-q",
+      "htt/bass/collision/test_coherency.py",
+      "htt/bass/transport/test_stokes_fourier.py",
+      "htt/bass/collision/test_full_stokes_thomson.py",
+      "tests/obsstat/test_r101_clocked_chemistry.py",
+      "tests/bass/test_r101_moving_projection.py",
+      "tests/bass/test_r101_chemistry_coherency.py",
+      "htt/htt/tests/test_cf4_predictive_response.py",
+      "tests/obsstat/test_r100_bianchi_phy.py"
+    ],
+    "returncode": 0,
+    "elapsed_seconds": 58.20886813401012,
+    "log": "docs/research_program/observational_publication_20261015/R101_SIXTH_SOLVER_RESPONSE_20261123/scoped_tests.log"
+  },
+  {
+    "name": "r100_validator",
+    "command": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "-B",
+      "-m",
+      "scripts.r100.validate_cycle"
+    ],
+    "returncode": 0,
+    "elapsed_seconds": 29.013059003045782,
+    "log": "docs/research_program/observational_publication_20261015/R101_SIXTH_SOLVER_RESPONSE_20261123/r100_validator.log"
+  },
+  {
+    "name": "diff_check",
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "returncode": 0,
+    "elapsed_seconds": 0.11416698602261022,
+    "log": "docs/research_program/observational_publication_20261015/R101_SIXTH_SOLVER_RESPONSE_20261123/diff_check.log"
+  }
+]

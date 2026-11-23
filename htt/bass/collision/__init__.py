@@ -4,6 +4,7 @@ The package holds the older Thomson kernels plus the VER2 S2 electron-frame
 ownership and rate-factor contracts.
 """
 
+from bass.collision.coherency import ThomsonCoherencyPropagator
 from bass.collision.electron_frame import (
     AngularStokesThomsonSource,
     AngularStokesTemperatureCollision,
@@ -28,6 +29,7 @@ from bass.collision.electron_frame import (
 )
 
 __all__ = [
+    "ThomsonCoherencyPropagator",
     "AngularStokesThomsonSource",
     "AngularStokesTemperatureCollision",
     "ElectronFrameRate",

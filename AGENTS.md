@@ -1,5 +1,28 @@
 # AGENTS.md — `htt_base` Codex operating contract
 
+## R101 active owner direction — 2026-11-23 (sixth cycle)
+
+The owner now explicitly requests concrete native solver development using the
+current BASS, REI, REC and legacy resources, integration of the four supplementary
+studies, and commit/push to the existing active research branch. This authorization
+supersedes earlier solver-free/no-native-implementation and no-push instructions
+for R101 and its explicitly handed-off continuation. Develop and validate actual
+collision, kinetic, background and transfer code; do not leave a code blocker
+permanently classified as an external input merely because older policy did so.
+Use the existing checkout and one production writer. Preserve unrelated files.
+
+The R78 scientific DAG, its original 42 acceptances, source qualifications and
+historical evidence remain unchanged. Native implementation, numerical validation,
+calibrated observational inference and Bianchi family attribution are different
+claims. Conditional development and data-analysis jobs may run while a scientific
+node remains blocked. Old BLOCK_LOCAL_AGENT_START statements do not prohibit these
+owner-authorized jobs or direct solver development. Missing observational inputs
+remain explicit; do not manufacture covariance, rejected populations or nulls.
+
+R101's numerical/physics definitions and exact executed commands live in
+`docs/research_program/observational_publication_20261015/R101_SIXTH_SOLVER_RESPONSE_20261123/`.
+No main push, merge, force-push or external person-directed message is authorized.
+
 ## Mission
 
 Upgrade `htt_base` before the external native low-ell Bianchi solver arrives. The active goal is not to fake a solver or force Bianchi family identification. The goal is to turn the current repository into a claim-tiered, manifest-backed, transfer-provenance-aware, MIO/HTT-separated observatory and inference framework that can later consume native solver outputs cleanly.

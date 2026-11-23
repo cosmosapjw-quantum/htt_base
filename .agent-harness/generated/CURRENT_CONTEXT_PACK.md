@@ -1,7 +1,7 @@
 # Generated Shared Context View
 
-Context version: `c4ef69678b3483cc6a7600cf9d4b83a61055a48dc5db38ea6369c41f22655d48`
-Built at: `2026-11-16T19:13:18+00:00`
+Context version: `57d1b1e18259b76fdb1babc51783d51b3c0a208cca170b2f0691e4e936cc021d`
+Built at: `2026-11-23T11:35:12+00:00`
 
 This compact view is generated from the current machine context index. It does not compute live HEAD, DAG or status. SessionStart can read a host-installed active-controller pointer for a bounded advisory snapshot; absent or invalid pointers provide no active-state observation. Reference-only sources are read on demand.
 
@@ -44,9 +44,11 @@ current pack is static guidance, not live HEAD/DAG/status computation.
 
 ## Source: `.agent-harness/context/CURRENT_FROZEN_DECISIONS.md`
 
-SHA-256: `d2c16a7d047d1921d9697aeb3ec51b2456af7ca571b3a134c046771d2b082366`
+SHA-256: `54f8e2e00f14216966c398efaf124725c3da69cc0881cb6da084a4ae759daa6e`
 
 # Current execution and scientific boundaries
+
+- **Active R101 owner scope (2026-11-23):** directly develop native BASS/REI/REC solver capabilities and integrate the four supplementary studies; commit/push validated work to the existing research branch. Earlier solver-free/no-native/no-push restrictions apply only to their historical assignments. Conditional development/data-analysis execution is allowed while original scientific acceptances remain blocked. R78's 60-node/42-original scientific contracts are unchanged. Use the existing checkout, preserve unrelated edits, and do not merge/main-push/force-push. See root AGENTS.md and R101_SIXTH_SOLVER_RESPONSE_20261123.
 
 - R58/R59 scope (owner 2026-11-17): use owned data only, no new observational download or native Bianchi solver. Read docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/LOCAL_AGENT_CONTRACT.json. R58 is complete_scoped C0; R59 native replay, matched benchmark and manuscript decision is the sole terminal successor. The general continuous-controller/acquisition bullets below do not auto-extend this bounded assignment. Historical R57 stop and unrelated DAG nodes remain unchanged.
 

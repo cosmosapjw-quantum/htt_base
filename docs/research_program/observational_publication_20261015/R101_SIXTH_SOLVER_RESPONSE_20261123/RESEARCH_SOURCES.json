@@ -1,0 +1,88 @@
+{
+  "schema": "htt.r101.external_research_evidence/1",
+  "date": "2026-11-23",
+  "sources": [
+    {
+      "id": "MZ2019",
+      "title": "Mori-Zwanzig projection operator formalism for far-from-equilibrium systems with time-dependent Hamiltonians",
+      "authors": "Michael te Vrugt; Raphael Wittkowski",
+      "url": "https://doi.org/10.1103/PhysRevE.99.062118",
+      "preprint": "https://arxiv.org/abs/1903.00583",
+      "used_for": "Time-dependent observables and projection; finite weighted linear identities are derived in R101."
+    },
+    {
+      "id": "Alexander1977",
+      "title": "Diagonally Implicit Runge–Kutta Methods for Stiff O.D.E.'s",
+      "url": "https://doi.org/10.1137/0714068",
+      "used_for": "Two-stage stiff diagonally implicit method; specific low-rank conservative implementation is independently tested."
+    },
+    {
+      "id": "HYREC2",
+      "title": "HYREC-2: a highly accurate sub-millisecond recombination code",
+      "url": "https://arxiv.org/html/2007.14114v2",
+      "code": "https://github.com/nanoomlee/HYREC-2/tree/038dc8d71baed5c30a4fdd55576b97637ba5b879",
+      "used_for": "Effective atomic/radiative closure and exact original table recovery; not a claim of full tilted recombination."
+    },
+    {
+      "id": "EMLA2010",
+      "url": "https://arxiv.org/abs/1006.1355",
+      "used_for": "Existing effective multilevel atom basis; finite supplied-rate demonstrator is separately scoped."
+    },
+    {
+      "id": "ThomsonTensor2004",
+      "url": "https://arxiv.org/abs/astro-ph/0412094",
+      "locations": "Eqs. 140,143,163–164",
+      "used_for": "Rest-frame coherency gain/loss and independent Jones reference."
+    },
+    {
+      "id": "Harville1974",
+      "url": "https://doi.org/10.1093/biomet/61.2.383",
+      "used_for": "Fixed effects/error contrasts; R101 train-only predictive derivative is explicit."
+    },
+    {
+      "id": "6dFGSv",
+      "url": "https://doi.org/10.1093/mnras/stu1743",
+      "locations": "Section4.1 and table1",
+      "used_for": "Native eta distance-ratio convention; R100 Gaussian approximation retained."
+    },
+    {
+      "id": "Frechet2009",
+      "url": "https://doi.org/10.1137/080716426",
+      "used_for": "Matrix-exponential directional derivative."
+    }
+  ],
+  "providers": [
+    {
+      "provider": "Exa",
+      "status": "used",
+      "task": "Locate official HYREC-2 code and atomic table source"
+    },
+    {
+      "provider": "Parallel",
+      "status": "used",
+      "task": "Locate primary time-dependent MZ formulation"
+    },
+    {
+      "provider": "SciSpace",
+      "status": "used",
+      "task": "Paper discovery for time-dependent projection and polarized transfer; primary publication resolves indexed-year ambiguity"
+    },
+    {
+      "provider": "WolframContext",
+      "status": "tool_error",
+      "observed": "Mcp error -32603 Internal error; not mathematical counterevidence"
+    },
+    {
+      "provider": "WolframLanguageEvaluator",
+      "status": "executed",
+      "observed_output": "Out[1]= {{0, 0}, {-1}, 0}",
+      "checked": "Rotating 2D observable: split residual, K=-1 and a=cos(s) memory residual"
+    },
+    {
+      "provider": "PhysMath/MathBox",
+      "status": "skills_applied",
+      "task": "Constructive ten-stage theory/code and explicit model-variable mapping"
+    }
+  ],
+  "claim_rule": "Literature supports identified antecedents. New project calculations are tied to source files, actual owner results and independent review; no novelty or four-axis CAS gate is claimed."
+}

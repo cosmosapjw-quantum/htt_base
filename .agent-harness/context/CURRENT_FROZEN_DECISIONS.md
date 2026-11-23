@@ -1,5 +1,7 @@
 # Current execution and scientific boundaries
 
+- **Active R101 owner scope (2026-11-23):** directly develop native BASS/REI/REC solver capabilities and integrate the four supplementary studies; commit/push validated work to the existing research branch. Earlier solver-free/no-native/no-push restrictions apply only to their historical assignments. Conditional development/data-analysis execution is allowed while original scientific acceptances remain blocked. R78's 60-node/42-original scientific contracts are unchanged. Use the existing checkout, preserve unrelated edits, and do not merge/main-push/force-push. See root AGENTS.md and R101_SIXTH_SOLVER_RESPONSE_20261123.
+
 - R58/R59 scope (owner 2026-11-17): use owned data only, no new observational download or native Bianchi solver. Read docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/LOCAL_AGENT_CONTRACT.json. R58 is complete_scoped C0; R59 native replay, matched benchmark and manuscript decision is the sole terminal successor. The general continuous-controller/acquisition bullets below do not auto-extend this bounded assignment. Historical R57 stop and unrelated DAG nodes remain unchanged.
 
 - Work in the existing repo root for implementation, review, validation, publication and recovery. Do not create a new clone, worktree or full repository copy without an explicit owner exception naming its purpose. Preserve unrelated edits, task IDs, cumulative costs and historical directory bindings.

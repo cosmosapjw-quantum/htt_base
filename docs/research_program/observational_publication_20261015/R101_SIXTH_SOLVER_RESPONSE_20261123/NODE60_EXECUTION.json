@@ -1,0 +1,1783 @@
+{
+  "schema": "htt.r101.conditional_execution/1",
+  "parent": "f8931fbef075d55c2c2a3caee8b8f5db5174b16b",
+  "science_authority": "docs/research_program/observational_publication_20261015/R78_UNIFIED_SCIENCE_DAG_20261119/INTEGRATED_DAG.json",
+  "science_authority_sha256": "90aba8c1ca9c8e3a7744be0f071dcfe09b81e5353892aca13878191e20f58c11",
+  "r100_overlay_sha256": "41fdd3851ae6902d62fb37fd1ac17c7c6a2beb3f110f3f6aa863d141fcc09287",
+  "original_42_sha256": "e3264e105cabf78ddac37addc36cacc3cfa05ee942e33e54b431b22e3e87de0d",
+  "next_id": "SQ-CF4",
+  "counts": {
+    "nodes": 60,
+    "canonical_edges": 129,
+    "new_science_acceptances": 0
+  },
+  "jobs": {
+    "CF4_RESPONSE": {
+      "module": "scripts.r101.cf4_predictive_response",
+      "args": [
+        "--source-marks"
+      ],
+      "result": "CF4_PREDICTIVE_RESPONSE.json"
+    },
+    "CHEMISTRY_COLLISION": {
+      "module": "scripts.r101.chemistry_coherency",
+      "args": [],
+      "result": "CHEMISTRY_COHERENCY.json"
+    },
+    "MOVING_PROJECTION": {
+      "module": "scripts.r101.moving_projection_checks",
+      "args": [],
+      "result": "MOVING_PROJECTION.json"
+    },
+    "HYREC_COLLISION": {
+      "module": "scripts.r101.coherency_history",
+      "args": [],
+      "result": "HYREC_COHERENCY_HISTORY.json"
+    },
+    "NATIVE_COLLISION_CHECKS": {
+      "module": "scripts.r101.coherency_checks",
+      "args": [],
+      "result": "NATIVE_COLLISION_CHECKS.json"
+    }
+  },
+  "nodes": [
+    {
+      "id": "E0",
+      "paper": "COMMON",
+      "original_acceptance": "PR533@13d8d85f source identity available",
+      "science_status": "INHERITED_COMPLETED_SCOPED",
+      "effective_hard_dependencies": [],
+      "conditional_jobs": [
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {},
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [],
+      "source_specific_next_actions": [
+        "Reuse exact inherited scoped evidence; check its source identity before downstream scientific promotion."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "E1",
+      "paper": "COMMON",
+      "original_acceptance": "17 scenarios/12 tests conditional; not physical shear",
+      "science_status": "INHERITED_COMPLETED_SCOPED",
+      "effective_hard_dependencies": [
+        "E0"
+      ],
+      "conditional_jobs": [
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {},
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [],
+      "source_specific_next_actions": [
+        "Reuse exact inherited scoped evidence; check its source identity before downstream scientific promotion."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "E2",
+      "paper": "COMMON",
+      "original_acceptance": "13 tests and 26,846 same-mask pixels conditional",
+      "science_status": "INHERITED_COMPLETED_SCOPED",
+      "effective_hard_dependencies": [
+        "E1"
+      ],
+      "conditional_jobs": [
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {},
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [],
+      "source_specific_next_actions": [
+        "Reuse exact inherited scoped evidence; check its source identity before downstream scientific promotion."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "E3",
+      "paper": "COMMON",
+      "original_acceptance": "Original code/ledger present at ancestor",
+      "science_status": "INHERITED_COMPLETED_SCOPED",
+      "effective_hard_dependencies": [
+        "E0"
+      ],
+      "conditional_jobs": [
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {},
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [],
+      "source_specific_next_actions": [
+        "Reuse exact inherited scoped evidence; check its source identity before downstream scientific promotion."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "X01",
+      "paper": "COMMON",
+      "original_acceptance": "Each claim connected to immutable release/estimator/shared-sky or marked local-uncommitted",
+      "science_status": "INHERITED_COMPLETED_SCOPED",
+      "effective_hard_dependencies": [
+        "E0"
+      ],
+      "conditional_jobs": [
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {},
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [],
+      "source_specific_next_actions": [
+        "Reuse exact inherited scoped evidence; check its source identity before downstream scientific promotion."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "X02",
+      "paper": "COMMON",
+      "original_acceptance": "Six comparable estimands, releases and matched null/likelihoods with contrasts",
+      "science_status": "INHERITED_COMPLETED_SCOPED",
+      "effective_hard_dependencies": [
+        "E0"
+      ],
+      "conditional_jobs": [
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {},
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [],
+      "source_specific_next_actions": [
+        "Reuse exact inherited scoped evidence; check its source identity before downstream scientific promotion."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "X03",
+      "paper": "COMMON",
+      "original_acceptance": "Retrospective p=.039 and previous exploratory ranks never promoted to confirmatory",
+      "science_status": "INHERITED_COMPLETED_SCOPED",
+      "effective_hard_dependencies": [
+        "E0"
+      ],
+      "conditional_jobs": [
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {},
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [],
+      "source_specific_next_actions": [
+        "Reuse exact inherited scoped evidence; check its source identity before downstream scientific promotion."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "S01",
+      "paper": "P1",
+      "original_acceptance": "Signed x, Q source anchor, F sign-clean samplewise, strict Pi unknown mass, G_F fixed floor/depth; F4 separate",
+      "science_status": "INHERITED_COMPLETED_SCOPED",
+      "effective_hard_dependencies": [
+        "E3"
+      ],
+      "conditional_jobs": [
+        "CF4_RESPONSE",
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {},
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [],
+      "source_specific_next_actions": [
+        "Reuse exact inherited scoped evidence; check its source identity before downstream scientific promotion."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "S02",
+      "paper": "P1",
+      "original_acceptance": "One joint source, exact normalized weights; posterior unknown mass not silently renormalized",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "E2",
+        "S01",
+        "SQ-P1-ANCHOR"
+      ],
+      "conditional_jobs": [
+        "CF4_RESPONSE",
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {
+        "D01": "Analyze native SDSS/6dF sign genealogy; obtain unshifted method/anchor tables and independent calibration covariance.",
+        "D02": "Use all 8885 released 6dFGSv match indicators; obtain other CF4 parent/rejection denominators before union claims."
+      },
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [
+        "M01",
+        "M02",
+        "M03"
+      ],
+      "source_specific_next_actions": [
+        "Acquire bounded full payloads, match galaxy/host and group IDs, then reconstruct calibration/holdout roles and shared anchor covariance.",
+        "Join upstream eligible parents to the selected survey samples; recover native cuts, rejections, and group inclusion denominators.",
+        "Recover native estimator conventions and calibrate full-band coherent and small-scale terms using identified source data.",
+        "Construct position drift on matched worldlines and source-frame transfer kernels; validate against independent source and coverage tests.",
+        "Map the admitted source law through a signed physical carrier; retain unknown mass and common nuisance, with no per-draw nuisance maximization."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "S03",
+      "paper": "P1",
+      "original_acceptance": "Outputs change on declared denominator/selection, zero/missing distinct",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "S02",
+        "X01"
+      ],
+      "conditional_jobs": [
+        "CF4_RESPONSE",
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {
+        "D01": "Analyze native SDSS/6dF sign genealogy; obtain unshifted method/anchor tables and independent calibration covariance.",
+        "D02": "Use all 8885 released 6dFGSv match indicators; obtain other CF4 parent/rejection denominators before union claims."
+      },
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [
+        "A05",
+        "M01",
+        "M02",
+        "M03"
+      ],
+      "source_specific_next_actions": [
+        "Repeat all flux/redshift/model combinations on qualified matched mocks, including missing/zero-source regions and systematic model alternatives."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "S04",
+      "paper": "P1",
+      "original_acceptance": "At least one actual selected likelihood or justified outer interval, not synthetic-only",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "S03",
+        "X03"
+      ],
+      "conditional_jobs": [
+        "CF4_RESPONSE",
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {
+        "D01": "Analyze native SDSS/6dF sign genealogy; obtain unshifted method/anchor tables and independent calibration covariance.",
+        "D02": "Use all 8885 released 6dFGSv match indicators; obtain other CF4 parent/rejection denominators before union claims."
+      },
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [
+        "A01",
+        "A05",
+        "M01",
+        "M02",
+        "M03"
+      ],
+      "source_specific_next_actions": [
+        "Map the admitted source law through a signed physical carrier; retain unknown mass and common nuisance, with no per-draw nuisance maximization.",
+        "After D01/D02/M01, execute complete-source posterior predictive and truly independent holdout/selection injections, with old diagnostic retained."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "S05",
+      "paper": "P1",
+      "original_acceptance": "Distinct from standard pushforward; model comparison and source-linked robustness",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "S04",
+        "X02"
+      ],
+      "conditional_jobs": [
+        "CF4_RESPONSE",
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {
+        "D01": "Analyze native SDSS/6dF sign genealogy; obtain unshifted method/anchor tables and independent calibration covariance.",
+        "D02": "Use all 8885 released 6dFGSv match indicators; obtain other CF4 parent/rejection denominators before union claims."
+      },
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [
+        "A01",
+        "A05",
+        "A06",
+        "M01",
+        "M02",
+        "M03"
+      ],
+      "source_specific_next_actions": [
+        "Use source-qualified results to decide informative null/partial identification/model discrimination, then draft; keep retrospective statistics retrospective."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "S06",
+      "paper": "P1",
+      "original_acceptance": "All P1 gates shown with actual evidence or HOLD",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "S05"
+      ],
+      "conditional_jobs": [
+        "CF4_RESPONSE",
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {
+        "D01": "Analyze native SDSS/6dF sign genealogy; obtain unshifted method/anchor tables and independent calibration covariance.",
+        "D02": "Use all 8885 released 6dFGSv match indicators; obtain other CF4 parent/rejection denominators before union claims."
+      },
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [
+        "A01",
+        "A05",
+        "A06",
+        "M01",
+        "M02",
+        "M03"
+      ],
+      "source_specific_next_actions": [
+        "Use source-qualified results to decide informative null/partial identification/model discrimination, then draft; keep retrospective statistics retrospective."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "L01",
+      "paper": "P2",
+      "original_acceptance": "Match selected T/E/B source supports, corrected NESTED->RING and ell>5 remainder",
+      "science_status": "INHERITED_COMPLETED_SCOPED",
+      "effective_hard_dependencies": [
+        "E2"
+      ],
+      "conditional_jobs": [
+        "HYREC_COLLISION",
+        "NATIVE_COLLISION_CHECKS",
+        "CHEMISTRY_COLLISION"
+      ],
+      "required_data_actions": {},
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [],
+      "source_specific_next_actions": [
+        "Reuse exact inherited scoped evidence; check its source identity before downstream scientific promotion."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "L02",
+      "paper": "P2",
+      "original_acceptance": "Conservation under SO3/O3 and no posthoc pre-registration",
+      "science_status": "INHERITED_COMPLETED_SCOPED",
+      "effective_hard_dependencies": [
+        "L01",
+        "X03"
+      ],
+      "conditional_jobs": [
+        "HYREC_COLLISION",
+        "NATIVE_COLLISION_CHECKS",
+        "CHEMISTRY_COLLISION"
+      ],
+      "required_data_actions": {},
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [],
+      "source_specific_next_actions": [
+        "Reuse exact inherited scoped evidence; check its source identity before downstream scientific promotion."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "L03",
+      "paper": "P2",
+      "original_acceptance": "Simulation IDs independent units; actual and null same mask/beam/foreground law",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "L01",
+        "SQ-CMB-NULL",
+        "X01"
+      ],
+      "conditional_jobs": [
+        "HYREC_COLLISION",
+        "NATIVE_COLLISION_CHECKS",
+        "CHEMISTRY_COLLISION"
+      ],
+      "required_data_actions": {
+        "D03": "Acquire the existing Commander matched-noise allowlist; split by independent simulation/noise genealogy."
+      },
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [
+        "A02",
+        "M04"
+      ],
+      "source_specific_next_actions": [
+        "Retrieve the selected Commander product under an explicit budget and verify release, simulation, beam, mask and split genealogy.",
+        "Keep group-wise cross-fitting, add paired residual/foreground and weight-selection generative model; calibrate on held-out noise groups."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "L04",
+      "paper": "P2",
+      "original_acceptance": "Correct finite MC ranks, nuisance sensitivity and look elsewhere",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "L02",
+        "L03"
+      ],
+      "conditional_jobs": [
+        "HYREC_COLLISION",
+        "NATIVE_COLLISION_CHECKS",
+        "CHEMISTRY_COLLISION"
+      ],
+      "required_data_actions": {
+        "D03": "Acquire the existing Commander matched-noise allowlist; split by independent simulation/noise genealogy."
+      },
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [
+        "A02",
+        "M04"
+      ],
+      "source_specific_next_actions": [
+        "Once D03/M04 are qualified, rerun all groups and all candidate statistics with a prospective multiplicity protocol; retain noise genealogy."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "L05",
+      "paper": "P2",
+      "original_acceptance": "No independent-sky multiplication or historical p reuse",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "L04",
+        "X02"
+      ],
+      "conditional_jobs": [
+        "HYREC_COLLISION",
+        "NATIVE_COLLISION_CHECKS",
+        "CHEMISTRY_COLLISION"
+      ],
+      "required_data_actions": {
+        "D03": "Acquire the existing Commander matched-noise allowlist; split by independent simulation/noise genealogy."
+      },
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [
+        "A02",
+        "A06",
+        "M04"
+      ],
+      "source_specific_next_actions": [
+        "Use source-qualified results to decide informative null/partial identification/model discrimination, then draft; keep retrospective statistics retrospective."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "L06",
+      "paper": "P2",
+      "original_acceptance": "Qualified simulations, method novelty over Planck VII and reporting of null results",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "L05"
+      ],
+      "conditional_jobs": [
+        "HYREC_COLLISION",
+        "NATIVE_COLLISION_CHECKS",
+        "CHEMISTRY_COLLISION"
+      ],
+      "required_data_actions": {
+        "D03": "Acquire the existing Commander matched-noise allowlist; split by independent simulation/noise genealogy."
+      },
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [
+        "A02",
+        "A06",
+        "M04"
+      ],
+      "source_specific_next_actions": [
+        "Use source-qualified results to decide informative null/partial identification/model discrimination, then draft; keep retrospective statistics retrospective."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "H01",
+      "paper": "P3",
+      "original_acceptance": "Not Theta/3 unless independent physical mapping derived; isotropic window null returns zero spurious dipole",
+      "science_status": "INHERITED_COMPLETED_SCOPED",
+      "effective_hard_dependencies": [
+        "E1"
+      ],
+      "conditional_jobs": [
+        "CF4_RESPONSE"
+      ],
+      "required_data_actions": {},
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [],
+      "source_specific_next_actions": [
+        "Reuse exact inherited scoped evidence; check its source identity before downstream scientific promotion."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "H02",
+      "paper": "P3",
+      "original_acceptance": "Use method-group overlap and correlated errors, reproduce source null simulations",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "H01",
+        "SQ-CF4",
+        "X01"
+      ],
+      "conditional_jobs": [
+        "CF4_RESPONSE"
+      ],
+      "required_data_actions": {
+        "D01": "Analyze native SDSS/6dF sign genealogy; obtain unshifted method/anchor tables and independent calibration covariance.",
+        "D02": "Use all 8885 released 6dFGSv match indicators; obtain other CF4 parent/rejection denominators before union claims."
+      },
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [
+        "A01",
+        "M01"
+      ],
+      "source_specific_next_actions": [
+        "Acquire bounded full payloads, match galaxy/host and group IDs, then reconstruct calibration/holdout roles and shared anchor covariance.",
+        "Join upstream eligible parents to the selected survey samples; recover native cuts, rejections, and group inclusion denominators.",
+        "Recover native estimator conventions and calibrate full-band coherent and small-scale terms using identified source data."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "H03",
+      "paper": "P3",
+      "original_acceptance": "No physical global tilt inferred; nested sky/redshift windows correlated",
+      "science_status": "INHERITED_COMPLETED_SCOPED",
+      "effective_hard_dependencies": [
+        "H01"
+      ],
+      "conditional_jobs": [
+        "CF4_RESPONSE"
+      ],
+      "required_data_actions": {},
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [],
+      "source_specific_next_actions": [
+        "Reuse exact inherited scoped evidence; check its source identity before downstream scientific promotion."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "H04",
+      "paper": "P3",
+      "original_acceptance": "False-positive calibration plus shared calibration posterior predictive checks",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "H02",
+        "H03"
+      ],
+      "conditional_jobs": [
+        "CF4_RESPONSE"
+      ],
+      "required_data_actions": {
+        "D01": "Analyze native SDSS/6dF sign genealogy; obtain unshifted method/anchor tables and independent calibration covariance.",
+        "D02": "Use all 8885 released 6dFGSv match indicators; obtain other CF4 parent/rejection denominators before union claims."
+      },
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [
+        "A01",
+        "M01",
+        "M02"
+      ],
+      "source_specific_next_actions": [
+        "After D01/D02/M01, execute complete-source posterior predictive and truly independent holdout/selection injections, with old diagnostic retained.",
+        "Construct position drift on matched worldlines and source-frame transfer kernels; validate against independent source and coverage tests."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "H05",
+      "paper": "P3",
+      "original_acceptance": "Real novel difference is covariance/window/calibration robustness, not a recycled dipole",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "H04",
+        "X02"
+      ],
+      "conditional_jobs": [
+        "CF4_RESPONSE"
+      ],
+      "required_data_actions": {
+        "D01": "Analyze native SDSS/6dF sign genealogy; obtain unshifted method/anchor tables and independent calibration covariance.",
+        "D02": "Use all 8885 released 6dFGSv match indicators; obtain other CF4 parent/rejection denominators before union claims."
+      },
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [
+        "A01",
+        "A06",
+        "M01",
+        "M02"
+      ],
+      "source_specific_next_actions": [
+        "Use source-qualified results to decide informative null/partial identification/model discrimination, then draft; keep retrospective statistics retrospective."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "H06",
+      "paper": "P3",
+      "original_acceptance": "Actual full law, competing models, independent data validation or scientifically informative null",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "H05"
+      ],
+      "conditional_jobs": [
+        "CF4_RESPONSE"
+      ],
+      "required_data_actions": {
+        "D01": "Analyze native SDSS/6dF sign genealogy; obtain unshifted method/anchor tables and independent calibration covariance.",
+        "D02": "Use all 8885 released 6dFGSv match indicators; obtain other CF4 parent/rejection denominators before union claims."
+      },
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [
+        "A01",
+        "A06",
+        "M01",
+        "M02"
+      ],
+      "source_specific_next_actions": [
+        "Use source-qualified results to decide informative null/partial identification/model discrimination, then draft; keep retrospective statistics retrospective."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "V01",
+      "paper": "P4",
+      "original_acceptance": "Intrinsic radiation eps1 not raw solar CMB dipole; beta fraction != rapidity",
+      "science_status": "INHERITED_COMPLETED_SCOPED",
+      "effective_hard_dependencies": [
+        "E1",
+        "E2"
+      ],
+      "conditional_jobs": [
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {},
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [],
+      "source_specific_next_actions": [
+        "Reuse exact inherited scoped evidence; check its source identity before downstream scientific promotion."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "V02",
+      "paper": "P4",
+      "original_acceptance": "Matched mask/beam/input and mode leakage",
+      "science_status": "INHERITED_COMPLETED_SCOPED",
+      "effective_hard_dependencies": [
+        "L01",
+        "V01"
+      ],
+      "conditional_jobs": [
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {},
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [],
+      "source_specific_next_actions": [
+        "Reuse exact inherited scoped evidence; check its source identity before downstream scientific promotion."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "V03",
+      "paper": "P4",
+      "original_acceptance": "Same-frame, different radial/temporal transfer and exact source units",
+      "science_status": "INHERITED_COMPLETED_SCOPED",
+      "effective_hard_dependencies": [
+        "V01"
+      ],
+      "conditional_jobs": [
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {},
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [],
+      "source_specific_next_actions": [
+        "Reuse exact inherited scoped evidence; check its source identity before downstream scientific promotion."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "V04",
+      "paper": "P4",
+      "original_acceptance": "Do not identify from a normalization of a null column",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "H04",
+        "SQ-FRAME",
+        "SQ-RADIO",
+        "V02",
+        "V03"
+      ],
+      "conditional_jobs": [
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {
+        "D01": "Analyze native SDSS/6dF sign genealogy; obtain unshifted method/anchor tables and independent calibration covariance.",
+        "D02": "Use all 8885 released 6dFGSv match indicators; obtain other CF4 parent/rejection denominators before union claims.",
+        "D05": "Fetch prepared LoTSS RMS/weight files when online; apply interior holes and source associations before count fits."
+      },
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [
+        "A01",
+        "A04",
+        "A05",
+        "M01",
+        "M02",
+        "M06",
+        "M07"
+      ],
+      "source_specific_next_actions": [
+        "Compute common-operator Jacobians for both mechanisms, test singular values under observational covariance rather than arbitrary column normalization.",
+        "Use all catalog overlap IDs and common mock sky/light cone, not product of per-survey likelihoods; compare alternative source and transfer models."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "V05",
+      "paper": "P4",
+      "original_acceptance": "No unqualified Bayes evidence; calibrated null and prior family",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "V04",
+        "X03"
+      ],
+      "conditional_jobs": [
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {
+        "D01": "Analyze native SDSS/6dF sign genealogy; obtain unshifted method/anchor tables and independent calibration covariance.",
+        "D02": "Use all 8885 released 6dFGSv match indicators; obtain other CF4 parent/rejection denominators before union claims.",
+        "D05": "Fetch prepared LoTSS RMS/weight files when online; apply interior holes and source associations before count fits."
+      },
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [
+        "A01",
+        "A04",
+        "A05",
+        "M01",
+        "M02",
+        "M06",
+        "M07"
+      ],
+      "source_specific_next_actions": [
+        "Use all catalog overlap IDs and common mock sky/light cone, not product of per-survey likelihoods; compare alternative source and transfer models.",
+        "Repeat all flux/redshift/model combinations on qualified matched mocks, including missing/zero-source regions and systematic model alternatives."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "V06",
+      "paper": "P4",
+      "original_acceptance": "Actual distinct transfer or physical non-identifiability statement and real-data significance",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "V05",
+        "X02"
+      ],
+      "conditional_jobs": [
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {
+        "D01": "Analyze native SDSS/6dF sign genealogy; obtain unshifted method/anchor tables and independent calibration covariance.",
+        "D02": "Use all 8885 released 6dFGSv match indicators; obtain other CF4 parent/rejection denominators before union claims.",
+        "D05": "Fetch prepared LoTSS RMS/weight files when online; apply interior holes and source associations before count fits."
+      },
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [
+        "A01",
+        "A04",
+        "A05",
+        "A06",
+        "M01",
+        "M02",
+        "M06",
+        "M07"
+      ],
+      "source_specific_next_actions": [
+        "Use source-qualified results to decide informative null/partial identification/model discrimination, then draft; keep retrospective statistics retrospective."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "B01",
+      "paper": "P5",
+      "original_acceptance": "Do not count partial synthetic or scalar templates as physically verified T/E/B",
+      "science_status": "INHERITED_COMPLETED_SCOPED",
+      "effective_hard_dependencies": [
+        "E2"
+      ],
+      "conditional_jobs": [
+        "NATIVE_COLLISION_CHECKS",
+        "CHEMISTRY_COLLISION",
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {},
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [],
+      "source_specific_next_actions": [
+        "Reuse exact inherited scoped evidence; check its source identity before downstream scientific promotion."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "B02",
+      "paper": "P5",
+      "original_acceptance": "Einstein/Boltzmann physics, recombination, constraints, IC and mode test actual",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "B01",
+        "SQ-NATIVE"
+      ],
+      "conditional_jobs": [
+        "NATIVE_COLLISION_CHECKS",
+        "CHEMISTRY_COLLISION",
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {},
+      "remaining_solver_actions": {
+        "A03": {
+          "kind": "NATIVE_SOLVER_ANALYSIS",
+          "completed": "direct collision and conditional transfer substeps executable",
+          "next": "Run I-IX/admissible Class-B mode families, constraints, ell/m and time convergence, and independent FLRW/curved-limit comparisons. Do not wait indefinitely for an external implementation."
+        },
+        "M08": {
+          "kind": "CODE_AND_THEORY",
+          "completed": "signed IQUV collision repair; exact stiff collision/source cells; bounded Fourier transport",
+          "next": "Implement k-dependent general-Lie streaming, electron-frame transforms and Einstein/species coupling on the existing R100 state; prove constraints and converge signed all-m transfer before atlas qualification."
+        },
+        "M09": {
+          "kind": "CODE_AND_THEORY_WITH_RATE_INPUT",
+          "completed": "clock-correct positive finite chemistry, opacity/reward and tangent; exact original HYREC inputs/tables recovered",
+          "next": "Separate actual HYREC reaction clock, density, radiation frequency/escape and thermal expansion interfaces. Supply anisotropic radiation/atomic rates; couple their Jacobians and test against FULL/FLRW."
+        }
+      },
+      "other_model_or_analysis_blockers": [],
+      "source_specific_next_actions": [
+        "Propagate successive coupled radiation/background iterates and test convergence, constraints and matched external solutions.",
+        "Extend retained rec/rei source operators along actual H/clock with photons and density; verify conserved energy, opacity and chemical closure.",
+        "Expand admissible parameter/IC atlas with constraint monitoring; test scalar/vector/tensor limits, radiation feedback and external near-FLRW agreement."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "B03",
+      "paper": "P5",
+      "original_acceptance": "No fake T/E/B source or forged full-sky score",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "B02",
+        "L03",
+        "SQ-CMB-NULL",
+        "SQ-OPTICAL"
+      ],
+      "conditional_jobs": [
+        "NATIVE_COLLISION_CHECKS",
+        "CHEMISTRY_COLLISION",
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {
+        "D03": "Acquire the existing Commander matched-noise allowlist; split by independent simulation/noise genealogy."
+      },
+      "remaining_solver_actions": {
+        "A03": {
+          "kind": "NATIVE_SOLVER_ANALYSIS",
+          "completed": "direct collision and conditional transfer substeps executable",
+          "next": "Run I-IX/admissible Class-B mode families, constraints, ell/m and time convergence, and independent FLRW/curved-limit comparisons. Do not wait indefinitely for an external implementation."
+        },
+        "M08": {
+          "kind": "CODE_AND_THEORY",
+          "completed": "signed IQUV collision repair; exact stiff collision/source cells; bounded Fourier transport",
+          "next": "Implement k-dependent general-Lie streaming, electron-frame transforms and Einstein/species coupling on the existing R100 state; prove constraints and converge signed all-m transfer before atlas qualification."
+        },
+        "M09": {
+          "kind": "CODE_AND_THEORY_WITH_RATE_INPUT",
+          "completed": "clock-correct positive finite chemistry, opacity/reward and tangent; exact original HYREC inputs/tables recovered",
+          "next": "Separate actual HYREC reaction clock, density, radiation frequency/escape and thermal expansion interfaces. Supply anisotropic radiation/atomic rates; couple their Jacobians and test against FULL/FLRW."
+        }
+      },
+      "other_model_or_analysis_blockers": [
+        "A02",
+        "M02",
+        "M04",
+        "M07"
+      ],
+      "source_specific_next_actions": [
+        "Once D03/M04 are qualified, rerun all groups and all candidate statistics with a prospective multiplicity protocol; retain noise genealogy.",
+        "Expand admissible parameter/IC atlas with constraint monitoring; test scalar/vector/tensor limits, radiation feedback and external near-FLRW agreement."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "B04",
+      "paper": "P5",
+      "original_acceptance": "Degenerate families reported equivalence class and compared Saadeh 2016",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "B03"
+      ],
+      "conditional_jobs": [
+        "NATIVE_COLLISION_CHECKS",
+        "CHEMISTRY_COLLISION",
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {
+        "D03": "Acquire the existing Commander matched-noise allowlist; split by independent simulation/noise genealogy."
+      },
+      "remaining_solver_actions": {
+        "A03": {
+          "kind": "NATIVE_SOLVER_ANALYSIS",
+          "completed": "direct collision and conditional transfer substeps executable",
+          "next": "Run I-IX/admissible Class-B mode families, constraints, ell/m and time convergence, and independent FLRW/curved-limit comparisons. Do not wait indefinitely for an external implementation."
+        },
+        "M08": {
+          "kind": "CODE_AND_THEORY",
+          "completed": "signed IQUV collision repair; exact stiff collision/source cells; bounded Fourier transport",
+          "next": "Implement k-dependent general-Lie streaming, electron-frame transforms and Einstein/species coupling on the existing R100 state; prove constraints and converge signed all-m transfer before atlas qualification."
+        },
+        "M09": {
+          "kind": "CODE_AND_THEORY_WITH_RATE_INPUT",
+          "completed": "clock-correct positive finite chemistry, opacity/reward and tangent; exact original HYREC inputs/tables recovered",
+          "next": "Separate actual HYREC reaction clock, density, radiation frequency/escape and thermal expansion interfaces. Supply anisotropic radiation/atomic rates; couple their Jacobians and test against FULL/FLRW."
+        }
+      },
+      "other_model_or_analysis_blockers": [
+        "A02",
+        "A04",
+        "M02",
+        "M04",
+        "M07"
+      ],
+      "source_specific_next_actions": [
+        "Expand admissible parameter/IC atlas with constraint monitoring; test scalar/vector/tensor limits, radiation feedback and external near-FLRW agreement.",
+        "Use all catalog overlap IDs and common mock sky/light cone, not product of per-survey likelihoods; compare alternative source and transfer models."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "B05",
+      "paper": "P5",
+      "original_acceptance": "Real Planck likelihood and family physical mode calibration, hold if unavailable",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "B04",
+        "X02"
+      ],
+      "conditional_jobs": [
+        "NATIVE_COLLISION_CHECKS",
+        "CHEMISTRY_COLLISION",
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {
+        "D03": "Acquire the existing Commander matched-noise allowlist; split by independent simulation/noise genealogy."
+      },
+      "remaining_solver_actions": {
+        "A03": {
+          "kind": "NATIVE_SOLVER_ANALYSIS",
+          "completed": "direct collision and conditional transfer substeps executable",
+          "next": "Run I-IX/admissible Class-B mode families, constraints, ell/m and time convergence, and independent FLRW/curved-limit comparisons. Do not wait indefinitely for an external implementation."
+        },
+        "M08": {
+          "kind": "CODE_AND_THEORY",
+          "completed": "signed IQUV collision repair; exact stiff collision/source cells; bounded Fourier transport",
+          "next": "Implement k-dependent general-Lie streaming, electron-frame transforms and Einstein/species coupling on the existing R100 state; prove constraints and converge signed all-m transfer before atlas qualification."
+        },
+        "M09": {
+          "kind": "CODE_AND_THEORY_WITH_RATE_INPUT",
+          "completed": "clock-correct positive finite chemistry, opacity/reward and tangent; exact original HYREC inputs/tables recovered",
+          "next": "Separate actual HYREC reaction clock, density, radiation frequency/escape and thermal expansion interfaces. Supply anisotropic radiation/atomic rates; couple their Jacobians and test against FULL/FLRW."
+        }
+      },
+      "other_model_or_analysis_blockers": [
+        "A02",
+        "A04",
+        "A06",
+        "M02",
+        "M04",
+        "M07"
+      ],
+      "source_specific_next_actions": [
+        "Use source-qualified results to decide informative null/partial identification/model discrimination, then draft; keep retrospective statistics retrospective."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "K01",
+      "paper": "P6",
+      "original_acceptance": "n^i Omega_ij n^j=0, apparent STF\u2260geometry sigma; 4accel dipole not assumed",
+      "science_status": "INHERITED_COMPLETED_SCOPED",
+      "effective_hard_dependencies": [
+        "E1",
+        "E2"
+      ],
+      "conditional_jobs": [
+        "MOVING_PROJECTION",
+        "CF4_RESPONSE"
+      ],
+      "required_data_actions": {},
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [],
+      "source_specific_next_actions": [
+        "Reuse exact inherited scoped evidence; check its source identity before downstream scientific promotion."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "K02",
+      "paper": "P6",
+      "original_acceptance": "No measured omega from radial redshift and no manufactured A posterior",
+      "science_status": "INHERITED_COMPLETED_SCOPED",
+      "effective_hard_dependencies": [
+        "H01",
+        "K01"
+      ],
+      "conditional_jobs": [
+        "MOVING_PROJECTION",
+        "CF4_RESPONSE"
+      ],
+      "required_data_actions": {},
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [],
+      "source_specific_next_actions": [
+        "Reuse exact inherited scoped evidence; check its source identity before downstream scientific promotion."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "K03",
+      "paper": "P6",
+      "original_acceptance": "Independent source qualification and nonradial response demonstrated",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "K01",
+        "SQ-GAIA"
+      ],
+      "conditional_jobs": [
+        "MOVING_PROJECTION",
+        "CF4_RESPONSE"
+      ],
+      "required_data_actions": {
+        "D04": "Supply release-matched AGIS scan/AGN centroid controls; retain rank-47 supported covariance subspace."
+      },
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [
+        "A05",
+        "M02",
+        "M05"
+      ],
+      "source_specific_next_actions": [
+        "Attach audited calibration and independent source labels with exact IDs and test the held-out angular residuals.",
+        "Construct position drift on matched worldlines and source-frame transfer kernels; validate against independent source and coverage tests.",
+        "Condition shared covariance on independent AGIS/AGN controls and a positional-drift response with frame-spin degeneracies."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "K04",
+      "paper": "P6",
+      "original_acceptance": "Output unbounded or undefined for genuinely null sectors; no zero fill",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "H04",
+        "K02",
+        "SQ-OPTICAL"
+      ],
+      "conditional_jobs": [
+        "MOVING_PROJECTION",
+        "CF4_RESPONSE"
+      ],
+      "required_data_actions": {
+        "D01": "Analyze native SDSS/6dF sign genealogy; obtain unshifted method/anchor tables and independent calibration covariance.",
+        "D02": "Use all 8885 released 6dFGSv match indicators; obtain other CF4 parent/rejection denominators before union claims."
+      },
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [
+        "A01",
+        "M01",
+        "M02",
+        "M07"
+      ],
+      "source_specific_next_actions": [
+        "Construct position drift on matched worldlines and source-frame transfer kernels; validate against independent source and coverage tests.",
+        "After D01/D02/M01, execute complete-source posterior predictive and truly independent holdout/selection injections, with old diagnostic retained."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "K05",
+      "paper": "P6",
+      "original_acceptance": "Calibration, source clock, observer frame and shared sky treatment exact",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "K03",
+        "K04",
+        "SQ-CROSS-COV",
+        "V03"
+      ],
+      "conditional_jobs": [
+        "MOVING_PROJECTION",
+        "CF4_RESPONSE"
+      ],
+      "required_data_actions": {
+        "D01": "Analyze native SDSS/6dF sign genealogy; obtain unshifted method/anchor tables and independent calibration covariance.",
+        "D02": "Use all 8885 released 6dFGSv match indicators; obtain other CF4 parent/rejection denominators before union claims.",
+        "D04": "Supply release-matched AGIS scan/AGN centroid controls; retain rank-47 supported covariance subspace.",
+        "D05": "Fetch prepared LoTSS RMS/weight files when online; apply interior holes and source associations before count fits."
+      },
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [
+        "A01",
+        "A04",
+        "A05",
+        "M01",
+        "M02",
+        "M05",
+        "M06",
+        "M07"
+      ],
+      "source_specific_next_actions": [
+        "Condition shared covariance on independent AGIS/AGN controls and a positional-drift response with frame-spin degeneracies.",
+        "Compute common-operator Jacobians for both mechanisms, test singular values under observational covariance rather than arbitrary column normalization.",
+        "Use all catalog overlap IDs and common mock sky/light cone, not product of per-survey likelihoods; compare alternative source and transfer models."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "K06",
+      "paper": "P6",
+      "original_acceptance": "Source-supported physical identified combinations with independent error budget",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "K05",
+        "X02"
+      ],
+      "conditional_jobs": [
+        "MOVING_PROJECTION",
+        "CF4_RESPONSE"
+      ],
+      "required_data_actions": {
+        "D01": "Analyze native SDSS/6dF sign genealogy; obtain unshifted method/anchor tables and independent calibration covariance.",
+        "D02": "Use all 8885 released 6dFGSv match indicators; obtain other CF4 parent/rejection denominators before union claims.",
+        "D04": "Supply release-matched AGIS scan/AGN centroid controls; retain rank-47 supported covariance subspace.",
+        "D05": "Fetch prepared LoTSS RMS/weight files when online; apply interior holes and source associations before count fits."
+      },
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [
+        "A01",
+        "A04",
+        "A05",
+        "A06",
+        "M01",
+        "M02",
+        "M05",
+        "M06",
+        "M07"
+      ],
+      "source_specific_next_actions": [
+        "Use source-qualified results to decide informative null/partial identification/model discrimination, then draft; keep retrospective statistics retrospective."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "SQ-CF4",
+      "paper": "P3",
+      "original_acceptance": "Match exact group/method IDs, form source-level C=N+S_PV+Jcal Sigma_cal Jcal^T+Csel, compare heldout contrast/coverage with an explicit missing-source remainder.",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "E1",
+        "H01",
+        "X01"
+      ],
+      "conditional_jobs": [
+        "CF4_RESPONSE"
+      ],
+      "required_data_actions": {
+        "D01": "Analyze native SDSS/6dF sign genealogy; obtain unshifted method/anchor tables and independent calibration covariance.",
+        "D02": "Use all 8885 released 6dFGSv match indicators; obtain other CF4 parent/rejection denominators before union claims."
+      },
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [
+        "A01",
+        "M01"
+      ],
+      "source_specific_next_actions": [
+        "Acquire bounded full payloads, match galaxy/host and group IDs, then reconstruct calibration/holdout roles and shared anchor covariance.",
+        "Join upstream eligible parents to the selected survey samples; recover native cuts, rejections, and group inclusion denominators.",
+        "Recover native estimator conventions and calibrate full-band coherent and small-scale terms using identified source data.",
+        "After D01/D02/M01, execute complete-source posterior predictive and truly independent holdout/selection injections, with old diagnostic retained."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "SQ-GAIA",
+      "paper": "P6",
+      "original_acceptance": "Reproduce 16D fit on registered subset with stable cross-hemisphere/patch forecast and a source-specific null; keep local cosmic shear unqualified.",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "K01",
+        "X01"
+      ],
+      "conditional_jobs": [
+        "MOVING_PROJECTION",
+        "CF4_RESPONSE"
+      ],
+      "required_data_actions": {
+        "D04": "Supply release-matched AGIS scan/AGN centroid controls; retain rank-47 supported covariance subspace."
+      },
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [
+        "A05",
+        "M05"
+      ],
+      "source_specific_next_actions": [
+        "Attach audited calibration and independent source labels with exact IDs and test the held-out angular residuals.",
+        "Condition shared covariance on independent AGIS/AGN controls and a positional-drift response with frame-spin degeneracies.",
+        "Repeat all flux/redshift/model combinations on qualified matched mocks, including missing/zero-source regions and systematic model alternatives."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "SQ-RADIO",
+      "paper": "P4",
+      "original_acceptance": "Estimate one physically selected k,kappa and paired covariance; source-preserving Lorentz aberration/reselection/heldout validation; distinguish log-count vs count-density.",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "V01",
+        "X01"
+      ],
+      "conditional_jobs": [
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {
+        "D05": "Fetch prepared LoTSS RMS/weight files when online; apply interior holes and source associations before count fits."
+      },
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [
+        "A05",
+        "M06"
+      ],
+      "source_specific_next_actions": [
+        "Acquire per-mosaic weights/RMS with explicit byte limits, recover internal coverage and validate with source injections and SED matches.",
+        "Develop Cox/LSS mocks with flux-size completeness and spectral-index distribution; jointly propagate shared-object and shared-sky covariance.",
+        "Repeat all flux/redshift/model combinations on qualified matched mocks, including missing/zero-source regions and systematic model alternatives."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "SQ-FRAME",
+      "paper": "COMMON",
+      "original_acceptance": "Produce a unit-tested local proper Lorentz/Fermi frame dictionary, source frame identity and redshift-dependent applicability; no unmeasured beta.",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "K01",
+        "V01",
+        "X01"
+      ],
+      "conditional_jobs": [
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {},
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [
+        "M02",
+        "M07"
+      ],
+      "source_specific_next_actions": [
+        "Construct position drift on matched worldlines and source-frame transfer kernels; validate against independent source and coverage tests.",
+        "Compute common-operator Jacobians for both mechanisms, test singular values under observational covariance rather than arbitrary column normalization."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "SQ-P1-ANCHOR",
+      "paper": "P1",
+      "original_acceptance": "One identified physical x with actual source covariance and partial identified interval; original P1 F/common-scale null.",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "S01",
+        "X01"
+      ],
+      "conditional_jobs": [
+        "CF4_RESPONSE",
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {},
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [
+        "M03"
+      ],
+      "source_specific_next_actions": [
+        "Map the admitted source law through a signed physical carrier; retain unknown mass and common nuisance, with no per-draw nuisance maximization."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "SQ-CMB-NULL",
+      "paper": "P2",
+      "original_acceptance": "Same-release source-qualified T/E/B null and actual matched cosmic/instrument simulation coverage, no invented PTE.",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "E2",
+        "L01"
+      ],
+      "conditional_jobs": [
+        "HYREC_COLLISION"
+      ],
+      "required_data_actions": {
+        "D03": "Acquire the existing Commander matched-noise allowlist; split by independent simulation/noise genealogy."
+      },
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [
+        "A02",
+        "M04"
+      ],
+      "source_specific_next_actions": [
+        "Retrieve the selected Commander product under an explicit budget and verify release, simulation, beam, mask and split genealogy.",
+        "Keep group-wise cross-fitting, add paired residual/foreground and weight-selection generative model; calibrate on held-out noise groups.",
+        "Once D03/M04 are qualified, rerun all groups and all candidate statistics with a prospective multiplicity protocol; retain noise genealogy."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "SQ-PHOTON-FLUX",
+      "paper": "P2",
+      "original_acceptance": "Check P-ff^T PSD and Einstein-Codazzi joint photon-only vs multifluid constraints with independently defined frame.",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "B01",
+        "L01"
+      ],
+      "conditional_jobs": [
+        "HYREC_COLLISION",
+        "CHEMISTRY_COLLISION"
+      ],
+      "required_data_actions": {
+        "D06": "Supply independent normal-frame rho,j,pi; a constraint inversion is not an independent measurement."
+      },
+      "remaining_solver_actions": {
+        "M08": {
+          "kind": "CODE_AND_THEORY",
+          "completed": "signed IQUV collision repair; exact stiff collision/source cells; bounded Fourier transport",
+          "next": "Implement k-dependent general-Lie streaming, electron-frame transforms and Einstein/species coupling on the existing R100 state; prove constraints and converge signed all-m transfer before atlas qualification."
+        }
+      },
+      "other_model_or_analysis_blockers": [],
+      "source_specific_next_actions": [
+        "Prepare source/units/frame contracts; seek independent matter or photon observables. No generic catalogue download supplies all these moments.",
+        "Propagate successive coupled radiation/background iterates and test convergence, constraints and matched external solutions."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "SQ-LIE-FLUX",
+      "paper": "P5",
+      "original_acceptance": "Rank-aware normal Codazzi residual using independently sourced shear+u with covariance and Hamiltonian consistency.",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "B01",
+        "K01"
+      ],
+      "conditional_jobs": [
+        "MOVING_PROJECTION",
+        "NATIVE_COLLISION_CHECKS"
+      ],
+      "required_data_actions": {
+        "D06": "Supply independent normal-frame rho,j,pi; a constraint inversion is not an independent measurement."
+      },
+      "remaining_solver_actions": {
+        "M08": {
+          "kind": "CODE_AND_THEORY",
+          "completed": "signed IQUV collision repair; exact stiff collision/source cells; bounded Fourier transport",
+          "next": "Implement k-dependent general-Lie streaming, electron-frame transforms and Einstein/species coupling on the existing R100 state; prove constraints and converge signed all-m transfer before atlas qualification."
+        }
+      },
+      "other_model_or_analysis_blockers": [],
+      "source_specific_next_actions": [
+        "Prepare source/units/frame contracts; seek independent matter or photon observables. No generic catalogue download supplies all these moments.",
+        "Propagate successive coupled radiation/background iterates and test convergence, constraints and matched external solutions."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "SQ-OPTICAL",
+      "paper": "COMMON",
+      "original_acceptance": "Validate z->0 local H and same-tensor scalar/E2 consistency; compute T_C(z), T_G(z), and precise finite-z optical remainder with heldout prediction.",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "B01",
+        "H01",
+        "K01",
+        "SQ-FRAME"
+      ],
+      "conditional_jobs": [
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {},
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [
+        "M02",
+        "M07"
+      ],
+      "source_specific_next_actions": [
+        "Construct position drift on matched worldlines and source-frame transfer kernels; validate against independent source and coverage tests."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "SQ-CROSS-COV",
+      "paper": "COMMON",
+      "original_acceptance": "Independent source-level cross-covariance and calibrated heldout predictive test; report identifiable target rank and nuisance profile.",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "SQ-CF4",
+        "SQ-FRAME",
+        "SQ-GAIA",
+        "SQ-OPTICAL",
+        "SQ-RADIO"
+      ],
+      "conditional_jobs": [
+        "CF4_RESPONSE",
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {
+        "D01": "Analyze native SDSS/6dF sign genealogy; obtain unshifted method/anchor tables and independent calibration covariance.",
+        "D02": "Use all 8885 released 6dFGSv match indicators; obtain other CF4 parent/rejection denominators before union claims.",
+        "D04": "Supply release-matched AGIS scan/AGN centroid controls; retain rank-47 supported covariance subspace.",
+        "D05": "Fetch prepared LoTSS RMS/weight files when online; apply interior holes and source associations before count fits."
+      },
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [
+        "A01",
+        "A04",
+        "A05",
+        "M01",
+        "M02",
+        "M05",
+        "M06",
+        "M07"
+      ],
+      "source_specific_next_actions": [
+        "Use all catalog overlap IDs and common mock sky/light cone, not product of per-survey likelihoods; compare alternative source and transfer models."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "SQ-NATIVE",
+      "paper": "P5",
+      "original_acceptance": "Qualify actual external solver provenance, CMB/Planck response family confusion and injection with heldout calibrated null.",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "B01",
+        "L01"
+      ],
+      "conditional_jobs": [
+        "NATIVE_COLLISION_CHECKS",
+        "HYREC_COLLISION",
+        "CHEMISTRY_COLLISION"
+      ],
+      "required_data_actions": {},
+      "remaining_solver_actions": {
+        "A03": {
+          "kind": "NATIVE_SOLVER_ANALYSIS",
+          "completed": "direct collision and conditional transfer substeps executable",
+          "next": "Run I-IX/admissible Class-B mode families, constraints, ell/m and time convergence, and independent FLRW/curved-limit comparisons. Do not wait indefinitely for an external implementation."
+        },
+        "M08": {
+          "kind": "CODE_AND_THEORY",
+          "completed": "signed IQUV collision repair; exact stiff collision/source cells; bounded Fourier transport",
+          "next": "Implement k-dependent general-Lie streaming, electron-frame transforms and Einstein/species coupling on the existing R100 state; prove constraints and converge signed all-m transfer before atlas qualification."
+        },
+        "M09": {
+          "kind": "CODE_AND_THEORY_WITH_RATE_INPUT",
+          "completed": "clock-correct positive finite chemistry, opacity/reward and tangent; exact original HYREC inputs/tables recovered",
+          "next": "Separate actual HYREC reaction clock, density, radiation frequency/escape and thermal expansion interfaces. Supply anisotropic radiation/atomic rates; couple their Jacobians and test against FULL/FLRW."
+        }
+      },
+      "other_model_or_analysis_blockers": [],
+      "source_specific_next_actions": [
+        "Propagate successive coupled radiation/background iterates and test convergence, constraints and matched external solutions.",
+        "Extend retained rec/rei source operators along actual H/clock with photons and density; verify conserved energy, opacity and chemical closure.",
+        "Expand admissible parameter/IC atlas with constraint monitoring; test scalar/vector/tensor limits, radiation feedback and external near-FLRW agreement."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "PHY-01",
+      "paper": "CROSS",
+      "original_acceptance": "Physically matched source/null/frames and heldout independent predictive discriminator; preserve signed source data and joint covariance.",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "SQ-CF4",
+        "SQ-LIE-FLUX",
+        "SQ-OPTICAL"
+      ],
+      "conditional_jobs": [
+        "CF4_RESPONSE",
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {
+        "D01": "Analyze native SDSS/6dF sign genealogy; obtain unshifted method/anchor tables and independent calibration covariance.",
+        "D02": "Use all 8885 released 6dFGSv match indicators; obtain other CF4 parent/rejection denominators before union claims.",
+        "D06": "Supply independent normal-frame rho,j,pi; a constraint inversion is not an independent measurement."
+      },
+      "remaining_solver_actions": {
+        "M08": {
+          "kind": "CODE_AND_THEORY",
+          "completed": "signed IQUV collision repair; exact stiff collision/source cells; bounded Fourier transport",
+          "next": "Implement k-dependent general-Lie streaming, electron-frame transforms and Einstein/species coupling on the existing R100 state; prove constraints and converge signed all-m transfer before atlas qualification."
+        }
+      },
+      "other_model_or_analysis_blockers": [
+        "A01",
+        "A04",
+        "M01",
+        "M02",
+        "M07"
+      ],
+      "source_specific_next_actions": [
+        "Construct position drift on matched worldlines and source-frame transfer kernels; validate against independent source and coverage tests.",
+        "Use all catalog overlap IDs and common mock sky/light cone, not product of per-survey likelihoods; compare alternative source and transfer models."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "PHY-02",
+      "paper": "CROSS",
+      "original_acceptance": "Physically matched source/null/frames and heldout independent predictive discriminator; preserve signed source data and joint covariance.",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "SQ-CMB-NULL",
+        "SQ-LIE-FLUX",
+        "SQ-PHOTON-FLUX"
+      ],
+      "conditional_jobs": [
+        "HYREC_COLLISION",
+        "NATIVE_COLLISION_CHECKS",
+        "CHEMISTRY_COLLISION"
+      ],
+      "required_data_actions": {
+        "D03": "Acquire the existing Commander matched-noise allowlist; split by independent simulation/noise genealogy.",
+        "D06": "Supply independent normal-frame rho,j,pi; a constraint inversion is not an independent measurement."
+      },
+      "remaining_solver_actions": {
+        "M08": {
+          "kind": "CODE_AND_THEORY",
+          "completed": "signed IQUV collision repair; exact stiff collision/source cells; bounded Fourier transport",
+          "next": "Implement k-dependent general-Lie streaming, electron-frame transforms and Einstein/species coupling on the existing R100 state; prove constraints and converge signed all-m transfer before atlas qualification."
+        }
+      },
+      "other_model_or_analysis_blockers": [
+        "A02",
+        "M04"
+      ],
+      "source_specific_next_actions": [
+        "Prepare source/units/frame contracts; seek independent matter or photon observables. No generic catalogue download supplies all these moments.",
+        "Propagate successive coupled radiation/background iterates and test convergence, constraints and matched external solutions."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "PHY-03",
+      "paper": "CROSS",
+      "original_acceptance": "Physically matched source/null/frames and heldout independent predictive discriminator; preserve signed source data and joint covariance.",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "SQ-FRAME",
+        "SQ-PHOTON-FLUX",
+        "SQ-RADIO"
+      ],
+      "conditional_jobs": [
+        "CHEMISTRY_COLLISION",
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {
+        "D05": "Fetch prepared LoTSS RMS/weight files when online; apply interior holes and source associations before count fits.",
+        "D06": "Supply independent normal-frame rho,j,pi; a constraint inversion is not an independent measurement."
+      },
+      "remaining_solver_actions": {
+        "M08": {
+          "kind": "CODE_AND_THEORY",
+          "completed": "signed IQUV collision repair; exact stiff collision/source cells; bounded Fourier transport",
+          "next": "Implement k-dependent general-Lie streaming, electron-frame transforms and Einstein/species coupling on the existing R100 state; prove constraints and converge signed all-m transfer before atlas qualification."
+        }
+      },
+      "other_model_or_analysis_blockers": [
+        "A04",
+        "A05",
+        "M02",
+        "M06",
+        "M07"
+      ],
+      "source_specific_next_actions": [
+        "Develop Cox/LSS mocks with flux-size completeness and spectral-index distribution; jointly propagate shared-object and shared-sky covariance.",
+        "Compute common-operator Jacobians for both mechanisms, test singular values under observational covariance rather than arbitrary column normalization.",
+        "Use all catalog overlap IDs and common mock sky/light cone, not product of per-survey likelihoods; compare alternative source and transfer models."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "PHY-04",
+      "paper": "CROSS",
+      "original_acceptance": "Physically matched source/null/frames and heldout independent predictive discriminator; preserve signed source data and joint covariance.",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "SQ-FRAME",
+        "SQ-GAIA",
+        "SQ-OPTICAL",
+        "SQ-RADIO"
+      ],
+      "conditional_jobs": [
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {
+        "D04": "Supply release-matched AGIS scan/AGN centroid controls; retain rank-47 supported covariance subspace.",
+        "D05": "Fetch prepared LoTSS RMS/weight files when online; apply interior holes and source associations before count fits."
+      },
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [
+        "A04",
+        "A05",
+        "M02",
+        "M05",
+        "M06",
+        "M07"
+      ],
+      "source_specific_next_actions": [
+        "Construct position drift on matched worldlines and source-frame transfer kernels; validate against independent source and coverage tests.",
+        "Condition shared covariance on independent AGIS/AGN controls and a positional-drift response with frame-spin degeneracies.",
+        "Use all catalog overlap IDs and common mock sky/light cone, not product of per-survey likelihoods; compare alternative source and transfer models."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "PHY-05",
+      "paper": "CROSS",
+      "original_acceptance": "Physically matched source/null/frames and heldout independent predictive discriminator; preserve signed source data and joint covariance.",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "SQ-LIE-FLUX",
+        "SQ-OPTICAL"
+      ],
+      "conditional_jobs": [
+        "MOVING_PROJECTION",
+        "NATIVE_COLLISION_CHECKS"
+      ],
+      "required_data_actions": {
+        "D06": "Supply independent normal-frame rho,j,pi; a constraint inversion is not an independent measurement."
+      },
+      "remaining_solver_actions": {
+        "M08": {
+          "kind": "CODE_AND_THEORY",
+          "completed": "signed IQUV collision repair; exact stiff collision/source cells; bounded Fourier transport",
+          "next": "Implement k-dependent general-Lie streaming, electron-frame transforms and Einstein/species coupling on the existing R100 state; prove constraints and converge signed all-m transfer before atlas qualification."
+        }
+      },
+      "other_model_or_analysis_blockers": [
+        "A04",
+        "M02",
+        "M07"
+      ],
+      "source_specific_next_actions": [
+        "Prepare source/units/frame contracts; seek independent matter or photon observables. No generic catalogue download supplies all these moments.",
+        "Use all catalog overlap IDs and common mock sky/light cone, not product of per-survey likelihoods; compare alternative source and transfer models."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "PHY-06",
+      "paper": "CROSS",
+      "original_acceptance": "Physically matched source/null/frames and heldout independent predictive discriminator; preserve signed source data and joint covariance.",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "SQ-CMB-NULL",
+        "SQ-LIE-FLUX",
+        "SQ-OPTICAL",
+        "SQ-PHOTON-FLUX"
+      ],
+      "conditional_jobs": [
+        "CF4_RESPONSE",
+        "HYREC_COLLISION",
+        "NATIVE_COLLISION_CHECKS",
+        "CHEMISTRY_COLLISION",
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {
+        "D03": "Acquire the existing Commander matched-noise allowlist; split by independent simulation/noise genealogy.",
+        "D06": "Supply independent normal-frame rho,j,pi; a constraint inversion is not an independent measurement."
+      },
+      "remaining_solver_actions": {
+        "M08": {
+          "kind": "CODE_AND_THEORY",
+          "completed": "signed IQUV collision repair; exact stiff collision/source cells; bounded Fourier transport",
+          "next": "Implement k-dependent general-Lie streaming, electron-frame transforms and Einstein/species coupling on the existing R100 state; prove constraints and converge signed all-m transfer before atlas qualification."
+        },
+        "M09": {
+          "kind": "CODE_AND_THEORY_WITH_RATE_INPUT",
+          "completed": "clock-correct positive finite chemistry, opacity/reward and tangent; exact original HYREC inputs/tables recovered",
+          "next": "Separate actual HYREC reaction clock, density, radiation frequency/escape and thermal expansion interfaces. Supply anisotropic radiation/atomic rates; couple their Jacobians and test against FULL/FLRW."
+        }
+      },
+      "other_model_or_analysis_blockers": [
+        "A02",
+        "M02",
+        "M04",
+        "M07"
+      ],
+      "source_specific_next_actions": [
+        "Propagate successive coupled radiation/background iterates and test convergence, constraints and matched external solutions.",
+        "Extend retained rec/rei source operators along actual H/clock with photons and density; verify conserved energy, opacity and chemical closure."
+      ],
+      "new_scientific_acceptance": false
+    },
+    {
+      "id": "PHY-07",
+      "paper": "CROSS",
+      "original_acceptance": "Physically matched source/null/frames and heldout independent predictive discriminator; preserve signed source data and joint covariance.",
+      "science_status": "SCIENCE_BLOCKED",
+      "effective_hard_dependencies": [
+        "SQ-CF4",
+        "SQ-FRAME",
+        "SQ-OPTICAL",
+        "SQ-RADIO"
+      ],
+      "conditional_jobs": [
+        "CF4_RESPONSE",
+        "MOVING_PROJECTION"
+      ],
+      "required_data_actions": {
+        "D01": "Analyze native SDSS/6dF sign genealogy; obtain unshifted method/anchor tables and independent calibration covariance.",
+        "D02": "Use all 8885 released 6dFGSv match indicators; obtain other CF4 parent/rejection denominators before union claims.",
+        "D05": "Fetch prepared LoTSS RMS/weight files when online; apply interior holes and source associations before count fits."
+      },
+      "remaining_solver_actions": {},
+      "other_model_or_analysis_blockers": [
+        "A01",
+        "A04",
+        "A05",
+        "M01",
+        "M02",
+        "M06",
+        "M07"
+      ],
+      "source_specific_next_actions": [
+        "Recover native estimator conventions and calibrate full-band coherent and small-scale terms using identified source data.",
+        "Construct position drift on matched worldlines and source-frame transfer kernels; validate against independent source and coverage tests.",
+        "Develop Cox/LSS mocks with flux-size completeness and spectral-index distribution; jointly propagate shared-object and shared-sky covariance.",
+        "Use all catalog overlap IDs and common mock sky/light cone, not product of per-survey likelihoods; compare alternative source and transfer models."
+      ],
+      "new_scientific_acceptance": false
+    }
+  ]
+}

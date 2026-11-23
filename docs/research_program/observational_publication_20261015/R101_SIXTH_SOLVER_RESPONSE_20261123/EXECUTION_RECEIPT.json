@@ -1,0 +1,63 @@
+[
+  {
+    "job": "CF4_RESPONSE",
+    "command": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "-B",
+      "-m",
+      "scripts.r101.cf4_predictive_response",
+      "--source-marks"
+    ],
+    "returncode": 0,
+    "status": "EXECUTED_CONDITIONAL",
+    "result": "CF4_PREDICTIVE_RESPONSE.json"
+  },
+  {
+    "job": "CHEMISTRY_COLLISION",
+    "command": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "-B",
+      "-m",
+      "scripts.r101.chemistry_coherency"
+    ],
+    "returncode": 0,
+    "status": "EXECUTED_CONDITIONAL",
+    "result": "CHEMISTRY_COHERENCY.json"
+  },
+  {
+    "job": "MOVING_PROJECTION",
+    "command": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "-B",
+      "-m",
+      "scripts.r101.moving_projection_checks"
+    ],
+    "returncode": 0,
+    "status": "EXECUTED_CONDITIONAL",
+    "result": "MOVING_PROJECTION.json"
+  },
+  {
+    "job": "HYREC_COLLISION",
+    "command": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "-B",
+      "-m",
+      "scripts.r101.coherency_history"
+    ],
+    "returncode": 0,
+    "status": "EXECUTED_CONDITIONAL",
+    "result": "HYREC_COHERENCY_HISTORY.json"
+  },
+  {
+    "job": "NATIVE_COLLISION_CHECKS",
+    "command": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "-B",
+      "-m",
+      "scripts.r101.coherency_checks"
+    ],
+    "returncode": 0,
+    "status": "EXECUTED_CONDITIONAL",
+    "result": "NATIVE_COLLISION_CHECKS.json"
+  }
+]

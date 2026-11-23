@@ -143,10 +143,13 @@ pol OFF 환원:
 | `D_u X` | `u^a ∇_a X` (observer proper-time) |
 | `DX/dλ` | affine parameter (exact transport) |
 
-**Universal identity** (`ds² = −a²dη² + a²dχ²`, `dτ_proper = a·dη`):
+**Normal-congruence identity** (`dτ_n = a·dη`, conformal time measured in seconds):
 ```
-D_u X = (1/a) · X'        (항상 성립)
+D_n X = (1/a) · ∂_η X
 ```
+For a homogeneous scalar and tilted baryons, `u_b = Γ_b(n + β^i e_i)`
+gives `D_ub X = Γ_b D_n X`; the normal-congruence identity is not a universal
+identity for arbitrary observer `u`. Spatial gradients require the advective term.
 
 **Branch-specific** (명시적으로 채택한 모듈에서만):
 ```
@@ -196,6 +199,34 @@ g = χ · e^{−τ} ≥ 0
 `CambBackground::dopac` 필드는 **FENCED to 0.0** (Phase B-1 post-audit bug E3). 재활성화 전제는 본 문서 §15.2.
 
 ---
+
+### 3.6 R101 finite chemistry and positive optical-depth cells (SI)
+
+`bass.recombination.clocked_chemistry` uses `N=ln a`, normal proper time
+`t_n [s]`, `H_n=dN/dt_n [s^-1]`, `β=v/c`, and baryon proper-time generators
+`R_b [s^-1]`. For homogeneous Class A with zero spatial-current divergence:
+
+```
+dN/dτ_b = Γ_b H_n
+n_H,rest Γ_b a^3 = N_H  [m^-3]
+dp/dN = R_b p/(Γ_b H_n)
+dκ/dN = σ_T c x_e N_H exp(-3N)(1-β·e)/H_n >= 0
+```
+
+Here `e` is the normal-frame photon propagation direction. Gamma cancels
+explicitly in opacity, not in chemistry. Non-Class-A/divergent currents need
+their actual continuity equation. This SI adapter keeps `c` explicitly; the
+older conformal-length convention for `χ` is unchanged. A tilted single-ray
+opacity cannot be fed to an isotropic electron-rest-frame all-angle collision
+operator without the full aberration/frequency/polarization transform.
+
+R101's finite supplied rate network is a conditional kinetic model. It is not
+an unqualified anisotropic HYREC radiative-transfer closure. HYREC's H enters
+chemical stepping and spectral drift/escape; a global H -> Γ_b H substitution
+is not a valid automatic patch. `bass.kinetic.moving_projection` uses a declared
+evolution coordinate `s` with supplied generator and includes both basis and
+weight derivatives. Neither `s` nor an `x_e` abundance redefines the five
+publication views `(x,Q,Pi,F,G_F)`.
 
 ## §4. Operator Split SSOT
 

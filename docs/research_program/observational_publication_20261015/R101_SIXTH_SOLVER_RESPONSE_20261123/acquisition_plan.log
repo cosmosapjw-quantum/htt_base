@@ -1,0 +1,79 @@
+{
+  "mode": "PLAN_ONLY",
+  "jobs": [
+    {
+      "id": "commander_pr3_ffp10_noise_00000",
+      "url": "https://pla.esac.esa.int/pla/aio/product-action?SIMULATED_MAP.FILE_ID=dx12_v3_commander_noise_mc_00000_raw.fits",
+      "expected_bytes": 603987840,
+      "checksum": null,
+      "purpose": "Match existing PR3/FFP10 Commander fullmission signal ID00000; no PR4/NPIPE substitution",
+      "status": "R98_HEADER_VERIFIED_PREPARED",
+      "full_payload_downloaded": false,
+      "full_payload_hash_verified": false,
+      "release": "Planck PR3/FFP10 dx12_v3 Commander fullmission",
+      "source_checksum_available": false,
+      "full_null_qualified": false
+    },
+    {
+      "id": "sdss_randoms_v1_1",
+      "url": "https://zenodo.org/api/records/6824749/files/SDSS_randoms_public.dat/content",
+      "expected_bytes": 284000071,
+      "checksum": "md5:8627b4063e8a71572e333e0ac65d6657",
+      "purpose": "SDSS-only angular/radial selection and clustering reference",
+      "status": "PREFIX_HTTP_206_PREPARED",
+      "full_payload_downloaded": false,
+      "full_payload_hash_verified": false,
+      "release": "10.5281/zenodo.6824749 v1.1.0"
+    },
+    {
+      "id": "sdss_mocks_v1_1",
+      "url": "https://zenodo.org/api/records/6824749/files/mocks.tar.gz/content",
+      "expected_bytes": 10643218721,
+      "checksum": "md5:9ba3e8876f6f08a2af00d30cbf1c6cd9",
+      "purpose": "256 simulation boxes with 8 observers each; hold out by box",
+      "status": "PREPARED_MANIFEST_ONLY",
+      "full_payload_downloaded": false,
+      "full_payload_hash_verified": false,
+      "release": "10.5281/zenodo.6824749 v1.1.0"
+    },
+    {
+      "id": "sixdf_reconstruction_mocks",
+      "url": "https://www.mso.anu.edu.au/6dfgs/mocks/6dFGSRecon_Files.tar.gz",
+      "expected_bytes": 17344070928,
+      "checksum": null,
+      "purpose": "Public reconstruction mocks; internal content and PV/FP matching NOT YET QUALIFIED",
+      "status": "HEAD_200_PREPARED_UNQUALIFIED_CONTENT",
+      "full_payload_downloaded": false,
+      "full_payload_hash_verified": false,
+      "source_checksum_available": false
+    },
+    {
+      "id": "lotss_aux_1078",
+      "url": "https://repository.surf.nl/api/records/zxsna-nk223/files/HP-misc-1078.tar/content",
+      "expected_bytes": 4507238400,
+      "checksum": "md5:578f0063bd88f50f0c066d97f1686a7b",
+      "purpose": "PyBDSF source mask/model/residual/RMS and high/low resolution mosaic weights",
+      "status": "DEFERRED_HTTP_202",
+      "full_payload_downloaded": false,
+      "full_payload_hash_verified": false,
+      "record_id": "zxsna-nk223",
+      "metadata_storage_class": "M",
+      "internal_archive_names_verified": false,
+      "availability_requires_fresh_check": true
+    },
+    {
+      "id": "lotss_aux_355",
+      "url": "https://repository.surf.nl/api/records/9syjm-kpz72/files/HP-misc-355.tar/content",
+      "expected_bytes": 6025820160,
+      "checksum": "md5:6279374775bbea70db562e76dbec9207",
+      "purpose": "PyBDSF source mask/model/residual/RMS and high/low resolution mosaic weights",
+      "status": "HEAD_200_AT_R2_PREPARED",
+      "full_payload_downloaded": false,
+      "full_payload_hash_verified": false,
+      "record_id": "9syjm-kpz72",
+      "metadata_storage_class": "M",
+      "internal_archive_names_verified": false,
+      "availability_requires_fresh_check": true
+    }
+  ]
+}

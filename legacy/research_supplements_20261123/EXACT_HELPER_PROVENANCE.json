@@ -1,0 +1,78 @@
+[
+  {
+    "symbol": "P2",
+    "file_sha256": [
+      "d740498171cf78aa403c714a3a376bdb9f8a1320602c07f02208a290dfd2c637",
+      "e30a3a5c533b8f66fd05ad3e8fab00c3bba4eabdeacea01b0f73ee96821c0450"
+    ],
+    "source_sha256": "cc5ce9619b805cdc161824ffa2de00448db7eea2f0879ca12f03a817cb6829d4",
+    "source": "def P2(mu: float) -> float:\n    return 0.5 * (3.0 * mu * mu - 1.0)",
+    "locations": [
+      {
+        "path": "texts/d740498171cf78aa403c714a3a376bdb9f8a1320602c07f02208a290dfd2c637.txt",
+        "line": 25
+      },
+      {
+        "path": "texts/e30a3a5c533b8f66fd05ad3e8fab00c3bba4eabdeacea01b0f73ee96821c0450.txt",
+        "line": 27
+      }
+    ]
+  },
+  {
+    "symbol": "source_zeta",
+    "file_sha256": [
+      "d740498171cf78aa403c714a3a376bdb9f8a1320602c07f02208a290dfd2c637",
+      "e30a3a5c533b8f66fd05ad3e8fab00c3bba4eabdeacea01b0f73ee96821c0450"
+    ],
+    "source_sha256": "54f85fc1cf7913b39dba43318074091fe316b81d4e322f52020f78d1f31626ee",
+    "source": "def source_zeta(I2: float, E2: float) -> float:\n    return 0.75 * I2 + 4.5 * E2",
+    "locations": [
+      {
+        "path": "texts/d740498171cf78aa403c714a3a376bdb9f8a1320602c07f02208a290dfd2c637.txt",
+        "line": 28
+      },
+      {
+        "path": "texts/e30a3a5c533b8f66fd05ad3e8fab00c3bba4eabdeacea01b0f73ee96821c0450.txt",
+        "line": 31
+      }
+    ]
+  },
+  {
+    "symbol": "_unit_vec",
+    "file_sha256": [
+      "c91113c958fb73a4cdec7430bb1c78baf9b63a6d026fbd6df7bbb5f8f49cd86f",
+      "f19caa83c6725378fd4794407ff72dda3e78bf7df1abab29816bad1b05316624"
+    ],
+    "source_sha256": "50bb2951bd65a40e73fe19b5ef81e1d5be1993c4ea3e9edb93ab4856b7b449c5",
+    "source": "def _unit_vec(l_deg, b_deg):\n    l, b = np.radians(l_deg), np.radians(b_deg)\n    return np.array([np.cos(b)*np.cos(l), np.cos(b)*np.sin(l), np.sin(b)])",
+    "locations": [
+      {
+        "path": "texts/c91113c958fb73a4cdec7430bb1c78baf9b63a6d026fbd6df7bbb5f8f49cd86f.txt",
+        "line": 136
+      },
+      {
+        "path": "texts/f19caa83c6725378fd4794407ff72dda3e78bf7df1abab29816bad1b05316624.txt",
+        "line": 143
+      }
+    ]
+  },
+  {
+    "symbol": "_angular_sep",
+    "file_sha256": [
+      "c91113c958fb73a4cdec7430bb1c78baf9b63a6d026fbd6df7bbb5f8f49cd86f",
+      "f19caa83c6725378fd4794407ff72dda3e78bf7df1abab29816bad1b05316624"
+    ],
+    "source_sha256": "ce27f01c495d9e23927bad2262b1313b5ab7adb85cb56380d2f768eec2dc6b28",
+    "source": "def _angular_sep(l1, b1, l2, b2):\n    d1, d2 = _unit_vec(l1, b1), _unit_vec(l2, b2)\n    return np.arccos(np.clip(np.dot(d1, d2), -1, 1))",
+    "locations": [
+      {
+        "path": "texts/c91113c958fb73a4cdec7430bb1c78baf9b63a6d026fbd6df7bbb5f8f49cd86f.txt",
+        "line": 141
+      },
+      {
+        "path": "texts/f19caa83c6725378fd4794407ff72dda3e78bf7df1abab29816bad1b05316624.txt",
+        "line": 148
+      }
+    ]
+  }
+]

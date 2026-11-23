@@ -1,0 +1,79 @@
+{
+  "scope": "Finite prescribed-rate class-A chemistry, one normal-frame photon ray, fixed N grid; conditional synthetic reference runs.",
+  "htt_base": "f8931fbef075d55c2c2a3caee8b8f5db5174b16b",
+  "BASS_source": "ee298e24a6bac85bb11a81393f37499a8b0ddbe3",
+  "legacy_H2248": {
+    "sha256": "09f09528f845dbef4df71ed0dfb2a165f65a8920c2055dc2f66945a665a3d4d6",
+    "type": "normal H_n per second; unchanged FLRW for z>1700",
+    "separate_density_factor": "Gamma(z_anchor)/Gamma(z)"
+  },
+  "source_provenance": {
+    "typeii_sources": {
+      "generate_typeii_H_grid.py": "b7c2a7d63dd731b96ba72df6c87a2ba6d26f090ca0c438cbfe46f5a5467c48f4",
+      "run_native_typeii_atomic_H.py": "86debde0c7de4002cb699443970e02a3be83b535e1b85f4e5165dad6e7658191",
+      "run_native_typeii_proper_current.py": "46696277d2cd363598b5ae369aef6ebdcba5cc4cc50a526917bba6caa8c4104d"
+    },
+    "htt_read_sources_git_blob_ids": {
+      "htt/bass/kinetic/boltzmann_memory.py": "8b84d12ab1f5d9ae82733880d12c6a08e41c13e6",
+      "htt/bass/recombination/history_visibility.py": "90c228e296b447e2f053607f6353119b3acfcbde",
+      "htt/bass/recombination/reionization.py": "a1b3598acd3fa56908d69f2a524fbc0ea846b7ce",
+      "htt/bass/recombination/recombination_ingest.py": "4d9ba4a98309e82e9dbcb0ea623164904ed3c857"
+    },
+    "r100_bianchi_selfconsistent_and_phy.py_git_blob": "957014db626508caac7ad1a8f49b2e488dc1d83e"
+  },
+  "implementation_sha256": {
+    "htt/bass/recombination/clocked_chemistry.py": "5cbc1f5382e76e33dc2126c60fbada56a1c65c9c981ec4926de5a3a9806d281c",
+    "tests/obsstat/test_r101_clocked_chemistry.py": "08b10de9bdda82c6f609472a5a5589cbf2511ab3d91583db3611397b2e5e92f4"
+  },
+  "runtime": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "suite": "unittest; pytest compatible",
+    "cwd": "/workspace/scratch/0d598eeec9e2",
+    "PYTHONPATH": "round6_20261123/response/htt:round6_20261123/source_reference/htt:round6_20261123/response/tests/obsstat",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "round6_20261123/response/tests/obsstat/test_r101_clocked_chemistry.py",
+      "-v"
+    ],
+    "exit": 0,
+    "raw_output": "test_clock_scaling_and_tilt_separation (__main__.ClockedChemistryTest.test_clock_scaling_and_tilt_separation) ... ok\ntest_complete_fixed_grid_tangent (__main__.ClockedChemistryTest.test_complete_fixed_grid_tangent) ... ok\ntest_delayed_rec_then_reionization (__main__.ClockedChemistryTest.test_delayed_rec_then_reionization) ... ok\ntest_domain_and_tangent_guards (__main__.ClockedChemistryTest.test_domain_and_tangent_guards) ... ok\ntest_hyrec_table_unit_bridge_in_flrw (__main__.ClockedChemistryTest.test_hyrec_table_unit_bridge_in_flrw) ... ok\ntest_independent_proper_time_evolution (__main__.ClockedChemistryTest.test_independent_proper_time_evolution) ... ok\ntest_midpoint_freeze_converges_for_smooth_driving (__main__.ClockedChemistryTest.test_midpoint_freeze_converges_for_smooth_driving) ... ok\ntest_nil_electron_limit_and_optically_thin_bin (__main__.ClockedChemistryTest.test_nil_electron_limit_and_optically_thin_bin) ... ok\ntest_piecewise_time_order_and_refinement (__main__.ClockedChemistryTest.test_piecewise_time_order_and_refinement) ... ok\ntest_stiff_two_state_reward_and_log_rate_derivative (__main__.ClockedChemistryTest.test_stiff_two_state_reward_and_log_rate_derivative) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 0.023s\n\nOK\n"
+  },
+  "metrics": {
+    "proper_time_ivp_max_abs_population_error": 1.5543122344752192e-15,
+    "proper_time_ivp_max_abs_cell_depth_error": 6.38378239159465e-16,
+    "cell_optical_depth": [
+      0.18747387118313594,
+      0.014852760160758205
+    ],
+    "cell_depth_tangent": [
+      -0.053504924469716206,
+      0.0013381286493136606
+    ],
+    "visibility_bin_probability": [
+      0.16842891529539628,
+      0.014743001994389143
+    ],
+    "visibility_sum_identity_abs": 0.0,
+    "all_seven_inputs_perturbed_centered_h": 2e-05,
+    "max_abs_directional_derivative_errors": {
+      "population": 2.3776466906433313e-12,
+      "x_e": 3.126002928732774e-12,
+      "delta_optical_depth": 1.648785274976916e-12,
+      "optical_depth_to_observer": 1.1940864963477793e-12,
+      "visibility_bin_probability": 8.728157085968746e-13
+    }
+  },
+  "validation": "10 tests include stiff 10^15 analytic two-state population, reward and log-rate derivative, proper-time DOP853, FLRW conformal-unit conversion, finite differences, repeated rates and REC to REI, positivity, turning-point/domain guards and midpoint convergence.",
+  "numerical_repair": {
+    "failure_seen": "Untreated full dense exponent on two-cell fixture, with all proper rates multiplied by 1e8 or more, failed the population mass tolerance (2e-10)",
+    "repair": "Stochastic normalization at each semigroup doubling and exact weighted reward composition, differentiated with the matched tangent.",
+    "regression": "test_stiff_two_state_reward_and_log_rate_derivative"
+  },
+  "primary_sources": [
+    "https://arxiv.org/abs/1006.1355",
+    "https://arxiv.org/abs/2007.14114",
+    "https://doi.org/10.1137/080716426"
+  ]
+}

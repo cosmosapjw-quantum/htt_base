@@ -1,0 +1,210 @@
+{
+  "schema": "htt.r101.data_acquisition_plan/1",
+  "science_baseline": "f8931fbef075d55c2c2a3caee8b8f5db5174b16b",
+  "r99_plan": {
+    "path": "docs/research_program/observational_publication_20261015/R99_FIFTH_BLOCKER_RESOLUTION_20261123/ACQUISITION_PLAN.json",
+    "sha256": "012ebc7a87a4c5ef8a6c37307232a4c8ad733411163944428aea1cf29df3cdb9"
+  },
+  "r100_receipt": {
+    "path": "docs/research_program/observational_publication_20261015/R100_SOURCE_LAW_OPTICAL_MULTIPROBE_20261123/SOURCE_INTAKE_RECEIPT.json",
+    "sha256": "73e1caefb94ec796c037b553b0b87c06b02db307bd3705b7c42078ced5c6f19a"
+  },
+  "scope": "Prepared observational acquisition only. Existing source receipts and owner recovery are reused. Availability is historical unless an explicit future execution checks it.",
+  "already_acquired": {
+    "r100_verified_bytes": 20927710,
+    "products": [
+      {
+        "id": "sdss_pv_v1_1",
+        "path": "/home/cosmosapjw/Downloads/htt_r100/source_intake/SDSS_PV_public.dat",
+        "rows": 34059,
+        "bytes": 20231640,
+        "provider_md5": "b5b6e31caf7ea469c2ac2cb775fa8d14",
+        "measured_md5": "b5b6e31caf7ea469c2ac2cb775fa8d14",
+        "sha256": "a48cfd9a9a3c27ff908f98972b2e26536e514b6635f9ed14c656dff3e5075485",
+        "action": "reuse R100 input"
+      },
+      {
+        "id": "sixdf_pv_table1",
+        "path": "/home/cosmosapjw/Downloads/htt_r100/source_intake/table1.txt",
+        "rows": 8885,
+        "bytes": 696070,
+        "provider_md5": null,
+        "measured_md5": "2cf556179ef4ae089e8e4669c76a5633",
+        "sha256": "08f3d4b264e28efcb574bea4efa370d66e4f299f8254e21bd04979fb8301a14d",
+        "action": "reuse R100 input"
+      }
+    ]
+  },
+  "legacy_recovery": {
+    "status": "EXACT_BYTES_RECOVERED",
+    "owner_receipt": "RESOURCE_RECOVERY.json",
+    "count": 8,
+    "total_bytes": 481990,
+    "source_config": "configs/r101/legacy_recovery.json",
+    "files": [
+      {
+        "path": "research/typeii_hyrec2_history_20261102/HYREC2_FLRW_INPUT_20261102.dat",
+        "sha256": "ab6268cd2e4d1cf5380455035186d3607980fe6f47100059cf2da234ffec3cb3"
+      },
+      {
+        "path": "research/typeii_hyrec2_history_20261102/HYREC2_NATIVE_SOURCE_REPORT.json",
+        "sha256": "abfcc76891630dcbe7e1f58cc9e53ffd1392dde5f10cb78eccaebc9d67b4ec58"
+      },
+      {
+        "path": "research/typeii_native_hyrec_expansion_20261102/NATIVE_TYPEII_H_ARRAY_2248.dat",
+        "sha256": "09f09528f845dbef4df71ed0dfb2a165f65a8920c2055dc2f66945a665a3d4d6"
+      },
+      {
+        "name": "Alpha_inf.dat",
+        "sha256": "357101049c9382e90e5e1e896961407d3b465b61b78de9750b852c05ea4d1023"
+      },
+      {
+        "name": "fit_swift.dat",
+        "sha256": "46a644d7d2633b8f13080f9062df9b72a2e5adfa956d70d32ad1d7f4ec0a4641"
+      },
+      {
+        "name": "R_inf.dat",
+        "sha256": "ce914f4b552ba55ba00f7916f36b0986f19adfdb638e5aefae91f7b2d05a8112"
+      },
+      {
+        "name": "two_photon_tables.dat",
+        "sha256": "93d23871e21c40f5b72a6ef9acf3eb7be054735c8aee9401e455736c1d9d8cf9"
+      },
+      {
+        "name": "two_photon_tables_hires.dat",
+        "sha256": "db201c729a38c7919172cf080c8ba44cdf8e6b131a6eaa8adcbc9e58fd4d0c93"
+      }
+    ],
+    "bass_commit": "ee298e24a6bac85bb11a81393f37499a8b0ddbe3",
+    "atomic_commit": "038dc8d71baed5c30a4fdd55576b97637ba5b879",
+    "reacquisition_needed": false,
+    "physics_qualified": false
+  },
+  "remaining_r99_jobs": [
+    {
+      "id": "commander_pr3_ffp10_noise_00000",
+      "blocker": "D03",
+      "status": "priority single pair",
+      "expected_bytes": 603987840,
+      "provider_checksum": null,
+      "url": "https://pla.esac.esa.int/pla/aio/product-action?SIMULATED_MAP.FILE_ID=dx12_v3_commander_noise_mc_00000_raw.fits",
+      "purpose": "Pair PR3 dx12_v3 Commander signal ID 00000 with same fullmission ID/noise. Compare FITS metadata, beam, unit, mask, split and MC IDs before forming any null.",
+      "r99_observation": "R98_HEADER_VERIFIED_PREPARED",
+      "plan_command": ".venv/bin/python -m scripts.r99.acquisition plan --ids commander_pr3_ffp10_noise_00000 --max-bytes 603987840",
+      "r101_plan_command": ".venv/bin/python -m scripts.r101.acquire --ids commander_pr3_ffp10_noise_00000 --max-bytes 603987840"
+    },
+    {
+      "id": "sdss_randoms_v1_1",
+      "blocker": "D02",
+      "status": "bounded public selection reference",
+      "expected_bytes": 284000071,
+      "provider_checksum": "md5:8627b4063e8a71572e333e0ac65d6657",
+      "url": "https://zenodo.org/api/records/6824749/files/SDSS_randoms_public.dat/content",
+      "purpose": "Estimate SDSS-only support in angle/redshift. Keep group and zero-point structure.",
+      "r99_observation": "PREFIX_HTTP_206_PREPARED",
+      "plan_command": ".venv/bin/python -m scripts.r99.acquisition plan --ids sdss_randoms_v1_1 --max-bytes 284000071",
+      "r101_plan_command": ".venv/bin/python -m scripts.r101.acquire --ids sdss_randoms_v1_1 --max-bytes 284000071"
+    },
+    {
+      "id": "sdss_mocks_v1_1",
+      "blocker": "D02",
+      "status": "large manifest-only until requested",
+      "expected_bytes": 10643218721,
+      "provider_checksum": "md5:9ba3e8876f6f08a2af00d30cbf1c6cd9",
+      "url": "https://zenodo.org/api/records/6824749/files/mocks.tar.gz/content",
+      "purpose": "Group the 8 observers of each simulation box together for fitting/holdout. Selection and forward-PV calibration only within SDSS.",
+      "r99_observation": "PREPARED_MANIFEST_ONLY",
+      "plan_command": ".venv/bin/python -m scripts.r99.acquisition plan --ids sdss_mocks_v1_1 --max-bytes 10643218721",
+      "r101_plan_command": ".venv/bin/python -m scripts.r101.acquire --ids sdss_mocks_v1_1 --max-bytes 10643218721"
+    },
+    {
+      "id": "sixdf_reconstruction_mocks",
+      "blocker": "D02",
+      "status": "large; contents unqualified",
+      "expected_bytes": 17344070928,
+      "provider_checksum": null,
+      "url": "https://www.mso.anu.edu.au/6dfgs/mocks/6dFGSRecon_Files.tar.gz",
+      "purpose": "First qualify that reconstruction mocks preserve FP/PV sample, cuts and observables. They are not established rejected-parent records.",
+      "r99_observation": "HEAD_200_PREPARED_UNQUALIFIED_CONTENT",
+      "plan_command": ".venv/bin/python -m scripts.r99.acquisition plan --ids sixdf_reconstruction_mocks --max-bytes 17344070928",
+      "r101_plan_command": ".venv/bin/python -m scripts.r101.acquire --ids sixdf_reconstruction_mocks --max-bytes 17344070928"
+    },
+    {
+      "id": "lotss_aux_355",
+      "blocker": "D05",
+      "status": "candidate online archive; historic HEAD 200",
+      "expected_bytes": 6025820160,
+      "provider_checksum": "md5:6279374775bbea70db562e76dbec9207",
+      "url": "https://repository.surf.nl/api/records/9syjm-kpz72/files/HP-misc-355.tar/content",
+      "purpose": "One-mosaic pilot. Check weights, local RMS, mask, WCS and archive members.",
+      "r99_observation": "HEAD_200_AT_R2_PREPARED",
+      "plan_command": ".venv/bin/python -m scripts.r99.acquisition plan --ids lotss_aux_355 --max-bytes 6025820160",
+      "r101_plan_command": ".venv/bin/python -m scripts.r101.acquire --ids lotss_aux_355 --max-bytes 6025820160"
+    },
+    {
+      "id": "lotss_aux_1078",
+      "blocker": "D05",
+      "status": "deferred at historic HEAD 202",
+      "expected_bytes": 4507238400,
+      "provider_checksum": "md5:578f0063bd88f50f0c066d97f1686a7b",
+      "url": "https://repository.surf.nl/api/records/zxsna-nk223/files/HP-misc-1078.tar/content",
+      "purpose": "Only an online full-response preflight permits ordinary GET. A deferred response remains deferred. No explicit tape staging.",
+      "r99_observation": "DEFERRED_HTTP_202",
+      "plan_command": ".venv/bin/python -m scripts.r99.acquisition plan --ids lotss_aux_1078 --max-bytes 4507238400",
+      "r101_plan_command": ".venv/bin/python -m scripts.r101.acquire --ids lotss_aux_1078 --max-bytes 4507238400"
+    }
+  ],
+  "data_blockers": {
+    "D01": {
+      "known_jobs": [],
+      "partial_evidence": [
+        "sdss_pv_v1_1",
+        "sixdf_pv_table1"
+      ],
+      "obtain": "Unshifted SNIa, TF, SBF, TRGB, Cepheid and maser measurements; method/group zero-point covariance; upstream signed SDSS/6dF FP intercalibration rule. Preserve parent survey IDs, group IDs and calibrator links.",
+      "status": "external sources with exact version/bytes not identified in the R99 manifest"
+    },
+    "D02": {
+      "known_jobs": [
+        "sdss_randoms_v1_1",
+        "sdss_mocks_v1_1",
+        "sixdf_reconstruction_mocks"
+      ],
+      "partial_evidence": "6dFGSv released-Sample selection only. R100 8,885 released, 6,219 ungrouped sentinels, 2,666 grouped. R101 conditional selected-parent treatment. SDSS selected catalogue and internal randoms have separate populations.",
+      "obtain": "Rejected pre-cuts, denominator and source-specific selection/censoring for all CF4 union methods, including TF, SNIa and SBF; survey intersections; independent marked holdout. 6dF reconstruction-mock contents unqualified."
+    },
+    "D03": {
+      "known_jobs": [
+        "commander_pr3_ffp10_noise_00000"
+      ],
+      "obtain": "First match historical PR3/FFP10 fullmission Commander signal/noise 00000 at source. Need multiple matched pairs, common beam/units/mask and fullmission vs split genealogy before null qualification.",
+      "alternative": "PR4/NPIPE maps and their own independent paired simulation pipeline form a separate comparison with its own calibration. No mixed-release pairing.",
+      "full_null_qualified": false
+    },
+    "D04": {
+      "known_jobs": [],
+      "obtain": "Gaia release-specific AGIS scanning-law/spatial proper-motion error calibration, angular and magnitude/color dependence, independent AGN host/photocentre controls and common sky support.",
+      "status": "exact product ID, survey access path and byte budget unresolved"
+    },
+    "D05": {
+      "known_jobs": [
+        "lotss_aux_355",
+        "lotss_aux_1078"
+      ],
+      "obtain": "LoTSS DR3 per-mosaic positive-weight sky support, RMS, detection vs intrinsic flux/size, counterpart/association and SED model; mosaic pilot conditional on available bytes. Existing union of 1,580 outer mosaic rectangles reused."
+    },
+    "D06": {
+      "known_jobs": [],
+      "obtain": "Independent normal-frame photon/matter flux measurement or measurement likelihood with declared tetrad, selection, covariance and units.",
+      "status": "source and independent measurement remain unresolved; no fabricated download URL"
+    }
+  },
+  "execution": {
+    "wrapper": "scripts/r101/acquire.py",
+    "listing_command": ".venv/bin/python -m scripts.r101.acquire",
+    "execute_example": ".venv/bin/python -m scripts.r101.acquire --execute --ids commander_pr3_ffp10_noise_00000 --max-bytes 603987840 --destination \"$HOME/Downloads/htt_r101\"",
+    "jobs_run_sequentially": true,
+    "explicit_tape_staging": false,
+    "new_science_payload_bytes_transferred_by_this_preparation": 0
+  }
+}

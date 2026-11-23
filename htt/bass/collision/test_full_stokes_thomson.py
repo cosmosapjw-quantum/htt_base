@@ -124,7 +124,8 @@ def test_full_stokes_thomson_recovers_90_degree_rayleigh_polarization() -> None:
         ),
     )
     assert source.source_I[0] > 0.0
-    assert abs(source.source_Q[0] / source.source_I[0]) == pytest.approx(1.0)
+    # The outgoing x axis is in the x-z scattering plane. Electric power is along y.
+    assert source.source_Q[0] / source.source_I[0] == pytest.approx(-1.0)
     assert source.source_U[0] == pytest.approx(0.0, abs=1.0e-14)
 
 
