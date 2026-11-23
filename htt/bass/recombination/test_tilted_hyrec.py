@@ -137,11 +137,15 @@ def test_tilt_channel_separation_and_anisotropic_sobolev_order() -> None:
 
 def test_reionization_visibility_and_clocked_chemistry_bridge() -> None:
     tables = load_hyrec_atomic_tables()
-    zs = np.linspace(1500.0, 0.0, 301)
+    # Resolve the <=0.5 redshift widths of the reionization transitions for the
+    # pointwise-density trapezoid check. A five-redshift stride skips both transitions.
+    zs = np.unique(np.r_[np.linspace(1500.0, 0.0, 301), np.linspace(0.0, 18.0, 181)])[::-1]
     reion = ReionizationParameters(z_reion_H=7.67, delta_z_H=0.5, z_reion_HeII=3.5, delta_z_HeII=0.5, include_HeII=True)
     hist = integrate_tilted_recombination(zs, tables=tables, reionization=reion)
     assert hist.x_e[-1] > 1.0  # reionized near z=0
     # Visibility normalization: int g dN + exp(-tau_max) == 1 across monotonic grid
+    cells = hist.opacity_history().cells(hist.N_grid)
+    assert_allclose(cells.visibility_mass.sum() + np.exp(-hist.kappa[0]), 1.0, atol=3e-15, rtol=0)
     dN = np.diff(hist.N_grid)
     g_mid = 0.5 * (hist.visibility[:-1] + hist.visibility[1:])
     vis_integral = float(np.sum(g_mid * dN)) + float(np.exp(-hist.kappa[0]))

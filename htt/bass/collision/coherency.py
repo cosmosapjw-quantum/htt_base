@@ -52,6 +52,19 @@ def _source_response(t, gain):
     return (_mean_attenuation((1-gain)*t) - _mean_attenuation(t))/gain
 
 
+def symmetric_screen_columns(u, v):
+    """Stokes I,Q,U response to an orthonormal basis of real symmetric tensors."""
+    # A symmetric 3x3 tensor has six independent real components. The
+    # sqrt(2) factors make the Euclidean inner product equal the trace product.
+    a = np.array([0, 1, 2, 0, 0, 1])
+    b = np.array([0, 1, 2, 1, 2, 2])
+    scale = np.where(a == b, 1., np.sqrt(2.))
+    uu = u[:, a]*u[:, b]
+    vv = v[:, a]*v[:, b]
+    uv = u[:, a]*v[:, b] + v[:, a]*u[:, b]
+    return np.stack((uu+vv, uu-vv, uv), axis=1) * scale
+
+
 class ThomsonCoherencyPropagator:
     """Apply the electron-rest-frame collision generator or its exact flow.
 
@@ -68,15 +81,7 @@ class ThomsonCoherencyPropagator:
         u, v = _validate_screen_basis(n, basis_u, basis_v)
         if np.any(np.einsum("ni,ni->n", np.cross(u, v), n) < 1 - 2e-10):
             raise ValueError("circular polarization requires a right-handed screen")
-        # A symmetric 3x3 tensor has six independent real components. The
-        # sqrt(2) factors make the Euclidean inner product equal the trace product.
-        a = np.array([0, 1, 2, 0, 0, 1])
-        b = np.array([0, 1, 2, 1, 2, 2])
-        scale = np.where(a == b, 1., np.sqrt(2.))
-        uu = u[:, a]*u[:, b]
-        vv = v[:, a]*v[:, b]
-        uv = u[:, a]*v[:, b] + v[:, a]*u[:, b]
-        self._linear_screen = np.stack((uu+vv, uu-vv, uv), axis=1) * scale
+        self._linear_screen = symmetric_screen_columns(u, v)
         self._direction = n
         self._weight = 3*w/(16*np.pi)
 

@@ -1,0 +1,75 @@
+{
+  "schema": "htt.r103.rei_five_case_optical/1",
+  "commit": "56dc609ea9b801c88d3364aed3eee140b3a20d46",
+  "source_path": "research/rei_igm_sync_20261116/approximation_validity/incremental_fifth/results_five/five_case_abundances.csv.gz",
+  "source_sample_sha256": "f4bc0046d79faf2cd13ae7ed78135503306c7d76c11580e4601a757c407bc83d",
+  "status": "CONDITIONAL_PRESCRIBED_BACKGROUND_HISTORIES",
+  "mean_redshift_interval": [
+    20,
+    4
+  ],
+  "cases": {
+    "ZERO": {
+      "q_ref": 0.0,
+      "rows": 1001,
+      "tau": 0.031968203049834255,
+      "time_trapezoid_tau": 0.03196816730522454
+    },
+    "SHEAR_HALF_PLUS": {
+      "q_ref": 0.005,
+      "rows": 1001,
+      "tau": 0.03196813822483702,
+      "time_trapezoid_tau": 0.031968102480292186
+    },
+    "SHEAR_HALF_MINUS": {
+      "q_ref": -0.005,
+      "rows": 1001,
+      "tau": 0.031968138224836955,
+      "time_trapezoid_tau": 0.031968102480292124
+    },
+    "SHEAR_PLUS": {
+      "q_ref": 0.01,
+      "rows": 1001,
+      "tau": 0.031967943754979807,
+      "time_trapezoid_tau": 0.031967908010629674
+    },
+    "SHEAR_MINUS": {
+      "q_ref": -0.01,
+      "rows": 1001,
+      "tau": 0.03196794375497989,
+      "time_trapezoid_tau": 0.031967908010629764
+    }
+  },
+  "paired_response": {
+    "tau": [
+      {
+        "q_magnitude": 0.005,
+        "odd": 3.122502256758253e-17,
+        "even_minus_zero": -6.482499726595536e-08
+      },
+      {
+        "q_magnitude": 0.01,
+        "odd": -4.163336342344337e-17,
+        "even_minus_zero": -2.5929485440723266e-07
+      }
+    ],
+    "time_trapezoid_tau": [
+      {
+        "q_magnitude": 0.005,
+        "odd": 3.122502256758253e-17,
+        "even_minus_zero": -6.482493238729736e-08
+      },
+      {
+        "q_magnitude": 0.01,
+        "odd": -4.5102810375396984e-17,
+        "even_minus_zero": -2.592945948162728e-07
+      }
+    ]
+  },
+  "notes": [
+    "Optical depth is dimensionless; these five signed shear scenarios share a prescribed model.",
+    "Even and odd optical-depth differences are finite differences of inspection samples, without a native trajectory-resolution uncertainty. They do not measure cosmic shear."
+  ],
+  "physical_Pi": null,
+  "calibrated_p": null
+}

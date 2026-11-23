@@ -493,8 +493,10 @@ class GeneralLieStokesOperator:
 
     def _project_cartesian_streaming(self, axis: int) -> csc_matrix:
         """Exact GL projection of -1j * n_{axis} onto (T, E, B, V) signed harmonics."""
-        _, _, n_hat_grid, _ = self._grid
-        mul = -1j * n_hat_grid[..., axis]
+        return self._project_scalar_multiplier(-1j * self._grid[2][..., axis])
+
+    def _project_scalar_multiplier(self, mul):
+        """Harmonic representation of a common ray-dependent Stokes multiplier."""
         _, S_0 = self._spin_blocks(None, None, mul, s=0, ell_min=0, use_advection=False)
         _, S_p2 = self._spin_blocks(None, None, mul, s=2, ell_min=2, use_advection=False)
         _, S_m2 = self._spin_blocks(None, None, mul, s=-2, ell_min=2, use_advection=False)
@@ -514,6 +516,24 @@ class GeneralLieStokesOperator:
         _insert_sparse(M, off_B, off_E, -M_EB)
         _insert_sparse(M, off_B, off_B, M_EE)
         return M.tocsc()
+
+    def bolometric_redshift_operator(self, geometry):
+        """Projection of -4 sigma_ij n_i n_j multiplying existing brightness.
+
+        This term evolves a^4 I or the normalized bolometric Stokes increment.
+        Direction/screen-only geodesic tests can still use base_operator alone.
+        """
+        packed = geometry.pack_14() if isinstance(geometry, LieGeometry) else np.asarray(geometry)
+        if not hasattr(self, "_bolometric_shear_basis"):
+            n = self._grid[2]
+            basis = []
+            for row in np.eye(14)[:5]:
+                shear, _, _ = LieGeometry.unpack_14(row)
+                rate = -4.0 * np.einsum("...i,ij,...j->...", n, shear, n)
+                basis.append(self._project_scalar_multiplier(rate))
+            self._bolometric_shear_basis = tuple(basis)
+        return sum((x * mat for x, mat in zip(packed[:5], self._bolometric_shear_basis)),
+                   0.0 * self._I_sp)
 
     def _build_sparse_thomson(self) -> csc_matrix:
         """Return exact sparse rank-9 K = U diag(b) U^T - I for dense verification and source RHS."""
@@ -655,6 +675,8 @@ class GeneralLieStokesOperator:
         source_increment: np.ndarray | None = None,
         k_eff: Sequence[float] | np.ndarray = (0.0, 0.0, 0.0),
         substeps: int = 1,
+        moving_collision=None,
+        bolometric_redshift: bool = False,
     ) -> np.ndarray:
         """Evolve S' = M_base * rate_time * S + tau_rate * K S + src over one cell via L-stable SDIRK(2,2).
 
@@ -681,10 +703,13 @@ class GeneralLieStokesOperator:
             src_step = src / float(substeps)
 
         M_base = self.base_operator(geometry, k_eff=k_eff)
+        if bolometric_redshift:
+            M_base = M_base + self.bolometric_redshift_operator(geometry)
         gamma = 1.0 - 1.0 / math.sqrt(2.0)
         h = 1.0 / float(substeps)
         # Factor with dN * M_base so step size in u is h and stage depth s = gamma * h * dtau
-        solve = self.factor_sdirk_stage((dN * M_base) if dN != 0.0 else 0.0 * M_base, gamma * h, dtau)
+        factor = self.factor_sdirk_stage if moving_collision is None else moving_collision.factor_sdirk_stage
+        solve = factor(dN * M_base, gamma * h, dtau)
         for _ in range(int(substeps)):
             if src_step is None:
                 y1 = solve(y)

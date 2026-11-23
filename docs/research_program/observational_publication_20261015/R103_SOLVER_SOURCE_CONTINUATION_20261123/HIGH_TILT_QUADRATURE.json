@@ -1,0 +1,149 @@
+{
+  "status": "pass_scoped",
+  "scope": "one fixed harmonic sky; threshold applies to its integrated four-force",
+  "basis": "normal outward n; propagation -n; conserved_anchor; (-,+,+,+)",
+  "beta": [
+    0.9,
+    0.1,
+    0.0
+  ],
+  "speed": 0.9055385138137417,
+  "ell_max": 5,
+  "I_bg": 0.25,
+  "nonnegative_m_modes_channel_ell_m_re_im": [
+    [
+      "T",
+      1,
+      0,
+      0.013,
+      0.0
+    ],
+    [
+      "T",
+      2,
+      2,
+      0.023,
+      -0.011
+    ],
+    [
+      "T",
+      4,
+      1,
+      -0.019,
+      0.006
+    ],
+    [
+      "T",
+      5,
+      3,
+      0.007,
+      0.005
+    ],
+    [
+      "E",
+      2,
+      1,
+      0.014,
+      0.004
+    ],
+    [
+      "B",
+      3,
+      2,
+      -0.008,
+      0.005
+    ],
+    [
+      "V",
+      5,
+      4,
+      0.003,
+      -0.002
+    ]
+  ],
+  "reference_four_force": [
+    19.22882328883389,
+    21.104070440854073,
+    2.3515989206523114,
+    0.02660649440660927
+  ],
+  "target_relative": 1e-08,
+  "smallest_tested_n_theta_meeting_target": 32,
+  "rows": [
+    {
+      "n_theta": 14,
+      "n_rays": 392,
+      "four_force": [
+        19.164195701752224,
+        21.036719895349176,
+        2.343592167424305,
+        0.02657097035010714
+      ],
+      "relative_four_force_error": 0.003270315485620528,
+      "abs_u_dot_F_over_force": 0.00026422827456577423,
+      "lie_setup_seconds": 0.08586033100436907,
+      "moving_stage_and_force_seconds": 0.0030182310001691803,
+      "target_met": false
+    },
+    {
+      "n_theta": 16,
+      "n_rays": 512,
+      "four_force": [
+        19.213096546872176,
+        21.087438623642527,
+        2.3510586982479174,
+        0.026598952563055476
+      ],
+      "relative_four_force_error": 0.0007992511297366671,
+      "abs_u_dot_F_over_force": 5.793042170576818e-05,
+      "lie_setup_seconds": 0.08891340300033335,
+      "moving_stage_and_force_seconds": 0.0027483700032462366,
+      "target_met": false
+    },
+    {
+      "n_theta": 24,
+      "n_rays": 1152,
+      "four_force": [
+        19.228818868734578,
+        21.10406479446904,
+        2.3516068812436077,
+        0.026606467025333633
+      ],
+      "relative_four_force_error": 3.740000731744815e-07,
+      "abs_u_dot_F_over_force": 1.1059101819489599e-08,
+      "lie_setup_seconds": 0.0901016889984021,
+      "moving_stage_and_force_seconds": 0.008559265006624628,
+      "target_met": false
+    },
+    {
+      "n_theta": 32,
+      "n_rays": 2048,
+      "four_force": [
+        19.22882328744175,
+        21.10407044100442,
+        2.3515989056429625,
+        0.02660649432579184
+      ],
+      "relative_four_force_error": 5.262209306173066e-10,
+      "abs_u_dot_F_over_force": 2.1827231120217494e-12,
+      "lie_setup_seconds": 0.10609080200083554,
+      "moving_stage_and_force_seconds": 0.014275520996307023,
+      "target_met": true
+    }
+  ],
+  "wall_seconds": 0.4026506390000577,
+  "python": "3.12.14",
+  "numpy": "2.3.5",
+  "scipy": "1.17.0",
+  "OPENBLAS_NUM_THREADS": "1",
+  "source_sha256": {
+    "htt/bass/collision/coherency.py": "f1f5c9f7ca8e2c5cbada91404d65bb002fa62219a8341670f28ba5d8968987e2",
+    "htt/bass/collision/electron_frame.py": "9f460bb6fddde3ce7250fd1326b4117e4ae1b113266a0760096f5c6080d52b7a",
+    "htt/bass/collision/moving_thomson.py": "b068e958bd1282967c0c643ac699bed42fe4420301c0df2888dd416e392f376f",
+    "htt/bass/transport/general_bianchi_transfer.py": "9bcb541d35cabc05b8c325a58bbef57f253627203ff1ac1c354e4bd789f60410",
+    "htt/bass/transport/general_lie_stokes.py": "1d0b5e94d41f4d9aba806ceb4b9ce087ee4a0ccec6dcdc92f9345a5221676357",
+    "htt/bass/transport/moving_collision_stage.py": "e2d2e94f98f3fab70d0030ef8781b91a1019bcdff9075cd21f16e585db2c1504",
+    "htt/src/common/relativistic_kinematics.py": "9ae767f9cec93358e4ca9b1a63abacf909fb1b770699c7e31be9b82ee2959d5e",
+    "scripts/r103/high_tilt_quadrature.py": "79e0ae8ed498c1147c58faae6aa1cfce2e7d7f0a6810675b873a4e2620fe102a"
+  }
+}

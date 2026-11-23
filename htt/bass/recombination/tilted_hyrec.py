@@ -2,9 +2,9 @@
 
 Separates the four distinct physical appearances of baryon tilt and metric expansion:
 1. Proper baryon reaction clock: dt_n / d tau_b = Gamma_b => dN / d tau_b = Gamma_b * H_n.
-2. Baryon rest-frame target density: n_{H,rest} = N_H / (Gamma_b * a^3).
+2. Baryon rest-frame target density: n_{H,rest} = D_H/Gamma_b, with the normal-frame hydrogen current D_H supplied by the geometry.
 3. Directional Sobolev Ly-alpha escape rate averaged over Gauss-Legendre S^2:
-     K(n_hat) = (1/3) Theta_b + sigma_{b,ab} n_hat^a n_hat^b,
+     K(n_hat) = Theta_b/3 + sigma_{b,ab} n_hat^a n_hat^b + (a_b/c)·n_hat,
      tau_S(n_hat) = 3 A_{Ly-alpha} lambda_alpha^3 n_{1s} / (8 pi K(n_hat)),
      P_esc(tau_S) = (1 - exp(-tau_S)) / tau_S.
 4. Matter expansion cooling Theta_b / 3 + Compton heating/cooling dT_m / dtau_b.
@@ -19,10 +19,16 @@ from dataclasses import dataclass
 import hashlib
 import math
 from pathlib import Path
-from typing import Literal, Sequence
+from typing import TYPE_CHECKING, Literal, Sequence
+
+if TYPE_CHECKING:
+    from bass.recombination.rei_material_history import ReiMaterialHistory
 
 import numpy as np
 from scipy.integrate import solve_ivp
+from functools import lru_cache
+from scipy.optimize import brentq
+from bass.recombination.opacity_history import OpacityHistory
 
 from bass.background.geometry import pstf_rank2
 from bass.recombination.clocked_chemistry import ChemistryHistory, ChemistryTangent, evolve_clocked_chemistry
@@ -225,6 +231,7 @@ class TiltedRecombinationChannels:
     matter_expansion_rate_s: float
     gamma_baryon: float = 1.0
     tr_baryon_k: float = 2.7255
+    d_lya_escape_d_x1s_s: float = 0.0
 
     def __post_init__(self) -> None:
         if self.reaction_clock_rate_s <= 0.0 or not math.isfinite(self.reaction_clock_rate_s):
@@ -249,6 +256,37 @@ def _sobolev_p_esc(tau_s: float) -> float:
     return -math.expm1(-tau_s) / tau_s
 
 
+@lru_cache(maxsize=8)
+def _sobolev_sky(order):
+    _, _, rays, weights = gl_sphere_grid(order)
+    return rays.reshape(-1, 3), weights.reshape(-1) / (4.0 * math.pi)
+
+
+def _require_expanding_directions(h, shear, acceleration):
+    # Minimize h + e S e + A.e on |e|=1. Its trust-region dual is
+    # h + lambda - sum_j(A_j²/[4(s_j-lambda)]), lambda <= min(s_j).
+    eig, basis = np.linalg.eigh(shear)
+    if h + eig[0] > np.linalg.norm(acceleration):
+        return
+    scale = max(abs(h), np.max(np.abs(eig)), np.linalg.norm(acceleration), np.finfo(float).tiny)
+    gaps = (eig-eig[0])/scale
+    a = (basis.T @ acceleration)/(2*scale)
+    zero = gaps == 0
+    rest = ~zero
+    if not np.any(a[zero]) and np.sum((a[rest]/gaps[rest])**2) <= 1.0:
+        minimum = h + eig[0] - scale*np.sum(a[rest]**2/gaps[rest])
+    else:
+        # t=(s_min-lambda)/scale is the unique positive root.
+        def secular(t):
+            with np.errstate(divide="ignore", over="ignore", invalid="ignore"):
+                ratios = np.divide(a, gaps+t, out=np.zeros(3), where=a != 0)
+                return np.linalg.norm(ratios)-1.0
+        t = brentq(secular, 0.0, max(2.0, 2*np.linalg.norm(a)), xtol=np.finfo(float).tiny)
+        minimum = h + eig[0] - scale*(t + np.sum(a*a/(gaps+t)))
+    if minimum <= 32*np.finfo(float).eps*scale:
+        raise ValueError("directional redshift gradient reaches zero or its roundoff neighborhood; expanding Sobolev closure unavailable")
+
+
 def channel_expansion_from_tilted_kinematics(
     H_n_s: float,
     v_b: Sequence[float] | np.ndarray,
@@ -258,14 +296,15 @@ def channel_expansion_from_tilted_kinematics(
     x_1s: float,
     tr_normal_k: float,
     *,
+    acceleration_b_over_c_s: np.ndarray | None = None,
     n_gl_theta: int = 8,
     baryon_radiation_temp_mode: Literal["normal", "rest_monopole"] = "normal",
 ) -> TiltedRecombinationChannels:
     """Build the four separate physical channels from tilted baryon kinematics and shear.
 
     For anisotropic baryon shear ``sigma_b_s`` (trace-free 3x3 in s^-1), computes the
-    exact optical escape expansion ``H_esc`` satisfying:
-      P_esc(tau_0 / (1 + sigma_{nn}/(Theta_b/3)))_S2 == P_esc(tau_0 * H_iso / H_esc).
+    angular-quadrature optical escape expansion ``H_esc`` satisfying:
+      <P_esc(C / (Theta_b/3 + sigma_nn + acceleration_b.n/c))> = P_esc(C/H_esc).
     To leading O(sigma^2), <P_esc(n)> = P_esc(H_b) + quadratic shear corrections (zero O(sigma)).
     """
     vb = np.asarray(v_b, dtype=np.float64)
@@ -279,7 +318,7 @@ def channel_expansion_from_tilted_kinematics(
     n_h_rest = float(n_H_normal_cm3) / gamma
     h_iso_b = float(H_n_s) if theta_b_s is None else float(theta_b_s) / 3.0
 
-    # In the tilted baryon frame, isotropic dipole modulation gives <T> = Gamma T_n in photon bath
+    # The rest_monopole option uses an energy-density-equivalent temperature.
     if baryon_radiation_temp_mode == "normal":
         tr_b = float(tr_normal_k)
     elif baryon_radiation_temp_mode == "rest_monopole":
@@ -288,39 +327,53 @@ def channel_expansion_from_tilted_kinematics(
     else:
         raise ValueError(f"unknown baryon_radiation_temp_mode {baryon_radiation_temp_mode!r}")
 
-    if sigma_b_s is None or float(np.max(np.abs(sigma_b_s))) == 0.0:
+    sig = np.zeros((3, 3)) if sigma_b_s is None else pstf_rank2(np.asarray(sigma_b_s, dtype=float))
+    acc = np.zeros(3) if acceleration_b_over_c_s is None else np.asarray(acceleration_b_over_c_s, dtype=float)
+    if acc.shape != (3,) or not np.isfinite(acc).all() or not np.isfinite(sig).all():
+        raise ValueError("baryon-rest acceleration/c and shear must be finite")
+    d_hesc_d_x1s = 0.0
+    if not np.any(sig) and not np.any(acc):
         h_esc = h_iso_b
     else:
-        sig = pstf_rank2(np.asarray(sigma_b_s, dtype=np.float64))
-        _, _, n_grid, w_grid = gl_sphere_grid(int(n_gl_theta))
-        n_vec = n_grid.reshape(-1, 3)
-        w_norm = w_grid.reshape(-1) / (4.0 * math.pi)
-        # Line-of-sight velocity gradient K(n) = Theta_b/3 + sigma_{ab} n^a n^b
-        k_dir = h_iso_b + np.einsum("ni,ij,nj->n", n_vec, sig, n_vec)
-        k_dir = np.maximum(k_dir, 1e-30 * abs(h_iso_b))
+        _require_expanding_directions(h_iso_b, sig, acc)
+        n_vec, w_norm = _sobolev_sky(int(n_gl_theta))
+        k_dir = h_iso_b + np.einsum("ni,ij,nj->n", n_vec, sig, n_vec) + n_vec @ acc
         n1s_rest = max(n_h_rest * max(float(x_1s), 1e-12), 1e-30)
         # Dimensionless Sobolev optical depth: tau_S(n) = (A_LyA * n_{1s}) / (LYA_FACT * K(n))
         # where LYA_FACT = 8*pi/(3*lambda_alpha^3) [cm^-3] and A_LyA = 6.2649e8 [s^-1].
         num = (A_LYA_S * n1s_rest) / LYA_FACT_CGS
         tau_dir = num / k_dir
-        p_avg = 0.0
-        for wj, tj in zip(w_norm, tau_dir):
-            p_avg += float(wj) * _sobolev_p_esc(float(tj))
-        # In optically thick regime P_esc = 1/tau_S = H_esc / (n_{1s} * LYA_FACT), invert cleanly via tau_eff:
-        if p_avg < 1e-6:
-            tau_eff = 1.0 / max(p_avg, 1e-300)
+        if np.min(tau_dir) > 500.0:
+            # <K>=Theta/3 for STF shear and vector acceleration; exp(-tau)<1e-217.
+            h_esc = h_iso_b
         else:
-            # Solve (1 - exp(-tau)) / tau = p_avg monotonically by Newton
-            tau_eff = min(1.0 / max(p_avg, 1e-300), num / h_iso_b)
-            tau_eff = max(tau_eff, 1e-8)
-            for _ in range(12):
-                ex = math.exp(-tau_eff)
-                val = (1.0 - ex) / tau_eff - p_avg
-                deriv = (tau_eff * ex - (1.0 - ex)) / (tau_eff * tau_eff)
-                if abs(deriv) < 1e-300:
-                    break
-                tau_eff = max(1e-12, tau_eff - val / deriv)
-        h_esc = num / tau_eff
+            # Bracket H_eff between angular extrema; evaluate the small-depth
+            # complement directly when P is close to one.
+            def escape_loss(t):
+                if t < 0.01:
+                    return t*(0.5 + t*(-1/6 + t*(1/24 + t*(-1/120 + t/720))))
+                return 1 + math.expm1(-t)/t
+            if np.max(tau_dir) < 0.5:
+                quantity = escape_loss
+            else:
+                quantity = _sobolev_p_esc
+            target = float(np.average([quantity(t) for t in tau_dir], weights=w_norm))
+            lo, hi = float(np.min(tau_dir)), float(np.max(tau_dir))
+            # Numerical angular averages can round to either endpoint.
+            f_lo, f_hi = quantity(lo)-target, quantity(hi)-target
+            if f_lo == 0 or f_hi == 0 or np.signbit(f_lo) == np.signbit(f_hi):
+                tau_eff = lo if abs(f_lo) <= abs(f_hi) else hi
+            else:
+                tau_eff = brentq(lambda t: quantity(t)-target, lo, hi, xtol=np.finfo(float).tiny)
+            h_esc = num / tau_eff
+            if x_1s > 1e-12 and n_h_rest*x_1s > 1e-30:
+                def log_depth_slope(t):
+                    # t P'(t)=exp(-t)-P(t), avoiding loss of its O(t) difference.
+                    if t < 1e-3:
+                        return t*(-0.5 + t*(1/3 + t*(-1/8 + t*(1/30 - t/144))))
+                    return math.exp(-t) - _sobolev_p_esc(t)
+                avg_slope = np.average([log_depth_slope(t) for t in tau_dir], weights=w_norm)
+                d_hesc_d_x1s = h_esc/x_1s*(1.0 - avg_slope/log_depth_slope(tau_eff))
 
     return TiltedRecombinationChannels(
         reaction_clock_rate_s=clock,
@@ -329,6 +382,7 @@ def channel_expansion_from_tilted_kinematics(
         matter_expansion_rate_s=h_iso_b,
         gamma_baryon=gamma,
         tr_baryon_k=tr_b,
+        d_lya_escape_d_x1s_s=float(d_hesc_d_x1s),
     )
 
 
@@ -349,31 +403,9 @@ def _helium_saha_xe(n_h_cm3: float, tr_ev: float, f_he: float) -> float:
     return f_he * y_he
 
 
-def hyrec_emla_rhs_and_jacobian(
-    x_hii: float,
-    tm_k: float,
-    channels: TiltedRecombinationChannels,
-    tables: HyRecAtomicTables,
-    *,
-    f_he: float,
-    omega_bh2: float = 0.02242,
-    y_he: float = 0.245,
-    t_cmb0: float = 2.7255,
-    x_he_ion: float | None = None,
-    use_swift: bool = True,
-) -> tuple[np.ndarray, np.ndarray, dict[str, np.ndarray]]:
-    """Compute d(x_HII, T_m)/dN, 2x2 state Jacobian, and sensitivities to the 4 channels.
-
-    Returns:
-        rhs: array ``[dx_HII/dN, dT_m/dN]``.
-        jac: 2x2 Jacobian ``d(rhs)/d(x_HII, T_m)``.
-        channel_tangents: dict mapping each channel name to length-2 partial derivative
-          ``d(rhs)/d(channel_value)``.
-    """
+def _rate_evaluator(channels, tables, f_he, omega_bh2, y_he, t_cmb0, x_he_ion=None, use_swift=True):
+    """Share the same local rate law between Radau evaluation and its derivatives."""
     n_h = channels.proper_hydrogen_density_cm3
-    clock = channels.reaction_clock_rate_s
-    h_esc = channels.lya_escape_expansion_s
-    h_mat = channels.matter_expansion_rate_s
     tr_k = channels.tr_baryon_k
 
     x_he = _helium_saha_xe(n_h, KBOLTZ_EV_PER_K * tr_k, f_he) if x_he_ion is None else float(x_he_ion)
@@ -410,6 +442,36 @@ def hyrec_emla_rhs_and_jacobian(
         compton = (gamma_c / cl) * (xe / max(1.0 + f_he + xe, 1e-30)) * (tr_k - tm)
         dtm = -2.0 * (hmat / cl) * tm + compton
         return np.array([dx, dtm], dtype=np.float64)
+
+    return _eval_rhs
+
+
+def hyrec_emla_rhs_and_jacobian(
+    x_hii: float,
+    tm_k: float,
+    channels: TiltedRecombinationChannels,
+    tables: HyRecAtomicTables,
+    *,
+    f_he: float,
+    omega_bh2: float = 0.02242,
+    y_he: float = 0.245,
+    t_cmb0: float = 2.7255,
+    x_he_ion: float | None = None,
+    use_swift: bool = True,
+) -> tuple[np.ndarray, np.ndarray, dict[str, np.ndarray]]:
+    """Compute d(x_HII, T_m)/dN, 2x2 state Jacobian, and sensitivities to the 4 channels.
+
+    Returns:
+        rhs: array ``[dx_HII/dN, dT_m/dN]``.
+        jac: 2x2 Jacobian ``d(rhs)/d(x_HII, T_m)``.
+        channel_tangents: dict mapping each channel name to length-2 partial derivative
+          ``d(rhs)/d(channel_value)``.
+    """
+    n_h = channels.proper_hydrogen_density_cm3
+    clock = channels.reaction_clock_rate_s
+    h_esc = channels.lya_escape_expansion_s
+    h_mat = channels.matter_expansion_rate_s
+    _eval_rhs = _rate_evaluator(channels, tables, f_he, omega_bh2, y_he, t_cmb0, x_he_ion, use_swift)
 
     base = _eval_rhs(x_hii, tm_k, clock, n_h, h_esc, h_mat)
 
@@ -459,6 +521,28 @@ class TiltedHyrecHistory:
     channel_mode: str
     tables_sha256: dict[str, str]
 
+    rei_opacity_source: ReiMaterialHistory | None = None
+
+    @classmethod
+    def from_rei_history(cls, source: ReiMaterialHistory, z_eval):
+        """Use a finite source's own composition, proper clock and expansion history."""
+        return source.evaluate(z_eval)
+
+    def opacity_history(self, *, beta=None, direction=None):
+        """Construct the optical measure, optionally for a specified ray on these nodes.
+
+        Nodewise beta and direction follow the original requested z order.
+        """
+        if self.rei_opacity_source is not None:
+            if beta is not None or direction is not None:
+                raise ValueError("the archived REI background has fixed non-tilted electrons")
+            return self.rei_opacity_source
+        order = np.argsort(self.N_grid)
+        def ordered(x):
+            return np.asarray(x)[order] if x is not None and np.ndim(x) == 2 else x
+        return OpacityHistory(self.N_grid[order], self.opacity_per_efold[order],
+                              beta=ordered(beta), direction=ordered(direction))
+
 
 def _default_reion_xe(z: np.ndarray, f_he: float, params: ReionizationParameters) -> np.ndarray:
     """Smooth tanh reionization floor identical in form to bass.recombination.reionization."""
@@ -489,6 +573,8 @@ def integrate_tilted_recombination(
     v_b_fn=None,
     sigma_b_fn=None,
     theta_b_fn=None,
+    hydrogen_factor_fn=None,
+    acceleration_b_over_c_fn=None,
     tables: HyRecAtomicTables | None = None,
     reionization: ReionizationParameters | None = None,
     mode: Literal["tilted_physical", "forbidden_global_gamma_H"] = "tilted_physical",
@@ -498,18 +584,20 @@ def integrate_tilted_recombination(
 ) -> TiltedHyrecHistory:
     """Integrate coupled HYREC-2 (x_HII, T_m) along N = -ln(1+z) over arbitrary z_eval.
 
-    Uses Radau with analytic/table Jacobian across the recombination epoch, supporting
+    Uses Radau with a state Jacobian including the neutral-fraction escape derivative across the recombination epoch, supporting
     arbitrarily prescribed background expansion ``H_n_fn(N)``, baryon tilt ``v_b_fn(N)``,
     and baryon shear/expansion ``sigma_b_fn(N), theta_b_fn(N)``.
     """
     tbl = load_hyrec_atomic_tables() if tables is None else tables
     zs = np.asarray(z_eval, dtype=np.float64)
-    if zs.ndim != 1 or np.any(zs < 0.0) or not np.all(np.isfinite(zs)):
+    if zs.ndim != 1 or zs.size == 0 or np.any(zs < 0.0) or not np.all(np.isfinite(zs)):
         raise ValueError("z_eval must be a finite non-negative 1D array")
     # Sort descending in z (ascending in e-fold N = -ln(1+z)) for causal forward time evolution
     sort_order = np.argsort(-zs, kind="mergesort")
     z_desc = zs[sort_order]
     N_asc = -np.log1p(z_desc)
+    if np.any(np.diff(N_asc) == 0):
+        raise ValueError("duplicate redshifts in z_eval")
 
     h0_s = float(h) * 100.0 * 1e5 / MPC_CM  # 100 km/s/Mpc = 1e7 cm/s/Mpc; h*1e7/MPC_CM
     rho_crit_cgs = 3.0 * h0_s * h0_s / (8.0 * math.pi * G_CGS)
@@ -533,7 +621,8 @@ def integrate_tilted_recombination(
         z_v = math.exp(-float(N_val)) - 1.0
         a = math.exp(float(N_val))
         H_n = _H_normal(N_val)
-        n_h_norm = n_h0_cm3 / (a ** 3)
+        factor = 1.0 if hydrogen_factor_fn is None else float(hydrogen_factor_fn(float(N_val)))
+        n_h_norm = n_h0_cm3 * factor / (a ** 3)
         tr_norm = float(t_cmb0) * (1.0 + z_v)
         vb = np.zeros(3, dtype=np.float64) if v_b_fn is None else np.asarray(v_b_fn(float(N_val)), dtype=np.float64)
         sig = None if sigma_b_fn is None else np.asarray(sigma_b_fn(float(N_val)), dtype=np.float64)
@@ -541,6 +630,7 @@ def integrate_tilted_recombination(
         ch = channel_expansion_from_tilted_kinematics(
             H_n, vb, sig, th, n_h_norm, max(1.0 - x_hii, 1e-12), tr_norm,
             baryon_radiation_temp_mode=baryon_radiation_temp_mode,
+            acceleration_b_over_c_s=None if acceleration_b_over_c_fn is None else acceleration_b_over_c_fn(float(N_val)),
         )
         if mode == "tilted_physical":
             return ch
@@ -559,24 +649,25 @@ def integrate_tilted_recombination(
     z_start = max(1650.0, float(z_desc[0]) + 50.0)
     N_start = -math.log1p(z_start)
     # Initialize in Hydrogen Saha equilibrium at z_start
-    n_h_i = n_h0_cm3 * ((1.0 + z_start) ** 3)
-    tr_ev_i = KBOLTZ_EV_PER_K * float(t_cmb0) * (1.0 + z_start)
+    initial_channels = _channels_at(N_start, 1.0)
+    n_h_i = initial_channels.proper_hydrogen_density_cm3
+    tr_ev_i = KBOLTZ_EV_PER_K * initial_channels.tr_baryon_k
     s_i = SAHA_FACT_CGS * (tr_ev_i ** 1.5) * math.exp(-EI_EV / tr_ev_i) / n_h_i
-    x_hii_0 = 1.0 if s_i > 1e10 else 0.5 * (-s_i + math.sqrt(s_i * s_i + 4.0 * s_i))
-    y0 = np.array([x_hii_0, float(t_cmb0) * (1.0 + z_start)], dtype=np.float64)
+    x_hii_0 = 2.0 / (1.0 + math.sqrt(1.0 + 4.0 / s_i)) if s_i > 0.0 else 0.0
+    y0 = np.array([x_hii_0, initial_channels.tr_baryon_k], dtype=np.float64)
 
     def ode_rhs(N_val: float, y: np.ndarray) -> np.ndarray:
         ch = _channels_at(N_val, float(y[0]))
-        rhs_vec, _, _ = hyrec_emla_rhs_and_jacobian(
-            float(y[0]), float(y[1]), ch, tbl, f_he=f_he, omega_bh2=omega_bh2, y_he=float(y_he), t_cmb0=float(t_cmb0)
-        )
-        return rhs_vec
+        rate = _rate_evaluator(ch, tbl, f_he, omega_bh2, float(y_he), float(t_cmb0))
+        return rate(float(y[0]), float(y[1]), ch.reaction_clock_rate_s, ch.proper_hydrogen_density_cm3,
+                    ch.lya_escape_expansion_s, ch.matter_expansion_rate_s)
 
     def ode_jac(N_val: float, y: np.ndarray) -> np.ndarray:
         ch = _channels_at(N_val, float(y[0]))
-        _, jac_mat, _ = hyrec_emla_rhs_and_jacobian(
+        _, jac_mat, tangents = hyrec_emla_rhs_and_jacobian(
             float(y[0]), float(y[1]), ch, tbl, f_he=f_he, omega_bh2=omega_bh2, y_he=float(y_he), t_cmb0=float(t_cmb0)
         )
+        jac_mat[:, 0] -= tangents['lya_escape_expansion_s'] * ch.d_lya_escape_d_x1s_s
         return jac_mat
 
     sol = solve_ivp(
@@ -594,8 +685,9 @@ def integrate_tilted_recombination(
 
     x_hii_asc = np.clip(sol.y[0], 0.0, 1.0)
     tm_asc = np.maximum(sol.y[1], 1e-6)
+    output_channels = [_channels_at(t, float(x)) for t, x in zip(N_asc, x_hii_asc)]
     x_he_asc = np.array(
-        [_helium_saha_xe(_channels_at(Nv, float(xh)).proper_hydrogen_density_cm3, KBOLTZ_EV_PER_K * float(t_cmb0) * (1.0 + zv), f_he) for Nv, zv, xh in zip(N_asc, z_desc, x_hii_asc)],
+        [_helium_saha_xe(ch.proper_hydrogen_density_cm3, KBOLTZ_EV_PER_K * ch.tr_baryon_k, f_he) for ch in output_channels],
         dtype=np.float64,
     )
     xe_asc = x_hii_asc + x_he_asc
@@ -606,23 +698,18 @@ def integrate_tilted_recombination(
         xe_asc = np.where(z_desc < z_cut, np.maximum(xe_asc, xe_re), xe_asc)
 
     H_n_arr = np.array([_H_normal(Nv) for Nv in N_asc], dtype=np.float64)
-    gam_arr = np.array([_channels_at(Nv, float(xh)).gamma_baryon for Nv, xh in zip(N_asc, x_hii_asc)], dtype=np.float64)
-    n_h_rest_arr = np.array([_channels_at(Nv, float(xh)).proper_hydrogen_density_cm3 for Nv, xh in zip(N_asc, x_hii_asc)], dtype=np.float64)
+    gam_arr = np.array([ch.gamma_baryon for ch in output_channels])
+    n_h_rest_arr = np.array([ch.proper_hydrogen_density_cm3 for ch in output_channels])
 
-    # Proper Thomson opacity per e-fold d tau_0 / dN along normal frame: Gamma_b^-1 n_{e,rest} sigma_T c / H_n
-    # Wait: in rest_time tau_0 = int sigma_T c n_{e,rest} dt_n = int (sigma_T c N_H/(Gamma a^3) xe / H_n) dN;
-    # at normal frame: d tau / dN = n_e_normal * sigma_T * c / H_n = n_{H,rest}*Gamma * xe * sigma_T * c / H_n!
-    # Conformal d tau / d chi [Mpc^-1] in normal frame uses n_e_normal * sigma_T * a * MPC_M:
+    # Direction-averaged opacity uses n_e,normal = Gamma_b n_e,rest.
+    # The moving collision operator supplies its own angular (1-beta.e) factor.
     mpc_m = MPC_CM / 100.0
     n_e_normal_m3 = (n_h_rest_arr * 1e6) * gam_arr * xe_asc
     tau_dot_mpc = n_e_normal_m3 * SIGMA_T / (1.0 + z_desc) * mpc_m
     op_per_efold = n_e_normal_m3 * SIGMA_T * C_LIGHT / np.maximum(H_n_arr, 1e-300)
 
-    # Forward optical depth from observer (z_desc[-1]) integrated upward via trapezoid rule on op_per_efold dN
-    kappa_asc = np.zeros_like(N_asc)
-    for k in range(len(N_asc) - 2, -1, -1):
-        dN = float(N_asc[k + 1] - N_asc[k])
-        kappa_asc[k] = kappa_asc[k + 1] + 0.5 * (op_per_efold[k] + op_per_efold[k + 1]) * dN
+    kappa_asc = (OpacityHistory(N_asc, op_per_efold).cells(N_asc).tau_to_observer
+                 if len(N_asc) > 1 else np.zeros(1))
     vis_asc = op_per_efold * np.exp(-kappa_asc)
 
     # Restore exact requested z_eval ordering
@@ -679,7 +766,12 @@ def to_clocked_chemistry_inputs(
     comoving_hydrogen_m3: float,
     y_he: float = 0.245,
 ) -> ChemistryHistory:
-    """Adapt linearized HYREC-2 rates around a trajectory into clocked_chemistry cells."""
+    """Construct the class-A hydrogen-only reference around a supplied trajectory.
+
+    The cell model assumes a constant comoving hydrogen anchor, H_n as the
+    scalar escape gradient, and T_gamma=2.72548/a. For class-B tilted or
+    reionized visibility use the full history's opacity_history().
+    """
     z_e = np.asarray(z_edges, dtype=np.float64)
     N_edges = -np.log1p(z_e)
     if np.any(np.diff(N_edges) <= 0.0):

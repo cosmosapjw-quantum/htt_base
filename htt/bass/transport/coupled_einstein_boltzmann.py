@@ -51,7 +51,9 @@ from bass.background.tilted_bianchi_state import (
     construct_admissible_tilted_state,
     solve_compensating_tilt_velocity,
 )
-from bass.collision.moving_thomson import MovingFrameThomsonOperator, covariant_thomson_four_force
+from bass.collision.moving_thomson import covariant_thomson_four_force
+from bass.transport.moving_collision_stage import MovingCollisionStage, initial_radiation_stokes
+from bass.recombination.baryon_history import BaryonHistory
 from bass.recombination.reionization import CosmologyForRecombination, ReionizationParameters, cosmology_from_metadata
 from bass.recombination.recombination_ingest import load_recombination_table
 from bass.recombination.tilted_hyrec import (
@@ -60,11 +62,10 @@ from bass.recombination.tilted_hyrec import (
     integrate_tilted_recombination,
     load_hyrec_atomic_tables,
 )
-from bass.transport.general_bianchi_transfer import _spherical_screen_basis, gl_sphere_grid, spin_weighted_spherical_harmonic_grid
+from bass.transport.general_bianchi_transfer import gl_sphere_grid
 from bass.transport.general_lie_stokes import (
     GeneralLieStokesOperator,
     LieGeometry,
-    alm_dict_to_vector,
     max_stokes_reality_error,
     vector_to_alm_dict,
 )
@@ -103,6 +104,7 @@ def build_early_family_state(
     handedness: int = 1,
     curvature: float = 3e-4,
     z_initial: float = Z_INITIAL,
+    massless_neutrino_fraction: float = 0.0,
     cosmo: CosmologyForRecombination | None = None,
 ) -> tuple[TiltedBianchiState, CosmologyForRecombination, float]:
     """Construct exact Jacobi/Hamiltonian/Codazzi-admissible multi-fluid early state.
@@ -116,6 +118,10 @@ def build_early_family_state(
         raise ValueError("handedness must be +1 or -1")
     if not math.isfinite(epsilon) or epsilon < 0.0:
         raise ValueError("epsilon must be finite and non-negative")
+
+    f_nu = float(massless_neutrino_fraction)
+    if not math.isfinite(f_nu) or not 0.0 <= f_nu < 1.0:
+        raise ValueError("massless_neutrino_fraction must satisfy 0 <= rho_nu/rho_rad < 1")
 
     c = _load_default_cosmo() if cosmo is None else cosmo
     u = 1.0 + float(z_initial)
@@ -180,9 +186,17 @@ def build_early_family_state(
 
     sigma = amp * _DEFAULT_SHEAR_SHAPE
     v_rad_init = 0.1 * amp * _DEFAULT_TILT_SHAPE
-    sp_rad = SpeciesFluidCongruence(species="radiation", eps_hat=rho_rad, p_hat=rho_rad / 3.0, v_vec=v_rad_init)
+    # Keep the legacy "radiation" key for the photon hierarchy. Ω_r is fixed;
+    # its split has a shared initial velocity and an isotropic rest distribution.
+    rho_gamma = (1.0 - f_nu) * rho_rad
+    if rho_gamma/3 <= 0.0 or (f_nu and (f_nu*rho_rad)/3 <= 0.0):
+        raise ValueError("massless radiation pressure underflows the represented density range")
+    sp_rad = SpeciesFluidCongruence(species="radiation", eps_hat=rho_gamma, p_hat=rho_gamma/3, v_vec=v_rad_init)
+    sp_nu = ([SpeciesFluidCongruence(species="neutrino", eps_hat=f_nu*rho_rad,
+                                    p_hat=f_nu*rho_rad/3, v_vec=v_rad_init)]
+             if f_nu else [])
     # Compensate geometric momentum divergence div(sigma) + q_rad smoothly into CDM tilt (exact relativistic boost inverse)
-    q_rem = -exact_momentum_divergence(sigma, algebra.a, algebra.n, a_sign=1) - sp_rad.to_projected_state().q
+    q_rem = -exact_momentum_divergence(sigma, algebra.a, algebra.n, a_sign=1) - sum(sp.to_projected_state().q for sp in (sp_rad, *sp_nu))
     q_mag = float(np.linalg.norm(q_rem))
     if q_mag == 0.0:
         v_cdm_init = np.zeros(3, dtype=np.float64)
@@ -196,7 +210,7 @@ def build_early_family_state(
         family=algebra.type_name,
         algebra=algebra,
         sigma_ab=sigma,
-        species=[sp_rad, sp_cdm, sp_bar],
+        species=[sp_rad, sp_cdm, sp_bar, *sp_nu],
         lambda_value=lam_val,
         kappa=1.0,
         codazzi_mode="strict",
@@ -231,128 +245,6 @@ def extract_stf_pi_from_state(
     return (4.0 * float(rho_rad)) * pstf_rank2(M)
 
 
-def _moving_emission_and_delta_vector(
-    op_lie: GeneralLieStokesOperator,
-    state: np.ndarray,
-    v_b: np.ndarray,
-    *,
-    moving_op_cache: dict[tuple[float, float, float], MovingFrameThomsonOperator],
-) -> tuple[np.ndarray, np.ndarray]:
-    """Compute moving electron-frame linearized collision corrections projected onto (T,E,B,V).
-
-    Uses MovingFrameThomsonOperator exact Lorentz transformation D(n)^4 R_screen, returning:
-    - emission_delta_vec: difference between exact moving equilibrium emission
-      `collision_bolometric(0.25, clock='conserved_anchor')` and rest-frame `(v_b . n)` dipole
-      (capturing O(v_b^2) kinematic quadrupole in T/E/B and relativistic aberration).
-    - hom_delta_vec: moving-frame perturbation change `(C_moving[S] - C_rest[S])` when
-      `|v_b| > 1e-10`.
-    """
-    b_norm = float(np.linalg.norm(v_b))
-    if b_norm <= 1e-12:
-        zeros = np.zeros(op_lie.dim, dtype=np.complex128)
-        return zeros, zeros
-
-    key = (round(float(v_b[0]), 12), round(float(v_b[1]), 12), round(float(v_b[2]), 12))
-    op_mov = moving_op_cache.get(key)
-    if op_mov is None:
-        op_mov = MovingFrameThomsonOperator(v_b, n_theta_rest=max(op_lie.L + 4, 8))
-        if len(moving_op_cache) < 256:
-            moving_op_cache[key] = op_mov
-
-    # Project emission on normal-frame rays using exact normal weights and right-handed (u, v, n) -> (e_th, e_ph)
-    n_vec = op_mov.directions_normal
-    w_n = op_mov.weights_normal
-    e_th, e_ph = _spherical_screen_basis(n_vec)
-    # Spherical coordinates matching gl_sphere_grid / spin_weighted_spherical_harmonic_grid
-    th = np.arccos(np.clip(n_vec[:, 2], -1.0, 1.0))
-    ph = np.mod(np.arctan2(n_vec[:, 1], n_vec[:, 0]), 2.0 * math.pi)
-
-    I_bg = np.zeros((len(n_vec), 4), dtype=np.float64)
-    I_bg[:, 0] = 0.25
-    em_sky = op_mov.collision_bolometric(I_bg, clock="conserved_anchor")
-
-    from bass.collision.electron_frame import rotate_stokes_samples
-
-    q_scr, u_scr = rotate_stokes_samples(
-        em_sky[:, 1], em_sky[:, 2], op_mov.basis_u_normal, op_mov.basis_v_normal, e_th, e_ph
-    )
-    # Spin-weighted harmonic transform on arbitrary (n_vec, w_n) up to l=2 (emission has l<=2 + O(beta^2))
-    lmax_em = min(op_lie.L, 4)
-    em_alms: dict[str, dict[tuple[int, int], complex]] = {"T": {}, "E": {}, "B": {}, "V": {}}
-    # Include only the residual BEYOND the rest-frame dipole (n . v_b), which is already added analytically
-    dip_rest = n_vec @ v_b
-    dI_res = em_sky[:, 0] - dip_rest
-    for ell in range(lmax_em + 1):
-        for m in range(-ell, ell + 1):
-            if (ell, m) in op_lie.idx["T"]:
-                ylm = sph_harm_y(ell, m, th, ph)
-                em_alms["T"][(ell, m)] = complex(np.sum(w_n * dI_res * np.conj(ylm)))
-            if ell >= 2 and ((ell, m) in op_lie.idx["E"] or (ell, m) in op_lie.idx["B"]):
-                qp = q_scr + 1j * u_scr
-                qm = q_scr - 1j * u_scr
-                yp2 = spin_weighted_spherical_harmonic_grid(2, ell, m, th, ph)
-                ym2 = spin_weighted_spherical_harmonic_grid(-2, ell, m, th, ph)
-                ap = complex(np.sum(w_n * (-qp) * np.conj(yp2)))
-                am = complex(np.sum(w_n * (-qm) * np.conj(ym2)))
-                em_alms["E"][(ell, m)] = 0.5 * (ap + am)
-                em_alms["B"][(ell, m)] = -0.5j * (ap - am)
-            if (ell, m) in op_lie.idx["V"]:
-                ylm = sph_harm_y(ell, m, th, ph)
-                em_alms["V"][(ell, m)] = complex(np.sum(w_n * em_sky[:, 3] * np.conj(ylm)))
-
-    em_delta_vec = alm_dict_to_vector(em_alms, op_lie.idx, op_lie.dim)
-    hom_delta_vec = np.zeros(op_lie.dim, dtype=np.complex128)
-    # Linearized homogeneous moving correction only becomes non-negligible when |v_b| > 1e-6
-    if b_norm > 1e-6:
-        # Evaluate current normal-frame sky on op_mov.directions_normal up to min(L, 4)
-        alms = vector_to_alm_dict(state, op_lie.idx)
-        I_cur = np.zeros(len(n_vec), dtype=np.float64)
-        Q_cur = np.zeros(len(n_vec), dtype=np.float64)
-        U_cur = np.zeros(len(n_vec), dtype=np.float64)
-        V_cur = np.zeros(len(n_vec), dtype=np.float64)
-        for ell in range(min(op_lie.L, 4) + 1):
-            for m in range(-ell, ell + 1):
-                ylm = sph_harm_y(ell, m, th, ph)
-                if (ell, m) in alms["T"]:
-                    I_cur += (alms["T"][(ell, m)] * ylm).real
-                if (ell, m) in alms["V"]:
-                    V_cur += (alms["V"][(ell, m)] * ylm).real
-                if ell >= 2 and (ell, m) in alms["E"] and (ell, m) in alms["B"]:
-                    a2p = -(alms["E"][(ell, m)] + 1j * alms["B"][(ell, m)])
-                    yp2 = spin_weighted_spherical_harmonic_grid(2, ell, m, th, ph)
-                    val = a2p * yp2
-                    Q_cur += val.real
-                    U_cur += val.imag
-        q_n, u_n = rotate_stokes_samples(Q_cur, U_cur, e_th, e_ph, op_mov.basis_u_normal, op_mov.basis_v_normal)
-        sky_cur = np.column_stack((I_cur, q_n, u_n, V_cur))
-        hom_mov, _ = op_mov.linearized_perturbation_and_emission(sky_cur, clock="conserved_anchor")
-        # Subtract unboosted rest collision K_rest @ state to extract pure O(v_b) correction
-        hom_rest_on_vec = op_lie.U_rank9 @ (op_lie.thomson_gains * (op_lie.U_rank9.T @ state)) - state
-        qh_scr, uh_scr = rotate_stokes_samples(
-            hom_mov[:, 1], hom_mov[:, 2], op_mov.basis_u_normal, op_mov.basis_v_normal, e_th, e_ph
-        )
-        hom_alms: dict[str, dict[tuple[int, int], complex]] = {"T": {}, "E": {}, "B": {}, "V": {}}
-        for ell in range(min(op_lie.L, 4) + 1):
-            for m in range(-ell, ell + 1):
-                ylm = sph_harm_y(ell, m, th, ph)
-                if (ell, m) in op_lie.idx["T"]:
-                    hom_alms["T"][(ell, m)] = complex(np.sum(w_n * hom_mov[:, 0] * np.conj(ylm)))
-                if (ell, m) in op_lie.idx["V"]:
-                    hom_alms["V"][(ell, m)] = complex(np.sum(w_n * hom_mov[:, 3] * np.conj(ylm)))
-                if ell >= 2 and (ell, m) in op_lie.idx["E"]:
-                    qp = qh_scr + 1j * uh_scr
-                    qm = qh_scr - 1j * uh_scr
-                    yp2 = spin_weighted_spherical_harmonic_grid(2, ell, m, th, ph)
-                    ym2 = spin_weighted_spherical_harmonic_grid(-2, ell, m, th, ph)
-                    ap = complex(np.sum(w_n * (-qp) * np.conj(yp2)))
-                    am = complex(np.sum(w_n * (-qm) * np.conj(ym2)))
-                    hom_alms["E"][(ell, m)] = 0.5 * (ap + am)
-                    hom_alms["B"][(ell, m)] = -0.5j * (ap - am)
-        hom_delta_vec = alm_dict_to_vector(hom_alms, op_lie.idx, op_lie.dim) - hom_rest_on_vec
-
-    return em_delta_vec, hom_delta_vec
-
-
 @dataclass(frozen=True)
 class CoupledSolverConfig:
     """Configuration for self-consistent coupled Einstein-Boltzmann integration."""
@@ -368,6 +260,7 @@ class CoupledSolverConfig:
     reionization: ReionizationParameters | None = None
     include_moving_correction: bool = True
     constraint_abort_tol: float = 1e-6
+    massless_neutrino_fraction: float = 0.0
 
 
 @dataclass(frozen=True)
@@ -392,6 +285,7 @@ class CoupledSolverResult:
     max_stokes_reality_err: float
     picard_pi_rel_change: float
     total_optical_depth: float
+    neutrino_final_state: np.ndarray | None = None
 
 
 def _power_spectrum_from_alms(alms: dict[str, dict[tuple[int, int], complex]], ell_max: int) -> dict[str, np.ndarray]:
@@ -406,6 +300,26 @@ def _power_spectrum_from_alms(alms: dict[str, dict[tuple[int, int], complex]], e
                 cl[ell] = float(np.sum(np.abs(arr) ** 2) / (2 * ell + 1))
         out[ch] = cl
     return out
+
+
+def _species_thomson_forces(photon_tensor, baryon_velocity, rate, count, photon_idx, baryon_idx):
+    """In a common normal tetrad the only Thomson four-force pair is gamma-b."""
+    forces = np.zeros((count, 4))
+    forces[photon_idx] = rate * covariant_thomson_four_force(
+        photon_tensor, baryon_velocity, clock="conserved_anchor")
+    forces[baryon_idx] = -forces[photon_idx]
+    return forces
+
+
+def _stress_feedback_ratio(state, op, flux_ratio, velocity):
+    """Additional STF pressure divided by the current normal energy density."""
+    zero_mode = op.idx["T"].get((0, 0))
+    monopole = state[zero_mode].real / math.sqrt(4*math.pi) if zero_mode is not None else 0.
+    mean_intensity = 1.0 + 4.0*monopole
+    if not math.isfinite(mean_intensity) or mean_intensity <= 0.0:
+        raise FloatingPointError("nonpositive mean radiation intensity in stress feedback")
+    pi_over_energy = extract_stf_pi_from_state(state, 1./mean_intensity, op)
+    return pi_over_energy - pstf_rank2(np.outer(velocity, flux_ratio))
 
 
 def solve_coupled_einstein_boltzmann(
@@ -426,6 +340,7 @@ def solve_coupled_einstein_boltzmann(
         handedness=cfg.handedness,
         curvature=cfg.curvature,
         z_initial=cfg.z_initial,
+        massless_neutrino_fraction=cfg.massless_neutrino_fraction,
     )
     N_start = -math.log1p(cfg.z_initial)
     N_end = 0.0
@@ -436,9 +351,14 @@ def solve_coupled_einstein_boltzmann(
     from common.stf_metric_bridge import orthonormal_to_stf_matrix, stf_matrix_to_orthonormal
 
     species_specs = tuple(
-        EvolvedSpeciesSpec(species=sp.species, K_eos=float(sp.p_hat / max(sp.eps_hat, 1e-30))) for sp in congs
+        EvolvedSpeciesSpec(species=sp.species, K_eos=1/3 if sp.species in ("radiation", "neutrino") else 0.)
+        for sp in congs
     )
 
+    photon_idx = next(i for i, spec in enumerate(species_specs) if spec.species == "radiation")
+    baryon_idx = next(i for i, spec in enumerate(species_specs) if spec.species == "baryon")
+    radiation_indices = tuple(i for i, spec in enumerate(species_specs)
+                              if spec.species in ("radiation", "neutrino"))
     y0 = np.zeros(16 + 4 * len(congs), dtype=np.float64)
     y0[0] = math.log(float(init_state.H))
     y0[1:6] = stf_matrix_to_orthonormal(init_state.sigma_ab, convention="kinematic_response")
@@ -451,23 +371,23 @@ def solve_coupled_einstein_boltzmann(
         y0[off] = lE
         y0[off + 1 : off + 4] = r_v
 
+    initial_stokes = initial_radiation_stokes(op_lie, congs[photon_idx].v_vec)
+
     # Sample at (2 * n_cells + 1) exact ODE points so midpoint geometry lies ON exact Jacobi manifold!
     n_eval = 2 * int(cfg.n_cells) + 1
     N_eval = np.linspace(N_start, N_end, n_eval, dtype=np.float64)
     z_eval_recomb = np.expm1(-N_eval)
 
     # Zero-initialized radiation stress tensor pi_gamma_tab[k, 3, 3]
-    pi_tab = np.zeros((n_eval, 3, 3), dtype=np.float64)
+    pi_tab = np.zeros((len(radiation_indices), n_eval, 3, 3), dtype=np.float64)
     prev_pi_tab = None
     recomb_hist: TiltedHyrecHistory | None = None
-    H_fn_cur = None
-    v_b_fn_cur = None
-    sig_b_fn_cur = None
+    baryon_history = None
     delta = np.eye(3, dtype=np.float64)
-    moving_cache: dict[tuple[float, float, float], MovingFrameThomsonOperator] = {}
 
     traj: TiltedEvolutionResult | None = None
     final_S = np.zeros(op_lie.dim, dtype=np.complex128)
+    neutrino_final = None
     max_orthog_err = 0.0
     max_mom_sum_err = 0.0
     max_jac = 0.0
@@ -493,24 +413,26 @@ def solve_coupled_einstein_boltzmann(
             omega_lambda=float(cosmo.Omega_Lambda),
             y_he=float(cosmo.Y_He),
             n_h0_m3=float(cosmo.n_H_today),
-            H_n_fn=H_fn_cur,
-            v_b_fn=v_b_fn_cur,
-            sigma_b_fn=sig_b_fn_cur,
+            H_n_fn=baryon_history.H if baryon_history else None,
+            v_b_fn=baryon_history.beta if baryon_history else None,
+            sigma_b_fn=baryon_history.shear if baryon_history else None,
+            theta_b_fn=baryon_history.theta if baryon_history else None,
+            hydrogen_factor_fn=baryon_history.hydrogen_factor if baryon_history else None,
+            acceleration_b_over_c_fn=baryon_history.acceleration if baryon_history else None,
             tables=tbl,
             reionization=reion_par,
             mode="tilted_physical",
         )
-        op_spline = CubicSpline(N_eval, np.maximum(recomb_hist.opacity_per_efold, 0.0))
+        opacity = recomb_hist.opacity_history()
+        cell_depths = opacity.cells(N_eval[::2]).delta_tau
 
-        # Splines for 5 independent components of pi_gamma(N)
-        pi_comps = np.array([stf_matrix_to_orthonormal(p) for p in pi_tab], dtype=np.float64)
-        pi_spline = CubicSpline(N_eval, pi_comps)
-
-        def _eval_pi(N_v: float) -> np.ndarray:
-            if picard_idx == 0:
-                return np.zeros((3, 3), dtype=np.float64)
-            Nc = min(max(float(N_v), N_start), N_end)
-            return orthonormal_to_stf_matrix(pi_spline(Nc))
+        # Each massless component supplies its own correction to boosted-fluid
+        # STF pressure, in the same normal frame as the conserved E and q.
+        pi_splines = {}
+        if picard_idx:
+            for slot, species_idx in enumerate(radiation_indices):
+                coeff = np.array([stf_matrix_to_orthonormal(p) for p in pi_tab[slot]])
+                pi_splines[species_idx] = CubicSpline(N_eval, coeff)
 
         def _unpack(N_val: float, y: np.ndarray):
             H = math.exp(float(y[0]))
@@ -523,13 +445,15 @@ def solve_coupled_einstein_boltzmann(
             for idx, spec in enumerate(species_specs):
                 off = 16 + 4 * idx
                 eh, _, vv, T4_s = primitive_from_energy_momentum_ratio(y[off], y[off + 1 : off + 4], spec.K_eos)
-                if idx == 0 and picard_idx > 0:
+                if T4_s[0, 0] <= 0.0:
+                    raise FloatingPointError(f"{spec.species} normal energy underflow at N={N_val}")
+                if idx in pi_splines:
                     T4_s = T4_s.copy()
-                    T4_s[1:, 1:] += _eval_pi(N_val)
+                    T4_s[1:, 1:] += T4_s[0, 0] * orthonormal_to_stf_matrix(pi_splines[idx](N_val))
                 T4_list.append(T4_s)
                 eh_list.append(eh)
                 vv_list.append(vv)
-            T4_tot = T4_list[0] + T4_list[1] + T4_list[2]
+            T4_tot = sum(T4_list)
             rho_tot = float(T4_tot[0, 0])
             q_tot = T4_tot[0, 1:]
             p_tot = float(np.trace(T4_tot[1:, 1:]) / 3.0)
@@ -562,9 +486,9 @@ def solve_coupled_einstein_boltzmann(
             dy[9:15] = _pack_sym6(ndot * inv_H)
             dy[15] = math.exp(-float(N_val)) * inv_H
 
-            op_val = max(0.0, float(op_spline(min(max(float(N_val), N_start), N_end))))
-            F_rad = covariant_thomson_four_force(T4_list[0], vv_list[2], clock="conserved_anchor") * op_val
-            coll_forces = (F_rad, np.zeros(4, dtype=np.float64), -F_rad)
+            op_val = float(opacity.rate(min(max(float(N_val), N_start), N_end)))
+            coll_forces = _species_thomson_forces(T4_list[photon_idx], vv_list[baryon_idx], op_val,
+                                                  len(species_specs), photon_idx, baryon_idx)
 
             for idx, (T4_s, F_s) in enumerate(zip(T4_list, coll_forces)):
                 dT0_dt = -(np.einsum("aca,cb->b", Gamma4, T4_s) + np.einsum("bca,ac->b", Gamma4, T4_s))
@@ -623,11 +547,12 @@ def solve_coupled_einstein_boltzmann(
             max_cod = max(max_cod, cod_k)
             max_trace = max(max_trace, abs(float(np.trace(sig))))
 
-            op_k = max(0.0, float(op_spline(float(N_eval[k]))))
-            F_rad = covariant_thomson_four_force(T4_list[0], vv_list[2], clock="conserved_anchor") * op_k
-            F_bar = -F_rad
+            op_k = float(recomb_hist.opacity_per_efold[k])
+            force_grid = _species_thomson_forces(T4_list[photon_idx], vv_list[baryon_idx], op_k,
+                                                len(species_specs), photon_idx, baryon_idx)
+            F_rad, F_bar = force_grid[photon_idx], force_grid[baryon_idx]
             max_mom_sum_err = max(max_mom_sum_err, float(np.linalg.norm(F_rad + F_bar)))
-            vb = vv_list[2]
+            vb = vv_list[baryon_idx]
             gb = 1.0 / math.sqrt(max(1e-30, 1.0 - float(vb @ vb)))
             u_b_cov = np.r_[-gb, gb * vb]
             max_orthog_err = max(max_orthog_err, abs(float(u_b_cov @ F_rad)))
@@ -659,17 +584,18 @@ def solve_coupled_einstein_boltzmann(
         )
 
         # Update recombination background callbacks for next Picard iteration
-        H_si_sp = CubicSpline(N_eval, H_grid * href_i)
-        vb_sp = CubicSpline(N_eval, v_grid["baryon"])
-        sig_si_sp = CubicSpline(N_eval, np.array([stf_matrix_to_orthonormal(s) * href_i for s in sig_grid]))
-        H_fn_cur = lambda Nv, sp=H_si_sp: float(sp(min(max(float(Nv), N_start), N_end)))
-        v_b_fn_cur = lambda Nv, sp=vb_sp: np.asarray(sp(min(max(float(Nv), N_start), N_end)), dtype=np.float64)
-        sig_b_fn_cur = lambda Nv, sp=sig_si_sp: orthonormal_to_stf_matrix(sp(min(max(float(Nv), N_start), N_end)))
+        if picard_idx + 1 < int(cfg.n_picard):
+            baryon_history = BaryonHistory(N_eval, H_grid*href_i, sig_grid*href_i,
+                                          a_grid*href_i, n_grid*href_i, v_grid["baryon"])
 
         # Step 3: Evolve N1+N2 all-m polarized Stokes state across cfg.n_cells (each cell has exact midpoint index 2*c + 1)
-        S_vec = np.zeros(op_lie.dim, dtype=np.complex128)
+        # Initial normalized brightness is identical for common-velocity
+        # thermal massless populations, independent of the absolute density.
+        S_vec = initial_stokes.copy()
+        nu_vec = initial_stokes.copy() if len(radiation_indices) == 2 else None
+        # The boosted perfect-fluid pressure already contains STF(v_i q_j).
+        # The prescribed IC matches that stress, so its initial correction is zero.
         new_pi_tab = np.zeros_like(pi_tab)
-        new_pi_tab[0] = extract_stf_pi_from_state(S_vec, float(eps_grid["radiation"][0]), op_lie)
 
         for cell in range(int(cfg.n_cells)):
             i0 = 2 * cell
@@ -701,19 +627,24 @@ def solve_coupled_einstein_boltzmann(
                     nN_mid = 0.5 * (n_proj + n_proj.T)
 
             geom = LieGeometry(sigN_mid, aN_mid, nN_mid)
-            # Simpson quadrature on [i0, i_mid, i1]
-            dtau_cell = max(
-                0.0,
-                float(dN_cell / 6.0 * (op_spline(N_eval[i0]) + 4.0 * op_spline(N_eval[i_mid]) + op_spline(N_eval[i1]))),
-            )
+            dtau_cell = float(cell_depths[cell])
 
             vb_mid = v_grid["baryon"][i_mid]
             src_vec = op_lie.shear_source_vector(sigN_mid, amplitude=dN_cell)
-            src_vec = src_vec + op_lie.dipole_source_vector(vb_mid, channel="T", amplitude=dtau_cell)
-
-            if cfg.include_moving_correction and dtau_cell > 0.0 and float(np.linalg.norm(vb_mid)) > 1e-12:
-                em_delta, hom_delta = _moving_emission_and_delta_vector(op_lie, S_vec, vb_mid, moving_op_cache=moving_cache)
-                src_vec = src_vec + dtau_cell * (em_delta + hom_delta)
+            if nu_vec is not None:
+                # The collisionless species receives gravitational brightness
+                # forcing only; it has no polarization and no electron opacity.
+                nu_vec = op_lie.advance_cell(nu_vec, dN_cell, geom, 0.0,
+                                             source_increment=src_vec, substeps=cfg.substeps_per_cell,
+                                             bolometric_redshift=True)
+            moving = None
+            if dtau_cell > 0.0 and np.any(vb_mid):
+                if cfg.include_moving_correction:
+                    moving = MovingCollisionStage(op_lie, vb_mid)
+                    src_vec += dtau_cell * moving.emission
+                else:
+                    # Outward sky direction n is opposite photon momentum p in the Lie operator.
+                    src_vec += op_lie.dipole_source_vector(-vb_mid, channel="T", amplitude=dtau_cell)
 
             S_vec = op_lie.advance_cell(
                 S_vec,
@@ -722,16 +653,28 @@ def solve_coupled_einstein_boltzmann(
                 dtau_cell,
                 source_increment=src_vec,
                 substeps=cfg.substeps_per_cell,
+                moving_collision=moving,
+                bolometric_redshift=True,
             )
-            pi_end = extract_stf_pi_from_state(S_vec, float(eps_grid["radiation"][i1]), op_lie)
-            new_pi_tab[i1] = pi_end
-            new_pi_tab[i_mid] = 0.5 * (new_pi_tab[i0] + pi_end)
+            for slot, species_idx in enumerate(radiation_indices):
+                spec_key = species_specs[species_idx].species
+                angular_state = S_vec if species_idx == photon_idx else nu_vec
+                offset = 16 + 4*species_idx
+                new_pi_tab[slot, i1] = _stress_feedback_ratio(
+                    angular_state, op_lie, sol.y[offset+1:offset+4, i1], v_grid[spec_key][i1])
+                new_pi_tab[slot, i_mid] = .5*(new_pi_tab[slot, i0] + new_pi_tab[slot, i1])
 
+        neutrino_final = nu_vec
         final_S = S_vec
+        # Interpolate the slowly varying pi/E, then restore the dimensional
+        # pressure using the current stage energy. Preserve the historical
+        # Picard error definition in units of dimensional normal pressure.
+        energy_history = np.exp(sol.y[[16+4*i for i in radiation_indices]])
+        physical_pi = energy_history[:, :, None, None] * new_pi_tab
         if prev_pi_tab is not None:
-            denom = max(float(np.max(np.abs(new_pi_tab))), 1e-30)
-            picard_rel_change = float(np.max(np.abs(new_pi_tab - prev_pi_tab)) / denom)
-        prev_pi_tab = new_pi_tab.copy()
+            denom = max(float(np.max(np.abs(physical_pi))), 1e-30)
+            picard_rel_change = float(np.max(np.abs(physical_pi - prev_pi_tab)) / denom)
+        prev_pi_tab = physical_pi
         pi_tab = new_pi_tab
 
     reality_err = max_stokes_reality_error(final_S, op_lie.idx)
@@ -760,4 +703,5 @@ def solve_coupled_einstein_boltzmann(
         max_stokes_reality_err=reality_err,
         picard_pi_rel_change=picard_rel_change,
         total_optical_depth=float(recomb_hist.kappa[0]),
+        neutrino_final_state=neutrino_final,
     )

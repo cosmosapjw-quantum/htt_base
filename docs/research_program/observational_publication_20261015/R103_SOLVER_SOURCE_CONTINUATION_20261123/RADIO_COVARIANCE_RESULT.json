@@ -1,0 +1,76 @@
+{
+  "schema": "htt.r103.radio_covariance_budget/1",
+  "source_summary": "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/RESULTS/INTERPRETATION_SUMMARY.json",
+  "source_sha256": "203f6cf070661afb923aa095ce992278c720f3e7a7149107c14c7e8a28c761c7",
+  "input_catalog_sha256": "52eb576c1e3e71837f2fca26121789ccc0b316152cca3f25ea2f37ea8ef5a38e",
+  "covariance_norm": "spectral norm, Euclidean ICRS xy log-intensity coefficient coordinates",
+  "fits": {
+    "dipole": {
+      "shared_objects": 241892,
+      "delta_log_intensity_ICRS_xy": [
+        -0.001396043913191444,
+        0.005627036601351938
+      ],
+      "paired_covariance_replay_max_abs": 1.6940658945086007e-21,
+      "working_contours": {
+        "0.95": {
+          "wald_working": 32.792386268354065,
+          "threshold": 5.99146454710798,
+          "extra_spectral_variance": 4.584849117775165e-06,
+          "extra_sd": 0.0021412260781559626,
+          "rank_one_axis": [
+            -0.24326795922643527,
+            0.9699591228571468
+          ],
+          "achieved_wald": 5.99146454710798
+        },
+        "0.99": {
+          "wald_working": 32.792386268354065,
+          "threshold": 9.21034037197618,
+          "extra_spectral_variance": 2.624237099385819e-06,
+          "extra_sd": 0.0016199497212524279,
+          "rank_one_axis": [
+            -0.24468760494056588,
+            0.969601967813829
+          ],
+          "achieved_wald": 9.21034037197618
+        }
+      }
+    },
+    "dipole_stf": {
+      "shared_objects": 241892,
+      "delta_log_intensity_ICRS_xy": [
+        -0.0016440241048542026,
+        0.005524671826759816
+      ],
+      "paired_covariance_replay_max_abs": 1.0587911840678754e-22,
+      "working_contours": {
+        "0.95": {
+          "wald_working": 30.989468960483364,
+          "threshold": 5.99146454710798,
+          "extra_spectral_variance": 4.472816667588066e-06,
+          "extra_sd": 0.002114903465311849,
+          "rank_one_axis": [
+            -0.28877521418854185,
+            0.9573969269171285
+          ],
+          "achieved_wald": 5.9914645471079835
+        },
+        "0.99": {
+          "wald_working": 30.989468960483364,
+          "threshold": 9.21034037197618,
+          "extra_spectral_variance": 2.5348395976780103e-06,
+          "extra_sd": 0.0015921179597247217,
+          "rank_one_axis": [
+            -0.29084355255339994,
+            0.9567706245167218
+          ],
+          "achieved_wald": 9.210340371976182
+        }
+      }
+    }
+  },
+  "physical_LSS_calibrated": false,
+  "physical_Pi": null,
+  "sampling_scope": "Actual R65 paired contrast, conditioned on the empirical Poisson source influence covariance. Extra positive covariance is an identified sensitivity budget. The physical extra covariance and its orientation are unknown."
+}

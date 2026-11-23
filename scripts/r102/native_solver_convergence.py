@@ -35,11 +35,11 @@ from bass.background.geometry import pstf_rank2
 from bass.background.initial_conditions import CodazziProjectionError
 from bass.collision.electron_frame import rotate_stokes_samples
 from bass.collision.moving_thomson import MovingFrameThomsonOperator
+from bass.transport.moving_collision_stage import MovingCollisionStage, initial_radiation_stokes
 from bass.recombination.tilted_hyrec import compare_against_forbidden_global_gamma_H, load_hyrec_atomic_tables
 from bass.transport.coupled_einstein_boltzmann import (
     ALL_SEVEN_FAMILIES,
     CoupledSolverConfig,
-    _moving_emission_and_delta_vector,
     _power_spectrum_from_alms,
     solve_coupled_einstein_boltzmann,
 )
@@ -96,11 +96,10 @@ def _transport_sweep_on_converged_bg(
     a_sp = CubicSpline(N_bg, traj.a_grid)
     n_sp = CubicSpline(N_bg, traj.n_grid.reshape(len(N_bg), 9))
     vb_sp = CubicSpline(N_bg, traj.species_v_grid["baryon"])
-    op_sp = CubicSpline(rec.N_grid, np.maximum(rec.opacity_per_efold, 0.0))
 
     N_edges = np.linspace(float(N_bg[0]), float(N_bg[-1]), int(n_cells) + 1, dtype=np.float64)
-    S_vec = np.zeros(op_lie.dim, dtype=np.complex128)
-    moving_cache: dict[tuple[float, float, float], MovingFrameThomsonOperator] = {}
+    cell_depths = rec.opacity_history().cells(N_edges).delta_tau
+    S_vec = initial_radiation_stokes(op_lie, traj.species_v_grid["radiation"][0])
 
     for c in range(int(n_cells)):
         N0, N1 = float(N_edges[c]), float(N_edges[c + 1])
@@ -130,14 +129,19 @@ def _transport_sweep_on_converged_bg(
                 np_m = proj @ nN @ proj
                 nN = 0.5 * (np_m + np_m.T)
 
-        dtau = max(0.0, float(dN / 6.0 * (op_sp(N0) + 4.0 * op_sp(N_mid) + op_sp(N1))))
+        dtau = float(cell_depths[c])
         geom = LieGeometry(sigN, aN, nN)
         vb = np.asarray(vb_sp(N_mid), dtype=np.float64)
-        src = op_lie.shear_source_vector(sigN, amplitude=dN) + op_lie.dipole_source_vector(vb, channel="T", amplitude=dtau)
-        if include_moving_correction and dtau > 0.0 and float(np.linalg.norm(vb)) > 1e-12:
-            em_d, hom_d = _moving_emission_and_delta_vector(op_lie, S_vec, vb, moving_op_cache=moving_cache)
-            src = src + dtau * (em_d + hom_d)
-        S_vec = op_lie.advance_cell(S_vec, dN, geom, dtau, source_increment=src, substeps=substeps)
+        src = op_lie.shear_source_vector(sigN, amplitude=dN)
+        moving = None
+        if dtau > 0.0 and np.any(vb):
+            if include_moving_correction:
+                moving = MovingCollisionStage(op_lie, vb)
+                src += dtau * moving.emission
+            else:
+                src += op_lie.dipole_source_vector(-vb, channel="T", amplitude=dtau)
+        S_vec = op_lie.advance_cell(S_vec, dN, geom, dtau, source_increment=src,
+                                    substeps=substeps, moving_collision=moving, bolometric_redshift=True)
 
     reality = max_stokes_reality_error(S_vec, op_lie.idx)
     alms = vector_to_alm_dict(S_vec, op_lie.idx)

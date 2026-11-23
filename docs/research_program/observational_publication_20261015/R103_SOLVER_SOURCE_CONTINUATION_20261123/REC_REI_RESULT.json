@@ -1,0 +1,58 @@
+{
+  "scope": "Homogeneous background, expanding Sobolev rays, cold Thomson, tabulated HYREC and homogeneous tanh REI. Two Picard passes with a prescribed Saha warm start. Counts exclude calibration or family attribution.",
+  "baseline": "664845022",
+  "atomic_sha256": {
+    "Alpha_inf.dat": "357101049c9382e90e5e1e896961407d3b465b61b78de9750b852c05ea4d1023",
+    "R_inf.dat": "ce914f4b552ba55ba00f7916f36b0986f19adfdb638e5aefae91f7b2d05a8112",
+    "fit_swift.dat": "46a644d7d2633b8f13080f9062df9b72a2e5adfa956d70d32ad1d7f4ec0a4641",
+    "two_photon_tables.dat": "93d23871e21c40f5b72a6ef9acf3eb7be054735c8aee9401e455736c1d9d8cf9"
+  },
+  "software": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1"
+  },
+  "class_b": {
+    "max_relative_Da3_error": 1.1102230246251565e-16,
+    "max_relative_theta_error": 8.881784197001252e-16
+  },
+  "opacity": {
+    "adversarial_cubic_min": -4916186.666666667,
+    "pchip_min": 0.0,
+    "late_cell_depth": 1e-20,
+    "max_directional_slab_depth_error": 3.469446951953614e-18
+  },
+  "visibility": [
+    {
+      "node_count": 301,
+      "cell_mass_plus_transmission": 1.0,
+      "sampled_trapezoid_plus_transmission": 0.9784256190402687
+    },
+    {
+      "node_count": 478,
+      "cell_mass_plus_transmission": 0.9999999999999998,
+      "sampled_trapezoid_plus_transmission": 1.0000143540995958
+    }
+  ],
+  "coupled_controls": {
+    "ell_max": 2,
+    "n_cells": 24,
+    "picard": 2,
+    "families": {
+      "FLRW": {
+        "tau": 32.27428811877036,
+        "max_abs_stokes": 0.0,
+        "hamiltonian_relative": 1.3872218073853763e-09,
+        "codazzi_relative": 0.0,
+        "closure_error": 0.0
+      },
+      "V": {
+        "tau": 32.27428611441806,
+        "max_abs_stokes": 3.1157429107012566e-06,
+        "hamiltonian_relative": 8.797233487552121e-10,
+        "codazzi_relative": 3.5137604618345014e-09,
+        "closure_error": 0.0
+      }
+    }
+  }
+}

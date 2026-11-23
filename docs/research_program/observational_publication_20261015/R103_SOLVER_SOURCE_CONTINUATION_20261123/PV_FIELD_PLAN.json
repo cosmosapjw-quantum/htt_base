@@ -1,0 +1,40 @@
+{
+  "schema": "htt.r103.manticore_local.cf4/1",
+  "product": "Manticore-Local (2M++), z=0 DMO, 80 posterior realizations, N-body R1024, 256^3 SPH mesh",
+  "sources": {
+    "release": "https://digitaltwin.fysik.su.se/data-access.html",
+    "tutorial": "https://github.com/stuartmcalpine/manticore_public_scripts/blob/main/manticore_data_tutorial.ipynb",
+    "tutorial_git_blob": "48250a2cd2f1562f8f0b4a72b48355416e9cee65",
+    "package": "https://pypi.org/project/manticore-data/2.0.1/",
+    "sdist_sha256_verified": "a9a2ffc7e9b6ba43fc9961cefaccca98dbda64bd99a20b63db07218f9cc8cf49",
+    "example_key_from_tutorial_output": "s3://manticore-local/R1024/mcmc_0/velocity_fields/N256/field.h5",
+    "loader": "ManticoreDataLoader(ManticoreGeneration.Local).get_velocity_field(1024,mesh_resolution=256)",
+    "access": "The published 2.0.1 package selects the S3 endpoint and public credentials from its public index. Use the Local public catalogue without a private token. Inspect actual object IDs from the returned list; remove a redundant manticore-local/ key prefix exactly once as in the tutorial.",
+    "access_probe": "Public tutorial and source package retrieved. A 64-byte HTTPS Range request against the package-default IAP mirror and its public key-index host timed out after 7 s from the workstation. No provider data bytes, ETag, current exact content-length, or per-draw SHA exported in this run.",
+    "alternative_endpoint_check": "The published 2.0.1 sdist settings list one default S3 mirror and one public key-index endpoint; no second verified product mirror found in the distribution or official field-release page. One-byte range requests returned HTTP 206 for release landing/PyPI metadata; both IAP hosts timed out before a connection. The GitHub tutorial provides an object key and code, not the underlying HDF5 bytes."
+  },
+  "conventions": {
+    "mesh": "Array xyz axis order and velocity components p0=x,p1=y,p2=z follow the notebook sky-projection code. Compute p/density at each positive-density contributing vertex, then interpolate velocity. p is in (M_sun/h)(km/s); density is M_sun/h per cell.",
+    "coordinates": "1000 Mpc box, h=0.681, central observer at tutorial array index 128 on each axis. Equatorial xyz=(RA0 Dec0, RA90 Dec0, north). Use R100 comoving r in Mpc, 1000/256 Mpc per grid step.",
+    "offset": "Default 0 exactly follows notebook sky-map convention. Offset -0.5 implements a cell-centred registration sensitivity, varying observer and targets together. Absolute grid convention beyond tutorial not independently calibrated.",
+    "frame": "simulation reads n dot v. relative-to-grid-observer reads n dot [v(x)-v(center)] within each draw. Both use source directions and the explicitly conditional R100 growth/transfer map. Local-grid matter velocity is not a measured Solar CMB four-velocity.",
+    "observable": "For a draw v(z=0), b = A diag[g(z)(1+v_corrected/c)/v_corrected] v_los with R98 A from four windows and the R100 linear WF Jacobian. Distance placement uses R100 CMB redshifts and background; DMO z=0 and linear redshift extrapolation remain model assumptions.",
+    "ensemble": "For M unique posterior fields compute sample mean and centered 36x36 covariance with divisor M-1. This is uncertainty conditional on a survey-constrained reconstruction and estimated dynamics. It must not be added to the existing unconditional S_PV without a joint generative argument. Rank <=min(M-1,36); two draws allow a transfer pilot only."
+  },
+  "executed": {
+    "source_geometry": "35,970/35,970 hash-matched R98 CF4 groups; 36 x 35,970 compression; χ=44.4164490713..434.355611283 Mpc; 198,924 accessed stencil vertices including observer",
+    "real_manticore_posterior_draws": 0,
+    "source_qualification": "BLOCKED_INPUT",
+    "physical_Pi": null,
+    "calibrated_p": null,
+    "regressions": "7 passed, including zero-byte retry of both cached draws, mixed cached/new request budget, interrupted receipt-only repair, wrong-draw receipt and wrong raw SHA rejection, immutable atomic output, HDF5 integration."
+  },
+  "local_commands_from_active_checkout": [
+    "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=1 .venv/bin/python -B -m scripts.r103.manticore_cf4_pv geometry",
+    "Install manticore-data==2.0.1 in the analysis environment if necessary (sdist identity above); projection additionally uses h5py and the active htt_base dependencies.",
+    "PYTHONPATH=.:htt:htt/src .venv/bin/python -B -m scripts.r103.manticore_cf4_pv fetch --indices 0 1 --directory /home/cosmosapjw/Downloads/htt_r103/manticore --max-bytes 800000000",
+    "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=1 .venv/bin/python -B -m scripts.r103.manticore_cf4_pv reduce --files /home/cosmosapjw/Downloads/htt_r103/manticore/manticore_local_00[01].h5 --frame simulation --output /home/cosmosapjw/Downloads/htt_r103/manticore/pilot_simulation.npz",
+    "Repeat reduce with --frame relative-to-grid-observer and a fresh output filename; use --origin-offset -0.5 for registration sensitivity. Expand to remaining actual catalogue keys after the pilot; for each fetch the implementation preflights all HEAD sizes under an explicit byte ceiling, then streams one draw at a time. The tutorial shows about 336 MB per field, so the full 80-draw plan is about 27 GB; exact lengths come from the live catalogue."
+  ],
+  "return": "Each manticore_local_NNN.h5 is accompanied by manticore_local_NNN.source.json (bucket, key, index, size, ETag, SHA-256). Rerun the same fetch; existing matching draws consume zero transfer allowance. A lone receipt recovers by refetching the pinned bytes. The immutable NPZ embeds canonical per-draw receipts, source hashes, solver hash, numeric geometry/projection identities, frame and origin. Evaluate effective posterior sample size and covariance eigendirections separately from cross-survey calibration and holdout genealogy."
+}
