@@ -1,0 +1,184 @@
+{
+  "schema": "htt.r99.acquisition_plan/1",
+  "source_baseline": "eee33d7ed33e1af10d7c6a3c453810ecb227e461",
+  "owner": "obsstat",
+  "claim_tier": "C1",
+  "status": "PREPARATION_ONLY",
+  "transfer_source": "none",
+  "user_scope": "download preparation; no full science payload or tape staging",
+  "metadata_snapshot_sha256": {
+    "sdss_record.json": "ed2e7464c7551a5906781baa4a1cba10ea1f9aa040ed1231df5baf5b26f09546",
+    "sdss_data_description.pdf": "9e167fb6f6e3d5c172e08b42d78187a427c25e2eb275b220dae2441690ae449a",
+    "sdss_mock_description.pdf": "6daf3efd3921bfca653391d4969d17970fa25b14d72ca0fd4588aa3f37fe331e",
+    "sdss_pv_prefix.txt": "a443502f1f6d8eefa545656fc66d706d1b69c9bc20bb2dade948850c80423f57",
+    "sdss_random_prefix.txt": "8071fd6cea0e5e066e8cc0caae65e9e13cadafeab8a76114689aa5b9ddaf7b0d",
+    "sixdf_release.html": "18ea6c56eb6ea96286ca06ecd8b122a540d1fcfe218ebd9cc8082d4fca8527f6",
+    "sixdf_table1_prefix.txt": "1038dbc0dfacd70648a3b068780998bd3ec1b7dd0b1ec9e6eefedde4fb3789c8",
+    "sixdf_mock_index.html": "cd00ab79910117845f0e21c3ee270cca0decbb71b3c4d0733a6a26a6a399eea9",
+    "lotss_mosaics.csv": "8671fa69f744a32f71904a2cc89919a3cf1021d7d030816d0adb218b34227572",
+    "lotss_mosaic_schema.csv": "91536ace00ef021512fc81c539b79124471598d2f53da85e38ffb54aaa7a573c",
+    "lotss_hp1078.json": "aafb26f2c3ecd3cc67e122721a4bff91951cc6e4134e56cd84b6a33771f4c6b0",
+    "lotss_hp355.json": "4348b254b39833762f002f03d321391413670dc4f34a14f08da7d24acaf55e16",
+    "lotss_hp264_datalink.xml": "1dd5311acb565a698b8d7b20a7b398ee3a68861302b1eb0ce9b36756e7899610"
+  },
+  "jobs": [
+    {
+      "id": "sdss_pv_v1_1",
+      "url": "https://zenodo.org/api/records/6824749/files/SDSS_PV_public.dat/content",
+      "expected_bytes": 20231640,
+      "checksum": "md5:b5b6e31caf7ea469c2ac2cb775fa8d14",
+      "purpose": "Upstream SDSS FP/log-distance subset before CF4 intercalibration",
+      "status": "PREFIX_HTTP_206_PREPARED",
+      "full_payload_downloaded": false,
+      "full_payload_hash_verified": false,
+      "release": "10.5281/zenodo.6824749 v1.1.0"
+    },
+    {
+      "id": "sdss_randoms_v1_1",
+      "url": "https://zenodo.org/api/records/6824749/files/SDSS_randoms_public.dat/content",
+      "expected_bytes": 284000071,
+      "checksum": "md5:8627b4063e8a71572e333e0ac65d6657",
+      "purpose": "SDSS-only angular/radial selection and clustering reference",
+      "status": "PREFIX_HTTP_206_PREPARED",
+      "full_payload_downloaded": false,
+      "full_payload_hash_verified": false,
+      "release": "10.5281/zenodo.6824749 v1.1.0"
+    },
+    {
+      "id": "sdss_mocks_v1_1",
+      "url": "https://zenodo.org/api/records/6824749/files/mocks.tar.gz/content",
+      "expected_bytes": 10643218721,
+      "checksum": "md5:9ba3e8876f6f08a2af00d30cbf1c6cd9",
+      "purpose": "256 simulation boxes with 8 observers each; hold out by box",
+      "status": "PREPARED_MANIFEST_ONLY",
+      "full_payload_downloaded": false,
+      "full_payload_hash_verified": false,
+      "release": "10.5281/zenodo.6824749 v1.1.0"
+    },
+    {
+      "id": "sixdf_pv_table1",
+      "url": "https://www.mso.anu.edu.au/6dfgs/vfield/table1.txt",
+      "expected_bytes": 696070,
+      "checksum": null,
+      "purpose": "6dFGSv log-distance ratio/error/skew, galaxy/group CMB cz; raw FP and full selection are separate",
+      "status": "PREFIX_HTTP_206_PREPARED",
+      "full_payload_downloaded": false,
+      "full_payload_hash_verified": false,
+      "source_checksum_available": false
+    },
+    {
+      "id": "sixdf_reconstruction_mocks",
+      "url": "https://www.mso.anu.edu.au/6dfgs/mocks/6dFGSRecon_Files.tar.gz",
+      "expected_bytes": 17344070928,
+      "checksum": null,
+      "purpose": "Public reconstruction mocks; internal content and PV/FP matching NOT YET QUALIFIED",
+      "status": "HEAD_200_PREPARED_UNQUALIFIED_CONTENT",
+      "full_payload_downloaded": false,
+      "full_payload_hash_verified": false,
+      "source_checksum_available": false
+    },
+    {
+      "id": "lotss_aux_1078",
+      "url": "https://repository.surf.nl/api/records/zxsna-nk223/files/HP-misc-1078.tar/content",
+      "expected_bytes": 4507238400,
+      "checksum": "md5:578f0063bd88f50f0c066d97f1686a7b",
+      "purpose": "PyBDSF source mask/model/residual/RMS and high/low resolution mosaic weights",
+      "status": "DEFERRED_HTTP_202",
+      "full_payload_downloaded": false,
+      "full_payload_hash_verified": false,
+      "record_id": "zxsna-nk223",
+      "metadata_storage_class": "M",
+      "internal_archive_names_verified": false,
+      "availability_requires_fresh_check": true
+    },
+    {
+      "id": "lotss_aux_355",
+      "url": "https://repository.surf.nl/api/records/9syjm-kpz72/files/HP-misc-355.tar/content",
+      "expected_bytes": 6025820160,
+      "checksum": "md5:6279374775bbea70db562e76dbec9207",
+      "purpose": "PyBDSF source mask/model/residual/RMS and high/low resolution mosaic weights",
+      "status": "HEAD_200_AT_R2_PREPARED",
+      "full_payload_downloaded": false,
+      "full_payload_hash_verified": false,
+      "record_id": "9syjm-kpz72",
+      "metadata_storage_class": "M",
+      "internal_archive_names_verified": false,
+      "availability_requires_fresh_check": true
+    },
+    {
+      "id": "commander_pr3_ffp10_noise_00000",
+      "url": "https://pla.esac.esa.int/pla/aio/product-action?SIMULATED_MAP.FILE_ID=dx12_v3_commander_noise_mc_00000_raw.fits",
+      "expected_bytes": 603987840,
+      "checksum": null,
+      "purpose": "Match existing PR3/FFP10 Commander fullmission signal ID00000; no PR4/NPIPE substitution",
+      "status": "R98_HEADER_VERIFIED_PREPARED",
+      "full_payload_downloaded": false,
+      "full_payload_hash_verified": false,
+      "release": "Planck PR3/FFP10 dx12_v3 Commander fullmission",
+      "source_checksum_available": false,
+      "full_null_qualified": false
+    }
+  ],
+  "prior_http_observations": [
+    {
+      "id": "lotss_aux_1078",
+      "method": "HEAD",
+      "http_status": 202,
+      "content_type": "application/json",
+      "response_bytes": 349,
+      "observation": "R99 R2, 2026-11-23; remote process 3846847",
+      "explicit_staging_request_sent": false,
+      "status": "DEFERRED_HTTP_202",
+      "whole_product_hash_verified": false
+    },
+    {
+      "id": "lotss_aux_355",
+      "method": "HEAD",
+      "http_status": 200,
+      "content_type": "application/octet-stream",
+      "content_length": 6025820160,
+      "accept_ranges": "bytes",
+      "observation": "R99 R2, 2026-11-23; remote process 3846847",
+      "page_online_labels": 3,
+      "status": "ONLINE_AT_HEAD_OBSERVATION",
+      "whole_product_hash_verified": false
+    },
+    {
+      "id": "sixdf_reconstruction_mocks",
+      "method": "HEAD",
+      "http_status": 200,
+      "content_length": 17344070928,
+      "accept_ranges": "bytes",
+      "last_modified": "Thu, 08 Mar 2018 00:13:45 GMT",
+      "observation": "R99 R2, 2026-11-23; remote process 3847596",
+      "whole_product_hash_verified": false
+    }
+  ],
+  "producer_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r99/acquisition.py",
+  "producer_sha256": "fe794b47a4b0aec8e1319319323ef70b4b2ba2c4eb9a41edb3a42a053e3ab386",
+  "reused_commander_allowlist_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r98/acquisition_preflight.py",
+  "reused_commander_allowlist_sha256": "5f37dc96073a04a21426a92056a73511f2653fde196b2814398c98d809b86dc4",
+  "suggested_bounded_first_subset": [
+    "sdss_pv_v1_1",
+    "sixdf_pv_table1"
+  ],
+  "suggested_subset_expected_bytes": 20927710,
+  "budgets": {
+    "metadata_max_bytes_per_response": 2000000,
+    "maximum_concurrent_product_jobs": 1,
+    "threads": 1,
+    "full_science_payload_bytes_executed_this_module": 0,
+    "saved_science_prefix_bytes": 17408,
+    "saved_source_response_bytes": 847746,
+    "dry_run_requires_explicit_ids_and_byte_budget": true
+  },
+  "scientific_obligations": [
+    "SDSS logdist_corr zero point must be calibrated at group level, not independent galaxies",
+    "SDSS mean/std with skew are not skew-normal location/scale parameters",
+    "CF4 joint seven-method upstream calibration remains unavailable from these products alone",
+    "SDSS randoms/weights are not the union CF4 selection denominator",
+    "Mock observations in the same simulation box are not independent holdout groups",
+    "LoTSS polygon is outer geometry only; valid weight/RMS holes and completeness remain",
+    "Commander one pair does not calibrate a matched joint null"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "schema": "r99.independent-review-probes/v1",
+  "reviewed_head": "355c1a6f77c2776cd24607b3b4a5775ab97456c1",
+  "theory_commit": "575ff4811b6a5ae12d7c14bf7cd8ecadef7e58aa",
+  "scope": "Numerical source, not acquisition. One independent pre-repair review; preserved afterwards without rerunning.",
+  "source_sha256": {
+    "scripts/r99/cf4_source_law.py": "11c0369c379efcf1d7873affbb5d0ff208cfeceebd0cd28806677b94b7dfc831",
+    "htt/bass/transport/finite_redshift_optics.py": "82e7b141b2a3ab0118b9ccaea7dfc98191a27b6433707dbea6b8594b45f9127f",
+    "scripts/r99/optical.py": "3906ddbf2045748469676c78f44b49ec64c11af4bc1ee6a113a8284dc95134a7",
+    "scripts/r99/gaia_shared_field.py": "fca1f7c1c0bb93ffde3320f57a8712a43815dd21f9a70f9e44bbc2da40770a0a"
+  },
+  "runtime": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "architecture": "x86_64"
+  },
+  "runs": [
+    {
+      "pid": 3868373,
+      "command": "cd '/home/cosmosapjw/Dropbox/bianchi/htt_base' && export PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:htt OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 && timeout 80 .venv/bin/python -m pytest -p no:cacheprovider -q tests/obsstat/test_r99_cf4_source_law.py tests/obsstat/test_r99_optical.py tests/obsstat/test_r99_gaia_shared_field.py; rc=$?; echo exit=$rc; exit $rc",
+      "exit": 0,
+      "pytest": "30 passed in 4.27s"
+    },
+    {
+      "pid": 3869481,
+      "stdin_file": "off_axis_and_limits.py",
+      "command_prefix": "cd '/home/cosmosapjw/Dropbox/bianchi/htt_base' && export PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:htt OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 && timeout 35 .venv/bin/python - <<'PY'\n",
+      "command_suffix": "PY\nrc=$?; echo exit=$rc; exit $rc",
+      "exit": 0
+    },
+    {
+      "pid": 3870732,
+      "stdin_file": "rapidity_first_attempt.py",
+      "command_prefix": "cd '/home/cosmosapjw/Dropbox/bianchi/htt_base' && export PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:htt OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 && timeout 35 .venv/bin/python - <<'PY'\n",
+      "command_suffix": "PY\nrc=$?; echo exit=$rc; exit $rc",
+      "exit": 1
+    },
+    {
+      "pid": 3870930,
+      "stdin_file": "rapidity_and_gaia_svd.py",
+      "command_prefix": "cd '/home/cosmosapjw/Dropbox/bianchi/htt_base' && export PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:htt OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 && timeout 35 .venv/bin/python - <<'PY'\n",
+      "command_suffix": "PY\nrc=$?; echo exit=$rc; exit $rc",
+      "exit": 0
+    }
+  ],
+  "notes": "The exact remote shell probe command is command_prefix + UTF-8 stdin_file contents (including trailing LF) + command_suffix. The initial failed attempt aborted before the Gaia SVD or file hash statements. Full checkout and external R98 input cache required for all probe sections."
+}

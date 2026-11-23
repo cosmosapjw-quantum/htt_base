@@ -1,0 +1,251 @@
+{
+  "schema": "htt.r99.bounded_validation/1",
+  "started_at_utc": "2026-11-23T04:42:39.619619+00:00",
+  "checkout": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "head_before_verification": "355c1a6f77c2776cd24607b3b4a5775ab97456c1",
+  "scope": "Current R99 numerical and integration tests; DAG/source identity. No full historical regression or new science promotion.",
+  "code_and_tests_sha256": {
+    "scripts/r99/cf4_source_law.py": "058084e07ef086bb0bc2dcaa3a38fb78d986265b3ba45f0116ec1ebbb4efed66",
+    "scripts/r99/optical.py": "3906ddbf2045748469676c78f44b49ec64c11af4bc1ee6a113a8284dc95134a7",
+    "htt/bass/transport/finite_redshift_optics.py": "f2d1898b46ce65348f8116c1c3741287bea2091e71d713792de5ad23ffa86401",
+    "scripts/r99/gaia_shared_field.py": "d3fd2f206926390cca47a0ed290a1e4bd0116d9cb21cf40cf915a58e9609c0e2",
+    "scripts/r99/acquisition.py": "fe794b47a4b0aec8e1319319323ef70b4b2ba2c4eb9a41edb3a42a053e3ab386",
+    "scripts/r99/program_preparation.py": "a325a1804a5cda5993ca94c7528981446ed7e85b70cc2ce4a03d0f6ed6036b43",
+    "scripts/r99/validate_cycle.py": "1dde6d684cfae68828518ccc7b8b55edaa11a929b78f2ee705502d9a3bd39af1",
+    "tests/obsstat/test_r99_cf4_source_law.py": "4d685fc674942aebf352e65824ccf831a577f15accdf7844f0d4b8a8a3114ae4",
+    "tests/obsstat/test_r99_optical.py": "ee378066f8f6f0e392d9b684b3d14cf9d14c70f930364bc35912a1cd1933a93d",
+    "tests/obsstat/test_r99_gaia_shared_field.py": "667080958b06ec64eff765308ba8ebedbcf6085cfb14f659e93e39d34a444410",
+    "tests/obsstat/test_r99_acquisition.py": "5dcaf96373478a617095f434843f41e1e0a0ee7c5095f9b9108e948e0bdca8a5",
+    "tests/obsstat/test_r99_program_preparation.py": "c08ed37558e824f9dc8fae710cf547480d80d1db046e229a08c8bc2f12ab86cc"
+  },
+  "result_artifact_sha256": {
+    "CF4_RESULTS.json": "89b52693582041ebc07308edb0773a88ed15c5e1d5876fedf120b9564e4a15eb",
+    "OPTICAL_RESULTS.json": "56452011161051813d05d90f5b8613af1e8ef1c47861ba6df2efabdfb8459e60",
+    "GAIA_SHARED_FIELD_RESULTS.json": "eef5cc5efa235d900178eaef9c31542d533ebd431ec4e8c19e41ece35f948661",
+    "GAIA_SHARED_FIELD_COVARIANCES.npz": "edfcf5d7e19f6a8b2cdd3bdab002fdb16534ff2a969e5f16a18b12f2effdcd55",
+    "ACQUISITION_PLAN.json": "012ebc7a87a4c5ef8a6c37307232a4c8ad733411163944428aea1cf29df3cdb9",
+    "ACQUISITION_RESULTS.json": "683c019ad02abd549383f9416ef24a955df61035e996a75bb55566bfb6dc23a3",
+    "inputs/lotss_outer_exposure_nside16.npz": "562c8e0904d506814a50a2dcca1cd95d03dd75a1bc0d05fd77d470e221e4458d",
+    "NODE60_EXECUTION_PREPARATION.json": "7bcf01630318b4701ac0a8973a0180de727c527aa2ba542e8660b2a5d84a235e",
+    "BLOCKER_ACTIONS.md": "4d2b4ae0d87a116baa720579b4972653bf97761c499e17f277a59fac59b16be2"
+  },
+  "science_authority_sha256": "90aba8c1ca9c8e3a7744be0f071dcfe09b81e5353892aca13878191e20f58c11",
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "healpy": "1.19.0",
+    "threads": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1"
+    }
+  },
+  "runs": [
+    {
+      "label": "targeted_pytest",
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "tests/obsstat/test_r99_cf4_source_law.py",
+        "tests/obsstat/test_r99_optical.py",
+        "tests/obsstat/test_r99_gaia_shared_field.py",
+        "tests/obsstat/test_r99_acquisition.py",
+        "tests/obsstat/test_r99_program_preparation.py"
+      ],
+      "expected_exit_code": 0,
+      "exit_code": 0,
+      "timeout_seconds": 120,
+      "timed_out": false,
+      "elapsed_seconds": 5.8099933009943925,
+      "log": "validation_targeted_pytest.log",
+      "log_sha256": "8f02a9f592fe717db5a5bffec928ebe36f9b622daf3f97c231d63c3e49457a02",
+      "matched_expected_exit": true,
+      "reported_passed_tests": 43
+    },
+    {
+      "label": "strict_science_authority",
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R78_UNIFIED_SCIENCE_DAG_20261119/validate_unified.py",
+        "--strict-authority"
+      ],
+      "expected_exit_code": 0,
+      "exit_code": 0,
+      "timeout_seconds": 30,
+      "timed_out": false,
+      "elapsed_seconds": 1.1844127200020012,
+      "log": "validation_strict_science_authority.log",
+      "log_sha256": "93398ac643bdbef921e3dcf9fe32c19bbc11409281d584b2935f383a874b0b39",
+      "matched_expected_exit": true,
+      "summary": {
+        "pass": true,
+        "failed": [],
+        "counts": {
+          "historical_science": 42,
+          "qualification": 11,
+          "conditional_cross_phy": 7,
+          "total": 60,
+          "edges": 129
+        },
+        "checks": 32,
+        "strict": true
+      }
+    },
+    {
+      "label": "current_preparation_identity",
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "-m",
+        "scripts.r99.program_preparation",
+        "--check"
+      ],
+      "expected_exit_code": 0,
+      "exit_code": 0,
+      "timeout_seconds": 30,
+      "timed_out": false,
+      "elapsed_seconds": 0.06231313300668262,
+      "log": "validation_current_preparation_identity.log",
+      "log_sha256": "bd292cde8ab6eb1b148333b9e1ea2cdf7898321b101013c4ccef1ff6331a0dcf",
+      "matched_expected_exit": true,
+      "summary": {
+        "mode": "prepare",
+        "node": "SQ-CF4",
+        "science_status": "SCIENCE_BLOCKED",
+        "next_id": "SQ-CF4",
+        "counts": {
+          "nodes": 60,
+          "edges": 129,
+          "node_payload_dependencies": 118,
+          "major_topics": 6,
+          "cross_topics": 7,
+          "original_scoped_completed": 18,
+          "new_science_nodes_promoted": 0,
+          "distinct_open_obligations": {
+            "DATA": 6,
+            "MODEL": 9,
+            "ADDITIONAL_ANALYSIS": 6
+          }
+        },
+        "packages": [
+          "CF4",
+          "CF4_SOURCE_LAW",
+          "SOURCE_ACQUISITION"
+        ],
+        "blockers": [
+          "A01",
+          "D01",
+          "D02",
+          "M01"
+        ],
+        "science_command_executed": false,
+        "promoted": false
+      }
+    },
+    {
+      "label": "expected_science_block",
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "-m",
+        "scripts.r99.program_preparation",
+        "science",
+        "--node",
+        "SQ-CF4"
+      ],
+      "expected_exit_code": 3,
+      "exit_code": 3,
+      "timeout_seconds": 30,
+      "timed_out": false,
+      "elapsed_seconds": 0.06062326399842277,
+      "log": "validation_expected_science_block.log",
+      "log_sha256": "69de831d93b4e4b5af887ac55b7b6fe31f6dfbb349e3ad5fdde14bdbfc6ae360",
+      "matched_expected_exit": true,
+      "summary": {
+        "mode": "science",
+        "node": "SQ-CF4",
+        "science_status": "SCIENCE_BLOCKED",
+        "next_id": "SQ-CF4",
+        "counts": {
+          "nodes": 60,
+          "edges": 129,
+          "node_payload_dependencies": 118,
+          "major_topics": 6,
+          "cross_topics": 7,
+          "original_scoped_completed": 18,
+          "new_science_nodes_promoted": 0,
+          "distinct_open_obligations": {
+            "DATA": 6,
+            "MODEL": 9,
+            "ADDITIONAL_ANALYSIS": 6
+          }
+        },
+        "packages": [
+          "CF4",
+          "CF4_SOURCE_LAW",
+          "SOURCE_ACQUISITION"
+        ],
+        "blockers": [
+          "A01",
+          "D01",
+          "D02",
+          "M01"
+        ],
+        "science_command_executed": false,
+        "promoted": false
+      }
+    },
+    {
+      "label": "bounded_acquisition_plan",
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "-m",
+        "scripts.r99.acquisition",
+        "plan",
+        "--ids",
+        "sdss_pv_v1_1",
+        "sixdf_pv_table1",
+        "--max-bytes",
+        "22000000"
+      ],
+      "expected_exit_code": 0,
+      "exit_code": 0,
+      "timeout_seconds": 30,
+      "timed_out": false,
+      "elapsed_seconds": 0.8433113450009841,
+      "log": "validation_bounded_acquisition_plan.log",
+      "log_sha256": "84e09d84ffb1c48944fb99bd8da2d9a60026113f490dc1988221a5acbf646f45",
+      "matched_expected_exit": true,
+      "summary": {
+        "mode": "DRY_RUN_ONLY",
+        "selected_ids": [
+          "sdss_pv_v1_1",
+          "sixdf_pv_table1"
+        ],
+        "expected_bytes": 20927710,
+        "max_bytes": 22000000,
+        "deferred_ids": [],
+        "ready_for_explicit_future_fetch": true,
+        "downloaded_bytes": 0,
+        "stable_urls": [
+          "https://zenodo.org/api/records/6824749/files/SDSS_PV_public.dat/content",
+          "https://www.mso.anu.edu.au/6dfgs/vfield/table1.txt"
+        ]
+      }
+    }
+  ],
+  "sources_unchanged_during_verification": true,
+  "result_artifacts_unchanged_during_verification": true,
+  "bounded_verification_pass": true,
+  "new_science_nodes_promoted": 0,
+  "finished_at_utc": "2026-11-23T04:42:47.593735+00:00"
+}

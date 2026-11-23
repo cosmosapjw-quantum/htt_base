@@ -1,0 +1,708 @@
+{
+  "schema": "htt.r99.shared_angular_field/1",
+  "owner": "obsstat",
+  "status": "MODEL_CONDITIONAL_COMPUTATION",
+  "source_baseline": "eee33d7ed33e1af10d7c6a3c453810ecb227e461",
+  "inputs": {
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R98_FOURTH_RESEARCH_CYCLE_20261123/GAIA_FULL_SHARED_PATCH.json": {
+      "sha256": "0a56bc358b6048f4b018d93d2b55be2f2ac5526e22191a44ca6a9f1148a9d800"
+    },
+    "/home/cosmosapjw/Downloads/htt_r98_full_data/gaia_joint_patch_statistics.npz": {
+      "sha256": "70d1bc9c959ccfa0197923fc7d7e950ac790eaa1345ca0aca507ade446464c92"
+    },
+    "source_census_reused_from_R98": {
+      "gaia_crf3_total": 1614173,
+      "quaia_join_total": 692154,
+      "quaia_qualified": 634233,
+      "all_source_rows_visited": true
+    }
+  },
+  "source_rows_reread_this_run": 0,
+  "actual_full_source_sufficient_statistics_used": true,
+  "formula": "J_ap=F_a^-1 F_ap E; C_ab=s^2 J_a(K tensor I6)J_b^T",
+  "component_order": [
+    "glide_x",
+    "glide_y",
+    "glide_z",
+    "spin_x",
+    "spin_y",
+    "spin_z"
+  ],
+  "patches": {
+    "nside": 2,
+    "ordering": "RING",
+    "count": 48
+  },
+  "same_systematic_field_shared_by_all_fits": true,
+  "constant_field_response_max_error": 6.661338147750939e-16,
+  "constant_field_contrast_response_max_error": 4.0766001685454967e-16,
+  "constant_field_contrast_covariance_max_abs": 2.5160168237542563e-31,
+  "actual_rhs_refit_max_error_by_fit": {
+    "crf3_all": 2.6645352591003757e-15,
+    "crf3_quality": 2.4424906541753444e-15,
+    "quaia_inverse_noise": 1.7763568394002505e-15,
+    "quaia_multiply_selection": 1.7763568394002505e-15,
+    "quaia_ipw_0p20": 1.5543122344752192e-15,
+    "quaia_ipw_0p35": 1.5543122344752192e-15,
+    "quaia_z0": 2.581268532253489e-15,
+    "quaia_z1": 1.7763568394002505e-15,
+    "quaia_z2": 5.329070518200751e-15,
+    "quaia_z3": 1.887379141862766e-15
+  },
+  "rank47_supported_and_unsupported_components": {
+    "dimension": 160,
+    "rank": 47,
+    "supported_quadratic_form": 524.5928366832662,
+    "coefficient_euclidean_norm_microasyr": 33.203221634150935,
+    "supported_component_norm_microasyr": 29.912884866863546,
+    "unsupported_component_norm_microasyr": 14.410872486713426,
+    "unsupported_squared_norm_fraction": 0.1883736279254827,
+    "orthogonality_residual": 4.0678571622265736e-13,
+    "relative_eigenvalue_cut": 1e-10,
+    "calibrated_p": null,
+    "nullspace_is_unmeasured_not_zero": true
+  },
+  "scenarios": [
+    {
+      "angular_scale_degrees": 15.0,
+      "latent_component_sd_microasyr": 1.0,
+      "covariance_trace": 39.35303463390035,
+      "min_eigenvalue": -8.710365349455548e-17,
+      "max_eigenvalue": 3.9456714802277904,
+      "contrasts": [
+        {
+          "a": "crf3_all",
+          "b": "crf3_quality",
+          "trace_shared_unit_field": 6.893795318256255e-05,
+          "trace_independent_unit_fields": 7.738369348140138,
+          "trace_ratio_shared_over_independent": 8.908589145997704e-06,
+          "sectors": {
+            "glide": {
+              "unit_field_variance_trace": 3.736147407674407e-06,
+              "observed_coefficient_difference_norm_microasyr": 0.0685583349892025,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 35.46894414305743,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "spin": {
+              "unit_field_variance_trace": 3.107846600426281e-06,
+              "observed_coefficient_difference_norm_microasyr": 0.03140091329730768,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 17.81199204642217,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "E2": {
+              "unit_field_variance_trace": 3.299974732212868e-05,
+              "observed_coefficient_difference_norm_microasyr": 0.1342594175471847,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 23.37165417403257,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "B2": {
+              "unit_field_variance_trace": 2.9094211852333185e-05,
+              "observed_coefficient_difference_norm_microasyr": 0.13767501693208314,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 25.524182437036135,
+              "amplitude_is_scenario_not_estimate": true
+            }
+          }
+        },
+        {
+          "a": "crf3_quality",
+          "b": "quaia_inverse_noise",
+          "trace_shared_unit_field": 0.006426013313835313,
+          "trace_independent_unit_fields": 7.830663972012802,
+          "trace_ratio_shared_over_independent": 0.000820621768064907,
+          "sectors": {
+            "glide": {
+              "unit_field_variance_trace": 0.0005955876174842183,
+              "observed_coefficient_difference_norm_microasyr": 0.5176221050560955,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 21.20996659907262,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "spin": {
+              "unit_field_variance_trace": 0.0005787848668710305,
+              "observed_coefficient_difference_norm_microasyr": 2.786803134138144,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 115.83710806677288,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "E2": {
+              "unit_field_variance_trace": 0.002630003778017248,
+              "observed_coefficient_difference_norm_microasyr": 0.7067832902706819,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 13.78186803810178,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "B2": {
+              "unit_field_variance_trace": 0.0026216370514628162,
+              "observed_coefficient_difference_norm_microasyr": 0.8602701810345373,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 16.801520507041488,
+              "amplitude_is_scenario_not_estimate": true
+            }
+          }
+        },
+        {
+          "a": "quaia_inverse_noise",
+          "b": "quaia_multiply_selection",
+          "trace_shared_unit_field": 0.05709402611322789,
+          "trace_independent_unit_fields": 8.28377377363486,
+          "trace_ratio_shared_over_independent": 0.006892272492392734,
+          "sectors": {
+            "glide": {
+              "unit_field_variance_trace": 0.004751789864089539,
+              "observed_coefficient_difference_norm_microasyr": 0.22801215024545132,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 3.307724855810447,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "spin": {
+              "unit_field_variance_trace": 0.004713520498848739,
+              "observed_coefficient_difference_norm_microasyr": 0.18792470081076104,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 2.7372292197733388,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "E2": {
+              "unit_field_variance_trace": 0.02519987069660924,
+              "observed_coefficient_difference_norm_microasyr": 0.9397470085883125,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 5.919864902074865,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "B2": {
+              "unit_field_variance_trace": 0.022428845053680382,
+              "observed_coefficient_difference_norm_microasyr": 0.4017768527071285,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 2.6827577434508445,
+              "amplitude_is_scenario_not_estimate": true
+            }
+          }
+        },
+        {
+          "a": "quaia_inverse_noise",
+          "b": "quaia_ipw_0p20",
+          "trace_shared_unit_field": 0.08164289974363223,
+          "trace_independent_unit_fields": 7.630658758491819,
+          "trace_ratio_shared_over_independent": 0.01069932522572517,
+          "sectors": {
+            "glide": {
+              "unit_field_variance_trace": 0.006413686196023132,
+              "observed_coefficient_difference_norm_microasyr": 0.2724938055387822,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 3.4025364043237603,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "spin": {
+              "unit_field_variance_trace": 0.006219458093734956,
+              "observed_coefficient_difference_norm_microasyr": 0.26584070318044817,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 3.3708948383921182,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "E2": {
+              "unit_field_variance_trace": 0.03628429103771081,
+              "observed_coefficient_difference_norm_microasyr": 1.1789631279064894,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 6.18929099411205,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "B2": {
+              "unit_field_variance_trace": 0.032725464416163336,
+              "observed_coefficient_difference_norm_microasyr": 0.6557461518938289,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 3.624873384922838,
+              "amplitude_is_scenario_not_estimate": true
+            }
+          }
+        },
+        {
+          "a": "quaia_ipw_0p20",
+          "b": "quaia_ipw_0p35",
+          "trace_shared_unit_field": 0.003876384305503931,
+          "trace_independent_unit_fields": 7.391642696357928,
+          "trace_ratio_shared_over_independent": 0.0005244279877616292,
+          "sectors": {
+            "glide": {
+              "unit_field_variance_trace": 0.0003414615222175719,
+              "observed_coefficient_difference_norm_microasyr": 0.1025158719742135,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 5.547792690462879,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "spin": {
+              "unit_field_variance_trace": 0.00033332616973148933,
+              "observed_coefficient_difference_norm_microasyr": 0.08161643344694458,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 4.470364202323017,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "E2": {
+              "unit_field_variance_trace": 0.00163500362376628,
+              "observed_coefficient_difference_norm_microasyr": 0.35083655288232396,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 8.676518067179561,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "B2": {
+              "unit_field_variance_trace": 0.0015665929897885895,
+              "observed_coefficient_difference_norm_microasyr": 0.3428837384592642,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 8.663009674892582,
+              "amplitude_is_scenario_not_estimate": true
+            }
+          }
+        },
+        {
+          "a": "quaia_z0",
+          "b": "quaia_z3",
+          "trace_shared_unit_field": 0.05729904347574438,
+          "trace_independent_unit_fields": 7.950929504348316,
+          "trace_ratio_shared_over_independent": 0.007206584267211509,
+          "sectors": {
+            "glide": {
+              "unit_field_variance_trace": 0.004604065100836612,
+              "observed_coefficient_difference_norm_microasyr": 2.2173397010350167,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 32.678454224569165,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "spin": {
+              "unit_field_variance_trace": 0.004617917380433586,
+              "observed_coefficient_difference_norm_microasyr": 9.446606505937016,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 139.01214544308667,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "E2": {
+              "unit_field_variance_trace": 0.025461777758497374,
+              "observed_coefficient_difference_norm_microasyr": 8.537259553596765,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 53.502505913492676,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "B2": {
+              "unit_field_variance_trace": 0.022615283235976807,
+              "observed_coefficient_difference_norm_microasyr": 6.602576974799615,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 43.904845923600824,
+              "amplitude_is_scenario_not_estimate": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "angular_scale_degrees": 30.0,
+      "latent_component_sd_microasyr": 1.0,
+      "covariance_trace": 79.74003721528696,
+      "min_eigenvalue": -2.0360797632377956e-16,
+      "max_eigenvalue": 6.6942046976004,
+      "contrasts": [
+        {
+          "a": "crf3_all",
+          "b": "crf3_quality",
+          "trace_shared_unit_field": 3.720150453692679e-05,
+          "trace_independent_unit_fields": 15.845540606232259,
+          "trace_ratio_shared_over_independent": 2.3477586193742705e-06,
+          "sectors": {
+            "glide": {
+              "unit_field_variance_trace": 2.3009766669561896e-06,
+              "observed_coefficient_difference_norm_microasyr": 0.0685583349892025,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 45.19643234194537,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "spin": {
+              "unit_field_variance_trace": 1.8561198915415123e-06,
+              "observed_coefficient_difference_norm_microasyr": 0.03140091329730768,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 23.04831958817571,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "E2": {
+              "unit_field_variance_trace": 1.7017044773520113e-05,
+              "observed_coefficient_difference_norm_microasyr": 0.1342594175471847,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 32.54637979033782,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "B2": {
+              "unit_field_variance_trace": 1.6027363204908973e-05,
+              "observed_coefficient_difference_norm_microasyr": 0.13767501693208314,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 34.3893604475732,
+              "amplitude_is_scenario_not_estimate": true
+            }
+          }
+        },
+        {
+          "a": "crf3_quality",
+          "b": "quaia_inverse_noise",
+          "trace_shared_unit_field": 0.005182948242597019,
+          "trace_independent_unit_fields": 15.919585015253858,
+          "trace_ratio_shared_over_independent": 0.00032557056214912707,
+          "sectors": {
+            "glide": {
+              "unit_field_variance_trace": 0.0005390933502229679,
+              "observed_coefficient_difference_norm_microasyr": 0.5176221050560955,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 22.293631960942182,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "spin": {
+              "unit_field_variance_trace": 0.0005059323524194454,
+              "observed_coefficient_difference_norm_microasyr": 2.786803134138144,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 123.89679281783265,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "E2": {
+              "unit_field_variance_trace": 0.0020997235027216433,
+              "observed_coefficient_difference_norm_microasyr": 0.7067832902706819,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 15.424291301633907,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "B2": {
+              "unit_field_variance_trace": 0.0020381990372329625,
+              "observed_coefficient_difference_norm_microasyr": 0.8602701810345373,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 19.05511496982637,
+              "amplitude_is_scenario_not_estimate": true
+            }
+          }
+        },
+        {
+          "a": "quaia_inverse_noise",
+          "b": "quaia_multiply_selection",
+          "trace_shared_unit_field": 0.04444514990473669,
+          "trace_independent_unit_fields": 16.287256825512394,
+          "trace_ratio_shared_over_independent": 0.0027288296845124783,
+          "sectors": {
+            "glide": {
+              "unit_field_variance_trace": 0.004471496029405313,
+              "observed_coefficient_difference_norm_microasyr": 0.22801215024545132,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 3.409820877014433,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "spin": {
+              "unit_field_variance_trace": 0.004396194790850453,
+              "observed_coefficient_difference_norm_microasyr": 0.18792470081076104,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 2.8342973050002254,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "E2": {
+              "unit_field_variance_trace": 0.01888977325962295,
+              "observed_coefficient_difference_norm_microasyr": 0.9397470085883125,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 6.837503780304579,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "B2": {
+              "unit_field_variance_trace": 0.01668768582485797,
+              "observed_coefficient_difference_norm_microasyr": 0.4017768527071285,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 3.1101895298348907,
+              "amplitude_is_scenario_not_estimate": true
+            }
+          }
+        },
+        {
+          "a": "quaia_inverse_noise",
+          "b": "quaia_ipw_0p20",
+          "trace_shared_unit_field": 0.06614910404206317,
+          "trace_independent_unit_fields": 15.746957025777146,
+          "trace_ratio_shared_over_independent": 0.004200754719389892,
+          "sectors": {
+            "glide": {
+              "unit_field_variance_trace": 0.006359885964416921,
+              "observed_coefficient_difference_norm_microasyr": 0.2724938055387822,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 3.41689764775426,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "spin": {
+              "unit_field_variance_trace": 0.0060457268772000335,
+              "observed_coefficient_difference_norm_microasyr": 0.26584070318044817,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 3.4189851561652946,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "E2": {
+              "unit_field_variance_trace": 0.02837855359653922,
+              "observed_coefficient_difference_norm_microasyr": 1.1789631279064894,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 6.998502055579687,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "B2": {
+              "unit_field_variance_trace": 0.025364937603907012,
+              "observed_coefficient_difference_norm_microasyr": 0.6557461518938289,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 4.11736009950056,
+              "amplitude_is_scenario_not_estimate": true
+            }
+          }
+        },
+        {
+          "a": "quaia_ipw_0p20",
+          "b": "quaia_ipw_0p35",
+          "trace_shared_unit_field": 0.0031421426111470467,
+          "trace_independent_unit_fields": 15.54407294613467,
+          "trace_ratio_shared_over_independent": 0.00020214409839915224,
+          "sectors": {
+            "glide": {
+              "unit_field_variance_trace": 0.000307189898947066,
+              "observed_coefficient_difference_norm_microasyr": 0.1025158719742135,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 5.849081119220922,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "spin": {
+              "unit_field_variance_trace": 0.00030089497108622625,
+              "observed_coefficient_difference_norm_microasyr": 0.08161643344694458,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 4.705113973620871,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "E2": {
+              "unit_field_variance_trace": 0.001315218819672792,
+              "observed_coefficient_difference_norm_microasyr": 0.35083655288232396,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 9.673994316783343,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "B2": {
+              "unit_field_variance_trace": 0.001218838921440962,
+              "observed_coefficient_difference_norm_microasyr": 0.3428837384592642,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 9.821407522859628,
+              "amplitude_is_scenario_not_estimate": true
+            }
+          }
+        },
+        {
+          "a": "quaia_z0",
+          "b": "quaia_z3",
+          "trace_shared_unit_field": 0.044889266115264184,
+          "trace_independent_unit_fields": 16.023159021524393,
+          "trace_ratio_shared_over_independent": 0.0028015240973994627,
+          "sectors": {
+            "glide": {
+              "unit_field_variance_trace": 0.004191232790083371,
+              "observed_coefficient_difference_norm_microasyr": 2.2173397010350167,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 34.25006037961354,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "spin": {
+              "unit_field_variance_trace": 0.004332987049439969,
+              "observed_coefficient_difference_norm_microasyr": 9.446606505937016,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 143.50998858448534,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "E2": {
+              "unit_field_variance_trace": 0.01932091861132386,
+              "observed_coefficient_difference_norm_microasyr": 8.537259553596765,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 61.419262841924784,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "B2": {
+              "unit_field_variance_trace": 0.017044127664416982,
+              "observed_coefficient_difference_norm_microasyr": 6.602576974799615,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 50.57385787987199,
+              "amplitude_is_scenario_not_estimate": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "angular_scale_degrees": 60.0,
+      "latent_component_sd_microasyr": 1.0,
+      "covariance_trace": 90.55409487822737,
+      "min_eigenvalue": -3.7801258922735007e-16,
+      "max_eigenvalue": 6.523889558511031,
+      "contrasts": [
+        {
+          "a": "crf3_all",
+          "b": "crf3_quality",
+          "trace_shared_unit_field": 8.513198426722205e-06,
+          "trace_independent_unit_fields": 18.08765111925538,
+          "trace_ratio_shared_over_independent": 4.7066356878474943e-07,
+          "sectors": {
+            "glide": {
+              "unit_field_variance_trace": 6.086418262946841e-07,
+              "observed_coefficient_difference_norm_microasyr": 0.0685583349892025,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 87.87783820057831,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "spin": {
+              "unit_field_variance_trace": 4.91628635998e-07,
+              "observed_coefficient_difference_norm_microasyr": 0.03140091329730768,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 44.7840838272143,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "E2": {
+              "unit_field_variance_trace": 3.7157776872347803e-06,
+              "observed_coefficient_difference_norm_microasyr": 0.1342594175471847,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 69.64980382140672,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "B2": {
+              "unit_field_variance_trace": 3.69715027719474e-06,
+              "observed_coefficient_difference_norm_microasyr": 0.13767501693208314,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 71.60141199424325,
+              "amplitude_is_scenario_not_estimate": true
+            }
+          }
+        },
+        {
+          "a": "crf3_quality",
+          "b": "quaia_inverse_noise",
+          "trace_shared_unit_field": 0.0012712445829228727,
+          "trace_independent_unit_fields": 18.104347920246315,
+          "trace_ratio_shared_over_independent": 7.021763990191684e-05,
+          "sectors": {
+            "glide": {
+              "unit_field_variance_trace": 0.00014676454378470587,
+              "observed_coefficient_difference_norm_microasyr": 0.5176221050560955,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 42.72698420690446,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "spin": {
+              "unit_field_variance_trace": 0.0001333439239796253,
+              "observed_coefficient_difference_norm_microasyr": 2.786803134138144,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 241.33464655424183,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "E2": {
+              "unit_field_variance_trace": 0.0005101509141652492,
+              "observed_coefficient_difference_norm_microasyr": 0.7067832902706819,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 31.29226062976695,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "B2": {
+              "unit_field_variance_trace": 0.00048098520099329223,
+              "observed_coefficient_difference_norm_microasyr": 0.8602701810345373,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 39.22554735141311,
+              "amplitude_is_scenario_not_estimate": true
+            }
+          }
+        },
+        {
+          "a": "quaia_inverse_noise",
+          "b": "quaia_multiply_selection",
+          "trace_shared_unit_field": 0.010418142947136924,
+          "trace_independent_unit_fields": 18.182201854591895,
+          "trace_ratio_shared_over_independent": 0.0005729857709453289,
+          "sectors": {
+            "glide": {
+              "unit_field_variance_trace": 0.001290326697198773,
+              "observed_coefficient_difference_norm_microasyr": 0.22801215024545132,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 6.347579496718788,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "spin": {
+              "unit_field_variance_trace": 0.0012629204275294438,
+              "observed_coefficient_difference_norm_microasyr": 0.18792470081076104,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 5.2880539042255625,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "E2": {
+              "unit_field_variance_trace": 0.004212929776123914,
+              "observed_coefficient_difference_norm_microasyr": 0.9397470085883125,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 14.478342360068684,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "B2": {
+              "unit_field_variance_trace": 0.0036519660462847924,
+              "observed_coefficient_difference_norm_microasyr": 0.4017768527071285,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 6.6484674505253984,
+              "amplitude_is_scenario_not_estimate": true
+            }
+          }
+        },
+        {
+          "a": "quaia_inverse_noise",
+          "b": "quaia_ipw_0p20",
+          "trace_shared_unit_field": 0.016046771300379528,
+          "trace_independent_unit_fields": 18.06779620874474,
+          "trace_ratio_shared_over_independent": 0.0008881421461137002,
+          "sectors": {
+            "glide": {
+              "unit_field_variance_trace": 0.0018918568724736505,
+              "observed_coefficient_difference_norm_microasyr": 0.2724938055387822,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 6.264876233347751,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "spin": {
+              "unit_field_variance_trace": 0.0017750299571228636,
+              "observed_coefficient_difference_norm_microasyr": 0.26584070318044817,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 6.309844164526882,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "E2": {
+              "unit_field_variance_trace": 0.006594192758499302,
+              "observed_coefficient_difference_norm_microasyr": 1.1789631279064894,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 14.518421599246516,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "B2": {
+              "unit_field_variance_trace": 0.00578569171228371,
+              "observed_coefficient_difference_norm_microasyr": 0.6557461518938289,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 8.621009155718415,
+              "amplitude_is_scenario_not_estimate": true
+            }
+          }
+        },
+        {
+          "a": "quaia_ipw_0p20",
+          "b": "quaia_ipw_0p35",
+          "trace_shared_unit_field": 0.0007938277957343965,
+          "trace_independent_unit_fields": 18.02497436901789,
+          "trace_ratio_shared_over_independent": 4.4040439641282504e-05,
+          "sectors": {
+            "glide": {
+              "unit_field_variance_trace": 8.589854950032523e-05,
+              "observed_coefficient_difference_norm_microasyr": 0.1025158719742135,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 11.06109684756098,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "spin": {
+              "unit_field_variance_trace": 8.428755991383653e-05,
+              "observed_coefficient_difference_norm_microasyr": 0.08161643344694458,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 8.889879452465081,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "E2": {
+              "unit_field_variance_trace": 0.00032862305773353014,
+              "observed_coefficient_difference_norm_microasyr": 0.35083655288232396,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 19.353335218434392,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "B2": {
+              "unit_field_variance_trace": 0.0002950186285867047,
+              "observed_coefficient_difference_norm_microasyr": 0.3428837384592642,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 19.962832781412306,
+              "amplitude_is_scenario_not_estimate": true
+            }
+          }
+        },
+        {
+          "a": "quaia_z0",
+          "b": "quaia_z3",
+          "trace_shared_unit_field": 0.010875077909812063,
+          "trace_independent_unit_fields": 18.132444467799356,
+          "trace_ratio_shared_over_independent": 0.0005997579603304262,
+          "sectors": {
+            "glide": {
+              "unit_field_variance_trace": 0.0012008196007890213,
+              "observed_coefficient_difference_norm_microasyr": 2.2173397010350167,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 63.98723573173304,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "spin": {
+              "unit_field_variance_trace": 0.0012802313349084332,
+              "observed_coefficient_difference_norm_microasyr": 9.446606505937016,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 264.0168219449022,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "E2": {
+              "unit_field_variance_trace": 0.004496491134571618,
+              "observed_coefficient_difference_norm_microasyr": 8.537259553596765,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 127.31559806927507,
+              "amplitude_is_scenario_not_estimate": true
+            },
+            "B2": {
+              "unit_field_variance_trace": 0.00389753583954299,
+              "observed_coefficient_difference_norm_microasyr": 6.602576974799615,
+              "field_amplitude_for_equal_norm_and_rms_microasyr": 105.75926266785706,
+              "amplitude_is_scenario_not_estimate": true
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "covariance_artifact": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R99_FIFTH_BLOCKER_RESOLUTION_20261123/GAIA_SHARED_FIELD_COVARIANCES.npz",
+    "sha256": "edfcf5d7e19f6a8b2cdd3bdab002fdb16534ff2a969e5f16a18b12f2effdcd55"
+  },
+  "limitations": [
+    "Coarse piecewise 48-patch vector-field sensitivity, not fitted AGIS/AGN law.",
+    "Amplitude belongs to six Cartesian glide/spin template coefficient fields.",
+    "No joint covariance sum with spatial jackknife: unknown double counting.",
+    "Small-angle and intra-patch correlations are unrepresented.",
+    "No physical Pi, normal-frame vorticity or cosmological detection.",
+    "Field amplitude matching a coefficient RMS is not a parameter estimate."
+  ],
+  "physical_Pi": null,
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "platform": "Linux-7.0.0-43-generic-x86_64-with-glibc2.39"
+  },
+  "runtime_seconds": 0.05919623398222029,
+  "code_sha256": "d3fd2f206926390cca47a0ed290a1e4bd0116d9cb21cf40cf915a58e9609c0e2"
+}

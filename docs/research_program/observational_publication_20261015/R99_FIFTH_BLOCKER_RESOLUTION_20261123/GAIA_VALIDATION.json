@@ -1,0 +1,36 @@
+{
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "runs": [
+    {
+      "label": "unit",
+      "argv": [
+        ".venv/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "tests/obsstat/test_r99_gaia_shared_field.py"
+      ],
+      "exit_code": 0,
+      "runtime_seconds": 0.4330962900130544
+    },
+    {
+      "label": "full_source_statistics",
+      "argv": [
+        ".venv/bin/python",
+        "-B",
+        "-m",
+        "scripts.r99.gaia_shared_field"
+      ],
+      "exit_code": 0,
+      "runtime_seconds": 0.6332089040079154
+    }
+  ],
+  "thread_environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  }
+}

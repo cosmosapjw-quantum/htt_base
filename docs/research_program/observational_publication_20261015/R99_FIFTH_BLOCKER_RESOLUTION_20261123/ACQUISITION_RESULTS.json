@@ -1,0 +1,146 @@
+{
+  "schema": "htt.r99.lotss_outer_exposure/1",
+  "owner": "obsstat",
+  "claim_tier": "C1",
+  "status": "IMPLEMENTATION_VERIFIED_GEOMETRIC_PREPARATION",
+  "transfer_source": "none",
+  "source_baseline": "eee33d7ed33e1af10d7c6a3c453810ecb227e461",
+  "csv_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R99_FIFTH_BLOCKER_RESOLUTION_20261123/inputs/lotss_mosaics.csv",
+  "csv_sha256": "8671fa69f744a32f71904a2cc89919a3cf1021d7d030816d0adb218b34227572",
+  "mosaic_count": 1580,
+  "frame": "ICRS",
+  "output_ordering": "RING",
+  "target_nside": 16,
+  "fine_nsides": [
+    64,
+    128,
+    256
+  ],
+  "polygon_interpretation": "great-circle edges between official four image corners; outer image support",
+  "overlap_handling": "Boolean union, no sum of repeat sky",
+  "rasterization": "fine nested HEALPix pixel-center inclusion; equal-area child average, then RING",
+  "resolution_checks": [
+    {
+      "fine_nside": 64,
+      "area_sr": 6.847945900586151,
+      "area_square_deg": 22480.480286981106,
+      "fsky": 0.5449422200520834,
+      "nonzero_target_cells": 1762,
+      "fractional_target_cells": 174,
+      "nested_union_path": "/home/cosmosapjw/Downloads/htt_r99/lotss_outer_union_nside64_nested.npy",
+      "nested_union_sha256": "26ca8ff840fed0b4ffde8d51fd48a931d8f7bfc28a0e3bd4a84cd9c022359213",
+      "independent_sampled_centers": 4096,
+      "independent_membership_mismatches": 0,
+      "runtime_seconds": 0.23189075401751325
+    },
+    {
+      "fine_nside": 128,
+      "area_sr": 6.8430882947578455,
+      "area_square_deg": 22464.533707722094,
+      "fsky": 0.5445556640625,
+      "nonzero_target_cells": 1771,
+      "fractional_target_cells": 183,
+      "nested_union_path": "/home/cosmosapjw/Downloads/htt_r99/lotss_outer_union_nside128_nested.npy",
+      "nested_union_sha256": "2c4c3e1f59f577e8710f7c754e2034684a6b7f287a84b8658698a6d4d5fae570",
+      "independent_sampled_centers": 4096,
+      "independent_membership_mismatches": 0,
+      "runtime_seconds": 0.2438090369978454,
+      "refinement_area_change_sr": -0.00485760582830453,
+      "refinement_l1_area_change_sr": 0.021475731030398976,
+      "refinement_max_cell_fraction_change": 0.109375
+    },
+    {
+      "fine_nside": 256,
+      "area_sr": 6.846316045999022,
+      "area_square_deg": 22475.129789992887,
+      "fsky": 0.5448125203450521,
+      "nonzero_target_cells": 1771,
+      "fractional_target_cells": 184,
+      "nested_union_path": "/home/cosmosapjw/Downloads/htt_r99/lotss_outer_union_nside256_nested.npy",
+      "nested_union_sha256": "b9826901c37d51efec1913a7b33c5f31f4fa838813a1baa32619689257bfcc98",
+      "independent_sampled_centers": 4096,
+      "independent_membership_mismatches": 0,
+      "runtime_seconds": 0.2759534879878629,
+      "refinement_area_change_sr": 0.0032277512411760362,
+      "refinement_l1_area_change_sr": 0.01083373931444234,
+      "refinement_max_cell_fraction_change": 0.046875
+    }
+  ],
+  "original_cache": {
+    "maps_path": "/home/cosmosapjw/Downloads/htt_r98_full_data/radio_full_maps.npz",
+    "maps_sha256": "989a0f9a6d5c30b4c2468bf2d159d8b644b137e654104e32714a58201e68f6bd",
+    "source_receipt_path": "/home/cosmosapjw/Downloads/htt_r98_full_data/radio_full_maps_sources.json",
+    "source_receipt_sha256": "156bf2dd62acbadba451d55738a2673a39085b24e1c77e765eb2300541649398",
+    "fingerprint_path": "/home/cosmosapjw/Downloads/htt_r98_full_data/radio_full_maps_fingerprints.json",
+    "fingerprint_sha256": "b683d9db5b0c8b5b78ffe8642f59c42b513bf38ce91c054a6d4385b560b51170",
+    "reader_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R89_EIGHT_ANALYSIS_HANDOFF_20261121/runs/G04_RADIO_FRAME/run_g04_solver_free_research.py",
+    "reader_sha256": "4ced76ad7f56e3832620b374df08cb24d96e432389783896d346dbea1ea5b940",
+    "source_verification": "inherited full hashes plus unchanged storage fingerprints; no raw rescan"
+  },
+  "comparison_to_original_density_mask": {
+    "old_mask_name": "LoTSS_DR3_int1500",
+    "old_mask_cells": 966,
+    "old_mask_cells_with_zero_outer_fraction": 0,
+    "outer_cells_not_in_old_mask": 805,
+    "minimum_outer_fraction_inside_old_mask": 1.0,
+    "old_mask_uses_density_cut": true,
+    "old_mask_also_includes_galactic_NHI_cuts": true
+  },
+  "counts_comparison": {
+    "20.0": {
+      "total_cached_sources": 659841,
+      "occupied_cached_cells": 1576,
+      "sources_inside_outer_support": 659841,
+      "positive_count_cells_outside_outer_support": 0,
+      "sources_outside_outer_support": 0,
+      "observed_zero_cells_inside_outer_support": 195,
+      "sources_on_old_mask": 438806,
+      "sources_on_outer_support_excluded_by_old_mask": 221035,
+      "supports_future_count_offset": true
+    },
+    "50.0": {
+      "total_cached_sources": 339865,
+      "occupied_cached_cells": 1576,
+      "sources_inside_outer_support": 339865,
+      "positive_count_cells_outside_outer_support": 0,
+      "sources_outside_outer_support": 0,
+      "observed_zero_cells_inside_outer_support": 195,
+      "sources_on_old_mask": 226788,
+      "sources_on_outer_support_excluded_by_old_mask": 113077,
+      "supports_future_count_offset": true
+    },
+    "100.0": {
+      "total_cached_sources": 194914,
+      "occupied_cached_cells": 1567,
+      "sources_inside_outer_support": 194914,
+      "positive_count_cells_outside_outer_support": 0,
+      "sources_outside_outer_support": 0,
+      "observed_zero_cells_inside_outer_support": 204,
+      "sources_on_old_mask": 130576,
+      "sources_on_outer_support_excluded_by_old_mask": 64338,
+      "supports_future_count_offset": true
+    }
+  },
+  "output_npz": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R99_FIFTH_BLOCKER_RESOLUTION_20261123/inputs/lotss_outer_exposure_nside16.npz",
+  "output_npz_sha256": "562c8e0904d506814a50a2dcca1cd95d03dd75a1bc0d05fd77d470e221e4458d",
+  "likelihood_offset": "mu_p=exposure_sr[p]*exp(X_p beta); additive log_exposure_sr, no fitted offset coefficient",
+  "caveats": [
+    "Outer mosaic rectangle may contain valid-weight holes; not a completed RMS footprint",
+    "Source-size/flux completeness, association, SED and LSS models remain",
+    "Different fine NSIDE compares boundary discretization only, not these systematic errors",
+    "Count comparison uses existing all-sky cut maps, without rescanning catalogue rows",
+    "No cosmological null, p-value, physical Pi or GF is produced"
+  ],
+  "physical_Pi": null,
+  "runtime_seconds": 0.798211312998319,
+  "producer_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r99/acquisition.py",
+  "producer_sha256": "fe794b47a4b0aec8e1319319323ef70b4b2ba2c4eb9a41edb3a42a053e3ab386",
+  "python_version": "3.12.3",
+  "numpy_version": "2.5.4",
+  "healpy_version": "1.19.0",
+  "thread_environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1"
+  },
+  "finished_at_utc": "2026-11-23T04:29:37.969554+00:00"
+}

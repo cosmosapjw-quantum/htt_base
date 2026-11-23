@@ -1,0 +1,35 @@
+column_name,datatype,unit,description
+bandpassid,char,,Freeform name of the bandpass used
+wcs_cdmatrix,float,deg/pix,FITS WCS CDij matrix
+accref,char,,Access key for the data
+owner,char,,Owner of the data
+embargo,char,a,Date the data will become/became public
+mime,char,,MIME type of the file served
+accsize,long,byte,Size of the data in bytes
+centeralpha,double,deg,"Approximate center of image, RA"
+centerdelta,double,deg,"Approximate center of image, Dec"
+imagetitle,char,,Synthetic name of the image
+instid,char,,Identifier of the originating instrument
+dateobs,double,d,Epoch at midpoint of observation
+naxes,int,,Number of axes in data
+pixelsize,int,pix,Number of pixels along each of the axes
+pixelscale,float,deg/pix,The pixel scale on each image axis
+refframe,char,,Coordinate system reference frame
+wcs_equinox,float,yr,Equinox of the given coordinates
+wcs_projection,char,,FITS WCS projection type
+wcs_refpixel,float,pix,WCS reference pixel
+wcs_refvalues,double,deg,World coordinates at WCS reference pixel
+bandpassunit,char,,Unit of bandpass specifications (always m).
+bandpassrefval,float,m,Characteristic quantity for the bandpass of the image
+bandpasshi,float,m,Upper limit of the bandpass (in BandPass_Unit units)
+bandpasslo,float,m,Lower limit of the bandpass (in BandPass_Unit units)
+pixflags,char,,Flags specifying the processing done (C-original; F-resampled; Z-fluxes valid; X-not resampled; V-for display only
+coverage,double,deg,Field covered by the image
+mosaic_id,char,,The name of the mosaic.
+related_products,char,,Link related products for the observation
+lofar_obsids,int,,ObsID(s) of the LOFAR observation(s) used for imaging the central pointing.
+record_id,char,,Surf Data Repository record ID.
+md5,char,,md5 checksum of the file
+datefirstobs,double,d,Epoch of first observation
+datelastobs,double,d,Epoch of last observation
+dateallobs,double,,Epoch of all observations
