@@ -81,3 +81,13 @@ C9: completed one fresh independent numerical review of CF4/optics/Gaia. Exact o
 Final bounded verification: remote PID 3889465, exit 0, total observed 8.06 s. Targeted pytest: 43 passed in 5.04 s. Original strict-authority validator: 32 checks passed, 60 nodes and 129 edges. Current package/overlay identity check: exit 0. SQ-CF4 science entry: expected exit 3 with A01/D01/D02/M01, no execution/promotion. Bounded 20,927,710-byte acquisition selector: exit 0 and downloaded_bytes=0. All recorded code/test and result identities were unchanged during the final verification. Exact argv, exits, timings and stdout hashes are in VALIDATION.json and validation_*.log.
 
 No full historical regression, four-axis CAS, calibrated cosmological p-value, physical Pi/GF, native Boltzmann implementation or new scientific gate acceptance is claimed.
+
+## C10 — results, continuation and source publication (completed)
+
+The fifth theory and coding tracks are complete in their declared scope. REPORT_KO.md contains the mathematical changes, full-source results, six-theme/seven-route mapping and residual input obligations. HANDOFF_KO.md contains exact environment, reproduction entrypoints and the bounded next source intake. NODE60_EXECUTION_PREPARATION.json preserves all 60 acceptance contracts; no sixth cycle or scientific promotion was executed.
+
+Validated C5–C9 implementation, results, review, report and handoff were committed as 21241ebaf826138640f9e1e463809af750848ab4. The non-force push to origin/research/r69-observable-physics-bridges-20261118 returned exit 0; git ls-remote returned the identical SHA. Remote PID 3897382 completed in 5.25 s. PUBLICATION_RECEIPT.json binds that scientific commit and VALIDATION.json. This C10 completion and publication receipt are saved in a subsequent scoped documentation commit, avoiding a recursive self-hash claim.
+
+Before that source commit, the broad git whitespace diagnostic returned exit 2 on exact provider CRLF/padded response bytes and intentional Markdown hard line breaks. Those bytes were preserved; the Python source check returned exit 0 and all 62 staged files matched their working bytes exactly. PUBLICATION_PRECHECK.json retains the classification. No numerical code or accepted source was altered to make a formatting diagnostic disappear.
+
+Existing branch publication is distinct from main merge, paper submission, new worker launch, local runtime installation and client activation; those actions were not performed. Existing unrelated untracked research and frozen R78/R98 content remain unchanged. The sole next scientific entry stays SQ-CF4 with D01/D02/M01/A01; the preparation selector for the 20,927,710-byte SDSS/6dF subset is runnable now.

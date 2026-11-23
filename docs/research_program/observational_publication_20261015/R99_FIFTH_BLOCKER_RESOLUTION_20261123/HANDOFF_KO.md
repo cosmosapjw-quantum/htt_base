@@ -92,3 +92,5 @@ Git publication receipt는 [PUBLICATION_RECEIPT.json](PUBLICATION_RECEIPT.json)�
 ## Runtime 및 publication 경계
 
 현재 프로젝트 실행 지침은 docs/harness/CURRENT_CODEX_RUNTIME.md와 AGENTS.md의 native-execution/owner publication 조항이다. 과거 CUH-G descriptor/hooks는 현재 authority로 재구성하지 않았다. 이번 실제 runtime receipt는 VALIDATION.json, lane EXECUTION 문서, review/commands.json이며 사용한 native task는 /root/cf4_theory, /root/optical_theory, /root/legacy_evidence, /root/independent_review다. 기존 source budget·historical outcome·미확인 상태를 새 PASS로 바꾸지 않았다. 기존 checkout의 source publication과 로컬 harness 설치·client activation은 구분한다. 이번 작업은 source와 연구 산출물의 commit/push이며 runtime 설치나 client activation을 수행한 것이 아니다.
+
+검증된 연구 산출물 commit은 `21241ebaf826138640f9e1e463809af750848ab4`이며 기존 연구 branch의 origin SHA와 일치함을 확인했다. 이 인계의 최종 C10 기록·publication receipt는 그 뒤의 문서 commit으로 추가한다. 정확한 검증과 scientific source는 위 commit 및 PUBLICATION_RECEIPT.json을 사용한다.
