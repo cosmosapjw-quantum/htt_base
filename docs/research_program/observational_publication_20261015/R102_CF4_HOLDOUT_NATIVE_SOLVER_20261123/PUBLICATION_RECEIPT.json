@@ -1,0 +1,80 @@
+{
+  "schema": "htt.r102.publication_receipt/1",
+  "recorded_at_utc": "2026-11-23T13:51:31+00:00",
+  "branch": "research/r69-observable-physics-bridges-20261118",
+  "baseline_commit": "c69fa980c5efb360f38e0b01c4c9476a292d1350",
+  "implementation_commit": "909ba09d06412e6b064caed45ecbdbd07fa311f7",
+  "implementation_tree": "372ba2dc249be8b3d3ad7bfb45f421349233caa4",
+  "implementation_changed_files": 26,
+  "readback_verification_tier": "R1",
+  "implementation_push": {
+    "commit": "909ba09d06412e6b064caed45ecbdbd07fa311f7",
+    "branch": "research/r69-observable-physics-bridges-20261118",
+    "returncode": 0,
+    "remote_ref": "909ba09d06412e6b064caed45ecbdbd07fa311f7\trefs/heads/research/r69-observable-physics-bridges-20261118",
+    "remote_matches": true
+  },
+  "science_authority": {
+    "path": "docs/research_program/observational_publication_20261015/R78_UNIFIED_SCIENCE_DAG_20261119/INTEGRATED_DAG.json",
+    "sha256": "90aba8c1ca9c8e3a7744be0f071dcfe09b81e5353892aca13878191e20f58c11",
+    "original_42_sha256": "e3264e105cabf78ddac37addc36cacc3cfa05ee942e33e54b431b22e3e87de0d",
+    "next_id": "SQ-CF4",
+    "new_science_acceptances": 0
+  },
+  "scope": "R102 bounded observational acquisition (SDSS randoms 4M + Commander PR3 FFP10 noise 00000), SQ-CF4 group-blocked holdout & selection uncertainty propagation, 36D component Euler tangents, native GeneralLieStokes (T,E,B,V) + MovingFrameThomson + 4-channel TiltedHyrec + coupled Bianchi Einstein-Boltzmann 7-family convergence, and independent review closeout.",
+  "receipts": {
+    "ACQUISITION_RECEIPT.json": {
+      "path": "docs/research_program/observational_publication_20261015/R102_CF4_HOLDOUT_NATIVE_SOLVER_20261123/ACQUISITION_RECEIPT.json",
+      "sha256": "4f006e85b2f5b14da3dd2c1246484a504a76f0738c5b0933359b851cf1d6239f"
+    },
+    "CF4_SELECTION_HOLDOUT_RESULTS.json": {
+      "path": "docs/research_program/observational_publication_20261015/R102_CF4_HOLDOUT_NATIVE_SOLVER_20261123/CF4_SELECTION_HOLDOUT_RESULTS.json",
+      "sha256": "f2b65075e9d4e6d66e29431e31334f031deff267adec557841517c7692796029"
+    },
+    "COMMANDER_PAIR_00000_CHECK.json": {
+      "path": "docs/research_program/observational_publication_20261015/R102_CF4_HOLDOUT_NATIVE_SOLVER_20261123/COMMANDER_PAIR_00000_CHECK.json",
+      "sha256": "959f5a1d7b076841e74273386b86e774ce0aba8fc019e28c09d0b4264eb4fb65"
+    },
+    "INDEPENDENT_REVIEW.md": {
+      "path": "docs/research_program/observational_publication_20261015/R102_CF4_HOLDOUT_NATIVE_SOLVER_20261123/INDEPENDENT_REVIEW.md",
+      "sha256": "3f88a767e0e0bfaddb83393d63bc8be50acfe725a8a5f5bc45de12decfac2160"
+    },
+    "NATIVE_SOLVER_CONVERGENCE.json": {
+      "path": "docs/research_program/observational_publication_20261015/R102_CF4_HOLDOUT_NATIVE_SOLVER_20261123/NATIVE_SOLVER_CONVERGENCE.json",
+      "sha256": "7178d7d0687c1370319fcd9ae6072e356bb0b627b9c9a7322d9bd5ae25e79bf9"
+    },
+    "NODE60_EXECUTION.json": {
+      "path": "docs/research_program/observational_publication_20261015/R102_CF4_HOLDOUT_NATIVE_SOLVER_20261123/NODE60_EXECUTION.json",
+      "sha256": "374002e191c3a00b8c76608b7680d9760c591002977f652185d4e4dcd6a7d0c0"
+    },
+    "NODE60_EXECUTION.md": {
+      "path": "docs/research_program/observational_publication_20261015/R102_CF4_HOLDOUT_NATIVE_SOLVER_20261123/NODE60_EXECUTION.md",
+      "sha256": "c9a410e173e323a0589fa4d7f2ed6d10ce2b941a1b05db6b2e4c06852f0d0161"
+    },
+    "REPORT_KO.md": {
+      "path": "docs/research_program/observational_publication_20261015/R102_CF4_HOLDOUT_NATIVE_SOLVER_20261123/REPORT_KO.md",
+      "sha256": "45dc7220a248e57bcd237c25a300312eec448062f339b0e9b4f4683f2d51c37e"
+    }
+  },
+  "verified_tests": {
+    "combined_r102_r101_r86": {
+      "files": 13,
+      "passed": 75,
+      "subtests_passed": 34,
+      "failed": 0,
+      "skipped": 0,
+      "runtime_s": 212.71
+    },
+    "sq_cf4_cli_check": {
+      "command": "scripts.r102.program check-node --node SQ-CF4 --phase science",
+      "exit_code": 3
+    }
+  },
+  "preservation": {
+    "unrelated_dirty_paths_untouched": true,
+    "main_push": false,
+    "merge": false,
+    "force_push": false
+  },
+  "delivery_receipt_note": "This receipt is committed immediately after the verified implementation commit 909ba09d06412e6b064caed45ecbdbd07fa311f7. Its own containing commit cannot be self-recorded here; inspect git history or the final delivery message."
+}
