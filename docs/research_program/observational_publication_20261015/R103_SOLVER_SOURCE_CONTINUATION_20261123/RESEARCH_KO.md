@@ -2,6 +2,8 @@
 
 출발점은 연구 브랜치 `research/r69-observable-physics-bridges-20261118`의 R102 게시 커밋 `664845022a9600ad925d6c1332143395aac5ed90`이다. R102의 CF4 관측 holdout, Commander 00000, 움직이는 전자와 tilted HYREC, Lie–Stokes 계산을 재사용했다. R103에서 직접 계산한 관측량은 선택 표본의 예측 점수, 카탈로그 재적합 민감도와 제한된 모형의 복사 전달이다. 데이터에 의해 보정된 물리적 초과확률과 Bianchi 계열 귀속은 여전히 미정이다.
 
+원래 60개 노드 모두에 의존성과 다음 행동을 기록했다. 이번 결과가 직접 연결된 노드는 새 결과 파일이 연결된 10개와 교차 유도를 수행한 7개를 합친 17개다. 기존 판정은 범위 한정 완료 18개이며, 새 과학 수용 판정은 0개다.
+
 ## 분야별 결과
 
 | 분야 | 이번 계산과 해석 | 남은 입력 또는 계산 |
@@ -41,11 +43,15 @@ PHY-01…07의 개별 유도와 수치표는 `CROSS_ROUTE_BOUNDS_KO.md`에 있�
 | R9 / C9 | 채택한 식·IC·단위·유효영역을 재현 문서에 연결 | 독립 검토에서 class-B 밀도, Sobolev Jacobian, 광자/중성미자 분리, 높은 tilt 각격자와 flux 불일치를 확인·수정 |
 | R10 / C10 | 전달 계산과 관측 귀속에 필요한 남은 가정을 고정 | 실제 측정·소스 해시·실행 명령·로컬 분석 인계와 결과를 같은 연구 브랜치에 보존 |
 
+### 통합 회귀와 해상도
+
+워크스테이션에서 충돌·재결합·수송 모듈과 CF4·Commander 등 관련 시험 1,143개와 하위 시험 5개가 통과했다. healpy의 기존 `verbose` 인자 사용에 대한 폐기예정 경고 1건이 있었다. 최종 코드로 R102의 4차원 null geodesic/Sachs 및 결합 수렴 검사를 재실행했다. 160셀·2 substep에서 320셀·4 substep으로 바꾼 최종 결합 상태의 상대차는 VIIh 0.0014893, VI₋₁/₉ 0.00002560, IX 0.00046841이었다. 이는 기본 단일 복사종·작은 비등방 초기조건에서 얻은 값이다. 같은 실행의 광선/각수송 비교는 5개 계열에서 분리된 짧은 무충돌 방향·편광 수송을 검사한다. 전 구간의 독립 우주론 검사는 별도다. 입력과 수치표는 `NATIVE_CONVERGENCE_REPLAY.json`에 있다.
+
 ### 출처와 다음 입력
 
 - Dropbox `/dossier/Dossier_II_Kinetic_Transport.pdf` rev `65dd5afc2e7920af03d47`, `Dossier_IV_Reionization.pdf` rev `65dd5afd21dc50af03d47`, 통합본 `BASS_Integrated_Dossier.pdf` rev `65dd5afc2e7910af03d47`; 이전 recombination 검증본 `/bianchi/Mathematical_Verification_Dossier_III_Recombination.pdf` rev `65b3f27c2fcdb0af03d47`.
 - Pereira & Pitrou의 FLRW 극한이 있는 계열에 대한 선형 대응과 Vicente·Pereira·Pitrou의 Boltzmann 계층·observable 변환. [Bianchi spacetimes as super-curvature modes](https://arxiv.org/abs/1909.13688) · [CMB line-of-sight integrators](https://arxiv.org/html/2506.07786v2)
 - PR3 모의지도는 독립 signal/noise 성분과 실제 기기 효과를 포함한다. 데이터의 beam HDU 유무만으로 MC beam을 지정하지 않는다. [Planck 2018 I, Appendix B.3](https://doi.org/10.1051/0004-6361/201833880)
-- CF4를 조건으로 얻은 추정 속도장과 외부 2M++ 복원은 서로 다른 조건부 모형이다. Valade 등의 HMC 필드는 저자 요청 방식이며, Manticore-Local은 총 80개의 z=0 밀도·운동량 실현을 공개한다. 이 회차에서 Manticore 미러 연결은 시간 초과였다. 실제 field draw는 0개, 35,970개 군의 투영 준비는 완료했다. [CF4 HMC 데이터 이용 조건](https://www.nature.com/articles/s41550-024-02370-0) · [Manticore 공식 자료](https://digitaltwin.fysik.su.se/data-access.html)
+- CF4를 조건으로 얻은 추정 속도장과 외부 2M++ 복원은 서로 다른 조건부 모형이다. Valade 등의 HMC 필드는 저자 요청 방식이며, Manticore-Local은 총 80개의 z=0 밀도·운동량 실현을 공개한다. 이 회차에서 Manticore 미러 연결은 시간 초과였다. 워크스테이션 전용 다운로드 환경의 설치·패키지 로딩·의존성 검사를 마쳤다. 실제 field draw는 0개이며, 35,970개 군의 투영 준비를 완료했다. [CF4 HMC 데이터 이용 조건](https://www.nature.com/articles/s41550-024-02370-0) · [Manticore 공식 자료](https://digitaltwin.fysik.su.se/data-access.html)
 
 원자료 분석은 `HANDOFF_LOCAL_KO.md`에서 시작한다. 각 지표의 물리적 의미, 확인된 commit 및 재현 명령은 동봉된 개별 결과와 `VALIDATION.json`에서 확인할 수 있다.

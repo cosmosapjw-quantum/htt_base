@@ -1,0 +1,236 @@
+{
+  "python": "3.12.3",
+  "numpy": "2.5.4",
+  "scipy": "1.18.1",
+  "thomson": {
+    "fixture": "stationary cold-electron Thomson collision block, all five real quadrupoles; spatial derivatives, sources, expansion and tilt zero",
+    "initial_conditions": 10,
+    "depth": 1.0,
+    "n_gl_theta": 8,
+    "ell_max": 3,
+    "signed_harmonic_generator_max_abs_error": 2.7755575615628914e-17,
+    "angular_exact_flow_max_abs_error": 1.935038351876166e-15,
+    "zero_channel_leakage": 1.935038351876166e-15,
+    "sdirk_absolute_errors": {
+      "4": 0.0008256165015465,
+      "8": 0.0002035208740125971,
+      "16": 5.055921481689207e-05
+    },
+    "sdirk_orders": [
+      2.0202950347600455,
+      2.009130807556405
+    ],
+    "passed": true
+  },
+  "bass_base": "207a73834b6dcbbe49be044d895bfee95b73b7a6",
+  "anilos_vs_bass_IX": {
+    "fixture": "matched closed IX test-photon m=+2 T/E/B block, no metric feedback, constant scattering rate, both spatial orientations",
+    "upstream_git_blob": "d54fdf7d1c757d249105602b19fe40441813d70e",
+    "upstream_source": "jgvicente/AniLoS 9b7a2611882dcca80a1491bcad2b8f05635faca7 src/anilos/hierarchy.py tensor_hierarchy, original NumPy body without JIT decorator",
+    "native_basis_relative_to_raw_upstream_TEB": [
+      1,
+      -1,
+      -1
+    ],
+    "optical_rate": 1.7,
+    "duration": 0.43,
+    "initial_conditions": 6,
+    "sdirk_substeps": 128,
+    "generator_max_abs_error": 2.6646366398867027e-15,
+    "off_sector_generator_leakage": 4.774005574783444e-15,
+    "finite_cross_code_max_abs_error": 1.109690589418122e-06,
+    "passed": true
+  },
+  "aniclass": {
+    "fixture": "AniCLASS compiled deterministic tensor mode, same IC and geometry, observable vs TAM",
+    "source_head": "be1e43fcb1d7549710ba3ca2baa74bb0216bd228",
+    "executable_sha256": "16f5948f95a9ac1c893c7a0d34921248b914c2e52e2f77b365e92b55a17cbed4",
+    "tracked_source_clean": true,
+    "parameters": {
+      "hierarchy": "tam",
+      "statistics": "non_stochastic",
+      "non_stochastic_type": "bianchi",
+      "output": "tCl,pCl",
+      "modes": "t",
+      "Omega_k": "0.01",
+      "z_reio": "7.6711",
+      "gauge": "synchronous",
+      "k_output_values": "0.001",
+      "l_max_tensors": "16",
+      "non_stochastic_format": "class",
+      "l_max_g_ten": "30",
+      "l_max_pol_g_ten": "30",
+      "l_max_ur_ten": "30",
+      "radiation_streaming_approximation": "3",
+      "perturbations_sampling_stepsize": "0.01",
+      "tight_coupling_trigger_tau_c_over_tau_h": "0.005",
+      "start_small_omega_tau": "0.001",
+      "tol_perturbations_integration": "1e-6",
+      "hyper_x_min": "1e-7"
+    },
+    "OMP_NUM_THREADS": 1,
+    "ell_range": [
+      2,
+      16
+    ],
+    "channel_order": [
+      "T",
+      "E",
+      "B"
+    ],
+    "observable_ell2_real_imag": [
+      -0.009754276535688,
+      0.01293758216454,
+      0.001388316428781,
+      -0.0003278505853632,
+      0.001039872304026,
+      0.0002255044508211
+    ],
+    "unsigned_B_negative_control_relative_error": 1.9999999999997393,
+    "signed_observed_rows_l_ReT_ImT_ReE_ImE_ReB_ImB": [
+      [
+        2.0,
+        -0.009754276535688,
+        0.01293758216454,
+        0.001388316428781,
+        -0.0003278505853632,
+        0.001039872304026,
+        0.0002255044508211
+      ],
+      [
+        3.0,
+        -0.0001797654906029,
+        -0.05458053720397,
+        2.961114044293e-05,
+        0.001692107297789,
+        -0.0004917858022822,
+        -0.0009958750703693
+      ],
+      [
+        4.0,
+        -0.009677883440904,
+        0.02984469589795,
+        1.830775147218e-05,
+        -0.000417867318756,
+        0.002054985774813,
+        -0.0004738424438475
+      ],
+      [
+        5.0,
+        -0.05889493478774,
+        -0.1277290935826,
+        0.0008270158211285,
+        0.001645807206834,
+        0.000137530161675,
+        0.001221162086096
+      ],
+      [
+        6.0,
+        0.1614940947586,
+        -0.04736620924648,
+        -0.001933103747779,
+        0.0009845371867961,
+        0.0001789601275981,
+        -0.00038766900709
+      ],
+      [
+        7.0,
+        -0.05379077815847,
+        0.04437762997858,
+        -0.0008395586023247,
+        -0.001316275799939,
+        0.0007945917677379,
+        0.000894564107026
+      ],
+      [
+        8.0,
+        0.1460008340803,
+        -0.2528338414824,
+        0.0006548839254882,
+        -0.0005787694509034,
+        -0.0008276727389356,
+        0.0008841780521243
+      ],
+      [
+        9.0,
+        0.4850538628843,
+        0.2703653711626,
+        0.0004031940881348,
+        0.0003001718290745,
+        -0.0007313962910514,
+        -0.0004731871045072
+      ],
+      [
+        10.0,
+        -0.2539119249357,
+        0.6481796562093,
+        -0.0001603713717243,
+        0.0003466766638223,
+        0.0001902446576009,
+        -0.0005312103951743
+      ],
+      [
+        11.0,
+        -0.6745391417282,
+        -0.1290328761947,
+        -0.0003257456185404,
+        -8.050193497175e-05,
+        0.0003944897883272,
+        4.008509319438e-05
+      ],
+      [
+        12.0,
+        -0.01652883640592,
+        -0.5709900761193,
+        1.022224991986e-05,
+        -0.0002725042087936,
+        3.913113678269e-05,
+        0.0003131894780506
+      ],
+      [
+        13.0,
+        0.3999157501801,
+        -0.1127325599575,
+        0.0001863716201742,
+        -3.591643254611e-05,
+        -0.0002420387027546,
+        8.863907961502e-05
+      ],
+      [
+        14.0,
+        0.1403617436084,
+        0.231161716031,
+        4.757487125864e-05,
+        0.0001014072696072,
+        -0.0001115425561658,
+        -0.0001629372737019
+      ],
+      [
+        15.0,
+        -0.1068056310284,
+        0.1191916523126,
+        -4.278562688083e-05,
+        3.606970187591e-05,
+        8.766262918678e-05,
+        -0.0001055270987182
+      ],
+      [
+        16.0,
+        -0.07979295118155,
+        -0.03503639389046,
+        -1.906116023026e-05,
+        -1.331953316491e-05,
+        7.975220775146e-05,
+        3.266966475257e-05
+      ]
+    ],
+    "convention_error_scaled_by_channel_peak": [
+      7.770988720449787e-14,
+      1.877351911792605e-13,
+      2.6217163270960357e-13
+    ],
+    "passed": true
+  },
+  "cross_code_matched_bianchi_alm": "not_run: BASS matching regular tensor initial data, source history and frame orientation are required",
+  "pass_scoped": true
+}

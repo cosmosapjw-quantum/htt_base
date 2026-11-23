@@ -12,6 +12,7 @@ git status --short --branch
 git rev-parse HEAD FETCH_HEAD
 export PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1
 export PYTHONDONTWRITEBYTECODE=1
+mkdir -p "$HOME/Downloads"
 run_dir=$(mktemp -d "$HOME/Downloads/htt-r103-analysis-XXXXXXXX")
 report_dir=docs/research_program/observational_publication_20261015/R103_SOLVER_SOURCE_CONTINUATION_20261123
 .venv/bin/python -B -m scripts.r103.program --node SQ-CF4
@@ -31,11 +32,23 @@ report_dir=docs/research_program/observational_publication_20261015/R103_SOLVER_
 
 ```bash
 field_dir="$HOME/Downloads/htt_r103/manticore"
-.venv/bin/python -B -m scripts.r103.manticore_cf4_pv fetch --indices 0 1 --directory "$field_dir" --max-bytes 800000000
+field_py="$HOME/Downloads/htt_r103/manticore-2.0.1-venv/bin/python"
+# 다른 머신에서 첫 실행할 때 사용할 전용 환경
+if [ ! -x "$field_py" ]; then
+  mkdir -p "$HOME/Downloads/htt_r103"
+  .venv/bin/python -m venv "${field_py%/bin/python}"
+  env -u PYTHONPATH "$field_py" -m pip install -r scripts/r103/manticore-fetch-requirements.txt
+fi
+env -u PYTHONPATH "$field_py" -m pip check
+env -u PYTHONPATH "$field_py" -B -m scripts.r103.manticore_cf4_pv fetch --indices 0 1 --directory "$field_dir" --max-bytes 800000000
 for frame in simulation relative-to-grid-observer; do
-  .venv/bin/python -B -m scripts.r103.manticore_cf4_pv reduce --files "$field_dir"/manticore_local_00[01].h5 --frame "$frame" --output "$run_dir/pilot_$frame.npz"
+  for offset in 0 -0.5; do
+    .venv/bin/python -B -m scripts.r103.manticore_cf4_pv reduce --files "$field_dir"/manticore_local_00[01].h5 --frame "$frame" --origin-offset "$offset" --output "$run_dir/pilot_${frame}_${offset}.npz"
+  done
 done
 ```
+
+이 워크스테이션에는 위 전용 다운로드 환경을 설치했다. 패키지와 공개 로더를 불러왔고 의존성 검사도 통과했다. 실제 카탈로그는 IAP의 공개 키 조회에서 25초 한도를 넘겼다. 미러가 응답한 뒤 전송량을 확인하고 재개하라.
 
 파일럿 2개로 얻는 36차원 표본공분산의 최대 rank는 1이다. 각 실현·frame·격자 원점 규약(0, −0.5)과 공통 압축행렬을 고정한 뒤, 공급자 목록의 고유 실현을 늘려 공분산 고유값과 유효 표본수를 비교하라. 2M++–CF4 추적자 중복, CF4 선정 실패 표본, 독립 영점 및 같은 창의 상관 PV를 각각 조사하라. Hartlap 보정 등 정밀도 행렬의 보정은 표본 독립성과 분포 가정부터 확인한다. 예상값·필드 불확실성과 무조건부 PV 분산을 단순 합산하면 같은 물리를 두 번 셀 수 있다.
 
@@ -50,7 +63,7 @@ export OMP_NUM_THREADS=4
 export OMP_NUM_THREADS=1
 ```
 
-위 바이트 예산은 기존 신호 00001을 재사용하고 noise 1개를 받는 경우다. 그 뒤 실제 `plan`을 보고 연속 구간과 전송 상한을 정하라. 원본은 읽기 전용으로 재사용하고, 새 스트리밍 파일은 쌍별 축약 후 임시 경로에서 해제된다. 입력·마스크 SHA와 모든 서명 있는 TT/EE/BB/TE/EB/TB를 저장한다. 이미 계산한 `output-dir`으로 재개할 수 있다. 300개의 독립된 noise 실현과 corresponding CMB 실현이 필요하다. 동일한 쌍의 재조합은 독립 실현 수를 늘리지 않는다.
+위 바이트 예산은 기존 신호 00001을 재사용하고 noise 1개를 받는 경우다. 그 뒤 실제 `plan`을 보고 연속 구간과 전송 상한을 정하라. 원본은 읽기 전용으로 재사용하고, 새 스트리밍 파일은 쌍별 축약 후 임시 경로에서 해제된다. 입력·마스크 SHA와 모든 서명 있는 TT/EE/BB/TE/EB/TB를 저장한다. 이미 계산한 `output-dir`으로 재개할 수 있다. 서로 다른 noise 실현 300개와 짝을 이루는 CMB 실현이 필요하다. 동일한 쌍의 재조합은 독립 실현 수를 늘리지 않는다.
 
 관측 통계량의 calibration 전에 release-specific 유효 빔·픽셀창, intensity/polarization mask, foreground 처리와 통계량의 관측자 프레임을 동결하라. 관측 맵에만 beam HDU가 있다는 사실만으로 raw MC가 무빔이라는 결론을 낼 수 없다. 공식 릴리스에서 유효 응답을 확인한 후 공통 전달함수 처리와 holdout/injection coverage를 실행한다. PR4 Commander는 해당 릴리스의 별도 자료·전달함수에서 처리한다.
 

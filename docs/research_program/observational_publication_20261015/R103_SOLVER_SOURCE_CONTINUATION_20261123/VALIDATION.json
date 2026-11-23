@@ -1,0 +1,183 @@
+{
+  "schema": "htt.r103.integrated_validation/1",
+  "repository": "cosmosapjw-quantum/htt_base",
+  "branch": "research/r69-observable-physics-bridges-20261118",
+  "r102_base": "664845022a9600ad925d6c1332143395aac5ed90",
+  "source_analysis_commit": "207a73834b6dcbbe49be044d895bfee95b73b7a6",
+  "tested_implementation_commit": "de579912397e1decc76d2ae05a73e06b7e44cca6",
+  "tested_git_tree": "c3202ff527aa58bc435e7f289f3b4257efec4ce8",
+  "workspace": "owner Linux checkout, .venv, PYTHONPATH=.:htt:htt/src, OMP_NUM_THREADS=MKL_NUM_THREADS=OPENBLAS_NUM_THREADS=1 unless noted",
+  "software": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1"
+  },
+  "pytest": {
+    "command": ".venv/bin/python -m pytest -q htt/bass/collision htt/bass/recombination htt/bass/transport htt/htt/tests/test_cf4_group_holdout.py htt/htt/tests/test_cf4_predictive_response.py htt/htt/tests/test_cf4_shared_field_holdout.py tests/obsstat/test_r102_acquire_commander.py tests/obsstat/test_r102_program.py tests/obsstat/test_r103*.py",
+    "exit_code": 0,
+    "passed": 1143,
+    "passed_subtests": 5,
+    "seconds_pytest": 205.39,
+    "warnings": [
+      "healpy verbose keyword deprecation, scripts/r102/commander_pair_check.py:86"
+    ]
+  },
+  "science_execution": {
+    "nodes": 60,
+    "edges": 129,
+    "direct_result_file_nodes": 10,
+    "direct_cross_route_nodes": 7,
+    "union_nodes": 17,
+    "byte_bound_receipts": 15,
+    "canonical_states": {
+      "blocked_external": 1,
+      "blocked_input": 1,
+      "blocked_physical_anchor": 1,
+      "blocked_source": 3,
+      "completed_scoped": 18,
+      "pending": 23,
+      "pending_conditional": 1,
+      "pending_dependency": 1,
+      "ready_scoped": 4,
+      "theory_verified_physical_data_pending": 7
+    },
+    "new_acceptances": 0,
+    "owner_byte_reproduction_sha256": "393bf7d3c233762a30ce52e90bed55e32dbde731db5b87a187befdbb8a5fbb34",
+    "command": ".venv/bin/python -m scripts.r103.program --output /tmp/node60.json"
+  },
+  "full_r102_driver_replay": {
+    "command": ".venv/bin/python -m scripts.r102.native_solver_convergence --output /tmp/native_replay.json",
+    "runtime_seconds": 284.83546788600506,
+    "wall_seconds": 285.9,
+    "peak_rss_KiB": 165460,
+    "raw_sha256": "ee167c12314eadb2ab788204dabef71b8200820c9a1959191b963f024a49de3c",
+    "raw_schema_note": "Historical R102 schema/claim strings are emitted by that CLI. This R103 replay is evidence for the recorded numerical fixtures and meshes.",
+    "full_coupled_step_changes": {
+      "VII_h": {
+        "ref1_vs_ref2_state_rel": 0.005224485899430092,
+        "ref2_vs_ref4_state_rel": 0.0014892810277299612,
+        "ref4_constraints": {
+          "max_jacobi": 1.4162006938941752e-20,
+          "max_ham": 1.0142907154735357e-09,
+          "max_codazzi": 3.886322179035583e-09
+        }
+      },
+      "VI_-1/9": {
+        "ref1_vs_ref2_state_rel": 0.00010021793610980452,
+        "ref2_vs_ref4_state_rel": 2.5602339605495106e-05,
+        "ref4_constraints": {
+          "max_jacobi": 2.856380515060144e-21,
+          "max_ham": 1.5506248797284368e-09,
+          "max_codazzi": 8.238647256409094e-09
+        }
+      },
+      "IX": {
+        "ref1_vs_ref2_state_rel": 0.0016401132257669755,
+        "ref2_vs_ref4_state_rel": 0.00046840875454812696,
+        "ref4_constraints": {
+          "max_jacobi": 1.69449747903299e-22,
+          "max_ham": 1.0212083199364845e-09,
+          "max_codazzi": 1.944094709114544e-08
+        }
+      }
+    },
+    "scope": "Photon-only default; six anisotropic families plus FLRW, both VIIh handednesses, Lmax=6,8,12 transport. Full 80/160/320 cell comparison on three families."
+  },
+  "independent_signed_transfer": {
+    "original_base": "664845022a9600ad925d6c1332143395aac5ed90",
+    "replay_base_at_runtime": "207a73834b6dcbbe49be044d895bfee95b73b7a6",
+    "replay_pass_scoped": true,
+    "replay_signed_reference_sha256": "7d8bf2fc2238ef7d8a1044398399174c7c07e53228c829dc70c33fb477aabc9a",
+    "comparison_source": "AniLoS/AniCLASS pinned in SIGNED_REFERENCE.json and CLOSED_TENSOR_HISTORY.json. Cold source history and initial T/E/B externally supplied for the full time-dependent closed IX transport test.",
+    "raw_closed_sha256": "c66ffa6786349114362c91d99387122bfad31739cacfdff6878a71c73ce3d49f",
+    "matched_native_transport_git_blob": "010e9294fa7cd11756cb7239a5c76a1926bcd224"
+  },
+  "rei_material_replays": {
+    "source_donor": "56dc609ea9b801c88d3364aed3eee140b3a20d46",
+    "units": "tau dimensionless; zbar=20 down to 4",
+    "single_source_max_abs_diff_by_quantity": {
+      "conditional_delta_tau_20_to_4": 6.938893903907228e-18,
+      "finite_tau_from_z4": 6.938893903907228e-18,
+      "x_e_per_H": 0.0
+    },
+    "five_case_max_abs_differences": {
+      "cases": 0.0,
+      "paired_response": 0.0
+    }
+  },
+  "high_tilt_replay": {
+    "smallest_tested_order_meeting_1e_minus8": 32,
+    "owner_relative_four_force_errors": [
+      0.0032703154856203514,
+      0.0007992511297364918,
+      3.740000731206615e-07,
+      5.262209562187166e-10
+    ]
+  },
+  "commander_pair": {
+    "pair": "00000",
+    "status": "physical input reduced and compared with earlier independently ordered map sum",
+    "wall_seconds": 85.66,
+    "peak_rss_KiB": 4185468,
+    "OMP_NUM_THREADS": 4,
+    "matched_ensemble_null": false,
+    "actual_pair_count": 1
+  },
+  "manticore_setup": {
+    "purpose": "download-only isolated environment; reduction uses normal htt_base .venv",
+    "interpreter": "$HOME/Downloads/htt_r103/manticore-2.0.1-venv/bin/python",
+    "python_package": "manticore-data 2.0.1",
+    "resolver_install_count": 26,
+    "sdist_sha256": "a9a2ffc7e9b6ba43fc9961cefaccca98dbda64bd99a20b63db07218f9cc8cf49",
+    "pip_check_exit": 0,
+    "loader_import_ok": true,
+    "live_catalog_probe_seconds_allowed": 25,
+    "live_catalog_exit": 124,
+    "last_visible_stage": "IAP public key metadata endpoint",
+    "real_draws_downloaded": 0,
+    "conditional_velocities_inferred": false
+  },
+  "numerical_scope": "Finite ell, homogeneous cold Thomson, optional collisionless massless-neutrino thermal IC. End-to-end external cosmological Einstein/thermal feedback and matched observational calibration remain unresolved.",
+  "implementation_file_sha256": {
+    "htt/bass/collision/coherency.py": "f1f5c9f7ca8e2c5cbada91404d65bb002fa62219a8341670f28ba5d8968987e2",
+    "htt/bass/recombination/baryon_history.py": "75466b3bc2896a0097722ea3523ab4ef7f1d76bd7be8988f8cbe5f1c26baa6ef",
+    "htt/bass/recombination/opacity_history.py": "3a2ffc1a22f92eae32781c88e9911040b49cc1f9e4c1502ee4dd0c24d3b44b88",
+    "htt/bass/recombination/rei_material_history.py": "bd7c0b8cefb7b025c4c2f24248a8530255c6dfbcd45daf5e6437161c88ff21dd",
+    "htt/bass/recombination/test_baryon_visibility.py": "240e0dd1d536056aace90110d46cb293b939ed4e83153ebd4e42e463a5683e4d",
+    "htt/bass/recombination/test_tilted_hyrec.py": "a58aa876c5a96b3676e676378a87e8c8a43c5b1ab343a3030ab099cc367ca901",
+    "htt/bass/recombination/tilted_hyrec.py": "b21f746b9e74c30178832c5f345d5e5c87914c4e92e153df2f1d282e790977a7",
+    "htt/bass/transport/coupled_einstein_boltzmann.py": "b3d1e4998d781484756498c115cd51a338ea4605c38f2f22ce75d5840203adec",
+    "htt/bass/transport/general_lie_stokes.py": "1d0b5e94d41f4d9aba806ceb4b9ce087ee4a0ccec6dcdc92f9345a5221676357",
+    "htt/bass/transport/moving_collision_stage.py": "e2d2e94f98f3fab70d0030ef8781b91a1019bcdff9075cd21f16e585db2c1504",
+    "htt/bass/transport/test_bolometric_flux_identity.py": "93c11debb0fa17294334e58da517bb5d47877701a95e54a6f3ae6e7827457aea",
+    "htt/bass/transport/test_massless_neutrino_split.py": "a4741125fb28712a4608bdeb78a576643f55506d4e43474024c9792dcd5ff5f4",
+    "htt/bass/transport/test_moving_collision_stage.py": "ff33e22a75620bcd952b9d05002a566a84782c837dcc05a8b0510b1041007891",
+    "htt/htt/htt/infer/cf4_predictive_response.py": "23fc69fdf18332fa86868eb7da480c1338ad6f886534cdc670833445efc9718f",
+    "htt/htt/tests/test_cf4_shared_field_holdout.py": "8abbdb1c9d4b03b0d44a6a6e9424a9c5b4f037559c6ad362b2919dc3820d5fdc",
+    "scripts/r102/acquire_commander_pair.py": "ad1334a575d9d0c26ae887909cbef25283f5aa723ce265c40c227cd81f3c741e",
+    "scripts/r102/native_solver_convergence.py": "630e1ba84491b83e806a3f5a288c4ce648dd167d026c83046b49f977238e2935",
+    "scripts/r103/__init__.py": "2301c8001a3b6a41b931c9bf2fcc80982397576f56ba34b38306567a723d8c90",
+    "scripts/r103/cf4_shared_field_holdout.py": "1cb9f9b0a13fb4c5577c47995f43100042ec2af82ffd6dbf681e531eabc7dacb",
+    "scripts/r103/closed_tensor_history.py": "9e25422db49b2767147d913172b162985a7c1b355b73547034a7684fe87bbcf6",
+    "scripts/r103/commander_ensemble.py": "5351f6adc94da1815f54413638a14821af95873b99403562f826aff94afed857",
+    "scripts/r103/compare_commander.py": "54a50078d3352bea9146e816a12fd5db8438b8611652116427de9586c082b46a",
+    "scripts/r103/cross_routes.py": "e9975b36b9e3ea4892a1d5183a8f1d3cd9aaa3bbb41ced241b8ba398272d674b",
+    "scripts/r103/gaia_frame_curvature.py": "175203c431e9d3354f7dc7c558aa311d2cb338c01b2e9d4419f877f05e906273",
+    "scripts/r103/high_tilt_quadrature.py": "79e0ae8ed498c1147c58faae6aa1cfce2e7d7f0a6810675b873a4e2620fe102a",
+    "scripts/r103/manticore_cf4_pv.py": "4762729645eded4f1c343f259b950ba6d5f970e9b91fb14cb86ae61ea485a515",
+    "scripts/r103/massless_neutrino_check.py": "fa5057d1378f7e09865e4744af07afe37aee68976efe2c174581f35a1034e95c",
+    "scripts/r103/native_moving_check.py": "9e62957f59fd6b528883d42bfd33e25a449df371f39c5f2c2a14f7d27ff27e89",
+    "scripts/r103/p1_joint_patterns.py": "c95156659158effd9c2962a00be3b3aa50697a4a47e3343995f7c0cf5b3f0cb8",
+    "scripts/r103/program.py": "af88eec791dcf567828a8c5f88675dded1de4386577a52e2251ff84be8b49137",
+    "scripts/r103/radio_selection.py": "df7d5133a05fd536faec6538202ddf3ea3fd45be7089475b87f4932f5d5b095a",
+    "scripts/r103/rec_rei_result.py": "5a4c043789953ccfcef71f953b8dc36ea1d0f05c472a3b871afdf0b81a99d9fe",
+    "scripts/r103/rei_five_case_optical.py": "c0deb03425a01a698d6cb000d44aee45a893b3464a58327271a0a62d59c0908b",
+    "scripts/r103/rei_source_check.py": "fb15b3c13a9c8287c64d025c2f36734d1888683f51a078f0e884162be1527876",
+    "scripts/r103/signed_reference.py": "953a9b65d2ffa6940a8a4f272bc3ccd1d519798652356dfbdefbeca282520b84",
+    "tests/obsstat/test_r103_commander_ensemble.py": "0b1a8ee75fd5c597efcf2f21bf7d1d4635f00eaf6d3b600dae83de0897862efe",
+    "tests/obsstat/test_r103_gaia_frame_curvature.py": "b5749c083bbb0275c58c40c4cfa38bde87121c8f75554e0e84360d0ad2dc9167",
+    "tests/obsstat/test_r103_manticore_cf4_pv.py": "d6e2d3959f8ea467ede2ddd1d436640a1cba437ce71c9aec7d6f4f2d50950663",
+    "tests/obsstat/test_r103_program.py": "3bede1a2f17b13212dcfc6cfd92d762a6023fd4f43384eabcce9f21d6c405973",
+    "tests/obsstat/test_r103_rei_material.py": "cce3f31e528807983b235fd2c030cae8baa5016913686d326faa96423be7d0d6"
+  }
+}
