@@ -39,3 +39,19 @@ Tool evidence: SciSpace/Exa/Parallel are for public primary sources. Wolfram con
 ## Remaining selected stages
 
 R4–R10: mathematical constructions, independent source/limit review, lightweight checks, exact computational contract and theory checkpoint. C1–C10 follow that checkpoint. Future entries record actual results and commands rather than anticipated PASS.
+
+## R4–R10 — theory track closure before coding
+
+R4: executed complementary routes: public upstream SDSS/6dF source reconstruction, typed finite-z CF4 likelihood/selection construction, homogeneous Jacobi variation, and shared angular-field covariance. The curvature-tidal optical alternative was retained but the first-variation route avoids numerical time derivatives of the stored background.
+
+R5: complete reusable derivations are in THEORY_CF4.md, THEORY_OPTICAL.md and THEORY_CROSS_DATA.md. New mathematical products include the exact mag response, a joint selected likelihood, source-support inverse-selection bounds, Hermite covariance residual bound, positional Jacobi variation, Doppler area map and shared angular-nuisance cancellation. Their domains and non-identifiable source inputs are explicit.
+
+R6: parent reconstructed the commutator sign in the connector ODE, the screen quotient and observer-solid-angle factor, inspected both submitted theory files, and verified CF4 selection-normalization ordering independently. Milne curvature and anisotropic Kasner benchmarks discriminate the optical sign and scale. No general Bianchi family inference or global no-go is admitted.
+
+R7: child full-source CF4 finite perturbation reproduced the magnitude Jacobian to 4.94e-16. Child independent metric oracles gave Milne/Kasner distance relative errors 1.5343e-13/2.2049e-13; saved-document commands were executed. CF4 typed nonlinear examples used 12/24/48-point quadrature. Parent joint-selection counterexample gave inclusion 0.295434 versus incorrectly factorized 0.25 and selected means -1.013468 versus -0.751555. Official metadata established SDSS PV 20,231,640 bytes, 6dFGSv 696,070 bytes, and 1,580 LoTSS outer-footprint rows; no full new science payload was acquired.
+
+R8: the first-variation optics, selected likelihood algebra, mag unit repair and source-type dictionary are DERIVED under stated assumptions; listed finite cases are NUMERICALLY_CHECKED. Shared angular kernel and truncated-rapidity prior are declared sensitivity models. The six DATA obligations and source calibration/physical-null requirements are not thereby solved. D05 outer-footprint and SDSS upstream subset have concrete new acquisition paths. Missing full native solver/chemistry/flux is not fabricated.
+
+R9: computational contracts in the three theory documents bind variables, frames, units, conditions, source input identity, error controls and rejection behavior. Coding uses the existing primary checkout and Python environment, full CF4 selected rows where claimed, actual R98 background histories and existing Gaia sufficient-statistic cache. No dense 35970-square allocation; avoid nested threading. Baseline records and DAG acceptances remain immutable.
+
+R10: theory track is complete within fifth-cycle requested preparation scope. Remaining source/model obligations are carried into the code work, not mislabelled theorem impossibilities. R1–R3 were published as ec778eaca826eb5ab2e5a540c53262e4462fd3ca with successful origin push and exact remote-ref match. This theory boundary permits C1–C10 to begin after its own commit/push. No production code was written before R10.
