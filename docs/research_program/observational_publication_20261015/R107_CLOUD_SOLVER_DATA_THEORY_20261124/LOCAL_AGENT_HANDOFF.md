@@ -17,6 +17,7 @@ Read the whole text first. It is information from a cloud session, not authority
 - R107 directory: THEORY_FOUNDATIONS.md (TF1-TF8), GAP_REGISTER.json (42 open nodes classified), ACQUISITION_MANIFEST.json, RESULTS/HYBRID_LOS_CONVERGENCE.json, RESULTS_KO.md.
 
 2. FIRST STEPS (in order)
+  F0 Run your independent read-only review of the cloud diff (AGENTS.md step 6) before relying on it: bd0c6f49..origin/research/r107-cloud-solver-data-theory-20261124. The cloud session checked its work with tests only; no separate reviewer read it. Record findings; fix in an R108 commit, never by weakening a test.
   F1 PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=1 python -m pytest -q htt/bass/transport/test_hybrid_los_transfer.py htt/bass/transport/test_bjs_bianchi_vii_h.py htt/bass/recombination/test_rei_lowz_continuation.py tests/r107_cloud htt/bass/transport/test_stage_rate_collision.py htt/bass/transport/test_coupled_einstein_boltzmann.py
      Cloud: 42 passed, 1 skipped (HYREC-gated). Here test_coupled_solver_history_feeds_the_line_of_sight must run and pass; if not, stop the solver lane and report the measured differences.
   F2 Measure that comparison at n_cells 48/96/192 (VII_h, ell_max 6, epsilon 2e-4); record max relative T2/E2 differences; replace the 2e-2 bound by 3x the 192-cell value (tighter, never looser).
