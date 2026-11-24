@@ -1,0 +1,42 @@
+{
+ "schema": "htt.r113.native_pins/1",
+ "bass": {
+  "repo": "cosmosapjw-quantum/bass",
+  "branch": "research/r113-cloud-universal-lie-sky-20261124",
+  "head": "db72d1bcf8341d1fdeed3f1f03b169f00594efb6",
+  "base": "40626723b",
+  "base_note": "R112 head of research/r109-native-nonlinear-sky-20261124"
+ },
+ "rec_bianchi": {
+  "repo": "cosmosapjw-quantum/rec_bianchi",
+  "branch": "research/r113-matched-implicit-recombination-20261124",
+  "head": "05db5451a97c66b9a87de98ae35b88ab820d368f",
+  "base": "3752213099ccb35998c22f1aaf0d42fb674184e4"
+ },
+ "rei_bianchi": {
+  "repo": "cosmosapjw-quantum/rei_bianchi",
+  "branch": null,
+  "head": "503508f1c82a968bebc57900d43a65135c3db185",
+  "note": "unchanged; BASS keeps this pin; cargo test --release --locked --lib --tests at this commit: 271 passed"
+ },
+ "htt_base_base": "e810a4f7",
+ "bass_cargo_pins": {
+  "rec_microphysics": "05db5451a97c66b9a87de98ae35b88ab820d368f",
+  "rei_microphysics": "503508f1c82a968bebc57900d43a65135c3db185"
+ },
+ "push_status": "PUSHED after owner approval (2026-11-25 KST): REC 05db5451a, BASS db72d1bcf, htt_base record 964983c7 verified with git ls-remote. The earlier git bundles carry the same commits.",
+ "tests": {
+  "bass_cargo_test_release_locked": "218 passed, 0 failed",
+  "rec_cargo_test_release_locked": "129 passed, 0 failed (2 new: tests/r113_matched_history.rs)",
+  "bass_r112_cli_byte_identity": "20/20 TSV files identical (V1)"
+ },
+ "bass_artifacts_sha256": {
+  "research/r113_cloud_universal_lie_sky/RESULTS/CROSS_ROUTE_ATLAS.json": "3c48162373e9871683b925b6ebff7ab630ecec09785d3f4b21b84f8d4edc8996",
+  "research/r113_cloud_universal_lie_sky/RESULTS/TRUNCATION_STUDY.json": "0da11488339188bc9998264ccd0cb75e4b00d67ec8009c24d6999982b2b37950",
+  "research/r113_cloud_universal_lie_sky/RESULTS/LONG_EPOCH_DEMO.json": "e8e233c0f62967435c274c2a62c2c482a834f62e1edfa625888422c32a6ff71f",
+  "research/r113_cloud_universal_lie_sky/RESULTS/RECOMBINATION_DEMO.json": "7630c65379f523f9319924b92aa3fb67acd9aca377c9ba32e848211167b1591d",
+  "research/r113_cloud_universal_lie_sky/THEORY.md": "641a1d619ae9b77272758ab7ff7ddec15c1676d629209f93bca45f45259acf0c",
+  "research/r113_cloud_universal_lie_sky/README_KO.md": "4c6ee056acab9038583bec31dc7b100306e87c4fd14867ae7ed19e3ed5847355"
+ },
+ "binary_sha256_note": "RESULTS JSON binary hashes depend on the build path. CROSS_ROUTE_ATLAS, TRUNCATION_STUDY and LONG_EPOCH_DEMO were produced before the recombination coupling (decc8e29...); the final build reproduces three atlas cases byte for byte. RECOMBINATION_DEMO was produced by the final build (3eeca732...)."
+}
