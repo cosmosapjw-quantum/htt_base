@@ -781,7 +781,21 @@ def solve_coupled_einstein_boltzmann(
                 "pi_over_E_fluid": np.zeros((n_rad, n_c, 3, 3)),
                 "thomson_force_over_E_fluid": np.zeros((n_c, 4)),
                 "thomson_force_over_E_sky": np.zeros((n_c, 4)),
+                # Line-of-sight source history (bass.transport.hybrid_los_transfer):
+                # native photon state at N_start and every cell end, electron velocity
+                # at the same nodes, and the H-normalised geometry on the exact ODE grid.
+                "N_start": float(N_eval[0]),
+                "stokes_initial": S_vec.copy(),
+                "stokes_state": np.zeros((n_c, S_vec.size), dtype=np.complex128),
+                "baryon_velocity": np.zeros((n_c + 1, 3)),
+                "geometry_N": N_eval.copy(),
+                "geometry14": np.stack([
+                    np.concatenate([pstf_rank2(sig_grid[k] / H_grid[k])[[0, 1, 0, 0, 1], [0, 1, 1, 2, 2]],
+                                    a_grid[k] / H_grid[k],
+                                    (n_grid[k] / H_grid[k])[[0, 1, 2, 0, 0, 1], [0, 1, 2, 1, 2, 2]]])
+                    for k in range(N_eval.size)]),
             }
+            record["baryon_velocity"][0] = v_grid["baryon"][0]
 
         for cell in range(int(cfg.n_cells)):
             i0 = 2 * cell
@@ -872,6 +886,8 @@ def solve_coupled_einstein_boltzmann(
                 boosted = pstf_rank2(np.outer(v_grid[spec_key][i1], sol.y[offset+1:offset+4, i1]))
                 stress_scale_tab[slot, i1] = float(np.linalg.norm(new_pi_tab[slot, i1] + boosted))
             if cfg.record_history:
+                record["stokes_state"][cell] = S_vec
+                record["baryon_velocity"][cell + 1] = v_grid["baryon"][i1]
                 T4_end = _unpack(float(N_eval[i1]), sol.y[:, i1])[11]
                 for slot, species_idx in enumerate(radiation_indices):
                     angular_state = S_vec if species_idx == photon_idx else nu_vec
