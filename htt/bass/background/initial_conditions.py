@@ -192,7 +192,7 @@ def project_shear_to_codazzi(
     atol: float = 1.0e-10,
     rtol: float = 1.0e-12,
 ) -> tuple[np.ndarray, CodazziProjectionMetadata]:
-    """Project `sigma_ab` onto the nearest Codazzi surface for `target_q`."""
+    """Find the nearest PSTF shear with `div σ = -κ target_q` for physical normal flux."""
 
     if policy not in {"least_squares_project", "solve_shear_offdiag"}:
         raise ValueError(f"Unsupported Codazzi policy {policy!r}")
@@ -204,9 +204,11 @@ def project_shear_to_codazzi(
 
     A = _codazzi_operator_matrix(geometry)
     x0 = _sigma_to_basis_coefficients(sigma0)
-    target = kappa * q
+    target = -kappa * q
     before = A @ x0 - target
-    delta = A.T @ (np.linalg.pinv(A @ A.T, rcond=1.0e-12) @ (-before))
+    # Preserve the old Gram pseudoinverse cutoff, 1e-12 in squared
+    # singular values, while solving directly on the divergence operator.
+    delta, _, rank, _ = np.linalg.lstsq(A, -before, rcond=1.0e-6)
     x_proj = x0 + delta
     sigma_proj = _sigma_from_basis_coefficients(x_proj)
     after = evaluate_background_constraints(
@@ -217,7 +219,7 @@ def project_shear_to_codazzi(
         matter=MatterNormalFrameState(
             rho=0.0,
             p=0.0,
-            q=target / max(float(kappa), 1.0e-30),
+            q=q,
         ),
         lambda_value=0.0,
         kappa=kappa,
@@ -225,7 +227,7 @@ def project_shear_to_codazzi(
     meta = CodazziProjectionMetadata(
         policy=policy,
         applied=bool(np.linalg.norm(delta) > 0.0),
-        rank=int(np.linalg.matrix_rank(A)),
+        rank=int(rank),
         residual_norm_before=float(np.linalg.norm(before)),
         residual_norm_after=float(np.linalg.norm(after)),
         target_q=q,
@@ -430,7 +432,8 @@ def build_tilted_initial_conditions(
 
     geometry = build_geometry(algebra)
     sigma_guess = project_trace_free_shear(np.zeros((3, 3)) if sigma_ab is None else sigma_ab)
-    matter = assemble_tilted_matter_state(tuple(species))
+    species = tuple(species)
+    matter = assemble_tilted_matter_state(species)
     projected_species = tuple(
         SpeciesProjectedState(
             label=piece.params.label,
@@ -447,7 +450,7 @@ def build_tilted_initial_conditions(
                 label=piece.params.label,
             ),
         )
-        for piece in tuple(species)
+        for piece in species
     )
     normal_frame = total_matter_projection(projected_species)
     sigma, matter, projection = project_tilted_codazzi(

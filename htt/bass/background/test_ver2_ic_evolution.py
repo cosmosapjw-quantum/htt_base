@@ -14,6 +14,7 @@ from bass.background import (
     rescale_bianchi_algebra,
     solve_background_evolution,
 )
+from bass.background.constraints import MatterNormalFrameState, codazzi_constraint_residual
 from bass.background.evolution import BackgroundEvolutionConfig
 from bass.background.geometry import build_geometry
 from bass.species.barotropic_closures import OrthogonalSpeciesRegistryClosure
@@ -131,6 +132,91 @@ def test_project_shear_to_codazzi_can_match_nonzero_class_b_momentum_target() ->
     )
     assert meta.residual_norm_after < 1.0e-10
     assert np.linalg.norm(sigma) > 0.0
+
+
+def _koszul_divergence(sigma, bracket):
+    """Contract the Koszul identity directly in an orthonormal invariant frame."""
+    axes = np.eye(3)
+
+    def comm(x, y):
+        return np.einsum("kij,i,j->k", bracket, x, y)
+
+    def nabla(x, y):
+        return np.array([
+            (comm(x, y) @ z - comm(y, z) @ x + comm(z, x) @ y) / 2
+            for z in axes
+        ])
+
+    return np.array([
+        -sum(nabla(y, x) @ sigma @ y + x @ sigma @ nabla(y, y) for y in axes)
+        for x in axes
+    ])
+
+
+@pytest.mark.parametrize("kappa", [0., 0.4, 2.5])
+def test_generic_vi_h_projection_and_residual_against_koszul(kappa):
+    algebra = build_bianchi_algebra("VI_h", a_twist=0.5, n1=1., n3=-2.)
+    geom = build_geometry(algebra)
+    seed = np.array([[0.2, 0.03, -0.11], [0.03, -0.05, 0.07], [-0.11, 0.07, -0.15]])
+    flux = np.array([0.11, -0.07, 0.05])
+    matter = MatterNormalFrameState(1., 0., q=flux)
+    before = _koszul_divergence(seed, algebra.C) + kappa * flux
+    np.testing.assert_allclose(codazzi_constraint_residual(seed, matter, geom, kappa=kappa),
+                               before, rtol=1e-13, atol=1e-14)
+    sigma, meta = project_shear_to_codazzi(sigma_ab=seed, geometry=geom, target_q=flux, kappa=kappa)
+    assert meta.rank == 3
+    np.testing.assert_array_equal(meta.target_q, flux)
+    assert meta.residual_norm_before == pytest.approx(np.linalg.norm(before), abs=1e-14)
+    np.testing.assert_allclose(_koszul_divergence(sigma, algebra.C), -kappa * flux, atol=4e-13)
+    assert meta.residual_norm_after < 4e-13
+
+
+def test_zero_flux_vi_h_projection_uses_divergence_kernel():
+    algebra = build_bianchi_algebra("VI_h", a_twist=0.5, n1=1., n3=-2.)
+    seed = np.diag([0.2, 0.1, -0.3])
+    sigma, _ = project_shear_to_codazzi(sigma_ab=seed, geometry=build_geometry(algebra),
+                                        target_q=np.zeros(3), kappa=2.5)
+    np.testing.assert_allclose(_koszul_divergence(sigma, algebra.C), 0., atol=2e-14)
+
+
+def test_exceptional_vi_h_rejects_exact_blind_flux_component():
+    algebra = build_bianchi_algebra("VI_h", a_twist=2./3., n1=1., n3=-4.)
+    # Left-null vector (0,sqrt(n_2),sqrt(-n_3)); no STF shear can source it.
+    flux = 0.125 * np.array([0., 1., 2.]) / np.sqrt(5.)
+    with pytest.raises(CodazziProjectionError, match="residual=3.125e-01"):
+        project_shear_to_codazzi(sigma_ab=np.zeros((3, 3)), geometry=build_geometry(algebra),
+                                 target_q=flux, kappa=2.5)
+
+
+def test_near_exceptional_vi_h_resolves_attainable_flux_without_normal_equations():
+    algebra = build_bianchi_algebra("VI_h", a_twist=(2./3.) * 1.00001, n1=1., n3=-4.)
+    flux = np.array([0.04, 0.03, -0.008])
+    sigma, meta = project_shear_to_codazzi(sigma_ab=np.zeros((3, 3)), geometry=build_geometry(algebra),
+                                           target_q=flux)
+    assert meta.rank == 3
+    np.testing.assert_allclose(_koszul_divergence(sigma, algebra.C), -flux, rtol=0, atol=2e-12)
+
+
+def test_projection_reports_the_effective_singular_value_rank():
+    algebra = build_bianchi_algebra("VI_h", a_twist=(2./3.) * 1.0000001, n1=1., n3=-4.)
+    flux = np.array([0.04, 0., 0.])
+    sigma, meta = project_shear_to_codazzi(sigma_ab=np.zeros((3, 3)), geometry=build_geometry(algebra),
+                                           target_q=flux)
+    assert meta.rank == 2
+    np.testing.assert_allclose(_koszul_divergence(sigma, algebra.C), -flux, rtol=0, atol=1e-13)
+
+
+def test_tilted_species_generator_retains_physical_flux_in_both_constraints():
+    algebra = build_bianchi_algebra("VI_h", a_twist=0.5, n1=1., n3=-2.)
+    v = np.array([0.03, -0.02, 0.01])
+    species = decompose_tilted_species(TiltedSpeciesParams(rho_hat=1., p_hat=0., v=v, label="dust"))
+    kappa = 0.7
+    ic = build_tilted_initial_conditions(algebra=algebra, species=(s for s in [species]), kappa=kappa)
+    expected_flux = v / (1. - v @ v)
+    np.testing.assert_allclose(ic.matter.q, expected_flux, atol=1e-15)
+    np.testing.assert_allclose(_koszul_divergence(ic.sigma_ab, algebra.C), -kappa * expected_flux, atol=1e-13)
+    assert ic.metadata.codazzi_satisfied and ic.metadata.gauss_admissible
+    np.testing.assert_allclose(ic.residuals.codazzi, 0., atol=1e-13)
 
 
 def test_short_flrw_background_run_preserves_isotropy() -> None:

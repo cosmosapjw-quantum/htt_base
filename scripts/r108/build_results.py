@@ -61,8 +61,8 @@ GAP_DELTA = {
                 "acceptance (physical k, kappa; overdispersion-reproducing mocks) open.",
     "SQ-FRAME": "registry built with boost/inverse tests; 2MRS entry and 6dFGSv conversion velocity missing.",
     "SQ-LIE-FLUX": "frame velocities and Codazzi ranks/blind direction computed in the production sign convention "
-                   "(convention_bridge: D_j sigma^j_i + kappa q_i = 0); constraints.codazzi_constraint_residual and the "
-                   "codazzi_tilt_rhs comment state the opposite sign (owner to reconcile); acceptance blocked (no "
+                   "(convention_bridge: D_j sigma^j_i + kappa q_i = 0). The frozen R108 audit recorded a polarity mismatch "
+                   "in the legacy IC helper, subsequently repaired in R109. Acceptance blocked (no "
                    "independent sigma_ab, no group-frame orientation).",
     "H05": "first joint bulk + H-dipole step done on R98 windows (CONDITIONAL); W1 TF step blocked (CDS unavailable).",
 }

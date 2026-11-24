@@ -20,11 +20,9 @@ Purpose
        convention: kappa q = M s5 with M = -D, D s5 = D_j sigma^j_i = exact_momentum_divergence(sigma, a, n),
        i.e. D_j sigma^j_i + kappa q_i = 0 with q^i = T^{0i} (convention_bridge.exact_momentum_divergence;
        tilted_bianchi_state.evaluate_tilted_constraints and MomentumConstraintMap 'matrix @ shear = -kappa q').
-       The R107 GAP route q = 3 sigma a - eps sigma n equals -div sigma (checked). Two repository statements
-       have the opposite sign and are recorded, not edited: bass.background.constraints.
-       codazzi_constraint_residual (div sigma - kappa q), which drives initial_conditions.
-       project_shear_to_codazzi (target div sigma = +kappa q, checked numerically), and the comment in
-       codazzi_tilt_rhs.py. Rank, singular values and every left-null (blind) flux direction are reported for
+       The R107 flux route, the tensor-state constraint evaluator, and the projected
+       initial conditions are checked against this convention. Rank, singular values
+       and every left-null (blind) flux direction are reported for
        the solver family atlas, including VI_-1/9 (PHY-05, TF5); rank < 2 maps report the whole blind subspace.
     4. The rank-aware Codazzi residual with the measured q needs an independently sourced shear with
        covariance, the structure constants and the orientation of the group frame; none is available,
@@ -44,7 +42,7 @@ Units
 
 Usage
     PYTHONPATH=.:htt:htt/src .venv/bin/python -m scripts.r108.frame_lie_flux \
-        --output docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/FRAME/LIE_FLUX_FRAMES.json
+        --output docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/FRAME/LIE_FLUX_FRAMES_V3.json
     Random shears for the sign-convention checks use numpy default_rng(20261124).
 """
 from __future__ import annotations
@@ -76,7 +74,7 @@ CODE = ["htt/bass/background/codazzi_tilt_rhs.py", "htt/bass/background/constrai
         "htt/obsstat/catalogue_frame_registry.py", "htt/obsstat/publication_frame_kinematics.py",
         "scripts/r108/frame_lie_flux.py", "scripts/r108/frame_cf4_joint.py", "scripts/r108/frame_registry_build.py",
         "scripts/r108/common.py"]
-OUTFILE = OUT_DIR / "FRAME/LIE_FLUX_FRAMES.json"
+OUTFILE = OUT_DIR / "FRAME/LIE_FLUX_FRAMES_V3.json"
 CURV = 3e-4  # solver atlas structure scale (CoupledSolverConfig.curvature default)
 CONVENTION_USED = ("production: kappa q_i = (M s5)_i with M = -D, where D s5 = D_j sigma^j_i = "
                    "exact_momentum_divergence(sigma, a, n, a_sign=+1) on the orthonormal STF-5 basis; equivalently "
@@ -92,16 +90,12 @@ PRODUCTION_SIGN_SOURCES = [
      "evaluate_tilted_constraints derivation"),
     ("htt/bass/background/tilted_bianchi_state.py", "cod_vec = div_sig + kq",
      "evaluate_tilted_constraints executable residual div sigma + kappa q"),
-]
-OPPOSITE_SIGN_SOURCES = [
-    ("htt/bass/background/constraints.py", "return div_pstf2(sigma, geometry.Gamma) - kappa * matter.q",
-     "codazzi_constraint_residual executable residual div sigma - kappa q (kappa q = +div sigma)"),
-    ("htt/bass/background/initial_conditions.py", "target = kappa * q",
-     "project_shear_to_codazzi: A = codazzi operator of evaluate_background_constraints (= div at q = 0); "
-     "solves A x = +kappa q, i.e. div sigma = +kappa q"),
-    ("htt/bass/background/codazzi_tilt_rhs.py", "D_B σ^{AB} − (2/3) D^A Θ",
-     "comment: residual D_B sigma^AB - (2/3) D^A Theta - kappa q^A (kappa q = +div sigma); the module's "
-     "executable gate is a Friedmann-slack surrogate"),
+    ("htt/bass/background/constraints.py", "return div_pstf2(sigma, geometry.Gamma) + kappa * matter.q",
+     "normal-frame tensor residual div sigma + kappa q"),
+    ("htt/bass/background/initial_conditions.py", "target = -kappa * q",
+     "projected shear has div sigma = -kappa q"),
+    ("htt/bass/background/codazzi_tilt_rhs.py", "+ κ q^A`` is evaluated",
+     "per-axis momentum constraint described by the reduced module; its scalar gate measures Friedmann slack"),
 ]
 
 
@@ -256,26 +250,22 @@ def sign_convention_audit(rng) -> dict:
         "production_state_VI_-1/9_eps1e-5": {
             "norm_div_sigma": float(np.linalg.norm(div)), "norm_kappa_q": float(np.linalg.norm(kq)),
             "production_residual_div_plus_kappa_q_rel": float(np.linalg.norm(div + kq) / sc),
-            "codazzi_tilt_rhs_constraints_residual_div_minus_kappa_q_rel": float(np.linalg.norm(res_constraints) / sc),
+            "constraints_helper_residual_rel": float(np.linalg.norm(res_constraints) / sc),
             "state_constraint_report_codazzi_norm": float(state.constraints.codazzi_residual_norm)},
         "initial_conditions_projection_VI_h_full_rank": {
             "kappa": 1.0, "norm_target_q": nq, "projection_rank": int(meta_ic.rank),
             "div_sigma_minus_kappa_q_rel": float(np.linalg.norm(div_ic - q_ic) / nq),
             "production_residual_div_plus_kappa_q_rel": float(np.linalg.norm(div_ic + q_ic) / nq),
-            "reading": "the projected shear satisfies div sigma = +kappa q, the opposite of the production constraint"},
+            "reading": "target_q is physical normal flux; compare both signed residuals"},
         "statement": {
             "convention_bridge.exact_momentum_divergence docstring / tilted_bianchi_state.evaluate_tilted_constraints "
             "/ MomentumConstraintMap": "div sigma + kappa q = 0  =>  kappa q = -div sigma (production solver states)",
             "R107 GAP_REGISTER SQ-LIE-FLUX route (WE97/HBW01 form)": "q = 3 sigma a - eps sigma n = -div sigma",
-            "constraints.py codazzi_constraint_residual": "(div sigma)_a - kappa q_a  =>  kappa q = +div sigma (opposite)",
-            "initial_conditions.project_shear_to_codazzi": "targets div sigma = +kappa q (opposite; inherits constraints.py)",
-            "codazzi_tilt_rhs.py comment": "D_B sigma^AB - (2/3) D^A Theta - kappa q^A  =>  kappa q = +div sigma (opposite)",
+            "constraints.py codazzi_constraint_residual": "div sigma + kappa q",
+            "initial_conditions.project_shear_to_codazzi": "div sigma = -kappa q",
+            "codazzi_tilt_rhs": "the reduced six-variable diagnostic measures negative Friedmann slack",
         },
-        "consequence": ("production sign confirmed: kappa q = -div sigma; the published maps (M_sigma_to_kappa_q_production) "
-                        "use it. constraints.codazzi_constraint_residual, the initial_conditions Codazzi projection that "
-                        "uses it, and the codazzi_tilt_rhs.py comment state the opposite sign: a pre-existing repository "
-                        "inconsistency reported to the lead (those files are not edited in R108). Ranks, singular values "
-                        "and blind directions are sign invariant; the sign of a residual or of a required shear is not"),
+        "consequence": "Map polarity fixes the physical shear or flux direction. Singular values and blind subspaces are sign invariant.",
     }
 
 
@@ -429,7 +419,7 @@ def run(output: Path) -> dict:
                                  if e["rank"] > 0 else None) for f, e in fam.items()}}
 
     payload = {
-        "schema": "htt.r108.frame.lie_flux_frames/2",
+        "schema": "htt.r108.frame.lie_flux_frames/3",
         "node": "SQ-LIE-FLUX (handoff A7); PHY-05 blind direction",
         "labels": {"frames_and_differences": "CONDITIONAL (CMB published dipole; CF4 working covariance)",
                    "radio_proxy_comparisons": ("CONDITIONAL (R65 proxy response law; Poisson or jackknife covariance; "
@@ -457,9 +447,6 @@ def run(output: Path) -> dict:
                                     "is not a frame velocity"),
         "codazzi": {"convention_used": CONVENTION_USED,
                     "production_sign_sources": [locate(*x) for x in PRODUCTION_SIGN_SOURCES],
-                    "opposite_sign_statements": {
-                        "status": "pre-existing repository sign inconsistency; reported to the lead; files not edited in R108",
-                        "items": [locate(*x) for x in OPPOSITE_SIGN_SOURCES]},
                     "sign_convention_audit": audit, "families": fam, "VI_-1/9": vi19,
                     "flux_scale_table": {"omega_m": planck_omega_m,
                                          "omega_m_locator": "Planck 2018 VI (A&A 641, A6) Table 2; htt/workspace/data/obs_defaults.json",

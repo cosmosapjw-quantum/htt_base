@@ -31,7 +31,7 @@ def test_map_equals_production_divergence_matrix_and_sign_convention():
         d = exact_momentum_divergence(s, alg.a, alg.n, a_sign=1)
         assert np.allclose(d, div_pstf2(s, geom.Gamma), rtol=1e-12, atol=1e-18)
         q_route = 3.0 * s @ alg.a - np.einsum("ijk,jd,kd->i", LEVI_CIVITA_3D, s, alg.n)
-        assert np.allclose(q_route, -d, rtol=1e-12, atol=1e-18)  # R107 route = production sign = -(codazzi_tilt_rhs sign)
+        assert np.allclose(q_route, -d, rtol=1e-12, atol=1e-18)  # Physical flux equals minus the geometric divergence.
 
 
 def _stf5(sigma):
@@ -114,7 +114,7 @@ def test_radio_proxy_is_never_a_frame_velocity(payload):
     assert payload["labels"]["radio_frame_velocity"] == "BLOCKED"
 
 
-def test_payload_codazzi_convention_and_opposite_sign_record(payload):
+def test_current_payload_codazzi_convention_and_physical_ic_sign(payload):
     """Review-2 FRAME-2/FRAME-4 on the published payload."""
     cod = payload["codazzi"]
     assert cod["convention_used"].startswith("production: kappa q_i = (M s5)_i with M = -D")
@@ -122,15 +122,15 @@ def test_payload_codazzi_convention_and_opposite_sign_record(payload):
         assert e["max_abs_M_plus_production_divergence_matrix"] == 0.0, fam
         assert "M_div_codazzi_tilt_rhs_convention" not in e
         assert e["blind_flux_dimension"] == 3 - e["rank"] == len(e["blind_flux_basis"]), fam
-    for item in cod["production_sign_sources"] + cod["opposite_sign_statements"]["items"]:
-        assert item["lines"], item["needle"]
-    files = {i["file"] for i in cod["opposite_sign_statements"]["items"]}
-    assert files == {"htt/bass/background/constraints.py", "htt/bass/background/initial_conditions.py",
-                     "htt/bass/background/codazzi_tilt_rhs.py"}
-    aud = cod["sign_convention_audit"]
-    assert aud["production_state_VI_-1/9_eps1e-5"]["production_residual_div_plus_kappa_q_rel"] < 1e-10
-    ic = aud["initial_conditions_projection_VI_h_full_rank"]
-    assert ic["div_sigma_minus_kappa_q_rel"] < 1e-10 and abs(ic["production_residual_div_plus_kappa_q_rel"] - 2.0) < 1e-10
+    for source in cod["production_sign_sources"]:
+        assert source["lines"], source["needle"]
+    audit = cod["sign_convention_audit"]
+    state = audit["production_state_VI_-1/9_eps1e-5"]
+    assert state["production_residual_div_plus_kappa_q_rel"] < 1e-10
+    assert state["constraints_helper_residual_rel"] < 1e-10
+    ic = audit["initial_conditions_projection_VI_h_full_rank"]
+    assert ic["production_residual_div_plus_kappa_q_rel"] < 1e-10
+    assert abs(ic["div_sigma_minus_kappa_q_rel"] - 2.0) < 1e-10
     assert payload["code_sha256"]["scripts/r108/frame_lie_flux.py"] and payload["git"]["head"]
 
 

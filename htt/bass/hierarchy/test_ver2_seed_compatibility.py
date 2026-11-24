@@ -86,6 +86,9 @@ def test_constraint_projection_accepts_explicit_runtime_target_q() -> None:
     assert projection.projection_ready is True
     assert projection.projection_mode == "background_codazzi_project"
     assert projection.projected_sigma_ab is not None
+    np.testing.assert_allclose(projection.momentum_residual_before, target_q, atol=1e-15)
+    # For type V, the normal Codazzi constraint reduces to 3 σ a = κ q.
+    np.testing.assert_allclose(3. * projection.projected_sigma_ab @ algebra.a, target_q, atol=1e-13)
     assert np.linalg.norm(projection.momentum_residual_after) < 1.0e-10
 
 

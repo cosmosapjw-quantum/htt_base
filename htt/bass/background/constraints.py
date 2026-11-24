@@ -117,9 +117,9 @@ def codazzi_constraint_residual(
     *,
     kappa: float = 1.0,
 ) -> np.ndarray:
-    """Return `(div σ)_α - κ q_α`."""
+    """Return `(div σ)_α + κ q_α` for normal-frame energy flux `q^i = T^{0i}`."""
     sigma = pstf_rank2(sigma_ab)
-    return div_pstf2(sigma, geometry.Gamma) - kappa * matter.q
+    return div_pstf2(sigma, geometry.Gamma) + kappa * matter.q
 
 
 def evaluate_background_constraints(

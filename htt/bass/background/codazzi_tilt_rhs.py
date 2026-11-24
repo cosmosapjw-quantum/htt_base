@@ -20,9 +20,10 @@ The shear five-vector decomposition into σ_+, σ_-, σ_×1..3 inherits from
 ``bass/background/initial_conditions.py``; here we evolve the scalar
 ``Σ² = (1/2) σ_ab σ^ab`` plus the King-Ellis tilt ``β``.
 
-Per V5_ROUND16_01 §3.3, the Codazzi residual ``||C_C^A||₂ / H_ref²`` must
-stay below ``1e-6`` (tightened from the ``1e-4`` historical threshold) and
-threshold breach is **integration-aborting**, not metadata-only.
+The six-variable evolution monitors negative Friedmann slack. The legacy
+Codazzi diagnostic fields retain that scalar, divided by the configured
+reference Hubble squared. The tensor-state background computes the three
+components of the momentum constraint with the normal-frame energy flux.
 
 The downstream consumers (``tilted_visibility_evolved.py`` per 01 §4,
 ``recombination/anisotropic_correction.py`` per 01 §5, the Round-16 hierarchy
@@ -56,7 +57,7 @@ __all__ = [
 ]
 
 
-#: Round-16 production threshold for the dimensionless Codazzi residual.
+#: Round-16 threshold for the scaled negative Friedmann slack of the reduced model.
 #: Tightened from the historical 1e-4 (V5_ROUND16_01 §3.3).
 DEFAULT_CODAZZI_RESIDUAL_THRESHOLD: float = 1.0e-6
 
@@ -91,7 +92,7 @@ class CodazziTiltConfig:
         IVP method label. ``"BDF"`` matches the existing
         ``integrate_tilt_rapidity_history`` default.
     codazzi_residual_threshold
-        Dimensionless ``||C||/H²`` ceiling. Breach raises
+        Ceiling for the scaled negative Friedmann slack. Breach raises
         :class:`bass.background.CodazziProjectionError`. Set to
         ``float("inf")`` to disable the gate (diagnostic only — the gate
         is the load-bearing addition for PR-S1).
@@ -109,7 +110,7 @@ class CodazziTiltConfig:
         result metadata sets ``tilt_evolution_status = "frozen_diagnostic"``.
         Default ``False`` (Round-16 production stance).
     H_reference
-        Reference Hubble used to non-dimensionalize the Codazzi residual.
+        Reference Hubble used in the legacy scalar diagnostic normalization.
         If ``None``, defaults to the H value implied by the initial
         Friedmann constraint at ``a_start``.
     """
@@ -176,7 +177,7 @@ class CodazziTiltEvolutionResult:
     The arrays are aligned: ``a[i]`` corresponds to ``Omega_r[i]``,
     ``Sigma_squared[i]``, ``beta[i]``, etc.
 
-    The dimensionless Codazzi residual at each output step is reported in
+    The scaled negative Friedmann slack at sampled steps is reported in
     ``codazzi_residual_over_Hsq``; ``codazzi_max_over_Hsq`` is its sup norm.
     A run with the gate active is guaranteed to satisfy
     ``codazzi_max_over_Hsq <= config.codazzi_residual_threshold``; otherwise
@@ -253,7 +254,7 @@ def evolve_codazzi_tilt_background(
     """Integrate the Round-16 Codazzi-consistent tilted Bianchi background.
 
     Implements the joint (Ω_r, Ω_m, Σ², W², β, Ω_k) evolution in e-fold
-    time with the dimensionless Codazzi residual gate enforced per output
+    time with the reduced Friedmann-slack gate enforced per output
     step (or per ``codazzi_projection_cadence``).
 
     On gate breach raises :class:`bass.background.CodazziProjectionError`
@@ -290,7 +291,7 @@ def evolve_codazzi_tilt_background(
     )
     if initial_residual_over_Hsq > config.codazzi_residual_threshold:
         raise CodazziProjectionError(
-            f"Codazzi residual {initial_residual_over_Hsq:.3e} exceeds "
+            f"Codazzi residual surrogate (negative Friedmann slack) {initial_residual_over_Hsq:.3e} exceeds "
             f"threshold {config.codazzi_residual_threshold:.0e} at IC "
             f"(N={float(np.log(config.a_start)):.3f}, a={config.a_start:.3e}); "
             f"family={family!r}, tilt_freeze={config.tilt_freeze}, "
@@ -344,7 +345,7 @@ def evolve_codazzi_tilt_background(
         dtype=np.float64,
     )
 
-    # Codazzi residual evaluation per cadence.
+    # Reduced Friedmann-slack evaluation per cadence.
     #
     # Note on the residual surrogate: the reduced 6-variable closure in
     # ``rhs_bianchi`` is *structurally* Friedmann-consistent — Ω_Λ is
@@ -357,7 +358,7 @@ def evolve_codazzi_tilt_background(
     # honest health metric for the reduced closure.
     #
     # The *full* per-axis Codazzi residual ``D_B σ^{AB} − (2/3) D^A Θ
-    # − κ q^A`` is evaluated on the per-axis tetrad-state evolution one
+    # + κ q^A`` is evaluated on the per-axis tetrad-state evolution one
     # layer up (``bass.background.evolution.solve_background_evolution``
     # with the canonical ``evaluate_background_constraints``); that
     # check fires through ``BackgroundResidualSummary`` already.
@@ -392,7 +393,7 @@ def evolve_codazzi_tilt_background(
     if codazzi_max > config.codazzi_residual_threshold:
         worst = int(np.argmax(codazzi_resid))
         raise CodazziProjectionError(
-            f"Codazzi residual {codazzi_max:.3e} exceeds threshold "
+            f"Codazzi residual surrogate (negative Friedmann slack) {codazzi_max:.3e} exceeds threshold "
             f"{config.codazzi_residual_threshold:.0e} at N={N[worst]:.3f} "
             f"(a={a[worst]:.3e}); family={family!r}, "
             f"tilt_freeze={config.tilt_freeze}, "
@@ -408,6 +409,7 @@ def evolve_codazzi_tilt_background(
         "family": family,
         "tilt_evolution_status": tilt_status,
         "codazzi_projection_cadence": cadence,
+        "reduced_constraint_diagnostic": "negative_friedmann_slack_over_Href_squared",
         "codazzi_residual_threshold": float(config.codazzi_residual_threshold),
         "codazzi_residual_max_over_Hsq": codazzi_max,
         "n_codazzi_evaluations": int((codazzi_resid != 0.0).sum() or 1),
