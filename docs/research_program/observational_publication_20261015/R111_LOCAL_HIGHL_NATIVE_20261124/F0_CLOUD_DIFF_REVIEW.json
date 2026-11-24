@@ -1,0 +1,137 @@
+{
+  "schema": "htt.r111.f0_cloud_diff_review/1",
+  "reviewed_commits": {
+    "bass": {
+      "repo": "/home/cosmosapjw/worktrees/bass-r109-native-20261124",
+      "base": "3966f2a0824a8b32309a8a99481dd6940b952a35",
+      "r110_head": "21dc1a9302eb2053e0ac544827ab32e6899b9058"
+    },
+    "rec": {
+      "repo": "/home/cosmosapjw/Downloads/htt_r109_original_rec",
+      "base": "f3797f42c36632d80a67f23a4e587f0799d12cc5",
+      "r110_head": "be75f8b1c3dbfb50ecd44fdbd6afae69ec9d959d"
+    },
+    "rei": {
+      "repo": "/home/cosmosapjw/worktrees/rei-htt-thomson-20261124",
+      "base": "25fbae98b3d63a47dfe7200160c86a36c5f80d27",
+      "r110_head": "fe3b4595616350c3f3d2013ebf3d761ec5115559"
+    },
+    "htt_base": {
+      "repo": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "base": "423165ab295dbd86064dbe116d7507c270ed3d10",
+      "r110_head": "3f114045da63c760e0ce76522a96e1ae5bb49699"
+    }
+  },
+  "reviewer_subagent": {
+    "role": "Independent Cloud Diff Reviewer",
+    "type": "research",
+    "conversation_id": "fbdb2b3d-73fa-4403-8621-17d2b63e9006"
+  },
+  "counts_by_severity": {
+    "CRITICAL": 0,
+    "HIGH": 1,
+    "MEDIUM": 4,
+    "LOW": 5
+  },
+  "findings": [
+    {
+      "id": "F0-1",
+      "severity": "HIGH",
+      "repo": "bass",
+      "locations": [
+        "_rustcore/src/homogeneous_sky/replay.rs:123-133",
+        "_rustcore/src/homogeneous_sky/recoil.rs:72,169-185",
+        "_rustcore/src/homogeneous_sky/mod.rs:274-276"
+      ],
+      "summary": "los_sky omitted negative transverse screen-eigenvalue guard (min_eig < -1e-9 * min_i) and recoil::trial aborted instead of bisecting when SDIRK2 hit stage nonpositivity (R_min = -0.2071).",
+      "r111_resolution": "Fixed in BASS R111 commit: added min_eig < -1e-9 * min_i check to los_sky, separated nonfinite vs nonpositive checks in to_normal, added Ok(None) bisection fallback in recoil::trial for Sdirk2 stage nonpositivity, and added regression tests."
+    },
+    {
+      "id": "F0-2",
+      "severity": "MEDIUM",
+      "repo": "htt_base / bass",
+      "locations": [
+        "docs/.../R110_CLOUD_NATIVE_HIGHL_20261124/LOCAL_AGENT_HANDOFF.md:8,19",
+        "docs/.../R110_CLOUD_NATIVE_HIGHL_20261124/RESULTS_KO.md:6",
+        "_rustcore/examples/homogeneous_sky.rs:373-401"
+      ],
+      "summary": "Handoff claims full byte-for-byte R109 reproduction, whereas modes.tsv/cl.tsv/diagnostics.tsv are byte-identical while run.txt unconditionally appends 10 new R110 provenance keys. Also RESULTS_KO.md writes '+50% relative to 2nd order' at Lya where (exact-second)/second = +101.12% (2nd order underestimates exact by 50.28%). Test count is 189 (173 unit + 16 integration) + 3 example tests = 192 total.",
+      "r111_resolution": "Documented repository-wins differences transparently in F0 review, R111/RESULTS_KO.md, and final report without rewriting R110 history."
+    },
+    {
+      "id": "F0-3",
+      "severity": "MEDIUM",
+      "repo": "htt_base / bass",
+      "locations": [
+        "scripts/r109/commander_native.py:63,91,100",
+        "research/r110_cloud_highl_sky/run_highl_atlas.py:90-91,145-152"
+      ],
+      "summary": "run_highl_atlas.py defaults --summary/--tarball to tracked RESULTS/* if omitted; commander_native.py hardcoded 'recoil_' archive prefix and lacked unit tests.",
+      "r111_resolution": "F3 invoked run_highl_atlas.py with explicit fresh paths in ~/Downloads/htt_r111/; added --member-prefix (default 'recoil_') to commander_native.py and added tests/obsstat/test_r111_commander_native.py."
+    },
+    {
+      "id": "F0-4",
+      "severity": "MEDIUM",
+      "repo": "rei / rec / bass",
+      "locations": [
+        "hyrec_1100/extract.py:32-34",
+        "rust/rei_microphysics/src/axbi_driver.rs:207-227",
+        "rust/rei_microphysics/src/igm_background.rs:79",
+        "research/r110_cloud_highl_sky/run_highl_atlas.py:31-35,125-128"
+      ],
+      "summary": "HyRec n_H0 (0.18971712 m^-3, m_H convention) differs by +0.0541% from REI AX08 (0.18981985 m^-3, m_p convention); R110 Part B used duration=7.0 (z=0.003982), dust_fraction=0.75 (exact 0.75668), and omitted +0.685 in Omega_Lambda denominator.",
+      "r111_resolution": "C1/C2 explicitly record both n_H0 anchors and quantify the +0.0541% z<=20 optical depth sensitivity; C1/C3 use exact duration=ln(1+z_emit), exact matter/(matter+rad) dust_fraction, and exact Omega_Lambda."
+    },
+    {
+      "id": "F0-5",
+      "severity": "MEDIUM",
+      "repo": "rei",
+      "locations": [
+        "rust/rei_microphysics/src/bass_ionization.rs:96,119,128-137",
+        "rust/rei_microphysics/examples/bass_ionization.rs:46-47"
+      ],
+      "summary": "bass_ionization::merge allowed z_low == 0.0 (causing 0/0 NaN and duplicate eta); rec(z=20) knot dropped so rec(z=21) bridges to rei(z=20); unchecked CSV indexing in example.",
+      "r111_resolution": "Fixed in REI R111 commit: reject z_match <= 0 in Continuation::xe, skip continuation cleanly when z_low == 0.0 in merge, replace unchecked CSV indexing with safe .get().ok_or()?, and document single-owner z=20 bridge behavior."
+    },
+    {
+      "id": "F0-6",
+      "severity": "LOW",
+      "repo": "bass",
+      "locations": ["_rustcore/examples/homogeneous_sky.rs:361"],
+      "summary": "run.txt logged required_initial_q_over_E using initial_lie_node(ic) (omega_lambda=0) instead of sol.history[0].node.",
+      "r111_resolution": "Fixed in BASS R111 commit to pass &sol.history[0].node."
+    },
+    {
+      "id": "F0-7",
+      "severity": "LOW",
+      "repo": "bass",
+      "locations": ["_rustcore/src/kinetic/sky_spectrum.rs:272,320"],
+      "summary": "analyze_rings lacked library-level Nyquist guard (n_phi >= 2*lmax+1) and used 1.0 - z*z instead of (1.0 - z)*(1.0 + z).",
+      "r111_resolution": "Fixed in BASS R111 commit with regression test in r110_replay_los.rs; analyze_rings uses (1.0 - z)*(1.0 + z) when |z| > 0.99999 so F3 l<=48 Gauss-Legendre rings remain bitwise identical to R110 RESULTS/HIGHL_ATLAS.json (32/32 SHA-256 match)."
+    },
+    {
+      "id": "F0-8",
+      "severity": "LOW",
+      "repo": "bass",
+      "locations": ["_rustcore/src/homogeneous_sky/solve.rs:19-37"],
+      "summary": "Settings struct expanded without Default/#[non_exhaustive].",
+      "r111_resolution": "Recorded as non-blocking API note; external callers use CLI or explicit struct initialization."
+    },
+    {
+      "id": "F0-9",
+      "severity": "LOW",
+      "repo": "rec",
+      "locations": ["rust/rec_microphysics/src/anisotropic.rs:102-116,176-232,252-284"],
+      "summary": "escape_rate_factor canceled for tau0 << 1; baryon-frame assumption undocumented; compton_temperature_k fixed 256 panels.",
+      "r111_resolution": "Fixed in REC R111 commit: delegate tau0 < 1.0 to tau0 * sobolev_escape_average, document baryon-rest-frame contract, add thin-depth test."
+    },
+    {
+      "id": "F0-10",
+      "severity": "LOW",
+      "repo": "bass",
+      "locations": ["research/r110_cloud_highl_sky/THEORY_CHECKS.json"],
+      "summary": "1-ulp local hardware/BLAS difference in ETD2 toy errors when re-running theory_checks.py locally.",
+      "r111_resolution": "Restored tracked THEORY_CHECKS.json cleanly in BASS; local F1 run output preserved separately."
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "schema": "htt.r111.executed_commands/1",
+  "claim_ceiling": "deterministic single-history native outputs and benchmarks; zero R78 DAG node promotions; T1-T3 remain HOLD design specifications",
+  "checkouts": {
+    "bass": "/home/cosmosapjw/worktrees/bass-r109-native-20261124",
+    "rec": "/home/cosmosapjw/Downloads/htt_r109_original_rec",
+    "rei": "/home/cosmosapjw/worktrees/rei-htt-thomson-20261124",
+    "htt_base": "/home/cosmosapjw/Dropbox/bianchi/htt_base"
+  },
+  "f1_f3_validation": [
+    {
+      "id": "F1_BASS_TESTS_AND_BUILD",
+      "cwd": "/home/cosmosapjw/worktrees/bass-r109-native-20261124",
+      "command": "cargo test --release --locked --manifest-path _rustcore/Cargo.toml && cargo test --release --locked --manifest-path _rustcore/Cargo.toml --examples && cargo build --release --locked --manifest-path _rustcore/Cargo.toml --example homogeneous_sky --example sky_covariance",
+      "summary": "174 unit + 1 + 2 + 5 + 10 = 192 tests + 3 sky_covariance example tests passed"
+    },
+    {
+      "id": "F1_THEORY_AND_CONVERGENCE",
+      "cwd": "/home/cosmosapjw/worktrees/bass-r109-native-20261124",
+      "command": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python research/r110_cloud_highl_sky/theory_checks.py && /home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python research/r110_cloud_highl_sky/convergence_study.py --binary _rustcore/target/release/examples/homogeneous_sky --out /home/cosmosapjw/Downloads/htt_r111/f1_conv.json",
+      "summary": "BE ratios ~1.90..2.49 (~2), SDIRK2 ratios 3.94..4.05 (~4)"
+    },
+    {
+      "id": "F2_REC_AND_REI_TESTS",
+      "command": "cd /home/cosmosapjw/Downloads/htt_r109_original_rec/rust/rec_microphysics && cargo test --release --locked && cd /home/cosmosapjw/worktrees/rei-htt-thomson-20261124/rust/rei_microphysics && cargo test --release --locked --lib bass_ionization && cargo build --release --locked --example bass_ionization",
+      "summary": "REC all passed (incl. 5 tests/anisotropic.rs); REI 3 passed"
+    },
+    {
+      "id": "F3_ATLAS_BITWISE_PARITY",
+      "cwd": "/home/cosmosapjw/worktrees/bass-r109-native-20261124",
+      "command": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python research/r110_cloud_highl_sky/run_highl_atlas.py --binary _rustcore/target/release/examples/homogeneous_sky --raw /home/cosmosapjw/Downloads/htt_r111/f3_r111_raw/runs --summary /home/cosmosapjw/Downloads/htt_r111/f3_r111_raw/HIGHL_ATLAS_REBUILD.json --tarball /home/cosmosapjw/Downloads/htt_r111/f3_r111_raw/HIGHL_ATLAS_MODES_REBUILD.tar.gz",
+      "summary": "32/32 los_modes.tsv SHA-256 identical to R110 RESULTS/HIGHL_ATLAS.json (0 mismatches)"
+    }
+  ],
+  "compute_lane": {
+    "C1": {
+      "command": "PYTHONPATH=.:htt:htt/src /home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python -m scripts.r111.c1_visibility_hyrec",
+      "output_json": "docs/research_program/observational_publication_20261015/R111_LOCAL_HIGHL_NATIVE_20261124/C1_VISIBILITY_COVERAGE.json",
+      "sha256": "f8d08b23418a9e016bcea89ee1e1c631b5d4db8aacba8d57fda1b52cd3b91cdb"
+    },
+    "C2": {
+      "command": "PYTHONPATH=.:htt:htt/src /home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python -m scripts.r111.c2_rei_join",
+      "output_json": "docs/research_program/observational_publication_20261015/R111_LOCAL_HIGHL_NATIVE_20261124/C2_REI_JOIN.json",
+      "sha256": "aada277dc70d7795731af04d0a40f1950e97cf88a1aac2cce313f586fa17ac52"
+    },
+    "C3": {
+      "command": "PYTHONPATH=.:htt:htt/src /home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python -m scripts.r111.c3_long_highl_atlas",
+      "extra_vi0_command": "RAYON_NUM_THREADS=4 ... homogeneous_sky --steps 8000 (VI0)",
+      "output_json": "docs/research_program/observational_publication_20261015/R111_LOCAL_HIGHL_NATIVE_20261124/C3_LONG_HIGHL_ATLAS.json",
+      "sha256": "1602683668d80f48b3223dd8fa1d5d46f854724cdc48f35d9211ec9921a8fc5a",
+      "tarball": "/home/cosmosapjw/Downloads/htt_r111/c3_atlas/C3_HIGHL_ATLAS_MODES.tar.gz",
+      "tarball_sha256": "f463bfd48fccbd03461a13305502fef0ef12c8a58ada69c2342b7b40a4e6e4fe",
+      "total_wall_seconds": 3628.348155490989
+    },
+    "C4": {
+      "command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=.:htt:htt/src /home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python -m scripts.r111.c4_bjs_highl",
+      "output_json": "docs/research_program/observational_publication_20261015/R111_LOCAL_HIGHL_NATIVE_20261124/C4_BJS_HIGHL.json",
+      "sha256": "444848a550a5e9d74064ca85cc2222502ff7c9fdb834fcdab3d016dc50948eca",
+      "total_wall_seconds": 1914.0604195549968
+    },
+    "C5": {
+      "command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONPATH=.:htt:htt/src /home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python -m scripts.r111.c5_commander_leakage",
+      "output_json": "docs/research_program/observational_publication_20261015/R111_LOCAL_HIGHL_NATIVE_20261124/C5_COMMANDER_LEAKAGE.json",
+      "sha256": "5f9239cba0997c4a651931db3d6dc931853d6c105d14ed5fcdc0faf890e653fd",
+      "wall_seconds_c3_los_l128": 157.1782970050117
+    },
+    "C6": {
+      "command": "PYTHONPATH=.:htt:htt/src /home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python -m scripts.r111.c6_los256_benchmark",
+      "output_json": "docs/research_program/observational_publication_20261015/R111_LOCAL_HIGHL_NATIVE_20261124/C6_LOS256_PERFORMANCE.json",
+      "sha256": "481bd1c3cd80b04348c51f3307f6a9d39e287257f4c5d5749e13116935e0e002",
+      "long_epoch_wall_seconds": 96.4884550870047
+    }
+  }
+}

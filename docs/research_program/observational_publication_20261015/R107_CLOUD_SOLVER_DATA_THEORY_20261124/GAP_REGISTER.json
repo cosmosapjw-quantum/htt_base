@@ -73,8 +73,8 @@
    "acquisition_items": [
     "D00"
    ],
-   "route": "htt/bass/transport/hybrid_los_transfer.py (exact-characteristic high-ell transfer, coupled-solver history hook) and htt/bass/transport/bjs_bianchi_vii_h.py; local: family runs with record_history, LoS truncation audit, matched BJS run.",
-   "owner": "cloud code done; local runs",
+   "route": "htt/bass/transport/hybrid_los_transfer.py and BASS Rust _rustcore (R109-R111 native SDIRK2+congruence+LoS): C1 z=1600 FLRW depth<=5.83e-7, C3 12-family l<=128 convergence<=1e-3, C4 VII_h l<=64 vs BJS corr>=0.9996 (1.0000 w/ Doppler), C6 l=256 96.5s/65.2MiB. Open: T1-T3 physics specs & SQ-CMB-NULL calibrated null.",
+   "owner": "R111 local native runs complete (C1-C6); null needs SQ-CMB-NULL",
    "acceptance_to_close": "provenance-bound native vs independent comparator agreement and calibrated null (needs SQ-CMB-NULL for the null part)",
    "dag_acceptance": "Qualify actual external solver provenance, CMB/Planck response family confusion and injection with heldout calibrated null."
   },
@@ -93,8 +93,8 @@
    "acquisition_items": [
     "D00"
    ],
-   "route": "htt/bass/transport/hybrid_los_transfer.py: all-m T/E/B to ell_max >= 128 from the native ell<=2 source; per family convergence in cells, ray step and Nside; native-L truncation audit.",
-   "owner": "cloud code done; local runs",
+   "route": "htt/bass/transport/hybrid_los_transfer.py & BASS _rustcore R111 C3/C4/C6: 12-family all-m T/E/B to l<=128 (61 runs, types & h preserved, <=1e-3 convergence) and l=256 timing (89.0s LoS). Open: SQ-NATIVE/T1-T3 physical closures and qualified nulls.",
+   "owner": "R111 local native l<=128/256 runs done; T1-T3 & nulls open",
    "acceptance_to_close": "Einstein/Boltzmann/recombination/constraint/IC/mode tests on actual runs plus LoS-vs-native and BJS agreement",
    "dag_acceptance": "Einstein/Boltzmann physics, recombination, constraints, IC and mode test actual"
   },
@@ -294,8 +294,8 @@
     "SQ-OPTICAL"
    ],
    "acquisition_items": [],
-   "route": "after B02, L03, SQ-CMB-NULL, SQ-OPTICAL; project htt/bass/transport/hybrid_los_transfer.py alm through beam, pixel window, mask and Commander transfer.",
-   "owner": "local",
+   "route": "after B02, L03, SQ-CMB-NULL, SQ-OPTICAL; R111 C5 projected native BASS l<=128 los_modes.tsv through R108 Commander lmax=256 kernel (up to 13.55% l>4 E-leakage into cut-sky l=2); R109 exact repro 0.0. Open: dependencies and scoring.",
+   "owner": "R111 C5 projection done; scoring blocked on SQ-CMB-NULL/L03",
    "acceptance_to_close": "no fake T/E/B source or forged full-sky score",
    "dag_acceptance": "No fake T/E/B source or forged full-sky score"
   },
@@ -397,8 +397,8 @@
    ],
    "open_hard_dependencies": [],
    "acquisition_items": [],
-   "route": "R107 THEORY_FOUNDATIONS.md TF6: physical anchor = calibrated template response d a_lm / d(sigma/H)_0 from B02 (LoS) per family; proposed route (not a DAG edge): join to the 274 rows once B02/B03 templates exist.",
-   "owner": "local",
+   "route": "R107 THEORY_FOUNDATIONS.md TF6: physical anchor = calibrated template response d a_lm / d(sigma/H)_0 from B02 (LoS) per family; R111 C1-C5 delivered deterministic z=1600+REI native pipeline & Commander projections (z<4 REI remains T3 HOLD placeholder). Proposed route (not a DAG edge): join to 274 rows once B02/B03 & independent covariances close.",
+   "owner": "R111 deterministic templates ready; covariance/T3 open",
    "acceptance_to_close": "one identified physical x with source covariance and partial identified interval",
    "dag_acceptance": "One identified physical x with actual source covariance and partial identified interval; original P1 F/common-scale null."
   },

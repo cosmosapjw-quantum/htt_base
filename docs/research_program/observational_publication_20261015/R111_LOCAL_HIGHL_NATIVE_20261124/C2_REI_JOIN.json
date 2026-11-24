@@ -1,0 +1,331 @@
+{
+  "schema": "htt.r111.c2_rei_join/1",
+  "claim_ceiling": "deterministic single-history join; z < 4 continuation is a conditional placeholder pending M1-M6 physics",
+  "rei_binary": "/home/cosmosapjw/worktrees/rei-htt-thomson-20261124/rust/rei_microphysics/target/release/examples/bass_ionization",
+  "rei_binary_sha256": "6534c9d161378089d710c1fbd2850197bf7009d959e7944205a61c1785684bff",
+  "bass_binary_sha256": "f53e33ed293103c8cb2bf91c72dce14f271eff47cf17893af7d1b57b2eb4b1c6",
+  "ax08_source": {
+    "repo": "/home/cosmosapjw/worktrees/rei-htt-thomson-20261124",
+    "commit": "56dc609ea9b801c88d3364aed3eee140b3a20d46",
+    "file": "research/rei_igm_sync_20261116/approximation_validity/incremental_fifth/results_five/five_case_abundances.csv.gz",
+    "gz_sha256": "f4bc0046d79faf2cd13ae7ed78135503306c7d76c11580e4601a757c407bc83d",
+    "csv_sha256": "43aaff01ec6f73cca9c16b66ab1ae9839aecfb69a72bc05d9c13f0dc3524c0b6"
+  },
+  "rec_input_sha256": "80c76287222c1012a518075f12b54a4646abd14c64ed5c43454230e9284fc892",
+  "nh0_anchors": {
+    "hyrec_mH_m3": 0.18971712352134673,
+    "ax08_mp_m3": 0.189819845071,
+    "relative_shift_mp_vs_mH": 0.0005414458523651522
+  },
+  "cases": {
+    "ZERO": {
+      "rei_seconds": 0.008211545005906373,
+      "merged_tsv": "/home/cosmosapjw/Downloads/htt_r111/c2_rei_join/merged_ZERO_1600.tsv",
+      "merged_tsv_sha256": "789d3f9b0c10e531ee2965e8d186a0f274ca942e68ddbefb1b7d33af03344e26",
+      "rei_report": {
+        "schema": "rei.bass_ionization.v1",
+        "case": "ZERO",
+        "z_emit": 1600,
+        "f_he": 0.08130135170951498,
+        "z_heii": 3.5,
+        "dz_heii": 0.5,
+        "z_high": 20,
+        "z_low": 3.999999999999999,
+        "jump_at_z_high": 1.0349192936354818e-05,
+        "rec_knots": 1580,
+        "rei_knots": 1001,
+        "continuation_knots": 400,
+        "z_below_low_is_conditional_placeholder": true
+      },
+      "single_owner_partition_verified": true,
+      "strictly_increasing_eta_verified": true,
+      "xe_rec_interp_at_z_high": 0.00021034919293635483,
+      "xe_rei_at_z_high": 0.0002,
+      "jump_rec_minus_rei_at_z_high": 1.0349192936354818e-05,
+      "xe_rei_at_z_low": 1.083394352319165,
+      "xe_at_z0": 1.16260270341903,
+      "tau_with_hyrec_nh0": {
+        "tau_1600_to_0": 32.59487623054292,
+        "tau_reio_z_le_20": 0.0543409149264819,
+        "tau_rei_4_to_20": 0.03195090323406037,
+        "tau_cont_0_to_4": 0.022390011692421514
+      },
+      "tau_with_ax08_mp_nh0": {
+        "tau_1600_to_0": 32.61252459108633,
+        "tau_reio_z_le_20": 0.05437033758948263,
+        "tau_rei_4_to_20": 0.031968202918095816,
+        "tau_cont_0_to_4": 0.022402134671386784
+      },
+      "nh0_convention_delta_tau_reio": 2.9422663000724936e-05,
+      "bass_flrw_4096": {
+        "wall_seconds": 0.8392302689608186,
+        "proper_depth": 32.594914211596745,
+        "abs_err_vs_hyrec_nh0_quad": 3.798105382202266e-05,
+        "rel_err_vs_hyrec_nh0_quad": 1.1652461433933177e-06,
+        "max_abs_gauss": 5.029225966124429e-05,
+        "diagnostics_sha256": "bda463034dfab859640e2e95391bf8e2acebb0ed70c59b443784a5997307b650"
+      }
+    },
+    "SHEAR_PLUS": {
+      "rei_seconds": 0.008613512967713177,
+      "merged_tsv": "/home/cosmosapjw/Downloads/htt_r111/c2_rei_join/merged_SHEAR_PLUS_1600.tsv",
+      "merged_tsv_sha256": "4636d2e27e95723099ce677d4721ebd147aef8e61667cd31586ac9482129c9f0",
+      "rei_report": {
+        "schema": "rei.bass_ionization.v1",
+        "case": "SHEAR_PLUS",
+        "z_emit": 1600,
+        "f_he": 0.08130135170951498,
+        "z_heii": 3.5,
+        "dz_heii": 0.5,
+        "z_high": 20,
+        "z_low": 3.999999999999999,
+        "jump_at_z_high": 1.0349192936354818e-05,
+        "rec_knots": 1580,
+        "rei_knots": 1001,
+        "continuation_knots": 400,
+        "z_below_low_is_conditional_placeholder": true
+      },
+      "single_owner_partition_verified": true,
+      "strictly_increasing_eta_verified": true,
+      "xe_rec_interp_at_z_high": 0.00021034919293635483,
+      "xe_rei_at_z_high": 0.0002,
+      "jump_rec_minus_rei_at_z_high": 1.0349192936354818e-05,
+      "xe_rei_at_z_low": 1.0833943516797104,
+      "xe_at_z0": 1.16260270341903,
+      "tau_with_hyrec_nh0": {
+        "tau_1600_to_0": 32.5948760816926,
+        "tau_reio_z_le_20": 0.05434076607613068,
+        "tau_rei_4_to_20": 0.03195075438624601,
+        "tau_cont_0_to_4": 0.02239001168988464
+      },
+      "tau_with_ax08_mp_nh0": {
+        "tau_1600_to_0": 32.61252444215546,
+        "tau_reio_z_le_20": 0.05437018865853692,
+        "tau_rei_4_to_20": 0.031968053989688355,
+        "tau_cont_0_to_4": 0.02240213466884855
+      },
+      "nh0_convention_delta_tau_reio": 2.942258240624246e-05,
+      "bass_flrw_4096": {
+        "wall_seconds": 0.8278132540290244,
+        "proper_depth": 32.59491406274559,
+        "abs_err_vs_hyrec_nh0_quad": 3.798105299068766e-05,
+        "rel_err_vs_hyrec_nh0_quad": 1.1652461232095399e-06,
+        "max_abs_gauss": 5.029225966124429e-05,
+        "diagnostics_sha256": "2f4a81733490dd256d96febbb18e13230fef1c4bcfbf136b6fcda2486abf9b80"
+      }
+    },
+    "SHEAR_MINUS": {
+      "rei_seconds": 0.008446136955171824,
+      "merged_tsv": "/home/cosmosapjw/Downloads/htt_r111/c2_rei_join/merged_SHEAR_MINUS_1600.tsv",
+      "merged_tsv_sha256": "26475a694dc522c429a466947339e17cf9d8ec71f255a402ef72a9d182ffaf3d",
+      "rei_report": {
+        "schema": "rei.bass_ionization.v1",
+        "case": "SHEAR_MINUS",
+        "z_emit": 1600,
+        "f_he": 0.08130135170951498,
+        "z_heii": 3.5,
+        "dz_heii": 0.5,
+        "z_high": 20,
+        "z_low": 3.999999999999999,
+        "jump_at_z_high": 1.0349192936354818e-05,
+        "rec_knots": 1580,
+        "rei_knots": 1001,
+        "continuation_knots": 400,
+        "z_below_low_is_conditional_placeholder": true
+      },
+      "single_owner_partition_verified": true,
+      "strictly_increasing_eta_verified": true,
+      "xe_rec_interp_at_z_high": 0.00021034919293635483,
+      "xe_rei_at_z_high": 0.0002,
+      "jump_rec_minus_rei_at_z_high": 1.0349192936354818e-05,
+      "xe_rei_at_z_low": 1.0833943516797118,
+      "xe_at_z0": 1.16260270341903,
+      "tau_with_hyrec_nh0": {
+        "tau_1600_to_0": 32.5948760816926,
+        "tau_reio_z_le_20": 0.05434076607613075,
+        "tau_rei_4_to_20": 0.03195075438624609,
+        "tau_cont_0_to_4": 0.02239001168988464
+      },
+      "tau_with_ax08_mp_nh0": {
+        "tau_1600_to_0": 32.61252444215546,
+        "tau_reio_z_le_20": 0.054370188658537016,
+        "tau_rei_4_to_20": 0.031968053989688446,
+        "tau_cont_0_to_4": 0.022402134668848557
+      },
+      "nh0_convention_delta_tau_reio": 2.9422582406263276e-05,
+      "bass_flrw_4096": {
+        "wall_seconds": 0.8190757550182752,
+        "proper_depth": 32.59491406274559,
+        "abs_err_vs_hyrec_nh0_quad": 3.798105299068766e-05,
+        "rel_err_vs_hyrec_nh0_quad": 1.1652461232095399e-06,
+        "max_abs_gauss": 5.029225966124429e-05,
+        "diagnostics_sha256": "7b142857081e77648430905aa3bf3d986dc0ab74fb57d79c5c7a747cb15b5fc2"
+      }
+    },
+    "SHEAR_HALF_PLUS": {
+      "rei_seconds": 0.008997638011351228,
+      "merged_tsv": "/home/cosmosapjw/Downloads/htt_r111/c2_rei_join/merged_SHEAR_HALF_PLUS_1600.tsv",
+      "merged_tsv_sha256": "34dd9b11dc31ae64cfe401a057872a60d40822365dd8ec93899e1bfbed59f492",
+      "rei_report": {
+        "schema": "rei.bass_ionization.v1",
+        "case": "SHEAR_HALF_PLUS",
+        "z_emit": 1600,
+        "f_he": 0.08130135170951498,
+        "z_heii": 3.5,
+        "dz_heii": 0.5,
+        "z_high": 20,
+        "z_low": 3.999999999999999,
+        "jump_at_z_high": 1.0349192936354818e-05,
+        "rec_knots": 1580,
+        "rei_knots": 1001,
+        "continuation_knots": 400,
+        "z_below_low_is_conditional_placeholder": true
+      },
+      "single_owner_partition_verified": true,
+      "strictly_increasing_eta_verified": true,
+      "xe_rec_interp_at_z_high": 0.00021034919293635483,
+      "xe_rei_at_z_high": 0.0002,
+      "jump_rec_minus_rei_at_z_high": 1.0349192936354818e-05,
+      "xe_rei_at_z_low": 1.083394352159316,
+      "xe_at_z0": 1.16260270341903,
+      "tau_with_hyrec_nh0": {
+        "tau_1600_to_0": 32.59487619332966,
+        "tau_reio_z_le_20": 0.05434087771318412,
+        "tau_rei_4_to_20": 0.03195086602139678,
+        "tau_cont_0_to_4": 0.02239001169178737
+      },
+      "tau_with_ax08_mp_nh0": {
+        "tau_1600_to_0": 32.61252455385285,
+        "tau_reio_z_le_20": 0.05437030035603582,
+        "tau_rei_4_to_20": 0.031968165685283566,
+        "tau_cont_0_to_4": 0.022402134670752298
+      },
+      "nh0_convention_delta_tau_reio": 2.9422642851703595e-05,
+      "bass_flrw_4096": {
+        "wall_seconds": 0.8167619970045052,
+        "proper_depth": 32.59491417438331,
+        "abs_err_vs_hyrec_nh0_quad": 3.79810536514924e-05,
+        "rel_err_vs_hyrec_nh0_quad": 1.1652461394918564e-06,
+        "max_abs_gauss": 5.029225966124429e-05,
+        "diagnostics_sha256": "fc0d025842ff11abb94b699faf9398dafd1b4ec6594059b926ffe0e9c107037c"
+      }
+    },
+    "SHEAR_HALF_MINUS": {
+      "rei_seconds": 0.008393889002036303,
+      "merged_tsv": "/home/cosmosapjw/Downloads/htt_r111/c2_rei_join/merged_SHEAR_HALF_MINUS_1600.tsv",
+      "merged_tsv_sha256": "77e2fe347152d3bcb1a09c09783ad20b877611727b70e3d343f508febf558b70",
+      "rei_report": {
+        "schema": "rei.bass_ionization.v1",
+        "case": "SHEAR_HALF_MINUS",
+        "z_emit": 1600,
+        "f_he": 0.08130135170951498,
+        "z_heii": 3.5,
+        "dz_heii": 0.5,
+        "z_high": 20,
+        "z_low": 3.999999999999999,
+        "jump_at_z_high": 1.0349192936354818e-05,
+        "rec_knots": 1580,
+        "rei_knots": 1001,
+        "continuation_knots": 400,
+        "z_below_low_is_conditional_placeholder": true
+      },
+      "single_owner_partition_verified": true,
+      "strictly_increasing_eta_verified": true,
+      "xe_rec_interp_at_z_high": 0.00021034919293635483,
+      "xe_rei_at_z_high": 0.0002,
+      "jump_rec_minus_rei_at_z_high": 1.0349192936354818e-05,
+      "xe_rei_at_z_low": 1.083394352159316,
+      "xe_at_z0": 1.16260270341903,
+      "tau_with_hyrec_nh0": {
+        "tau_1600_to_0": 32.59487619332966,
+        "tau_reio_z_le_20": 0.05434087771318406,
+        "tau_rei_4_to_20": 0.03195086602139673,
+        "tau_cont_0_to_4": 0.02239001169178737
+      },
+      "tau_with_ax08_mp_nh0": {
+        "tau_1600_to_0": 32.61252455385285,
+        "tau_reio_z_le_20": 0.05437030035603578,
+        "tau_rei_4_to_20": 0.031968165685283524,
+        "tau_cont_0_to_4": 0.022402134670752298
+      },
+      "nh0_convention_delta_tau_reio": 2.9422642851717473e-05,
+      "bass_flrw_4096": {
+        "wall_seconds": 0.8110440250020474,
+        "proper_depth": 32.59491417438331,
+        "abs_err_vs_hyrec_nh0_quad": 3.79810536514924e-05,
+        "rel_err_vs_hyrec_nh0_quad": 1.1652461394918564e-06,
+        "max_abs_gauss": 5.029225966124429e-05,
+        "diagnostics_sha256": "058f989b9113558ce0086f8cfc5e83be83a5d1177e131500675d57c64fb697f7"
+      }
+    }
+  },
+  "viih_zero_reionization_demo": {
+    "wall_seconds": 7.746410931984428,
+    "proper_depth": 32.59451535588101,
+    "max_abs_gauss": 5.158215145639744e-05,
+    "min_screen_eigenvalue": 7.606284553147423e-14,
+    "los_max_landing_error": 2.6875023162333603e-14,
+    "los_modes_sha256": "22abdcbd96e845654ba48c55005d8fc9f2f43b8635b02fd78e191272437a9ac1",
+    "cl_ell_2_to_10": [
+      {
+        "ell": 2,
+        "TT": 4.891433770434186e-09,
+        "EE": 4.958196189709622e-11,
+        "BB": 3.563754032672756e-11
+      },
+      {
+        "ell": 3,
+        "TT": 1.8306588987297591e-09,
+        "EE": 6.062900127887028e-12,
+        "BB": 4.053821537033728e-12
+      },
+      {
+        "ell": 4,
+        "TT": 3.0924910473725377e-10,
+        "EE": 6.386692987803842e-13,
+        "BB": 3.175670785863008e-13
+      },
+      {
+        "ell": 5,
+        "TT": 3.399911776913292e-11,
+        "EE": 5.5856299030905114e-14,
+        "BB": 2.005559110989565e-14
+      },
+      {
+        "ell": 6,
+        "TT": 2.8965512951347463e-12,
+        "EE": 4.183033620728126e-15,
+        "BB": 1.111579606324466e-15
+      },
+      {
+        "ell": 7,
+        "TT": 2.0960508899359727e-13,
+        "EE": 2.794472525837751e-16,
+        "BB": 5.674427150069213e-17
+      },
+      {
+        "ell": 8,
+        "TT": 1.3584340072574856e-14,
+        "EE": 1.718829287388225e-17,
+        "BB": 2.7457711474408056e-18
+      },
+      {
+        "ell": 9,
+        "TT": 8.145569280270456e-16,
+        "EE": 9.952446510184903e-19,
+        "BB": 1.2823521422187573e-19
+      },
+      {
+        "ell": 10,
+        "TT": 4.614859687331243e-17,
+        "EE": 5.509539013506861e-20,
+        "BB": 5.850850604848347e-21
+      }
+    ]
+  },
+  "acceptance": {
+    "all_five_cases_single_owner_per_interval": true,
+    "all_five_cases_strictly_increasing_eta": true,
+    "all_five_cases_jump_at_z20_reported": true
+  }
+}

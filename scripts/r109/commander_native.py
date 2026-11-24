@@ -39,7 +39,7 @@ def modes(raw):
     return lmax, np.asarray([data[int(l),int(m)] for l,m in zip(ls,ms)]).T.copy()
 
 
-def project(kernel_path, archive_path, out, modes_name="modes.tsv"):
+def project(kernel_path, archive_path, out, modes_name="modes.tsv", member_prefix="recoil_"):
     """modes_name selects the archive member per family: R109 forward
     Lagrangian modes ("modes.tsv", l<=4) or the R110 line-of-sight replay
     ("los_modes.tsv", any l up to the instrument kernel band limit)."""
@@ -60,7 +60,7 @@ def project(kernel_path, archive_path, out, modes_name="modes.tsv"):
     verif = 0.
     with tarfile.open(archive_path, "r:gz") as ar:
         for i, family in enumerate(FAMILIES):
-            raw = ar.extractfile("recoil_"+family+"/"+modes_name).read()
+            raw = ar.extractfile(f"{member_prefix}{family}/{modes_name}").read()
             ell, data = modes(raw)
             if ell>L:
                 raise ValueError("template exceeds instrument kernel bandlimit")
@@ -102,7 +102,8 @@ def project(kernel_path, archive_path, out, modes_name="modes.tsv"):
                 truncated_vs_padded_max_relative=verif, summaries=summaries)
     if modes_name != "modes.tsv":
         record["modes_name"] = modes_name
-        record["input"] = ("R110 line-of-sight replay of the native BASS solve; synthetic "
+        record["member_prefix"] = member_prefix
+        record["input"] = ("R110/R111 line-of-sight replay of the native BASS solve; synthetic "
                            "templates only; band-limited at the supplied ell_max")
     (out/"COMMANDER_NATIVE_PROJECTION.json").write_text(json.dumps(record,indent=2)+"\n")
 
@@ -113,5 +114,7 @@ if __name__ == "__main__":
         parser.add_argument("--"+option,type=Path,required=True)
     parser.add_argument("--modes-name",default="modes.tsv",choices=["modes.tsv","los_modes.tsv"],
                         help="per-family archive member (R110 atlases also carry los_modes.tsv)")
+    parser.add_argument("--member-prefix",default="recoil_",
+                        help="per-family archive directory prefix (default: recoil_)")
     g = parser.parse_args()
-    project(g.kernel,g.atlas,g.out,g.modes_name)
+    project(g.kernel,g.atlas,g.out,g.modes_name,g.member_prefix)
