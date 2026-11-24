@@ -1,0 +1,5211 @@
+{
+ "claim": "numerical evidence only; no family attribution, no likelihood",
+ "errors": {},
+ "floors": {
+  "amplitude": 1e-06,
+  "cl": 1e-12
+ },
+ "identity_at_atlas_start": {
+  "git": {
+   "dirty_code_paths": [
+    "M htt/bass/transport/bjs_bianchi_vii_h.py",
+    " M htt/bass/transport/coupled_einstein_boltzmann.py",
+    " M htt/bass/transport/hybrid_los_transfer.py",
+    " M htt/bass/transport/test_bjs_bianchi_vii_h.py",
+    " M htt/bass/transport/test_hybrid_los_transfer.py",
+    " M scripts/r107_cloud/acquisition.py",
+    " M tests/r107_cloud/test_acquisition.py",
+    "?? scripts/r108/"
+   ],
+   "head": "b79b9526b1817cc5946858f5891f7e7b567b87a2"
+  },
+  "hyrec_tables": {
+   "Alpha_inf.dat": "357101049c9382e90e5e1e896961407d3b465b61b78de9750b852c05ea4d1023",
+   "R_inf.dat": "ce914f4b552ba55ba00f7916f36b0986f19adfdb638e5aefae91f7b2d05a8112",
+   "fit_swift.dat": "46a644d7d2633b8f13080f9062df9b72a2e5adfa956d70d32ad1d7f4ec0a4641",
+   "two_photon_tables.dat": "93d23871e21c40f5b72a6ef9acf3eb7be054735c8aee9401e455736c1d9d8cf9",
+   "two_photon_tables_hires.dat": "db201c729a38c7919172cf080c8ba44cdf8e6b131a6eaa8adcbc9e58fd4d0c93"
+  },
+  "machine": "x86_64",
+  "openblas_threads": "1",
+  "python": "3.12.3",
+  "sources": {
+   "htt/bass/recombination/opacity_history.py": "3a2ffc1a22f92eae32781c88e9911040b49cc1f9e4c1502ee4dd0c24d3b44b88",
+   "htt/bass/recombination/tilted_hyrec.py": "b21f746b9e74c30178832c5f345d5e5c87914c4e92e153df2f1d282e790977a7",
+   "htt/bass/transport/coupled_einstein_boltzmann.py": "28b638cfb4428237148c7851fd0809eaa905190f74da9fb636ac42e9652a73c9",
+   "htt/bass/transport/general_bianchi_transfer.py": "9bcb541d35cabc05b8c325a58bbef57f253627203ff1ac1c354e4bd789f60410",
+   "htt/bass/transport/general_lie_stokes.py": "1d0b5e94d41f4d9aba806ceb4b9ce087ee4a0ccec6dcdc92f9345a5221676357",
+   "htt/bass/transport/hybrid_los_transfer.py": "529bf0316fa2b0923c93629bee72a833e99105abf1a22946d52f7c041e8f418c",
+   "htt/bass/transport/moving_collision_stage.py": "e2d2e94f98f3fab70d0030ef8781b91a1019bcdff9075cd21f16e585db2c1504"
+  }
+ },
+ "runs": [
+  {
+   "ell_max": 8,
+   "family": "FLRW",
+   "gl_low_ell_vs_native": {
+    "amplitude_floor": 1e-06,
+    "argmax": null,
+    "below_floor": [
+     "B2",
+     "B3",
+     "B4",
+     "E2",
+     "E3",
+     "E4",
+     "T0",
+     "T1",
+     "T2",
+     "T3",
+     "T4"
+    ],
+    "largest_native_amplitude": 0.0,
+    "max_rel": null,
+    "modes": {}
+   },
+   "handedness": 1,
+   "identity": "atlas IDENTITY.json (written when the run started)",
+   "max_codazzi": 0.0,
+   "max_hamiltonian": 1.3872218073853763e-09,
+   "max_jacobi": 0.0,
+   "maxrss_MB": 343.28515625,
+   "n_cells": 192,
+   "n_source_nodes": 589,
+   "n_substep_nodes": 396,
+   "picard_iterations_used": 4,
+   "products": {
+    "ns128_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 0.0,
+      "n_nodes": 589,
+      "source_ell_max": 0,
+      "top_shell_relative_norm": 0.0
+     },
+     "flrw_max_abs_alm_except_monopole": 5.541144882655014e-16,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": null,
+      "below_floor": [
+       "B2",
+       "B3",
+       "B4",
+       "E2",
+       "E3",
+       "E4",
+       "T0",
+       "T1",
+       "T2",
+       "T3",
+       "T4"
+      ],
+      "largest_native_amplitude": 0.0,
+      "max_rel": null,
+      "modes": {}
+     },
+     "lmax": 256,
+     "los_seconds": 369.003350569983,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/FLRW_hp_L8_c192_ns128_st0.02.npz",
+     "npz_sha256": "7179a05ec0d32ca992782eff3558fa947f5cf504d6a26a1f340abe7d7fa05dce",
+     "nside": 128
+    },
+    "ns64_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 0.0,
+      "n_nodes": 589,
+      "source_ell_max": 0,
+      "top_shell_relative_norm": 0.0
+     },
+     "flrw_max_abs_alm_except_monopole": 5.784806904462238e-16,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": null,
+      "below_floor": [
+       "B2",
+       "B3",
+       "B4",
+       "E2",
+       "E3",
+       "E4",
+       "T0",
+       "T1",
+       "T2",
+       "T3",
+       "T4"
+      ],
+      "largest_native_amplitude": 0.0,
+      "max_rel": null,
+      "modes": {}
+     },
+     "lmax": 128,
+     "los_seconds": 45.64614064403577,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/FLRW_hp_L8_c192_ns64_st0.02.npz",
+     "npz_sha256": "9cbbf44ad01999230c2a5f871847c10e2043dc618fbbac92c2ceea418a762ccc",
+     "nside": 64
+    }
+   },
+   "solve_seconds": 45.906062655034475,
+   "tag": "FLRW_hp_L8_c192",
+   "wall_seconds": 463.94854147103615
+  },
+  {
+   "ell_max": 8,
+   "family": "FLRW",
+   "gl_low_ell_vs_native": {
+    "amplitude_floor": 1e-06,
+    "argmax": null,
+    "below_floor": [
+     "B2",
+     "B3",
+     "B4",
+     "E2",
+     "E3",
+     "E4",
+     "T0",
+     "T1",
+     "T2",
+     "T3",
+     "T4"
+    ],
+    "largest_native_amplitude": 0.0,
+    "max_rel": null,
+    "modes": {}
+   },
+   "handedness": 1,
+   "identity": "atlas IDENTITY.json (written when the run started)",
+   "max_codazzi": 0.0,
+   "max_hamiltonian": 1.3872218073853763e-09,
+   "max_jacobi": 0.0,
+   "maxrss_MB": 394.671875,
+   "n_cells": 384,
+   "n_source_nodes": 932,
+   "n_substep_nodes": 547,
+   "picard_iterations_used": 4,
+   "products": {
+    "ns128_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 0.0,
+      "n_nodes": 932,
+      "source_ell_max": 0,
+      "top_shell_relative_norm": 0.0
+     },
+     "flrw_max_abs_alm_except_monopole": 5.541439915124398e-16,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": null,
+      "below_floor": [
+       "B2",
+       "B3",
+       "B4",
+       "E2",
+       "E3",
+       "E4",
+       "T0",
+       "T1",
+       "T2",
+       "T3",
+       "T4"
+      ],
+      "largest_native_amplitude": 0.0,
+      "max_rel": null,
+      "modes": {}
+     },
+     "lmax": 256,
+     "los_seconds": 472.02493741497165,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/FLRW_hp_L8_c384_ns128_st0.02.npz",
+     "npz_sha256": "fa741e606ee432405b77fa1a1f8c494ff4b419c57b0a4e0981cfd29b509bf5d6",
+     "nside": 128
+    },
+    "ns64_st0.01": {
+     "diagnostics": {
+      "max_source_truncation": 0.0,
+      "n_nodes": 932,
+      "source_ell_max": 0,
+      "top_shell_relative_norm": 0.0
+     },
+     "flrw_max_abs_alm_except_monopole": 5.785073108975681e-16,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": null,
+      "below_floor": [
+       "B2",
+       "B3",
+       "B4",
+       "E2",
+       "E3",
+       "E4",
+       "T0",
+       "T1",
+       "T2",
+       "T3",
+       "T4"
+      ],
+      "largest_native_amplitude": 0.0,
+      "max_rel": null,
+      "modes": {}
+     },
+     "lmax": 128,
+     "los_seconds": 54.68730652099475,
+     "max_step": 0.01,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/FLRW_hp_L8_c384_ns64_st0.01.npz",
+     "npz_sha256": "5571c0126819d79d1e1d36c4758604db0a782d9c8b183b4958fc768c25022999",
+     "nside": 64
+    },
+    "ns64_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 0.0,
+      "n_nodes": 932,
+      "source_ell_max": 0,
+      "top_shell_relative_norm": 0.0
+     },
+     "flrw_max_abs_alm_except_monopole": 5.785073108975681e-16,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": null,
+      "below_floor": [
+       "B2",
+       "B3",
+       "B4",
+       "E2",
+       "E3",
+       "E4",
+       "T0",
+       "T1",
+       "T2",
+       "T3",
+       "T4"
+      ],
+      "largest_native_amplitude": 0.0,
+      "max_rel": null,
+      "modes": {}
+     },
+     "lmax": 128,
+     "los_seconds": 78.55598607601132,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/FLRW_hp_L8_c384_ns64_st0.02.npz",
+     "npz_sha256": "5571c0126819d79d1e1d36c4758604db0a782d9c8b183b4958fc768c25022999",
+     "nside": 64
+    }
+   },
+   "solve_seconds": 60.12655107700266,
+   "tag": "FLRW_hp_L8_c384",
+   "wall_seconds": 671.8941374310525
+  },
+  {
+   "ell_max": 8,
+   "family": "FLRW",
+   "gl_low_ell_vs_native": {
+    "amplitude_floor": 1e-06,
+    "argmax": null,
+    "below_floor": [
+     "B2",
+     "B3",
+     "B4",
+     "E2",
+     "E3",
+     "E4",
+     "T0",
+     "T1",
+     "T2",
+     "T3",
+     "T4"
+    ],
+    "largest_native_amplitude": 0.0,
+    "max_rel": null,
+    "modes": {}
+   },
+   "handedness": 1,
+   "identity": "atlas IDENTITY.json (written when the run started)",
+   "max_codazzi": 0.0,
+   "max_hamiltonian": 1.3872218073853763e-09,
+   "max_jacobi": 0.0,
+   "maxrss_MB": 271.55078125,
+   "n_cells": 768,
+   "n_source_nodes": 1648,
+   "n_substep_nodes": 879,
+   "picard_iterations_used": 4,
+   "products": {
+    "ns64_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 0.0,
+      "n_nodes": 1648,
+      "source_ell_max": 0,
+      "top_shell_relative_norm": 0.0
+     },
+     "flrw_max_abs_alm_except_monopole": 5.785236950470143e-16,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": null,
+      "below_floor": [
+       "B2",
+       "B3",
+       "B4",
+       "E2",
+       "E3",
+       "E4",
+       "T0",
+       "T1",
+       "T2",
+       "T3",
+       "T4"
+      ],
+      "largest_native_amplitude": 0.0,
+      "max_rel": null,
+      "modes": {}
+     },
+     "lmax": 128,
+     "los_seconds": 65.11227581300773,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/FLRW_hp_L8_c768_ns64_st0.02.npz",
+     "npz_sha256": "9f76ecc88cd7cca06315718b64f5d438de5c2d7ddc53ec4ede3f47496aaf9474",
+     "nside": 64
+    }
+   },
+   "solve_seconds": 48.93008176999865,
+   "tag": "FLRW_hp_L8_c768",
+   "wall_seconds": 118.94832126097754
+  },
+  {
+   "ell_max": 8,
+   "family": "I",
+   "gl_low_ell_vs_native": {
+    "amplitude_floor": 1e-06,
+    "argmax": "E3",
+    "below_floor": [
+     "B2",
+     "B3",
+     "B4"
+    ],
+    "largest_native_amplitude": 6.991789449638647e-05,
+    "max_rel": 0.0005920633395470105,
+    "modes": {
+     "E2": {
+      "abs": 3.4233464735621726e-09,
+      "native_amplitude": 5.796056111724392e-06,
+      "rel": 0.0005906337702006284
+     },
+     "E3": {
+      "abs": 7.211420921451295e-14,
+      "native_amplitude": 1.2180151074661667e-10,
+      "rel": 0.0005920633395470105
+     },
+     "E4": {
+      "abs": 1.0022909124228137e-13,
+      "native_amplitude": 3.1061148662738963e-10,
+      "rel": 0.000322683144562894
+     },
+     "T0": {
+      "abs": 8.339100452117605e-13,
+      "native_amplitude": 2.4680324214381724e-09,
+      "rel": 0.0003378845585528509
+     },
+     "T1": {
+      "abs": 2.0424478275012323e-09,
+      "native_amplitude": 2.135896025839657e-05,
+      "rel": 9.562487137913521e-05
+     },
+     "T2": {
+      "abs": 1.8295427589969386e-08,
+      "native_amplitude": 6.991789449638647e-05,
+      "rel": 0.0002616701735907528
+     },
+     "T3": {
+      "abs": 7.386629644879802e-13,
+      "native_amplitude": 2.3328661705099255e-09,
+      "rel": 0.0003166332358990489
+     },
+     "T4": {
+      "abs": 1.9674777830948633e-12,
+      "native_amplitude": 4.2111207620028565e-09,
+      "rel": 0.000467210012319644
+     }
+    }
+   },
+   "handedness": 1,
+   "identity": "atlas IDENTITY.json (written when the run started)",
+   "max_codazzi": 1.4166158320056219e-09,
+   "max_hamiltonian": 1.041252432576867e-09,
+   "max_jacobi": 0.0,
+   "maxrss_MB": 326.109375,
+   "n_cells": 192,
+   "n_source_nodes": 589,
+   "n_substep_nodes": 396,
+   "picard_iterations_used": 6,
+   "products": {
+    "ns128_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 3.5281884915023565e-15,
+      "n_nodes": 589,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 1.011888630307366e-15
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "E4",
+      "below_floor": [
+       "B2",
+       "B3",
+       "B4"
+      ],
+      "largest_native_amplitude": 6.991789449638647e-05,
+      "max_rel": 0.0006342060060523031,
+      "modes": {
+       "E2": {
+        "abs": 3.4233464735621726e-09,
+        "native_amplitude": 5.796056111724392e-06,
+        "rel": 0.0005906337702006284
+       },
+       "E3": {
+        "abs": 7.211420807299666e-14,
+        "native_amplitude": 1.2180151074661667e-10,
+        "rel": 0.0005920633301750718
+       },
+       "E4": {
+        "abs": 1.9699167036792512e-13,
+        "native_amplitude": 3.1061148662738963e-10,
+        "rel": 0.0006342060060523031
+       },
+       "T0": {
+        "abs": 1.3516839751639183e-13,
+        "native_amplitude": 2.4680324214381724e-09,
+        "rel": 5.47676749876837e-05
+       },
+       "T1": {
+        "abs": 2.0424478320576516e-09,
+        "native_amplitude": 2.135896025839657e-05,
+        "rel": 9.562487159246109e-05
+       },
+       "T2": {
+        "abs": 1.829759576019445e-08,
+        "native_amplitude": 6.991789449638647e-05,
+        "rel": 0.0002617011838241227
+       },
+       "T3": {
+        "abs": 7.386621928867747e-13,
+        "native_amplitude": 2.3328661705099255e-09,
+        "rel": 0.0003166329051465972
+       },
+       "T4": {
+        "abs": 1.9674935056247128e-12,
+        "native_amplitude": 4.2111207620028565e-09,
+        "rel": 0.0004672137458933737
+       }
+      }
+     },
+     "lmax": 256,
+     "los_seconds": 1319.3950182140106,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/I_hp_L8_c192_ns128_st0.02.npz",
+     "npz_sha256": "191cf52b456b437ccd72a3c3e14464c89ba3029537e94ab26a2ad1d997069a0a",
+     "nside": 128
+    },
+    "ns64_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 3.5281884915023565e-15,
+      "n_nodes": 589,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 1.011888630307366e-15
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "T4",
+      "below_floor": [
+       "B2",
+       "B3",
+       "B4"
+      ],
+      "largest_native_amplitude": 6.991789449638647e-05,
+      "max_rel": 0.002440464839384659,
+      "modes": {
+       "E2": {
+        "abs": 3.4233464734147893e-09,
+        "native_amplitude": 5.796056111724392e-06,
+        "rel": 0.0005906337701752002
+       },
+       "E3": {
+        "abs": 7.2114208023186e-14,
+        "native_amplitude": 1.2180151074661667e-10,
+        "rel": 0.0005920633297661224
+       },
+       "E4": {
+        "abs": 5.270540697251988e-13,
+        "native_amplitude": 3.1061148662738963e-10,
+        "rel": 0.0016968273628510534
+       },
+       "T0": {
+        "abs": 3.1888060253762074e-12,
+        "native_amplitude": 2.4680324214381724e-09,
+        "rel": 0.0012920438150152119
+       },
+       "T1": {
+        "abs": 2.0424478338350068e-09,
+        "native_amplitude": 2.135896025839657e-05,
+        "rel": 9.562487167567465e-05
+       },
+       "T2": {
+        "abs": 1.8304439726573858e-08,
+        "native_amplitude": 6.991789449638647e-05,
+        "rel": 0.00026179906958611113
+       },
+       "T3": {
+        "abs": 7.386616182489169e-13,
+        "native_amplitude": 2.3328661705099255e-09,
+        "rel": 0.00031663265882391265
+       },
+       "T4": {
+        "abs": 1.0277092154070703e-11,
+        "native_amplitude": 4.2111207620028565e-09,
+        "rel": 0.002440464839384659
+       }
+      }
+     },
+     "lmax": 128,
+     "los_seconds": 181.018086977012,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/I_hp_L8_c192_ns64_st0.02.npz",
+     "npz_sha256": "9250c98c3c413d51d9a511273304bdb55d4e9b606dafe2b08e1b83a7d5d723a9",
+     "nside": 64
+    }
+   },
+   "solve_seconds": 268.79680501803523,
+   "tag": "I_hp_L8_c192",
+   "wall_seconds": 1787.744544314046
+  },
+  {
+   "ell_max": 8,
+   "family": "I",
+   "gl_low_ell_vs_native": {
+    "amplitude_floor": 1e-06,
+    "argmax": "E3",
+    "below_floor": [
+     "B2",
+     "B3",
+     "B4"
+    ],
+    "largest_native_amplitude": 6.99129345783739e-05,
+    "max_rel": 0.000354034787345615,
+    "modes": {
+     "E2": {
+      "abs": 2.0080191095236e-09,
+      "native_amplitude": 5.79547776308093e-06,
+      "rel": 0.00034648034063996104
+     },
+     "E3": {
+      "abs": 4.3117032313487355e-14,
+      "native_amplitude": 1.2178755832656566e-10,
+      "rel": 0.000354034787345615
+     },
+     "E4": {
+      "abs": 6.812869348645746e-14,
+      "native_amplitude": 3.1055702392899027e-10,
+      "rel": 0.00021937579329081694
+     },
+     "T0": {
+      "abs": 3.9218771804388933e-13,
+      "native_amplitude": 2.467685751569476e-09,
+      "rel": 0.00015892936035086862
+     },
+     "T1": {
+      "abs": 1.2016005537149798e-09,
+      "native_amplitude": 2.1358922650193878e-05,
+      "rel": 5.625754507351394e-05
+     },
+     "T2": {
+      "abs": 9.086271764532266e-09,
+      "native_amplitude": 6.99129345783739e-05,
+      "rel": 0.00012996553240582915
+     },
+     "T3": {
+      "abs": 3.8281644883640507e-13,
+      "native_amplitude": 2.3326929786964363e-09,
+      "rel": 0.00016410923011837242
+     },
+     "T4": {
+      "abs": 9.574514506214503e-13,
+      "native_amplitude": 4.210505688566539e-09,
+      "rel": 0.00022739583352692568
+     }
+    }
+   },
+   "handedness": 1,
+   "identity": "atlas IDENTITY.json (written when the run started)",
+   "max_codazzi": 1.0415315281958753e-09,
+   "max_hamiltonian": 1.179290602516648e-09,
+   "max_jacobi": 0.0,
+   "maxrss_MB": 286.22265625,
+   "n_cells": 384,
+   "n_source_nodes": 932,
+   "n_substep_nodes": 547,
+   "picard_iterations_used": 6,
+   "products": {
+    "ns128_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 3.522271274482359e-15,
+      "n_nodes": 932,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 1.011651880160537e-15
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "E4",
+      "below_floor": [
+       "B2",
+       "B3",
+       "B4"
+      ],
+      "largest_native_amplitude": 6.99129345783739e-05,
+      "max_rel": 0.0005404745063490173,
+      "modes": {
+       "E2": {
+        "abs": 2.008019109526141e-09,
+        "native_amplitude": 5.79547776308093e-06,
+        "rel": 0.0003464803406403995
+       },
+       "E3": {
+        "abs": 4.3117031406408663e-14,
+        "native_amplitude": 1.2178755832656566e-10,
+        "rel": 0.0003540347798975743
+       },
+       "E4": {
+        "abs": 1.6784815420124097e-13,
+        "native_amplitude": 3.1055702392899027e-10,
+        "rel": 0.0005404745063490173
+       },
+       "T0": {
+        "abs": 5.769508936787702e-13,
+        "native_amplitude": 2.467685751569476e-09,
+        "rel": 0.00023380241722910743
+       },
+       "T1": {
+        "abs": 1.2016005548596123e-09,
+        "native_amplitude": 2.1358922650193878e-05,
+        "rel": 5.6257545127104305e-05
+       },
+       "T2": {
+        "abs": 9.088440080907783e-09,
+        "native_amplitude": 6.99129345783739e-05,
+        "rel": 0.0001299965469296593
+       },
+       "T3": {
+        "abs": 3.82817576067567e-13,
+        "native_amplitude": 2.3326929786964363e-09,
+        "rel": 0.0001641097133500588
+       },
+       "T4": {
+        "abs": 2.01925743802888e-12,
+        "native_amplitude": 4.210505688566539e-09,
+        "rel": 0.00047957599095806787
+       }
+      }
+     },
+     "lmax": 256,
+     "los_seconds": 2014.2229166650213,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/I_hp_L8_c384_ns128_st0.02.npz",
+     "npz_sha256": "f869f199c155a82d125fd0d2cd2cc00b39051758d0bd9357747770539d123e35",
+     "nside": 128
+    },
+    "ns64_st0.01": {
+     "diagnostics": {
+      "max_source_truncation": 3.522271274482359e-15,
+      "n_nodes": 932,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 1.011651880160537e-15
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "T4",
+      "below_floor": [
+       "B2",
+       "B3",
+       "B4"
+      ],
+      "largest_native_amplitude": 6.99129345783739e-05,
+      "max_rel": 0.002664204707768385,
+      "modes": {
+       "E2": {
+        "abs": 2.0080191093787574e-09,
+        "native_amplitude": 5.79547776308093e-06,
+        "rel": 0.00034648034061496866
+       },
+       "E3": {
+        "abs": 4.3117031372650673e-14,
+        "native_amplitude": 1.2178755832656566e-10,
+        "rel": 0.0003540347796203868
+       },
+       "E4": {
+        "abs": 4.978512752559815e-13,
+        "native_amplitude": 3.1055702392899027e-10,
+        "rel": 0.0016030913387739593
+       },
+       "T0": {
+        "abs": 3.6307750440739985e-12,
+        "native_amplitude": 2.467685751569476e-09,
+        "rel": 0.0014713279605252753
+       },
+       "T1": {
+        "abs": 1.201600556246791e-09,
+        "native_amplitude": 2.1358922650193878e-05,
+        "rel": 5.625754519205041e-05
+       },
+       "T2": {
+        "abs": 9.095284461438868e-09,
+        "native_amplitude": 6.99129345783739e-05,
+        "rel": 0.0001300944455598965
+       },
+       "T3": {
+        "abs": 4.91770884907161e-13,
+        "native_amplitude": 2.3326929786964363e-09,
+        "rel": 0.00021081680675438656
+       },
+       "T4": {
+        "abs": 1.121764907756454e-11,
+        "native_amplitude": 4.210505688566539e-09,
+        "rel": 0.002664204707768385
+       }
+      }
+     },
+     "lmax": 128,
+     "los_seconds": 331.01704320998397,
+     "max_step": 0.01,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/I_hp_L8_c384_ns64_st0.01.npz",
+     "npz_sha256": "f1fb2f1ec1e22f9daad51021a266b61bd0f0279fc45e6e329149fa77ecd3ea29",
+     "nside": 64
+    },
+    "ns64_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 3.522271274482359e-15,
+      "n_nodes": 932,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 1.011651880160537e-15
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "T4",
+      "below_floor": [
+       "B2",
+       "B3",
+       "B4"
+      ],
+      "largest_native_amplitude": 6.99129345783739e-05,
+      "max_rel": 0.002664204707768385,
+      "modes": {
+       "E2": {
+        "abs": 2.0080191093787574e-09,
+        "native_amplitude": 5.79547776308093e-06,
+        "rel": 0.00034648034061496866
+       },
+       "E3": {
+        "abs": 4.3117031372650673e-14,
+        "native_amplitude": 1.2178755832656566e-10,
+        "rel": 0.0003540347796203868
+       },
+       "E4": {
+        "abs": 4.978512752559815e-13,
+        "native_amplitude": 3.1055702392899027e-10,
+        "rel": 0.0016030913387739593
+       },
+       "T0": {
+        "abs": 3.6307750440739985e-12,
+        "native_amplitude": 2.467685751569476e-09,
+        "rel": 0.0014713279605252753
+       },
+       "T1": {
+        "abs": 1.201600556246791e-09,
+        "native_amplitude": 2.1358922650193878e-05,
+        "rel": 5.625754519205041e-05
+       },
+       "T2": {
+        "abs": 9.095284461438868e-09,
+        "native_amplitude": 6.99129345783739e-05,
+        "rel": 0.0001300944455598965
+       },
+       "T3": {
+        "abs": 4.91770884907161e-13,
+        "native_amplitude": 2.3326929786964363e-09,
+        "rel": 0.00021081680675438656
+       },
+       "T4": {
+        "abs": 1.121764907756454e-11,
+        "native_amplitude": 4.210505688566539e-09,
+        "rel": 0.002664204707768385
+       }
+      }
+     },
+     "lmax": 128,
+     "los_seconds": 330.14405728300335,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/I_hp_L8_c384_ns64_st0.02.npz",
+     "npz_sha256": "f1fb2f1ec1e22f9daad51021a266b61bd0f0279fc45e6e329149fa77ecd3ea29",
+     "nside": 64
+    }
+   },
+   "solve_seconds": 328.3203394570155,
+   "tag": "I_hp_L8_c384",
+   "wall_seconds": 3031.248150332016
+  },
+  {
+   "ell_max": 8,
+   "family": "I",
+   "gl_low_ell_vs_native": {
+    "amplitude_floor": 1e-06,
+    "argmax": "E3",
+    "below_floor": [
+     "B2",
+     "B3",
+     "B4"
+    ],
+    "largest_native_amplitude": 6.991157882948128e-05,
+    "max_rel": 9.678011827588247e-05,
+    "modes": {
+     "E2": {
+      "abs": 5.291712361852666e-10,
+      "native_amplitude": 5.795285489671373e-06,
+      "rel": 9.131064157725796e-05
+     },
+     "E3": {
+      "abs": 1.1786101035813543e-14,
+      "native_amplitude": 1.21782254927773e-10,
+      "rel": 9.678011827588247e-05
+     },
+     "E4": {
+      "abs": 1.863502043881113e-14,
+      "native_amplitude": 3.1054068091347646e-10,
+      "rel": 6.0008306750648434e-05
+     },
+     "T0": {
+      "abs": 1.076875325365287e-13,
+      "native_amplitude": 2.4675709390511387e-09,
+      "rel": 4.3641109089223614e-05
+     },
+     "T1": {
+      "abs": 3.1254605774503125e-10,
+      "native_amplitude": 2.13588708013222e-05,
+      "rel": 1.4633079653521917e-05
+     },
+     "T2": {
+      "abs": 2.4127054981849675e-09,
+      "native_amplitude": 6.991157882948128e-05,
+      "rel": 3.451081406800592e-05
+     },
+     "T3": {
+      "abs": 1.0340787514790801e-13,
+      "native_amplitude": 2.3326399074892377e-09,
+      "rel": 4.433083512628925e-05
+     },
+     "T4": {
+      "abs": 2.5514056265112135e-13,
+      "native_amplitude": 4.210325838404251e-09,
+      "rel": 6.0598768941793294e-05
+     }
+    }
+   },
+   "handedness": 1,
+   "identity": "atlas IDENTITY.json (written when the run started)",
+   "max_codazzi": 8.873604657873341e-10,
+   "max_hamiltonian": 1.1613151096821745e-09,
+   "max_jacobi": 0.0,
+   "maxrss_MB": 290.76953125,
+   "n_cells": 768,
+   "n_source_nodes": 1648,
+   "n_substep_nodes": 879,
+   "picard_iterations_used": 6,
+   "products": {
+    "ns64_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 3.5361040735299006e-15,
+      "n_nodes": 1648,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 1.0102961035754523e-15
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "T4",
+      "below_floor": [
+       "B2",
+       "B3",
+       "B4"
+      ],
+      "largest_native_amplitude": 6.991157882948128e-05,
+      "max_rel": 0.0028197496043235303,
+      "modes": {
+       "E2": {
+        "abs": 5.291712360370359e-10,
+        "native_amplitude": 5.795285489671373e-06,
+        "rel": 9.131064155168014e-05
+       },
+       "E3": {
+        "abs": 1.1786100051389521e-14,
+        "native_amplitude": 1.21782254927773e-10,
+        "rel": 9.678011019240577e-05
+       },
+       "E4": {
+        "abs": 4.52957967733384e-13,
+        "native_amplitude": 3.1054068091347646e-10,
+        "rel": 0.0014586107250134745
+       },
+       "T0": {
+        "abs": 3.915573170686724e-12,
+        "native_amplitude": 2.4675709390511387e-09,
+        "rel": 0.0015868128079804624
+       },
+       "T1": {
+        "abs": 3.12546058286011e-10,
+        "native_amplitude": 2.13588708013222e-05,
+        "rel": 1.4633079678850024e-05
+       },
+       "T2": {
+        "abs": 2.421718882502852e-09,
+        "native_amplitude": 6.991157882948128e-05,
+        "rel": 3.463973955458188e-05
+       },
+       "T3": {
+        "abs": 6.858240125957857e-13,
+        "native_amplitude": 2.3326399074892377e-09,
+        "rel": 0.00029401195203505707
+       },
+       "T4": {
+        "abs": 1.1872064616913523e-11,
+        "native_amplitude": 4.210325838404251e-09,
+        "rel": 0.0028197496043235303
+       }
+      }
+     },
+     "lmax": 128,
+     "los_seconds": 588.5577733010286,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/I_hp_L8_c768_ns64_st0.02.npz",
+     "npz_sha256": "bc9a457c48ff317146046832cf0cc15fd4f7fc29516e51a9f285a81eaf5351e9",
+     "nside": 64
+    }
+   },
+   "solve_seconds": 316.8400315180188,
+   "tag": "I_hp_L8_c768",
+   "wall_seconds": 929.1268862510333
+  },
+  {
+   "ell_max": 8,
+   "family": "V",
+   "gl_low_ell_vs_native": {
+    "amplitude_floor": 1e-06,
+    "argmax": "B3",
+    "below_floor": [
+     "B4"
+    ],
+    "largest_native_amplitude": 6.968899858259895e-05,
+    "max_rel": 0.0006466055142074107,
+    "modes": {
+     "B2": {
+      "abs": 1.8501243288612144e-11,
+      "native_amplitude": 2.9336882560153458e-08,
+      "rel": 0.0006306478969153077
+     },
+     "B3": {
+      "abs": 1.9326156391671073e-13,
+      "native_amplitude": 2.9888635291581896e-10,
+      "rel": 0.0006466055142074107
+     },
+     "E2": {
+      "abs": 3.4223219409653167e-09,
+      "native_amplitude": 5.793179986373701e-06,
+      "rel": 0.0005907501491434851
+     },
+     "E3": {
+      "abs": 5.1615894901727706e-11,
+      "native_amplitude": 8.182207700573047e-08,
+      "rel": 0.0006308309051860508
+     },
+     "E4": {
+      "abs": 8.683799739853719e-13,
+      "native_amplitude": 1.4813910463537396e-09,
+      "rel": 0.0005861922657915217
+     },
+     "T0": {
+      "abs": 1.094249122000564e-10,
+      "native_amplitude": 8.8098126354352e-07,
+      "rel": 0.00012420799025841128
+     },
+     "T1": {
+      "abs": 2.8670435295010044e-09,
+      "native_amplitude": 2.4323850668726382e-05,
+      "rel": 0.00011786964031921206
+     },
+     "T2": {
+      "abs": 1.8258971939215363e-08,
+      "native_amplitude": 6.968899858259895e-05,
+      "rel": 0.0002620065191146907
+     },
+     "T3": {
+      "abs": 4.0338548954122853e-10,
+      "native_amplitude": 1.4506869807309995e-06,
+      "rel": 0.0002780651476846942
+     },
+     "T4": {
+      "abs": 9.335577497461788e-12,
+      "native_amplitude": 2.9554359029830283e-08,
+      "rel": 0.00031587819204737454
+     }
+    }
+   },
+   "handedness": 1,
+   "identity": "atlas IDENTITY.json (written when the run started)",
+   "max_codazzi": 1.0328592831173718e-09,
+   "max_hamiltonian": 9.187292307179403e-10,
+   "max_jacobi": 5.8582232417511155e-21,
+   "maxrss_MB": 394.671875,
+   "n_cells": 192,
+   "n_source_nodes": 589,
+   "n_substep_nodes": 396,
+   "picard_iterations_used": 6,
+   "products": {
+    "ns128_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 3.518903231620031e-15,
+      "n_nodes": 589,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 9.967025327584738e-16
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "B3",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 6.968899858259895e-05,
+      "max_rel": 0.0007821658373097608,
+      "modes": {
+       "B2": {
+        "abs": 1.8501243286903247e-11,
+        "native_amplitude": 2.9336882560153458e-08,
+        "rel": 0.0006306478968570568
+       },
+       "B3": {
+        "abs": 2.337786944888622e-13,
+        "native_amplitude": 2.9888635291581896e-10,
+        "rel": 0.0007821658373097608
+       },
+       "E2": {
+        "abs": 3.4223219409661633e-09,
+        "native_amplitude": 5.793179986373701e-06,
+        "rel": 0.0005907501491436313
+       },
+       "E3": {
+        "abs": 5.161589490134856e-11,
+        "native_amplitude": 8.182207700573047e-08,
+        "rel": 0.000630830905181417
+       },
+       "E4": {
+        "abs": 8.683799745103999e-13,
+        "native_amplitude": 1.4813910463537396e-09,
+        "rel": 0.0005861922661459373
+       },
+       "T0": {
+        "abs": 1.0846488486080907e-10,
+        "native_amplitude": 8.8098126354352e-07,
+        "rel": 0.00012311826522227843
+       },
+       "T1": {
+        "abs": 2.867043533060148e-09,
+        "native_amplitude": 2.4323850668726382e-05,
+        "rel": 0.00011786964046553525
+       },
+       "T2": {
+        "abs": 1.8261119898217867e-08,
+        "native_amplitude": 6.968899858259895e-05,
+        "rel": 0.0002620373411819637
+       },
+       "T3": {
+        "abs": 4.0338548621372856e-10,
+        "native_amplitude": 1.4506869807309995e-06,
+        "rel": 0.0002780651453909534
+       },
+       "T4": {
+        "abs": 9.335613266225512e-12,
+        "native_amplitude": 2.9554359029830283e-08,
+        "rel": 0.00031587940231770007
+       }
+      }
+     },
+     "lmax": 256,
+     "los_seconds": 1250.6177593690227,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/V_hp_L8_c192_ns128_st0.02.npz",
+     "npz_sha256": "735f5a553c626bdb56de132c462ae65b1169a982397eb0891584947861b433ad",
+     "nside": 128
+    },
+    "ns64_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 3.518903231620031e-15,
+      "n_nodes": 589,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 9.967025327584738e-16
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "B3",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 6.968899858259895e-05,
+      "max_rel": 0.0015717490610836515,
+      "modes": {
+       "B2": {
+        "abs": 1.8501243273881602e-11,
+        "native_amplitude": 2.9336882560153458e-08,
+        "rel": 0.0006306478964131908
+       },
+       "B3": {
+        "abs": 4.697743445661554e-13,
+        "native_amplitude": 2.9888635291581896e-10,
+        "rel": 0.0015717490610836515
+       },
+       "E2": {
+        "abs": 3.4223219408187795e-09,
+        "native_amplitude": 5.793179986373701e-06,
+        "rel": 0.0005907501491181904
+       },
+       "E3": {
+        "abs": 5.161589487886195e-11,
+        "native_amplitude": 8.182207700573047e-08,
+        "rel": 0.0006308309049065938
+       },
+       "E4": {
+        "abs": 1.1895508252904749e-12,
+        "native_amplitude": 1.4813910463537396e-09,
+        "rel": 0.0008029958249163222
+       },
+       "T0": {
+        "abs": 1.0543967948362735e-10,
+        "native_amplitude": 8.8098126354352e-07,
+        "rel": 0.00011968436089040467
+       },
+       "T1": {
+        "abs": 2.8670435357231012e-09,
+        "native_amplitude": 2.4323850668726382e-05,
+        "rel": 0.00011786964057501436
+       },
+       "T2": {
+        "abs": 1.8267900145127574e-08,
+        "native_amplitude": 6.968899858259895e-05,
+        "rel": 0.0002621346341126646
+       },
+       "T3": {
+        "abs": 4.033854868481433e-10,
+        "native_amplitude": 1.4506869807309995e-06,
+        "rel": 0.0002780651458282736
+       },
+       "T4": {
+        "abs": 9.33609041194714e-12,
+        "native_amplitude": 2.9554359029830283e-08,
+        "rel": 0.000315895546999476
+       }
+      }
+     },
+     "lmax": 128,
+     "los_seconds": 233.42582067195326,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/V_hp_L8_c192_ns64_st0.02.npz",
+     "npz_sha256": "4b6b8fb7ab0943dd3f8d1d907ded8436ef397c54d2dbd8364699ad9f17136b81",
+     "nside": 64
+    }
+   },
+   "solve_seconds": 216.83181943104137,
+   "tag": "V_hp_L8_c192",
+   "wall_seconds": 1719.1779630900128
+  },
+  {
+   "ell_max": 8,
+   "family": "V",
+   "gl_low_ell_vs_native": {
+    "amplitude_floor": 1e-06,
+    "argmax": "B3",
+    "below_floor": [
+     "B4"
+    ],
+    "largest_native_amplitude": 6.968404851929819e-05,
+    "max_rel": 0.0003907183165824924,
+    "modes": {
+     "B2": {
+      "abs": 1.1036086741539176e-11,
+      "native_amplitude": 2.9333683657447708e-08,
+      "rel": 0.0003762257366110634
+     },
+     "B3": {
+      "abs": 1.1676659166260265e-13,
+      "native_amplitude": 2.9885108198645125e-10,
+      "rel": 0.0003907183165824924
+     },
+     "E2": {
+      "abs": 2.0074159691933584e-09,
+      "native_amplitude": 5.792601878049227e-06,
+      "rel": 0.00034654823712300343
+     },
+     "E3": {
+      "abs": 3.0788134884140754e-11,
+      "native_amplitude": 8.181315674625891e-08,
+      "rel": 0.00037632253916847685
+     },
+     "E4": {
+      "abs": 5.313136314838069e-13,
+      "native_amplitude": 1.481200204200541e-09,
+      "rel": 0.00035870480572244905
+     },
+     "T0": {
+      "abs": 5.6135368936764816e-11,
+      "native_amplitude": 8.809675263973503e-07,
+      "rel": 6.372013411927468e-05
+     },
+     "T1": {
+      "abs": 1.6001343877456217e-09,
+      "native_amplitude": 2.4323579374226425e-05,
+      "rel": 6.578531733043963e-05
+     },
+     "T2": {
+      "abs": 9.068044331229865e-09,
+      "native_amplitude": 6.968404851929819e-05,
+      "rel": 0.000130130848076638
+     },
+     "T3": {
+      "abs": 1.9498282492804475e-10,
+      "native_amplitude": 1.4505725043387832e-06,
+      "rel": 0.00013441784146937493
+     },
+     "T4": {
+      "abs": 4.4322303356968785e-12,
+      "native_amplitude": 2.955158448054126e-08,
+      "rel": 0.00014998283217657434
+     }
+    }
+   },
+   "handedness": 1,
+   "identity": "atlas IDENTITY.json (written when the run started)",
+   "max_codazzi": 1.5358855543333393e-09,
+   "max_hamiltonian": 1.1364029696150795e-09,
+   "max_jacobi": 8.25202497095828e-21,
+   "maxrss_MB": 298.87109375,
+   "n_cells": 384,
+   "n_source_nodes": 932,
+   "n_substep_nodes": 547,
+   "picard_iterations_used": 6,
+   "products": {
+    "ns128_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 3.5230848852443066e-15,
+      "n_nodes": 932,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 1.0130781703574187e-15
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "B3",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 6.968404851929819e-05,
+      "max_rel": 0.0005553486418347878,
+      "modes": {
+       "B2": {
+        "abs": 1.1036086740609375e-11,
+        "native_amplitude": 2.9333683657447708e-08,
+        "rel": 0.000376225736579366
+       },
+       "B3": {
+        "abs": 1.6596654249203252e-13,
+        "native_amplitude": 2.9885108198645125e-10,
+        "rel": 0.0005553486418347878
+       },
+       "E2": {
+        "abs": 2.0074159691950525e-09,
+        "native_amplitude": 5.792601878049227e-06,
+        "rel": 0.0003465482371232959
+       },
+       "E3": {
+        "abs": 3.078813488373549e-11,
+        "native_amplitude": 8.181315674625891e-08,
+        "rel": 0.00037632253916352324
+       },
+       "E4": {
+        "abs": 5.714872340752765e-13,
+        "native_amplitude": 1.481200204200541e-09,
+        "rel": 0.0003858271369762128
+       },
+       "T0": {
+        "abs": 5.5175271063284055e-11,
+        "native_amplitude": 8.809675263973503e-07,
+        "rel": 6.263031202627766e-05
+       },
+       "T1": {
+        "abs": 1.6001343847277723e-09,
+        "native_amplitude": 2.4323579374226425e-05,
+        "rel": 6.57853172063687e-05
+       },
+       "T2": {
+        "abs": 9.070192421610565e-09,
+        "native_amplitude": 6.968404851929819e-05,
+        "rel": 0.00013016167421872282
+       },
+       "T3": {
+        "abs": 1.949828191564415e-10,
+        "native_amplitude": 1.4505725043387832e-06,
+        "rel": 0.00013441783749052987
+       },
+       "T4": {
+        "abs": 4.432260940495462e-12,
+        "native_amplitude": 2.955158448054126e-08,
+        "rel": 0.00014998386781642654
+       }
+      }
+     },
+     "lmax": 256,
+     "los_seconds": 1964.0902754639974,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/V_hp_L8_c384_ns128_st0.02.npz",
+     "npz_sha256": "04fc703a26ab9eb51e58e367e49e59a9e637f616dada38a6384e53716ecc4b0a",
+     "nside": 128
+    },
+    "ns64_st0.01": {
+     "diagnostics": {
+      "max_source_truncation": 3.5230848852443066e-15,
+      "n_nodes": 932,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 1.0130781703574187e-15
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "B3",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 6.968404851929819e-05,
+      "max_rel": 0.0014304768423545615,
+      "modes": {
+       "B2": {
+        "abs": 1.1036086727751513e-11,
+        "native_amplitude": 2.9333683657447708e-08,
+        "rel": 0.00037622573614103506
+       },
+       "B3": {
+        "abs": 4.2749955209422294e-13,
+        "native_amplitude": 2.9885108198645125e-10,
+        "rel": 0.0014304768423545615
+       },
+       "E2": {
+        "abs": 2.0074159690476687e-09,
+        "native_amplitude": 5.792601878049227e-06,
+        "rel": 0.00034654823709785244
+       },
+       "E3": {
+        "abs": 3.078813486129909e-11,
+        "native_amplitude": 8.181315674625891e-08,
+        "rel": 0.0003763225388892838
+       },
+       "E4": {
+        "abs": 8.955972623884552e-13,
+        "native_amplitude": 1.481200204200541e-09,
+        "rel": 0.0006046429509317023
+       },
+       "T0": {
+        "abs": 5.214987860511164e-11,
+        "native_amplitude": 8.809675263973503e-07,
+        "rel": 5.919614179012318e-05
+       },
+       "T1": {
+        "abs": 1.6001343857509182e-09,
+        "native_amplitude": 2.4323579374226425e-05,
+        "rel": 6.578531724843265e-05
+       },
+       "T2": {
+        "abs": 9.076973082089196e-09,
+        "native_amplitude": 6.968404851929819e-05,
+        "rel": 0.00013025897999562172
+       },
+       "T3": {
+        "abs": 1.9498281849926662e-10,
+        "native_amplitude": 1.4505725043387832e-06,
+        "rel": 0.0001344178370374847
+       },
+       "T4": {
+        "abs": 8.01288379912006e-12,
+        "native_amplitude": 2.955158448054126e-08,
+        "rel": 0.0002711490412433309
+       }
+      }
+     },
+     "lmax": 128,
+     "los_seconds": 375.14561520400457,
+     "max_step": 0.01,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/V_hp_L8_c384_ns64_st0.01.npz",
+     "npz_sha256": "9a1cdace82ca7614d1a3774dd4356d76fa7b0e99c7fb6373103d614d6fb83f19",
+     "nside": 64
+    },
+    "ns64_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 3.5230848852443066e-15,
+      "n_nodes": 932,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 1.0130781703574187e-15
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "B3",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 6.968404851929819e-05,
+      "max_rel": 0.0014304768423545615,
+      "modes": {
+       "B2": {
+        "abs": 1.1036086727751513e-11,
+        "native_amplitude": 2.9333683657447708e-08,
+        "rel": 0.00037622573614103506
+       },
+       "B3": {
+        "abs": 4.2749955209422294e-13,
+        "native_amplitude": 2.9885108198645125e-10,
+        "rel": 0.0014304768423545615
+       },
+       "E2": {
+        "abs": 2.0074159690476687e-09,
+        "native_amplitude": 5.792601878049227e-06,
+        "rel": 0.00034654823709785244
+       },
+       "E3": {
+        "abs": 3.078813486129909e-11,
+        "native_amplitude": 8.181315674625891e-08,
+        "rel": 0.0003763225388892838
+       },
+       "E4": {
+        "abs": 8.955972623884552e-13,
+        "native_amplitude": 1.481200204200541e-09,
+        "rel": 0.0006046429509317023
+       },
+       "T0": {
+        "abs": 5.214987860511164e-11,
+        "native_amplitude": 8.809675263973503e-07,
+        "rel": 5.919614179012318e-05
+       },
+       "T1": {
+        "abs": 1.6001343857509182e-09,
+        "native_amplitude": 2.4323579374226425e-05,
+        "rel": 6.578531724843265e-05
+       },
+       "T2": {
+        "abs": 9.076973082089196e-09,
+        "native_amplitude": 6.968404851929819e-05,
+        "rel": 0.00013025897999562172
+       },
+       "T3": {
+        "abs": 1.9498281849926662e-10,
+        "native_amplitude": 1.4505725043387832e-06,
+        "rel": 0.0001344178370374847
+       },
+       "T4": {
+        "abs": 8.01288379912006e-12,
+        "native_amplitude": 2.955158448054126e-08,
+        "rel": 0.0002711490412433309
+       }
+      }
+     },
+     "lmax": 128,
+     "los_seconds": 365.5366210610373,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/V_hp_L8_c384_ns64_st0.02.npz",
+     "npz_sha256": "9a1cdace82ca7614d1a3774dd4356d76fa7b0e99c7fb6373103d614d6fb83f19",
+     "nside": 64
+    }
+   },
+   "solve_seconds": 373.4053344359854,
+   "tag": "V_hp_L8_c384",
+   "wall_seconds": 3100.9300130140036
+  },
+  {
+   "ell_max": 8,
+   "family": "V",
+   "gl_low_ell_vs_native": {
+    "amplitude_floor": 1e-06,
+    "argmax": "B3",
+    "below_floor": [
+     "B4"
+    ],
+    "largest_native_amplitude": 6.968268406743593e-05,
+    "max_rel": 0.00010313675970883445,
+    "modes": {
+     "B2": {
+      "abs": 2.911063501111906e-12,
+      "native_amplitude": 2.9332624734795273e-08,
+      "rel": 9.924319856922698e-05
+     },
+     "B3": {
+      "abs": 3.082134130144967e-14,
+      "native_amplitude": 2.9883953488999896e-10,
+      "rel": 0.00010313675970883445
+     },
+     "E2": {
+      "abs": 5.290127179451607e-10,
+      "native_amplitude": 5.7924095131046085e-06,
+      "rel": 9.132861147823457e-05
+     },
+     "E3": {
+      "abs": 8.120952315595565e-12,
+      "native_amplitude": 8.181020414414203e-08,
+      "rel": 9.926576275603953e-05
+     },
+     "E4": {
+      "abs": 1.4081722282388866e-13,
+      "native_amplitude": 1.4811390167919614e-09,
+      "rel": 9.507360296867234e-05
+     },
+     "T0": {
+      "abs": 1.4566572012153344e-11,
+      "native_amplitude": 8.809623515811401e-07,
+      "rel": 1.6534840547963763e-05
+     },
+     "T1": {
+      "abs": 4.1819342414944795e-10,
+      "native_amplitude": 2.4323464082882e-05,
+      "rel": 1.7193004365022076e-05
+     },
+     "T2": {
+      "abs": 2.407931580920863e-09,
+      "native_amplitude": 6.968268406743593e-05,
+      "rel": 3.455566634876707e-05
+     },
+     "T3": {
+      "abs": 5.168632969129227e-11,
+      "native_amplitude": 1.4505412675793235e-06,
+      "rel": 3.563244345164125e-05
+     },
+     "T4": {
+      "abs": 1.1745995112171927e-12,
+      "native_amplitude": 2.9550820333517006e-08,
+      "rel": 3.9748456995792547e-05
+     }
+    }
+   },
+   "handedness": 1,
+   "identity": "atlas IDENTITY.json (written when the run started)",
+   "max_codazzi": 1.3454984007184079e-09,
+   "max_hamiltonian": 1.1683730629952429e-09,
+   "max_jacobi": 5.781047863553792e-21,
+   "maxrss_MB": 290.2734375,
+   "n_cells": 768,
+   "n_source_nodes": 1648,
+   "n_substep_nodes": 879,
+   "picard_iterations_used": 6,
+   "products": {
+    "ns64_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 3.5269062712235117e-15,
+      "n_nodes": 1648,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 1.0033558068867588e-15
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "B3",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 6.968268406743593e-05,
+      "max_rel": 0.001313761549019629,
+      "modes": {
+       "B2": {
+        "abs": 2.9110634871725887e-12,
+        "native_amplitude": 2.9332624734795273e-08,
+        "rel": 9.924319809401149e-05
+       },
+       "B3": {
+        "abs": 3.926038902653905e-13,
+        "native_amplitude": 2.9883953488999896e-10,
+        "rel": 0.001313761549019629
+       },
+       "E2": {
+        "abs": 5.29012717800318e-10,
+        "native_amplitude": 5.7924095131046085e-06,
+        "rel": 9.132861145322898e-05
+       },
+       "E3": {
+        "abs": 8.120952292523871e-12,
+        "native_amplitude": 8.181020414414203e-08,
+        "rel": 9.926576247402467e-05
+       },
+       "E4": {
+        "abs": 5.561353020785397e-13,
+        "native_amplitude": 1.4811390167919614e-09,
+        "rel": 0.00037547812580286216
+       },
+       "T0": {
+        "abs": 1.0580768419340667e-11,
+        "native_amplitude": 8.809623515811401e-07,
+        "rel": 1.2010466054934625e-05
+       },
+       "T1": {
+        "abs": 4.1819343001722873e-10,
+        "native_amplitude": 2.4323464082882e-05,
+        "rel": 1.7193004606261596e-05
+       },
+       "T2": {
+        "abs": 2.416861020736465e-09,
+        "native_amplitude": 6.968268406743593e-05,
+        "rel": 3.468381066374438e-05
+       },
+       "T3": {
+        "abs": 5.168632869292937e-11,
+        "native_amplitude": 1.4505412675793235e-06,
+        "rel": 3.563244276337204e-05
+       },
+       "T4": {
+        "abs": 1.0940979342719584e-11,
+        "native_amplitude": 2.9550820333517006e-08,
+        "rel": 0.0003702428297839892
+       }
+      }
+     },
+     "lmax": 128,
+     "los_seconds": 565.1415598880267,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/V_hp_L8_c768_ns64_st0.02.npz",
+     "npz_sha256": "a338b52ef94559231941797f41e7c42898743fab320ad983330378d2de876dfb",
+     "nside": 64
+    }
+   },
+   "solve_seconds": 318.9203260099748,
+   "tag": "V_hp_L8_c768",
+   "wall_seconds": 908.5292749229702
+  },
+  {
+   "ell_max": 8,
+   "family": "VII_h",
+   "gl_low_ell_vs_native": {
+    "amplitude_floor": 1e-06,
+    "argmax": "B3",
+    "below_floor": [
+     "B4"
+    ],
+    "largest_native_amplitude": 6.979505609130885e-05,
+    "max_rel": 0.0006465087835034001,
+    "modes": {
+     "B2": {
+      "abs": 4.0078736829842195e-11,
+      "native_amplitude": 6.355976705164227e-08,
+      "rel": 0.000630567711132079
+     },
+     "B3": {
+      "abs": 2.992834047413204e-13,
+      "native_amplitude": 4.6292241092150053e-10,
+      "rel": 0.0006465087835034001
+     },
+     "E2": {
+      "abs": 3.4221218639760725e-09,
+      "native_amplitude": 5.793481421230959e-06,
+      "rel": 0.0005906848775652005
+     },
+     "E3": {
+      "abs": 3.329394429739167e-11,
+      "native_amplitude": 5.278733730148025e-08,
+      "rel": 0.000630718388147569
+     },
+     "E4": {
+      "abs": 3.1759520583450597e-13,
+      "native_amplitude": 6.44384088713363e-10,
+      "rel": 0.0004928663065977405
+     },
+     "T0": {
+      "abs": 5.075239618688142e-11,
+      "native_amplitude": 4.2728911891426564e-07,
+      "rel": 0.00011877764712530567
+     },
+     "T1": {
+      "abs": 2.422427206199496e-09,
+      "native_amplitude": 2.2721340768280816e-05,
+      "rel": 0.0001066146241502273
+     },
+     "T2": {
+      "abs": 1.827931790495871e-08,
+      "native_amplitude": 6.979505609130885e-05,
+      "rel": 0.0002618998956178921
+     },
+     "T3": {
+      "abs": 2.604404577858182e-10,
+      "native_amplitude": 9.372156433218327e-07,
+      "rel": 0.000277887442064798
+     },
+     "T4": {
+      "abs": 3.932165666126748e-12,
+      "native_amplitude": 1.140456179395024e-08,
+      "rel": 0.00034478884302355554
+     }
+    }
+   },
+   "handedness": 1,
+   "identity": "atlas IDENTITY.json (written when the run started)",
+   "max_codazzi": 9.262925688835027e-10,
+   "max_hamiltonian": 9.213706177701803e-10,
+   "max_jacobi": 1.4436243894812947e-18,
+   "maxrss_MB": 369.890625,
+   "n_cells": 192,
+   "n_source_nodes": 589,
+   "n_substep_nodes": 396,
+   "picard_iterations_used": 6,
+   "products": {
+    "ns128_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 3.5236489104035006e-15,
+      "n_nodes": 589,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 1.0144664715614604e-15
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "B3",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 6.979505609130885e-05,
+      "max_rel": 0.0006938584161542147,
+      "modes": {
+       "B2": {
+        "abs": 4.007873682974955e-11,
+        "native_amplitude": 6.355976705164227e-08,
+        "rel": 0.0006305677111306214
+       },
+       "B3": {
+        "abs": 3.212026108442829e-13,
+        "native_amplitude": 4.6292241092150053e-10,
+        "rel": 0.0006938584161542147
+       },
+       "E2": {
+        "abs": 3.422121863982002e-09,
+        "native_amplitude": 5.793481421230959e-06,
+        "rel": 0.000590684877566224
+       },
+       "E3": {
+        "abs": 3.3293944295375286e-11,
+        "native_amplitude": 5.278733730148025e-08,
+        "rel": 0.0006307183881093709
+       },
+       "E4": {
+        "abs": 3.8252063917340156e-13,
+        "native_amplitude": 6.44384088713363e-10,
+        "rel": 0.0005936221050044512
+       },
+       "T0": {
+        "abs": 4.978777101330068e-11,
+        "native_amplitude": 4.2728911891426564e-07,
+        "rel": 0.00011652010034753648
+       },
+       "T1": {
+        "abs": 2.422427204103429e-09,
+        "native_amplitude": 2.2721340768280816e-05,
+        "rel": 0.00010661462405797627
+       },
+       "T2": {
+        "abs": 1.8281476100862602e-08,
+        "native_amplitude": 6.979505609130885e-05,
+        "rel": 0.00026193081752016935
+       },
+       "T3": {
+        "abs": 2.604404509639733e-10,
+        "native_amplitude": 9.372156433218327e-07,
+        "rel": 0.0002778874347859557
+       },
+       "T4": {
+        "abs": 3.932187869976279e-12,
+        "native_amplitude": 1.140456179395024e-08,
+        "rel": 0.00034479078995057754
+       }
+      }
+     },
+     "lmax": 256,
+     "los_seconds": 1316.4430146240047,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/VII_h_hp_L8_c192_ns128_st0.02.npz",
+     "npz_sha256": "0947d9494389fbfa2b6e3f735768d0fff4d7c23893bd8e1bea1ebc629572b4ea",
+     "nside": 128
+    },
+    "ns64_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 3.5236489104035006e-15,
+      "n_nodes": 589,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 1.0144664715614604e-15
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "B3",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 6.979505609130885e-05,
+      "max_rel": 0.0012574172010323653,
+      "modes": {
+       "B2": {
+        "abs": 4.0078736828108424e-11,
+        "native_amplitude": 6.355976705164227e-08,
+        "rel": 0.0006305677111048012
+       },
+       "B3": {
+        "abs": 5.820866022360677e-13,
+        "native_amplitude": 4.6292241092150053e-10,
+        "rel": 0.0012574172010323653
+       },
+       "E2": {
+        "abs": 3.422121863834618e-09,
+        "native_amplitude": 5.793481421230959e-06,
+        "rel": 0.0005906848775407844
+       },
+       "E3": {
+        "abs": 3.329394427734387e-11,
+        "native_amplitude": 5.278733730148025e-08,
+        "rel": 0.0006307183877677848
+       },
+       "E4": {
+        "abs": 7.111712416424575e-13,
+        "native_amplitude": 6.44384088713363e-10,
+        "rel": 0.0011036449442171175
+       },
+       "T0": {
+        "abs": 4.674814638827002e-11,
+        "native_amplitude": 4.2728911891426564e-07,
+        "rel": 0.00010940635817513037
+       },
+       "T1": {
+        "abs": 2.4224272056551673e-09,
+        "native_amplitude": 2.2721340768280816e-05,
+        "rel": 0.00010661462412627058
+       },
+       "T2": {
+        "abs": 1.8288288664694885e-08,
+        "native_amplitude": 6.979505609130885e-05,
+        "rel": 0.0002620284256347523
+       },
+       "T3": {
+        "abs": 2.604404584133105e-10,
+        "native_amplitude": 9.372156433218327e-07,
+        "rel": 0.0002778874427343262
+       },
+       "T4": {
+        "abs": 8.57163161005632e-12,
+        "native_amplitude": 1.140456179395024e-08,
+        "rel": 0.0007515967526786781
+       }
+      }
+     },
+     "lmax": 128,
+     "los_seconds": 256.09840054501547,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/VII_h_hp_L8_c192_ns64_st0.02.npz",
+     "npz_sha256": "e7c1e712e3b6a737b8262d6c90280b685e0272afcb128df8123babe36eb84c34",
+     "nside": 64
+    }
+   },
+   "solve_seconds": 315.6638204199844,
+   "tag": "VII_h_hp_L8_c192",
+   "wall_seconds": 1903.4014210389578
+  },
+  {
+   "ell_max": 8,
+   "family": "VII_h",
+   "gl_low_ell_vs_native": {
+    "amplitude_floor": 1e-06,
+    "argmax": "B3",
+    "below_floor": [
+     "B4"
+    ],
+    "largest_native_amplitude": 6.979010079502033e-05,
+    "max_rel": 0.0003906650521478294,
+    "modes": {
+     "B2": {
+      "abs": 2.390732582937569e-11,
+      "native_amplitude": 6.355283674679057e-08,
+      "rel": 0.0003761803100092619
+     },
+     "B3": {
+      "abs": 1.8082626367168699e-13,
+      "native_amplitude": 4.6286777554717516e-10,
+      "rel": 0.0003906650521478294
+     },
+     "E2": {
+      "abs": 2.007287797019048e-09,
+      "native_amplitude": 5.792903321810256e-06,
+      "rel": 0.0003465080781620536
+     },
+     "E3": {
+      "abs": 1.985984367492128e-11,
+      "native_amplitude": 5.2781582244672853e-08,
+      "rel": 0.00037626465199280183
+     },
+     "E4": {
+      "abs": 1.9931672450500249e-13,
+      "native_amplitude": 6.442904555482126e-10,
+      "rel": 0.0003093584931898584
+     },
+     "T0": {
+      "abs": 2.6279368547247425e-11,
+      "native_amplitude": 4.272833207053856e-07,
+      "rel": 6.150338024864585e-05
+     },
+     "T1": {
+      "abs": 1.3850997147333182e-09,
+      "native_amplitude": 2.2721195643678366e-05,
+      "rel": 6.096068782888586e-05
+     },
+     "T2": {
+      "abs": 9.078206619504204e-09,
+      "native_amplitude": 6.979010079502033e-05,
+      "rel": 0.00013007871483332136
+     },
+     "T3": {
+      "abs": 1.258802356669792e-10,
+      "native_amplitude": 9.371417254060189e-07,
+      "rel": 0.00013432358442095967
+     },
+     "T4": {
+      "abs": 1.9398515169553577e-12,
+      "native_amplitude": 1.1403330073807002e-08,
+      "rel": 0.00017011272184527218
+     }
+    }
+   },
+   "handedness": 1,
+   "identity": "atlas IDENTITY.json (written when the run started)",
+   "max_codazzi": 1.225540643455072e-09,
+   "max_hamiltonian": 1.3084770566691618e-09,
+   "max_jacobi": 1.946103654282871e-18,
+   "maxrss_MB": 301.5390625,
+   "n_cells": 384,
+   "n_source_nodes": 932,
+   "n_substep_nodes": 547,
+   "picard_iterations_used": 6,
+   "products": {
+    "ns128_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 3.5242058465459643e-15,
+      "n_nodes": 932,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 9.97374226196854e-16
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "B3",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 6.979010079502033e-05,
+      "max_rel": 0.0004860032076873201,
+      "modes": {
+       "B2": {
+        "abs": 2.3907325828555127e-11,
+        "native_amplitude": 6.355283674679057e-08,
+        "rel": 0.0003761803099963504
+       },
+       "B3": {
+        "abs": 2.2495522365102163e-13,
+        "native_amplitude": 4.6286777554717516e-10,
+        "rel": 0.0004860032076873201
+       },
+       "E2": {
+        "abs": 2.007287797020742e-09,
+        "native_amplitude": 5.792903321810256e-06,
+        "rel": 0.000346508078162346
+       },
+       "E3": {
+        "abs": 1.9859843673189635e-11,
+        "native_amplitude": 5.2781582244672853e-08,
+        "rel": 0.0003762646519599941
+       },
+       "E4": {
+        "abs": 2.796651271044879e-13,
+        "native_amplitude": 6.442904555482126e-10,
+        "rel": 0.0004340668477954201
+       },
+       "T0": {
+        "abs": 2.531468415409933e-11,
+        "native_amplitude": 4.272833207053856e-07,
+        "rel": 5.92456642405519e-05
+       },
+       "T1": {
+        "abs": 1.3850997143600192e-09,
+        "native_amplitude": 2.2721195643678366e-05,
+        "rel": 6.096068781245631e-05
+       },
+       "T2": {
+        "abs": 9.080364954877153e-09,
+        "native_amplitude": 6.979010079502033e-05,
+        "rel": 0.00013010964092954937
+       },
+       "T3": {
+        "abs": 1.2588023666744078e-10,
+        "native_amplitude": 9.371417254060189e-07,
+        "rel": 0.0001343235854885267
+       },
+       "T4": {
+        "abs": 1.939882589844597e-12,
+        "native_amplitude": 1.1403330073807002e-08,
+        "rel": 0.00017011544674133658
+       }
+      }
+     },
+     "lmax": 256,
+     "los_seconds": 1952.3723496030434,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/VII_h_hp_L8_c384_ns128_st0.02.npz",
+     "npz_sha256": "257f3c4b0fc8af62a6da987e6b261951974e7f3c1419479f379f1ca8328ab832",
+     "nside": 128
+    },
+    "ns64_st0.01": {
+     "diagnostics": {
+      "max_source_truncation": 3.5242058465459643e-15,
+      "n_nodes": 932,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 9.97374226196854e-16
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "B3",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 6.979010079502033e-05,
+      "max_rel": 0.001075754152602301,
+      "modes": {
+       "B2": {
+        "abs": 2.3907325826821356e-11,
+        "native_amplitude": 6.355283674679057e-08,
+        "rel": 0.00037618030996906966
+       },
+       "B3": {
+        "abs": 4.979319316506635e-13,
+        "native_amplitude": 4.6286777554717516e-10,
+        "rel": 0.001075754152602301
+       },
+       "E2": {
+        "abs": 2.0072877968742054e-09,
+        "native_amplitude": 5.792903321810256e-06,
+        "rel": 0.0003465080781370501
+       },
+       "E3": {
+        "abs": 1.9859843655055477e-11,
+        "native_amplitude": 5.2781582244672853e-08,
+        "rel": 0.0003762646516164243
+       },
+       "E4": {
+        "abs": 6.087631015937699e-13,
+        "native_amplitude": 6.442904555482126e-10,
+        "rel": 0.0009448581712665397
+       },
+       "T0": {
+        "abs": 2.227487394510284e-11,
+        "native_amplitude": 4.272833207053856e-07,
+        "rel": 5.213139120041032e-05
+       },
+       "T1": {
+        "abs": 1.3850997167310836e-09,
+        "native_amplitude": 2.2721195643678366e-05,
+        "rel": 6.096068791681105e-05
+       },
+       "T2": {
+        "abs": 9.08717793240033e-09,
+        "native_amplitude": 6.979010079502033e-05,
+        "rel": 0.00013020726190223126
+       },
+       "T3": {
+        "abs": 1.2588024549507402e-10,
+        "native_amplitude": 9.371417254060189e-07,
+        "rel": 0.00013432359490826864
+       },
+       "T4": {
+        "abs": 1.0311511220191952e-11,
+        "native_amplitude": 1.1403330073807002e-08,
+        "rel": 0.0009042543847675764
+       }
+      }
+     },
+     "lmax": 128,
+     "los_seconds": 399.96984395198524,
+     "max_step": 0.01,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/VII_h_hp_L8_c384_ns64_st0.01.npz",
+     "npz_sha256": "3076b3a7bbdb9fbcde72f3c7e01e6eb9db3a6162e8435b6e4d6aa1a221805e48",
+     "nside": 64
+    },
+    "ns64_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 3.5242058465459643e-15,
+      "n_nodes": 932,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 9.97374226196854e-16
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "B3",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 6.979010079502033e-05,
+      "max_rel": 0.001075754152602301,
+      "modes": {
+       "B2": {
+        "abs": 2.3907325826821356e-11,
+        "native_amplitude": 6.355283674679057e-08,
+        "rel": 0.00037618030996906966
+       },
+       "B3": {
+        "abs": 4.979319316506635e-13,
+        "native_amplitude": 4.6286777554717516e-10,
+        "rel": 0.001075754152602301
+       },
+       "E2": {
+        "abs": 2.0072877968742054e-09,
+        "native_amplitude": 5.792903321810256e-06,
+        "rel": 0.0003465080781370501
+       },
+       "E3": {
+        "abs": 1.9859843655055477e-11,
+        "native_amplitude": 5.2781582244672853e-08,
+        "rel": 0.0003762646516164243
+       },
+       "E4": {
+        "abs": 6.087631015937699e-13,
+        "native_amplitude": 6.442904555482126e-10,
+        "rel": 0.0009448581712665397
+       },
+       "T0": {
+        "abs": 2.227487394510284e-11,
+        "native_amplitude": 4.272833207053856e-07,
+        "rel": 5.213139120041032e-05
+       },
+       "T1": {
+        "abs": 1.3850997167310836e-09,
+        "native_amplitude": 2.2721195643678366e-05,
+        "rel": 6.096068791681105e-05
+       },
+       "T2": {
+        "abs": 9.08717793240033e-09,
+        "native_amplitude": 6.979010079502033e-05,
+        "rel": 0.00013020726190223126
+       },
+       "T3": {
+        "abs": 1.2588024549507402e-10,
+        "native_amplitude": 9.371417254060189e-07,
+        "rel": 0.00013432359490826864
+       },
+       "T4": {
+        "abs": 1.0311511220191952e-11,
+        "native_amplitude": 1.1403330073807002e-08,
+        "rel": 0.0009042543847675764
+       }
+      }
+     },
+     "lmax": 128,
+     "los_seconds": 412.3346799869905,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/VII_h_hp_L8_c384_ns64_st0.02.npz",
+     "npz_sha256": "3076b3a7bbdb9fbcde72f3c7e01e6eb9db3a6162e8435b6e4d6aa1a221805e48",
+     "nside": 64
+    }
+   },
+   "solve_seconds": 361.63751920702634,
+   "tag": "VII_h_hp_L8_c384",
+   "wall_seconds": 3145.5831132500316
+  },
+  {
+   "ell_max": 8,
+   "family": "VII_h",
+   "gl_low_ell_vs_native": {
+    "amplitude_floor": 1e-06,
+    "argmax": "B3",
+    "below_floor": [
+     "B4"
+    ],
+    "largest_native_amplitude": 6.978873781127702e-05,
+    "max_rel": 0.0001031234006619484,
+    "modes": {
+     "B2": {
+      "abs": 6.306386813508787e-12,
+      "native_amplitude": 6.3550542818807e-08,
+      "rel": 9.923419271947572e-05
+     },
+     "B3": {
+      "abs": 4.7730654812015933e-14,
+      "native_amplitude": 4.628498915438512e-10,
+      "rel": 0.0001031234006619484
+     },
+     "E2": {
+      "abs": 5.289785478347753e-10,
+      "native_amplitude": 5.7927110116698056e-06,
+      "rel": 9.13179592023687e-05
+     },
+     "E3": {
+      "abs": 5.238319154976575e-12,
+      "native_amplitude": 5.2779677918029535e-08,
+      "rel": 9.924878971622457e-05
+     },
+     "E4": {
+      "abs": 5.324801835867948e-14,
+      "native_amplitude": 6.442612368952129e-10,
+      "rel": 8.26497316760656e-05
+     },
+     "T0": {
+      "abs": 6.814431048285562e-12,
+      "native_amplitude": 4.2728101047382526e-07,
+      "rel": 1.594835923255477e-05
+     },
+     "T1": {
+      "abs": 3.611937109304364e-10,
+      "native_amplitude": 2.2721114699374762e-05,
+      "rel": 1.589683057849163e-05
+     },
+     "T2": {
+      "abs": 2.4105652138972774e-09,
+      "native_amplitude": 6.978873781127702e-05,
+      "rel": 3.454089140307907e-05
+     },
+     "T3": {
+      "abs": 3.336708295292469e-11,
+      "native_amplitude": 9.371215946957569e-07,
+      "rel": 3.560592685280884e-05
+     },
+     "T4": {
+      "abs": 5.168699132475895e-13,
+      "native_amplitude": 1.1402982834861771e-08,
+      "rel": 4.532760600738509e-05
+     }
+    }
+   },
+   "handedness": 1,
+   "identity": "atlas IDENTITY.json (written when the run started)",
+   "max_codazzi": 9.843743405880362e-10,
+   "max_hamiltonian": 1.0161810126748416e-09,
+   "max_jacobi": 1.0314916393183573e-18,
+   "maxrss_MB": 290.6328125,
+   "n_cells": 768,
+   "n_source_nodes": 1648,
+   "n_substep_nodes": 879,
+   "picard_iterations_used": 6,
+   "products": {
+    "ns64_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 3.5384905518238404e-15,
+      "n_nodes": 1648,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 1.0040733018363973e-15
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "T4",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 6.978873781127702e-05,
+      "max_rel": 0.0010163276915350092,
+      "modes": {
+       "B2": {
+        "abs": 6.306386811338265e-12,
+        "native_amplitude": 6.3550542818807e-08,
+        "rel": 9.923419268532145e-05
+       },
+       "B3": {
+        "abs": 4.1185147273364634e-13,
+        "native_amplitude": 4.628498915438512e-10,
+        "rel": 0.0008898165047849575
+       },
+       "E2": {
+        "abs": 5.289785476865445e-10,
+        "native_amplitude": 5.7927110116698056e-06,
+        "rel": 9.131795917677951e-05
+       },
+       "E3": {
+        "abs": 5.2383191354272015e-12,
+        "native_amplitude": 5.2779677918029535e-08,
+        "rel": 9.924878934582873e-05
+       },
+       "E4": {
+        "abs": 4.819875030861812e-13,
+        "native_amplitude": 6.442612368952129e-10,
+        "rel": 0.0007481243251711805
+       },
+       "T0": {
+        "abs": 2.809623775681081e-12,
+        "native_amplitude": 4.2728101047382526e-07,
+        "rel": 6.575587743919163e-06
+       },
+       "T1": {
+        "abs": 3.61193715554995e-10,
+        "native_amplitude": 2.2721114699374762e-05,
+        "rel": 1.589683078202736e-05
+       },
+       "T2": {
+        "abs": 2.4195372246672365e-09,
+        "native_amplitude": 6.978873781127702e-05,
+        "rel": 3.466945098233699e-05
+       },
+       "T3": {
+        "abs": 3.336709053659734e-11,
+        "native_amplitude": 9.371215946957569e-07,
+        "rel": 3.560593494532607e-05
+       },
+       "T4": {
+        "abs": 1.1589167221168398e-11,
+        "native_amplitude": 1.1402982834861771e-08,
+        "rel": 0.0010163276915350092
+       }
+      }
+     },
+     "lmax": 128,
+     "los_seconds": 567.7266388299759,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/VII_h_hp_L8_c768_ns64_st0.02.npz",
+     "npz_sha256": "02c2695b5a7bd2335bdeb3132186cf316d4cc0f6db90e3003ccc53901e18204f",
+     "nside": 64
+    }
+   },
+   "solve_seconds": 314.7185993739986,
+   "tag": "VII_h_hp_L8_c768",
+   "wall_seconds": 913.163147382962
+  },
+  {
+   "ell_max": 8,
+   "family": "VII_h",
+   "gl_low_ell_vs_native": {
+    "amplitude_floor": 1e-06,
+    "argmax": "B3",
+    "below_floor": [
+     "B4"
+    ],
+    "largest_native_amplitude": 6.980943473388548e-05,
+    "max_rel": 0.0006465040774237439,
+    "modes": {
+     "B2": {
+      "abs": 3.6579735709476295e-11,
+      "native_amplitude": 5.800776694071829e-08,
+      "rel": 0.0006306006529584112
+     },
+     "B3": {
+      "abs": 3.9728991187057403e-13,
+      "native_amplitude": 6.145203499005541e-10,
+      "rel": 0.0006465040774237439
+     },
+     "E2": {
+      "abs": 3.4227498311291423e-09,
+      "native_amplitude": 5.794509380243731e-06,
+      "rel": 0.0005906884615285882
+     },
+     "E3": {
+      "abs": 2.8937854518458388e-11,
+      "native_amplitude": 4.58807429685777e-08,
+      "rel": 0.0006307189606383888
+     },
+     "E4": {
+      "abs": 3.65117175932751e-13,
+      "native_amplitude": 6.479514509416663e-10,
+      "rel": 0.0005634946497953313
+     },
+     "T0": {
+      "abs": 5.075185446621885e-11,
+      "native_amplitude": 4.2728912268507093e-07,
+      "rel": 0.00011877637826887764
+     },
+     "T1": {
+      "abs": 2.4891773561104273e-09,
+      "native_amplitude": 2.296629639165295e-05,
+      "rel": 0.00010838392545587426
+     },
+     "T2": {
+      "abs": 1.828072323865318e-08,
+      "native_amplitude": 6.980943473388548e-05,
+      "rel": 0.0002618660831209928
+     },
+     "T3": {
+      "abs": 2.2638045241906994e-10,
+      "native_amplitude": 8.145361105711736e-07,
+      "rel": 0.0002779256186203042
+     },
+     "T4": {
+      "abs": 3.846970963022028e-12,
+      "native_amplitude": 1.252278389700154e-08,
+      "rel": 0.00030719774410090626
+     }
+    }
+   },
+   "handedness": -1,
+   "identity": "atlas IDENTITY.json (written when the run started)",
+   "max_codazzi": 8.676700054980506e-10,
+   "max_hamiltonian": 1.060696058259061e-09,
+   "max_jacobi": 1.0707383409699202e-18,
+   "maxrss_MB": 353.75390625,
+   "n_cells": 192,
+   "n_source_nodes": 589,
+   "n_substep_nodes": 396,
+   "picard_iterations_used": 6,
+   "products": {
+    "ns128_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 3.5355951327865535e-15,
+      "n_nodes": 589,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 9.93058285794655e-16
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "B3",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 6.980943473388548e-05,
+      "max_rel": 0.0007530670377041765,
+      "modes": {
+       "B2": {
+        "abs": 3.6579735709115974e-11,
+        "native_amplitude": 5.800776694071829e-08,
+        "rel": 0.0006306006529521996
+       },
+       "B3": {
+        "abs": 4.627750195085443e-13,
+        "native_amplitude": 6.145203499005541e-10,
+        "rel": 0.0007530670377041765
+       },
+       "E2": {
+        "abs": 3.4227498311266012e-09,
+        "native_amplitude": 5.794509380243731e-06,
+        "rel": 0.0005906884615281496
+       },
+       "E3": {
+        "abs": 2.8937854517950425e-11,
+        "native_amplitude": 4.58807429685777e-08,
+        "rel": 0.0006307189606273173
+       },
+       "E4": {
+        "abs": 3.6511717735142997e-13,
+        "native_amplitude": 6.479514509416663e-10,
+        "rel": 0.0005634946519848147
+       },
+       "T0": {
+        "abs": 4.9786900222296864e-11,
+        "native_amplitude": 4.2728912268507093e-07,
+        "rel": 0.00011651806137595454
+       },
+       "T1": {
+        "abs": 2.4891773540787257e-09,
+        "native_amplitude": 2.296629639165295e-05,
+        "rel": 0.00010838392536740977
+       },
+       "T2": {
+        "abs": 1.8282882170825212e-08,
+        "native_amplitude": 6.980943473388548e-05,
+        "rel": 0.00026189700920111744
+       },
+       "T3": {
+        "abs": 2.2638045032074028e-10,
+        "native_amplitude": 8.145361105711736e-07,
+        "rel": 0.0002779256160442003
+       },
+       "T4": {
+        "abs": 3.847006044663037e-12,
+        "native_amplitude": 1.252278389700154e-08,
+        "rel": 0.00030720054552599643
+       }
+      }
+     },
+     "lmax": 256,
+     "los_seconds": 920.9793714790139,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/VII_h_hm_L8_c192_ns128_st0.02.npz",
+     "npz_sha256": "045323011de0d6ce423072ebf8f98986f82190a3414422c1fe6d2323eb248912",
+     "nside": 128
+    },
+    "ns64_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 3.5355951327865535e-15,
+      "n_nodes": 589,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 9.93058285794655e-16
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "B3",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 6.980943473388548e-05,
+      "max_rel": 0.0011529084067440978,
+      "modes": {
+       "B2": {
+        "abs": 3.6579735696849066e-11,
+        "native_amplitude": 5.800776694071829e-08,
+        "rel": 0.0006306006527407296
+       },
+       "B3": {
+        "abs": 7.084856775156734e-13,
+        "native_amplitude": 6.145203499005541e-10,
+        "rel": 0.0011529084067440978
+       },
+       "E2": {
+        "abs": 3.422749830980064e-09,
+        "native_amplitude": 5.794509380243731e-06,
+        "rel": 0.0005906884615028607
+       },
+       "E3": {
+        "abs": 2.8937854506874373e-11,
+        "native_amplitude": 4.58807429685777e-08,
+        "rel": 0.0006307189603859078
+       },
+       "E4": {
+        "abs": 5.533207545838299e-13,
+        "native_amplitude": 6.479514509416663e-10,
+        "rel": 0.0008539540327900958
+       },
+       "T0": {
+        "abs": 4.6746251256764986e-11,
+        "native_amplitude": 4.2728912268507093e-07,
+        "rel": 0.00010940192196565423
+       },
+       "T1": {
+        "abs": 2.489177355611331e-09,
+        "native_amplitude": 2.296629639165295e-05,
+        "rel": 0.00010838392543414256
+       },
+       "T2": {
+        "abs": 1.828969703030652e-08,
+        "native_amplitude": 6.980943473388548e-05,
+        "rel": 0.00026199463009587596
+       },
+       "T3": {
+        "abs": 2.263804510521705e-10,
+        "native_amplitude": 8.145361105711736e-07,
+        "rel": 0.0002779256169421718
+       },
+       "T4": {
+        "abs": 1.0557255605337709e-11,
+        "native_amplitude": 1.252278389700154e-08,
+        "rel": 0.0008430438225373786
+       }
+      }
+     },
+     "lmax": 128,
+     "los_seconds": 240.1032052449882,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/VII_h_hm_L8_c192_ns64_st0.02.npz",
+     "npz_sha256": "7500112573fa13077055905b6ff41ce9fb85c0cb6943cd7adc90a52a15f96027",
+     "nside": 64
+    }
+   },
+   "solve_seconds": 387.4281863049837,
+   "tag": "VII_h_hm_L8_c192",
+   "wall_seconds": 1569.7223666609498
+  },
+  {
+   "ell_max": 8,
+   "family": "VII_h",
+   "gl_low_ell_vs_native": {
+    "amplitude_floor": 1e-06,
+    "argmax": "B3",
+    "below_floor": [
+     "B4"
+    ],
+    "largest_native_amplitude": 6.980447329300219e-05,
+    "max_rel": 0.0003906617200067956,
+    "modes": {
+     "B2": {
+      "abs": 2.1820062700176428e-11,
+      "native_amplitude": 5.800144135152778e-08,
+      "rel": 0.00037619862871910646
+     },
+     "B3": {
+      "abs": 2.400412422014029e-13,
+      "native_amplitude": 6.144478199635925e-10,
+      "rel": 0.0003906617200067956
+     },
+     "E2": {
+      "abs": 2.0076661132421706e-09,
+      "native_amplitude": 5.7939310789216676e-06,
+      "rel": 0.0003465119080456555
+     },
+     "E3": {
+      "abs": 1.726142227038054e-11,
+      "native_amplitude": 4.5875740384416185e-08,
+      "rel": 0.0003762647125853075
+     },
+     "E4": {
+      "abs": 2.2401550338505744e-13,
+      "native_amplitude": 6.478639161669513e-10,
+      "rel": 0.0003457755522339197
+     },
+     "T0": {
+      "abs": 2.627928079955747e-11,
+      "native_amplitude": 4.2728332379143056e-07,
+      "rel": 6.150317444259807e-05
+     },
+     "T1": {
+      "abs": 1.4175226419715598e-09,
+      "native_amplitude": 2.2966132113105503e-05,
+      "rel": 6.172230635051768e-05
+     },
+     "T2": {
+      "abs": 9.078762834558145e-09,
+      "native_amplitude": 6.980447329300219e-05,
+      "rel": 0.00013005990026527828
+     },
+     "T3": {
+      "abs": 1.094194916245789e-10,
+      "native_amplitude": 8.144717969045721e-07,
+      "rel": 0.00013434411362116087
+     },
+     "T4": {
+      "abs": 1.9321174861737122e-12,
+      "native_amplitude": 1.2521577320939932e-08,
+      "rel": 0.00015430304319110158
+     }
+    }
+   },
+   "handedness": -1,
+   "identity": "atlas IDENTITY.json (written when the run started)",
+   "max_codazzi": 8.94565487544151e-10,
+   "max_hamiltonian": 9.373060979689198e-10,
+   "max_jacobi": 1.274982386093985e-18,
+   "maxrss_MB": 294.85546875,
+   "n_cells": 384,
+   "n_source_nodes": 932,
+   "n_substep_nodes": 547,
+   "picard_iterations_used": 6,
+   "products": {
+    "ns128_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 3.5239211379557286e-15,
+      "n_nodes": 932,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 1.0045328094009012e-15
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "B3",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 6.980447329300219e-05,
+      "max_rel": 0.0005018901144363436,
+      "modes": {
+       "B2": {
+        "abs": 2.1820062698177662e-11,
+        "native_amplitude": 5.800144135152778e-08,
+        "rel": 0.00037619862868464585
+       },
+       "B3": {
+        "abs": 3.083852866766893e-13,
+        "native_amplitude": 6.144478199635925e-10,
+        "rel": 0.0005018901144363436
+       },
+       "E2": {
+        "abs": 2.0076661132464058e-09,
+        "native_amplitude": 5.7939310789216676e-06,
+        "rel": 0.0003465119080463865
+       },
+       "E3": {
+        "abs": 1.726142227099178e-11,
+        "native_amplitude": 4.5875740384416185e-08,
+        "rel": 0.0003762647125986314
+       },
+       "E4": {
+        "abs": 2.2401550421833798e-13,
+        "native_amplitude": 6.478639161669513e-10,
+        "rel": 0.00034577555352011656
+       },
+       "T0": {
+        "abs": 2.5314277962255272e-11,
+        "native_amplitude": 4.2728332379143056e-07,
+        "rel": 5.9244713174464793e-05
+       },
+       "T1": {
+        "abs": 1.4175226469081843e-09,
+        "native_amplitude": 2.2966132113105503e-05,
+        "rel": 6.172230656547005e-05
+       },
+       "T2": {
+        "abs": 9.080921894923533e-09,
+        "native_amplitude": 6.980447329300219e-05,
+        "rel": 0.0001300908303799763
+       },
+       "T3": {
+        "abs": 1.0941948882337414e-10,
+        "native_amplitude": 8.144717969045721e-07,
+        "rel": 0.00013434411018187082
+       },
+       "T4": {
+        "abs": 2.0913473458019506e-12,
+        "native_amplitude": 1.2521577320939932e-08,
+        "rel": 0.00016701948102852617
+       }
+      }
+     },
+     "lmax": 256,
+     "los_seconds": 1950.0077741459827,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/VII_h_hm_L8_c384_ns128_st0.02.npz",
+     "npz_sha256": "fc9b35c6970af2526c13684dc494ae061d2583360bc422c79a0d8f4efce5f076",
+     "nside": 128
+    },
+    "ns64_st0.01": {
+     "diagnostics": {
+      "max_source_truncation": 3.5239211379557286e-15,
+      "n_nodes": 932,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 1.0045328094009012e-15
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "B3",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 6.980447329300219e-05,
+      "max_rel": 0.0009262704556535933,
+      "modes": {
+       "B2": {
+        "abs": 2.182006268583822e-11,
+        "native_amplitude": 5.800144135152778e-08,
+        "rel": 0.00037619862847190213
+       },
+       "B3": {
+        "abs": 5.691448621730339e-13,
+        "native_amplitude": 6.144478199635925e-10,
+        "rel": 0.0009262704556535933
+       },
+       "E2": {
+        "abs": 2.007666113098175e-09,
+        "native_amplitude": 5.7939310789216676e-06,
+        "rel": 0.0003465119080208027
+       },
+       "E3": {
+        "abs": 1.7261422259861688e-11,
+        "native_amplitude": 4.5875740384416185e-08,
+        "rel": 0.0003762647123560174
+       },
+       "E4": {
+        "abs": 5.129285180542373e-13,
+        "native_amplitude": 6.478639161669513e-10,
+        "rel": 0.0007917226214556734
+       },
+       "T0": {
+        "abs": 2.2273444911264726e-11,
+        "native_amplitude": 4.2728332379143056e-07,
+        "rel": 5.2128046359555666e-05
+       },
+       "T1": {
+        "abs": 1.4175226490563297e-09,
+        "native_amplitude": 2.2966132113105503e-05,
+        "rel": 6.17223066590054e-05
+       },
+       "T2": {
+        "abs": 9.087737166876006e-09,
+        "native_amplitude": 6.980447329300219e-05,
+        "rel": 0.00013018846412221323
+       },
+       "T3": {
+        "abs": 1.094194892171648e-10,
+        "native_amplitude": 8.144717969045721e-07,
+        "rel": 0.0001343441106653629
+       },
+       "T4": {
+        "abs": 1.1250618234710358e-11,
+        "native_amplitude": 1.2521577320939932e-08,
+        "rel": 0.0008984984835653142
+       }
+      }
+     },
+     "lmax": 128,
+     "los_seconds": 420.84953781496733,
+     "max_step": 0.01,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/VII_h_hm_L8_c384_ns64_st0.01.npz",
+     "npz_sha256": "dd236ef6e15ca72804bd830ac22e81208fa216bb9c37ab752c31c109aafeeab1",
+     "nside": 64
+    },
+    "ns64_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 3.5239211379557286e-15,
+      "n_nodes": 932,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 1.0045328094009012e-15
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "B3",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 6.980447329300219e-05,
+      "max_rel": 0.0009262704556535933,
+      "modes": {
+       "B2": {
+        "abs": 2.182006268583822e-11,
+        "native_amplitude": 5.800144135152778e-08,
+        "rel": 0.00037619862847190213
+       },
+       "B3": {
+        "abs": 5.691448621730339e-13,
+        "native_amplitude": 6.144478199635925e-10,
+        "rel": 0.0009262704556535933
+       },
+       "E2": {
+        "abs": 2.007666113098175e-09,
+        "native_amplitude": 5.7939310789216676e-06,
+        "rel": 0.0003465119080208027
+       },
+       "E3": {
+        "abs": 1.7261422259861688e-11,
+        "native_amplitude": 4.5875740384416185e-08,
+        "rel": 0.0003762647123560174
+       },
+       "E4": {
+        "abs": 5.129285180542373e-13,
+        "native_amplitude": 6.478639161669513e-10,
+        "rel": 0.0007917226214556734
+       },
+       "T0": {
+        "abs": 2.2273444911264726e-11,
+        "native_amplitude": 4.2728332379143056e-07,
+        "rel": 5.2128046359555666e-05
+       },
+       "T1": {
+        "abs": 1.4175226490563297e-09,
+        "native_amplitude": 2.2966132113105503e-05,
+        "rel": 6.17223066590054e-05
+       },
+       "T2": {
+        "abs": 9.087737166876006e-09,
+        "native_amplitude": 6.980447329300219e-05,
+        "rel": 0.00013018846412221323
+       },
+       "T3": {
+        "abs": 1.094194892171648e-10,
+        "native_amplitude": 8.144717969045721e-07,
+        "rel": 0.0001343441106653629
+       },
+       "T4": {
+        "abs": 1.1250618234710358e-11,
+        "native_amplitude": 1.2521577320939932e-08,
+        "rel": 0.0008984984835653142
+       }
+      }
+     },
+     "lmax": 128,
+     "los_seconds": 296.3778192860191,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/VII_h_hm_L8_c384_ns64_st0.02.npz",
+     "npz_sha256": "dd236ef6e15ca72804bd830ac22e81208fa216bb9c37ab752c31c109aafeeab1",
+     "nside": 64
+    }
+   },
+   "solve_seconds": 359.10817399597727,
+   "tag": "VII_h_hm_L8_c384",
+   "wall_seconds": 3046.2915328099625
+  },
+  {
+   "ell_max": 8,
+   "family": "VII_h",
+   "gl_low_ell_vs_native": {
+    "amplitude_floor": 1e-06,
+    "argmax": "B3",
+    "below_floor": [
+     "B4"
+    ],
+    "largest_native_amplitude": 6.980311663421361e-05,
+    "max_rel": 0.0001031241607294221,
+    "modes": {
+     "B2": {
+      "abs": 5.755759187834392e-12,
+      "native_amplitude": 5.7999348467408365e-08,
+      "rel": 9.923834215256283e-05
+     },
+     "B3": {
+      "abs": 6.336196793733518e-14,
+      "native_amplitude": 6.144240834462135e-10,
+      "rel": 0.0001031241607294221
+     },
+     "E2": {
+      "abs": 5.29078398377445e-10,
+      "native_amplitude": 5.793738834985234e-06,
+      "rel": 9.131899339035246e-05
+     },
+     "E3": {
+      "abs": 4.552991285265078e-12,
+      "native_amplitude": 4.5874085636255325e-08,
+      "rel": 9.924974464595643e-05
+     },
+     "E4": {
+      "abs": 5.943446701579489e-14,
+      "native_amplitude": 6.478361935835177e-10,
+      "rel": 9.17430480180986e-05
+     },
+     "T0": {
+      "abs": 6.814421982968383e-12,
+      "native_amplitude": 4.272810162242604e-07,
+      "rel": 1.5948337801630303e-05
+     },
+     "T1": {
+      "abs": 3.6978517484840606e-10,
+      "native_amplitude": 2.2966046186199976e-05,
+      "rel": 1.610138601352311e-05
+     },
+     "T2": {
+      "abs": 2.4107410841070574e-09,
+      "native_amplitude": 6.980311663421361e-05,
+      "rel": 3.4536295803810085e-05
+     },
+     "T3": {
+      "abs": 2.9004432747151747e-11,
+      "native_amplitude": 8.14454370927536e-07,
+      "rel": 3.5612102755517464e-05
+     },
+     "T4": {
+      "abs": 5.154658778777071e-13,
+      "native_amplitude": 1.2521245597104964e-08,
+      "rel": 4.116730032009658e-05
+     }
+    }
+   },
+   "handedness": -1,
+   "identity": "atlas IDENTITY.json (written when the run started)",
+   "max_codazzi": 1.2988113298091375e-09,
+   "max_hamiltonian": 1.175728929976405e-09,
+   "max_jacobi": 1.3161170309321348e-18,
+   "maxrss_MB": 291.37109375,
+   "n_cells": 768,
+   "n_source_nodes": 1648,
+   "n_substep_nodes": 879,
+   "picard_iterations_used": 6,
+   "products": {
+    "ns64_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 3.5326522463607913e-15,
+      "n_nodes": 1648,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 1.00909247104813e-15
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "T4",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 6.980311663421361e-05,
+      "max_rel": 0.0009456472450624242,
+      "modes": {
+       "B2": {
+        "abs": 5.755759174747241e-12,
+        "native_amplitude": 5.7999348467408365e-08,
+        "rel": 9.923834192691976e-05
+       },
+       "B3": {
+        "abs": 4.2778071809673864e-13,
+        "native_amplitude": 6.144240834462135e-10,
+        "rel": 0.0006962303881341696
+       },
+       "E2": {
+        "abs": 5.290783982368375e-10,
+        "native_amplitude": 5.793738834985234e-06,
+        "rel": 9.13189933660836e-05
+       },
+       "E3": {
+        "abs": 4.552991274796564e-12,
+        "native_amplitude": 4.5874085636255325e-08,
+        "rel": 9.924974441775537e-05
+       },
+       "E4": {
+        "abs": 4.56563821431307e-13,
+        "native_amplitude": 6.478361935835177e-10,
+        "rel": 0.0007047519511156298
+       },
+       "T0": {
+        "abs": 2.8082696244788826e-12,
+        "native_amplitude": 4.272810162242604e-07,
+        "rel": 6.572418426857863e-06
+       },
+       "T1": {
+        "abs": 3.6978517514597704e-10,
+        "native_amplitude": 2.2966046186199976e-05,
+        "rel": 1.6101386026480106e-05
+       },
+       "T2": {
+        "abs": 2.4197161218339567e-09,
+        "native_amplitude": 6.980311663421361e-05,
+        "rel": 3.466487226514391e-05
+       },
+       "T3": {
+        "abs": 2.9004432737280093e-11,
+        "native_amplitude": 8.14454370927536e-07,
+        "rel": 3.561210274339689e-05
+       },
+       "T4": {
+        "abs": 1.1840681403652318e-11,
+        "native_amplitude": 1.2521245597104964e-08,
+        "rel": 0.0009456472450624242
+       }
+      }
+     },
+     "lmax": 128,
+     "los_seconds": 560.5165334470221,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/VII_h_hm_L8_c768_ns64_st0.02.npz",
+     "npz_sha256": "c22723d3e390f603a216a5c39cbf8abf8e7a501ed5710189c472bdcb84957008",
+     "nside": 64
+    }
+   },
+   "solve_seconds": 319.6491865029675,
+   "tag": "VII_h_hm_L8_c768",
+   "wall_seconds": 908.493292375002
+  },
+  {
+   "ell_max": 8,
+   "family": "VI_h",
+   "gl_low_ell_vs_native": {
+    "amplitude_floor": 1e-06,
+    "argmax": "E2",
+    "below_floor": [
+     "B4"
+    ],
+    "largest_native_amplitude": 0.00024122502194999832,
+    "max_rel": 0.0007074312835543701,
+    "modes": {
+     "B2": {
+      "abs": 2.1363040648916484e-10,
+      "native_amplitude": 3.084593544167047e-07,
+      "rel": 0.0006925723063031724
+     },
+     "B3": {
+      "abs": 2.107951547914485e-12,
+      "native_amplitude": 3.3001706083782514e-09,
+      "rel": 0.0006387401737846398
+     },
+     "E2": {
+      "abs": 3.362217075727598e-09,
+      "native_amplitude": 4.752711894270071e-06,
+      "rel": 0.0007074312835543701
+     },
+     "E3": {
+      "abs": 1.3037502929956805e-10,
+      "native_amplitude": 1.9695610542198903e-07,
+      "rel": 0.0006619496715790178
+     },
+     "E4": {
+      "abs": 2.5694033609654744e-12,
+      "native_amplitude": 4.019263619390643e-09,
+      "rel": 0.0006392721663166297
+     },
+     "T0": {
+      "abs": 5.213657787967496e-11,
+      "native_amplitude": 4.3290135447027593e-07,
+      "rel": 0.00012043523851634146
+     },
+     "T1": {
+      "abs": 2.3896153820466247e-09,
+      "native_amplitude": 2.2587350908760937e-05,
+      "rel": 0.00010579440642239133
+     },
+     "T2": {
+      "abs": 1.2953638888945992e-08,
+      "native_amplitude": 0.00024122502194999832,
+      "rel": 5.369939977300967e-05
+     },
+     "T3": {
+      "abs": 8.7973669095668e-10,
+      "native_amplitude": 1.7929560582373366e-06,
+      "rel": 0.0004906627169778791
+     },
+     "T4": {
+      "abs": 2.6021094261009888e-11,
+      "native_amplitude": 9.08246475511012e-08,
+      "rel": 0.00028649815840319653
+     }
+    }
+   },
+   "handedness": 1,
+   "identity": "atlas IDENTITY.json (written when the run started)",
+   "max_codazzi": 8.230761718543796e-10,
+   "max_hamiltonian": 9.162367999403157e-10,
+   "max_jacobi": 4.74556798413396e-19,
+   "maxrss_MB": 394.671875,
+   "n_cells": 192,
+   "n_source_nodes": 589,
+   "n_substep_nodes": 396,
+   "picard_iterations_used": 6,
+   "products": {
+    "ns128_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 1.7795509831832696e-15,
+      "n_nodes": 589,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 7.633706121392997e-16
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "E2",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 0.00024122502194999832,
+      "max_rel": 0.0007074312835536572,
+      "modes": {
+       "B2": {
+        "abs": 2.1363040648874132e-10,
+        "native_amplitude": 3.084593544167047e-07,
+        "rel": 0.0006925723063017994
+       },
+       "B3": {
+        "abs": 2.107951528638082e-12,
+        "native_amplitude": 3.3001706083782514e-09,
+        "rel": 0.0006387401679436075
+       },
+       "E2": {
+        "abs": 3.36221707572421e-09,
+        "native_amplitude": 4.752711894270071e-06,
+        "rel": 0.0007074312835536572
+       },
+       "E3": {
+        "abs": 1.3036881810101146e-10,
+        "native_amplitude": 1.9695610542198903e-07,
+        "rel": 0.0006619181356256475
+       },
+       "E4": {
+        "abs": 2.6668726321103345e-12,
+        "native_amplitude": 4.019263619390643e-09,
+        "rel": 0.0006635226958600582
+       },
+       "T0": {
+        "abs": 5.548434662376725e-11,
+        "native_amplitude": 4.3290135447027593e-07,
+        "rel": 0.00012816856785227948
+       },
+       "T1": {
+        "abs": 2.3896153795519807e-09,
+        "native_amplitude": 2.2587350908760937e-05,
+        "rel": 0.00010579440631194704
+       },
+       "T2": {
+        "abs": 1.2953638884460501e-08,
+        "native_amplitude": 0.00024122502194999832,
+        "rel": 5.369939975441504e-05
+       },
+       "T3": {
+        "abs": 8.797366952500558e-10,
+        "native_amplitude": 1.7929560582373366e-06,
+        "rel": 0.0004906627193724586
+       },
+       "T4": {
+        "abs": 2.602108974742865e-11,
+        "native_amplitude": 9.08246475511012e-08,
+        "rel": 0.00028649810870764184
+       }
+      }
+     },
+     "lmax": 256,
+     "los_seconds": 856.4871848800103,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/VI_h_hp_L8_c192_ns128_st0.02.npz",
+     "npz_sha256": "91437189c55f7df7a73b4907878757cbec6c2e38a66d5df01b2e49eb949726ab",
+     "nside": 128
+    },
+    "ns64_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 1.7795509831832696e-15,
+      "n_nodes": 589,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 7.633706121392997e-16
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "E4",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 0.00024122502194999832,
+      "max_rel": 0.0007388766600700548,
+      "modes": {
+       "B2": {
+        "abs": 2.1363040648085333e-10,
+        "native_amplitude": 3.084593544167047e-07,
+        "rel": 0.0006925723062762272
+       },
+       "B3": {
+        "abs": 2.107951232046603e-12,
+        "native_amplitude": 3.3001706083782514e-09,
+        "rel": 0.0006387400780720481
+       },
+       "E2": {
+        "abs": 3.3622170756073188e-09,
+        "native_amplitude": 4.752711894270071e-06,
+        "rel": 0.0007074312835290627
+       },
+       "E3": {
+        "abs": 1.3034950470402453e-10,
+        "native_amplitude": 1.9695610542198903e-07,
+        "rel": 0.0006618200762283744
+       },
+       "E4": {
+        "abs": 2.969740079036438e-12,
+        "native_amplitude": 4.019263619390643e-09,
+        "rel": 0.0007388766600700548
+       },
+       "T0": {
+        "abs": 6.603345802171995e-11,
+        "native_amplitude": 4.3290135447027593e-07,
+        "rel": 0.00015253696330546818
+       },
+       "T1": {
+        "abs": 2.389615381058367e-09,
+        "native_amplitude": 2.2587350908760937e-05,
+        "rel": 0.00010579440637863861
+       },
+       "T2": {
+        "abs": 1.2953638883364336e-08,
+        "native_amplitude": 0.00024122502194999832,
+        "rel": 5.3699399749870875e-05
+       },
+       "T3": {
+        "abs": 8.797366961418553e-10,
+        "native_amplitude": 1.7929560582373366e-06,
+        "rel": 0.0004906627198698492
+       },
+       "T4": {
+        "abs": 2.905198145088489e-11,
+        "native_amplitude": 9.08246475511012e-08,
+        "rel": 0.00031986891481785494
+       }
+      }
+     },
+     "lmax": 128,
+     "los_seconds": 241.11096733703744,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/VI_h_hp_L8_c192_ns64_st0.02.npz",
+     "npz_sha256": "5e183c97fc2bb1166ab58dafaa9d9c6c3c9031afcab798caa91ede7425a622a5",
+     "nside": 64
+    }
+   },
+   "solve_seconds": 324.889964974951,
+   "tag": "VI_h_hp_L8_c192",
+   "wall_seconds": 1435.8797143059783
+  },
+  {
+   "ell_max": 8,
+   "family": "VI_h",
+   "gl_low_ell_vs_native": {
+    "amplitude_floor": 1e-06,
+    "argmax": "E2",
+    "below_floor": [
+     "B4"
+    ],
+    "largest_native_amplitude": 0.00024122524795625012,
+    "max_rel": 0.00041893363013638174,
+    "modes": {
+     "B2": {
+      "abs": 1.26917997452792e-10,
+      "native_amplitude": 3.0842376567694355e-07,
+      "rel": 0.0004115052456292601
+     },
+     "B3": {
+      "abs": 1.2736750413891109e-12,
+      "native_amplitude": 3.299782171056702e-09,
+      "rel": 0.0003859876123220694
+     },
+     "E2": {
+      "abs": 1.990860331474091e-09,
+      "native_amplitude": 4.752209391320474e-06,
+      "rel": 0.00041893363013638174
+     },
+     "E3": {
+      "abs": 7.760122532901685e-11,
+      "native_amplitude": 1.9693400562053427e-07,
+      "rel": 0.00039404685384069287
+     },
+     "E4": {
+      "abs": 1.5564302447908101e-12,
+      "native_amplitude": 4.018772856097542e-09,
+      "rel": 0.00038728992668229397
+     },
+     "T0": {
+      "abs": 2.459637906102686e-11,
+      "native_amplitude": 4.328963459780078e-07,
+      "rel": 5.6818172039448026e-05
+     },
+     "T1": {
+      "abs": 1.3689326273749472e-09,
+      "native_amplitude": 2.2587215109590424e-05,
+      "rel": 6.060652544959847e-05
+     },
+     "T2": {
+      "abs": 7.218381298389219e-09,
+      "native_amplitude": 0.00024122524795625012,
+      "rel": 2.992382165443305e-05
+     },
+     "T3": {
+      "abs": 4.563870689022922e-10,
+      "native_amplitude": 1.7928005979005815e-06,
+      "rel": 0.00025456655326684625
+     },
+     "T4": {
+      "abs": 1.2137639665692058e-11,
+      "native_amplitude": 9.081786404512748e-08,
+      "rel": 0.00013364815164184938
+     }
+    }
+   },
+   "handedness": 1,
+   "identity": "atlas IDENTITY.json (written when the run started)",
+   "max_codazzi": 7.694286041632699e-10,
+   "max_hamiltonian": 9.875667460122098e-10,
+   "max_jacobi": 3.1657438796301133e-19,
+   "maxrss_MB": 297.09765625,
+   "n_cells": 384,
+   "n_source_nodes": 932,
+   "n_substep_nodes": 547,
+   "picard_iterations_used": 6,
+   "products": {
+    "ns128_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 1.7897711490974525e-15,
+      "n_nodes": 932,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 7.56681901387024e-16
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "E2",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 0.00024122524795625012,
+      "max_rel": 0.0004189336301358697,
+      "modes": {
+       "B2": {
+        "abs": 1.2691799745252731e-10,
+        "native_amplitude": 3.0842376567694355e-07,
+        "rel": 0.00041150524562840184
+       },
+       "B3": {
+        "abs": 1.2736750222307122e-12,
+        "native_amplitude": 3.299782171056702e-09,
+        "rel": 0.00038598760651611084
+       },
+       "E2": {
+        "abs": 1.990860331471658e-09,
+        "native_amplitude": 4.752209391320474e-06,
+        "rel": 0.0004189336301358697
+       },
+       "E3": {
+        "abs": 7.759501543257744e-11,
+        "native_amplitude": 1.9693400562053427e-07,
+        "rel": 0.0003940153209603259
+       },
+       "E4": {
+        "abs": 1.6538691813041547e-12,
+        "native_amplitude": 4.018772856097542e-09,
+        "rel": 0.0004115358694121758
+       },
+       "T0": {
+        "abs": 2.7944141593403024e-11,
+        "native_amplitude": 4.328963459780078e-07,
+        "rel": 6.455157649869065e-05
+       },
+       "T1": {
+        "abs": 1.3689326256048117e-09,
+        "native_amplitude": 2.2587215109590424e-05,
+        "rel": 6.0606525371229555e-05
+       },
+       "T2": {
+        "abs": 7.218381296628646e-09,
+        "native_amplitude": 0.00024122524795625012,
+        "rel": 2.9923821647134592e-05
+       },
+       "T3": {
+        "abs": 4.563870646502558e-10,
+        "native_amplitude": 1.7928005979005815e-06,
+        "rel": 0.0002545665508951177
+       },
+       "T4": {
+        "abs": 1.2137636820400357e-11,
+        "native_amplitude": 9.081786404512748e-08,
+        "rel": 0.00013364812031220152
+       }
+      }
+     },
+     "lmax": 256,
+     "los_seconds": 1937.0211494219839,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/VI_h_hp_L8_c384_ns128_st0.02.npz",
+     "npz_sha256": "95b5ffee6d26f03b30e29bef55f75a7d2b94a2ff6dbae2fe711202d6323c5564",
+     "nside": 128
+    },
+    "ns64_st0.01": {
+     "diagnostics": {
+      "max_source_truncation": 1.7897711490974525e-15,
+      "n_nodes": 932,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 7.56681901387024e-16
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "E4",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 0.00024122524795625012,
+      "max_rel": 0.0004868902250501715,
+      "modes": {
+       "B2": {
+        "abs": 1.2691799744495696e-10,
+        "native_amplitude": 3.0842376567694355e-07,
+        "rel": 0.00041150524560385653
+       },
+       "B3": {
+        "abs": 1.2736747252456967e-12,
+        "native_amplitude": 3.299782171056702e-09,
+        "rel": 0.00038598751651471074
+       },
+       "E2": {
+        "abs": 1.9908603313539204e-09,
+        "native_amplitude": 4.752209391320474e-06,
+        "rel": 0.0004189336301110944
+       },
+       "E3": {
+        "abs": 7.757570623143594e-11,
+        "native_amplitude": 1.9693400562053427e-07,
+        "rel": 0.0003939172718647385
+       },
+       "E4": {
+        "abs": 1.956701220330853e-12,
+        "native_amplitude": 4.018772856097542e-09,
+        "rel": 0.0004868902250501715
+       },
+       "T0": {
+        "abs": 3.8493186295663824e-11,
+        "native_amplitude": 4.328963459780078e-07,
+        "rel": 8.892009981904392e-05
+       },
+       "T1": {
+        "abs": 1.3689326272620422e-09,
+        "native_amplitude": 2.2587215109590424e-05,
+        "rel": 6.060652544459985e-05
+       },
+       "T2": {
+        "abs": 7.218381295665169e-09,
+        "native_amplitude": 0.00024122524795625012,
+        "rel": 2.992382164314049e-05
+       },
+       "T3": {
+        "abs": 4.563870646220579e-10,
+        "native_amplitude": 1.7928005979005815e-06,
+        "rel": 0.00025456655087938927
+       },
+       "T4": {
+        "abs": 3.5981696323281685e-11,
+        "native_amplitude": 9.081786404512748e-08,
+        "rel": 0.00039619624070218553
+       }
+      }
+     },
+     "lmax": 128,
+     "los_seconds": 370.634987455036,
+     "max_step": 0.01,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/VI_h_hp_L8_c384_ns64_st0.01.npz",
+     "npz_sha256": "77a4b54b36920c242bf69e28a5847ad0ff3decc06ef0a0c46f153401c43d7661",
+     "nside": 64
+    },
+    "ns64_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 1.7897711490974525e-15,
+      "n_nodes": 932,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 7.56681901387024e-16
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "E4",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 0.00024122524795625012,
+      "max_rel": 0.0004868902250501715,
+      "modes": {
+       "B2": {
+        "abs": 1.2691799744495696e-10,
+        "native_amplitude": 3.0842376567694355e-07,
+        "rel": 0.00041150524560385653
+       },
+       "B3": {
+        "abs": 1.2736747252456967e-12,
+        "native_amplitude": 3.299782171056702e-09,
+        "rel": 0.00038598751651471074
+       },
+       "E2": {
+        "abs": 1.9908603313539204e-09,
+        "native_amplitude": 4.752209391320474e-06,
+        "rel": 0.0004189336301110944
+       },
+       "E3": {
+        "abs": 7.757570623143594e-11,
+        "native_amplitude": 1.9693400562053427e-07,
+        "rel": 0.0003939172718647385
+       },
+       "E4": {
+        "abs": 1.956701220330853e-12,
+        "native_amplitude": 4.018772856097542e-09,
+        "rel": 0.0004868902250501715
+       },
+       "T0": {
+        "abs": 3.8493186295663824e-11,
+        "native_amplitude": 4.328963459780078e-07,
+        "rel": 8.892009981904392e-05
+       },
+       "T1": {
+        "abs": 1.3689326272620422e-09,
+        "native_amplitude": 2.2587215109590424e-05,
+        "rel": 6.060652544459985e-05
+       },
+       "T2": {
+        "abs": 7.218381295665169e-09,
+        "native_amplitude": 0.00024122524795625012,
+        "rel": 2.992382164314049e-05
+       },
+       "T3": {
+        "abs": 4.563870646220579e-10,
+        "native_amplitude": 1.7928005979005815e-06,
+        "rel": 0.00025456655087938927
+       },
+       "T4": {
+        "abs": 3.5981696323281685e-11,
+        "native_amplitude": 9.081786404512748e-08,
+        "rel": 0.00039619624070218553
+       }
+      }
+     },
+     "lmax": 128,
+     "los_seconds": 458.28126372996485,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/VI_h_hp_L8_c384_ns64_st0.02.npz",
+     "npz_sha256": "77a4b54b36920c242bf69e28a5847ad0ff3decc06ef0a0c46f153401c43d7661",
+     "nside": 64
+    }
+   },
+   "solve_seconds": 362.86678702000063,
+   "tag": "VI_h_hp_L8_c384",
+   "wall_seconds": 3146.4014603279647
+  },
+  {
+   "ell_max": 8,
+   "family": "VI_h",
+   "gl_low_ell_vs_native": {
+    "amplitude_floor": 1e-06,
+    "argmax": "E2",
+    "below_floor": [
+     "B4"
+    ],
+    "largest_native_amplitude": 0.00024122542572845888,
+    "max_rel": 0.00011052495703867975,
+    "modes": {
+     "B2": {
+      "abs": 3.3486689056935514e-11,
+      "native_amplitude": 3.084119184357189e-07,
+      "rel": 0.00010857780473200167
+     },
+     "B3": {
+      "abs": 3.3617992413878335e-13,
+      "native_amplitude": 3.299655206779233e-09,
+      "rel": 0.00010188334934149859
+     },
+     "E2": {
+      "abs": 5.252191868219443e-10,
+      "native_amplitude": 4.752041537895703e-06,
+      "rel": 0.00011052495703867975
+     },
+     "E3": {
+      "abs": 2.0472465179986003e-11,
+      "native_amplitude": 1.969266697708381e-07,
+      "rel": 0.00010395984050209979
+     },
+     "E4": {
+      "abs": 4.1146720475415515e-13,
+      "native_amplitude": 4.018613038558132e-09,
+      "rel": 0.00010239035229472817
+     },
+     "T0": {
+      "abs": 6.301193734897892e-12,
+      "native_amplitude": 4.328942630773736e-07,
+      "rel": 1.4555964983466745e-05
+     },
+     "T1": {
+      "abs": 3.5692513165586416e-10,
+      "native_amplitude": 2.258713679857758e-05,
+      "rel": 1.580214149490348e-05
+     },
+     "T2": {
+      "abs": 1.9300215072141333e-09,
+      "native_amplitude": 0.00024122542572845888,
+      "rel": 8.000904139295448e-06
+     },
+     "T3": {
+      "abs": 1.2152130707333496e-10,
+      "native_amplitude": 1.792758149988309e-06,
+      "rel": 6.778455146006583e-05
+     },
+     "T4": {
+      "abs": 3.2070998897696288e-12,
+      "native_amplitude": 9.081600546126496e-08,
+      "rel": 3.531425846667004e-05
+     }
+    }
+   },
+   "handedness": 1,
+   "identity": "atlas IDENTITY.json (written when the run started)",
+   "max_codazzi": 9.715814933354142e-10,
+   "max_hamiltonian": 1.0887381482129221e-09,
+   "max_jacobi": 2.750546770857488e-19,
+   "maxrss_MB": 289.796875,
+   "n_cells": 768,
+   "n_source_nodes": 1648,
+   "n_substep_nodes": 879,
+   "picard_iterations_used": 6,
+   "products": {
+    "ns64_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 1.7809992795824603e-15,
+      "n_nodes": 1648,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 7.721251227616988e-16
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "T4",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 0.00024122542572845888,
+      "max_rel": 0.000443764390104112,
+      "modes": {
+       "B2": {
+        "abs": 3.3486689049418097e-11,
+        "native_amplitude": 3.084119184357189e-07,
+        "rel": 0.00010857780470762707
+       },
+       "B3": {
+        "abs": 3.361796077861998e-13,
+        "native_amplitude": 3.299655206779233e-09,
+        "rel": 0.0001018832534670621
+       },
+       "E2": {
+        "abs": 5.252191867102001e-10,
+        "native_amplitude": 4.752041537895703e-06,
+        "rel": 0.00011052495701516478
+       },
+       "E3": {
+        "abs": 2.0446954838811823e-11,
+        "native_amplitude": 1.969266697708381e-07,
+        "rel": 0.00010383029816431554
+       },
+       "E4": {
+        "abs": 8.119628951062244e-13,
+        "native_amplitude": 4.018613038558132e-09,
+        "rel": 0.00020205053019923375
+       },
+       "T0": {
+        "abs": 2.0197722328676554e-11,
+        "native_amplitude": 4.328942630773736e-07,
+        "rel": 4.6657403554148056e-05
+       },
+       "T1": {
+        "abs": 3.5692513480196445e-10,
+        "native_amplitude": 2.258713679857758e-05,
+        "rel": 1.5802141634190736e-05
+       },
+       "T2": {
+        "abs": 1.930021511199903e-09,
+        "native_amplitude": 0.00024122542572845888,
+        "rel": 8.000904155818456e-06
+       },
+       "T3": {
+        "abs": 1.2152131216993344e-10,
+        "native_amplitude": 1.792758149988309e-06,
+        "rel": 6.778455430294706e-05
+       },
+       "T4": {
+        "abs": 4.030090927520995e-11,
+        "native_amplitude": 9.081600546126496e-08,
+        "rel": 0.000443764390104112
+       }
+      }
+     },
+     "lmax": 128,
+     "los_seconds": 584.6723066390259,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/VI_h_hp_L8_c768_ns64_st0.02.npz",
+     "npz_sha256": "d5b0fa4b4bc7ff0ca46fa7abbcbac8bc8aa02883d8ea6a1eda10f5b918bd3fb4",
+     "nside": 64
+    }
+   },
+   "solve_seconds": 326.1052523829858,
+   "tag": "VI_h_hp_L8_c768",
+   "wall_seconds": 942.1209172180388
+  },
+  {
+   "ell_max": 8,
+   "family": "VI_-1/9",
+   "gl_low_ell_vs_native": {
+    "amplitude_floor": 1e-06,
+    "argmax": "B2",
+    "below_floor": [
+     "B4"
+    ],
+    "largest_native_amplitude": 0.001138948067714052,
+    "max_rel": 0.0009779821656012355,
+    "modes": {
+     "B2": {
+      "abs": 3.868826216196766e-10,
+      "native_amplitude": 3.955927165418525e-07,
+      "rel": 0.0009779821656012355
+     },
+     "B3": {
+      "abs": 5.816634320136375e-12,
+      "native_amplitude": 9.12253225468428e-09,
+      "rel": 0.0006376118119121609
+     },
+     "E2": {
+      "abs": 3.188282564492699e-09,
+      "native_amplitude": 4.485650924634247e-06,
+      "rel": 0.0007107736687630607
+     },
+     "E3": {
+      "abs": 2.1524513305326015e-10,
+      "native_amplitude": 3.091585121663779e-07,
+      "rel": 0.0006962290365061112
+     },
+     "E4": {
+      "abs": 6.98597947122582e-12,
+      "native_amplitude": 1.0675926404830825e-08,
+      "rel": 0.0006543675186880912
+     },
+     "T0": {
+      "abs": 8.749331759601708e-11,
+      "native_amplitude": 7.717310933935496e-07,
+      "rel": 0.0001133728034868737
+     },
+     "T1": {
+      "abs": 2.516469642984486e-09,
+      "native_amplitude": 2.299318207268112e-05,
+      "rel": 0.00010944416631982304
+     },
+     "T2": {
+      "abs": 2.045216533326857e-08,
+      "native_amplitude": 0.001138948067714052,
+      "rel": 1.7957065746041865e-05
+     },
+     "T3": {
+      "abs": 1.2379177531023309e-09,
+      "native_amplitude": 5.894496628424146e-06,
+      "rel": 0.00021001246266439546
+     },
+     "T4": {
+      "abs": 6.667712588659198e-11,
+      "native_amplitude": 8.847163818392181e-07,
+      "rel": 7.536553776474481e-05
+     }
+    }
+   },
+   "handedness": 1,
+   "identity": "atlas IDENTITY.json (written when the run started)",
+   "max_codazzi": 1.2531829347518884e-09,
+   "max_hamiltonian": 1.0254138354018134e-09,
+   "max_jacobi": 1.626160339974909e-19,
+   "maxrss_MB": 369.890625,
+   "n_cells": 192,
+   "n_source_nodes": 589,
+   "n_substep_nodes": 396,
+   "picard_iterations_used": 6,
+   "products": {
+    "ns128_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 8.690521965201498e-16,
+      "n_nodes": 589,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 7.419556934862479e-16
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "B2",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 0.001138948067714052,
+      "max_rel": 0.0009779821655997634,
+      "modes": {
+       "B2": {
+        "abs": 3.868826216190942e-10,
+        "native_amplitude": 3.955927165418525e-07,
+        "rel": 0.0009779821655997634
+       },
+       "B3": {
+        "abs": 5.816634289406079e-12,
+        "native_amplitude": 9.12253225468428e-09,
+        "rel": 0.0006376118085435463
+       },
+       "E2": {
+        "abs": 3.188282564491893e-09,
+        "native_amplitude": 4.485650924634247e-06,
+        "rel": 0.000710773668762881
+       },
+       "E3": {
+        "abs": 2.1523495593088671e-10,
+        "native_amplitude": 3.091585121663779e-07,
+        "rel": 0.0006961961177218212
+       },
+       "E4": {
+        "abs": 7.078030877200145e-12,
+        "native_amplitude": 1.0675926404830825e-08,
+        "rel": 0.0006629898529459099
+       },
+       "T0": {
+        "abs": 1.0330588479413161e-10,
+        "native_amplitude": 7.717310933935496e-07,
+        "rel": 0.00013386254056430775
+       },
+       "T1": {
+        "abs": 2.5164696415561295e-09,
+        "native_amplitude": 2.299318207268112e-05,
+        "rel": 0.00010944416625770218
+       },
+       "T2": {
+        "abs": 2.048754374592461e-08,
+        "native_amplitude": 0.001138948067714052,
+        "rel": 1.79881281040711e-05
+       },
+       "T3": {
+        "abs": 1.2379177523012643e-09,
+        "native_amplitude": 5.894496628424146e-06,
+        "rel": 0.0002100124625284947
+       },
+       "T4": {
+        "abs": 6.66771229403645e-11,
+        "native_amplitude": 8.847163818392181e-07,
+        "rel": 7.5365534434607e-05
+       }
+      }
+     },
+     "lmax": 256,
+     "los_seconds": 741.9136419479619,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/VI_m1_9_hp_L8_c192_ns128_st0.02.npz",
+     "npz_sha256": "2a66bfcca92643f1522dde915d6df7fea525ea5b7e42ca85c71a5ccbdbc82356",
+     "nside": 128
+    },
+    "ns64_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 8.690521965201498e-16,
+      "n_nodes": 589,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 7.419556934862479e-16
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "B2",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 0.001138948067714052,
+      "max_rel": 0.000977982165574337,
+      "modes": {
+       "B2": {
+        "abs": 3.8688262160903576e-10,
+        "native_amplitude": 3.955927165418525e-07,
+        "rel": 0.000977982165574337
+       },
+       "B3": {
+        "abs": 5.816633807001731e-12,
+        "native_amplitude": 9.12253225468428e-09,
+        "rel": 0.0006376117556630155
+       },
+       "E2": {
+        "abs": 3.1882825644601292e-09,
+        "native_amplitude": 4.485650924634247e-06,
+        "rel": 0.0007107736687557998
+       },
+       "E3": {
+        "abs": 2.1520331646350137e-10,
+        "native_amplitude": 3.091585121663779e-07,
+        "rel": 0.0006960937771226132
+       },
+       "E4": {
+        "abs": 7.363897158843566e-12,
+        "native_amplitude": 1.0675926404830825e-08,
+        "rel": 0.0006897665719680705
+       },
+       "T0": {
+        "abs": 1.5313269178847456e-10,
+        "native_amplitude": 7.717310933935496e-07,
+        "rel": 0.0001984275262450563
+       },
+       "T1": {
+        "abs": 2.5164696426515073e-09,
+        "native_amplitude": 2.299318207268112e-05,
+        "rel": 0.00010944416630534142
+       },
+       "T2": {
+        "abs": 2.0599218114461876e-08,
+        "native_amplitude": 0.001138948067714052,
+        "rel": 1.808617855228987e-05
+       },
+       "T3": {
+        "abs": 1.2379177521642164e-09,
+        "native_amplitude": 5.894496628424146e-06,
+        "rel": 0.00021001246250524456
+       },
+       "T4": {
+        "abs": 2.0886063684338283e-10,
+        "native_amplitude": 8.847163818392181e-07,
+        "rel": 0.0002360763755828584
+       }
+      }
+     },
+     "lmax": 128,
+     "los_seconds": 207.8720914130099,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/VI_m1_9_hp_L8_c192_ns64_st0.02.npz",
+     "npz_sha256": "7f660f5db68b534c246508c864879e0983cd548e5f114fa768d3d9c551a2277d",
+     "nside": 64
+    }
+   },
+   "solve_seconds": 321.33931732800556,
+   "tag": "VI_m1_9_hp_L8_c192",
+   "wall_seconds": 1285.0229796120548
+  },
+  {
+   "ell_max": 8,
+   "family": "VI_-1/9",
+   "gl_low_ell_vs_native": {
+    "amplitude_floor": 1e-06,
+    "argmax": "B2",
+    "below_floor": [
+     "B4"
+    ],
+    "largest_native_amplitude": 0.001138934631509418,
+    "max_rel": 0.0005741177153174627,
+    "modes": {
+     "B2": {
+      "abs": 2.2708395514167078e-10,
+      "native_amplitude": 3.955355305768661e-07,
+      "rel": 0.0005741177153174627
+     },
+     "B3": {
+      "abs": 3.514702818757556e-12,
+      "native_amplitude": 9.12145949411444e-09,
+      "rel": 0.0003853224169909864
+     },
+     "E2": {
+      "abs": 1.9429927916535398e-09,
+      "native_amplitude": 4.485157698879544e-06,
+      "rel": 0.0004332050113062751
+     },
+     "E3": {
+      "abs": 1.2783476927109794e-10,
+      "native_amplitude": 3.091227806175383e-07,
+      "rel": 0.0004135404353432668
+     },
+     "E4": {
+      "abs": 4.214889161278746e-12,
+      "native_amplitude": 1.0674657347051553e-08,
+      "rel": 0.0003948500663061508
+     },
+     "T0": {
+      "abs": 3.424411156781537e-11,
+      "native_amplitude": 7.717195083166045e-07,
+      "rel": 4.437377984977209e-05
+     },
+     "T1": {
+      "abs": 1.4289162443536491e-09,
+      "native_amplitude": 2.299301077253971e-05,
+      "rel": 6.214567802752424e-05
+     },
+     "T2": {
+      "abs": 6.653540844683672e-09,
+      "native_amplitude": 0.001138934631509418,
+      "rel": 5.841898789104169e-06
+     },
+     "T3": {
+      "abs": 6.940870506758079e-10,
+      "native_amplitude": 5.894425563464887e-06,
+      "rel": 0.00011775312847751133
+     },
+     "T4": {
+      "abs": 3.170420304582661e-11,
+      "native_amplitude": 8.846968190498665e-07,
+      "rel": 3.583623492607989e-05
+     }
+    }
+   },
+   "handedness": 1,
+   "identity": "atlas IDENTITY.json (written when the run started)",
+   "max_codazzi": 1.2637415151778263e-09,
+   "max_hamiltonian": 1.1054778983662078e-09,
+   "max_jacobi": 2.193162098496251e-19,
+   "maxrss_MB": 303.87890625,
+   "n_cells": 384,
+   "n_source_nodes": 932,
+   "n_substep_nodes": 547,
+   "picard_iterations_used": 6,
+   "products": {
+    "ns128_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 8.614939473259599e-16,
+      "n_nodes": 932,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 7.611088473846337e-16
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "B2",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 0.001138934631509418,
+      "max_rel": 0.0005741177153173288,
+      "modes": {
+       "B2": {
+        "abs": 2.2708395514161781e-10,
+        "native_amplitude": 3.955355305768661e-07,
+        "rel": 0.0005741177153173288
+       },
+       "B3": {
+        "abs": 3.514702788061637e-12,
+        "native_amplitude": 9.12145949411444e-09,
+        "rel": 0.00038532241362574434
+       },
+       "E2": {
+        "abs": 1.942992791653625e-09,
+        "native_amplitude": 4.485157698879544e-06,
+        "rel": 0.0004332050113062941
+       },
+       "E3": {
+        "abs": 1.278245932142608e-10,
+        "native_amplitude": 3.091227806175383e-07,
+        "rel": 0.0004135075162008574
+       },
+       "E4": {
+        "abs": 4.306900984296315e-12,
+        "native_amplitude": 1.0674657347051553e-08,
+        "rel": 0.0004034697175067567
+       },
+       "T0": {
+        "abs": 5.00567562688093e-11,
+        "native_amplitude": 7.717195083166045e-07,
+        "rel": 6.486392494858778e-05
+       },
+       "T1": {
+        "abs": 1.4289162472338738e-09,
+        "native_amplitude": 2.299301077253971e-05,
+        "rel": 6.214567815278947e-05
+       },
+       "T2": {
+        "abs": 6.653540837589922e-09,
+        "native_amplitude": 0.001138934631509418,
+        "rel": 5.841898782875761e-06
+       },
+       "T3": {
+        "abs": 6.940870499137634e-10,
+        "native_amplitude": 5.894425563464887e-06,
+        "rel": 0.00011775312834822911
+       },
+       "T4": {
+        "abs": 4.196004748684595e-11,
+        "native_amplitude": 8.846968190498665e-07,
+        "rel": 4.7428731044731885e-05
+       }
+      }
+     },
+     "lmax": 256,
+     "los_seconds": 1932.422931100009,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/VI_m1_9_hp_L8_c384_ns128_st0.02.npz",
+     "npz_sha256": "f6d69252825b3f00ee8f880d03577325b7f9b679eda0cf691277b9d123990795",
+     "nside": 128
+    },
+    "ns64_st0.01": {
+     "diagnostics": {
+      "max_source_truncation": 8.614939473259599e-16,
+      "n_nodes": 932,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 7.611088473846337e-16
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "B2",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 0.001138934631509418,
+      "max_rel": 0.0005741177152920325,
+      "modes": {
+       "B2": {
+        "abs": 2.2708395513161224e-10,
+        "native_amplitude": 3.955355305768661e-07,
+        "rel": 0.0005741177152920325
+       },
+       "B3": {
+        "abs": 3.514702305546687e-12,
+        "native_amplitude": 9.12145949411444e-09,
+        "rel": 0.0003853223607268689
+       },
+       "E2": {
+        "abs": 1.9429927916218612e-09,
+        "native_amplitude": 4.485157698879544e-06,
+        "rel": 0.00043320501129921215
+       },
+       "E3": {
+        "abs": 1.2779295751193102e-10,
+        "native_amplitude": 3.091227806175383e-07,
+        "rel": 0.00041340517595189036
+       },
+       "E4": {
+        "abs": 4.592650977044208e-12,
+        "native_amplitude": 1.0674657347051553e-08,
+        "rel": 0.0004302387259589877
+       },
+       "T0": {
+        "abs": 9.988384203651828e-11,
+        "native_amplitude": 7.717195083166045e-07,
+        "rel": 0.000129430241117528
+       },
+       "T1": {
+        "abs": 1.4289162497977927e-09,
+        "native_amplitude": 2.299301077253971e-05,
+        "rel": 6.214567826429809e-05
+       },
+       "T2": {
+        "abs": 6.653540833643838e-09,
+        "native_amplitude": 0.001138934631509418,
+        "rel": 5.8418987794110454e-06
+       },
+       "T3": {
+        "abs": 6.940870497614974e-10,
+        "native_amplitude": 5.894425563464887e-06,
+        "rel": 0.00011775312832239688
+       },
+       "T4": {
+        "abs": 1.920437622784631e-10,
+        "native_amplitude": 8.846968190498665e-07,
+        "rel": 0.0002170729657248134
+       }
+      }
+     },
+     "lmax": 128,
+     "los_seconds": 414.70329550100723,
+     "max_step": 0.01,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/VI_m1_9_hp_L8_c384_ns64_st0.01.npz",
+     "npz_sha256": "ce9fec32b9092c6d83992b67c5f7caf34e7ce6fe6c1a592b8f612f92bcb06405",
+     "nside": 64
+    },
+    "ns64_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 8.614939473259599e-16,
+      "n_nodes": 932,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 7.611088473846337e-16
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "B2",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 0.001138934631509418,
+      "max_rel": 0.0005741177152920325,
+      "modes": {
+       "B2": {
+        "abs": 2.2708395513161224e-10,
+        "native_amplitude": 3.955355305768661e-07,
+        "rel": 0.0005741177152920325
+       },
+       "B3": {
+        "abs": 3.514702305546687e-12,
+        "native_amplitude": 9.12145949411444e-09,
+        "rel": 0.0003853223607268689
+       },
+       "E2": {
+        "abs": 1.9429927916218612e-09,
+        "native_amplitude": 4.485157698879544e-06,
+        "rel": 0.00043320501129921215
+       },
+       "E3": {
+        "abs": 1.2779295751193102e-10,
+        "native_amplitude": 3.091227806175383e-07,
+        "rel": 0.00041340517595189036
+       },
+       "E4": {
+        "abs": 4.592650977044208e-12,
+        "native_amplitude": 1.0674657347051553e-08,
+        "rel": 0.0004302387259589877
+       },
+       "T0": {
+        "abs": 9.988384203651828e-11,
+        "native_amplitude": 7.717195083166045e-07,
+        "rel": 0.000129430241117528
+       },
+       "T1": {
+        "abs": 1.4289162497977927e-09,
+        "native_amplitude": 2.299301077253971e-05,
+        "rel": 6.214567826429809e-05
+       },
+       "T2": {
+        "abs": 6.653540833643838e-09,
+        "native_amplitude": 0.001138934631509418,
+        "rel": 5.8418987794110454e-06
+       },
+       "T3": {
+        "abs": 6.940870497614974e-10,
+        "native_amplitude": 5.894425563464887e-06,
+        "rel": 0.00011775312832239688
+       },
+       "T4": {
+        "abs": 1.920437622784631e-10,
+        "native_amplitude": 8.846968190498665e-07,
+        "rel": 0.0002170729657248134
+       }
+      }
+     },
+     "lmax": 128,
+     "los_seconds": 306.7405243840185,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/VI_m1_9_hp_L8_c384_ns64_st0.02.npz",
+     "npz_sha256": "ce9fec32b9092c6d83992b67c5f7caf34e7ce6fe6c1a592b8f612f92bcb06405",
+     "nside": 64
+    }
+   },
+   "solve_seconds": 358.6800350660342,
+   "tag": "VI_m1_9_hp_L8_c384",
+   "wall_seconds": 3031.2960986520047
+  },
+  {
+   "ell_max": 8,
+   "family": "VI_-1/9",
+   "gl_low_ell_vs_native": {
+    "amplitude_floor": 1e-06,
+    "argmax": "B2",
+    "below_floor": [
+     "B4"
+    ],
+    "largest_native_amplitude": 0.0011389313977915362,
+    "max_rel": 0.00015159529182781235,
+    "modes": {
+     "B2": {
+      "abs": 5.995837797100422e-11,
+      "native_amplitude": 3.9551609583698153e-07,
+      "rel": 0.00015159529182781235
+     },
+     "B3": {
+      "abs": 9.277102887940577e-13,
+      "native_amplitude": 9.121108817754432e-09,
+      "rel": 0.0001017102533617678
+     },
+     "E2": {
+      "abs": 5.142487740797467e-10,
+      "native_amplitude": 4.484992443303208e-06,
+      "rel": 0.00011465989755403046
+     },
+     "E3": {
+      "abs": 3.372914517389168e-11,
+      "native_amplitude": 3.091108816827027e-07,
+      "rel": 0.00010911665416073608
+     },
+     "E4": {
+      "abs": 1.1132995234066719e-12,
+      "native_amplitude": 1.0674241508803767e-08,
+      "rel": 0.00010429776415387067
+     },
+     "T0": {
+      "abs": 8.606827332109443e-12,
+      "native_amplitude": 7.717155455708891e-07,
+      "rel": 1.1152849494229642e-05
+     },
+     "T1": {
+      "abs": 3.728649882128457e-10,
+      "native_amplitude": 2.2992922916421515e-05,
+      "rel": 1.6216511035512845e-05
+     },
+     "T2": {
+      "abs": 1.7878798564060425e-09,
+      "native_amplitude": 0.0011389313977915362,
+      "rel": 1.5697871354436805e-06
+     },
+     "T3": {
+      "abs": 1.8570588903376168e-10,
+      "native_amplitude": 5.894412627621691e-06,
+      "rel": 3.1505410422665184e-05
+     },
+     "T4": {
+      "abs": 8.38912203194081e-12,
+      "native_amplitude": 8.846921942896351e-07,
+      "rel": 9.48253198806266e-06
+     }
+    }
+   },
+   "handedness": 1,
+   "identity": "atlas IDENTITY.json (written when the run started)",
+   "max_codazzi": 1.3399614050166395e-09,
+   "max_hamiltonian": 1.2090014473615448e-09,
+   "max_jacobi": 4.295247698098112e-19,
+   "maxrss_MB": 290.484375,
+   "n_cells": 768,
+   "n_source_nodes": 1648,
+   "n_substep_nodes": 879,
+   "picard_iterations_used": 6,
+   "products": {
+    "ns64_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 8.894098160659047e-16,
+      "n_nodes": 1648,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 7.702920709562624e-16
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "T4",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 0.0011389313977915362,
+      "max_rel": 0.0002215176541758834,
+      "modes": {
+       "B2": {
+        "abs": 5.99583779609457e-11,
+        "native_amplitude": 3.9551609583698153e-07,
+        "rel": 0.00015159529180238098
+       },
+       "B3": {
+        "abs": 9.277097751947856e-13,
+        "native_amplitude": 9.121108817754432e-09,
+        "rel": 0.00010171019705290424
+       },
+       "E2": {
+        "abs": 5.142487740506173e-10,
+        "native_amplitude": 4.484992443303208e-06,
+        "rel": 0.0001146598975475356
+       },
+       "E3": {
+        "abs": 3.36873481265579e-11,
+        "native_amplitude": 3.091108816827027e-07,
+        "rel": 0.00010898143715670746
+       },
+       "E4": {
+        "abs": 1.4909963761994108e-12,
+        "native_amplitude": 1.0674241508803767e-08,
+        "rel": 0.00013968171649195735
+       },
+       "T0": {
+        "abs": 7.424640490098921e-11,
+        "native_amplitude": 7.717155455708891e-07,
+        "rel": 9.620954939564451e-05
+       },
+       "T1": {
+        "abs": 3.72864991490076e-10,
+        "native_amplitude": 2.2992922916421515e-05,
+        "rel": 1.6216511178044977e-05
+       },
+       "T2": {
+        "abs": 1.7878798533201454e-09,
+        "native_amplitude": 0.0011389313977915362,
+        "rel": 1.5697871327342133e-06
+       },
+       "T3": {
+        "abs": 1.8570589127084094e-10,
+        "native_amplitude": 5.894412627621691e-06,
+        "rel": 3.1505410802190575e-05
+       },
+       "T4": {
+        "abs": 1.9597493954675484e-10,
+        "native_amplitude": 8.846921942896351e-07,
+        "rel": 0.0002215176541758834
+       }
+      }
+     },
+     "lmax": 128,
+     "los_seconds": 560.6615892089903,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/VI_m1_9_hp_L8_c768_ns64_st0.02.npz",
+     "npz_sha256": "bd073a28cad758c146d90428f038a91be9ca780218f9bf6eee2c782b734be060",
+     "nside": 64
+    }
+   },
+   "solve_seconds": 319.22751728398725,
+   "tag": "VI_m1_9_hp_L8_c768",
+   "wall_seconds": 909.6153362810146
+  },
+  {
+   "ell_max": 8,
+   "family": "IX",
+   "gl_low_ell_vs_native": {
+    "amplitude_floor": 1e-06,
+    "argmax": "B3",
+    "below_floor": [
+     "B4"
+    ],
+    "largest_native_amplitude": 8.390344136456965e-05,
+    "max_rel": 0.0006360764482792743,
+    "modes": {
+     "B2": {
+      "abs": 8.17878261002688e-11,
+      "native_amplitude": 1.2930897334670024e-07,
+      "rel": 0.0006324992302040877
+     },
+     "B3": {
+      "abs": 4.0037947732969463e-13,
+      "native_amplitude": 6.29451818901342e-10,
+      "rel": 0.0006360764482792743
+     },
+     "E2": {
+      "abs": 3.425276559630898e-09,
+      "native_amplitude": 5.847713756433254e-06,
+      "rel": 0.0005857462766303571
+     },
+     "E3": {
+      "abs": 1.3419114904457554e-11,
+      "native_amplitude": 2.1267989255807552e-08,
+      "rel": 0.0006309536243908557
+     },
+     "E4": {
+      "abs": 1.2832687769038142e-13,
+      "native_amplitude": 3.408431641523939e-10,
+      "rel": 0.00037649831707642925
+     },
+     "T0": {
+      "abs": 9.004083242237236e-13,
+      "native_amplitude": 2.5444080830850007e-09,
+      "rel": 0.0003538773242427417
+     },
+     "T1": {
+      "abs": 2.033900414520449e-09,
+      "native_amplitude": 2.1328019981645353e-05,
+      "rel": 9.536283331836712e-05
+     },
+     "T2": {
+      "abs": 1.8742642382416552e-08,
+      "native_amplitude": 8.390344136456965e-05,
+      "rel": 0.00022338347602427554
+     },
+     "T3": {
+      "abs": 1.0496355572098737e-10,
+      "native_amplitude": 3.747283764736495e-07,
+      "rel": 0.00028010570405352875
+     },
+     "T4": {
+      "abs": 2.1556794037262395e-12,
+      "native_amplitude": 4.964251856880011e-09,
+      "rel": 0.0004342405393349775
+     }
+    }
+   },
+   "handedness": 1,
+   "identity": "atlas IDENTITY.json (written when the run started)",
+   "max_codazzi": 1.4618959371720924e-09,
+   "max_hamiltonian": 1.2624007725964304e-09,
+   "max_jacobi": 3.39407671275256e-21,
+   "maxrss_MB": 329.515625,
+   "n_cells": 192,
+   "n_source_nodes": 589,
+   "n_substep_nodes": 396,
+   "picard_iterations_used": 6,
+   "products": {
+    "ns128_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 3.524165865499914e-15,
+      "n_nodes": 589,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 1.0084663794990146e-15
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "B3",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 8.390344136456965e-05,
+      "max_rel": 0.0007826451537238508,
+      "modes": {
+       "B2": {
+        "abs": 8.178546624289191e-11,
+        "native_amplitude": 1.2930897334670024e-07,
+        "rel": 0.0006324809804468141
+       },
+       "B3": {
+        "abs": 4.926374155657984e-13,
+        "native_amplitude": 6.29451818901342e-10,
+        "rel": 0.0007826451537238508
+       },
+       "E2": {
+        "abs": 3.425276559632592e-09,
+        "native_amplitude": 5.847713756433254e-06,
+        "rel": 0.0005857462766306468
+       },
+       "E3": {
+        "abs": 1.3416360332097863e-11,
+        "native_amplitude": 2.1267989255807552e-08,
+        "rel": 0.0006308241070995613
+       },
+       "E4": {
+        "abs": 2.3382789890416595e-13,
+        "native_amplitude": 3.408431641523939e-10,
+        "rel": 0.0006860278377172308
+       },
+       "T0": {
+        "abs": 2.625297940209196e-13,
+        "native_amplitude": 2.5444080830850007e-09,
+        "rel": 0.00010317912278545033
+       },
+       "T1": {
+        "abs": 2.033900416161776e-09,
+        "native_amplitude": 2.1328019981645353e-05,
+        "rel": 9.536283339532348e-05
+       },
+       "T2": {
+        "abs": 1.8745244349737083e-08,
+        "native_amplitude": 8.390344136456965e-05,
+        "rel": 0.00022341448747360604
+       },
+       "T3": {
+        "abs": 1.0496356170693614e-10,
+        "native_amplitude": 3.747283764736495e-07,
+        "rel": 0.0002801057200276293
+       },
+       "T4": {
+        "abs": 2.155685843024131e-12,
+        "native_amplitude": 4.964251856880011e-09,
+        "rel": 0.0004342418364685794
+       }
+      }
+     },
+     "lmax": 256,
+     "los_seconds": 610.0953529570252,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/IX_hp_L8_c192_ns128_st0.02.npz",
+     "npz_sha256": "4c7f6fb0cc26e00b812c16d5c326d709fe16bfa327916c7a6735c1fe97ba1b7c",
+     "nside": 128
+    },
+    "ns64_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 3.524165865499914e-15,
+      "n_nodes": 589,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 1.0084663794990146e-15
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "T4",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 8.390344136456965e-05,
+      "max_rel": 0.0025163362296414175,
+      "modes": {
+       "B2": {
+        "abs": 8.177813903692775e-11,
+        "native_amplitude": 1.2930897334670024e-07,
+        "rel": 0.0006324243161197026
+       },
+       "B3": {
+        "abs": 7.807772830076952e-13,
+        "native_amplitude": 6.29451818901342e-10,
+        "rel": 0.0012404083355744046
+       },
+       "E2": {
+        "abs": 3.425276559485208e-09,
+        "native_amplitude": 5.847713756433254e-06,
+        "rel": 0.0005857462766054431
+       },
+       "E3": {
+        "abs": 1.340779042325645e-11,
+        "native_amplitude": 2.1267989255807552e-08,
+        "rel": 0.0006304211583892562
+       },
+       "E4": {
+        "abs": 5.620762669302453e-13,
+        "native_amplitude": 3.408431641523939e-10,
+        "rel": 0.0016490759564681667
+       },
+       "T0": {
+        "abs": 3.927120537063554e-12,
+        "native_amplitude": 2.5444080830850007e-09,
+        "rel": 0.001543431874458623
+       },
+       "T1": {
+        "abs": 2.0339004171011815e-09,
+        "native_amplitude": 2.1328019981645353e-05,
+        "rel": 9.536283343936909e-05
+       },
+       "T2": {
+        "abs": 1.8753457616297545e-08,
+        "native_amplitude": 8.390344136456965e-05,
+        "rel": 0.00022351237698119814
+       },
+       "T3": {
+        "abs": 1.049635614979465e-10,
+        "native_amplitude": 3.747283764736495e-07,
+        "rel": 0.0002801057194699196
+       },
+       "T4": {
+        "abs": 1.2491726800531853e-11,
+        "native_amplitude": 4.964251856880011e-09,
+        "rel": 0.0025163362296414175
+       }
+      }
+     },
+     "lmax": 128,
+     "los_seconds": 155.63836839603027,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/IX_hp_L8_c192_ns64_st0.02.npz",
+     "npz_sha256": "7d34c94bdbcdb7f6c63e24b315fcdda7943d02682e86c6e3b151507b4346dae2",
+     "nside": 64
+    }
+   },
+   "solve_seconds": 270.2091283570044,
+   "tag": "IX_hp_L8_c192",
+   "wall_seconds": 1046.6340802200139
+  },
+  {
+   "ell_max": 8,
+   "family": "IX",
+   "gl_low_ell_vs_native": {
+    "amplitude_floor": 1e-06,
+    "argmax": "B3",
+    "below_floor": [
+     "B4"
+    ],
+    "largest_native_amplitude": 8.389826905832505e-05,
+    "max_rel": 0.0003845505327442001,
+    "modes": {
+     "B2": {
+      "abs": 4.878043275567309e-11,
+      "native_amplitude": 1.2929484858482752e-07,
+      "rel": 0.00037728055904461894
+     },
+     "B3": {
+      "abs": 2.420275961732675e-13,
+      "native_amplitude": 6.293778725155539e-10,
+      "rel": 0.0003845505327442001
+     },
+     "E2": {
+      "abs": 2.0082972956628515e-09,
+      "native_amplitude": 5.847134060109884e-06,
+      "rel": 0.000343466948938932
+     },
+     "E3": {
+      "abs": 8.004304322976704e-12,
+      "native_amplitude": 2.1265669458512067e-08,
+      "rel": 0.00037639559566147584
+     },
+     "E4": {
+      "abs": 8.441436502912552e-14,
+      "native_amplitude": 3.4078680516284793e-10,
+      "rel": 0.000247704323495704
+     },
+     "T0": {
+      "abs": 4.003457062458816e-13,
+      "native_amplitude": 2.54405745438719e-09,
+      "rel": 0.00015736504124759106
+     },
+     "T1": {
+      "abs": 1.1974691752903697e-09,
+      "native_amplitude": 2.1327984844128433e-05,
+      "rel": 5.614544384018687e-05
+     },
+     "T2": {
+      "abs": 9.198118249486784e-09,
+      "native_amplitude": 8.389826905832505e-05,
+      "rel": 0.00010963418378861147
+     },
+     "T3": {
+      "abs": 5.079238476639465e-11,
+      "native_amplitude": 3.746986681290113e-07,
+      "rel": 0.00013555528505083047
+     },
+     "T4": {
+      "abs": 1.0403678713946749e-12,
+      "native_amplitude": 4.96358952945814e-09,
+      "rel": 0.00020959990047933087
+     }
+    }
+   },
+   "handedness": 1,
+   "identity": "atlas IDENTITY.json (written when the run started)",
+   "max_codazzi": 1.0321495132805337e-09,
+   "max_hamiltonian": 9.776302803228468e-10,
+   "max_jacobi": 3.463921543872962e-21,
+   "maxrss_MB": 300.1796875,
+   "n_cells": 384,
+   "n_source_nodes": 932,
+   "n_substep_nodes": 547,
+   "picard_iterations_used": 6,
+   "products": {
+    "ns128_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 3.5259657311845606e-15,
+      "n_nodes": 932,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 1.011347395778703e-15
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "E4",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 8.389826905832505e-05,
+      "max_rel": 0.000557206270040418,
+      "modes": {
+       "B2": {
+        "abs": 4.877807376253253e-11,
+        "native_amplitude": 1.2929484858482752e-07,
+        "rel": 0.0003772623139778868
+       },
+       "B3": {
+        "abs": 3.343465779544846e-13,
+        "native_amplitude": 6.293778725155539e-10,
+        "rel": 0.0005312334490218701
+       },
+       "E2": {
+        "abs": 2.0082972956628515e-09,
+        "native_amplitude": 5.847134060109884e-06,
+        "rel": 0.000343466948938932
+       },
+       "E3": {
+        "abs": 8.001550758857319e-12,
+        "native_amplitude": 2.1265669458512067e-08,
+        "rel": 0.0003762661116532363
+       },
+       "E4": {
+        "abs": 1.8988854458378115e-13,
+        "native_amplitude": 3.4078680516284793e-10,
+        "rel": 0.000557206270040418
+       },
+       "T0": {
+        "abs": 7.62678110039385e-13,
+        "native_amplitude": 2.54405745438719e-09,
+        "rel": 0.00029978808407968847
+       },
+       "T1": {
+        "abs": 1.1974691761554935e-09,
+        "native_amplitude": 2.1327984844128433e-05,
+        "rel": 5.614544388074972e-05
+       },
+       "T2": {
+        "abs": 9.200720369571401e-09,
+        "native_amplitude": 8.389826905832505e-05,
+        "rel": 0.00010966519897061491
+       },
+       "T3": {
+        "abs": 5.0792385789451167e-11,
+        "native_amplitude": 3.746986681290113e-07,
+        "rel": 0.00013555528778117515
+       },
+       "T4": {
+        "abs": 2.496076868584803e-12,
+        "native_amplitude": 4.96358952945814e-09,
+        "rel": 0.000502877374079982
+       }
+      }
+     },
+     "lmax": 256,
+     "los_seconds": 1958.287461405038,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/IX_hp_L8_c384_ns128_st0.02.npz",
+     "npz_sha256": "c70c81da6f63e46f4d79ed22671431fa4d4c72e08ba9a200de9121ab1cfe1b86",
+     "nside": 128
+    },
+    "ns64_st0.01": {
+     "diagnostics": {
+      "max_source_truncation": 3.5259657311845606e-15,
+      "n_nodes": 932,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 1.011347395778703e-15
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "T4",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 8.389826905832505e-05,
+      "max_rel": 0.0027268033360110504,
+      "modes": {
+       "B2": {
+        "abs": 4.877074925110882e-11,
+        "native_amplitude": 1.2929484858482752e-07,
+        "rel": 0.00037720566430078146
+       },
+       "B3": {
+        "abs": 6.228020381380328e-13,
+        "native_amplitude": 6.293778725155539e-10,
+        "rel": 0.000989551850065465
+       },
+       "E2": {
+        "abs": 2.0082972955129267e-09,
+        "native_amplitude": 5.847134060109884e-06,
+        "rel": 0.00034346694891329127
+       },
+       "E3": {
+        "abs": 7.992984056820405e-12,
+        "native_amplitude": 2.1265669458512067e-08,
+        "rel": 0.0003758632697839207
+       },
+       "E4": {
+        "abs": 5.180450894843138e-13,
+        "native_amplitude": 3.4078680516284793e-10,
+        "rel": 0.0015201442122642086
+       },
+       "T0": {
+        "abs": 4.427461084677399e-12,
+        "native_amplitude": 2.54405745438719e-09,
+        "rel": 0.0017403148962073587
+       },
+       "T1": {
+        "abs": 1.1974691779464034e-09,
+        "native_amplitude": 2.1327984844128433e-05,
+        "rel": 5.6145443964719675e-05
+       },
+       "T2": {
+        "abs": 9.20893406470343e-09,
+        "native_amplitude": 8.389826905832505e-05,
+        "rel": 0.0001097630996212984
+       },
+       "T3": {
+        "abs": 5.0792387653586604e-11,
+        "native_amplitude": 3.746986681290113e-07,
+        "rel": 0.00013555529275620067
+       },
+       "T4": {
+        "abs": 1.3534732487515976e-11,
+        "native_amplitude": 4.96358952945814e-09,
+        "rel": 0.0027268033360110504
+       }
+      }
+     },
+     "lmax": 128,
+     "los_seconds": 397.96425619901856,
+     "max_step": 0.01,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/IX_hp_L8_c384_ns64_st0.01.npz",
+     "npz_sha256": "4e0163851c5497122cc7d8532946a7d59cfe5a4060b7b9acb43bffab030f24fe",
+     "nside": 64
+    },
+    "ns64_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 3.5259657311845606e-15,
+      "n_nodes": 932,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 1.011347395778703e-15
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "T4",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 8.389826905832505e-05,
+      "max_rel": 0.0027268033360110504,
+      "modes": {
+       "B2": {
+        "abs": 4.877074925110882e-11,
+        "native_amplitude": 1.2929484858482752e-07,
+        "rel": 0.00037720566430078146
+       },
+       "B3": {
+        "abs": 6.228020381380328e-13,
+        "native_amplitude": 6.293778725155539e-10,
+        "rel": 0.000989551850065465
+       },
+       "E2": {
+        "abs": 2.0082972955129267e-09,
+        "native_amplitude": 5.847134060109884e-06,
+        "rel": 0.00034346694891329127
+       },
+       "E3": {
+        "abs": 7.992984056820405e-12,
+        "native_amplitude": 2.1265669458512067e-08,
+        "rel": 0.0003758632697839207
+       },
+       "E4": {
+        "abs": 5.180450894843138e-13,
+        "native_amplitude": 3.4078680516284793e-10,
+        "rel": 0.0015201442122642086
+       },
+       "T0": {
+        "abs": 4.427461084677399e-12,
+        "native_amplitude": 2.54405745438719e-09,
+        "rel": 0.0017403148962073587
+       },
+       "T1": {
+        "abs": 1.1974691779464034e-09,
+        "native_amplitude": 2.1327984844128433e-05,
+        "rel": 5.6145443964719675e-05
+       },
+       "T2": {
+        "abs": 9.20893406470343e-09,
+        "native_amplitude": 8.389826905832505e-05,
+        "rel": 0.0001097630996212984
+       },
+       "T3": {
+        "abs": 5.0792387653586604e-11,
+        "native_amplitude": 3.746986681290113e-07,
+        "rel": 0.00013555529275620067
+       },
+       "T4": {
+        "abs": 1.3534732487515976e-11,
+        "native_amplitude": 4.96358952945814e-09,
+        "rel": 0.0027268033360110504
+       }
+      }
+     },
+     "lmax": 128,
+     "los_seconds": 296.7824709559791,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/IX_hp_L8_c384_ns64_st0.02.npz",
+     "npz_sha256": "4e0163851c5497122cc7d8532946a7d59cfe5a4060b7b9acb43bffab030f24fe",
+     "nside": 64
+    }
+   },
+   "solve_seconds": 374.43029853800545,
+   "tag": "IX_hp_L8_c384",
+   "wall_seconds": 3053.435558134981
+  },
+  {
+   "ell_max": 8,
+   "family": "IX",
+   "gl_low_ell_vs_native": {
+    "amplitude_floor": 1e-06,
+    "argmax": "B3",
+    "below_floor": [
+     "B4"
+    ],
+    "largest_native_amplitude": 8.389685260025983e-05,
+    "max_rel": 0.00010151453998601141,
+    "modes": {
+     "B2": {
+      "abs": 1.286742448115775e-11,
+      "native_amplitude": 1.2929017366385435e-07,
+      "rel": 9.95236073749284e-05
+     },
+     "B3": {
+      "abs": 6.388855111627109e-14,
+      "native_amplitude": 6.293536977567436e-10,
+      "rel": 0.00010151453998601141
+     },
+     "E2": {
+      "abs": 5.292187234391283e-10,
+      "native_amplitude": 5.846941369483788e-06,
+      "rel": 9.051206263179132e-05
+     },
+     "E3": {
+      "abs": 2.111503964480209e-12,
+      "native_amplitude": 2.126490154577705e-08,
+      "rel": 9.929526172198656e-05
+     },
+     "E4": {
+      "abs": 2.2873408769761137e-14,
+      "native_amplitude": 3.4076967604932555e-10,
+      "rel": 6.712278227024599e-05
+     },
+     "T0": {
+      "abs": 1.0910529540310918e-13,
+      "native_amplitude": 2.5439411135642964e-09,
+      "rel": 4.288829439540076e-05
+     },
+     "T1": {
+      "abs": 3.1145237072504253e-10,
+      "native_amplitude": 2.1327933687707266e-05,
+      "rel": 1.4603026026124305e-05
+     },
+     "T2": {
+      "abs": 2.4406043521205774e-09,
+      "native_amplitude": 8.389685260025983e-05,
+      "rel": 2.909053529992636e-05
+     },
+     "T3": {
+      "abs": 1.3465561730185703e-11,
+      "native_amplitude": 3.7469057566366667e-07,
+      "rel": 3.593781804182016e-05
+     },
+     "T4": {
+      "abs": 2.7682511609423815e-13,
+      "native_amplitude": 4.963397299477616e-09,
+      "rel": 5.5773314000749694e-05
+     }
+    }
+   },
+   "handedness": 1,
+   "identity": "atlas IDENTITY.json (written when the run started)",
+   "max_codazzi": 7.225975080329107e-10,
+   "max_hamiltonian": 9.330172473789073e-10,
+   "max_jacobi": 3.446085899191627e-21,
+   "maxrss_MB": 291.2734375,
+   "n_cells": 768,
+   "n_source_nodes": 1648,
+   "n_substep_nodes": 879,
+   "picard_iterations_used": 6,
+   "products": {
+    "ns64_st0.02": {
+     "diagnostics": {
+      "max_source_truncation": 3.5289809220455714e-15,
+      "n_nodes": 1648,
+      "source_ell_max": 4,
+      "top_shell_relative_norm": 1.0105986381993212e-15
+     },
+     "flrw_max_abs_alm_except_monopole": null,
+     "healpix_low_ell_vs_native": {
+      "amplitude_floor": 1e-06,
+      "argmax": "T4",
+      "below_floor": [
+       "B4"
+      ],
+      "largest_native_amplitude": 8.389685260025983e-05,
+      "max_rel": 0.0028743233762346587,
+      "modes": {
+       "B2": {
+        "abs": 1.2857744017500094e-11,
+        "native_amplitude": 1.2929017366385435e-07,
+        "rel": 9.944873344303298e-05
+       },
+       "B3": {
+        "abs": 4.455568077849103e-13,
+        "native_amplitude": 6.293536977567436e-10,
+        "rel": 0.0007079593071003548
+       },
+       "E2": {
+        "abs": 5.292187232875094e-10,
+        "native_amplitude": 5.846941369483788e-06,
+        "rel": 9.051206260586e-05
+       },
+       "E3": {
+        "abs": 2.100188076670203e-12,
+        "native_amplitude": 2.126490154577705e-08,
+        "rel": 9.876312251665584e-05
+       },
+       "E4": {
+        "abs": 4.564673262839716e-13,
+        "native_amplitude": 3.4076967604932555e-10,
+        "rel": 0.001339518620248062
+       },
+       "T0": {
+        "abs": 4.719009739656788e-12,
+        "native_amplitude": 2.5439411135642964e-09,
+        "rel": 0.0018549995966868193
+       },
+       "T1": {
+        "abs": 3.1145237611324146e-10,
+        "native_amplitude": 2.1327933687707266e-05,
+        "rel": 1.4603026278760074e-05
+       },
+       "T2": {
+        "abs": 2.451420848405923e-09,
+        "native_amplitude": 8.389685260025983e-05,
+        "rel": 2.9219461427070638e-05
+       },
+       "T3": {
+        "abs": 1.346556573380654e-11,
+        "native_amplitude": 3.7469057566366667e-07,
+        "rel": 3.593782872695904e-05
+       },
+       "T4": {
+        "abs": 1.4266408883428489e-11,
+        "native_amplitude": 4.963397299477616e-09,
+        "rel": 0.0028743233762346587
+       }
+      }
+     },
+     "lmax": 128,
+     "los_seconds": 545.5491734670359,
+     "max_step": 0.02,
+     "npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/IX_hp_L8_c768_ns64_st0.02.npz",
+     "npz_sha256": "688c98609d68e035e4bd56442e06f779b41a46261637bd9e099bcf949a0dc05a",
+     "nside": 64
+    }
+   },
+   "solve_seconds": 311.6855075810454,
+   "tag": "IX_hp_L8_c768",
+   "wall_seconds": 884.0979200250003
+  }
+ ],
+ "schema": "htt.r108.s1_atlas.2",
+ "settings": {
+  "cap": 0.25,
+  "epsilon": 0.0002,
+  "families": [
+   [
+    "FLRW",
+    1
+   ],
+   [
+    "I",
+    1
+   ],
+   [
+    "V",
+    1
+   ],
+   [
+    "VII_h",
+    1
+   ],
+   [
+    "VII_h",
+    -1
+   ],
+   [
+    "VI_h",
+    1
+   ],
+   [
+    "VI_-1/9",
+    1
+   ],
+   [
+    "IX",
+    1
+   ]
+  ]
+ },
+ "units": "native quarter-intensity increments; C_ell dimensionless"
+}

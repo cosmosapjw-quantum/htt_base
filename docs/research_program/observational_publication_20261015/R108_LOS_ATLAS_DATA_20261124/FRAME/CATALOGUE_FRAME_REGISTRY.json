@@ -1,0 +1,4409 @@
+{
+ "blocked": [
+  {
+   "missing_input": "2MRS table3 VOTable/ReadMe (CDS ftp HTML 404; CfA mirror Postgres error)",
+   "reason": [
+    "attempt 1: no table in VOTable; QUERY_STATUS=[('QUERY_STATUS', \"-- no connection\\n Report from: stdb_pg,     Status: STDB_ERR\\nPostgres connect error\\n\\n -- no connection\\n Report from: stdb_pg_conn,     Status: STDB_ERR\\nCouldn't connect with server\\n\\n -- no connection\\n\")]",
+    "attempt 2: no table in VOTable; QUERY_STATUS=[('QUERY_STATUS', \"-- no connection\\n Report from: stdb_pg,     Status: STDB_ERR\\nPostgres connect error\\n\\n -- no connection\\n Report from: stdb_pg_conn,     Status: STDB_ERR\\nCouldn't connect with server\\n\\n -- no connection\\n\")]"
+   ],
+   "release": "2MRS J/ApJS/199/26"
+  }
+ ],
+ "casda_columns": null,
+ "casda_tables": {
+  "errors": [
+   "attempt 1: DALServiceError: 404 Client Error: Not Found for url: https://casda.csiro.au/tap/async/1795484628655A/results/result",
+   "attempt 2: DALServiceError: 404 Client Error: Not Found for url: https://casda.csiro.au/tap/async/1795484635477A/results/result"
+  ],
+  "ok": false
+ },
+ "cf4_readme_hits": [
+  {
+   "line": 134,
+   "text": " 23-  27 I5     km/s    Vcmb    [-784/32575] Systemic velocity of the galaxy (2)"
+  },
+  {
+   "line": 162,
+   "text": "138- 145 F8.4   deg     RAdeg   Right Ascension, decimal degree (J2000)"
+  },
+  {
+   "line": 163,
+   "text": "147- 154 F8.4   deg     DEdeg   [-90/89] Declination, decimal degree (J2000)"
+  },
+  {
+   "line": 171,
+   "text": "Note (2): Systemic velocity of the galaxy in the reference frame of the"
+  },
+  {
+   "line": 172,
+   "text": "    cosmic microwave background."
+  },
+  {
+   "line": 192,
+   "text": " 29-  33 I5     km/s    Vcmb    [-617/32575] Systemic velocity of the galaxy (3)"
+  },
+  {
+   "line": 193,
+   "text": " 35-  42 F8.4   deg     RAdeg   Right Ascension, decimal degree (J2000)"
+  },
+  {
+   "line": 194,
+   "text": " 44-  51 F8.4   deg     DEdeg   [-90/89] Declination, decimal degree (J2000)"
+  },
+  {
+   "line": 240,
+   "text": "Note (3): Systemic velocity of the galaxy in the reference frame of the"
+  },
+  {
+   "line": 241,
+   "text": "    cosmic microwave background."
+  },
+  {
+   "line": 257,
+   "text": " 28-  32 I5     km/s         Vh     [-331/32885] Group velocity, relative to"
+  },
+  {
+   "line": 258,
+   "text": "                                     the Sun"
+  },
+  {
+   "line": 259,
+   "text": " 34-  38 I5     km/s         Vls    [-157/32984] Group velocity, relative to"
+  },
+  {
+   "line": 260,
+   "text": "                                     Local Sheet"
+  },
+  {
+   "line": 261,
+   "text": " 40-  44 I5     km/s         V3k    [-617/32575] Group velocity, relative to"
+  },
+  {
+   "line": 262,
+   "text": "                                     cosmic background"
+  },
+  {
+   "line": 263,
+   "text": " 46-  50 I5     km/s         fV3k   [-616/35300] V3K times the cosmological"
+  },
+  {
+   "line": 275,
+   "text": " 84-  91 F8.4   deg          RAdeg  Right Ascension, decimal degree (J2000)"
+  },
+  {
+   "line": 276,
+   "text": " 93- 100 F8.4   deg          DEdeg  [-90/89] Declination, decimal degree (J2000)"
+  }
+ ],
+ "code_sha256": {
+  "htt/obsstat/catalogue_frame_registry.py": "f69967dddaeaa52f801a1e1662dbe12a5c5c9d51ffa8fb04feae526cab5d4298",
+  "htt/obsstat/publication_frame_kinematics.py": "dae3574f98fce5c1fef52a461d0955808952b99188e2f49c61a1b54c3a3225e9",
+  "scripts/r108/common.py": "dded5b978a15680df0975cb2921e0931824c27cee7d508ea81721a1ceaaff41e",
+  "scripts/r108/frame_input_receipts.py": "ec599d241d8ed66e95defaf87faebbb82d962b492a738634b3e73aed207cf88e",
+  "scripts/r108/frame_registry_build.py": "f05d0b22dae211cc48e9d0d969f1a112b3d1401974b960fc819c33007f2ef4a1"
+ },
+ "command": "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r108/frame_registry_build.py --replay-receipts --downloads /home/cosmosapjw/Downloads/htt_r108/frame --output docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/FRAME/CATALOGUE_FRAME_REGISTRY.json",
+ "frame_velocity_recovery": {
+  "cf3_t3_helio_to_cmb": {
+   "acceptance_rule": "selected-formula residual RMS < 1 km/s and <= 1% rows beyond 10 km/s",
+   "accepted_as_release_beta": true,
+   "fits": {
+    "exact_relativistic": {
+     "apex_b_deg": 48.26724532061237,
+     "apex_l_deg": 264.1594664351385,
+     "beta_galactic": [
+      -8.154925143180139e-05,
+      -0.0007972273135315376,
+      0.0008984228378956065
+     ],
+     "clip_kms": 10.0,
+     "covariance_galactic": [
+      [
+       2.698341599944997e-14,
+       1.0295618144203002e-15,
+       -2.783850100134702e-15
+      ],
+      [
+       1.0295618144203e-15,
+       2.4708085132977248e-14,
+       2.214424439701946e-15
+      ],
+      [
+       -2.783850100134702e-15,
+       2.214424439701946e-15,
+       1.7226208545841115e-14
+      ]
+     ],
+     "formula": "exact_relativistic",
+     "n_clipped": 100,
+     "n_rows": 17669,
+     "n_used": 17569,
+     "residual_fraction_le_1kms_all": 0.315354575810742,
+     "residual_max_abs_kms_used": 9.898772081742209,
+     "residual_rms_kms": 3.471928819355299,
+     "speed_kms": 360.92139218324746
+    },
+    "linear_cz_sum": {
+     "apex_b_deg": 48.25687403064928,
+     "apex_l_deg": 264.14637780325717,
+     "beta_galactic": [
+      -8.402286896708099e-05,
+      -0.0008195599924473682,
+      0.000923275417196584
+     ],
+     "clip_kms": 10.0,
+     "covariance_galactic": [
+      [
+       2.0747271896892142e-16,
+       8.087643262032412e-18,
+       -2.1225251359373226e-17
+      ],
+      [
+       8.08764326203241e-18,
+       1.8972413550634122e-16,
+       1.7779337153262206e-17
+      ],
+      [
+       -2.1225251359373232e-17,
+       1.7779337153262206e-17,
+       1.317536925948874e-16
+      ]
+     ],
+     "formula": "linear_cz_sum",
+     "n_clipped": 28,
+     "n_rows": 17669,
+     "n_used": 17641,
+     "residual_fraction_le_1kms_all": 0.9966608183824778,
+     "residual_max_abs_kms_used": 1.4921466517940871,
+     "residual_rms_kms": 0.2959519132547444,
+     "speed_kms": 370.96526621960606
+    }
+   },
+   "n_rows_fetched": 17669,
+   "selected_formula": "linear_cz_sum"
+  },
+  "cf3_t3_helio_to_gsr": {
+   "acceptance_rule": "selected-formula residual RMS < 1 km/s and <= 1% rows beyond 10 km/s",
+   "accepted_as_release_beta": true,
+   "fits": {
+    "exact_relativistic": {
+     "apex_b_deg": 1.6090373390153208,
+     "apex_l_deg": 87.50339206304035,
+     "beta_galactic": [
+      3.545315830834707e-05,
+      0.0008131154801191993,
+      2.2862427266633382e-05
+     ],
+     "clip_kms": 10.0,
+     "covariance_galactic": [
+      [
+       8.92491920266488e-15,
+       3.403719229302263e-16,
+       -9.205375358014569e-16
+      ],
+      [
+       3.4037192293022634e-16,
+       8.16874889729015e-15,
+       7.589957684144022e-16
+      ],
+      [
+       -9.205375358014569e-16,
+       7.589957684144023e-16,
+       5.6900067328945e-15
+      ]
+     ],
+     "formula": "exact_relativistic",
+     "n_clipped": 28,
+     "n_rows": 17669,
+     "n_used": 17641,
+     "residual_fraction_le_1kms_all": 0.46646669307827265,
+     "residual_max_abs_kms_used": 9.754957960372849,
+     "residual_rms_kms": 1.9991723580833036,
+     "speed_kms": 244.09373682941947
+    },
+    "linear_cz_sum": {
+     "apex_b_deg": 1.6526559380200312,
+     "apex_l_deg": 87.47151811260552,
+     "beta_galactic": [
+      3.697187071874765e-05,
+      0.0008372442151415303,
+      2.417995380440972e-05
+     ],
+     "clip_kms": 10.0,
+     "covariance_galactic": [
+      [
+       2.0168160042520514e-16,
+       7.972424785304565e-18,
+       -2.0621823183301854e-17
+      ],
+      [
+       7.972424785304566e-18,
+       1.8431061794385322e-16,
+       1.7259795412839368e-17
+      ],
+      [
+       -2.0621823183301848e-17,
+       1.7259795412839368e-17,
+       1.2821421710431156e-16
+      ]
+     ],
+     "formula": "linear_cz_sum",
+     "n_clipped": 13,
+     "n_rows": 17669,
+     "n_used": 17656,
+     "residual_fraction_le_1kms_all": 0.998415303639142,
+     "residual_max_abs_kms_used": 1.455305119321821,
+     "residual_rms_kms": 0.2919585815046682,
+     "speed_kms": 251.3486616466804
+    }
+   },
+   "n_rows_fetched": 17669,
+   "selected_formula": "linear_cz_sum"
+  },
+  "cf3_t3_helio_to_localsheet": {
+   "acceptance_rule": "selected-formula residual RMS < 1 km/s and <= 1% rows beyond 10 km/s",
+   "accepted_as_release_beta": true,
+   "fits": {
+    "exact_relativistic": {
+     "apex_b_deg": -1.488398851047675,
+     "apex_l_deg": 94.72046848947731,
+     "beta_galactic": [
+      -8.481500416244195e-05,
+      0.0010271314625895295,
+      -2.677910398414475e-05
+     ],
+     "clip_kms": 10.0,
+     "covariance_galactic": [
+      [
+       1.4594238737358507e-14,
+       5.522530897566616e-16,
+       -1.50563594285212e-15
+      ],
+      [
+       5.522530897566615e-16,
+       1.3377193645077834e-14,
+       1.2355659000899785e-15
+      ],
+      [
+       -1.50563594285212e-15,
+       1.2355659000899783e-15,
+       9.297849629205557e-15
+      ]
+     ],
+     "formula": "exact_relativistic",
+     "n_clipped": 53,
+     "n_rows": 17669,
+     "n_used": 17616,
+     "residual_fraction_le_1kms_all": 0.38366630822344217,
+     "residual_max_abs_kms_used": 9.84428684597242,
+     "residual_rms_kms": 2.554761609483948,
+     "speed_kms": 309.07857244569357
+    },
+    "linear_cz_sum": {
+     "apex_b_deg": -1.440211363464075,
+     "apex_l_deg": 94.69244259464817,
+     "beta_galactic": [
+      -8.679567218535138e-05,
+      0.0010574241388359488,
+      -2.6674876792928347e-05
+     ],
+     "clip_kms": 10.0,
+     "covariance_galactic": [
+      [
+       1.9916034002228629e-16,
+       7.763612437786676e-18,
+       -2.0374863251741997e-17
+      ],
+      [
+       7.763612437786674e-18,
+       1.8212285225229947e-16,
+       1.706700933391601e-17
+      ],
+      [
+       -2.0374863251741997e-17,
+       1.706700933391601e-17,
+       1.2647499077360882e-16
+      ]
+     ],
+     "formula": "linear_cz_sum",
+     "n_clipped": 28,
+     "n_rows": 17669,
+     "n_used": 17641,
+     "residual_fraction_le_1kms_all": 0.997622955458713,
+     "residual_max_abs_kms_used": 1.451340931135805,
+     "residual_rms_kms": 0.28996266472181653,
+     "speed_kms": 318.17441870179994
+    }
+   },
+   "n_rows_fetched": 17669,
+   "selected_formula": "linear_cz_sum"
+  },
+  "cf4_t4_helio_to_cmb": {
+   "acceptance_rule": "selected-formula residual RMS < 1 km/s and <= 1% rows beyond 10 km/s",
+   "accepted_as_release_beta": true,
+   "fits": {
+    "exact_relativistic": {
+     "apex_b_deg": 47.7982717532665,
+     "apex_l_deg": 264.68817412771386,
+     "beta_galactic": [
+      -7.373506311842569e-05,
+      -0.0007930601243389554,
+      0.0008783423873678149
+     ],
+     "clip_kms": 10.0,
+     "covariance_galactic": [
+      [
+       2.7417913266667984e-14,
+       -5.136960042933127e-15,
+       8.430446791283793e-16
+      ],
+      [
+       -5.136960042933129e-15,
+       3.722824633561047e-14,
+       -1.3727189266532972e-15
+      ],
+      [
+       8.430446791283793e-16,
+       -1.3727189266532972e-15,
+       1.2694660945314131e-14
+      ]
+     ],
+     "formula": "exact_relativistic",
+     "n_clipped": 4363,
+     "n_rows": 38053,
+     "n_used": 33690,
+     "residual_fraction_le_1kms_all": 0.137781515255039,
+     "residual_max_abs_kms_used": 9.999341025835747,
+     "residual_rms_kms": 4.812208489170771,
+     "speed_kms": 355.4616519707366
+    },
+    "linear_cz_sum": {
+     "apex_b_deg": 48.25600927545066,
+     "apex_l_deg": 264.14759100995093,
+     "beta_galactic": [
+      -8.400918955061617e-05,
+      -0.0008195976183926203,
+      0.0009232877490423081
+     ],
+     "clip_kms": 10.0,
+     "covariance_galactic": [
+      [
+       1.0340151002099052e-16,
+       -1.9455431658516815e-17,
+       2.992171793699834e-18
+      ],
+      [
+       -1.9455431658516815e-17,
+       1.3121691956753e-16,
+       3.609376566153131e-18
+      ],
+      [
+       2.9921717936998335e-18,
+       3.6093765661531315e-18,
+       4.38610261727071e-17
+      ]
+     ],
+     "formula": "linear_cz_sum",
+     "n_clipped": 0,
+     "n_rows": 38053,
+     "n_used": 38053,
+     "residual_fraction_le_1kms_all": 1.0,
+     "residual_max_abs_kms_used": 0.5075555317580438,
+     "residual_rms_kms": 0.2896662442426103,
+     "speed_kms": 370.9752172558147
+    }
+   },
+   "selected_formula": "linear_cz_sum"
+  },
+  "cf4_t4_helio_to_localsheet": {
+   "acceptance_rule": "selected-formula residual RMS < 1 km/s and <= 1% rows beyond 10 km/s",
+   "accepted_as_release_beta": true,
+   "fits": {
+    "exact_relativistic": {
+     "apex_b_deg": -1.4833924842392279,
+     "apex_l_deg": 94.93010962007355,
+     "beta_galactic": [
+      -8.741175087201769e-05,
+      0.001013356314086805,
+      -2.6339190406064552e-05
+     ],
+     "clip_kms": 10.0,
+     "covariance_galactic": [
+      [
+       1.3087523932380397e-14,
+       -2.653044951032459e-15,
+       4.0136222310248854e-16
+      ],
+      [
+       -2.6530449510324597e-15,
+       1.7111704956087892e-14,
+       4.142531909464097e-16
+      ],
+      [
+       4.0136222310248854e-16,
+       4.142531909464097e-16,
+       5.474996816229485e-15
+      ]
+     ],
+     "formula": "exact_relativistic",
+     "n_clipped": 198,
+     "n_rows": 38053,
+     "n_used": 37855,
+     "residual_fraction_le_1kms_all": 0.2765090794418311,
+     "residual_max_abs_kms_used": 9.993356808565636,
+     "residual_rms_kms": 3.4132941711103784,
+     "speed_kms": 305.0269425763937
+    },
+    "linear_cz_sum": {
+     "apex_b_deg": -1.4411796640646584,
+     "apex_l_deg": 94.69144235882023,
+     "beta_galactic": [
+      -8.6775569018284e-05,
+      0.0010574056298149727,
+      -2.6692313265898422e-05
+     ],
+     "clip_kms": 10.0,
+     "covariance_galactic": [
+      [
+       2.0650569929066454e-16,
+       -3.8854921118105976e-17,
+       5.975739891291538e-18
+      ],
+      [
+       -3.8854921118105964e-17,
+       2.6205653796599985e-16,
+       7.208374746318983e-18
+      ],
+      [
+       5.975739891291538e-18,
+       7.208374746318983e-18,
+       8.759593434241461e-17
+      ]
+     ],
+     "formula": "linear_cz_sum",
+     "n_clipped": 0,
+     "n_rows": 38053,
+     "n_used": 38053,
+     "residual_fraction_le_1kms_all": 0.9999737208630068,
+     "residual_max_abs_kms_used": 1.0001020147938107,
+     "residual_rms_kms": 0.4093553483445112,
+     "speed_kms": 318.16852878182675
+    }
+   },
+   "selected_formula": "linear_cz_sum"
+  },
+  "sixdfv_dr3cz_to_cmb": {
+   "acceptance_rule": "selected-formula residual RMS < 1 km/s and <= 1% rows beyond 10 km/s",
+   "accepted_as_release_beta": false,
+   "fits": {
+    "exact_relativistic": {
+     "apex_b_deg": 48.0072443565255,
+     "apex_l_deg": 264.34431542865593,
+     "beta_galactic": [
+      -7.886973488074384e-05,
+      -0.0007964051663929712,
+      0.0008890502920059208
+     ],
+     "clip_kms": 10.0,
+     "covariance_galactic": [
+      [
+       2.0357595521274827e-13,
+       3.030569819288351e-15,
+       -1.9502232532831385e-14
+      ],
+      [
+       3.030569819288351e-15,
+       1.8048604091383213e-13,
+       7.7838396456932e-15
+      ],
+      [
+       -1.9502232532831385e-14,
+       7.783839645693199e-15,
+       1.5056383962216736e-13
+      ]
+     ],
+     "formula": "exact_relativistic",
+     "n_clipped": 3078,
+     "n_rows": 8885,
+     "n_used": 5807,
+     "residual_fraction_le_1kms_all": 0.06933033202025886,
+     "residual_max_abs_kms_used": 9.99907901656843,
+     "residual_rms_kms": 5.700592788320384,
+     "speed_kms": 358.6114382481479
+    },
+    "linear_cz_sum": {
+     "apex_b_deg": 48.04547899038816,
+     "apex_l_deg": 264.3947629541149,
+     "beta_galactic": [
+      -8.070762324781075e-05,
+      -0.0008223460426338197,
+      0.0009191619651384033
+     ],
+     "clip_kms": 10.0,
+     "covariance_galactic": [
+      [
+       2.2140822646100394e-13,
+       3.91089058806545e-15,
+       -2.2018691582137254e-14
+      ],
+      [
+       3.9108905880654494e-15,
+       1.970556671037077e-13,
+       9.771252350563828e-15
+      ],
+      [
+       -2.2018691582137257e-14,
+       9.771252350563828e-15,
+       1.6294823793748284e-13
+      ]
+     ],
+     "formula": "linear_cz_sum",
+     "n_clipped": 3058,
+     "n_rows": 8885,
+     "n_used": 5827,
+     "residual_fraction_le_1kms_all": 0.06933033202025886,
+     "residual_max_abs_kms_used": 9.998520844275845,
+     "residual_rms_kms": 5.734941762404882,
+     "speed_kms": 370.5349223154594
+    }
+   },
+   "n_matched": 8885,
+   "n_table1": 8885,
+   "selected_formula": "linear_cz_sum"
+  }
+ },
+ "gaia_ref_epoch_rows": {
+  "ok": true,
+  "receipt": {
+   "attempt": 1,
+   "bytes": 1261,
+   "fetched_at_utc": "2026-11-24T01:43:49Z",
+   "final_url": "https://gea.esac.esa.int/tap-server/tap/async/7d846b93-e7a8-11f1-89b3-bc97e148b76b-O",
+   "id": "gaia_astroquery_ref_epoch",
+   "job_id": "7d846b93-e7a8-11f1-89b3-bc97e148b76b-O",
+   "name": "astroquery.gaia",
+   "query": "SELECT TOP 5 source_id, ref_epoch FROM gaiadr3.gaia_source",
+   "rows": 5,
+   "saved": "/home/cosmosapjw/Downloads/htt_r108/frame/gaia_astroquery_ref_epoch/gaia_astroquery_ref_epoch.vot",
+   "sha256": "be40fbb0d73760256c75a9c94578b75b90ec135704ebf4a9c987d2be583c6caa",
+   "status": "COMPLETED",
+   "url": "https://gea.esac.esa.int/tap-server/tap"
+  },
+  "rows": [
+   {
+    "ref_epoch": 2016.0,
+    "source_id": 137338932274762880
+   },
+   {
+    "ref_epoch": 2016.0,
+    "source_id": 137339172795102336
+   },
+   {
+    "ref_epoch": 2016.0,
+    "source_id": 137339280167249408
+   },
+   {
+    "ref_epoch": 2016.0,
+    "source_id": 137339314526984448
+   },
+   {
+    "ref_epoch": 2016.0,
+    "source_id": 137339451965938304
+   }
+  ]
+ },
+ "gaia_tap_schema": {
+  "ok": true,
+  "receipt": {
+   "attempt": 1,
+   "bytes": 3636,
+   "fetched_at_utc": "2026-11-24T01:43:44Z",
+   "final_url": "https://gea.esac.esa.int/tap-server/tap/async/798614b9-e7a8-11f1-89b3-bc97e148b76b-O",
+   "id": "gaia_tap_schema_gaia_source",
+   "job_id": "798614b9-e7a8-11f1-89b3-bc97e148b76b-O",
+   "name": "pyvo TAP https://gea.esac.esa.int/tap-server/tap",
+   "query": "SELECT column_name, description, unit, ucd FROM tap_schema.columns WHERE table_name = 'gaiadr3.gaia_source' AND column_name IN ('ra', 'dec', 'ref_epoch', 'pmra', 'radial_velocity')",
+   "rows": 5,
+   "saved": "/home/cosmosapjw/Downloads/htt_r108/frame/gaia_tap_schema_gaia_source/gaia_tap_schema_gaia_source.vot",
+   "sha256": "77edf6b602b69df3a5ababf42dc93350a8876dfd0e8ecfe9d118bb116452adf6",
+   "status": "COMPLETED",
+   "url": "https://gea.esac.esa.int/tap-server/tap"
+  },
+  "rows": [
+   {
+    "column_name": "ref_epoch",
+    "description": "Reference epoch",
+    "ucd": "meta.ref;time.epoch",
+    "unit": "yr"
+   },
+   {
+    "column_name": "ra",
+    "description": "Right ascension",
+    "ucd": "pos.eq.ra;meta.main",
+    "unit": "deg"
+   },
+   {
+    "column_name": "dec",
+    "description": "Declination",
+    "ucd": "pos.eq.dec;meta.main",
+    "unit": "deg"
+   },
+   {
+    "column_name": "pmra",
+    "description": "Proper motion in right ascension direction",
+    "ucd": "pos.pm;pos.eq.ra",
+    "unit": "mas.yr**-1"
+   },
+   {
+    "column_name": "radial_velocity",
+    "description": "Radial velocity",
+    "ucd": "spect.dopplerVeloc.opt;em.opt.I",
+    "unit": "km.s**-1"
+   }
+  ]
+ },
+ "git": {
+  "diff_head_sha256": "68355025a0522cde3a0af3a1995f8e67d41869fe07d780ffd110cf17e261df45",
+  "dirty_code_paths": [
+   " M htt/bass/background/tilted_bianchi_state.py",
+   " M htt/bass/transport/bjs_bianchi_vii_h.py",
+   " M htt/bass/transport/coupled_einstein_boltzmann.py",
+   " M htt/bass/transport/hybrid_los_transfer.py",
+   " M htt/bass/transport/test_bjs_bianchi_vii_h.py",
+   " M htt/bass/transport/test_hybrid_los_transfer.py",
+   " M scripts/r107_cloud/acquisition.py",
+   " M tests/r107_cloud/test_acquisition.py",
+   "?? htt/bass/background/test_compensating_tilt_root.py",
+   "?? htt/bass/transport/hybrid_los_parallel.py",
+   "?? htt/bass/transport/test_hybrid_los_parallel.py",
+   "?? htt/obsstat/catalogue_frame_registry.py",
+   "?? scripts/r108/__init__.py",
+   "?? scripts/r108/build_results.py",
+   "?? scripts/r108/cf4_2mpp_field.py",
+   "?? scripts/r108/cf4_acquire.py",
+   "?? scripts/r108/cf4_cf3_table3_overlap.py",
+   "?? scripts/r108/cf4_kband_contrast.py",
+   "?? scripts/r108/cf4_receipts.py",
+   "?? scripts/r108/commander_splits.py",
+   "?? scripts/r108/commander_status.py",
+   "?? scripts/r108/common.py",
+   "?? scripts/r108/f2_coupled_los.py",
+   "?? scripts/r108/frame_cf4_joint.py",
+   "?? scripts/r108/frame_input_receipts.py",
+   "?? scripts/r108/frame_lie_flux.py",
+   "?? scripts/r108/frame_registry_build.py",
+   "?? scripts/r108/frame_w1tf_joint.py",
+   "?? scripts/r108/gaia_acquire.py",
+   "?? scripts/r108/gaia_agn_split.py",
+   "?? scripts/r108/gaia_cmdlog.py",
+   "?? scripts/r108/gaia_estimator.py",
+   "?? scripts/r108/gaia_frame_leakage.py",
+   "?? scripts/r108/gaia_input_receipts.py",
+   "?? scripts/r108/gaia_scan_null.py",
+   "?? scripts/r108/gaia_scanlaw.py",
+   "?? scripts/r108/gaia_summary.py",
+   "?? scripts/r108/gaia_supersede.py",
+   "?? scripts/r108/radio_cmdlog.py",
+   "?? scripts/r108/radio_input_receipts.py",
+   "?? scripts/r108/radio_p_of_c1.py",
+   "?? scripts/r108/radio_racs_dipole.py",
+   "?? scripts/r108/radio_racs_fetch.py",
+   "?? scripts/r108/radio_summary.py",
+   "?? scripts/r108/radio_theory_c1.py",
+   "?? scripts/r108/radio_v3_diag.py",
+   "?? scripts/r108/review_r107_claims.py",
+   "?? scripts/r108/s1_family_atlas.py",
+   "?? scripts/r108/s4_aggregate.py",
+   "?? scripts/r108/s4_bjs_comparator.py",
+   "?? scripts/r108/s4_cmdlog.py",
+   "?? scripts/r108/s4_lit_fetch.py",
+   "?? scripts/r108/s4_posthoc_checks.py",
+   "?? scripts/r108/s5_photon_moments.py",
+   "?? scripts/r108/s6_b03_templates.py",
+   "?? scripts/r108/s7_los_performance.py",
+   "?? scripts/r108/s8_cmdlog.py",
+   "?? scripts/r108/s8_lowz_feasibility.py",
+   "?? scripts/r108/s8_lowz_tau.py",
+   "?? scripts/r108/s8_replay_compare.py",
+   "?? scripts/r108/s8_uvb_vo_probe.py",
+   "?? tests/obsstat/test_r108_cf4_2mpp.py",
+   "?? tests/obsstat/test_r108_cf4_acquire.py",
+   "?? tests/obsstat/test_r108_cf4_cf3_overlap.py",
+   "?? tests/obsstat/test_r108_cf4_kband.py",
+   "?? tests/obsstat/test_r108_cf4_receipts.py",
+   "?? tests/obsstat/test_r108_frame_cf4_joint.py",
+   "?? tests/obsstat/test_r108_frame_lie_flux.py",
+   "?? tests/obsstat/test_r108_frame_registry.py",
+   "?? tests/obsstat/test_r108_gaia_acquire.py",
+   "?? tests/obsstat/test_r108_gaia_agn_split.py",
+   "?? tests/obsstat/test_r108_gaia_estimator.py",
+   "?? tests/obsstat/test_r108_gaia_frame_leakage.py",
+   "?? tests/obsstat/test_r108_gaia_scan_null.py",
+   "?? tests/obsstat/test_r108_gaia_scanlaw.py",
+   "?? tests/obsstat/test_r108_gaia_supersede.py",
+   "?? tests/obsstat/test_r108_radio_input_receipts.py",
+   "?? tests/obsstat/test_r108_radio_p_of_c1.py",
+   "?? tests/obsstat/test_r108_radio_racs_dipole.py",
+   "?? tests/obsstat/test_r108_radio_theory_c1.py",
+   "?? tests/obsstat/test_r108_s4_rotation_fitter.py",
+   "?? tests/obsstat/test_r108_s6_kernel.py",
+   "?? tests/obsstat/test_r108_s8_lowz_tau.py"
+  ],
+  "dirty_code_sha256": {
+   "htt/bass/background/test_compensating_tilt_root.py": "cbdd64e0b7a536464a25c8fd7f759c2ddc4f94dfadb77ed0abf9647e338b0584",
+   "htt/bass/background/tilted_bianchi_state.py": "dd6bd75fb358b3c738d555414471066d14f40707ee43bd4afed683f07f7a7b2f",
+   "htt/bass/transport/bjs_bianchi_vii_h.py": "1b7e9c72ab1cb9f66bc9c2996c58e53b82bff572e4a27fefd42a15b609ddfd9e",
+   "htt/bass/transport/coupled_einstein_boltzmann.py": "b564041da20eb830a6099960909f7236a2dfae977842ebcb1d04629cbe25c56a",
+   "htt/bass/transport/hybrid_los_parallel.py": "85b40325ef1c0e2b8695bf846eb944e90deb0598f4dab3a8b60b6b17ae49d9f3",
+   "htt/bass/transport/hybrid_los_transfer.py": "96744df0f361d4c07aee3e30016450072d797df13c2bee57919c2a9cb66810db",
+   "htt/bass/transport/test_bjs_bianchi_vii_h.py": "b7709ab0bc3b7878f3b6778c00643038dd5aaedc27b377a27c99335633c119ac",
+   "htt/bass/transport/test_hybrid_los_parallel.py": "14a68cf9aba2e7e79d05771e99cc7637eaee6644af3c73eaf5b8a3ab69289bef",
+   "htt/bass/transport/test_hybrid_los_transfer.py": "42040c8514df07cdfb36eb79c494c9ccecedaea89c27baab1c2cdcbefd007505",
+   "htt/obsstat/catalogue_frame_registry.py": "f69967dddaeaa52f801a1e1662dbe12a5c5c9d51ffa8fb04feae526cab5d4298",
+   "scripts/r107_cloud/acquisition.py": "97037c43513c7c7973a6941781c26d3407da6cae1a31a1f2770ef6711ce833db",
+   "scripts/r108/__init__.py": "8d579afbf258026e1054383aed56826844a30771b57e9cb3eea11f72464079bc",
+   "scripts/r108/build_results.py": "c1f71936d542cb9a55811e9a8c33cbade1037e1cc1f0dd544741b09c54a1c29d",
+   "scripts/r108/cf4_2mpp_field.py": "6b24f23caf5f1f5bae3b7b48874947457d9c1da678ab0553e20a0e55feff6e67",
+   "scripts/r108/cf4_acquire.py": "d7510d7c6d27f796eb2898a3791cb2c00c1706244cc2fa339688bf4eba322112",
+   "scripts/r108/cf4_cf3_table3_overlap.py": "c28bc6b941fc56198b95329efd92a83e96d01408a15ae1250a3288bcb5ab6c06",
+   "scripts/r108/cf4_kband_contrast.py": "7f6f67a4245fae903e6bf79b7ef82cce16baeab61a8799b04f0d4a92df558245",
+   "scripts/r108/cf4_receipts.py": "a3b15bb8462a18b0fa4f59a47f5471e075239bbdbce8b82d747dfca779c706cd",
+   "scripts/r108/commander_splits.py": "01926d899d66e06d6831f47346c6449d5face457d72f4af56fe19489fad5643c",
+   "scripts/r108/commander_status.py": "8a9a3a14774ec5ee65036be1442f2a6c4d778733e2199042bb4835fa8460f5fe",
+   "scripts/r108/common.py": "dded5b978a15680df0975cb2921e0931824c27cee7d508ea81721a1ceaaff41e",
+   "scripts/r108/f2_coupled_los.py": "0b60e9fcbb798493fd6aac322433439573ebd582491112f126bcc6ca9a4e14a4",
+   "scripts/r108/frame_cf4_joint.py": "51a39b27428abd53d256f22b442fa22279ec601d9fb68d95f4fc268b009eff21",
+   "scripts/r108/frame_input_receipts.py": "ec599d241d8ed66e95defaf87faebbb82d962b492a738634b3e73aed207cf88e",
+   "scripts/r108/frame_lie_flux.py": "f09a661fd9840f8b3e39e7ffa20bbf10790efc66769c5c3413fe59364151f018",
+   "scripts/r108/frame_registry_build.py": "f05d0b22dae211cc48e9d0d969f1a112b3d1401974b960fc819c33007f2ef4a1",
+   "scripts/r108/frame_w1tf_joint.py": "5899bc805f70096b521a14e11d830b8877f36209f25da2f7fb9dffd44523c274",
+   "scripts/r108/gaia_acquire.py": "b5ce4997fd7bd52a81bc451768c13a6f6de52cae7e7a5bab2b2aca1981eda6e0",
+   "scripts/r108/gaia_agn_split.py": "cf7f5d1f133e1c49330b053123dfafcada4c93233289a083e94bcc0743444dff",
+   "scripts/r108/gaia_cmdlog.py": "eff796ab73f20e224ada67d37c95ba63f6e67cf1a56bbf7eab55558d2a47da4b",
+   "scripts/r108/gaia_estimator.py": "84cdf08db5c8ba4c84d1f5c0be97677b0f51de91610703da79d15f404ebd7402",
+   "scripts/r108/gaia_frame_leakage.py": "b2d7537004954f35e1723562fa6799fd91985c6bcf241fe7ccdf942cad78c454",
+   "scripts/r108/gaia_input_receipts.py": "8a52ee575497ab47f751d1d05a70c0612f19cc64a9d7ef41fce0efd813924f34",
+   "scripts/r108/gaia_scan_null.py": "ad3e7b2cb8b47ad7350d3aeb4b8167909e6fc4dc825b2ede3949bee6d58157f2",
+   "scripts/r108/gaia_scanlaw.py": "a10b2b83bcd028625870d6bc3439d91d2b69bb5a1e2f59123f04fe1feb699a1b",
+   "scripts/r108/gaia_summary.py": "5f236da9f59c5ed43f2baf46f39e6c17dcf0a36a10569fd00674fcb18fa16780",
+   "scripts/r108/gaia_supersede.py": "75d253087aec1d7c91a57bed185023cedf5c11615d1ef41e542308fdf2954560",
+   "scripts/r108/radio_cmdlog.py": "18d83a9d3421348ce149e02d47439b85fd91589be538ff777d87746e134fe0c2",
+   "scripts/r108/radio_input_receipts.py": "5def968ebaa0ab53228d0fd501286fc2fd40bb7c2be563290a563ad2edc31e99",
+   "scripts/r108/radio_p_of_c1.py": "08dd5bcc983c4ceec2153f1c67b6d30ac6a2092d9f34af2fb16fe1c4f32f8570",
+   "scripts/r108/radio_racs_dipole.py": "18f2f4088bb2a086b444d80100709bfb7b3fda65319e4493e41082015c911080",
+   "scripts/r108/radio_racs_fetch.py": "98acf036ae5bc6fbd56161584b992034e1e19cf63480d2aec0192deef8a392c7",
+   "scripts/r108/radio_summary.py": "e8c3ba53d4f2059d40f437a617d508014dfa427c50cc70ab5e5f92280e85f96c",
+   "scripts/r108/radio_theory_c1.py": "8e0bfde578a0f7ca0d13857766e29794ae97d5b7cfddf086d8f0142a7cbe41c6",
+   "scripts/r108/radio_v3_diag.py": "416bbfec06daac2de9641ddd6993bd279f178deb4c30c95506aabe631ae018bf",
+   "scripts/r108/review_r107_claims.py": "cdb61ed26c39dff78ca18cb491aa48b7789c92843c1a8b6e248241895621df97",
+   "scripts/r108/s1_family_atlas.py": "5d70606693bcac06653daa1a917252ce557d551919115aa5b38e1112905a9cbc",
+   "scripts/r108/s4_aggregate.py": "c06616ccf1bc72b416d799ecb41d4ad34f4d0e37ac541655c10a5df99702c572",
+   "scripts/r108/s4_bjs_comparator.py": "7b0ba3ca9a930643481ec371ca2318f015e394010f76440af222814fd1b81d7b",
+   "scripts/r108/s4_cmdlog.py": "eddbeca9f8d8c08f7f89e5450f8c3accede25f0ed9c28037042d8588de707b95",
+   "scripts/r108/s4_lit_fetch.py": "1f74fbb626681f7adfe3b85c61de35e1a95af056c5e21e8e79f6b403301030d6",
+   "scripts/r108/s4_posthoc_checks.py": "be30727555d33751f0c8d0511a98fad6e923782b1da210e804e500f7772ed7b5",
+   "scripts/r108/s5_photon_moments.py": "b1eb89d9e6648fe7d2d0737b48f50b2443b2ef71b2380c27908d1b7558fa88fd",
+   "scripts/r108/s6_b03_templates.py": "8bf0aeeab51bbd2efc92af82aea1829bb4dbaa7a166dff00286bb953cbeef23c",
+   "scripts/r108/s7_los_performance.py": "8bede5caa6342a00c659ad5ebab59e2829fb0b5c93403374a33d4084bc80707c",
+   "scripts/r108/s8_cmdlog.py": "f664ae05bdf77f50c3e8b7242773a1d0b10ee5033778b68c6d97f4f51db1d83a",
+   "scripts/r108/s8_lowz_feasibility.py": "d14d63f12e66b57372617b66bc0dc82bb51589ed84268c4bfbc7921043ba393d",
+   "scripts/r108/s8_lowz_tau.py": "724c95700c82f00513b4a3061d79a70ec6d2d211ca38732a3d446035a7e2a902",
+   "scripts/r108/s8_replay_compare.py": "a7ba16bfecf70c4f8dbd7e8858e98d387489b47c990754263e788f3d03084a5e",
+   "scripts/r108/s8_uvb_vo_probe.py": "d2c40c8dd4a44001b4826717d9a57f9e5a734fb164b34e20bb7ed0ea78a73c94",
+   "tests/obsstat/test_r108_cf4_2mpp.py": "630204a57bf14620ec3c4b326e86b570bd7995c8f5d06628acf5be21be96888e",
+   "tests/obsstat/test_r108_cf4_acquire.py": "6ef6695a5a9ef1be378619452848bda534dbba113fc9cde82c656673fc6ebdcd",
+   "tests/obsstat/test_r108_cf4_cf3_overlap.py": "f319cdeff11a34d8e64ed8c46f4ebaf4d44b148f03591f8dbb43c343fa8837ca",
+   "tests/obsstat/test_r108_cf4_kband.py": "610302e9736fadb35147d051131c0b7326d89f473498462534cc9bbb3355a975",
+   "tests/obsstat/test_r108_cf4_receipts.py": "92a323481558686cde7c5f03a88afb7d626f7b8184a0d904e9b39ba31e95eddb",
+   "tests/obsstat/test_r108_frame_cf4_joint.py": "a68866f4eda34d81971cd7def89c266c13d835e27f63696af398519674d9d57c",
+   "tests/obsstat/test_r108_frame_lie_flux.py": "66976c8e087d5ed311a5d9b9f0d43d47d281dddab191ab7b2598b1e913f47257",
+   "tests/obsstat/test_r108_frame_registry.py": "94499c9cb941dbb40051dcc1552e6a1cef83ca590bb4f259c5a333a6d25190bc",
+   "tests/obsstat/test_r108_gaia_acquire.py": "f563e84706747f6a68f0b7ee4633976b94e0a063d62106a3450e4a819ab1dfd6",
+   "tests/obsstat/test_r108_gaia_agn_split.py": "2f3db18a458a291dc0c7a8a364242861e1c3b815af200c7626938be494bcefc5",
+   "tests/obsstat/test_r108_gaia_estimator.py": "a1260756f239f90ea1b331dfb221c4f0b0fa5670e3d5292c55ac53013031fac1",
+   "tests/obsstat/test_r108_gaia_frame_leakage.py": "8c8b879c8131a82f1e1c81657b85a9c6ff5b848e2b61bbbb00af8fb625e63e9d",
+   "tests/obsstat/test_r108_gaia_scan_null.py": "66791d9fc9406c1e1b39f454ce7e2e9cd3b90dda93892f3a24c600bbfb0df8db",
+   "tests/obsstat/test_r108_gaia_scanlaw.py": "9bb22d639f9fda641827cfdb7b8acb6d6132188897f5a05f40317fa34a62cad8",
+   "tests/obsstat/test_r108_gaia_supersede.py": "1ff159a166feb1613b5921a7975e5d9e855a261b3ae2ac28f1bd5a54b8200994",
+   "tests/obsstat/test_r108_radio_input_receipts.py": "8671dd32518ce6aa2e67274bbee88bc4e390f66197eda44c9a367b0c2c11e84a",
+   "tests/obsstat/test_r108_radio_p_of_c1.py": "0add58f756d41e04ab224cf5fb8d51a587a166d6796fe74618a24343dd67edc1",
+   "tests/obsstat/test_r108_radio_racs_dipole.py": "e20c96a0001b1b52940ab4fe95fceb7e31319d5e9e9da8d6be3ac485f6e8b9be",
+   "tests/obsstat/test_r108_radio_theory_c1.py": "a8dcbbfffae34d0c25214106c9dff4ad1b3297e52cb1e6c0b3e4470e38f06bca",
+   "tests/obsstat/test_r108_s4_rotation_fitter.py": "c2a736a7763c5343a55afb00c11268c575c4ec2d29401a4fa451759d86f61f2b",
+   "tests/obsstat/test_r108_s6_kernel.py": "72da1c58314cc3056a3b9c9407a9f0f977fc20e0f33e622755b78184ef486fbc",
+   "tests/obsstat/test_r108_s8_lowz_tau.py": "057a0552612c555ebd1c646c49cce3c11a36e54541ce994487d257a1d78e8fbf",
+   "tests/r107_cloud/test_acquisition.py": "fde7b4acaf42a9973e6ae30a5c3559cb4881462498cfb3f4f1eafcdacc0820a6"
+  },
+  "head": "b79b9526b1817cc5946858f5891f7e7b567b87a2"
+ },
+ "inputs_local": {
+  "cf4_ReadMe": {
+   "bytes": 19918,
+   "path": "/mnt/extdrive/workdir/raw/cf4_full/ReadMe",
+   "sha256": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4"
+  },
+  "cf4_table4": {
+   "bytes": 6012374,
+   "path": "/mnt/extdrive/workdir/raw/cf4_full/table4.dat",
+   "sha256": "b6edfec68bdfddeada8f3b8f11938f3bbda98a8e2894ff136a369c2ad6594e94"
+  },
+  "commander_pr3": {
+   "bytes": 1610660160,
+   "path": "/mnt/extdrive/workdir/raw/planck_data/COM_CMB_IQU-commander_2048_R3.00_full.fits",
+   "sha256": "fe0332e61087ab445656ef272b31578ca4b1edcc7c3784a7662577684e2685a4"
+  },
+  "icrf3_sx": {
+   "bytes": 745282,
+   "path": "/mnt/extdrive/workdir/raw/icrf3_iers_20261110/icrf3sx.txt",
+   "sha256": "83abfa7c8ece43066cff93cd256e8744ecd46cdb4c1f6cde6ed4c411b0bab3bb"
+  },
+  "nvss_ReadMe": {
+   "bytes": 6296,
+   "path": "/mnt/extdrive/workdir/raw/new_acquisitions/radio_hi/NVSS/ReadMe",
+   "sha256": "7235bb67b68e98321ff2551eb912f2eff67db3a18a48266da6cd438f3f76b429"
+  },
+  "quaia_G20.0": {
+   "bytes": 99786240,
+   "path": "/mnt/extdrive/workdir/raw/observational_bundles/Quaia_zenodo_10403370_v1.0.0/quaia_G20.0.fits",
+   "sha256": "efeda9ae727bf2cd75569f52460a0492827c8a3fcd8ce29dc692b559fca2acb0"
+  },
+  "sixdf_dr3_ReadMe": {
+   "bytes": 10424,
+   "path": "/mnt/extdrive/workdir/raw/new_acquisitions/optical/6dFGS_final/ReadMe",
+   "sha256": "59ab49eb12ef2db602881f6c2495d3e746d032576e399f9e62b8221b0fdf7114"
+  },
+  "sixdf_dr3_dat": {
+   "bytes": 5224614,
+   "path": "/mnt/extdrive/workdir/raw/new_acquisitions/optical/6dFGS_final/6dfgs.dat.gz",
+   "sha256": "264cf54f1a8c038ae07f72b5be11f2548b33070ab3c0cd51b3b5fa2203cb1fb9"
+  },
+  "sixdfv_table1": {
+   "bytes": 696070,
+   "path": "/home/cosmosapjw/Downloads/htt_r100/source_intake/table1.txt",
+   "sha256": "08f3d4b264e28efcb574bea4efa370d66e4f299f8254e21bd04979fb8301a14d"
+  }
+ },
+ "label": "NUMERICAL (registry + release-recovered frame velocities); no physical tilt claim",
+ "no_unmeasured_beta_rule": "every frame change names a registered VelocityReference key (never a raw velocity) and the release whose data it transforms (required release_id; FrameRegistry.conversion_reference). The release must have conversion_status 'registered', and the key must be one of its own references, or the own reference of another registered release whose input frame (moving frame for *_to_rest, rest frame for *_to_moving) is a frame the data release states. Every transformation that names a release with conversion_status beta_not_stated or not_applicable, or an unregistered release, raises UnmeasuredBetaError. A reference is admitted with status published, recovered_from_release or measured_repository_estimate and a locator of at least 8 characters; the registry does not verify the locator's content.",
+ "node": "SQ-FRAME (handoff A6)",
+ "pre_existing_input_receipts": [
+  {
+   "appended_now": true,
+   "path": "/home/cosmosapjw/Downloads/htt_r100/source_intake/table1.txt",
+   "receipts": "/home/cosmosapjw/Downloads/htt_r108/frame/RECEIPTS.jsonl",
+   "sha256": "08f3d4b264e28efcb574bea4efa370d66e4f299f8254e21bd04979fb8301a14d"
+  },
+  {
+   "appended_now": true,
+   "path": "/mnt/extdrive/workdir/raw/cf4_full/ReadMe",
+   "receipts": "/home/cosmosapjw/Downloads/htt_r108/frame/RECEIPTS.jsonl",
+   "sha256": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4"
+  },
+  {
+   "appended_now": true,
+   "path": "/mnt/extdrive/workdir/raw/cf4_full/table4.dat",
+   "receipts": "/home/cosmosapjw/Downloads/htt_r108/frame/RECEIPTS.jsonl",
+   "sha256": "b6edfec68bdfddeada8f3b8f11938f3bbda98a8e2894ff136a369c2ad6594e94"
+  },
+  {
+   "appended_now": true,
+   "path": "/mnt/extdrive/workdir/raw/icrf3_iers_20261110/icrf3sx.txt",
+   "receipts": "/home/cosmosapjw/Downloads/htt_r108/frame/RECEIPTS.jsonl",
+   "sha256": "83abfa7c8ece43066cff93cd256e8744ecd46cdb4c1f6cde6ed4c411b0bab3bb"
+  },
+  {
+   "appended_now": true,
+   "path": "/mnt/extdrive/workdir/raw/new_acquisitions/optical/6dFGS_final/6dfgs.dat.gz",
+   "receipts": "/home/cosmosapjw/Downloads/htt_r108/frame/RECEIPTS.jsonl",
+   "sha256": "264cf54f1a8c038ae07f72b5be11f2548b33070ab3c0cd51b3b5fa2203cb1fb9"
+  },
+  {
+   "appended_now": true,
+   "path": "/mnt/extdrive/workdir/raw/new_acquisitions/optical/6dFGS_final/ReadMe",
+   "receipts": "/home/cosmosapjw/Downloads/htt_r108/frame/RECEIPTS.jsonl",
+   "sha256": "59ab49eb12ef2db602881f6c2495d3e746d032576e399f9e62b8221b0fdf7114"
+  },
+  {
+   "appended_now": true,
+   "path": "/mnt/extdrive/workdir/raw/new_acquisitions/radio_hi/NVSS/ReadMe",
+   "receipts": "/home/cosmosapjw/Downloads/htt_r108/frame/RECEIPTS.jsonl",
+   "sha256": "7235bb67b68e98321ff2551eb912f2eff67db3a18a48266da6cd438f3f76b429"
+  },
+  {
+   "appended_now": true,
+   "path": "/mnt/extdrive/workdir/raw/observational_bundles/Quaia_zenodo_10403370_v1.0.0/quaia_G20.0.fits",
+   "receipts": "/home/cosmosapjw/Downloads/htt_r108/frame/RECEIPTS.jsonl",
+   "sha256": "efeda9ae727bf2cd75569f52460a0492827c8a3fcd8ce29dc692b559fca2acb0"
+  },
+  {
+   "appended_now": true,
+   "path": "/mnt/extdrive/workdir/raw/planck_data/COM_CMB_IQU-commander_2048_R3.00_full.fits",
+   "receipts": "/home/cosmosapjw/Downloads/htt_r108/frame/RECEIPTS.jsonl",
+   "sha256": "fe0332e61087ab445656ef272b31578ca4b1edcc7c3784a7662577684e2685a4"
+  }
+ ],
+ "recovered_minus_planck2018": {
+  "cf3_t3_helio_to_cmb": {
+   "angle_to_planck2018_deg": 0.08356855437685431,
+   "minus_planck2018_kms": [
+    0.4598319489822736,
+    -0.7981359604171703,
+    0.8741274602044361
+   ],
+   "speed_minus_planck2018_kms": 1.1492238371120171
+  },
+  "cf3_t3_helio_to_gsr": {
+   "angle_to_planck2018_deg": 130.00403427276947,
+   "minus_planck2018_kms": [
+    36.73314236446699,
+    495.89926985740095,
+    -268.6679114867845
+   ],
+   "speed_minus_planck2018_kms": -118.46738073581366
+  },
+  "cf3_t3_helio_to_localsheet": {
+   "angle_to_planck2018_deg": 132.28914801604517,
+   "minus_planck2018_kms": [
+    -0.37143354337331563,
+    561.907550384003,
+    -283.9138061527341
+   ],
+   "speed_minus_planck2018_kms": -51.64162368069415
+  },
+  "cf4_t4_helio_to_cmb": {
+   "angle_to_planck2018_deg": 0.08434089992237784,
+   "minus_planck2018_kms": [
+    0.4639329348682681,
+    -0.8094159350288888,
+    0.8778244545457254
+   ],
+   "speed_minus_planck2018_kms": 1.1591748733206506
+  },
+  "cf4_t4_helio_to_localsheet": {
+   "angle_to_planck2018_deg": 132.29026942762752,
+   "minus_planck2018_kms": [
+    -0.3654067655046009,
+    561.9020015191095,
+    -283.9190334758246
+   ],
+   "speed_minus_planck2018_kms": -51.647513600667324
+  },
+  "sixdfv_dr3cz_to_cmb": {
+   "angle_to_planck2018_deg": 0.32442390180986436,
+   "minus_planck2018_kms": [
+    1.4537176120362767,
+    -1.6333727939248304,
+    -0.35905444318272817
+   ],
+   "speed_minus_planck2018_kms": 0.7188799329653526
+  }
+ },
+ "registry": {
+  "references": {
+   "cf3_t3_helio_to_cmb": {
+    "beta_galactic": [
+     -8.402286896708099e-05,
+     -0.0008195599924473682,
+     0.000923275417196584
+    ],
+    "covariance_galactic": [
+     [
+      2.0747271896892142e-16,
+      8.087643262032412e-18,
+      -2.1225251359373226e-17
+     ],
+     [
+      8.08764326203241e-18,
+      1.8972413550634122e-16,
+      1.7779337153262206e-17
+     ],
+     [
+      -2.1225251359373232e-17,
+      1.7779337153262206e-17,
+      1.317536925948874e-16
+     ]
+    ],
+    "formula": "linear_cz_sum",
+    "key": "cf3_t3_helio_to_cmb",
+    "locator": "recovered from J/AJ/152/50/table3 HV and Vcmb via astroquery (vizier.cfa.harvard.edu), receipt sha256 0a7759f6995d8677; VizieR VOTable J/AJ/152/50/table3 via astroquery (vizier.cfa.harvard.edu), receipt sha256 c9c6c310df7a12b2: HV: '[-376/34770] Heliocentric Velocity (V_h_)' (ucd VELOC_HC); Vcmb: '[-669/34755] Velocity in CMB standard of rest (Fixsen et al. 1996ApJ...473..576F) (V_cmb_)' (ucd VELOC_CMB); COOSYS J2000 system=eq_FK5 equinox=J2000 epoch=None",
+    "moving_frame": "solar_system_barycentre",
+    "notes": "rms 0.296 km/s over 17641 rows; covariance = LS with residual variance",
+    "rest_frame": "CF3_CMB_frame",
+    "status": "recovered_from_release"
+   },
+   "cf3_t3_helio_to_gsr": {
+    "beta_galactic": [
+     3.697187071874765e-05,
+     0.0008372442151415303,
+     2.417995380440972e-05
+    ],
+    "covariance_galactic": [
+     [
+      2.0168160042520514e-16,
+      7.972424785304565e-18,
+      -2.0621823183301854e-17
+     ],
+     [
+      7.972424785304566e-18,
+      1.8431061794385322e-16,
+      1.7259795412839368e-17
+     ],
+     [
+      -2.0621823183301848e-17,
+      1.7259795412839368e-17,
+      1.2821421710431156e-16
+     ]
+    ],
+    "formula": "linear_cz_sum",
+    "key": "cf3_t3_helio_to_gsr",
+    "locator": "recovered from J/AJ/152/50/table3 HV and Vgsr via astroquery (vizier.cfa.harvard.edu), receipt sha256 0a7759f6995d8677; VizieR VOTable J/AJ/152/50/table3 via astroquery (vizier.cfa.harvard.edu), receipt sha256 c9c6c310df7a12b2: HV: '[-376/34770] Heliocentric Velocity (V_h_)' (ucd VELOC_HC); Vgsr: '[-339/34591] Velocity in Galactic standard of rest (V_gsr_) (G5)' (ucd VELOC_GC); COOSYS J2000 system=eq_FK5 equinox=J2000 epoch=None",
+    "moving_frame": "solar_system_barycentre",
+    "notes": "rms 0.292 km/s over 17656 rows; covariance = LS with residual variance",
+    "rest_frame": "CF3_Galactic_standard_of_rest",
+    "status": "recovered_from_release"
+   },
+   "cf3_t3_helio_to_localsheet": {
+    "beta_galactic": [
+     -8.679567218535138e-05,
+     0.0010574241388359488,
+     -2.6674876792928347e-05
+    ],
+    "covariance_galactic": [
+     [
+      1.9916034002228629e-16,
+      7.763612437786676e-18,
+      -2.0374863251741997e-17
+     ],
+     [
+      7.763612437786674e-18,
+      1.8212285225229947e-16,
+      1.706700933391601e-17
+     ],
+     [
+      -2.0374863251741997e-17,
+      1.706700933391601e-17,
+      1.2647499077360882e-16
+     ]
+    ],
+    "formula": "linear_cz_sum",
+    "key": "cf3_t3_helio_to_localsheet",
+    "locator": "recovered from J/AJ/152/50/table3 HV and Vls via astroquery (vizier.cfa.harvard.edu), receipt sha256 0a7759f6995d8677; VizieR VOTable J/AJ/152/50/table3 via astroquery (vizier.cfa.harvard.edu), receipt sha256 c9c6c310df7a12b2: HV: '[-376/34770] Heliocentric Velocity (V_h_)' (ucd VELOC_HC); Vls: '[-373/34545] Velocity in Local Sheet standard of rest (Tully et al. 2008, Cat. J/ApJ/676/184) (V_ls_)' (ucd VELOC_LSR); COOSYS J2000 system=eq_FK5 equinox=J2000 epoch=None",
+    "moving_frame": "solar_system_barycentre",
+    "notes": "rms 0.290 km/s over 17641 rows; covariance = LS with residual variance",
+    "rest_frame": "CF3_Local_Sheet",
+    "status": "recovered_from_release"
+   },
+   "cf4_t4_helio_to_cmb": {
+    "beta_galactic": [
+     -8.400918955061617e-05,
+     -0.0008195976183926203,
+     0.0009232877490423081
+    ],
+    "covariance_galactic": [
+     [
+      1.0340151002099052e-16,
+      -1.9455431658516815e-17,
+      2.992171793699834e-18
+     ],
+     [
+      -1.9455431658516815e-17,
+      1.3121691956753e-16,
+      3.609376566153131e-18
+     ],
+     [
+      2.9921717936998335e-18,
+      3.6093765661531315e-18,
+      4.38610261727071e-17
+     ]
+    ],
+    "formula": "linear_cz_sum",
+    "key": "cf4_t4_helio_to_cmb",
+    "locator": "recovered from J/ApJ/944/94 table4 Vh (bytes 28-32) and V3k (40-44), ReadMe lines 257-262 (sha256 2cfed1418147d5a6), table4 sha256 b6edfec68bdfddea",
+    "moving_frame": "solar_system_barycentre",
+    "notes": "rms 0.290 km/s over 38053 rows; covariance = LS with residual variance",
+    "rest_frame": "CF4_CMB_frame",
+    "status": "recovered_from_release"
+   },
+   "cf4_t4_helio_to_localsheet": {
+    "beta_galactic": [
+     -8.6775569018284e-05,
+     0.0010574056298149727,
+     -2.6692313265898422e-05
+    ],
+    "covariance_galactic": [
+     [
+      2.0650569929066454e-16,
+      -3.8854921118105976e-17,
+      5.975739891291538e-18
+     ],
+     [
+      -3.8854921118105964e-17,
+      2.6205653796599985e-16,
+      7.208374746318983e-18
+     ],
+     [
+      5.975739891291538e-18,
+      7.208374746318983e-18,
+      8.759593434241461e-17
+     ]
+    ],
+    "formula": "linear_cz_sum",
+    "key": "cf4_t4_helio_to_localsheet",
+    "locator": "recovered from J/ApJ/944/94 table4 Vh (28-32) and Vls (34-38), ReadMe lines 257-260; table4 sha256 b6edfec68bdfddea",
+    "moving_frame": "solar_system_barycentre",
+    "notes": "rms 0.409 km/s over 38053 rows; covariance = LS with residual variance",
+    "rest_frame": "CF4_Local_Sheet",
+    "status": "recovered_from_release"
+   },
+   "planck2018_solar_dipole": {
+    "beta_galactic": [
+     -8.555670324713574e-05,
+     -0.0008168976974525516,
+     0.0009203596418430745
+    ],
+    "covariance_galactic": [
+     [
+      2.5621466959466866e-14,
+      7.20916200283344e-15,
+      -9.67200087571747e-15
+     ],
+     [
+      7.209162002833438e-15,
+      9.369969705367853e-14,
+      -9.234852378907173e-14
+     ],
+     [
+      -9.67200087571747e-15,
+      -9.234852378907173e-14,
+      1.1563310970438718e-13
+     ]
+    ],
+    "formula": "exact_relativistic",
+    "key": "planck2018_solar_dipole",
+    "locator": "Planck 2018 results I, A&A 641, A1 (2020), Sect. 5.1 Table 3 (3362.08+-0.99 uK, l=264.021+-0.011, b=48.253+-0.005); T0 Fixsen 2009 ApJ 707 916; repo constants htt/htt/htt/infer/physical_dipole.py",
+    "moving_frame": "solar_system_barycentre",
+    "notes": "beta = A/T0 (first-order kinematic dipole); 369.82 km/s",
+    "rest_frame": "CMB",
+    "status": "published"
+   }
+  },
+  "releases": {
+   "6dFGSv_J_MNRAS_445_2677_table1": {
+    "conversion_status": "beta_not_stated",
+    "epoch": "not stated",
+    "equinox": "J2000",
+    "locators": {
+     "epoch": "6dFGSv table1.txt header lines 5-6 ('(J2000)')",
+     "position_frame": "VizieR VOTable J/MNRAS/445/2677/table1 via astroquery (vizier.cfa.harvard.edu), receipt sha256 d6163268196f92e4: RAJ2000: 'Right ascension (J2000)' (ucd POS_EQ_RA_MAIN); DEJ2000: 'Declination (J2000)' (ucd POS_EQ_DEC_MAIN); COOSYS J2000 system=eq_FK5 equinox=J2000 epoch=None",
+     "redshift_frames": "VizieR VOTable J/MNRAS/445/2677/table1 via astroquery (vizier.cfa.harvard.edu), receipt sha256 d6163268196f92e4: czgal: '[762/16689] CMB frame galaxy redshift' (ucd VELOC_CMB); czgr: '[1523/16082]? CMB frame group redshift (1)' (ucd VELOC_CMB); COOSYS J2000 system=eq_FK5 equinox=J2000 epoch=None"
+    },
+    "name": "6dFGS peculiar velocities (Springob+2014) table1",
+    "notes": "moving frame is the frame of VII/259 cz, which its ReadMe does not name (bytes 72-78 'Best available combined recession velocity')",
+    "position_frame": "FK5 J2000 (VOTable COOSYS eq_FK5)",
+    "redshift_frames": [
+     "CMB czgal",
+     "CMB czgr (group)"
+    ],
+    "release_id": "6dFGSv_J_MNRAS_445_2677_table1",
+    "velocity_reference_keys": []
+   },
+   "CF3_J_AJ_152_50_table3": {
+    "conversion_status": "registered",
+    "epoch": "not stated",
+    "equinox": "J2000",
+    "locators": {
+     "epoch": "VizieR VOTable J/AJ/152/50/table3 via astroquery (vizier.cfa.harvard.edu), receipt sha256 c9c6c310df7a12b2: RAJ2000: 'Hour of Right Ascension (J2000)' (ucd POS_EQ_RA_MAIN); COOSYS J2000 system=eq_FK5 equinox=J2000 epoch=None",
+     "position_frame": "VizieR VOTable J/AJ/152/50/table3 via astroquery (vizier.cfa.harvard.edu), receipt sha256 c9c6c310df7a12b2: RAJ2000: 'Hour of Right Ascension (J2000)' (ucd POS_EQ_RA_MAIN); DEJ2000: 'Degree of Declination (J2000)' (ucd POS_EQ_DEC_MAIN); GLON: 'Galaxy Galactic longitude (Glon)' (ucd POS_GAL_LON); GLAT: 'Galaxy Galactic latitude (Glat)' (ucd POS_GAL_LAT); COOSYS J2000 system=eq_FK5 equinox=J2000 epoch=None",
+     "redshift_frames": "VizieR VOTable J/AJ/152/50/table3 via astroquery (vizier.cfa.harvard.edu), receipt sha256 c9c6c310df7a12b2: HV: '[-376/34770] Heliocentric Velocity (V_h_)' (ucd VELOC_HC); Vgsr: '[-339/34591] Velocity in Galactic standard of rest (V_gsr_) (G5)' (ucd VELOC_GC); Vls: '[-373/34545] Velocity in Local Sheet standard of rest (Tully et al. 2008, Cat. J/ApJ/676/184) (V_ls_)' (ucd VELOC_LSR); Vcmb: '[-669/34755] Velocity in CMB standard of rest (Fixsen et al. 1996ApJ...473..576F) (V_cmb_)' (ucd VELOC_CMB); Vcmba: '[-668/37849] Velocity in CMB standard of rest, adjusted (V_mod_) (G6)' (ucd VELOC_CMB); COOSYS J2000 system=eq_FK5 equinox=J2000 epoch=None",
+     "velocity_reference": "recovered from J/AJ/152/50/table3 HV and Vcmb via astroquery (vizier.cfa.harvard.edu), receipt sha256 0a7759f6995d8677; VizieR VOTable J/AJ/152/50/table3 via astroquery (vizier.cfa.harvard.edu), receipt sha256 c9c6c310df7a12b2: HV: '[-376/34770] Heliocentric Velocity (V_h_)' (ucd VELOC_HC); Vcmb: '[-669/34755] Velocity in CMB standard of rest (Fixsen et al. 1996ApJ...473..576F) (V_cmb_)' (ucd VELOC_CMB); COOSYS J2000 system=eq_FK5 equinox=J2000 epoch=None; recovered from J/AJ/152/50/table3 HV and Vls via astroquery (vizier.cfa.harvard.edu), receipt sha256 0a7759f6995d8677; VizieR VOTable J/AJ/152/50/table3 via astroquery (vizier.cfa.harvard.edu), receipt sha256 c9c6c310df7a12b2: HV: '[-376/34770] Heliocentric Velocity (V_h_)' (ucd VELOC_HC); Vls: '[-373/34545] Velocity in Local Sheet standard of rest (Tully et al. 2008, Cat. J/ApJ/676/184) (V_ls_)' (ucd VELOC_LSR); COOSYS J2000 system=eq_FK5 equinox=J2000 epoch=None; recovered from J/AJ/152/50/table3 HV and Vgsr via astroquery (vizier.cfa.harvard.edu), receipt sha256 0a7759f6995d8677; VizieR VOTable J/AJ/152/50/table3 via astroquery (vizier.cfa.harvard.edu), receipt sha256 c9c6c310df7a12b2: HV: '[-376/34770] Heliocentric Velocity (V_h_)' (ucd VELOC_HC); Vgsr: '[-339/34591] Velocity in Galactic standard of rest (V_gsr_) (G5)' (ucd VELOC_GC); COOSYS J2000 system=eq_FK5 equinox=J2000 epoch=None"
+    },
+    "name": "Cosmicflows-3 (Tully+2016) table3",
+    "notes": "Vcmb FIELD description cites Fixsen et al. 1996 ApJ 473 576 for the CMB frame",
+    "position_frame": "FK5 J2000 (VOTable COOSYS eq_FK5) and Galactic",
+    "redshift_frames": [
+     "heliocentric HV",
+     "Galactic standard of rest Vgsr",
+     "Local Sheet Vls",
+     "CMB Vcmb (Fixsen+1996)",
+     "CMB adjusted Vcmba"
+    ],
+    "release_id": "CF3_J_AJ_152_50_table3",
+    "velocity_reference_keys": [
+     "cf3_t3_helio_to_cmb",
+     "cf3_t3_helio_to_localsheet",
+     "cf3_t3_helio_to_gsr"
+    ]
+   },
+   "CF4_galaxies_J_ApJ_944_94_table2": {
+    "conversion_status": "beta_not_stated",
+    "epoch": "not stated in ReadMe",
+    "equinox": "J2000",
+    "locators": {
+     "epoch": "J/ApJ/944/94 ReadMe lines 162-163 ('(J2000)')",
+     "position_frame": "J/ApJ/944/94 ReadMe lines 162-163; VizieR VOTable J/ApJ/944/94/table2 via astroquery (vizier.cfa.harvard.edu), receipt sha256 1dc7625c46446ec9: RAJ2000: 'Right Ascension, decimal degree (J2000)' (ucd POS_EQ_RA_MAIN); DEJ2000: '[-90/89] Declination, decimal degree (J2000)' (ucd POS_EQ_DEC_MAIN); COOSYS J2000 system=eq_FK5 equinox=J2000 epoch=None",
+     "redshift_frames": "J/ApJ/944/94 ReadMe line 134 and Note (2) lines 171-172 ('in the reference frame of the cosmic microwave background')"
+    },
+    "name": "Cosmicflows-4 galaxies (Tully+2023) table2",
+    "notes": "table2 carries only CMB-frame velocities; the galaxy-level conversion velocity is not stated (table4 recovery applies to group velocities)",
+    "position_frame": "equatorial J2000 (RAdeg/DEdeg)",
+    "redshift_frames": [
+     "CMB Vcmb only"
+    ],
+    "release_id": "CF4_galaxies_J_ApJ_944_94_table2",
+    "velocity_reference_keys": []
+   },
+   "CF4_groups_J_ApJ_944_94_table4": {
+    "conversion_status": "registered",
+    "epoch": "not stated in ReadMe",
+    "equinox": "J2000",
+    "locators": {
+     "epoch": "J/ApJ/944/94 ReadMe lines 275-276 ('(J2000)'); no epoch keyword",
+     "position_frame": "J/ApJ/944/94 ReadMe lines 275,276",
+     "redshift_frames": "J/ApJ/944/94 ReadMe lines 257-266 (Vh 'relative to the Sun', Vls 'relative to Local Sheet', V3k 'relative to cosmic background', fV3k Note 6 lines 293-299)",
+     "velocity_reference": "recovered from J/ApJ/944/94 table4 Vh (bytes 28-32) and V3k (40-44), ReadMe lines 257-262 (sha256 2cfed1418147d5a6), table4 sha256 b6edfec68bdfddea; recovered from J/ApJ/944/94 table4 Vh (28-32) and Vls (34-38), ReadMe lines 257-260; table4 sha256 b6edfec68bdfddea"
+    },
+    "name": "Cosmicflows-4 groups (Tully+2023) table4",
+    "notes": "frame velocity not quoted in the ReadMe; recovered from the release's own Vh/V3k/Vls columns",
+    "position_frame": "equatorial J2000 (RAdeg/DEdeg) and Galactic GLON/GLAT",
+    "redshift_frames": [
+     "heliocentric Vh",
+     "Local Sheet Vls",
+     "CMB V3k",
+     "fV3k = f(z) V3k"
+    ],
+    "release_id": "CF4_groups_J_ApJ_944_94_table4",
+    "velocity_reference_keys": [
+     "cf4_t4_helio_to_cmb",
+     "cf4_t4_helio_to_localsheet"
+    ]
+   },
+   "GaiaDR3_gaia_source": {
+    "conversion_status": "not_applicable",
+    "epoch": "ref_epoch [2016.0]",
+    "equinox": "ICRS (no equinox)",
+    "locators": {
+     "epoch": "astroquery.gaia job 7d846b93-e7a8-11f1-89b3-bc97e148b76b-O rows ref_epoch=[2016.0]",
+     "position_frame": "Gaia TAP_SCHEMA via pyvo (job 798614b9-e7a8-11f1-89b3-bc97e148b76b-O): gaiadr3.gaia_source.dec: 'Declination' [deg]; gaiadr3.gaia_source.pmra: 'Proper motion in right ascension direction' [mas.yr**-1]; gaiadr3.gaia_source.ra: 'Right ascension' [deg]; gaiadr3.gaia_source.radial_velocity: 'Radial velocity' [km.s**-1]; gaiadr3.gaia_source.ref_epoch: 'Reference epoch' [yr]",
+     "redshift_frames": "gaiadr3.gaia_source.dec: 'Declination' [deg]; gaiadr3.gaia_source.pmra: 'Proper motion in right ascension direction' [mas.yr**-1]; gaiadr3.gaia_source.ra: 'Right ascension' [deg]; gaiadr3.gaia_source.radial_velocity: 'Radial velocity' [km.s**-1]; gaiadr3.gaia_source.ref_epoch: 'Reference epoch' [yr]"
+    },
+    "name": "Gaia DR3 gaia_source",
+    "notes": "",
+    "position_frame": "ICRS (Gaia-CRF3)",
+    "redshift_frames": [
+     "barycentric radial_velocity (stars); no extragalactic redshift frame"
+    ],
+    "release_id": "GaiaDR3_gaia_source",
+    "velocity_reference_keys": []
+   },
+   "ICRF3_J_A+A_644_A159": {
+    "conversion_status": "not_applicable",
+    "epoch": "Ep=2015.0",
+    "equinox": "J2000.0 (designations)",
+    "locators": {
+     "epoch": "VizieR VOTable J/A+A/644/A159/table10 via astroquery (vizier.cfa.harvard.edu), receipt sha256 eae027426e2522fb: RAICRS: 'Right ascension (ICRF) at Ep=2015.0' (ucd POS_EQ_RA_MAIN); DEICRS: 'Declination (ICRF) at Ep=2015.0' (ucd POS_EQ_DEC_MAIN); COOSYS H_2015.000 system=ICRS equinox=None epoch=2015.000",
+     "position_frame": "VizieR VOTable J/A+A/644/A159/table10 via astroquery (vizier.cfa.harvard.edu), receipt sha256 eae027426e2522fb: RAICRS: 'Right ascension (ICRF) at Ep=2015.0' (ucd POS_EQ_RA_MAIN); DEICRS: 'Declination (ICRF) at Ep=2015.0' (ucd POS_EQ_DEC_MAIN); COOSYS H_2015.000 system=ICRS equinox=None epoch=2015.000; IERS icrf3sx.txt lines 3,7,20",
+     "redshift_frames": "ICRF3 tables carry no redshift"
+    },
+    "name": "ICRF3 (Charlot+2020) S/X, K, X/Ka",
+    "notes": "galactic-aberration epoch from the VizieR COOSYS epoch and RAICRS description",
+    "position_frame": "ICRS (ICRF3 realisation)",
+    "redshift_frames": [
+     "none"
+    ],
+    "release_id": "ICRF3_J_A+A_644_A159",
+    "velocity_reference_keys": []
+   },
+   "NVSS_VIII_65": {
+    "conversion_status": "not_applicable",
+    "epoch": "epoch of observation 1995+/-2",
+    "equinox": "J2000",
+    "locators": {
+     "epoch": "VIII/65 ReadMe lines 94",
+     "position_frame": "VIII/65 ReadMe lines 52,53,54,55,56,57,58,83,87; VizieR VOTable VIII/65/nvss via astroquery (vizier.cfa.harvard.edu), receipt sha256 a4ff08f51586f39f: RAJ2000: 'Right Ascension J2000 (2)' (ucd POS_EQ_RA_MAIN); DEJ2000: 'Declination J2000 (2)' (ucd POS_EQ_DEC_MAIN); COOSYS J2000 system=eq_FK5 equinox=J2000 epoch=None",
+     "redshift_frames": "VIII/65 field list (no redshift column)"
+    },
+    "name": "NRAO VLA Sky Survey (Condon+1998)",
+    "notes": "R65 count dipoles are expressed in ICRS x,y; FK5 J2000 and ICRS differ by < 0.1 arcsec",
+    "position_frame": "FK5 J2000 (VOTable COOSYS eq_FK5)",
+    "redshift_frames": [
+     "none (continuum counts)"
+    ],
+    "release_id": "NVSS_VIII_65",
+    "velocity_reference_keys": []
+   },
+   "Planck_PR3_Commander_2048_R3.00": {
+    "conversion_status": "registered",
+    "epoch": "not stated in header",
+    "equinox": "n/a",
+    "locators": {
+     "epoch": "FITS header: no EPOCH/EQUINOX card in HDUs 0-2",
+     "position_frame": "FITS header HDU1 COORDSYS=GALACTIC (Coordinate system); HDU1 POLCCONV=COSMO (Polarization convention); HDU1 ORDERING=NESTED (Healpix ordering)",
+     "redshift_frames": "FITS header TUNIT1=K_CMB; no dipole keyword in HDUs 0-2",
+     "velocity_reference": "Planck 2018 results I, A&A 641, A1 (2020), Sect. 5.1 Table 3 (3362.08+-0.99 uK, l=264.021+-0.011, b=48.253+-0.005); T0 Fixsen 2009 ApJ 707 916; repo constants htt/htt/htt/infer/physical_dipole.py"
+    },
+    "name": "Planck PR3 Commander CMB map (COM_CMB_IQU-commander_2048_R3.00_full)",
+    "notes": "solar-dipole treatment of the released map is not stated in its header; the registered velocity is the published Planck 2018 solar dipole",
+    "position_frame": "Galactic (HEALPix)",
+    "redshift_frames": [
+     "CMB temperature map; kinematic frame = barycentre in CMB frame"
+    ],
+    "release_id": "Planck_PR3_Commander_2048_R3.00",
+    "velocity_reference_keys": [
+     "planck2018_solar_dipole"
+    ]
+   },
+   "Quaia_G20.0_J_ApJ_964_69": {
+    "conversion_status": "beta_not_stated",
+    "epoch": "Ep=2016.0",
+    "equinox": "ICRS",
+    "locators": {
+     "epoch": "VizieR VOTable J/ApJ/964/69/quaiag200 via astroquery (vizier.cfa.harvard.edu), receipt sha256 6959cc1c1edd87c3: RA_ICRS: 'Right ascension (ICRS) at Ep=2016.0 (ra)' (ucd POS_EQ_RA_MAIN); COOSYS H_2016.000 system=ICRS equinox=None epoch=2016.000",
+     "position_frame": "VizieR VOTable J/ApJ/964/69/quaiag200 via astroquery (vizier.cfa.harvard.edu), receipt sha256 6959cc1c1edd87c3: RA_ICRS: 'Right ascension (ICRS) at Ep=2016.0 (ra)' (ucd POS_EQ_RA_MAIN); DE_ICRS: 'Declination (ICRS) at Ep=2016.0 (dec)' (ucd POS_EQ_DEC_MAIN); COOSYS H_2016.000 system=ICRS equinox=None epoch=2016.000",
+     "redshift_frames": "VizieR VOTable J/ApJ/964/69/quaiag200 via astroquery (vizier.cfa.harvard.edu), receipt sha256 6959cc1c1edd87c3: zQuaia: '[0.086/4.63] Spectroscopic redshift estimate (redshift_quaia)' (ucd REDSHIFT_HC); COOSYS H_2016.000 system=ICRS equinox=None epoch=2016.000"
+    },
+    "name": "Quaia G<20.0 (Storey-Fisher+2024)",
+    "notes": "local release FITS sha256 efeda9ae727bf2cd",
+    "position_frame": "ICRS (Gaia DR3 positions)",
+    "redshift_frames": [
+     "redshift_quaia (frame not stated by the release; VizieR UCD REDSHIFT_HC is a CDS annotation)"
+    ],
+    "release_id": "Quaia_G20.0_J_ApJ_964_69",
+    "velocity_reference_keys": []
+   },
+   "RACS_low_DR1": {
+    "conversion_status": "not_applicable",
+    "epoch": "not stated",
+    "equinox": "J2000/ICRS per locator",
+    "locators": {
+     "epoch": "VizieR VOTable J/other/PASA/38.58/galcut via astroquery (vizier.cfa.harvard.edu), receipt sha256 1f96bc46ce896e88: RAJ2000: 'Right ascension (J2000) (RA)' (ucd POS_EQ_RA_MAIN); DEJ2000: '[-84.7/29.2] Declination (J2000) (Dec)' (ucd POS_EQ_DEC_MAIN); COOSYS J2000 system=eq_FK5 equinox=J2000 epoch=None",
+     "position_frame": "VizieR VOTable J/other/PASA/38.58/galcut via astroquery (vizier.cfa.harvard.edu), receipt sha256 1f96bc46ce896e88: RAJ2000: 'Right ascension (J2000) (RA)' (ucd POS_EQ_RA_MAIN); DEJ2000: '[-84.7/29.2] Declination (J2000) (Dec)' (ucd POS_EQ_DEC_MAIN); COOSYS J2000 system=eq_FK5 equinox=J2000 epoch=None",
+     "redshift_frames": "no redshift column in RACS-low DR1"
+    },
+    "name": "RACS-low DR1 (Hale+2021)",
+    "notes": "the R65 radio file 'Full_NVSS_combined_named.dat' is NVSS-only; RACS enters only through SQ-RADIO cross-checks",
+    "position_frame": "see locator (VizieR COOSYS / CASDA TAP_SCHEMA)",
+    "redshift_frames": [
+     "none (continuum counts)"
+    ],
+    "release_id": "RACS_low_DR1",
+    "velocity_reference_keys": []
+   }
+  }
+ },
+ "remote_metadata": {
+  "J/A+A/644/A159": {
+   "catalog": "J/A+A/644/A159",
+   "ok": true,
+   "path": "/home/cosmosapjw/Downloads/htt_r108/frame/vizier_J_ApA_644_A159/vizier_J_ApA_644_A159.vot",
+   "receipt": {
+    "attempt": 1,
+    "bytes": 26394,
+    "fetched_at_utc": "2026-11-24T01:43:24Z",
+    "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+    "id": "vizier_J_ApA_644_A159",
+    "job_id": null,
+    "name": "astroquery.vizier J/A+A/644/A159",
+    "query": "-source=J/A+A/644/A159\n-out.max=1\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+    "query_status": [],
+    "rows": 6,
+    "saved": "/home/cosmosapjw/Downloads/htt_r108/frame/vizier_J_ApA_644_A159/vizier_J_ApA_644_A159.vot",
+    "sha256": "eae027426e2522fb550fe81df01b29221ca00e81272fbb175c3bf0ec261d7d3a",
+    "status": 200,
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+   },
+   "tables": [
+    {
+     "coosys": [
+      {
+       "ID": "H_2015.000",
+       "epoch": "2015.000",
+       "equinox": null,
+       "system": "ICRS"
+      }
+     ],
+     "description": "Coordinates at S/X band for 4536 sources",
+     "fields": [
+      {
+       "description": "Record number assigned by the VizieR team. Should Not be used for identification.",
+       "name": "recno",
+       "ucd": "RECORD",
+       "unit": null
+      },
+      {
+       "description": "indicates sources with normalized separation between the S/X and K band, X/Ka band or Gaia-CRF2 positions > 3",
+       "name": "NSepup3",
+       "ucd": "DATA_LINK",
+       "unit": null
+      },
+      {
+       "description": "International Celestial Reference Frame name, (JHHMMSS.s+DDMMSS) (1)",
+       "name": "ICRF",
+       "ucd": "ID_MAIN",
+       "unit": null
+      },
+      {
+       "description": "International Earth Rotation and Reference Systems Service name (HHMM+DDd, B1950 equinox) (2)",
+       "name": "IERS",
+       "ucd": "ID_ALTERNATIVE",
+       "unit": null
+      },
+      {
+       "description": "[D] ICRF3 source category (3)",
+       "name": "Cat",
+       "ucd": "NOTE",
+       "unit": null
+      },
+      {
+       "description": "[V] Flag signaling that the observations are solely from the VLBA (4)",
+       "name": "fVLBA",
+       "ucd": "NOTE",
+       "unit": null
+      },
+      {
+       "description": "Right ascension (ICRF) at Ep=2015.0",
+       "name": "RAICRS",
+       "ucd": "POS_EQ_RA_MAIN",
+       "unit": null
+      },
+      {
+       "description": "Declination (ICRF) at Ep=2015.0",
+       "name": "DEICRS",
+       "ucd": "POS_EQ_DEC_MAIN",
+       "unit": null
+      },
+      {
+       "description": "Right ascension uncertainty",
+       "name": "e_RAICRS",
+       "ucd": "ERROR",
+       "unit": "s"
+      },
+      {
+       "description": "Declination uncertainty",
+       "name": "e_DEICRS",
+       "ucd": "ERROR",
+       "unit": "arcsec"
+      },
+      {
+       "description": "Correlation coefficient between right ascension and declination",
+       "name": "Corr",
+       "ucd": "STAT_CORRELATION",
+       "unit": null
+      },
+      {
+       "description": "Mean epoch of the sessions in which the source was observed (5)",
+       "name": "Ep",
+       "ucd": "TIME_EPOCH",
+       "unit": "d"
+      },
+      {
+       "description": "Epoch of first session in which the source was observed (5)",
+       "name": "Of",
+       "ucd": "TIME_EPOCH",
+       "unit": "d"
+      },
+      {
+       "description": "Epoch of last session in which the source was observed (5)",
+       "name": "Ol",
+       "ucd": "TIME_EPOCH",
+       "unit": "d"
+      },
+      {
+       "description": "Number of sessions in which the source was observed",
+       "name": "Nses",
+       "ucd": "NUMBER",
+       "unit": null
+      },
+      {
+       "description": "Number of delay observations used to estimate the source position",
+       "name": "Ndel",
+       "ucd": "NUMBER",
+       "unit": null
+      },
+      {
+       "description": "Number of delay rate observations used to estimate the source position",
+       "name": "Nrat",
+       "ucd": "POS_ANG_VEL",
+       "unit": null
+      },
+      {
+       "description": "Right ascension (ICRS) at Epoch=J2015. (computed by VizieR, not part of the original data. The format may include more digits than the original data because of internal accuracy requirements in VizieR and across other CDS services)",
+       "name": "_RA.icrs",
+       "ucd": "POS_EQ_RA_OTHER",
+       "unit": null
+      },
+      {
+       "description": "Declination (ICRS) at Epoch=J2015. (computed by VizieR, not part of the original data. The format may include more digits than the original data because of internal accuracy requirements in VizieR and across other CDS services)",
+       "name": "_DE.icrs",
+       "ucd": "POS_EQ_DEC_OTHER",
+       "unit": null
+      }
+     ],
+     "name": "J/A+A/644/A159/table10",
+     "rows": 1
+    },
+    {
+     "coosys": [
+      {
+       "ID": "H_2015.000",
+       "epoch": "2015.000",
+       "equinox": null,
+       "system": "ICRS"
+      }
+     ],
+     "description": "Coordinates at K band for 824 sources",
+     "fields": [
+      {
+       "description": "Record number assigned by the VizieR team. Should Not be used for identification.",
+       "name": "recno",
+       "ucd": "RECORD",
+       "unit": null
+      },
+      {
+       "description": "International Celestial Reference Frame name, (JHHMMSS.s+DDMMSS) (1)",
+       "name": "ICRF",
+       "ucd": "ID_MAIN",
+       "unit": null
+      },
+      {
+       "description": "International Earth Rotation and Reference Systems Service name (HHMM+DDd, B1950 equinox) (2)",
+       "name": "IERS",
+       "ucd": "ID_ALTERNATIVE",
+       "unit": null
+      },
+      {
+       "description": "[D] ICRF3 source category (3)",
+       "name": "Cat",
+       "ucd": "NOTE",
+       "unit": null
+      },
+      {
+       "description": "[V] Flag signaling that the observations are solely from the VLBA (4)",
+       "name": "fVLBA",
+       "ucd": "NOTE",
+       "unit": null
+      },
+      {
+       "description": "Right ascension (ICRF) at Ep=2015.0",
+       "name": "RAICRS",
+       "ucd": "POS_EQ_RA_MAIN",
+       "unit": null
+      },
+      {
+       "description": "Declination (ICRF) at Ep=2015.0",
+       "name": "DEICRS",
+       "ucd": "POS_EQ_DEC_MAIN",
+       "unit": null
+      },
+      {
+       "description": "Right ascension uncertainty",
+       "name": "e_RAICRS",
+       "ucd": "ERROR",
+       "unit": "s"
+      },
+      {
+       "description": "Declination uncertainty",
+       "name": "e_DEICRS",
+       "ucd": "ERROR",
+       "unit": "arcsec"
+      },
+      {
+       "description": "Correlation coefficient between right ascension and declination",
+       "name": "Corr",
+       "ucd": "STAT_CORRELATION",
+       "unit": null
+      },
+      {
+       "description": "Mean epoch of the sessions in which the source was observed (5)",
+       "name": "Ep",
+       "ucd": "TIME_EPOCH",
+       "unit": "d"
+      },
+      {
+       "description": "Epoch of first session in which the source was observed (5)",
+       "name": "Of",
+       "ucd": "TIME_EPOCH",
+       "unit": "d"
+      },
+      {
+       "description": "Epoch of last session in which the source was observed (5)",
+       "name": "Ol",
+       "ucd": "TIME_EPOCH",
+       "unit": "d"
+      },
+      {
+       "description": "Number of sessions in which the source was observed",
+       "name": "Nses",
+       "ucd": "NUMBER",
+       "unit": null
+      },
+      {
+       "description": "Number of delay observations used to estimate the source position",
+       "name": "Ndel",
+       "ucd": "NUMBER",
+       "unit": null
+      },
+      {
+       "description": "Number of delay rate observations used to estimate the source position",
+       "name": "Nrat",
+       "ucd": "POS_ANG_VEL",
+       "unit": null
+      },
+      {
+       "description": "Right ascension (ICRS) at Epoch=J2015. (computed by VizieR, not part of the original data. The format may include more digits than the original data because of internal accuracy requirements in VizieR and across other CDS services)",
+       "name": "_RA.icrs",
+       "ucd": "POS_EQ_RA_OTHER",
+       "unit": null
+      },
+      {
+       "description": "Declination (ICRS) at Epoch=J2015. (computed by VizieR, not part of the original data. The format may include more digits than the original data because of internal accuracy requirements in VizieR and across other CDS services)",
+       "name": "_DE.icrs",
+       "ucd": "POS_EQ_DEC_OTHER",
+       "unit": null
+      }
+     ],
+     "name": "J/A+A/644/A159/table11",
+     "rows": 1
+    },
+    {
+     "coosys": [
+      {
+       "ID": "H_2015.000",
+       "epoch": "2015.000",
+       "equinox": null,
+       "system": "ICRS"
+      }
+     ],
+     "description": "Coordinates at X/Ka band for 678 sources",
+     "fields": [
+      {
+       "description": "Record number assigned by the VizieR team. Should Not be used for identification.",
+       "name": "recno",
+       "ucd": "RECORD",
+       "unit": null
+      },
+      {
+       "description": "International Celestial Reference Frame name, (JHHMMSS.s+DDMMSS) (1)",
+       "name": "ICRF",
+       "ucd": "ID_MAIN",
+       "unit": null
+      },
+      {
+       "description": "International Earth Rotation and Reference Systems Service name (HHMM+DDd, B1950 equinox) (2)",
+       "name": "IERS",
+       "ucd": "ID_ALTERNATIVE",
+       "unit": null
+      },
+      {
+       "description": "[D] ICRF3 source category (3)",
+       "name": "Cat",
+       "ucd": "NOTE",
+       "unit": null
+      },
+      {
+       "description": "[V] Flag signaling that the observations are solely from the VLBA (4)",
+       "name": "fVLBA",
+       "ucd": "NOTE",
+       "unit": null
+      },
+      {
+       "description": "Right ascension (ICRF) at Ep=2015.0",
+       "name": "RAICRS",
+       "ucd": "POS_EQ_RA_MAIN",
+       "unit": null
+      },
+      {
+       "description": "Declination (ICRF) at Ep=2015.0",
+       "name": "DEICRS",
+       "ucd": "POS_EQ_DEC_MAIN",
+       "unit": null
+      },
+      {
+       "description": "Right ascension uncertainty",
+       "name": "e_RAICRS",
+       "ucd": "ERROR",
+       "unit": "s"
+      },
+      {
+       "description": "Declination uncertainty",
+       "name": "e_DEICRS",
+       "ucd": "ERROR",
+       "unit": "arcsec"
+      },
+      {
+       "description": "Correlation coefficient between right ascension and declination",
+       "name": "Corr",
+       "ucd": "STAT_CORRELATION",
+       "unit": null
+      },
+      {
+       "description": "Mean epoch of the sessions in which the source was observed (5)",
+       "name": "Ep",
+       "ucd": "TIME_EPOCH",
+       "unit": "d"
+      },
+      {
+       "description": "Epoch of first session in which the source was observed (5)",
+       "name": "Of",
+       "ucd": "TIME_EPOCH",
+       "unit": "d"
+      },
+      {
+       "description": "Epoch of last session in which the source was observed (5)",
+       "name": "Ol",
+       "ucd": "TIME_EPOCH",
+       "unit": "d"
+      },
+      {
+       "description": "Number of sessions in which the source was observed",
+       "name": "Nses",
+       "ucd": "NUMBER",
+       "unit": null
+      },
+      {
+       "description": "Number of delay observations used to estimate the source position",
+       "name": "Ndel",
+       "ucd": "NUMBER",
+       "unit": null
+      },
+      {
+       "description": "Number of delay rate observations used to estimate the source position",
+       "name": "Nrat",
+       "ucd": "POS_ANG_VEL",
+       "unit": null
+      },
+      {
+       "description": "Right ascension (ICRS) at Epoch=J2015. (computed by VizieR, not part of the original data. The format may include more digits than the original data because of internal accuracy requirements in VizieR and across other CDS services)",
+       "name": "_RA.icrs",
+       "ucd": "POS_EQ_RA_OTHER",
+       "unit": null
+      },
+      {
+       "description": "Declination (ICRS) at Epoch=J2015. (computed by VizieR, not part of the original data. The format may include more digits than the original data because of internal accuracy requirements in VizieR and across other CDS services)",
+       "name": "_DE.icrs",
+       "ucd": "POS_EQ_DEC_OTHER",
+       "unit": null
+      }
+     ],
+     "name": "J/A+A/644/A159/table12",
+     "rows": 1
+    },
+    {
+     "coosys": [
+      {
+       "ID": "H_2015.000",
+       "epoch": "2015.000",
+       "equinox": null,
+       "system": "ICRS"
+      }
+     ],
+     "description": "List of sources with normalized separation between the S/X and K band positions > 3",
+     "fields": [
+      {
+       "description": "Record number assigned by the VizieR team. Should Not be used for identification.",
+       "name": "recno",
+       "ucd": "RECORD",
+       "unit": null
+      },
+      {
+       "description": "IERS name",
+       "name": "IERS",
+       "ucd": "ID_ALTERNATIVE",
+       "unit": null
+      },
+      {
+       "description": "Offset in RAcosDE (right ascension scaled by the cosine of the declination)",
+       "name": "oRAcosDE",
+       "ucd": "POS_EQ_RA_OFF",
+       "unit": "uarcsec"
+      },
+      {
+       "description": "Uncertainty for the RAcosDE offset",
+       "name": "e_oRAcosDE",
+       "ucd": "ERROR",
+       "unit": "uarcsec"
+      },
+      {
+       "description": "Offset in declination",
+       "name": "oDE",
+       "ucd": "POS_EQ_DEC_OFF",
+       "unit": "uarcsec"
+      },
+      {
+       "description": "Uncertainty for the declination offset",
+       "name": "e_oDE",
+       "ucd": "ERROR",
+       "unit": "uarcsec"
+      },
+      {
+       "description": "Length of the offset vector (1)",
+       "name": "Sep",
+       "ucd": "POS_ANG_DIST_GENERAL",
+       "unit": "uarcsec"
+      },
+      {
+       "description": "Uncertainty for the offset vector length",
+       "name": "e_Sep",
+       "ucd": "ERROR",
+       "unit": "uarcsec"
+      },
+      {
+       "description": "Direction of the offset vector (2)",
+       "name": "PA",
+       "ucd": "POS_POS-ANG",
+       "unit": "deg"
+      },
+      {
+       "description": "Uncertainty for the offset vector direction",
+       "name": "e_PA",
+       "ucd": "ERROR",
+       "unit": "deg"
+      },
+      {
+       "description": "Normalized separation",
+       "name": "Sep/e_Sep",
+       "ucd": "ERROR",
+       "unit": null
+      }
+     ],
+     "name": "J/A+A/644/A159/table14",
+     "rows": 1
+    },
+    {
+     "coosys": [
+      {
+       "ID": "H_2015.000",
+       "epoch": "2015.000",
+       "equinox": null,
+       "system": "ICRS"
+      }
+     ],
+     "description": "List of sources with normalized separation between the S/X and X/Ka band positions > 3",
+     "fields": [
+      {
+       "description": "Record number assigned by the VizieR team. Should Not be used for identification.",
+       "name": "recno",
+       "ucd": "RECORD",
+       "unit": null
+      },
+      {
+       "description": "IERS name",
+       "name": "IERS",
+       "ucd": "ID_ALTERNATIVE",
+       "unit": null
+      },
+      {
+       "description": "Offset in RAcosDE (right ascension scaled by the cosine of the declination)",
+       "name": "oRAcosDE",
+       "ucd": "POS_EQ_RA_OFF",
+       "unit": "uarcsec"
+      },
+      {
+       "description": "Uncertainty for the RAcosDE offset",
+       "name": "e_oRAcosDE",
+       "ucd": "ERROR",
+       "unit": "uarcsec"
+      },
+      {
+       "description": "Offset in declination",
+       "name": "oDE",
+       "ucd": "POS_EQ_DEC_OFF",
+       "unit": "uarcsec"
+      },
+      {
+       "description": "Uncertainty for the declination offset",
+       "name": "e_oDE",
+       "ucd": "ERROR",
+       "unit": "uarcsec"
+      },
+      {
+       "description": "Length of the offset vector (1)",
+       "name": "Sep",
+       "ucd": "POS_ANG_DIST_GENERAL",
+       "unit": "uarcsec"
+      },
+      {
+       "description": "Uncertainty for the offset vector length",
+       "name": "e_Sep",
+       "ucd": "ERROR",
+       "unit": "uarcsec"
+      },
+      {
+       "description": "Direction of the offset vector (2)",
+       "name": "PA",
+       "ucd": "POS_POS-ANG",
+       "unit": "deg"
+      },
+      {
+       "description": "Uncertainty for the offset vector direction",
+       "name": "e_PA",
+       "ucd": "ERROR",
+       "unit": "deg"
+      },
+      {
+       "description": "Normalized separation",
+       "name": "Sep/e_Sep",
+       "ucd": "ERROR",
+       "unit": null
+      }
+     ],
+     "name": "J/A+A/644/A159/table15",
+     "rows": 1
+    },
+    {
+     "coosys": [
+      {
+       "ID": "H_2015.000",
+       "epoch": "2015.000",
+       "equinox": null,
+       "system": "ICRS"
+      }
+     ],
+     "description": "List of sources with normalized separation between the S/X and Gaia-CRF2 positions > 3",
+     "fields": [
+      {
+       "description": "Record number assigned by the VizieR team. Should Not be used for identification.",
+       "name": "recno",
+       "ucd": "RECORD",
+       "unit": null
+      },
+      {
+       "description": "IERS name",
+       "name": "IERS",
+       "ucd": "ID_ALTERNATIVE",
+       "unit": null
+      },
+      {
+       "description": "Offset in RAcosDE (right ascension scaled by the cosine of the declination)",
+       "name": "oRAcosDE",
+       "ucd": "POS_EQ_RA_OFF",
+       "unit": "uarcsec"
+      },
+      {
+       "description": "Uncertainty for the RAcosDE offset",
+       "name": "e_oRAcosDE",
+       "ucd": "ERROR",
+       "unit": "uarcsec"
+      },
+      {
+       "description": "Offset in declination",
+       "name": "oDE",
+       "ucd": "POS_EQ_DEC_OFF",
+       "unit": "uarcsec"
+      },
+      {
+       "description": "Uncertainty for the declination offset",
+       "name": "e_oDE",
+       "ucd": "ERROR",
+       "unit": "uarcsec"
+      },
+      {
+       "description": "Length of the offset vector (1)",
+       "name": "Sep",
+       "ucd": "POS_ANG_DIST_GENERAL",
+       "unit": "uarcsec"
+      },
+      {
+       "description": "Uncertainty for the offset vector length",
+       "name": "e_Sep",
+       "ucd": "ERROR",
+       "unit": "uarcsec"
+      },
+      {
+       "description": "Direction of the offset vector (2)",
+       "name": "PA",
+       "ucd": "POS_POS-ANG",
+       "unit": "deg"
+      },
+      {
+       "description": "Uncertainty for the offset vector direction",
+       "name": "e_PA",
+       "ucd": "ERROR",
+       "unit": "deg"
+      },
+      {
+       "description": "Normalized separation",
+       "name": "Sep/e_Sep",
+       "ucd": "ERROR",
+       "unit": null
+      }
+     ],
+     "name": "J/A+A/644/A159/table16",
+     "rows": 1
+    }
+   ]
+  },
+  "J/AJ/152/50/table3": {
+   "catalog": "J/AJ/152/50/table3",
+   "ok": true,
+   "path": "/home/cosmosapjw/Downloads/htt_r108/frame/vizier_J_AJ_152_50_table3/vizier_J_AJ_152_50_table3.vot",
+   "receipt": {
+    "attempt": 1,
+    "bytes": 19238,
+    "fetched_at_utc": "2026-11-24T01:43:24Z",
+    "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+    "id": "vizier_J_AJ_152_50_table3",
+    "job_id": null,
+    "name": "astroquery.vizier J/AJ/152/50/table3",
+    "query": "-source=J/AJ/152/50/table3\n-out.max=1\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+    "query_status": [],
+    "rows": 1,
+    "saved": "/home/cosmosapjw/Downloads/htt_r108/frame/vizier_J_AJ_152_50_table3/vizier_J_AJ_152_50_table3.vot",
+    "sha256": "c9c6c310df7a12b2217e2a9e5f65be7d020184af907e46f6868275d6bb092f8b",
+    "status": 200,
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+   },
+   "tables": [
+    {
+     "coosys": [
+      {
+       "ID": "J2000",
+       "epoch": null,
+       "equinox": "J2000",
+       "system": "eq_FK5"
+      }
+     ],
+     "description": "Individual galaxy properties",
+     "fields": [
+      {
+       "description": "Record number assigned by the VizieR team. Should Not be used for identification.",
+       "name": "recno",
+       "ucd": "RECORD",
+       "unit": null
+      },
+      {
+       "description": "[4/9003164] Principal Galaxies Catalog number (Makarov et al. 2014A&A...570A..13M)",
+       "name": "PGC",
+       "ucd": "ID_MAIN",
+       "unit": null
+      },
+      {
+       "description": "VizieR added column, not part of original data",
+       "name": "LEDA",
+       "ucd": "DATA_LINK",
+       "unit": null
+      },
+      {
+       "description": "[0.05/517.7] Luminosity distance measurement for the individual galaxy (d) (1)",
+       "name": "Dist",
+       "ucd": "POS_GAL_HC",
+       "unit": "Mpc"
+      },
+      {
+       "description": "Source of distance (3)",
+       "name": "r_Dist",
+       "ucd": "REFER_CODE",
+       "unit": null
+      },
+      {
+       "description": "[1/7] Numbers of sources of distance measures for the individual galaxy (N_d_)",
+       "name": "o_Dist",
+       "ucd": "NUMBER",
+       "unit": null
+      },
+      {
+       "description": "[18.4/38.6] Luminosity distance modulus for the individual galaxy (<{mu}>) (1)",
+       "name": "DM",
+       "ucd": "PHOT_DIST-MOD",
+       "unit": "mag"
+      },
+      {
+       "description": "[0.1/0.6] One standard deviation uncertainty in DM ({epsilon}_{mu}_) (2)",
+       "name": "e_DM",
+       "ucd": "ERROR",
+       "unit": "mag"
+      },
+      {
+       "description": "[18.48/38.6]? Distance Modulus from CF2 (Tully et al. 2013, Cat. J/AJ/146/86) ({mu}_cf2_)",
+       "name": "DM-CF2",
+       "ucd": "PHOT_DIST-MOD",
+       "unit": "mag"
+      },
+      {
+       "description": "[0.1/0.6]? One standard deviation uncertainty in DM-CF2 ({epsilon}^cf2^_{mu}_)",
+       "name": "e_DM-CF2",
+       "ucd": "ERROR",
+       "unit": "mag"
+      },
+      {
+       "description": "Supernova identification",
+       "name": "SN",
+       "ucd": "ID_ALTERNATIVE",
+       "unit": null
+      },
+      {
+       "description": "[1/5]? Number of separate analyses of the supernova (N_sn_)",
+       "name": "o_SN",
+       "ucd": "NUMBER",
+       "unit": null
+      },
+      {
+       "description": "[30.73/38.5]? Luminosity distance modulus of supernova averaged over all contributions ({mu}_sn_)",
+       "name": "DM-N",
+       "ucd": "PHOT_DIST-MOD",
+       "unit": "mag"
+      },
+      {
+       "description": "[26.68/36.8]? Luminosity distance modulus determined from the Tully-Fisher correlation using Spitzer [3.6] band photometry ({mu}_spit_)",
+       "name": "DM-I",
+       "ucd": "PHOT_DIST-MOD",
+       "unit": "mag"
+      },
+      {
+       "description": "[0.45/0.54]? One standard deviation uncertainty in DM-I ({epsilon}^spit^_{mu}_) (0.45 or 0.54) (4)",
+       "name": "e_DM-I",
+       "ucd": "ERROR",
+       "unit": "mag"
+      },
+      {
+       "description": "[29.86/38.47]? Luminosity distance modulus from 6dFGS (Springob et al. 2014, Cat. J/MNRAS/445/2677) ({mu}_6df_) (5)",
+       "name": "DM-P",
+       "ucd": "PHOT_DIST-MOD",
+       "unit": "mag"
+      },
+      {
+       "description": "[0.5]? One standard deviation uncertainty in DM-P ({epsilon}^6df^_{mu}_)",
+       "name": "e_DM-P",
+       "ucd": "ERROR",
+       "unit": "mag"
+      },
+      {
+       "description": "[0/4]? 6dFGS morphology type code (Campbell et al. 2014, Cat. J/MNRAS/443/1231) (M_t_)",
+       "name": "Mt",
+       "ucd": "MORPH_TYPE",
+       "unit": null
+      },
+      {
+       "description": "Hour of Right Ascension (J2000)",
+       "name": "RAJ2000",
+       "ucd": "POS_EQ_RA_MAIN",
+       "unit": null
+      },
+      {
+       "description": "Degree of Declination (J2000)",
+       "name": "DEJ2000",
+       "ucd": "POS_EQ_DEC_MAIN",
+       "unit": null
+      },
+      {
+       "description": "Galaxy Galactic longitude (Glon)",
+       "name": "GLON",
+       "ucd": "POS_GAL_LON",
+       "unit": "deg"
+      },
+      {
+       "description": "Galaxy Galactic latitude (Glat)",
+       "name": "GLAT",
+       "ucd": "POS_GAL_LAT",
+       "unit": "deg"
+      },
+      {
+       "description": "Galaxy Supergalactic longitude (SGL)",
+       "name": "SGLON",
+       "ucd": "POS_SG_LON",
+       "unit": "deg"
+      },
+      {
+       "description": "Galaxy Supergalactic latitude (SGB)",
+       "name": "SGLAT",
+       "ucd": "POS_SG_LAT",
+       "unit": "deg"
+      },
+      {
+       "description": "[-5/10] Morphological type; RC3 numeric code (Makarov et al. 2014A&A...570A..13M) (Ty)",
+       "name": "MType",
+       "ucd": "MORPH_TYPE",
+       "unit": null
+      },
+      {
+       "description": "[0.019/8.8] Reddening at B band (Schlafly & Finkbeiner 2011ApJ...737..103S) (A_sf_)",
+       "name": "Ab",
+       "ucd": "PHOT_COLOR_EXCESS",
+       "unit": "mag"
+      },
+      {
+       "description": "[0/22.1] Total B magnitude from LEDA (B_t_)",
+       "name": "Bmag",
+       "ucd": "PHOT_MAG_B",
+       "unit": "mag"
+      },
+      {
+       "description": "[-1.8/18.8]? 2MASS Ks magnitude with corrections from Lavaux & Hudson 2011 (Cat. J/MNRAS/416/2840) (K_s_)",
+       "name": "Ksmag",
+       "ucd": "PHOT_JHN_K",
+       "unit": "mag"
+      },
+      {
+       "description": "[-376/34770] Heliocentric Velocity (V_h_)",
+       "name": "HV",
+       "ucd": "VELOC_HC",
+       "unit": "km / s"
+      },
+      {
+       "description": "[-339/34591] Velocity in Galactic standard of rest (V_gsr_) (G5)",
+       "name": "Vgsr",
+       "ucd": "VELOC_GC",
+       "unit": "km / s"
+      },
+      {
+       "description": "[-373/34545] Velocity in Local Sheet standard of rest (Tully et al. 2008, Cat. J/ApJ/676/184) (V_ls_)",
+       "name": "Vls",
+       "ucd": "VELOC_LSR",
+       "unit": "km / s"
+      },
+      {
+       "description": "[-669/34755] Velocity in CMB standard of rest (Fixsen et al. 1996ApJ...473..576F) (V_cmb_)",
+       "name": "Vcmb",
+       "ucd": "VELOC_CMB",
+       "unit": "km / s"
+      },
+      {
+       "description": "[-668/37849] Velocity in CMB standard of rest, adjusted (V_mod_) (G6)",
+       "name": "Vcmba",
+       "ucd": "VELOC_CMB",
+       "unit": "km / s"
+      },
+      {
+       "description": "Galaxy common name",
+       "name": "Name",
+       "ucd": "ID_ALTERNATIVE",
+       "unit": null
+      },
+      {
+       "description": "[100001/400002]? 2MASS \"nest\" group identification (Tully 2015, Cat. J/AJ/149/171) \\linkRole{group properties (table2) }",
+       "name": "Nest",
+       "ucd": "ID_GROUP",
+       "unit": null
+      },
+      {
+       "description": "[1/161] Number of galaxies in group with distance measures (N_d_^gp^)",
+       "name": "o_<DM>",
+       "ucd": "NUMBER",
+       "unit": null
+      },
+      {
+       "description": "[18.4/38.5] Luminosity distance modulus to group; weighted over all contributions (<{mu}>^gp^)",
+       "name": "<DM>",
+       "ucd": "PHOT_DIST-MOD",
+       "unit": "mag"
+      },
+      {
+       "description": "[0.02/0.54] One standard deviation uncertainty in <DM> ({epsilon}^gp^_{mu}_)",
+       "name": "e_<DM>",
+       "ucd": "ERROR",
+       "unit": "mag"
+      },
+      {
+       "description": "[0/494.3] Luminosity distance to group; weighted average of distance moduli (d^gp^)",
+       "name": "<Dist>",
+       "ucd": "POS_GAL_HC",
+       "unit": "Mpc"
+      },
+      {
+       "description": "Abell Cluster identification (ASxxx are from the southern supplement list)",
+       "name": "Abell",
+       "ucd": "ID_PARENT",
+       "unit": null
+      },
+      {
+       "description": "Alternative name for group or cluster",
+       "name": "GName",
+       "ucd": "ID_PARENT",
+       "unit": null
+      },
+      {
+       "description": "[1/197] Number of galaxies in group with positions and velocities in the 2MRS catalog (Huchra et al. 2012, Cat. J/ApJS/199/26) (N_v_)",
+       "name": "Npv",
+       "ucd": "NUMBER",
+       "unit": null
+      },
+      {
+       "description": "[14/9003164] Principal Galaxies Catalog identifier of brightest group member",
+       "name": "PGC1",
+       "ucd": "ID_ASSOCIATED",
+       "unit": null
+      },
+      {
+       "description": "Group Galactic longitude (Glon^gp^)",
+       "name": "GGLON",
+       "ucd": "POS_GAL_LON",
+       "unit": "deg"
+      },
+      {
+       "description": "Group Galactic latitude (Glat^gp^)",
+       "name": "GGLAT",
+       "ucd": "POS_GAL_LAT",
+       "unit": "deg"
+      },
+      {
+       "description": "Group Supergalactic longitude (SGL^gp^) (G1)",
+       "name": "GSGLON",
+       "ucd": "POS_SG_LON",
+       "unit": "deg"
+      },
+      {
+       "description": "Group Supergalactic latitude (SGB^gp^) (G1)",
+       "name": "GSGLAT",
+       "ucd": "POS_SG_LAT",
+       "unit": "deg"
+      },
+      {
+       "description": "[6.8/14.5]? Log summed Ks luminosity of group (LogL^gp^) (G2)",
+       "name": "logLKs",
+       "ucd": "PHYS_LUMINOSITY_IR_K",
+       "unit": "log(solLum)"
+      },
+      {
+       "description": "[1/118.1]? Luminosity selection function correction factor (cf)",
+       "name": "CF",
+       "ucd": "MODEL_CORRECTION",
+       "unit": null
+      },
+      {
+       "description": "[0/2303]? Projected velocity dispersion ({sigma}_p_) (G3)",
+       "name": "sigP",
+       "ucd": "VELOC_DISP",
+       "unit": "km / s"
+      },
+      {
+       "description": "[0.024/6.3]? Projected second turnaround radius (R_2t_) (G4)",
+       "name": "R2t",
+       "ucd": "PHYS_SIZE_RADIUS_GENERAL",
+       "unit": "Mpc"
+      },
+      {
+       "description": "[-376/29980] Group heliocentric velocity (V_h_^gp^)",
+       "name": "<HV>",
+       "ucd": "VELOC_HC",
+       "unit": "km / s"
+      },
+      {
+       "description": "[-189/29883] Group velocity in Galactic standard of rest (V_gsr_^gp^) (G5)",
+       "name": "<Vgsr>",
+       "ucd": "VELOC_GC",
+       "unit": "km / s"
+      },
+      {
+       "description": "[-158/29882] Group velocity in Local Sheet standard of rest (Tully et al. 2008, Cat. J/ApJ/676/184) (V_ls_^gp^)",
+       "name": "<Vls>",
+       "ucd": "VELOC_LSR",
+       "unit": "km / s"
+      },
+      {
+       "description": "[-669/29820] Group velocity in CMB standard of rest (Fixsen et al. 1996ApJ...473..576F) (V_cmb_^gp^)",
+       "name": "<Vcmb>",
+       "ucd": "VELOC_CMB",
+       "unit": "km / s"
+      },
+      {
+       "description": "[-668/32110] Group velocity in CMB standard of rest, adjusted (V_mod_^gp^) (G6)",
+       "name": "<Vcmba>",
+       "ucd": "VELOC_CMB",
+       "unit": "km / s"
+      },
+      {
+       "description": "[0/2401]? Group velocity dispersion (V_rms_)",
+       "name": "sigma",
+       "ucd": "VELOC_DISP",
+       "unit": "km / s"
+      },
+      {
+       "description": "[0.013/29466.7]? Group mass from virial theorem (M_12_^bw^) (G7)",
+       "name": "Mvir",
+       "ucd": "PHYS_MASS_MISC",
+       "unit": "TsolMass"
+      },
+      {
+       "description": "[0.001/24400.1]? Group mass from luminosity (M_12_^L^) (G8)",
+       "name": "Mlum",
+       "ucd": "PHYS_MASS_MISC",
+       "unit": "TsolMass"
+      },
+      {
+       "description": "[3/1538]? Low density group identifier (Crook et al. 2007, Cat. J/ApJ/655/790)",
+       "name": "LDC",
+       "ucd": "ID_GROUP",
+       "unit": null
+      },
+      {
+       "description": "[2/1258]? High density group identifier (Crook et al. 2007, Cat. J/ApJ/655/790)",
+       "name": "HDC",
+       "ucd": "ID_GROUP",
+       "unit": null
+      },
+      {
+       "description": "[0/4715]? Group identifier from 2MASS++ catalog (Lavaux & Hudson 2011, Cat. J/MNRAS/416/2840)",
+       "name": "2M++",
+       "ucd": "ID_PARENT",
+       "unit": null
+      },
+      {
+       "description": "[0/5067059]? Group identifier from MK2011 catalog (Makarov & Karachentsev 2011, Cat. J/MNRAS/412/2498) (M&K)",
+       "name": "MK2011",
+       "ucd": "ID_PARENT",
+       "unit": null
+      },
+      {
+       "description": "[1/2941]? Internal reference identifier",
+       "name": "Icnt",
+       "ucd": "ID_PARENT",
+       "unit": null
+      },
+      {
+       "description": "Indicates a galaxy in Springob et al. 2014 (Cat. J/MNRAS/445/2677) within 1.5''",
+       "name": "S14",
+       "ucd": "DATA_LINK",
+       "unit": null
+      },
+      {
+       "description": "Number of data from the 6dF galaxy survey final redshift release (Jones et al. 2009, Cat. VII/259) within 1.5''",
+       "name": "6dfgs",
+       "ucd": "DATA_LINK",
+       "unit": null
+      },
+      {
+       "description": "Indicates data from the third reference catalog of bright galaxies (RC3; de Vaucouleurs et al. 1991, Cat. VII/155) within 20''",
+       "name": "RC3",
+       "ucd": "DATA_LINK",
+       "unit": null
+      },
+      {
+       "description": "Indicates a galaxy in Cosmicflows-1 (Tully et al. 2008, Cat.J/ApJ/676/184)",
+       "name": "CF1",
+       "ucd": "NUMBER",
+       "unit": null
+      },
+      {
+       "description": "Indicates a galaxy in Cosmicflows-2 (Tully et al. 2008, Cat.J/AJ/146/86)",
+       "name": "CF2",
+       "ucd": "NUMBER",
+       "unit": null
+      },
+      {
+       "description": "Display the 2MASX data (Skrutskie et al. 2006, Cat. VII/233)",
+       "name": "2M",
+       "ucd": "DATA_LINK",
+       "unit": null
+      },
+      {
+       "description": "Simbad column added by the CDS",
+       "name": "SimbadName",
+       "ucd": "ID_ALTERNATIVE",
+       "unit": null
+      }
+     ],
+     "name": "J/AJ/152/50/table3",
+     "rows": 1
+    }
+   ]
+  },
+  "J/ApJ/944/94/table2": {
+   "catalog": "J/ApJ/944/94/table2",
+   "ok": true,
+   "path": "/home/cosmosapjw/Downloads/htt_r108/frame/vizier_J_ApJ_944_94_table2/vizier_J_ApJ_944_94_table2.vot",
+   "receipt": {
+    "attempt": 1,
+    "bytes": 10305,
+    "fetched_at_utc": "2026-11-24T01:43:04Z",
+    "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+    "id": "vizier_J_ApJ_944_94_table2",
+    "job_id": null,
+    "name": "astroquery.vizier J/ApJ/944/94/table2",
+    "query": "-source=J/ApJ/944/94/table2\n-out.max=1\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+    "query_status": [],
+    "rows": 1,
+    "saved": "/home/cosmosapjw/Downloads/htt_r108/frame/vizier_J_ApJ_944_94_table2/vizier_J_ApJ_944_94_table2.vot",
+    "sha256": "1dc7625c46446ec91747d2ad3a6ece41963ecef9e1ff4bec2dce8d6038e7b761",
+    "status": 200,
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+   },
+   "tables": [
+    {
+     "coosys": [
+      {
+       "ID": "J2000",
+       "epoch": null,
+       "equinox": "J2000",
+       "system": "eq_FK5"
+      }
+     ],
+     "description": "Distances of individual galaxies",
+     "fields": [
+      {
+       "description": "Record number assigned by the VizieR team. Should Not be used for identification.",
+       "name": "recno",
+       "ucd": "RECORD",
+       "unit": null
+      },
+      {
+       "description": "[2/9003288] Principal Galaxies Catalog ID (1)",
+       "name": "PGC",
+       "ucd": "ID_MAIN",
+       "unit": null
+      },
+      {
+       "description": "[12/9003288] PGC ID, dominant galaxy in the group (G1)",
+       "name": "1PGC",
+       "ucd": "ID_PARENT",
+       "unit": null
+      },
+      {
+       "description": "[1/88355]? Group identification, Tempel+ 2017, J/A+A/602/A100",
+       "name": "T17",
+       "ucd": "ID_PARENT",
+       "unit": null
+      },
+      {
+       "description": "[-784/32575] Systemic velocity of the galaxy (2)",
+       "name": "Vcmb",
+       "ucd": "VELOC_CMB",
+       "unit": "km / s"
+      },
+      {
+       "description": "[18.46/39.53] Distance modulus, all methodologies (3)",
+       "name": "DM",
+       "ucd": "PHOT_DIST-MOD",
+       "unit": "mag"
+      },
+      {
+       "description": "[0.01/2.11] Uncertainty in DM",
+       "name": "e_DM",
+       "ucd": "ERROR",
+       "unit": "mag"
+      },
+      {
+       "description": "[28.13/38.45]? Distance modulus, SN Ia, degenerate progenitors (4)",
+       "name": "DMsnIa",
+       "ucd": "PHOT_DIST-MOD",
+       "unit": "mag"
+      },
+      {
+       "description": "[0.07/1.3]? Uncertainty in DMsnIa",
+       "name": "e_DMsnIa",
+       "ucd": "ERROR",
+       "unit": "mag"
+      },
+      {
+       "description": "[26/38.5]? Distance modulus, Tully-Fisher relation (4)",
+       "name": "DMtf",
+       "ucd": "PHOT_DIST-MOD",
+       "unit": "mag"
+      },
+      {
+       "description": "[0.38/0.8]? Uncertainty in DMtf",
+       "name": "e_DMtf",
+       "ucd": "ERROR",
+       "unit": "mag"
+      },
+      {
+       "description": "[29.46/39.53]? Distance modulus, Fundamental Plane (4)",
+       "name": "DMfp",
+       "ucd": "PHOT_DIST-MOD",
+       "unit": "mag"
+      },
+      {
+       "description": "[0.42/2.11]? Uncertainty in DMfp",
+       "name": "e_DMfp",
+       "ucd": "ERROR",
+       "unit": "mag"
+      },
+      {
+       "description": "[23.83/34.94]? Distance modulus, Surface brightness fluctuations (4)",
+       "name": "DMsbf",
+       "ucd": "PHOT_DIST-MOD",
+       "unit": "mag"
+      },
+      {
+       "description": "[0.04/1.3]? Uncertainty in DMsbf",
+       "name": "e_DMsbf",
+       "ucd": "ERROR",
+       "unit": "mag"
+      },
+      {
+       "description": "[28.19/38.1]? Distance modulus, SNII, core collapse supernovae (4)",
+       "name": "DMsnII",
+       "ucd": "PHOT_DIST-MOD",
+       "unit": "mag"
+      },
+      {
+       "description": "[0.3/1.1]? Uncertainty in DMsnII",
+       "name": "e_DMsnII",
+       "ucd": "ERROR",
+       "unit": "mag"
+      },
+      {
+       "description": "[21.92/31.67]? Distance modulus, Tip of the Red Giant Branch (4)",
+       "name": "DMtrgb",
+       "ucd": "PHOT_DIST-MOD",
+       "unit": "mag"
+      },
+      {
+       "description": "[0.01/1.3]? Uncertainty in DMtrgb",
+       "name": "e_DMtrgb",
+       "ucd": "ERROR",
+       "unit": "mag"
+      },
+      {
+       "description": "[18.46/34.53]? Distance modulus, Cepheid period-luminosity relation (4)",
+       "name": "DMceph",
+       "ucd": "PHOT_DIST-MOD",
+       "unit": "mag"
+      },
+      {
+       "description": "[0.02/0.3]? Uncertainty in DMceph",
+       "name": "e_DMceph",
+       "ucd": "ERROR",
+       "unit": "mag"
+      },
+      {
+       "description": "[29.4/35.6]? Distance modulus, geometric masers (4)",
+       "name": "DMmas",
+       "ucd": "PHOT_DIST-MOD",
+       "unit": "mag"
+      },
+      {
+       "description": "[0.03/0.6]? Uncertainty in DMmas",
+       "name": "e_DMmas",
+       "ucd": "ERROR",
+       "unit": "mag"
+      },
+      {
+       "description": "Right Ascension, decimal degree (J2000)",
+       "name": "RAJ2000",
+       "ucd": "POS_EQ_RA_MAIN",
+       "unit": "deg"
+      },
+      {
+       "description": "[-90/89] Declination, decimal degree (J2000)",
+       "name": "DEJ2000",
+       "ucd": "POS_EQ_DEC_MAIN",
+       "unit": "deg"
+      },
+      {
+       "description": "Galactic longitude",
+       "name": "GLON",
+       "ucd": "POS_GAL_LON",
+       "unit": "deg"
+      },
+      {
+       "description": "[-90/90] Galactic latitude",
+       "name": "GLAT",
+       "ucd": "POS_GAL_LAT",
+       "unit": "deg"
+      },
+      {
+       "description": "Supergalactic longitude",
+       "name": "SGL",
+       "ucd": "POS_SG_LON",
+       "unit": "deg"
+      },
+      {
+       "description": "[-89/87] Supergalactic latitude",
+       "name": "SGB",
+       "ucd": "POS_SG_LAT",
+       "unit": "deg"
+      },
+      {
+       "description": "Display data from Cosmicflows-3 (Tully+ 2016, Cat. J/AJ/152/50) if any",
+       "name": "CF3",
+       "ucd": "DATA_LINK",
+       "unit": null
+      },
+      {
+       "description": "Display the online SDSS-DR17 data for the nearest object",
+       "name": "Sloan",
+       "ucd": "DATA_LINK",
+       "unit": null
+      },
+      {
+       "description": "Simbad column added by the CDS",
+       "name": "Simbad",
+       "ucd": "DATA_LINK",
+       "unit": null
+      },
+      {
+       "description": "NED column added by the CDS",
+       "name": "NED",
+       "ucd": "DATA_LINK",
+       "unit": null
+      },
+      {
+       "description": "VizieR added column, not part of original data",
+       "name": "LEDA",
+       "ucd": "DATA_LINK",
+       "unit": null
+      }
+     ],
+     "name": "J/ApJ/944/94/table2",
+     "rows": 1
+    }
+   ]
+  },
+  "J/ApJ/944/94/table4": {
+   "catalog": "J/ApJ/944/94/table4",
+   "errors": [
+    "attempt 1: no table in VOTable; QUERY_STATUS=[('QUERY_STATUS', '--POSTGRES MSG db=0\\n Report from: stdb_pg,     Status: STDB_ERR\\nERROR:  syntax error at or near \"COMMIT\" LINE 1: ...METAcat WHERE name=\\'#****err\\nor (J/ApJ/944/94/table4)\\' COMMIT\\n                  ^\\nER')]",
+    "attempt 2: no table in VOTable; QUERY_STATUS=[('QUERY_STATUS', '--POSTGRES MSG db=0\\n Report from: stdb_pg,     Status: STDB_ERR\\nERROR:  syntax error at or near \"COMMIT\" LINE 1: ...METAcat WHERE name=\\'#****err\\nor (J/ApJ/944/94/table4)\\' COMMIT\\n                  ^\\nER')]"
+   ],
+   "ok": false
+  },
+  "J/ApJ/964/69": {
+   "catalog": "J/ApJ/964/69",
+   "ok": true,
+   "path": "/home/cosmosapjw/Downloads/htt_r108/frame/vizier_J_ApJ_964_69/vizier_J_ApJ_964_69.vot",
+   "receipt": {
+    "attempt": 1,
+    "bytes": 7660,
+    "fetched_at_utc": "2026-11-24T01:43:24Z",
+    "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+    "id": "vizier_J_ApJ_964_69",
+    "job_id": null,
+    "name": "astroquery.vizier J/ApJ/964/69",
+    "query": "-source=J/ApJ/964/69\n-out.max=1\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+    "query_status": [],
+    "rows": 1,
+    "saved": "/home/cosmosapjw/Downloads/htt_r108/frame/vizier_J_ApJ_964_69/vizier_J_ApJ_964_69.vot",
+    "sha256": "6959cc1c1edd87c35af2722c543f6dd2f66d6217346a9d4e221408796a96a40d",
+    "status": 200,
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+   },
+   "tables": [
+    {
+     "coosys": [
+      {
+       "ID": "H_2016.000",
+       "epoch": "2016.000",
+       "equinox": null,
+       "system": "ICRS"
+      }
+     ],
+     "description": "*Quaia, the Gaia-unWISE G<20.0 Quasar catalog",
+     "fields": [
+      {
+       "description": "Record number assigned by the VizieR team. Should Not be used for identification.",
+       "name": "recno",
+       "ucd": "RECORD",
+       "unit": null
+      },
+      {
+       "description": "Gaia DR3 source identifier (source_id)",
+       "name": "GaiaDR3",
+       "ucd": "ID_MAIN",
+       "unit": null
+      },
+      {
+       "description": "unWISE DR1 objID identifier (unwise_objid)",
+       "name": "objID",
+       "ucd": "ID_CROSSID",
+       "unit": null
+      },
+      {
+       "description": "[0.086/4.63] Spectroscopic redshift estimate (redshift_quaia)",
+       "name": "zQuaia",
+       "ucd": "REDSHIFT_HC",
+       "unit": null
+      },
+      {
+       "description": "[0.016/1.9] zQuaia uncertainty (redshift_quaia_err)",
+       "name": "e_zQuaia",
+       "ucd": "ERROR",
+       "unit": null
+      },
+      {
+       "description": "Right ascension (ICRS) at Ep=2016.0 (ra)",
+       "name": "RA_ICRS",
+       "ucd": "POS_EQ_RA_MAIN",
+       "unit": "deg"
+      },
+      {
+       "description": "Declination (ICRS) at Ep=2016.0 (dec)",
+       "name": "DE_ICRS",
+       "ucd": "POS_EQ_DEC_MAIN",
+       "unit": "deg"
+      },
+      {
+       "description": "Galactic longitude (l)",
+       "name": "GLON",
+       "ucd": "POS_GAL_LON",
+       "unit": "deg"
+      },
+      {
+       "description": "Galactic latitude (b)",
+       "name": "GLAT",
+       "ucd": "POS_GAL_LAT",
+       "unit": "deg"
+      },
+      {
+       "description": "[13.88/20] Gaia G-band mean magnitude (phot_g_mean_mag)",
+       "name": "Gmag",
+       "ucd": "PHOT_MAG_OPTICAL",
+       "unit": "mag"
+      },
+      {
+       "description": "[13.99/21.25] Gaia BP-band mean magnitude (phot_bp_mean_mag)",
+       "name": "BPmag",
+       "ucd": "PHOT_MAG_B",
+       "unit": "mag"
+      },
+      {
+       "description": "[13.46/20.24] Gaia RP-band mean magnitude (phot_rp_mean_mag)",
+       "name": "RPmag",
+       "ucd": "PHOT_MAG_R",
+       "unit": "mag"
+      },
+      {
+       "description": "[8/17.9] WISE W1 (3.4um) band magnitude (mag_w1_vg)",
+       "name": "W1mag",
+       "ucd": "PHOT_IR_3.4",
+       "unit": "mag"
+      },
+      {
+       "description": "[7.4/16.8] WISE W2 (4.6um) band magnitude (mag_w2_vg)",
+       "name": "W2mag",
+       "ucd": "PHOT_IR_4.2",
+       "unit": "mag"
+      },
+      {
+       "description": "[0.0005/4.9] Total proper motion (pm)",
+       "name": "pm",
+       "ucd": "POS_EQ_PM",
+       "unit": "mas / yr"
+      },
+      {
+       "description": "[-3.9/4.6] Proper motion in right ascension direction (pmRA*cosDE) (pmra)",
+       "name": "pmRA",
+       "ucd": "POS_EQ_PMRA",
+       "unit": "mas / yr"
+      },
+      {
+       "description": "[-4.1/3.7] Proper motion in declination direction (pmdec)",
+       "name": "pmDE",
+       "ucd": "POS_EQ_PMDEC",
+       "unit": "mas / yr"
+      },
+      {
+       "description": "[0.014/2.2] pmRA uncertainty (pmra_error)",
+       "name": "e_pmRA",
+       "ucd": "ERROR",
+       "unit": "mas / yr"
+      },
+      {
+       "description": "[0.016/2] pmDE uncertainty (pmdec_error)",
+       "name": "e_pmDE",
+       "ucd": "ERROR",
+       "unit": "mas / yr"
+      },
+      {
+       "description": "Right ascension (ICRS) at Epoch=J2000, proper motions taken into account",
+       "name": "_RA.icrs",
+       "ucd": "POS_EQ_RA_OTHER",
+       "unit": "deg"
+      },
+      {
+       "description": "Declination (ICRS) at Epoch=J2000, proper motions taken into account",
+       "name": "_DE.icrs",
+       "ucd": "POS_EQ_DEC_OTHER",
+       "unit": "deg"
+      }
+     ],
+     "name": "J/ApJ/964/69/quaiag200",
+     "rows": 1
+    }
+   ]
+  },
+  "J/ApJS/199/26/table3": {
+   "catalog": "J/ApJS/199/26/table3",
+   "errors": [
+    "attempt 1: no table in VOTable; QUERY_STATUS=[('QUERY_STATUS', \"-- no connection\\n Report from: stdb_pg,     Status: STDB_ERR\\nPostgres connect error\\n\\n -- no connection\\n Report from: stdb_pg_conn,     Status: STDB_ERR\\nCouldn't connect with server\\n\\n -- no connection\\n\")]",
+    "attempt 2: no table in VOTable; QUERY_STATUS=[('QUERY_STATUS', \"-- no connection\\n Report from: stdb_pg,     Status: STDB_ERR\\nPostgres connect error\\n\\n -- no connection\\n Report from: stdb_pg_conn,     Status: STDB_ERR\\nCouldn't connect with server\\n\\n -- no connection\\n\")]"
+   ],
+   "ok": false
+  },
+  "J/MNRAS/445/2677/table1": {
+   "catalog": "J/MNRAS/445/2677/table1",
+   "ok": true,
+   "path": "/home/cosmosapjw/Downloads/htt_r108/frame/vizier_J_MNRAS_445_2677_table1/vizier_J_MNRAS_445_2677_table1.vot",
+   "receipt": {
+    "attempt": 1,
+    "bytes": 5453,
+    "fetched_at_utc": "2026-11-24T01:43:14Z",
+    "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+    "id": "vizier_J_MNRAS_445_2677_table1",
+    "job_id": null,
+    "name": "astroquery.vizier J/MNRAS/445/2677/table1",
+    "query": "-source=J/MNRAS/445/2677/table1\n-out.max=1\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+    "query_status": [],
+    "rows": 1,
+    "saved": "/home/cosmosapjw/Downloads/htt_r108/frame/vizier_J_MNRAS_445_2677_table1/vizier_J_MNRAS_445_2677_table1.vot",
+    "sha256": "d6163268196f92e4494d1b5e38ea1446d78c12822395585c5d2d3da89bb74d84",
+    "status": 200,
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+   },
+   "tables": [
+    {
+     "coosys": [
+      {
+       "ID": "J2000",
+       "epoch": null,
+       "equinox": "J2000",
+       "system": "eq_FK5"
+      }
+     ],
+     "description": "6dFGSv logarithmic distance ratios, and associated parameters",
+     "fields": [
+      {
+       "description": "Record number assigned by the VizieR team. Should Not be used for identification.",
+       "name": "recno",
+       "ucd": "RECORD",
+       "unit": null
+      },
+      {
+       "description": "Source name in 6dFGS catalog (gHHMMSSs+DDMMSS)",
+       "name": "6dFGS",
+       "ucd": "ID_MAIN",
+       "unit": null
+      },
+      {
+       "description": "Right ascension (J2000)",
+       "name": "RAJ2000",
+       "ucd": "POS_EQ_RA_MAIN",
+       "unit": "deg"
+      },
+      {
+       "description": "Declination (J2000)",
+       "name": "DEJ2000",
+       "ucd": "POS_EQ_DEC_MAIN",
+       "unit": "deg"
+      },
+      {
+       "description": "[762/16689] CMB frame galaxy redshift",
+       "name": "czgal",
+       "ucd": "VELOC_CMB",
+       "unit": "km / s"
+      },
+      {
+       "description": "[1523/16082]? CMB frame group redshift (1)",
+       "name": "czgr",
+       "ucd": "VELOC_CMB",
+       "unit": "km / s"
+      },
+      {
+       "description": "[11/1672]? Group ID (1)",
+       "name": "grID",
+       "ucd": "ID_PARENT",
+       "unit": null
+      },
+      {
+       "description": "Number of sources in the group",
+       "name": "Ng",
+       "ucd": "NUMBER",
+       "unit": null
+      },
+      {
+       "description": "[-0.6/0.4] logarithmic distance ratio log(D_z_/D_H_) (2)",
+       "name": "log(Dz/DH)",
+       "ucd": "PHYS_DISTANCE_RATIO",
+       "unit": null
+      },
+      {
+       "description": "[0.09/0.22] Error on log(Dz/DH)",
+       "name": "e_log(Dz/DH)",
+       "ucd": "ERROR",
+       "unit": null
+      },
+      {
+       "description": "[-0.07/0.11] Skew {alpha} in the log(Dz/DH) probability distribution",
+       "name": "alpha",
+       "ucd": "PHOT_CI_ALPHA",
+       "unit": null
+      },
+      {
+       "description": "Simbad column added by the CDS",
+       "name": "SimbadName",
+       "ucd": "ID_ALTERNATIVE",
+       "unit": null
+      }
+     ],
+     "name": "J/MNRAS/445/2677/table1",
+     "rows": 1
+    }
+   ]
+  },
+  "J/other/PASA/38.58": {
+   "catalog": "J/other/PASA/38.58",
+   "ok": true,
+   "path": "/home/cosmosapjw/Downloads/htt_r108/frame/vizier_J_other_PASA_38_58/vizier_J_other_PASA_38_58.vot",
+   "receipt": {
+    "attempt": 1,
+    "bytes": 35717,
+    "fetched_at_utc": "2026-11-24T01:43:24Z",
+    "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+    "id": "vizier_J_other_PASA_38_58",
+    "job_id": null,
+    "name": "astroquery.vizier J/other/PASA/38.58",
+    "query": "-source=J/other/PASA/38.58\n-out.max=1\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+    "query_status": [],
+    "rows": 4,
+    "saved": "/home/cosmosapjw/Downloads/htt_r108/frame/vizier_J_other_PASA_38_58/vizier_J_other_PASA_38_58.vot",
+    "sha256": "1f96bc46ce896e883915a6360038e8ff5f18bab1b408ddcd542833b92c8eede2",
+    "status": 200,
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+   },
+   "tables": [
+    {
+     "coosys": [
+      {
+       "ID": "J2000",
+       "epoch": null,
+       "equinox": "J2000",
+       "system": "eq_FK5"
+      }
+     ],
+     "description": "*RACS DR1 source or island catalog: |b|>5deg (RACS_DR1_Sources_GalacticCut_v2021_08)",
+     "fields": [
+      {
+       "description": "Record number assigned by the VizieR team. Should Not be used for identification.",
+       "name": "recno",
+       "ucd": "RECORD",
+       "unit": null
+      },
+      {
+       "description": "RACS-DR1 name of the source given in the IAU convention (JHHMMSS.s+DDMMSS) (Source_Name)",
+       "name": "RACS-DR1",
+       "ucd": "ID_MAIN",
+       "unit": null
+      },
+      {
+       "description": "ID of the source given by the RACS tile ID added to the Src_ID generated by PyBDSF (Source_ID)",
+       "name": "ID",
+       "ucd": "ID_FIELD",
+       "unit": null
+      },
+      {
+       "description": "ID of the tile that the source was located in (Tile_ID)",
+       "name": "Tile",
+       "ucd": "ID_FIELD",
+       "unit": null
+      },
+      {
+       "description": "[8540/14998] ID of the scheduling block associated with the observation",
+       "name": "SBID",
+       "ucd": "OBS_ID",
+       "unit": null
+      },
+      {
+       "description": "[58594.5/59021.9] Time that the pointing observation started (Obs_Start_Time)",
+       "name": "MJD",
+       "ucd": "TIME_DATE",
+       "unit": "d"
+      },
+      {
+       "description": "[1/64] Number of Gaussian components that were used to fit the source (N_Gaus)",
+       "name": "Ng",
+       "ucd": "NUMBER",
+       "unit": null
+      },
+      {
+       "description": "Right ascension (J2000) (RA)",
+       "name": "RAJ2000",
+       "ucd": "POS_EQ_RA_MAIN",
+       "unit": "deg"
+      },
+      {
+       "description": "[-84.7/29.2] Declination (J2000) (Dec)",
+       "name": "DEJ2000",
+       "ucd": "POS_EQ_DEC_MAIN",
+       "unit": "deg"
+      },
+      {
+       "description": "[0/90] RAdeg uncertainty (E_RA)",
+       "name": "e_RAJ2000",
+       "ucd": "ERROR",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0/102] DEdeg uncertainty (E_Dec)",
+       "name": "e_DEJ2000",
+       "ucd": "ERROR",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0.006/401950] Total flux density of the entire source (Total_flux_Source) (G1)",
+       "name": "Ftot",
+       "ucd": "PHOT_FLUX_RADIO_850M",
+       "unit": "mJy"
+      },
+      {
+       "description": "[0.002/6206] Error on the total flux density from the E_Total_Flux column in PyBDSF (E_Total_flux_Source_PyBDSF)",
+       "name": "e_Ftot",
+       "ucd": "ERROR",
+       "unit": "mJy"
+      },
+      {
+       "description": "[0.5/28160] Combined error on the total flux density (E_Total_flux_Source) (G2)",
+       "name": "s_Ftot",
+       "ucd": "ERROR",
+       "unit": "mJy"
+      },
+      {
+       "description": "[0.01/60495] Modelled peak flux density for the source (Peak_flux)",
+       "name": "Fpk",
+       "ucd": "PHOT_FLUX_RADIO_850M",
+       "unit": "mJy / beam"
+      },
+      {
+       "description": "[0.001/233] Fpk uncertainty from PyBDSF (E_Peak_flux)",
+       "name": "e_Fpk",
+       "ucd": "ERROR",
+       "unit": "mJy / beam"
+      },
+      {
+       "description": "[14/720] Major axis of the source fit by PyBDSF (Maj)",
+       "name": "amaj",
+       "ucd": "EXTENSION_DIAM",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0/259] amaj uncertainty (E_Maj)",
+       "name": "e_amaj",
+       "ucd": "ERROR",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[7/285] Minor axis of the source fit by PyBDSF (Min)",
+       "name": "bmin",
+       "ucd": "EXTENSION_MIN",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0/237] bmin uncertainty (E_Min)",
+       "name": "e_bmin",
+       "ucd": "ERROR",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0/180] Position angle of the source fit by PyBDSF",
+       "name": "PA",
+       "ucd": "POS_POS-ANG",
+       "unit": "deg"
+      },
+      {
+       "description": "[0/180] PA uncertainty",
+       "name": "e_PA",
+       "ucd": "ERROR",
+       "unit": "deg"
+      },
+      {
+       "description": "[1/720]? Deconvolved major axis of the source (DC_Maj)",
+       "name": "amaj0",
+       "ucd": "EXTENSION_DIAM",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0.01/259]? amaj0 uncertainty (E_DC_Maj)",
+       "name": "e_amaj0",
+       "ucd": "ERROR",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0.01/284]? Deconvolved minor axis of the source (DC_Min)",
+       "name": "bmin0",
+       "ucd": "EXTENSION_MIN",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0.01/49]? bmin0 uncertainty (E_DC_Min)",
+       "name": "e_bmin0",
+       "ucd": "ERROR",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0/180] Deconvolved position angle of the source (DC_PA)",
+       "name": "PA0",
+       "ucd": "POS_POS-ANG",
+       "unit": "deg"
+      },
+      {
+       "description": "[0/180] PA0 uncertainty (E_DC_PA)",
+       "name": "e_PA0",
+       "ucd": "ERROR",
+       "unit": "deg"
+      },
+      {
+       "description": "[MS] Single, Multiple or Complex source? (S_Code) (G3)",
+       "name": "Mult",
+       "ucd": "CODE_MISC",
+       "unit": null
+      },
+      {
+       "description": "[0.004/5.3] Distance between the source and the centre of the tile it is located in (Separation_Tile_Centre)",
+       "name": "Sep",
+       "ucd": "POS_ANG_DIST_GENERAL",
+       "unit": "deg"
+      },
+      {
+       "description": "[0.002/245] rms noise within the island boundary, quoted from the Isl_rmscolumn in PyBDSF",
+       "name": "Noise",
+       "ucd": "INST_NOISE",
+       "unit": "mJy / beam"
+      },
+      {
+       "description": "Galactic longitude of the source (Gal_lon)",
+       "name": "GLON",
+       "ucd": "POS_GAL_LON",
+       "unit": "deg"
+      },
+      {
+       "description": "[-90/90] Galactic latitude of the source (Gal_lat)",
+       "name": "GLAT",
+       "ucd": "POS_GAL_LAT",
+       "unit": "deg"
+      },
+      {
+       "description": "[CD- ] Close flag (Flag_Close) (1)",
+       "name": "Flag",
+       "ucd": "CODE_MISC",
+       "unit": null
+      }
+     ],
+     "name": "J/other/PASA/38.58/galcut",
+     "rows": 1
+    },
+    {
+     "coosys": [
+      {
+       "ID": "J2000",
+       "epoch": null,
+       "equinox": "J2000",
+       "system": "eq_FK5"
+      }
+     ],
+     "description": "*RACS DR1 source or island catalog: |b|<5deg (RACS_DR1_Sources_GalacticRegion_v2021_08)",
+     "fields": [
+      {
+       "description": "Record number assigned by the VizieR team. Should Not be used for identification.",
+       "name": "recno",
+       "ucd": "RECORD",
+       "unit": null
+      },
+      {
+       "description": "RACS-DR1 name of the source given in the IAU convention (JHHMMSS.s+DDMMSS) (Source_Name)",
+       "name": "RACS-DR1",
+       "ucd": "ID_MAIN",
+       "unit": null
+      },
+      {
+       "description": "ID of the source given by the RACS tile ID added to the Src_ID generated by PyBDSF (Source_ID)",
+       "name": "ID",
+       "ucd": "ID_FIELD",
+       "unit": null
+      },
+      {
+       "description": "ID of the tile that the source was located in (Tile_ID)",
+       "name": "Tile",
+       "ucd": "ID_FIELD",
+       "unit": null
+      },
+      {
+       "description": "[8540/14998] ID of the scheduling block associated with the observation",
+       "name": "SBID",
+       "ucd": "OBS_ID",
+       "unit": null
+      },
+      {
+       "description": "[58594.5/59021.9] Time that the pointing observation started (Obs_Start_Time)",
+       "name": "MJD",
+       "ucd": "TIME_DATE",
+       "unit": "d"
+      },
+      {
+       "description": "[1/64] Number of Gaussian components that were used to fit the source (N_Gaus)",
+       "name": "Ng",
+       "ucd": "NUMBER",
+       "unit": null
+      },
+      {
+       "description": "Right ascension (J2000) (RA)",
+       "name": "RAJ2000",
+       "ucd": "POS_EQ_RA_MAIN",
+       "unit": "deg"
+      },
+      {
+       "description": "[-84.7/29.2] Declination (J2000) (Dec)",
+       "name": "DEJ2000",
+       "ucd": "POS_EQ_DEC_MAIN",
+       "unit": "deg"
+      },
+      {
+       "description": "[0/90] RAdeg uncertainty (E_RA)",
+       "name": "e_RAJ2000",
+       "ucd": "ERROR",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0/102] DEdeg uncertainty (E_Dec)",
+       "name": "e_DEJ2000",
+       "ucd": "ERROR",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0.006/401950] Total flux density of the entire source (Total_flux_Source) (G1)",
+       "name": "Ftot",
+       "ucd": "PHOT_FLUX_RADIO_850M",
+       "unit": "mJy"
+      },
+      {
+       "description": "[0.002/6206] Error on the total flux density from the E_Total_Flux column in PyBDSF (E_Total_flux_Source_PyBDSF)",
+       "name": "e_Ftot",
+       "ucd": "ERROR",
+       "unit": "mJy"
+      },
+      {
+       "description": "[0.5/28160] Combined error on the total flux density (E_Total_flux_Source) (G2)",
+       "name": "s_Ftot",
+       "ucd": "ERROR",
+       "unit": "mJy"
+      },
+      {
+       "description": "[0.01/60495] Modelled peak flux density for the source (Peak_flux)",
+       "name": "Fpk",
+       "ucd": "PHOT_FLUX_RADIO_850M",
+       "unit": "mJy / beam"
+      },
+      {
+       "description": "[0.001/233] Fpk uncertainty from PyBDSF (E_Peak_flux)",
+       "name": "e_Fpk",
+       "ucd": "ERROR",
+       "unit": "mJy / beam"
+      },
+      {
+       "description": "[14/720] Major axis of the source fit by PyBDSF (Maj)",
+       "name": "amaj",
+       "ucd": "EXTENSION_DIAM",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0/259] amaj uncertainty (E_Maj)",
+       "name": "e_amaj",
+       "ucd": "ERROR",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[7/285] Minor axis of the source fit by PyBDSF (Min)",
+       "name": "bmin",
+       "ucd": "EXTENSION_MIN",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0/237] bmin uncertainty (E_Min)",
+       "name": "e_bmin",
+       "ucd": "ERROR",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0/180] Position angle of the source fit by PyBDSF",
+       "name": "PA",
+       "ucd": "POS_POS-ANG",
+       "unit": "deg"
+      },
+      {
+       "description": "[0/180] PA uncertainty",
+       "name": "e_PA",
+       "ucd": "ERROR",
+       "unit": "deg"
+      },
+      {
+       "description": "[1/720]? Deconvolved major axis of the source (DC_Maj)",
+       "name": "amaj0",
+       "ucd": "EXTENSION_DIAM",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0.01/259]? amaj0 uncertainty (E_DC_Maj)",
+       "name": "e_amaj0",
+       "ucd": "ERROR",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0.01/284]? Deconvolved minor axis of the source (DC_Min)",
+       "name": "bmin0",
+       "ucd": "EXTENSION_MIN",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0.01/49]? bmin0 uncertainty (E_DC_Min)",
+       "name": "e_bmin0",
+       "ucd": "ERROR",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0/180] Deconvolved position angle of the source (DC_PA)",
+       "name": "PA0",
+       "ucd": "POS_POS-ANG",
+       "unit": "deg"
+      },
+      {
+       "description": "[0/180] PA0 uncertainty (E_DC_PA)",
+       "name": "e_PA0",
+       "ucd": "ERROR",
+       "unit": "deg"
+      },
+      {
+       "description": "[MS] Single, Multiple or Complex source? (S_Code) (G3)",
+       "name": "Mult",
+       "ucd": "CODE_MISC",
+       "unit": null
+      },
+      {
+       "description": "[0.004/5.3] Distance between the source and the centre of the tile it is located in (Separation_Tile_Centre)",
+       "name": "Sep",
+       "ucd": "POS_ANG_DIST_GENERAL",
+       "unit": "deg"
+      },
+      {
+       "description": "[0.002/245] rms noise within the island boundary, quoted from the Isl_rmscolumn in PyBDSF",
+       "name": "Noise",
+       "ucd": "INST_NOISE",
+       "unit": "mJy / beam"
+      },
+      {
+       "description": "Galactic longitude of the source (Gal_lon)",
+       "name": "GLON",
+       "ucd": "POS_GAL_LON",
+       "unit": "deg"
+      },
+      {
+       "description": "[-90/90] Galactic latitude of the source (Gal_lat)",
+       "name": "GLAT",
+       "ucd": "POS_GAL_LAT",
+       "unit": "deg"
+      },
+      {
+       "description": "[CD- ] Close flag (Flag_Close) (1)",
+       "name": "Flag",
+       "ucd": "CODE_MISC",
+       "unit": null
+      }
+     ],
+     "name": "J/other/PASA/38.58/galreg",
+     "rows": 1
+    },
+    {
+     "coosys": [
+      {
+       "ID": "J2000",
+       "epoch": null,
+       "equinox": "J2000",
+       "system": "eq_FK5"
+      }
+     ],
+     "description": "*Gaussian component catalog: |b|>5deg (RACS_DR1_Gaussians_GalacticCut_v2021_08)",
+     "fields": [
+      {
+       "description": "Record number assigned by the VizieR team. Should Not be used for identification.",
+       "name": "recno",
+       "ucd": "RECORD",
+       "unit": null
+      },
+      {
+       "description": "ID corresponding to the Gaussian component constructed as the RACS tile ID added to a unique Gaussian ID for the Gaussian components in the individual tile (Gaussian_ID)",
+       "name": "GID",
+       "ucd": "ID_MAIN",
+       "unit": null
+      },
+      {
+       "description": "ID of the source associated with this Gaussian component given by the RACS tile ID added to the Src_ID generated by PyBDSF (Source_ID)",
+       "name": "ID",
+       "ucd": "ID_FIELD",
+       "unit": null
+      },
+      {
+       "description": "ID of the tile that the source associated with this Gaussian component was located in (Tile_ID)",
+       "name": "Tile",
+       "ucd": "ID_FIELD",
+       "unit": null
+      },
+      {
+       "description": "[8540/14998] ID of the scheduling block associated with the observation",
+       "name": "SBID",
+       "ucd": "OBS_ID",
+       "unit": null
+      },
+      {
+       "description": "[58594.5/59021.9] Time that the pointing observation started (Obs_Start_Time)",
+       "name": "MJD",
+       "ucd": "TIME_DATE",
+       "unit": "d"
+      },
+      {
+       "description": "[1/64] Number of Gaussian components that were used to fit the source associated with this Gaussian component (N_Gaus)",
+       "name": "Ng",
+       "ucd": "NUMBER",
+       "unit": null
+      },
+      {
+       "description": "Right ascension of the Gaussian component (J2000) (RA)",
+       "name": "RAJ2000",
+       "ucd": "POS_EQ_RA_MAIN",
+       "unit": "deg"
+      },
+      {
+       "description": "[-84.7/29.2] Declination of the Gaussian component (J2000) (Dec)",
+       "name": "DEJ2000",
+       "ucd": "POS_EQ_DEC_MAIN",
+       "unit": "deg"
+      },
+      {
+       "description": "[0/90] RAdeg uncertainty (E_RA)",
+       "name": "e_RAJ2000",
+       "ucd": "ERROR",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0/102] DEdeg uncertainty (E_Dec)",
+       "name": "e_DEJ2000",
+       "ucd": "ERROR",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0/227117] Modelled total flux density of each individual Gaussian component (Total_flux_Gaussian) (1)",
+       "name": "Fgauss",
+       "ucd": "PHOT_FLUX_RADIO_850M",
+       "unit": "mJy"
+      },
+      {
+       "description": "[0/6206] Error on Fgauss from the E_Total_Flux column in PyBDSF (E_Total_flux_Gaussian_PyBDSF) (1)",
+       "name": "e_Fgauss",
+       "ucd": "ERROR",
+       "unit": "mJy"
+      },
+      {
+       "description": "[0.5/17067] Combined error on Fgauss (E_Total_flux_Gaussian) (1)",
+       "name": "s_Fgauss",
+       "ucd": "ERROR",
+       "unit": "mJy"
+      },
+      {
+       "description": "[0.006/401950] Total flux density of the entire source (Total_flux_Source) (G1)",
+       "name": "Ftot",
+       "ucd": "PHOT_FLUX_RADIO_850M",
+       "unit": "mJy"
+      },
+      {
+       "description": "[0.002/6206] Error on the total flux density from the E_Total_Flux column in PyBDSF (E_Total_flux_Source_PyBDSF)",
+       "name": "e_Ftot",
+       "ucd": "ERROR",
+       "unit": "mJy"
+      },
+      {
+       "description": "[0.5/28160] Combined error on the total flux density (E_Total_flux_Source) (G2)",
+       "name": "s_Ftot",
+       "ucd": "ERROR",
+       "unit": "mJy"
+      },
+      {
+       "description": "[0.01/60495] Modelled peak flux density for the source (Peak_flux)",
+       "name": "Fpk",
+       "ucd": "PHOT_FLUX_RADIO_850M",
+       "unit": "mJy / beam"
+      },
+      {
+       "description": "[0/233] Fpk uncertainty from PyBDSF (E_Peak_flux)",
+       "name": "e_Fpk",
+       "ucd": "ERROR",
+       "unit": "mJy / beam"
+      },
+      {
+       "description": "[0.06/720] Major axis of the source (FWHM) of the Gaussian component used to model the source (Maj)",
+       "name": "amaj",
+       "ucd": "EXTENSION_DIAM",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0/259] amaj uncertainty (E_Maj)",
+       "name": "e_amaj",
+       "ucd": "ERROR",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0/335] Minor axis of the source (FWHM) of the Gaussian component used to model the source (Min)",
+       "name": "bmin",
+       "ucd": "EXTENSION_MIN",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0/31] bmin uncertainty (E_Min)",
+       "name": "e_bmin",
+       "ucd": "ERROR",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0/180] Position angle of the Gaussian component used to model the source",
+       "name": "PA",
+       "ucd": "POS_POS-ANG",
+       "unit": "deg"
+      },
+      {
+       "description": "[0/180] PA uncertainty",
+       "name": "e_PA",
+       "ucd": "ERROR",
+       "unit": "deg"
+      },
+      {
+       "description": "[0.7/720]? Deconvolved major axis of the source (DC_Maj)",
+       "name": "amaj0",
+       "ucd": "EXTENSION_DIAM",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0.01/157]? amaj0 uncertainty (E_DC_Maj)",
+       "name": "e_amaj0",
+       "ucd": "ERROR",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0.01/334]? Deconvolved minor axis of the source (DC_Min)",
+       "name": "bmin0",
+       "ucd": "EXTENSION_MIN",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0.01/31]? bmin0 uncertainty (E_DC_Min)",
+       "name": "e_bmin0",
+       "ucd": "ERROR",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0/180] Deconvolved position angle of the Gaussian component (DC_PA)",
+       "name": "PA0",
+       "ucd": "POS_POS-ANG",
+       "unit": "deg"
+      },
+      {
+       "description": "[0/180] PA0 uncertainty (E_DC_PA)",
+       "name": "e_PA0",
+       "ucd": "ERROR",
+       "unit": "deg"
+      },
+      {
+       "description": "[MS] Single, Multiple or Complex source? (S_Code) (G3)",
+       "name": "Mult",
+       "ucd": "CODE_MISC",
+       "unit": null
+      },
+      {
+       "description": "[0.004/5.3] Distance between the Gaussian component and the centre of the pointing it is located in (Separation_Tile_Centre)",
+       "name": "Sep",
+       "ucd": "POS_ANG_DIST_GENERAL",
+       "unit": "deg"
+      },
+      {
+       "description": "[0.002/245] rms noise within the island boundary, quoted from the Isl_rmscolumn in PyBDSF",
+       "name": "Noise",
+       "ucd": "INST_NOISE",
+       "unit": "mJy / beam"
+      },
+      {
+       "description": "Galactic longitude of the Gaussian component (Gal_lon)",
+       "name": "GLON",
+       "ucd": "POS_GAL_LON",
+       "unit": "deg"
+      },
+      {
+       "description": "[-90/90] Galactic latitude of the Gaussian component (Gal_lat)",
+       "name": "GLAT",
+       "ucd": "POS_GAL_LAT",
+       "unit": "deg"
+      }
+     ],
+     "name": "J/other/PASA/38.58/gausscut",
+     "rows": 1
+    },
+    {
+     "coosys": [
+      {
+       "ID": "J2000",
+       "epoch": null,
+       "equinox": "J2000",
+       "system": "eq_FK5"
+      }
+     ],
+     "description": "*Gaussian component catalog: |b|<5deg (RACS_DR1_Gaussians_GalacticRegion_v2021_08)",
+     "fields": [
+      {
+       "description": "Record number assigned by the VizieR team. Should Not be used for identification.",
+       "name": "recno",
+       "ucd": "RECORD",
+       "unit": null
+      },
+      {
+       "description": "ID corresponding to the Gaussian component constructed as the RACS tile ID added to a unique Gaussian ID for the Gaussian components in the individual tile (Gaussian_ID)",
+       "name": "GID",
+       "ucd": "ID_MAIN",
+       "unit": null
+      },
+      {
+       "description": "ID of the source associated with this Gaussian component given by the RACS tile ID added to the Src_ID generated by PyBDSF (Source_ID)",
+       "name": "ID",
+       "ucd": "ID_FIELD",
+       "unit": null
+      },
+      {
+       "description": "ID of the tile that the source associated with this Gaussian component was located in (Tile_ID)",
+       "name": "Tile",
+       "ucd": "ID_FIELD",
+       "unit": null
+      },
+      {
+       "description": "[8540/14998] ID of the scheduling block associated with the observation",
+       "name": "SBID",
+       "ucd": "OBS_ID",
+       "unit": null
+      },
+      {
+       "description": "[58594.5/59021.9] Time that the pointing observation started (Obs_Start_Time)",
+       "name": "MJD",
+       "ucd": "TIME_DATE",
+       "unit": "d"
+      },
+      {
+       "description": "[1/64] Number of Gaussian components that were used to fit the source associated with this Gaussian component (N_Gaus)",
+       "name": "Ng",
+       "ucd": "NUMBER",
+       "unit": null
+      },
+      {
+       "description": "Right ascension of the Gaussian component (J2000) (RA)",
+       "name": "RAJ2000",
+       "ucd": "POS_EQ_RA_MAIN",
+       "unit": "deg"
+      },
+      {
+       "description": "[-84.7/29.2] Declination of the Gaussian component (J2000) (Dec)",
+       "name": "DEJ2000",
+       "ucd": "POS_EQ_DEC_MAIN",
+       "unit": "deg"
+      },
+      {
+       "description": "[0/90] RAdeg uncertainty (E_RA)",
+       "name": "e_RAJ2000",
+       "ucd": "ERROR",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0/102] DEdeg uncertainty (E_Dec)",
+       "name": "e_DEJ2000",
+       "ucd": "ERROR",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0/227117] Modelled total flux density of each individual Gaussian component (Total_flux_Gaussian) (1)",
+       "name": "Fgauss",
+       "ucd": "PHOT_FLUX_RADIO_850M",
+       "unit": "mJy"
+      },
+      {
+       "description": "[0/6206] Error on Fgauss from the E_Total_Flux column in PyBDSF (E_Total_flux_Gaussian_PyBDSF) (1)",
+       "name": "e_Fgauss",
+       "ucd": "ERROR",
+       "unit": "mJy"
+      },
+      {
+       "description": "[0.5/17067] Combined error on Fgauss (E_Total_flux_Gaussian) (1)",
+       "name": "s_Fgauss",
+       "ucd": "ERROR",
+       "unit": "mJy"
+      },
+      {
+       "description": "[0.006/401950] Total flux density of the entire source (Total_flux_Source) (G1)",
+       "name": "Ftot",
+       "ucd": "PHOT_FLUX_RADIO_850M",
+       "unit": "mJy"
+      },
+      {
+       "description": "[0.002/6206] Error on the total flux density from the E_Total_Flux column in PyBDSF (E_Total_flux_Source_PyBDSF)",
+       "name": "e_Ftot",
+       "ucd": "ERROR",
+       "unit": "mJy"
+      },
+      {
+       "description": "[0.5/28160] Combined error on the total flux density (E_Total_flux_Source) (G2)",
+       "name": "s_Ftot",
+       "ucd": "ERROR",
+       "unit": "mJy"
+      },
+      {
+       "description": "[0.01/60495] Modelled peak flux density for the source (Peak_flux)",
+       "name": "Fpk",
+       "ucd": "PHOT_FLUX_RADIO_850M",
+       "unit": "mJy / beam"
+      },
+      {
+       "description": "[0/233] Fpk uncertainty from PyBDSF (E_Peak_flux)",
+       "name": "e_Fpk",
+       "ucd": "ERROR",
+       "unit": "mJy / beam"
+      },
+      {
+       "description": "[0.06/720] Major axis of the source (FWHM) of the Gaussian component used to model the source (Maj)",
+       "name": "amaj",
+       "ucd": "EXTENSION_DIAM",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0/259] amaj uncertainty (E_Maj)",
+       "name": "e_amaj",
+       "ucd": "ERROR",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0/335] Minor axis of the source (FWHM) of the Gaussian component used to model the source (Min)",
+       "name": "bmin",
+       "ucd": "EXTENSION_MIN",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0/31] bmin uncertainty (E_Min)",
+       "name": "e_bmin",
+       "ucd": "ERROR",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0/180] Position angle of the Gaussian component used to model the source",
+       "name": "PA",
+       "ucd": "POS_POS-ANG",
+       "unit": "deg"
+      },
+      {
+       "description": "[0/180] PA uncertainty",
+       "name": "e_PA",
+       "ucd": "ERROR",
+       "unit": "deg"
+      },
+      {
+       "description": "[0.7/720]? Deconvolved major axis of the source (DC_Maj)",
+       "name": "amaj0",
+       "ucd": "EXTENSION_DIAM",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0.01/157]? amaj0 uncertainty (E_DC_Maj)",
+       "name": "e_amaj0",
+       "ucd": "ERROR",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0.01/334]? Deconvolved minor axis of the source (DC_Min)",
+       "name": "bmin0",
+       "ucd": "EXTENSION_MIN",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0.01/31]? bmin0 uncertainty (E_DC_Min)",
+       "name": "e_bmin0",
+       "ucd": "ERROR",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[0/180] Deconvolved position angle of the Gaussian component (DC_PA)",
+       "name": "PA0",
+       "ucd": "POS_POS-ANG",
+       "unit": "deg"
+      },
+      {
+       "description": "[0/180] PA0 uncertainty (E_DC_PA)",
+       "name": "e_PA0",
+       "ucd": "ERROR",
+       "unit": "deg"
+      },
+      {
+       "description": "[MS] Single, Multiple or Complex source? (S_Code) (G3)",
+       "name": "Mult",
+       "ucd": "CODE_MISC",
+       "unit": null
+      },
+      {
+       "description": "[0.004/5.3] Distance between the Gaussian component and the centre of the pointing it is located in (Separation_Tile_Centre)",
+       "name": "Sep",
+       "ucd": "POS_ANG_DIST_GENERAL",
+       "unit": "deg"
+      },
+      {
+       "description": "[0.002/245] rms noise within the island boundary, quoted from the Isl_rmscolumn in PyBDSF",
+       "name": "Noise",
+       "ucd": "INST_NOISE",
+       "unit": "mJy / beam"
+      },
+      {
+       "description": "Galactic longitude of the Gaussian component (Gal_lon)",
+       "name": "GLON",
+       "ucd": "POS_GAL_LON",
+       "unit": "deg"
+      },
+      {
+       "description": "[-90/90] Galactic latitude of the Gaussian component (Gal_lat)",
+       "name": "GLAT",
+       "ucd": "POS_GAL_LAT",
+       "unit": "deg"
+      }
+     ],
+     "name": "J/other/PASA/38.58/gaussreg",
+     "rows": 1
+    }
+   ]
+  },
+  "VII/259/6dfgs": {
+   "catalog": "VII/259/6dfgs",
+   "errors": [
+    "attempt 1: no table in VOTable; QUERY_STATUS=[('QUERY_STATUS', \"-- no connection\\n Report from: stdb_pg,     Status: STDB_ERR\\nPostgres connect error\\n\\n -- no connection\\n Report from: stdb_pg_conn,     Status: STDB_ERR\\nCouldn't connect with server\\n\\n -- no connection\\n\")]",
+    "attempt 2: no table in VOTable; QUERY_STATUS=[('QUERY_STATUS', \"-- no connection\\n Report from: stdb_pg,     Status: STDB_ERR\\nPostgres connect error\\n\\n -- no connection\\n Report from: stdb_pg_conn,     Status: STDB_ERR\\nCouldn't connect with server\\n\\n -- no connection\\n\")]"
+   ],
+   "ok": false
+  },
+  "VIII/65/nvss": {
+   "catalog": "VIII/65/nvss",
+   "ok": true,
+   "path": "/home/cosmosapjw/Downloads/htt_r108/frame/vizier_VIII_65_nvss/vizier_VIII_65_nvss.vot",
+   "receipt": {
+    "attempt": 1,
+    "bytes": 7905,
+    "fetched_at_utc": "2026-11-24T01:43:24Z",
+    "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+    "id": "vizier_VIII_65_nvss",
+    "job_id": null,
+    "name": "astroquery.vizier VIII/65/nvss",
+    "query": "-source=VIII/65/nvss\n-out.max=1\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+    "query_status": [],
+    "rows": 1,
+    "saved": "/home/cosmosapjw/Downloads/htt_r108/frame/vizier_VIII_65_nvss/vizier_VIII_65_nvss.vot",
+    "sha256": "a4ff08f51586f39ffcd1be1d40f44bdbfd9026277f36d8ff0d1f0a7c31fa9d9b",
+    "status": 200,
+    "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+   },
+   "tables": [
+    {
+     "coosys": [
+      {
+       "ID": "J2000",
+       "epoch": null,
+       "equinox": "J2000",
+       "system": "eq_FK5"
+      }
+     ],
+     "description": "The NVSS Catalog",
+     "fields": [
+      {
+       "description": "Record number assigned by the VizieR team. Should Not be used for identification.",
+       "name": "recno",
+       "ucd": "RECORD",
+       "unit": null
+      },
+      {
+       "description": "Name of the original survey image field from which the component was derived.",
+       "name": "Field",
+       "ucd": "ID_FIELD",
+       "unit": null
+      },
+      {
+       "description": "X position (RA direction) of the radio source",
+       "name": "Xpos",
+       "ucd": "POS_CCD_X",
+       "unit": "pix"
+      },
+      {
+       "description": "Y position (Dec direction) of the radio source",
+       "name": "Ypos",
+       "ucd": "POS_CCD_Y",
+       "unit": "pix"
+      },
+      {
+       "description": "Source name (1)",
+       "name": "NVSS",
+       "ucd": "ID_MAIN",
+       "unit": null
+      },
+      {
+       "description": "Right Ascension J2000 (2)",
+       "name": "RAJ2000",
+       "ucd": "POS_EQ_RA_MAIN",
+       "unit": null
+      },
+      {
+       "description": "Declination J2000 (2)",
+       "name": "DEJ2000",
+       "ucd": "POS_EQ_DEC_MAIN",
+       "unit": null
+      },
+      {
+       "description": "Mean error on RA",
+       "name": "e_RAJ2000",
+       "ucd": "ERROR",
+       "unit": "s"
+      },
+      {
+       "description": "Mean error on Dec",
+       "name": "e_DEJ2000",
+       "ucd": "ERROR",
+       "unit": "arcsec"
+      },
+      {
+       "description": "Integrated 1.4GHz flux density of radio source",
+       "name": "S1.4",
+       "ucd": "PHOT_FLUX_RADIO_1.4G",
+       "unit": "mJy"
+      },
+      {
+       "description": "Mean error on S1.4",
+       "name": "e_S1.4",
+       "ucd": "ERROR",
+       "unit": "mJy"
+      },
+      {
+       "description": "Limit flag on MajAxis",
+       "name": "l_MajAxis",
+       "ucd": "CODE_LIMIT",
+       "unit": null
+      },
+      {
+       "description": "Fitted (deconvolved) major axis of radio source",
+       "name": "MajAxis",
+       "ucd": "EXTENSION_FWHM_MAJ",
+       "unit": "arcsec"
+      },
+      {
+       "description": "Limit flag on MinAxis",
+       "name": "l_MinAxis",
+       "ucd": "CODE_LIMIT",
+       "unit": null
+      },
+      {
+       "description": "Fitted (deconvolved) minor axis of radio source",
+       "name": "MinAxis",
+       "ucd": "EXTENSION_FWHM_MIN",
+       "unit": "arcsec"
+      },
+      {
+       "description": "[-90, 90]? Position angle of fitted major axis",
+       "name": "PA",
+       "ucd": "POS_POS-ANG",
+       "unit": "deg"
+      },
+      {
+       "description": "? Mean error on MajAxis",
+       "name": "e_MajAxis",
+       "ucd": "ERROR",
+       "unit": "arcsec"
+      },
+      {
+       "description": "? Mean error on MinAxis",
+       "name": "e_MinAxis",
+       "ucd": "ERROR",
+       "unit": "arcsec"
+      },
+      {
+       "description": "? Mean error on PA",
+       "name": "e_PA",
+       "ucd": "ERROR",
+       "unit": "deg"
+      },
+      {
+       "description": "[PS* ] Residual Code (3)",
+       "name": "f_resFlux",
+       "ucd": "CODE_MISC",
+       "unit": null
+      },
+      {
+       "description": "? Peak residual flux, in mJy/beam (3)",
+       "name": "resFlux",
+       "ucd": "PHOT_FLUX_RADIO_MISC",
+       "unit": "mJy"
+      },
+      {
+       "description": "? Integrated linearly polarized flux density",
+       "name": "polFlux",
+       "ucd": "POL_FLUX_LINEAR",
+       "unit": "mJy"
+      },
+      {
+       "description": "[-90,90]? The position angle of polFlux (4)",
+       "name": "polPA",
+       "ucd": "POL_PA_EQ",
+       "unit": "deg"
+      },
+      {
+       "description": "? Mean error on polFlux",
+       "name": "e_polFlux",
+       "ucd": "ERROR",
+       "unit": "mJy"
+      },
+      {
+       "description": "? Mean error on polPA",
+       "name": "e_polPA",
+       "ucd": "ERROR",
+       "unit": "deg"
+      },
+      {
+       "description": "FITS Image of the target, about 200x200 pixels of 5x5arcsec (or consult http://www.cv.nrao.edu/nvss/postage.shtml)",
+       "name": "Image",
+       "ucd": "DATA_LINK",
+       "unit": null
+      }
+     ],
+     "name": "VIII/65/nvss",
+     "rows": 1
+    }
+   ]
+  }
+ },
+ "remote_mode": "replayed from RECEIPTS.jsonl (saved bytes, SHA-256 verified; no network)",
+ "remote_receipts": [
+  {
+   "attempt": 1,
+   "bytes": 10305,
+   "fetched_at_utc": "2026-11-24T01:43:04Z",
+   "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+   "id": "vizier_J_ApJ_944_94_table2",
+   "job_id": null,
+   "name": "astroquery.vizier J/ApJ/944/94/table2",
+   "query": "-source=J/ApJ/944/94/table2\n-out.max=1\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+   "query_status": [],
+   "rows": 1,
+   "saved": "/home/cosmosapjw/Downloads/htt_r108/frame/vizier_J_ApJ_944_94_table2/vizier_J_ApJ_944_94_table2.vot",
+   "sha256": "1dc7625c46446ec91747d2ad3a6ece41963ecef9e1ff4bec2dce8d6038e7b761",
+   "status": 200,
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "bytes": 0,
+   "errors": [
+    "attempt 1: no table in VOTable; QUERY_STATUS=[('QUERY_STATUS', '--POSTGRES MSG db=0\\n Report from: stdb_pg,     Status: STDB_ERR\\nERROR:  syntax error at or near \"COMMIT\" LINE 1: ...METAcat WHERE name=\\'#****err\\nor (J/ApJ/944/94/table4)\\' COMMIT\\n                  ^\\nER')]",
+    "attempt 2: no table in VOTable; QUERY_STATUS=[('QUERY_STATUS', '--POSTGRES MSG db=0\\n Report from: stdb_pg,     Status: STDB_ERR\\nERROR:  syntax error at or near \"COMMIT\" LINE 1: ...METAcat WHERE name=\\'#****err\\nor (J/ApJ/944/94/table4)\\' COMMIT\\n                  ^\\nER')]"
+   ],
+   "fetched_at_utc": "2026-11-24T01:43:14Z",
+   "final_url": null,
+   "id": "vizier_J_ApJ_944_94_table4",
+   "name": "astroquery.vizier J/ApJ/944/94/table4",
+   "sha256": null,
+   "status": "failed",
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "attempt": 1,
+   "bytes": 5453,
+   "fetched_at_utc": "2026-11-24T01:43:14Z",
+   "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+   "id": "vizier_J_MNRAS_445_2677_table1",
+   "job_id": null,
+   "name": "astroquery.vizier J/MNRAS/445/2677/table1",
+   "query": "-source=J/MNRAS/445/2677/table1\n-out.max=1\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+   "query_status": [],
+   "rows": 1,
+   "saved": "/home/cosmosapjw/Downloads/htt_r108/frame/vizier_J_MNRAS_445_2677_table1/vizier_J_MNRAS_445_2677_table1.vot",
+   "sha256": "d6163268196f92e4494d1b5e38ea1446d78c12822395585c5d2d3da89bb74d84",
+   "status": 200,
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "bytes": 0,
+   "errors": [
+    "attempt 1: no table in VOTable; QUERY_STATUS=[('QUERY_STATUS', \"-- no connection\\n Report from: stdb_pg,     Status: STDB_ERR\\nPostgres connect error\\n\\n -- no connection\\n Report from: stdb_pg_conn,     Status: STDB_ERR\\nCouldn't connect with server\\n\\n -- no connection\\n\")]",
+    "attempt 2: no table in VOTable; QUERY_STATUS=[('QUERY_STATUS', \"-- no connection\\n Report from: stdb_pg,     Status: STDB_ERR\\nPostgres connect error\\n\\n -- no connection\\n Report from: stdb_pg_conn,     Status: STDB_ERR\\nCouldn't connect with server\\n\\n -- no connection\\n\")]"
+   ],
+   "fetched_at_utc": "2026-11-24T01:43:24Z",
+   "final_url": null,
+   "id": "vizier_J_ApJS_199_26_table3",
+   "name": "astroquery.vizier J/ApJS/199/26/table3",
+   "sha256": null,
+   "status": "failed",
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "attempt": 1,
+   "bytes": 19238,
+   "fetched_at_utc": "2026-11-24T01:43:24Z",
+   "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+   "id": "vizier_J_AJ_152_50_table3",
+   "job_id": null,
+   "name": "astroquery.vizier J/AJ/152/50/table3",
+   "query": "-source=J/AJ/152/50/table3\n-out.max=1\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+   "query_status": [],
+   "rows": 1,
+   "saved": "/home/cosmosapjw/Downloads/htt_r108/frame/vizier_J_AJ_152_50_table3/vizier_J_AJ_152_50_table3.vot",
+   "sha256": "c9c6c310df7a12b2217e2a9e5f65be7d020184af907e46f6868275d6bb092f8b",
+   "status": 200,
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "attempt": 1,
+   "bytes": 7905,
+   "fetched_at_utc": "2026-11-24T01:43:24Z",
+   "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+   "id": "vizier_VIII_65_nvss",
+   "job_id": null,
+   "name": "astroquery.vizier VIII/65/nvss",
+   "query": "-source=VIII/65/nvss\n-out.max=1\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+   "query_status": [],
+   "rows": 1,
+   "saved": "/home/cosmosapjw/Downloads/htt_r108/frame/vizier_VIII_65_nvss/vizier_VIII_65_nvss.vot",
+   "sha256": "a4ff08f51586f39ffcd1be1d40f44bdbfd9026277f36d8ff0d1f0a7c31fa9d9b",
+   "status": 200,
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "attempt": 1,
+   "bytes": 26394,
+   "fetched_at_utc": "2026-11-24T01:43:24Z",
+   "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+   "id": "vizier_J_ApA_644_A159",
+   "job_id": null,
+   "name": "astroquery.vizier J/A+A/644/A159",
+   "query": "-source=J/A+A/644/A159\n-out.max=1\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+   "query_status": [],
+   "rows": 6,
+   "saved": "/home/cosmosapjw/Downloads/htt_r108/frame/vizier_J_ApA_644_A159/vizier_J_ApA_644_A159.vot",
+   "sha256": "eae027426e2522fb550fe81df01b29221ca00e81272fbb175c3bf0ec261d7d3a",
+   "status": 200,
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "attempt": 1,
+   "bytes": 7660,
+   "fetched_at_utc": "2026-11-24T01:43:24Z",
+   "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+   "id": "vizier_J_ApJ_964_69",
+   "job_id": null,
+   "name": "astroquery.vizier J/ApJ/964/69",
+   "query": "-source=J/ApJ/964/69\n-out.max=1\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+   "query_status": [],
+   "rows": 1,
+   "saved": "/home/cosmosapjw/Downloads/htt_r108/frame/vizier_J_ApJ_964_69/vizier_J_ApJ_964_69.vot",
+   "sha256": "6959cc1c1edd87c35af2722c543f6dd2f66d6217346a9d4e221408796a96a40d",
+   "status": 200,
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "attempt": 1,
+   "bytes": 35717,
+   "fetched_at_utc": "2026-11-24T01:43:24Z",
+   "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+   "id": "vizier_J_other_PASA_38_58",
+   "job_id": null,
+   "name": "astroquery.vizier J/other/PASA/38.58",
+   "query": "-source=J/other/PASA/38.58\n-out.max=1\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+   "query_status": [],
+   "rows": 4,
+   "saved": "/home/cosmosapjw/Downloads/htt_r108/frame/vizier_J_other_PASA_38_58/vizier_J_other_PASA_38_58.vot",
+   "sha256": "1f96bc46ce896e883915a6360038e8ff5f18bab1b408ddcd542833b92c8eede2",
+   "status": 200,
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "bytes": 0,
+   "errors": [
+    "attempt 1: no table in VOTable; QUERY_STATUS=[('QUERY_STATUS', \"-- no connection\\n Report from: stdb_pg,     Status: STDB_ERR\\nPostgres connect error\\n\\n -- no connection\\n Report from: stdb_pg_conn,     Status: STDB_ERR\\nCouldn't connect with server\\n\\n -- no connection\\n\")]",
+    "attempt 2: no table in VOTable; QUERY_STATUS=[('QUERY_STATUS', \"-- no connection\\n Report from: stdb_pg,     Status: STDB_ERR\\nPostgres connect error\\n\\n -- no connection\\n Report from: stdb_pg_conn,     Status: STDB_ERR\\nCouldn't connect with server\\n\\n -- no connection\\n\")]"
+   ],
+   "fetched_at_utc": "2026-11-24T01:43:36Z",
+   "final_url": null,
+   "id": "vizier_VII_259_6dfgs",
+   "name": "astroquery.vizier VII/259/6dfgs",
+   "sha256": null,
+   "status": "failed",
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "attempt": 1,
+   "bytes": 1969806,
+   "fetched_at_utc": "2026-11-24T01:43:39Z",
+   "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+   "id": "vizier_J_AJ_152_50_table3",
+   "job_id": null,
+   "name": "astroquery.vizier J/AJ/152/50/table3",
+   "query": "-source=J/AJ/152/50/table3\n-out.max=unlimited\n-out=PGC,HV,Vgsr,Vls,Vcmb,GLON,GLAT\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+   "query_status": [],
+   "rows": 17669,
+   "saved": "/home/cosmosapjw/Downloads/htt_r108/frame/vizier_J_AJ_152_50_table3_2/vizier_J_AJ_152_50_table3.vot",
+   "sha256": "0a7759f6995d8677305400db7edacc2a0d58b9dc3ab7b05778bc988df34128ff",
+   "status": 200,
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "attempt": 1,
+   "bytes": 3636,
+   "fetched_at_utc": "2026-11-24T01:43:44Z",
+   "final_url": "https://gea.esac.esa.int/tap-server/tap/async/798614b9-e7a8-11f1-89b3-bc97e148b76b-O",
+   "id": "gaia_tap_schema_gaia_source",
+   "job_id": "798614b9-e7a8-11f1-89b3-bc97e148b76b-O",
+   "name": "pyvo TAP https://gea.esac.esa.int/tap-server/tap",
+   "query": "SELECT column_name, description, unit, ucd FROM tap_schema.columns WHERE table_name = 'gaiadr3.gaia_source' AND column_name IN ('ra', 'dec', 'ref_epoch', 'pmra', 'radial_velocity')",
+   "rows": 5,
+   "saved": "/home/cosmosapjw/Downloads/htt_r108/frame/gaia_tap_schema_gaia_source/gaia_tap_schema_gaia_source.vot",
+   "sha256": "77edf6b602b69df3a5ababf42dc93350a8876dfd0e8ecfe9d118bb116452adf6",
+   "status": "COMPLETED",
+   "url": "https://gea.esac.esa.int/tap-server/tap"
+  },
+  {
+   "attempt": 1,
+   "bytes": 1261,
+   "fetched_at_utc": "2026-11-24T01:43:49Z",
+   "final_url": "https://gea.esac.esa.int/tap-server/tap/async/7d846b93-e7a8-11f1-89b3-bc97e148b76b-O",
+   "id": "gaia_astroquery_ref_epoch",
+   "job_id": "7d846b93-e7a8-11f1-89b3-bc97e148b76b-O",
+   "name": "astroquery.gaia",
+   "query": "SELECT TOP 5 source_id, ref_epoch FROM gaiadr3.gaia_source",
+   "rows": 5,
+   "saved": "/home/cosmosapjw/Downloads/htt_r108/frame/gaia_astroquery_ref_epoch/gaia_astroquery_ref_epoch.vot",
+   "sha256": "be40fbb0d73760256c75a9c94578b75b90ec135704ebf4a9c987d2be583c6caa",
+   "status": "COMPLETED",
+   "url": "https://gea.esac.esa.int/tap-server/tap"
+  },
+  {
+   "bytes": 0,
+   "errors": [
+    "attempt 1: DALServiceError: 404 Client Error: Not Found for url: https://casda.csiro.au/tap/async/1795484628655A/results/result",
+    "attempt 2: DALServiceError: 404 Client Error: Not Found for url: https://casda.csiro.au/tap/async/1795484635477A/results/result"
+   ],
+   "fetched_at_utc": "2026-11-24T01:44:03Z",
+   "final_url": null,
+   "id": "casda_tap_as110_tables",
+   "name": "pyvo TAP https://casda.csiro.au/casda_vo_tools/tap",
+   "query": "SELECT table_name, description FROM tap_schema.tables WHERE table_name LIKE 'AS110%' OR table_name LIKE 'as110%'",
+   "sha256": null,
+   "status": "failed",
+   "url": "https://casda.csiro.au/casda_vo_tools/tap"
+  }
+ ],
+ "roundtrip_identity": {
+  "CF3_J_AJ_152_50_table3|cf3_t3_helio_to_cmb": {
+   "n_max_abs": 0.0,
+   "velocity_max_abs": 1.1102230246251565e-16,
+   "z_max_abs": 0.0
+  },
+  "CF3_J_AJ_152_50_table3|cf3_t3_helio_to_gsr": {
+   "n_max_abs": 0.0,
+   "velocity_max_abs": 5.551115123125783e-17,
+   "z_max_abs": 0.0
+  },
+  "CF3_J_AJ_152_50_table3|cf3_t3_helio_to_localsheet": {
+   "n_max_abs": 0.0,
+   "velocity_max_abs": 1.1102230246251565e-16,
+   "z_max_abs": 0.0
+  },
+  "CF4_groups_J_ApJ_944_94_table4|cf4_t4_helio_to_cmb": {
+   "n_max_abs": 0.0,
+   "velocity_max_abs": 5.551115123125783e-17,
+   "z_max_abs": 0.0
+  },
+  "CF4_groups_J_ApJ_944_94_table4|cf4_t4_helio_to_localsheet": {
+   "n_max_abs": 0.0,
+   "velocity_max_abs": 8.326672684688674e-17,
+   "z_max_abs": 5.421010862427522e-20
+  },
+  "Planck_PR3_Commander_2048_R3.00|planck2018_solar_dipole": {
+   "n_max_abs": 3.3306690738754696e-16,
+   "velocity_max_abs": 1.1102230246251565e-16,
+   "z_max_abs": 2.6645352591003757e-15
+  }
+ },
+ "runtime_s": 54.83389113203157,
+ "schema": "htt.r108.frame.catalogue_frame_registry/1"
+}

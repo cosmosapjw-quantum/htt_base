@@ -1,0 +1,118 @@
+{
+ "schema": "htt.r108.radio.v3_diag/1",
+ "window": "gauss_z1p0_s0p30",
+ "bias": 2.0,
+ "massless_neutrinos": true,
+ "command": "/usr/bin/python3 -m scripts.r108.radio_v3_diag --out docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO/V3_DIAGNOSTIC.json",
+ "git_head": "b79b9526b1817cc5946858f5891f7e7b567b87a2",
+ "script_sha256": "416bbfec06daac2de9641ddd6993bd279f178deb4c30c95506aabe631ae018bf",
+ "theory_module_sha256": "8e0bfde578a0f7ca0d13857766e29794ae97d5b7cfddf086d8f0142a7cbe41c6",
+ "variants": [
+  {
+   "var": "delta_nonu",
+   "k_per_logint": null,
+   "C_l": {
+    "2": 1.1712929196007852e-06,
+    "3": 1.414412613505969e-06,
+    "4": 1.6554032792826528e-06
+   }
+  },
+  {
+   "var": "delta_nonu",
+   "k_per_logint": 50,
+   "C_l": {
+    "2": 1.1712928739740995e-06,
+    "3": 1.4144124945898974e-06,
+    "4": 1.655403112868254e-06
+   }
+  },
+  {
+   "var": "delta_tot",
+   "k_per_logint": null,
+   "C_l": {
+    "2": 1.1712929196007852e-06,
+    "3": 1.414412613505969e-06,
+    "4": 1.6554032792826528e-06
+   }
+  },
+  {
+   "var": "delta_tot",
+   "k_per_logint": 50,
+   "C_l": {
+    "2": 1.1712928739740995e-06,
+    "3": 1.4144124945898974e-06,
+    "4": 1.655403112868254e-06
+   }
+  },
+  {
+   "var": "delta_cdm",
+   "k_per_logint": null,
+   "C_l": {
+    "2": 1.1713680195875377e-06,
+    "3": 1.4145022542887708e-06,
+    "4": 1.6555145277908096e-06
+   }
+  },
+  {
+   "var": "delta_cdm",
+   "k_per_logint": 50,
+   "C_l": {
+    "2": 1.171367961989227e-06,
+    "3": 1.414502129053832e-06,
+    "4": 1.6555143629797449e-06
+   }
+  }
+ ],
+ "camb_counts_density": {
+  "2": 1.2693330112897986e-06,
+  "3": 1.4873333917586625e-06,
+  "4": 1.7142421386067873e-06
+ },
+ "max_rel_spread_over_variants": {
+  "2": 6.411716957877012e-05,
+  "3": 6.337668509570626e-05,
+  "4": 6.720326675013766e-05
+ },
+ "rel_integrator_minus_camb": {
+  "2": -0.07723748678795694,
+  "3": -0.049027863326910115,
+  "4": -0.034323540414164855
+ },
+ "camb_accuracy_variation": {
+  "description": "CAMB 2.0.5 counts_density, SplinedSourceWindow, b = 2, massless neutrinos, AccuracyBoost = lAccuracyBoost = b, lSampleBoost = 50; window (1.0, 0.30) only (sets the V3 low-l systematic; the (0.5, 0.15) accuracy-2 run exceeded 10 min in R108)",
+  "accuracy_boosts": [
+   1.0,
+   2.0
+  ],
+  "windows": {
+   "gauss_z1p0_s0p30": {
+    "C_l": {
+     "accuracy_1": {
+      "2": 1.2693330112897986e-06,
+      "3": 1.4873333917586625e-06,
+      "4": 1.7142421386067873e-06
+     },
+     "accuracy_2": {
+      "2": 1.271078006044123e-06,
+      "3": 1.4894086929681486e-06,
+      "4": 1.715312551940692e-06
+     }
+    },
+    "rel_change_vs_accuracy_1": {
+     "accuracy_2": {
+      "2": 0.0013747336111200603,
+      "3": 0.0013953167601732375,
+      "4": 0.0006244236504269196
+     }
+    }
+   }
+  },
+  "max_abs_rel_change": 0.0013953167601732375,
+  "rel_integrator_minus_camb_at_highest_accuracy": {
+   "2": -0.07850429790213365,
+   "3": -0.0503529218113562,
+   "4": -0.03492615534717458
+  }
+ },
+ "gap_status": "unexplained (not integrator P(k) sampling / matter variable, not CAMB accuracy)"
+}

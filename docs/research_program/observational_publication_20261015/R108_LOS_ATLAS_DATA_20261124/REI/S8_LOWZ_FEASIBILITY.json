@@ -1,0 +1,891 @@
+{
+  "schema": "htt.r108.s8.lowz_feasibility/1",
+  "script": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r108/s8_lowz_feasibility.py",
+    "sha256": "1a1c69aeb1edb85aff0fb930657eb37068bc8c46fd768ce25d671bce2c337aeb"
+  },
+  "rei_commit": "56dc609ea9b801c88d3364aed3eee140b3a20d46",
+  "rei_bianchi_head_now": "fef2baf960f57f37b838004fbb8a7d37b3824852",
+  "verdict": {
+    "s8_physics_lift": "BLOCKED",
+    "branch_r108_lowz_feasibility_created": false,
+    "reason": "the z < 4 physics inputs M1-M6 are not all present and admitted; implementing the lift now would require choosing a quasar emissivity/SED, an fesc(z), an absorber opacity model and a source-mode handover that no admitted input fixes (invented model content)",
+    "what_remains_valid": "DonorMatchedContinuation depths (S8_LOWZ_TAU.json) as a declared-sensitivity closure below z = 4; the z >= 4 native history is reproducible (S8_REPLAY_COMPARISON.json)"
+  },
+  "missing_inputs": [
+    {
+      "id": "M1",
+      "kind": "SCIENTIFIC_SCOPE",
+      "missing": "an owner-issued scenario lock for 0 <= zbar < 4 (interval, AGN on, post-overlap IGM closure)",
+      "evidence": "code_sites: SCENARIO_LOCK scope / AGN_source / closure / observer_tail lines"
+    },
+    {
+      "id": "M2",
+      "kind": "SOURCE_MODEL_QUASAR",
+      "missing": "an admitted quasar ionizing emissivity eps(z) for 0 <= z <= 4 with an EUV SED reaching above 54.4 eV (HeII edge) and beyond the 100 eV grid end",
+      "on_disk_candidate": "R8 qlf_v3_e912_18_2.npz (Kulkarni QLF v3.0 cache)",
+      "candidate_status": "NOT_ADMITTED per QLF_CACHE_AUDIT.json (quantile labels/generator unresolved)"
+    },
+    {
+      "id": "M3",
+      "kind": "SOURCE_MODEL_STELLAR",
+      "missing": "an admitted stellar escaped emissivity below z = 4: the lock's MD14 x yield x fesc law is admitted only on [4, 20] (fesc = 0.2 fixed); an fesc(z < 4) or SSP-based escaped spectrum is not selected (SOURCE_CONTRACT stellar_ssp_provider = CANDIDATE_SELECTED_NOT_DOWNLOADED)"
+    },
+    {
+      "id": "M4",
+      "kind": "IGM_OPACITY",
+      "missing": "an absorber (Lyman-limit-system) opacity or mean-free-path model lambda_mfp(z) for the post-overlap IGM; the driver absorbs only on homogeneous gas (clumping 1) and has no recombination re-emission (excluded in the lock provider list)"
+    },
+    {
+      "id": "M5",
+      "kind": "UVB_TABLE",
+      "missing": "for an H/He UV background valid to z = 0: FG20 and HM12 tables are not on disk; P19 v1 ancillary rates (z 0..15.1) are on disk with receipts and a Python adapter, but production integration is PENDING and the prescribed-rate mode is exclusive with endogenous photon cohorts for the same population (SOURCE_CONTRACT mode_exclusivity), so it cannot both continue the z = 4 cohorts and supply the background without a declared handover rule",
+      "on_disk": "R8 puchwein_v1_rates_fiducial.txt / _eq-eq.txt (hashes in r8_inventory)"
+    },
+    {
+      "id": "M6",
+      "kind": "NUMERICS_GRID",
+      "missing": "an energy grid above 100 eV and a conservative remap of the 392-node z = 4 photon stock (8 angles x 49 energies) onto it; read_checkpoint fixes the vector length"
+    }
+  ],
+  "code_sites_at_56dc609e": [
+    {
+      "file": "56dc609e:rust/rei_microphysics/src/axbi_driver.rs",
+      "lines": [
+        136
+      ],
+      "needle": "!(4.0..20.0).contains(&self.end_zbar)",
+      "role": "DriverConfig::validate: 4 <= end_zbar < 20 (the guard of the handoff)"
+    },
+    {
+      "file": "56dc609e:rust/rei_microphysics/src/axbi_driver.rs",
+      "lines": [
+        112
+      ],
+      "needle": "c.validate()?;",
+      "role": "DriverConfig::read calls validate"
+    },
+    {
+      "file": "56dc609e:rust/rei_microphysics/src/axbi_driver.rs",
+      "lines": [
+        203
+      ],
+      "needle": "config.validate()?;",
+      "role": "Driver::new calls validate"
+    },
+    {
+      "file": "56dc609e:rust/rei_microphysics/src/axbi_driver.rs",
+      "lines": [
+        206
+      ],
+      "needle": "let a_end = 1.0 / (1.0 + config.end_zbar);",
+      "role": "background end derived from end_zbar"
+    },
+    {
+      "file": "56dc609e:rust/rei_microphysics/src/axbi_driver.rs",
+      "lines": [
+        216
+      ],
+      "needle": "ln_a_max: a_end.ln(),",
+      "role": "FlatFlrwBackground domain end"
+    },
+    {
+      "file": "56dc609e:rust/rei_microphysics/src/axbi_driver.rs",
+      "lines": [
+        246
+      ],
+      "needle": "let mut energies = vec![13.6];",
+      "role": "photon energy grid = source cell edges (13.6..100 eV)"
+    },
+    {
+      "file": "56dc609e:rust/rei_microphysics/src/axbi_driver.rs",
+      "lines": [
+        360
+      ],
+      "needle": "return Err(err(\"AXBI_ABOVE_SUPPORT\"));",
+      "role": "deposit(): photons above 100 eV rejected (quasar SED above 100 eV cannot be stored)"
+    },
+    {
+      "file": "56dc609e:rust/rei_microphysics/src/axbi_driver.rs",
+      "lines": [
+        406
+      ],
+      "needle": "fn inject(&self, s: &mut DriverState, dt: f64)",
+      "role": "single source owner (AxbiSource); a quasar population needs a second owner"
+    },
+    {
+      "file": "56dc609e:rust/rei_microphysics/src/axbi_driver.rs",
+      "lines": [
+        416
+      ],
+      "needle": "let rate = self.source.at_redshift(1.0 / s.a - 1.0)?.per_h_s;",
+      "role": "source call that hits the [4, 20] source guard below z = 4"
+    },
+    {
+      "file": "56dc609e:rust/rei_microphysics/src/axbi_driver.rs",
+      "lines": [
+        454
+      ],
+      "needle": "let opacity = (0..3)",
+      "role": "homogeneous absorption only (n_absorber sigma); no Lyman-limit-system / clumpy-IGM opacity"
+    },
+    {
+      "file": "56dc609e:rust/rei_microphysics/src/axbi_driver.rs",
+      "lines": [
+        913
+      ],
+      "needle": "|| photons.len() != self.energies.len() * self.source.angular_cells.len()",
+      "role": "read_checkpoint: photon vector length fixed by the energy grid (z = 4 cohorts need a remap if the grid grows)"
+    },
+    {
+      "file": "56dc609e:rust/rei_microphysics/src/axbi_driver.rs",
+      "lines": [
+        1305
+      ],
+      "needle": "pub fn run(config_text: &str, out: &Path, case: &str, resume: bool)",
+      "role": "run loop (end = 1/(1+end_zbar))"
+    },
+    {
+      "file": "56dc609e:rust/rei_microphysics/src/axbi_sources.rs",
+      "lines": [
+        10
+      ],
+      "needle": "pub const ENERGY_SUPPORT_EV: [f64; 2] = [13.6, 100.0];",
+      "role": "source energy support"
+    },
+    {
+      "file": "56dc609e:rust/rei_microphysics/src/axbi_sources.rs",
+      "lines": [
+        11
+      ],
+      "needle": "pub const REDSHIFT_SUPPORT: [f64; 2] = [4.0, 20.0];",
+      "role": "source redshift support"
+    },
+    {
+      "file": "56dc609e:rust/rei_microphysics/src/axbi_sources.rs",
+      "lines": [
+        138
+      ],
+      "needle": "let edges = [13.6_f64, 24.59, 54.42, 100.0];",
+      "role": "spectral cell edges"
+    },
+    {
+      "file": "56dc609e:rust/rei_microphysics/src/axbi_sources.rs",
+      "lines": [
+        186
+      ],
+      "needle": "if !zbar.is_finite() || !(4.0..=20.0).contains(&zbar) {",
+      "role": "AxbiSource::at_redshift guard [4, 20]"
+    },
+    {
+      "file": "56dc609e:rust/rei_microphysics/src/axbi_sources.rs",
+      "lines": [
+        190
+      ],
+      "needle": "let sfr = 0.015 * zp.powf(2.7) / (1.0 + (zp / 2.9).powf(5.6));",
+      "role": "MD14 SFRD law (stellar emissivity = fesc x yield x SFRD; no AGN term)"
+    },
+    {
+      "file": "56dc609e:rust/rei_microphysics/src/axbi_background.rs",
+      "lines": [
+        132
+      ],
+      "needle": "if a < self.a_ref || a > self.a_end {",
+      "role": "background scale-domain guard"
+    },
+    {
+      "file": "56dc609e:research/axbi_goal_20261014/scenario/SCENARIO_LOCK.json",
+      "lines": [
+        36
+      ],
+      "needle": "No continuation to recombination or today is claimed",
+      "role": "scenario scope (scientific blocker)"
+    },
+    {
+      "file": "56dc609e:research/axbi_goal_20261014/scenario/SCENARIO_LOCK.json",
+      "lines": [
+        80
+      ],
+      "needle": "\"clumping_factor\": 1.0,",
+      "role": "homogeneous IGM"
+    },
+    {
+      "file": "56dc609e:research/axbi_goal_20261014/scenario/SCENARIO_LOCK.json",
+      "lines": [
+        81
+      ],
+      "needle": "\"AGN_source\": \"OFF\"",
+      "role": "no quasar source in the locked scenario"
+    },
+    {
+      "file": "56dc609e:research/axbi_goal_20261014/scenario/SCENARIO_LOCK.json",
+      "lines": [
+        90
+      ],
+      "needle": "\"closure\": \"HOMOGENEOUS_PRIMARY_ONLY_CASE_A_ESCAPE\",",
+      "role": "primary-only closure"
+    },
+    {
+      "file": "56dc609e:research/axbi_goal_20261014/scenario/SCENARIO_LOCK.json",
+      "lines": [
+        120
+      ],
+      "needle": "\"observer_tail\": null",
+      "role": "no observer tail in the lock"
+    }
+  ],
+  "rust_tests_pinning_the_guards": [
+    {
+      "file": "56dc609e:rust/rei_microphysics/tests/axbi_sources.rs",
+      "lines": [
+        100
+      ],
+      "needle": "for z in [3.9, 20.1, f64::NAN, f64::INFINITY] {",
+      "role": "source redshift guard: AxbiSource::at_redshift(3.9) and at_redshift(20.1) must fail"
+    },
+    {
+      "file": "56dc609e:rust/rei_microphysics/tests/axbi_driver.rs",
+      "lines": [
+        44
+      ],
+      "needle": "assert!(d.deposit(&mut v.photons, 0, 101.0, 1.0).is_err());",
+      "role": "energy-support guard: a deposit at 101 eV must fail (AXBI_ABOVE_SUPPORT)"
+    },
+    {
+      "file": "56dc609e:rust/rei_microphysics/tests/axbi_background.rs",
+      "lines": [
+        118
+      ],
+      "needle": ".point_at_scale(0.3)",
+      "role": "background scale-domain guard: point_at_scale(0.3) on the toy background with a_end = 1/5 must fail (a > a_end, axbi_background.rs AxbiScaleDomain; the test asserts is_err, not the error kind)"
+    },
+    {
+      "file": "56dc609e:rust/rei_microphysics/tests/axbi_background.rs",
+      "lines": [
+        12
+      ],
+      "needle": "        1.0 / 5.0,",
+      "role": "the toy background's a_end = 1/5 (context of that test)"
+    }
+  ],
+  "rust_test_cited_before_review_not_a_z_domain_guard": [
+    {
+      "file": "56dc609e:rust/rei_microphysics/tests/axbi_driver.rs",
+      "lines": [
+        156
+      ],
+      "needle": "fn geometry_map_rejects_cold_endpoint_outside_provider_domain()",
+      "role": "temperature-provider guard, not the z >= 4 domain: a 1.0001 K gas mapped to a = 1/20.8 must fail after adiabatic cooling (AxbiProvider.rates)"
+    },
+    {
+      "file": "56dc609e:rust/rei_microphysics/tests/axbi_driver.rs",
+      "lines": [
+        162
+      ],
+      "needle": "1.0001,",
+      "role": "the 1.0001 K gas temperature of that test"
+    },
+    {
+      "file": "56dc609e:rust/rei_microphysics/tests/axbi_driver.rs",
+      "lines": [
+        165
+      ],
+      "needle": "assert!(d.geometry_map(&mut s, 1.0 / 20.8).is_err());",
+      "role": "its assertion"
+    }
+  ],
+  "guard_test_scan": {
+    "commit": "56dc609ea9b801c88d3364aed3eee140b3a20d46",
+    "test_files_scanned": 40,
+    "end_zbar_literals": [
+      {
+        "at": "56dc609e:rust/rei_microphysics/tests/axbi_driver.rs:5",
+        "value": 19.8,
+        "text": "c.end_zbar = 19.8;"
+      },
+      {
+        "at": "56dc609e:rust/rei_microphysics/tests/axbi_driver.rs:127",
+        "value": 19.8,
+        "text": "config.end_zbar = 19.8;"
+      },
+      {
+        "at": "56dc609e:rust/rei_microphysics/tests/axbi_driver.rs:331",
+        "value": 19.8,
+        "text": "let legacy = DriverConfig::read(\"end_zbar=19.8\\nbackground_panels=64\\n\").unwrap();"
+      },
+      {
+        "at": "56dc609e:rust/rei_microphysics/tests/axbi_driver.rs:338",
+        "value": 19.8,
+        "text": "let full = DriverConfig::read(\"end_zbar=19.8\\nbackground_panels=64\\noutput_budget_mib=2048\\n\")"
+      },
+      {
+        "at": "56dc609e:rust/rei_microphysics/tests/axbi_plus_resource_continuation.rs:16",
+        "value": 19.8,
+        "text": "cfg.end_zbar = 19.8;"
+      },
+      {
+        "at": "56dc609e:rust/rei_microphysics/tests/axbi_resource_continuation.rs:15",
+        "value": 19.8,
+        "text": "cfg.end_zbar = 19.8;"
+      },
+      {
+        "at": "56dc609e:rust/rei_microphysics/tests/axbi_signed_resource_continuation.rs:19",
+        "value": 19.8,
+        "text": "cfg.end_zbar = 19.8;"
+      }
+    ],
+    "end_zbar_computed_assignments": [
+      {
+        "at": "56dc609e:rust/rei_microphysics/tests/axbi_plus_resource_continuation.rs:220",
+        "text": "driver.config.end_zbar = 1.0 / state.a - 1.0;"
+      },
+      {
+        "at": "56dc609e:rust/rei_microphysics/tests/axbi_signed_resource_continuation.rs:229",
+        "text": "driver.config.end_zbar = 1.0 / state.a - 1.0;"
+      }
+    ],
+    "end_zbar_literals_outside_4_20": [],
+    "end_zbar_guard_pinned_by_a_test": false,
+    "point_at_scale_is_err_assertions": [
+      {
+        "at": "56dc609e:rust/rei_microphysics/tests/axbi_background.rs:118",
+        "text": ".point_at_scale(0.3)"
+      }
+    ],
+    "scale_domain_guard_pinned_by_a_test": true,
+    "rule": "end_zbar guard pinned iff a test supplies a literal end_zbar outside [4, 20) (necessary condition); scale guard pinned iff a test asserts is_err within 3 lines of a point_at_scale call; computed assignments set the struct field directly and do not call validate()"
+  },
+  "unpinned_guards": [
+    {
+      "guard": "DriverConfig::validate: 4 <= end_zbar < 20",
+      "site": {
+        "file": "56dc609e:rust/rei_microphysics/src/axbi_driver.rs",
+        "lines": [
+          136
+        ],
+        "needle": "!(4.0..20.0).contains(&self.end_zbar)",
+        "role": "DriverConfig::validate: 4 <= end_zbar < 20 (the guard of the handoff)"
+      },
+      "pinned_by_a_test": false,
+      "evidence": "guard_test_scan.end_zbar_literals (all literal values) and end_zbar_literals_outside_4_20"
+    }
+  ],
+  "pinned_guards_from_scan": [
+    {
+      "guard": "AxbiBackground::point_at_scale scale domain (a_ref <= a <= a_end)",
+      "pinned_by_a_test": true,
+      "evidence": "guard_test_scan.point_at_scale_is_err_assertions"
+    }
+  ],
+  "change_plan_if_unblocked": [
+    "add a separate low-z driver configuration (0 <= end_zbar < 4, start from an AXBI_CHECKPOINT_V2 at zbar = 4) instead of relaxing DriverConfig::validate, so the locked-scenario guard and its tests stay unchanged",
+    "add a LowZSource owner next to AxbiSource (quasar eps(z) x SED cells; stellar escaped emissivity below z = 4), each with its own redshift/energy support constants and unit tests; AxbiSource::at_redshift keeps [4, 20]",
+    "extend the energy grid above 100 eV for the low-z driver only; remap the z = 4 stock by zero padding (exact in N and U) and accept the remapped checkpoint through a versioned reader",
+    "add an absorber opacity term (lambda_mfp(z) or f(N_HI, z)) to evaluate() for the low-z driver only, with a photon-ledger owner for absorbed-by-absorber photons",
+    "keep the prescribed-rate (P19) branch as an exclusive regression mode, never added to endogenous cohorts"
+  ],
+  "acceptance_tests_if_unblocked": [
+    "T0 (first, before any low-z code) add Rust tests that DriverConfig::read(\"end_zbar=3.9\\n\") and DriverConfig::read(\"end_zbar=20.0\\n\") fail: the end_zbar guard of DriverConfig::validate has no test at 56dc609e (unpinned_guards); the scale-domain test (pinned_guards_from_scan) stays unchanged",
+    "T1 restart identity: the z = 4 checkpoints round-trip through the low-z reader (remap identity on the first 392 nodes) and the R106 117-step window replay is still bitwise identical (S8_REPLAY_COMPARISON.json)",
+    "T2 photon count and augmented energy ledgers closed to the lock tolerance 1e-8 over zbar 4 -> 0",
+    "T3 remap conserves photon number and energy exactly",
+    "T4 quasar/stellar source cell moments versus direct quadrature (<= 1e-7, as AxbiSource normalization)",
+    "T5 prescribed-rate regression branch versus the P19 table nodes (as PUBLIC_UVB_RESULTS.json, 181 checks)",
+    "T6 native tau(0 -> 4) versus the DonorMatchedContinuation band of S8_LOWZ_TAU.json (difference reported)",
+    "T7 the guard tests listed in rust_tests_pinning_the_guards and the T0 tests still pass unchanged"
+  ],
+  "r8_inventory": {
+    "directory": "/home/cosmosapjw/Dropbox/bianchi/rei_bianchi/research/microphysics_r9_20261015/vendor_r8/reionization_R8_20261014/radiation",
+    "files": {
+      "puchwein_v1_rates_fiducial.txt": {
+        "present": true,
+        "sha256": "5b4cca58fcc46e821970c0a5a8cbb188cf2b5e6c00f56d6942588c86806662fe",
+        "in_any_rei_bianchi_commit": false,
+        "receipt_url": "https://arxiv.org/src/1801.04931v1/anc/rates_fiducial.txt",
+        "sha256_equals_receipt": true
+      },
+      "puchwein_v1_rates_eq-eq.txt": {
+        "present": true,
+        "sha256": "e1e8b6557064fc11b861032cecbc79aa0fc73741f27e7707db7d68d3d0aab04e",
+        "in_any_rei_bianchi_commit": false,
+        "receipt_url": "https://arxiv.org/src/1801.04931v1/anc/rates_eq-eq.txt",
+        "sha256_equals_receipt": true
+      },
+      "puchwein_v1_readme.txt": {
+        "present": true,
+        "sha256": "9f3ebde0f062f9aefad350aa58c53d2cc1c69f4722175e1478b1e792400a65bf",
+        "in_any_rei_bianchi_commit": false,
+        "receipt_url": "https://arxiv.org/src/1801.04931v1/anc/readme.txt",
+        "sha256_equals_receipt": true
+      },
+      "PUBLIC_DATA_RECEIPT.json": {
+        "present": true,
+        "sha256": "1ff969ccd9ac49086905411bd2dd3e940a4c1a3fa7b0433065b3a6a8f2335231",
+        "in_any_rei_bianchi_commit": false
+      },
+      "PUBLIC_UVB_RESULTS.json": {
+        "present": true,
+        "sha256": "e72fcc0f39e5fdd01d625e9505c38d1730ac0d705c8663c5b2a03d1d915949f5",
+        "in_any_rei_bianchi_commit": false
+      },
+      "uvb_table_adapter.py": {
+        "present": true,
+        "sha256": "c6ab21409e9133f0c6484964c01a5a057d27c4efbffbc57ed4fde05eaeec770e",
+        "in_any_rei_bianchi_commit": false
+      },
+      "qlf_v3_e912_18_2.npz": {
+        "present": true,
+        "sha256": "94ac06bed8720b46dd4962c01693ce8d7b1d13d65dc50c225eb93680e3430610",
+        "in_any_rei_bianchi_commit": false,
+        "receipt_url": "https://raw.githubusercontent.com/gkulkarni/QLF/v3.0/e912_18_2.npz",
+        "sha256_equals_receipt": true
+      },
+      "QLF_DATA_RECEIPT.json": {
+        "present": true,
+        "sha256": "0b7d7a84d84a148ca484c77594af85b0d2592a9e26cbb78d1be9e60b624069f1",
+        "in_any_rei_bianchi_commit": false
+      },
+      "QLF_CACHE_AUDIT.json": {
+        "present": true,
+        "sha256": "6c71cec1832847bf5b7128c311bf1856ae695b2823f854e90d9cd8c7e0bf49ca",
+        "in_any_rei_bianchi_commit": false
+      },
+      "SOURCE_CONTRACT.json": {
+        "present": true,
+        "sha256": "7466cb84b9ace483819399ff94ceb6f594bf3e397c297805756b4c23f1248469",
+        "in_any_rei_bianchi_commit": false
+      },
+      "SOURCE_CANDIDATES.md": {
+        "present": true,
+        "sha256": "19a3b3c422c43b96e29694f6b2873a26f0ae85d7326c65e737eee05262bb44f2",
+        "in_any_rei_bianchi_commit": false
+      }
+    },
+    "source_contract": {
+      "modes": [
+        "endogenous_emissivity",
+        "prescribed_rates"
+      ],
+      "mode_exclusivity": "per physical population/domain",
+      "production_integration": "PENDING",
+      "AGN_provider": "AUTHOR_CODE_RETRIEVED_NOT_ADMITTED",
+      "stellar_ssp_provider": "CANDIDATE_SELECTED_NOT_DOWNLOADED",
+      "public_benchmark_status": "Puchwein arXiv v1 original nodes converted and verified"
+    },
+    "qlf_cache_audit": {
+      "file": "qlf_v3_e912_18_2.npz",
+      "status": "NOT_ADMITTED",
+      "reason": "Cached label/generator semantics unresolved; active author consumers load another file.",
+      "shape": {
+        "down": [
+          1000
+        ],
+        "z": [
+          1000
+        ],
+        "median": [
+          1000
+        ],
+        "up": [
+          1000
+        ]
+      },
+      "nodes": 1000,
+      "z_min": 0.0,
+      "z_max": 20.0,
+      "down_ge_median_ge_up_count": 1000,
+      "used_in_physical_calculation": false
+    },
+    "p19_fiducial_table": {
+      "n_nodes": 59,
+      "z_min": 0.0,
+      "z_max": 15.1,
+      "columns": "z, Gamma/heating HI, HeI, HeII, Compton (readme: units 1/s and eV/s)"
+    }
+  },
+  "runtime_extrapolation_frozen_physics": {
+    "ZERO": {
+      "replayed_steps": 117,
+      "continuous_wall_s": 3.064981192,
+      "wall_s_per_accepted_step": 0.026196420444444445,
+      "next_dln_a_at_z4_checkpoint": 1.25e-05,
+      "accepted_steps_z4_to_z0_at_that_step": 128755.03299472801,
+      "wall_h_z4_to_z0_at_that_rate": 0.9369224940745031,
+      "note": "arithmetic extrapolation of the frozen z>=4 physics at the z=4 step size; new z<4 physics changes both the step size and the per-step cost"
+    },
+    "SHEAR_HALF_PLUS": {
+      "replayed_steps": 117,
+      "continuous_wall_s": 3.6256322279999997,
+      "wall_s_per_accepted_step": 0.030988309641025637,
+      "next_dln_a_at_z4_checkpoint": 1.25e-05,
+      "accepted_steps_z4_to_z0_at_that_step": 128755.03299472801,
+      "wall_h_z4_to_z0_at_that_rate": 1.1083057861891956,
+      "note": "arithmetic extrapolation of the frozen z>=4 physics at the z=4 step size; new z<4 physics changes both the step size and the per-step cost"
+    },
+    "SHEAR_HALF_MINUS": {
+      "replayed_steps": 117,
+      "continuous_wall_s": 4.430130721,
+      "wall_s_per_accepted_step": 0.03786436513675214,
+      "next_dln_a_at_z4_checkpoint": 1.25e-05,
+      "accepted_steps_z4_to_z0_at_that_step": 128755.03299472801,
+      "wall_h_z4_to_z0_at_that_rate": 1.3542298840297087,
+      "note": "arithmetic extrapolation of the frozen z>=4 physics at the z=4 step size; new z<4 physics changes both the step size and the per-step cost"
+    },
+    "SHEAR_PLUS": {
+      "replayed_steps": 117,
+      "continuous_wall_s": 4.406881643,
+      "wall_s_per_accepted_step": 0.03766565506837607,
+      "next_dln_a_at_z4_checkpoint": 1.25e-05,
+      "accepted_steps_z4_to_z0_at_that_step": 128755.03299472801,
+      "wall_h_z4_to_z0_at_that_rate": 1.3471229614157791,
+      "note": "arithmetic extrapolation of the frozen z>=4 physics at the z=4 step size; new z<4 physics changes both the step size and the per-step cost"
+    },
+    "SHEAR_MINUS": {
+      "replayed_steps": 117,
+      "continuous_wall_s": 3.676616881,
+      "wall_s_per_accepted_step": 0.03142407590598291,
+      "next_dln_a_at_z4_checkpoint": 1.25e-05,
+      "accepted_steps_z4_to_z0_at_that_step": 128755.03299472801,
+      "wall_h_z4_to_z0_at_that_rate": 1.123891091695463,
+      "note": "arithmetic extrapolation of the frozen z>=4 physics at the z=4 step size; new z<4 physics changes both the step size and the per-step cost"
+    }
+  },
+  "donor_band_from_s8_lowz_tau": {
+    "band_min": 0.022196130294236036,
+    "band_max": 0.022512385922865797,
+    "all_case_depths_inside": false
+  },
+  "vo_probe_summary": {
+    "vizier_server_reachable": {
+      "vizier.cds.unistra.fr": false,
+      "vizier.cfa.harvard.edu": true
+    },
+    "regtap_ok": {
+      "UV background": true,
+      "ionizing background": true
+    },
+    "tapvizier_ok": false,
+    "vizier_catalogue_ids_returned": [
+      "II/59B",
+      "J/A+A/318/347",
+      "J/A+A/445/465",
+      "J/A+A/631/A59",
+      "J/A+A/636/A12",
+      "J/AJ/131/2766",
+      "J/AJ/155/110",
+      "J/AJ/155/131",
+      "J/AJ/168/22",
+      "J/AJ/169/103",
+      "J/ApJ/633/630",
+      "J/ApJ/710/1498",
+      "J/ApJ/746/169",
+      "J/ApJ/755/169",
+      "J/ApJ/764/45",
+      "J/ApJ/768/105",
+      "J/ApJ/773/14",
+      "J/ApJ/814/40",
+      "J/ApJ/829/33",
+      "J/ApJ/837/106",
+      "J/ApJ/842/87",
+      "J/ApJ/871/258",
+      "J/ApJ/928/172",
+      "J/ApJ/943/67",
+      "J/MNRAS/260/202",
+      "J/MNRAS/275/1102",
+      "J/MNRAS/445/1745",
+      "J/MNRAS/446/2985",
+      "J/MNRAS/488/1035"
+    ],
+    "named_catalogue_ids_found": {
+      "HM12 ApJ 746, 125": false,
+      "FG20 MNRAS 493, 1614": false,
+      "P19 MNRAS 485, 47": false,
+      "KS19 MNRAS 484, 4174": false,
+      "Kulkarni+2019 MNRAS 488, 1035": true,
+      "Shen+2020 MNRAS 495, 3252": false,
+      "Becker+2021 MNRAS 508, 1853": false,
+      "Worseck+2014 MNRAS 445, 1745": true
+    },
+    "file": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/REI/S8_UVB_VO_PROBE.json",
+    "sha256": "0d5d2ebc5281843ff49160376830ea1577467a8c693d0718738a9291ea3fc303",
+    "relevant_vizier_catalogues": {
+      "J/ApJ/837/106": {
+        "description": "UV background photoionization & photoheating rates (Onorbe+, 2017)",
+        "server": "vizier.cfa.harvard.edu"
+      },
+      "J/A+A/631/A59": {
+        "description": "Fluctuations of UV background from GALEX (Armengot+, 2019)",
+        "server": "vizier.cfa.harvard.edu"
+      },
+      "J/AJ/169/103": {
+        "description": "Cosmic UV background spectra with New Horizons (Murthy+, 2025)",
+        "server": "vizier.cfa.harvard.edu"
+      },
+      "J/ApJ/710/1498": {
+        "description": "QSO luminosity function at z~4 (Glikman+, 2010)",
+        "server": "vizier.cfa.harvard.edu"
+      },
+      "J/ApJ/755/169": {
+        "description": "3<z<5 quasar luminosity function in the COSMOS (Masters+, 2012)",
+        "server": "vizier.cfa.harvard.edu"
+      },
+      "J/ApJ/768/105": {
+        "description": "z~5 QSO luminosity function from SDSS Stripe 82 (McGreer+, 2013)",
+        "server": "vizier.cfa.harvard.edu"
+      },
+      "J/ApJ/773/14": {
+        "description": "BOSS: quasar luminosity function (Ross+, 2013)",
+        "server": "vizier.cfa.harvard.edu"
+      },
+      "J/ApJ/842/87": {
+        "description": "Radio luminosity function of FSRQs (Mao+, 2017)",
+        "server": "vizier.cfa.harvard.edu"
+      },
+      "J/ApJ/928/172": {
+        "description": "3.5<z<5.0 SDSS quasars UV luminosity function (Pan+, 2022)",
+        "server": "vizier.cfa.harvard.edu"
+      },
+      "J/A+A/636/A12": {
+        "description": "1.4<=z<=5.0 QSOs luminosity function (Retana-Montenegro+, 2020)",
+        "server": "vizier.cfa.harvard.edu"
+      },
+      "J/AJ/131/2766": {
+        "description": "Quasar luminosity function from SDSS-DR3 (Richards+, 2006)",
+        "server": "vizier.cfa.harvard.edu"
+      },
+      "J/AJ/155/131": {
+        "description": "z~5 quasar luminosity function from the CFHTLS (McGreer+, 2018)",
+        "server": "vizier.cfa.harvard.edu"
+      },
+      "J/MNRAS/260/202": {
+        "description": "Quasar luminosity function (Hawkins+, 1993)",
+        "server": "vizier.cfa.harvard.edu"
+      },
+      "J/MNRAS/275/1102": {
+        "description": "Evolution of quasar luminosity function (Hawkins+ 1995)",
+        "server": "vizier.cfa.harvard.edu"
+      },
+      "J/MNRAS/488/1035": {
+        "description": "AGN UV luminosity function (Kulkarni+, 2019)",
+        "server": "vizier.cfa.harvard.edu"
+      },
+      "J/MNRAS/445/1745": {
+        "description": "Giant Gemini GMOS survey. I. (Worseck+, 2014)",
+        "server": "vizier.cfa.harvard.edu"
+      }
+    },
+    "note": "'null' in vizier_catalogue_ids_returned is astroquery's placeholder for an empty match; the CDS server's legacy votable endpoint returned HTTP 404, the CfA mirror answered",
+    "cds_connectivity_error": "HTTPError: 404 Client Error: Not Found for url: https://vizier.cds.unistra.fr/viz-bin/votable",
+    "tapvizier_error": "DALFormatError: ConnectTimeout: HTTPSConnectionPool(host='tapvizier.cds.unistra.fr', port=443): Max retries exceeded with url: /TAPVizieR/tap/sync (Caused by Co",
+    "catalogue_search_scope": "named catalogue ids and keyword searches answered by the CfA VizieR mirror only (CDS VizieR unreachable, TAPVizieR timed out); absence means 'not found on the CfA mirror', not 'absent from VizieR'",
+    "versions": {
+      "astroquery": "0.4.11",
+      "pyvo": "1.10.0",
+      "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]"
+    }
+  },
+  "literature_arxiv_verification": {
+    "ok": true,
+    "url": "https://export.arxiv.org/api/query?id_list=1105.2039,1903.08657,1801.04931,1801.09693,1807.09774,2001.02696,1503.02075,1403.0007,2103.16610,1405.7405,2505.23544&max_results=11",
+    "response_sha256": "8e273a3a2bbe37cfe5ed0c0c8482d5195e0ccef3e329f598fe5f5be0ce4bcf74",
+    "wall_s": 0.147,
+    "response_file": "/home/cosmosapjw/Downloads/htt_r108/s8/arxiv_api/arxiv_api_8e273a3a2bbe37cf.xml",
+    "receipt": {
+      "id": "S8-ARXIV-API",
+      "name": "arxiv_api_8e273a3a2bbe37cf.xml",
+      "path": "/home/cosmosapjw/Downloads/htt_r108/s8/arxiv_api/arxiv_api_8e273a3a2bbe37cf.xml",
+      "url": "https://export.arxiv.org/api/query?id_list=1105.2039,1903.08657,1801.04931,1801.09693,1807.09774,2001.02696,1503.02075,1403.0007,2103.16610,1405.7405,2505.23544&max_results=11",
+      "final_url": "https://export.arxiv.org/api/query?id_list=1105.2039,1903.08657,1801.04931,1801.09693,1807.09774,2001.02696,1503.02075,1403.0007,2103.16610,1405.7405,2505.23544&max_results=11",
+      "http_status": 200,
+      "bytes": 31119,
+      "sha256": "8e273a3a2bbe37cfe5ed0c0c8482d5195e0ccef3e329f598fe5f5be0ce4bcf74",
+      "fetched_at_utc": "2026-11-24T04:35:46.766063+00:00",
+      "status": "FETCHED",
+      "route": "export.arxiv.org API (metadata only)"
+    },
+    "entries": {
+      "HM12 UV/X-ray background synthesis (Haardt & Madau)": {
+        "id": "1105.2039v3",
+        "title": "Radiative transfer in a clumpy universe: IV. New synthesis models of the cosmic UV/X-ray background",
+        "first_author": "Francesco Haardt",
+        "published": "2011-05-10T20:02:45Z",
+        "journal_ref": null,
+        "doi": "10.1088/0004-637X/746/2/125"
+      },
+      "FG20 UV/X-ray background update (Faucher-Giguere)": {
+        "id": "1903.08657v2",
+        "title": "A Cosmic UV/X-ray Background Model Update",
+        "first_author": "C. -A. Faucher-Giguere",
+        "published": "2019-03-20T18:00:00Z",
+        "journal_ref": null,
+        "doi": "10.1093/mnras/staa302"
+      },
+      "P19 UVB and IGM thermal history (Puchwein et al.)": {
+        "id": "1801.04931v1",
+        "title": "Consistent modelling of the meta-galactic UV background and the thermal/ionization history of the intergalactic medium",
+        "first_author": "Ewald Puchwein",
+        "published": "2018-01-15T19:00:00Z",
+        "journal_ref": null,
+        "doi": "10.1093/mnras/stz222"
+      },
+      "KS19 UVB / EBL synthesis (Khaire & Srianand)": {
+        "id": "1801.09693v2",
+        "title": "New synthesis models of consistent extragalactic background light over cosmic time",
+        "first_author": "Vikram Khaire",
+        "published": "2018-01-29T19:00:04Z",
+        "journal_ref": null,
+        "doi": "10.1093/mnras/stz174"
+      },
+      "AGN UV luminosity function (Kulkarni, Worseck & Hennawi)": {
+        "id": "1807.09774v2",
+        "title": "Evolution of the AGN UV luminosity function from redshift 7.5",
+        "first_author": "Girish Kulkarni",
+        "published": "2018-07-25T18:00:01Z",
+        "journal_ref": null,
+        "doi": "10.1093/mnras/stz1493"
+      },
+      "Bolometric quasar luminosity function (Shen et al.)": {
+        "id": "2001.02696v2",
+        "title": "The Bolometric Quasar Luminosity Function at z = 0-7",
+        "first_author": "Xuejian Shen",
+        "published": "2020-01-08T19:00:16Z",
+        "journal_ref": null,
+        "doi": "10.1093/mnras/staa1381"
+      },
+      "Quasar EUV stacked spectrum (Lusso et al.)": {
+        "id": "1503.02075v2",
+        "title": "The first ultraviolet quasar stacked spectrum at z=2.4 from WFC3",
+        "first_author": "E. Lusso",
+        "published": "2015-03-06T21:00:10Z",
+        "journal_ref": null,
+        "doi": "10.1093/mnras/stv516"
+      },
+      "Cosmic star formation history (Madau & Dickinson)": {
+        "id": "1403.0007v3",
+        "title": "Cosmic Star Formation History",
+        "first_author": "Piero Madau",
+        "published": "2014-02-28T21:00:32Z",
+        "journal_ref": null,
+        "doi": "10.1146/annurev-astro-081811-125615"
+      },
+      "Ionizing mean free path at 5 < z < 6 (Becker et al.)": {
+        "id": "2103.16610v2",
+        "title": "The mean free path of ionizing photons at 5 < z < 6: evidence for rapid evolution near reionization",
+        "first_author": "George D. Becker",
+        "published": "2021-03-30T18:29:27Z",
+        "journal_ref": null,
+        "doi": "10.1093/mnras/stab2696"
+      },
+      "HeII reionization from HeII Lyman-alpha absorption (Worseck et al.)": {
+        "id": "1405.7405v2",
+        "title": "Early and Extended Helium Reionization Over More Than 600 Million Years of Cosmic Time",
+        "first_author": "G\u00e1bor Worseck",
+        "published": "2014-05-28T21:38:51Z",
+        "journal_ref": null,
+        "doi": "10.3847/0004-637X/825/2/144"
+      },
+      "Reformatted UVB tables (Taira et al.)": {
+        "id": "2505.23544v1",
+        "title": "Metagalactic Ultraviolet Background Tables for Calculating Diffuse Astrophysical Plasma Properties",
+        "first_author": "Elias Taira",
+        "published": "2025-05-29T15:23:14Z",
+        "journal_ref": null,
+        "doi": null
+      }
+    },
+    "doi_summary": {
+      "n_entries": 11,
+      "n_missing": 0,
+      "with_doi": [
+        "HM12 UV/X-ray background synthesis (Haardt & Madau)",
+        "FG20 UV/X-ray background update (Faucher-Giguere)",
+        "P19 UVB and IGM thermal history (Puchwein et al.)",
+        "KS19 UVB / EBL synthesis (Khaire & Srianand)",
+        "AGN UV luminosity function (Kulkarni, Worseck & Hennawi)",
+        "Bolometric quasar luminosity function (Shen et al.)",
+        "Quasar EUV stacked spectrum (Lusso et al.)",
+        "Cosmic star formation history (Madau & Dickinson)",
+        "Ionizing mean free path at 5 < z < 6 (Becker et al.)",
+        "HeII reionization from HeII Lyman-alpha absorption (Worseck et al.)"
+      ],
+      "without_doi": [
+        "Reformatted UVB tables (Taira et al.)"
+      ]
+    }
+  },
+  "claim_class": "FEASIBILITY_RECORD (code locations, input inventory); no physics result",
+  "wall_s": 0.4221315383911133,
+  "inputs_sha256": {
+    "S8_LOWZ_TAU.json": "0077dc2eb96e4ba2af25643d2684945396fa979c3b990e4947395488b3a0af36",
+    "S8_REPLAY_COMPARISON.json": "71c028a1677059c16235e6e29495814b9443329ebc6f95f736b2612e84f418df",
+    "S8_UVB_VO_PROBE.json": "0d5d2ebc5281843ff49160376830ea1577467a8c693d0718738a9291ea3fc303"
+  },
+  "derived_for_markdown": {
+    "sources": "fields of S8_LOWZ_TAU.json, S8_REPLAY_COMPARISON.json and this file; replay wall time from the lane command log",
+    "replay_wall_time_from_command_log": {
+      "file": "/home/cosmosapjw/Downloads/htt_r108/logs/s8_COMMANDS.jsonl",
+      "cmd": ".venv/bin/python -B scripts/r106/rei_restart_replay.py --out /home/cosmosapjw/Downloads/htt_r108/s8/replay_rerun --stages build,record,replay,analyze --workers 2",
+      "wall_s": 50.16,
+      "started_utc": "2026-11-24T01:36:06+00:00"
+    },
+    "replay_n_cases": 5,
+    "replay_window_all_cases": "117 accepted steps, zbar 4.0072954801941 -> 4.0, regime CONSTANT_STEP_NO_REJECTION_ENDPOINT_CLIPPED_FINAL_STEP, rejections in window 0",
+    "replay_checkpoints_bytewise_identical_all": true,
+    "replay_output_rows_bytewise_identical_all": true,
+    "replay_last_two_intervals_zero_difference_all": true,
+    "restart_inventory_identical_to_r106_all": true,
+    "restart_inventory_groups": [
+      "charge",
+      "expansion",
+      "photons",
+      "proper_time",
+      "temperature"
+    ],
+    "native_files_identical_to_r106_cache_all": true,
+    "n_case_depths": 15,
+    "n_case_depths_inside_band": 10,
+    "z_HeII_with_depths_outside_band": [
+      "3.9"
+    ],
+    "above_band_max_by_range": [
+      4.329404890146549e-12,
+      5.977583011906873e-12
+    ],
+    "x_e4_checkpoint_range": [
+      1.0833943516797104,
+      1.083394352319165
+    ],
+    "x_e4_minus_tf8_donor_range": [
+      1.6797103707943961e-09,
+      2.3191648601539328e-09
+    ],
+    "max_abs_affine_prediction_minus_exact_x_e4_term": 6.089419583158179e-18,
+    "n_H0_and_f_He_terms_all_exactly_zero": true,
+    "n_h0_and_f_he_equal_r107_constants_all": true,
+    "shear_term_relative_range_by_abs_q_ref": {
+      "0": [
+        0.0,
+        0.0
+      ],
+      "0.005": [
+        -6.176393285706183e-08,
+        -6.116581563464507e-08
+      ],
+      "0.01": [
+        -2.4705562029492256e-07,
+        -2.4466315284854545e-07
+      ]
+    },
+    "units_relative_quad_minus_module": [
+      0.0,
+      -1.1102230246251565e-16
+    ],
+    "units_max_abs_relative_gauss_legendre_minus_module": 4.440892098500626e-15,
+    "units_codata2022_sigma_T_tau_shift": -4.05864974961645e-09,
+    "units_astropy_version": "8.0.2",
+    "arxiv_entries_without_doi": [
+      "Reformatted UVB tables (Taira et al.)"
+    ]
+  },
+  "receipts_written_this_run": []
+}

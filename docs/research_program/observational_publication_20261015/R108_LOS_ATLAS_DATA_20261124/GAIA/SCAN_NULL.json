@@ -1,0 +1,3020 @@
+{
+ "assumptions": [
+  "noise: Gaussian, independent between sources, catalogue covariance (or scan-law shape with catalogue trace)",
+  "systematic: along-scan error constant over blocks of 10 s / 600 s / 6 h of one FOV stream, independent between blocks and FOVs, propagated through a 5-parameter along-scan least squares per NSIDE-64 pixel of the commanded scan law; source coupling blind, linear in BP-RP or linear in G",
+  "amplitude: the largest of three NSIDE-16 pixel-power measurements (upper 97.5%; complement auto power, complement and Quaia random-half cross power) is attributed to the modelled systematic; real Gaia systematics with other spatial/temporal structure are not covered",
+  "no cosmological signal in the mocks; the observed R106 value is compared with the mock distribution (rank only, no calibrated p: the systematic model is not a qualified description of the Gaia error budget)"
+ ],
+ "calibrated_p": null,
+ "calibration": {
+  "sys_blind_tau10": {
+   "amplitude": 1.6881622319979435,
+   "amplitude_from": "complement_cross_blind",
+   "block_samples": 1,
+   "candidates": {
+    "complement_auto_blind": {
+     "amplitude": 1.2157851598797143,
+     "target_power": 0.01250312521222535,
+     "unit_amplitude_power_mean": 0.008458724971142997,
+     "unit_amplitude_power_sd": 0.0002655540071453486
+    },
+    "complement_cross_blind": {
+     "amplitude": 1.6881622319979435,
+     "target_power": 0.005230895941693041,
+     "unit_amplitude_power_mean": 0.0018354718188586345,
+     "unit_amplitude_power_sd": 0.00014507618164694212
+    },
+    "quaia_cross_blind": {
+     "amplitude": 0.5261598265275974,
+     "target_power": 0.0004775491351787153,
+     "unit_amplitude_power_mean": 0.001724974548550588,
+     "unit_amplitude_power_sd": 7.644264470316027e-05
+    }
+   }
+  },
+  "sys_blind_tau21600": {
+   "amplitude": 0.45624840481917583,
+   "amplitude_from": "complement_auto_blind",
+   "block_samples": 2160,
+   "candidates": {
+    "complement_auto_blind": {
+     "amplitude": 0.45624840481917583,
+     "target_power": 0.01250312521222535,
+     "unit_amplitude_power_mean": 0.06006422286126162,
+     "unit_amplitude_power_sd": 0.003869501635947731
+    },
+    "complement_cross_blind": {
+     "amplitude": 0.40268245545328724,
+     "target_power": 0.005230895941693041,
+     "unit_amplitude_power_mean": 0.03225898245803389,
+     "unit_amplitude_power_sd": 0.003360251813165725
+    },
+    "quaia_cross_blind": {
+     "amplitude": 0.12144565202450844,
+     "target_power": 0.0004775491351787153,
+     "unit_amplitude_power_mean": 0.032378305848932865,
+     "unit_amplitude_power_sd": 0.003607155521847645
+    }
+   }
+  },
+  "sys_blind_tau600": {
+   "amplitude": 0.4693747941171581,
+   "amplitude_from": "complement_auto_blind",
+   "block_samples": 60,
+   "candidates": {
+    "complement_auto_blind": {
+     "amplitude": 0.4693747941171581,
+     "target_power": 0.01250312521222535,
+     "unit_amplitude_power_mean": 0.056751723175623305,
+     "unit_amplitude_power_sd": 0.0014933449215543228
+    },
+    "complement_cross_blind": {
+     "amplitude": 0.4236328901303079,
+     "target_power": 0.005230895941693041,
+     "unit_amplitude_power_mean": 0.029147193185071973,
+     "unit_amplitude_power_sd": 0.0014068608900599906
+    },
+    "quaia_cross_blind": {
+     "amplitude": 0.12896909015602,
+     "target_power": 0.0004775491351787153,
+     "unit_amplitude_power_mean": 0.0287108989661045,
+     "unit_amplitude_power_sd": 0.0007166437941082464
+    }
+   }
+  },
+  "sys_colour_tau10": {
+   "amplitude": 1.307990042534161,
+   "amplitude_from": "complement_cross_colour",
+   "block_samples": 1,
+   "candidates": {
+    "complement_auto_colour": {
+     "amplitude": 0.9907064735819309,
+     "target_power": 0.07230079624036323,
+     "unit_amplitude_power_mean": 0.07366362360423961,
+     "unit_amplitude_power_sd": 0.003265858105028292
+    },
+    "complement_cross_colour": {
+     "amplitude": 1.307990042534161,
+     "target_power": 0.016351518456425372,
+     "unit_amplitude_power_mean": 0.00955760797996422,
+     "unit_amplitude_power_sd": 0.002677205722816534
+    },
+    "quaia_cross_colour": {
+     "amplitude": 1.041469734304928,
+     "target_power": 0.002356745607359176,
+     "unit_amplitude_power_mean": 0.0021727982311139475,
+     "unit_amplitude_power_sd": 5.601942976623869e-05
+    }
+   }
+  },
+  "sys_colour_tau21600": {
+   "amplitude": 0.39070437160508464,
+   "amplitude_from": "complement_auto_colour",
+   "block_samples": 2160,
+   "candidates": {
+    "complement_auto_colour": {
+     "amplitude": 0.39070437160508464,
+     "target_power": 0.07230079624036323,
+     "unit_amplitude_power_mean": 0.4736380004352737,
+     "unit_amplitude_power_sd": 0.03559977464576051
+    },
+    "complement_cross_colour": {
+     "amplitude": 0.30566775694664894,
+     "target_power": 0.016351518456425372,
+     "unit_amplitude_power_mean": 0.17500837361369231,
+     "unit_amplitude_power_sd": 0.029376215665252958
+    },
+    "quaia_cross_colour": {
+     "amplitude": 0.23438620833351578,
+     "target_power": 0.002356745607359176,
+     "unit_amplitude_power_mean": 0.04289914131614465,
+     "unit_amplitude_power_sd": 0.0049099828214084025
+    }
+   }
+  },
+  "sys_colour_tau600": {
+   "amplitude": 0.40145034780739824,
+   "amplitude_from": "complement_auto_colour",
+   "block_samples": 60,
+   "candidates": {
+    "complement_auto_colour": {
+     "amplitude": 0.40145034780739824,
+     "target_power": 0.07230079624036323,
+     "unit_amplitude_power_mean": 0.44862079756564044,
+     "unit_amplitude_power_sd": 0.0257765471424594
+    },
+    "complement_cross_colour": {
+     "amplitude": 0.3264308391359782,
+     "target_power": 0.016351518456425372,
+     "unit_amplitude_power_mean": 0.15345312110263498,
+     "unit_amplitude_power_sd": 0.02536666896379142
+    },
+    "quaia_cross_colour": {
+     "amplitude": 0.2487047279598726,
+     "target_power": 0.002356745607359176,
+     "unit_amplitude_power_mean": 0.03810172370665988,
+     "unit_amplitude_power_sd": 0.0009809237872873368
+    }
+   }
+  },
+  "sys_gmag_tau10": {
+   "amplitude": 1.634730763331523,
+   "amplitude_from": "complement_cross_gmag",
+   "block_samples": 1,
+   "candidates": {
+    "complement_auto_gmag": {
+     "amplitude": 0.756554561587306,
+     "target_power": 0.04062943737803992,
+     "unit_amplitude_power_mean": 0.07098397247285654,
+     "unit_amplitude_power_sd": 0.004803345569876674
+    },
+    "complement_cross_gmag": {
+     "amplitude": 1.634730763331523,
+     "target_power": 0.01070165850805525,
+     "unit_amplitude_power_mean": 0.004004595153413317,
+     "unit_amplitude_power_sd": 0.0009474576132558327
+    },
+    "quaia_cross_gmag": {
+     "amplitude": 0.4168002541992212,
+     "target_power": 0.0009183230571385349,
+     "unit_amplitude_power_mean": 0.005286150679385529,
+     "unit_amplitude_power_sd": 0.0002036687903175985
+    }
+   }
+  },
+  "sys_gmag_tau21600": {
+   "amplitude": 0.38504323386408335,
+   "amplitude_from": "complement_cross_gmag",
+   "block_samples": 2160,
+   "candidates": {
+    "complement_auto_gmag": {
+     "amplitude": 0.31545033626061003,
+     "target_power": 0.04062943737803992,
+     "unit_amplitude_power_mean": 0.4082994726874213,
+     "unit_amplitude_power_sd": 0.03034170649378321
+    },
+    "complement_cross_gmag": {
+     "amplitude": 0.38504323386408335,
+     "target_power": 0.01070165850805525,
+     "unit_amplitude_power_mean": 0.07218252933913857,
+     "unit_amplitude_power_sd": 0.010380562567722514
+    },
+    "quaia_cross_gmag": {
+     "amplitude": 0.0941372135615902,
+     "target_power": 0.0009183230571385349,
+     "unit_amplitude_power_mean": 0.10362697252282987,
+     "unit_amplitude_power_sd": 0.012364009604906412
+    }
+   }
+  },
+  "sys_gmag_tau600": {
+   "amplitude": 0.40190000489508027,
+   "amplitude_from": "complement_cross_gmag",
+   "block_samples": 60,
+   "candidates": {
+    "complement_auto_gmag": {
+     "amplitude": 0.320863271109068,
+     "target_power": 0.04062943737803992,
+     "unit_amplitude_power_mean": 0.3946397206401467,
+     "unit_amplitude_power_sd": 0.019333420415833778
+    },
+    "complement_cross_gmag": {
+     "amplitude": 0.40190000489508027,
+     "target_power": 0.01070165850805525,
+     "unit_amplitude_power_mean": 0.0662544518870408,
+     "unit_amplitude_power_sd": 0.007487540644607733
+    },
+    "quaia_cross_gmag": {
+     "amplitude": 0.10039966427521906,
+     "target_power": 0.0009183230571385349,
+     "unit_amplitude_power_mean": 0.09110264109691146,
+     "unit_amplitude_power_sd": 0.002960813639727509
+    }
+   }
+  }
+ },
+ "calibration_sha256": "95888422a46d03e1f3450b71a6d584fb50195608dddcae802921b4ecc49fd0aa",
+ "kinds": {
+  "noise_catalogue": {
+   "command": [
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r108/gaia_scan_null.py",
+    "run",
+    "--kind",
+    "noise_catalogue",
+    "--draws",
+    "1000",
+    "--seed",
+    "108311",
+    "--out-dir",
+    "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null"
+   ],
+   "receipt": {
+    "amplitude_from": null,
+    "amplitude_mas_per_yr_per_unit_e": 0.0,
+    "calibration_sha256": null,
+    "draws": 1000,
+    "npz_sha256": "df42970e59183dc522c3163b4cf8a3da1fa69568bb635490bb7bb68bbb8f2757",
+    "runtime_s": 633.7007109000115,
+    "seed": 108311
+   },
+   "receipt_path": "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null/scan_null_noise_catalogue.json",
+   "receipt_sha256": "662e6944d307a1f6c9b306787f66cc0f41729e8a8c4524ebfc3af65289ea0d32",
+   "replay_check": {
+    "arrays_compared": 32,
+    "draws_compared": 2,
+    "mismatched_arrays": [],
+    "replay_amplitude_mas_per_yr_per_unit_e": 0.0,
+    "replay_gaia_estimator_py_sha256": "84cdf08db5c8ba4c84d1f5c0be97677b0f51de91610703da79d15f404ebd7402",
+    "replay_gaia_scan_null_py_sha256": "ad3e7b2cb8b47ad7350d3aeb4b8167909e6fc4dc825b2ede3949bee6d58157f2",
+    "replay_receipt": "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2/scan_null_noise_catalogue.json",
+    "replay_receipt_sha256": "4b080dc91fce0452ed8a62f844c3b3b4407fc5b2d683afdc83888cd8cdc529f5",
+    "replay_seed": 108311,
+    "status": "BIT_IDENTICAL"
+   },
+   "script_version": {
+    "gaia_estimator_py_sha256": "f32017b7c1444c5f8adf1a12b2196a98f1ecd0ca940a638ee57d3620c4def63c",
+    "gaia_scan_null_py_sha256": null,
+    "group": "pre_fix_noise_kind (amplitude_from not applicable; version not separable from the receipt)"
+   },
+   "tables": {
+    "all48__joint32": {
+     "draws": 1000,
+     "draws_ge_observed": 24,
+     "null_max": 1487.2666714799743,
+     "null_q50": 128.80633551352508,
+     "null_q95": 324.61607169797304,
+     "null_q99": 489.2397049689807,
+     "observed": 406.385070538911
+    },
+    "all48__magnetic16": {
+     "draws": 1000,
+     "draws_ge_observed": 0,
+     "null_max": 163.2266624520334,
+     "null_q50": 22.81032343472994,
+     "null_q95": 49.581144950817226,
+     "null_q99": 71.76218915579817,
+     "observed": 171.9805476095276
+    },
+    "all48__spin6": {
+     "draws": 1000,
+     "draws_ge_observed": 0,
+     "null_max": 32.40318689314327,
+     "null_q50": 5.602949316420663,
+     "null_q95": 14.660752987859837,
+     "null_q99": 22.4848596627537,
+     "observed": 104.12458235777473
+    },
+    "all48_jk2__joint32": {
+     "draws": 1000,
+     "draws_ge_observed": 17,
+     "null_max": 1141.5250346203072,
+     "null_q50": 120.63094714920635,
+     "null_q95": 291.40946571763214,
+     "null_q99": 420.7231413153333,
+     "observed": 396.614882560647
+    },
+    "all48_jk2__magnetic16": {
+     "draws": 1000,
+     "draws_ge_observed": 0,
+     "null_max": 158.14612501549576,
+     "null_q50": 22.55742928420741,
+     "null_q95": 48.92860546880007,
+     "null_q99": 70.19431489596207,
+     "observed": 169.83443757949405
+    },
+    "all48_jk2__spin6": {
+     "draws": 1000,
+     "draws_ge_observed": 0,
+     "null_max": 32.24511900459082,
+     "null_q50": 5.571446171600094,
+     "null_q95": 14.572480566471015,
+     "null_q99": 22.2024544570317,
+     "observed": 103.55299053686419
+    },
+    "excl__joint32": {
+     "draws": 1000,
+     "draws_ge_observed": 5,
+     "null_max": 1547.086291378221,
+     "null_q50": 175.08843367184338,
+     "null_q95": 451.3369876178843,
+     "null_q99": 702.1437557839342,
+     "observed": 762.9905563786845
+    },
+    "excl__magnetic16": {
+     "draws": 1000,
+     "draws_ge_observed": 0,
+     "null_max": 126.65015479235622,
+     "null_q50": 27.657555110236466,
+     "null_q95": 57.960165551237324,
+     "null_q99": 83.59730060940116,
+     "observed": 199.84655511871495
+    },
+    "excl__spin6": {
+     "draws": 1000,
+     "draws_ge_observed": 0,
+     "null_max": 35.117058929515075,
+     "null_q50": 6.4699901594996625,
+     "null_q95": 17.17045644472358,
+     "null_q99": 22.649833818387304,
+     "observed": 103.19179235460663
+    },
+    "excl_jk2__joint32": {
+     "draws": 1000,
+     "draws_ge_observed": 3,
+     "null_max": 1179.0407336384774,
+     "null_q50": 161.88803190446427,
+     "null_q95": 385.5742929441311,
+     "null_q99": 583.4732331318577,
+     "observed": 694.5285411488791
+    },
+    "excl_jk2__magnetic16": {
+     "draws": 1000,
+     "draws_ge_observed": 0,
+     "null_max": 122.72705973478281,
+     "null_q50": 27.32428712031976,
+     "null_q95": 56.969385285835465,
+     "null_q99": 81.51933053582677,
+     "observed": 195.85319190563902
+    },
+    "excl_jk2__spin6": {
+     "draws": 1000,
+     "draws_ge_observed": 0,
+     "null_max": 34.94929446145968,
+     "null_q50": 6.423312017429082,
+     "null_q95": 16.986737247917645,
+     "null_q99": 22.45625733181063,
+     "observed": 102.58190465652973
+    }
+   }
+  },
+  "noise_scanshape": {
+   "command": [
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r108/gaia_scan_null.py",
+    "run",
+    "--kind",
+    "noise_scanshape",
+    "--draws",
+    "1000",
+    "--seed",
+    "108312",
+    "--scan-dir",
+    "/home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products",
+    "--calibration",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json",
+    "--out-dir",
+    "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null"
+   ],
+   "receipt": {
+    "amplitude_from": null,
+    "amplitude_mas_per_yr_per_unit_e": 0.0,
+    "calibration_sha256": null,
+    "draws": 1000,
+    "npz_sha256": "85eeebd87afd4c6172738e8f3e011dc8acf301563dc02df98803b279163ed61a",
+    "runtime_s": 353.31687164801406,
+    "seed": 108312
+   },
+   "receipt_path": "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null/scan_null_noise_scanshape.json",
+   "receipt_sha256": "6ddd2dca69e68287d8806412b944d5a95f736d58a73e5fa5f5224d7aa9eb935c",
+   "replay_check": {
+    "arrays_compared": 32,
+    "draws_compared": 2,
+    "mismatched_arrays": [],
+    "replay_amplitude_mas_per_yr_per_unit_e": 0.0,
+    "replay_gaia_estimator_py_sha256": "84cdf08db5c8ba4c84d1f5c0be97677b0f51de91610703da79d15f404ebd7402",
+    "replay_gaia_scan_null_py_sha256": "ad3e7b2cb8b47ad7350d3aeb4b8167909e6fc4dc825b2ede3949bee6d58157f2",
+    "replay_receipt": "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2/scan_null_noise_scanshape.json",
+    "replay_receipt_sha256": "708b9ac48b748342f6f22fe07cb5ab0bcaf220340424d8511cc01f2a3c8fd511",
+    "replay_seed": 108312,
+    "status": "BIT_IDENTICAL"
+   },
+   "script_version": {
+    "gaia_estimator_py_sha256": "f32017b7c1444c5f8adf1a12b2196a98f1ecd0ca940a638ee57d3620c4def63c",
+    "gaia_scan_null_py_sha256": null,
+    "group": "pre_fix_noise_kind (amplitude_from not applicable; version not separable from the receipt)"
+   },
+   "tables": {
+    "all48__joint32": {
+     "draws": 1000,
+     "draws_ge_observed": 17,
+     "null_max": 605.224845071467,
+     "null_q50": 132.35593880443628,
+     "null_q95": 308.85110190205984,
+     "null_q99": 463.87587550930397,
+     "observed": 406.385070538911
+    },
+    "all48__magnetic16": {
+     "draws": 1000,
+     "draws_ge_observed": 0,
+     "null_max": 118.13525675429074,
+     "null_q50": 22.738566004059535,
+     "null_q95": 49.781510722082935,
+     "null_q99": 74.56777595531996,
+     "observed": 171.9805476095276
+    },
+    "all48__spin6": {
+     "draws": 1000,
+     "draws_ge_observed": 0,
+     "null_max": 31.685579222264025,
+     "null_q50": 5.247728499501402,
+     "null_q95": 14.308922304402822,
+     "null_q99": 20.44742370699163,
+     "observed": 104.12458235777473
+    },
+    "all48_jk2__joint32": {
+     "draws": 1000,
+     "draws_ge_observed": 10,
+     "null_max": 561.5047623050629,
+     "null_q50": 125.31170882200813,
+     "null_q95": 279.440093519533,
+     "null_q99": 388.24958928967317,
+     "observed": 396.614882560647
+    },
+    "all48_jk2__magnetic16": {
+     "draws": 1000,
+     "draws_ge_observed": 0,
+     "null_max": 116.0179610064088,
+     "null_q50": 22.462021766410537,
+     "null_q95": 49.06603547642988,
+     "null_q99": 73.27094965980633,
+     "observed": 169.83443757949405
+    },
+    "all48_jk2__spin6": {
+     "draws": 1000,
+     "draws_ge_observed": 0,
+     "null_max": 31.355516190085222,
+     "null_q50": 5.2182233596325,
+     "null_q95": 14.163565653411428,
+     "null_q99": 20.254545187194644,
+     "observed": 103.55299053686419
+    },
+    "excl__joint32": {
+     "draws": 1000,
+     "draws_ge_observed": 5,
+     "null_max": 901.6935117145069,
+     "null_q50": 175.29584183278334,
+     "null_q95": 427.75592808881,
+     "null_q99": 655.431518495769,
+     "observed": 762.9905563786845
+    },
+    "excl__magnetic16": {
+     "draws": 1000,
+     "draws_ge_observed": 0,
+     "null_max": 120.543368777531,
+     "null_q50": 26.753944546079325,
+     "null_q95": 59.9829532467643,
+     "null_q99": 88.59801171586737,
+     "observed": 199.84655511871495
+    },
+    "excl__spin6": {
+     "draws": 1000,
+     "draws_ge_observed": 0,
+     "null_max": 36.82830426049097,
+     "null_q50": 6.234816340007665,
+     "null_q95": 16.440089923878823,
+     "null_q99": 24.32905290455809,
+     "observed": 103.19179235460663
+    },
+    "excl_jk2__joint32": {
+     "draws": 1000,
+     "draws_ge_observed": 2,
+     "null_max": 760.4685802057277,
+     "null_q50": 160.5922319759071,
+     "null_q95": 376.7131642584279,
+     "null_q99": 544.75703117899,
+     "observed": 694.5285411488791
+    },
+    "excl_jk2__magnetic16": {
+     "draws": 1000,
+     "draws_ge_observed": 0,
+     "null_max": 117.49709528122875,
+     "null_q50": 26.37144411724963,
+     "null_q95": 59.06161316243072,
+     "null_q99": 86.86053584050808,
+     "observed": 195.85319190563902
+    },
+    "excl_jk2__spin6": {
+     "draws": 1000,
+     "draws_ge_observed": 0,
+     "null_max": 36.48536131132728,
+     "null_q50": 6.185859619475123,
+     "null_q95": 16.27496582848856,
+     "null_q99": 24.037213013974213,
+     "observed": 102.58190465652973
+    }
+   }
+  },
+  "sys_blind_tau10": {
+   "command": [
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r108/gaia_scan_null.py",
+    "run",
+    "--kind",
+    "sys_blind_tau10",
+    "--draws",
+    "300",
+    "--seed",
+    "108333",
+    "--scan-dir",
+    "/home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products",
+    "--calibration",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json",
+    "--out-dir",
+    "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null"
+   ],
+   "receipt": {
+    "amplitude_from": "complement_cross_blind",
+    "amplitude_mas_per_yr_per_unit_e": 1.6881622319979435,
+    "calibration_sha256": "95888422a46d03e1f3450b71a6d584fb50195608dddcae802921b4ecc49fd0aa",
+    "draws": 300,
+    "npz_sha256": "4a001e4430e36b52f0bf14dbde318daf63e10adba7ffe43dccd39bec1d91ae3a",
+    "runtime_s": 342.3239963570377,
+    "seed": 108333
+   },
+   "receipt_path": "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null/scan_null_sys_blind_tau10.json",
+   "receipt_sha256": "a63ce236c0d464028a4d90b828ec48c03e2fee433368436ae0e08df0fc7a7891",
+   "replay_check": {
+    "arrays_compared": 32,
+    "draws_compared": 2,
+    "mismatched_arrays": [],
+    "replay_amplitude_mas_per_yr_per_unit_e": 1.6881622319979435,
+    "replay_gaia_estimator_py_sha256": "84cdf08db5c8ba4c84d1f5c0be97677b0f51de91610703da79d15f404ebd7402",
+    "replay_gaia_scan_null_py_sha256": "ad3e7b2cb8b47ad7350d3aeb4b8167909e6fc4dc825b2ede3949bee6d58157f2",
+    "replay_receipt": "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2/scan_null_sys_blind_tau10.json",
+    "replay_receipt_sha256": "7427606680027885401dd9d4801005a40f35805d0f83fb973536e0820fe5390d",
+    "replay_seed": 108333,
+    "status": "BIT_IDENTICAL"
+   },
+   "script_version": {
+    "gaia_estimator_py_sha256": "f32017b7c1444c5f8adf1a12b2196a98f1ecd0ca940a638ee57d3620c4def63c",
+    "gaia_scan_null_py_sha256": null,
+    "group": "pre_fix_B (amplitude_from recorded)"
+   },
+   "systematic_only_all48": {
+    "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+     1.8239345466708567,
+     3.646087152013114
+    ],
+    "min_amplitude_needed_over_calibrated": 1.5429977025301826,
+    "spin6_Q_in_observed_jk1_q50_q95_max": [
+     7.832478334443675,
+     22.150614388274175,
+     43.73435376781809
+    ]
+   },
+   "systematic_only_excl_8_47": {
+    "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+     1.6478250066932123,
+     3.42560693789299
+    ],
+    "min_amplitude_needed_over_calibrated": 1.4213901582903339,
+    "spin6_Q_in_observed_jk1_q50_q95_max": [
+     8.793674383052867,
+     23.74887549155606,
+     51.07619633709807
+    ]
+   },
+   "tables": {
+    "all48__joint32": {
+     "draws": 300,
+     "draws_ge_observed": 5,
+     "null_max": 689.2809299363771,
+     "null_q50": 137.12337124200036,
+     "null_q95": 327.1257158789062,
+     "null_q99": 443.4087932246868,
+     "observed": 406.385070538911
+    },
+    "all48__magnetic16": {
+     "draws": 300,
+     "draws_ge_observed": 0,
+     "null_max": 129.48876413670456,
+     "null_q50": 23.163584869818823,
+     "null_q95": 48.702379146480176,
+     "null_q99": 67.03335482776902,
+     "observed": 171.9805476095276
+    },
+    "all48__spin6": {
+     "draws": 300,
+     "draws_ge_observed": 0,
+     "null_max": 21.78507638298492,
+     "null_q50": 5.387880446301266,
+     "null_q95": 14.6937640262458,
+     "null_q99": 20.388892152455078,
+     "observed": 104.12458235777473
+    },
+    "all48_jk2__joint32": {
+     "draws": 300,
+     "draws_ge_observed": 5,
+     "null_max": 554.1354225458424,
+     "null_q50": 127.82606042246938,
+     "null_q95": 287.014687477609,
+     "null_q99": 404.9724698724815,
+     "observed": 396.614882560647
+    },
+    "all48_jk2__magnetic16": {
+     "draws": 300,
+     "draws_ge_observed": 0,
+     "null_max": 125.35628996352334,
+     "null_q50": 22.928641690281694,
+     "null_q95": 47.90530842244913,
+     "null_q99": 65.98329467227774,
+     "observed": 169.83443757949405
+    },
+    "all48_jk2__spin6": {
+     "draws": 300,
+     "draws_ge_observed": 0,
+     "null_max": 21.68915328646345,
+     "null_q50": 5.3398466122097386,
+     "null_q95": 14.556924310273054,
+     "null_q99": 20.299756383427187,
+     "observed": 103.55299053686419
+    },
+    "excl__joint32": {
+     "draws": 300,
+     "draws_ge_observed": 1,
+     "null_max": 1466.226068103892,
+     "null_q50": 167.61702087083597,
+     "null_q95": 466.5607129634688,
+     "null_q99": 623.4771972435891,
+     "observed": 762.9905563786845
+    },
+    "excl__magnetic16": {
+     "draws": 300,
+     "draws_ge_observed": 0,
+     "null_max": 115.77186707527082,
+     "null_q50": 25.975404723823576,
+     "null_q95": 59.29997169872313,
+     "null_q99": 93.74389716669116,
+     "observed": 199.84655511871495
+    },
+    "excl__spin6": {
+     "draws": 300,
+     "draws_ge_observed": 0,
+     "null_max": 25.398629324704572,
+     "null_q50": 6.100337776331506,
+     "null_q95": 15.704542433210362,
+     "null_q99": 21.332644860356147,
+     "observed": 103.19179235460663
+    },
+    "excl_jk2__joint32": {
+     "draws": 300,
+     "draws_ge_observed": 1,
+     "null_max": 1164.0690014679562,
+     "null_q50": 157.10641018129007,
+     "null_q95": 398.50667782608605,
+     "null_q99": 545.0454272829822,
+     "observed": 694.5285411488791
+    },
+    "excl_jk2__magnetic16": {
+     "draws": 300,
+     "draws_ge_observed": 0,
+     "null_max": 112.37644921069408,
+     "null_q50": 25.62016294851406,
+     "null_q95": 58.36366791128519,
+     "null_q99": 90.85946978783946,
+     "observed": 195.85319190563902
+    },
+    "excl_jk2__spin6": {
+     "draws": 300,
+     "draws_ge_observed": 0,
+     "null_max": 25.273465195809834,
+     "null_q50": 6.053046992692141,
+     "null_q95": 15.598884197197405,
+     "null_q99": 21.148226837766497,
+     "observed": 102.58190465652973
+    }
+   }
+  },
+  "sys_blind_tau21600": {
+   "command": [
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r108/gaia_scan_null.py",
+    "run",
+    "--kind",
+    "sys_blind_tau21600",
+    "--draws",
+    "400",
+    "--seed",
+    "108332",
+    "--scan-dir",
+    "/home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products",
+    "--calibration",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json",
+    "--out-dir",
+    "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null"
+   ],
+   "receipt": {
+    "amplitude_from": null,
+    "amplitude_mas_per_yr_per_unit_e": 0.45624840481917583,
+    "calibration_sha256": "95888422a46d03e1f3450b71a6d584fb50195608dddcae802921b4ecc49fd0aa",
+    "draws": 400,
+    "npz_sha256": "8add5a5fb943620fa69f91dd1666b8ff3f571bb8d263dbee9715a35dab0ca4a7",
+    "runtime_s": 497.969321771001,
+    "seed": 108332
+   },
+   "receipt_path": "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null/scan_null_sys_blind_tau21600.json",
+   "receipt_sha256": "8e995dd716ede006bb46aa3c50547ed9eb6b48b354a9bbc490ebc12c7e507f52",
+   "replay_check": {
+    "arrays_compared": 32,
+    "draws_compared": 2,
+    "mismatched_arrays": [],
+    "replay_amplitude_mas_per_yr_per_unit_e": 0.45624840481917583,
+    "replay_gaia_estimator_py_sha256": "84cdf08db5c8ba4c84d1f5c0be97677b0f51de91610703da79d15f404ebd7402",
+    "replay_gaia_scan_null_py_sha256": "ad3e7b2cb8b47ad7350d3aeb4b8167909e6fc4dc825b2ede3949bee6d58157f2",
+    "replay_receipt": "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2/scan_null_sys_blind_tau21600.json",
+    "replay_receipt_sha256": "490bdfeed7ba1f3f5401385430e6144baad9a30943fe29871122054c792d5c22",
+    "replay_seed": 108332,
+    "status": "BIT_IDENTICAL"
+   },
+   "script_version": {
+    "gaia_estimator_py_sha256": "f32017b7c1444c5f8adf1a12b2196a98f1ecd0ca940a638ee57d3620c4def63c",
+    "gaia_scan_null_py_sha256": null,
+    "group": "pre_fix_A (primary systematic run written before run() recorded amplitude_from)"
+   },
+   "systematic_only_all48": {
+    "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+     3.083205283575518,
+     5.791191375907943
+    ],
+    "min_amplitude_needed_over_calibrated": 2.702673598759217,
+    "spin6_Q_in_observed_jk1_q50_q95_max": [
+     3.1046923103637907,
+     8.10850956818734,
+     14.25496233108373
+    ]
+   },
+   "systematic_only_excl_8_47": {
+    "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+     2.8755713578361846,
+     5.526582130720758
+    ],
+    "min_amplitude_needed_over_calibrated": 2.533037422241442,
+    "spin6_Q_in_observed_jk1_q50_q95_max": [
+     3.3785621255821114,
+     9.309624994792458,
+     16.082810468430836
+    ]
+   },
+   "tables": {
+    "all48__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 5,
+     "null_max": 827.3602079650568,
+     "null_q50": 137.6608503105682,
+     "null_q95": 325.054429276811,
+     "null_q99": 426.21215755254605,
+     "observed": 406.385070538911
+    },
+    "all48__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 63.30705073918885,
+     "null_q50": 22.107392910552306,
+     "null_q95": 46.778653526198674,
+     "null_q99": 56.95392098195998,
+     "observed": 171.9805476095276
+    },
+    "all48__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 37.62996729361463,
+     "null_q50": 5.490909936519195,
+     "null_q95": 15.595034995401706,
+     "null_q99": 24.069909482772353,
+     "observed": 104.12458235777473
+    },
+    "all48_jk2__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 4,
+     "null_max": 695.3153251784007,
+     "null_q50": 128.06359270442564,
+     "null_q95": 274.5762485737093,
+     "null_q99": 394.0967195750563,
+     "observed": 396.614882560647
+    },
+    "all48_jk2__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 61.839829299090646,
+     "null_q50": 21.855412441552563,
+     "null_q95": 46.332536161512174,
+     "null_q99": 56.2656040760225,
+     "observed": 169.83443757949405
+    },
+    "all48_jk2__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 37.29731870668056,
+     "null_q50": 5.461836092058354,
+     "null_q95": 15.459725101884036,
+     "null_q99": 23.83807554449564,
+     "observed": 103.55299053686419
+    },
+    "excl__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 4,
+     "null_max": 1600.7672184307985,
+     "null_q50": 178.22852726605004,
+     "null_q95": 415.9817161726818,
+     "null_q99": 680.6912691260873,
+     "observed": 762.9905563786845
+    },
+    "excl__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 81.13248662156991,
+     "null_q50": 26.301719110940823,
+     "null_q95": 57.07827458428118,
+     "null_q99": 71.07973084723383,
+     "observed": 199.84655511871495
+    },
+    "excl__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 36.213657599568265,
+     "null_q50": 6.415365171207132,
+     "null_q95": 18.67283936506992,
+     "null_q99": 29.385386099730304,
+     "observed": 103.19179235460663
+    },
+    "excl_jk2__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 2,
+     "null_max": 1123.4014925674228,
+     "null_q50": 163.62505398865875,
+     "null_q95": 352.73383549083775,
+     "null_q99": 567.1775416585994,
+     "observed": 694.5285411488791
+    },
+    "excl_jk2__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 79.92992301074264,
+     "null_q50": 25.98208401095149,
+     "null_q95": 56.33195663132179,
+     "null_q99": 69.37893232030923,
+     "observed": 195.85319190563902
+    },
+    "excl_jk2__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 35.81604026876726,
+     "null_q50": 6.367034657784995,
+     "null_q95": 18.55788798856427,
+     "null_q99": 29.155944816967914,
+     "observed": 102.58190465652973
+    }
+   }
+  },
+  "sys_blind_tau600": {
+   "command": [
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r108/gaia_scan_null.py",
+    "run",
+    "--kind",
+    "sys_blind_tau600",
+    "--draws",
+    "400",
+    "--seed",
+    "108331",
+    "--scan-dir",
+    "/home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products",
+    "--calibration",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json",
+    "--out-dir",
+    "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null"
+   ],
+   "receipt": {
+    "amplitude_from": null,
+    "amplitude_mas_per_yr_per_unit_e": 0.4693747941171581,
+    "calibration_sha256": "95888422a46d03e1f3450b71a6d584fb50195608dddcae802921b4ecc49fd0aa",
+    "draws": 400,
+    "npz_sha256": "05567e5b9d360b0bdd0002e49836af73d8450c8fe075a6eba88c7ae591860672",
+    "runtime_s": 939.5013232809724,
+    "seed": 108331
+   },
+   "receipt_path": "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null/scan_null_sys_blind_tau600.json",
+   "receipt_sha256": "f5c2fe4eb1945bb7c28ac2407330052cd557bcd254d526da23d8e99dbf1c05ce",
+   "replay_check": {
+    "arrays_compared": 32,
+    "draws_compared": 2,
+    "mismatched_arrays": [],
+    "replay_amplitude_mas_per_yr_per_unit_e": 0.4693747941171581,
+    "replay_gaia_estimator_py_sha256": "84cdf08db5c8ba4c84d1f5c0be97677b0f51de91610703da79d15f404ebd7402",
+    "replay_gaia_scan_null_py_sha256": "ad3e7b2cb8b47ad7350d3aeb4b8167909e6fc4dc825b2ede3949bee6d58157f2",
+    "replay_receipt": "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2/scan_null_sys_blind_tau600.json",
+    "replay_receipt_sha256": "d63e3b2485c7f1ce31d944b803257a468be17725841f5b4c169855a8609a6ed7",
+    "replay_seed": 108331,
+    "status": "BIT_IDENTICAL"
+   },
+   "script_version": {
+    "gaia_estimator_py_sha256": "f32017b7c1444c5f8adf1a12b2196a98f1ecd0ca940a638ee57d3620c4def63c",
+    "gaia_scan_null_py_sha256": null,
+    "group": "pre_fix_A (primary systematic run written before run() recorded amplitude_from)"
+   },
+   "systematic_only_all48": {
+    "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+     3.0468112587433835,
+     5.6078957374102965
+    ],
+    "min_amplitude_needed_over_calibrated": 2.361433124705863,
+    "spin6_Q_in_observed_jk1_q50_q95_max": [
+     3.310956256668555,
+     8.367415405587675,
+     18.67247860755276
+    ]
+   },
+   "systematic_only_excl_8_47": {
+    "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+     2.6190130574355286,
+     5.40791908560414
+    ],
+    "min_amplitude_needed_over_calibrated": 2.1061073649353874,
+    "spin6_Q_in_observed_jk1_q50_q95_max": [
+     3.528456926993454,
+     9.04849296728593,
+     23.26398676881403
+    ]
+   },
+   "tables": {
+    "all48__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 9,
+     "null_max": 696.3152981622695,
+     "null_q50": 135.47613305783136,
+     "null_q95": 336.77699598240355,
+     "null_q99": 503.00206463893426,
+     "observed": 406.385070538911
+    },
+    "all48__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 89.13427712331199,
+     "null_q50": 23.66031212379136,
+     "null_q95": 52.44824326594324,
+     "null_q99": 66.28766695238086,
+     "observed": 171.9805476095276
+    },
+    "all48__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 22.202467157650588,
+     "null_q50": 5.628421695670303,
+     "null_q95": 14.102243158258432,
+     "null_q99": 17.369742745535724,
+     "observed": 104.12458235777473
+    },
+    "all48_jk2__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 6,
+     "null_max": 594.7320521830824,
+     "null_q50": 128.39022521488852,
+     "null_q95": 291.68847530114084,
+     "null_q99": 437.789083879502,
+     "observed": 396.614882560647
+    },
+    "all48_jk2__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 87.07837077201201,
+     "null_q50": 23.413536527359412,
+     "null_q95": 51.63023763081346,
+     "null_q99": 65.35690439469099,
+     "observed": 169.83443757949405
+    },
+    "all48_jk2__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 22.03505755610635,
+     "null_q50": 5.584243734465181,
+     "null_q95": 13.983672831363323,
+     "null_q99": 17.203272275337678,
+     "observed": 103.55299053686419
+    },
+    "excl__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 6,
+     "null_max": 1511.7551068565197,
+     "null_q50": 173.36635791765914,
+     "null_q95": 458.9846233854272,
+     "null_q99": 946.7668402629395,
+     "observed": 762.9905563786845
+    },
+    "excl__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 99.69618039891964,
+     "null_q50": 28.04671113768842,
+     "null_q95": 60.29629058664705,
+     "null_q99": 85.88440152303392,
+     "observed": 199.84655511871495
+    },
+    "excl__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 28.58232454583519,
+     "null_q50": 6.493443052297208,
+     "null_q95": 17.35635169654948,
+     "null_q99": 22.02881694985307,
+     "observed": 103.19179235460663
+    },
+    "excl_jk2__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 5,
+     "null_max": 919.0804735250871,
+     "null_q50": 158.95077055359621,
+     "null_q95": 397.23471246023394,
+     "null_q99": 722.4320473649748,
+     "observed": 694.5285411488791
+    },
+    "excl_jk2__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 97.77271869874963,
+     "null_q50": 27.662535392328458,
+     "null_q95": 59.29281341059854,
+     "null_q99": 84.5052787949574,
+     "observed": 195.85319190563902
+    },
+    "excl_jk2__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 28.19941642342252,
+     "null_q50": 6.455486577294681,
+     "null_q95": 17.213190091892997,
+     "null_q99": 21.88255148681869,
+     "observed": 102.58190465652973
+    }
+   }
+  },
+  "sys_colour_tau10": {
+   "command": [
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r108/gaia_scan_null.py",
+    "run",
+    "--kind",
+    "sys_colour_tau10",
+    "--draws",
+    "300",
+    "--seed",
+    "108323",
+    "--scan-dir",
+    "/home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products",
+    "--calibration",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json",
+    "--out-dir",
+    "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null"
+   ],
+   "receipt": {
+    "amplitude_from": null,
+    "amplitude_mas_per_yr_per_unit_e": 1.307990042534161,
+    "calibration_sha256": "95888422a46d03e1f3450b71a6d584fb50195608dddcae802921b4ecc49fd0aa",
+    "draws": 300,
+    "npz_sha256": "4379e5eb30f109e3e373d1b0611a1be1a6c9af9dc8958fe8c23bc38e2ee80abf",
+    "runtime_s": 750.8568952039932,
+    "seed": 108323
+   },
+   "receipt_path": "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null/scan_null_sys_colour_tau10.json",
+   "receipt_sha256": "8dcf3a1b110edfcbd323c7868e066766948a0765ff670672bcb3eaec0ef1e3c7",
+   "replay_check": {
+    "arrays_compared": 32,
+    "draws_compared": 2,
+    "mismatched_arrays": [],
+    "replay_amplitude_mas_per_yr_per_unit_e": 1.307990042534161,
+    "replay_gaia_estimator_py_sha256": "84cdf08db5c8ba4c84d1f5c0be97677b0f51de91610703da79d15f404ebd7402",
+    "replay_gaia_scan_null_py_sha256": "ad3e7b2cb8b47ad7350d3aeb4b8167909e6fc4dc825b2ede3949bee6d58157f2",
+    "replay_receipt": "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2/scan_null_sys_colour_tau10.json",
+    "replay_receipt_sha256": "15ac2bb3d989174b887fd363d9b7e3c429a364389a297324ae57c1007001492d",
+    "replay_seed": 108323,
+    "status": "BIT_IDENTICAL"
+   },
+   "script_version": {
+    "gaia_estimator_py_sha256": "f32017b7c1444c5f8adf1a12b2196a98f1ecd0ca940a638ee57d3620c4def63c",
+    "gaia_scan_null_py_sha256": null,
+    "group": "pre_fix_A (primary systematic run written before run() recorded amplitude_from)"
+   },
+   "systematic_only_all48": {
+    "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+     2.7702987958793797,
+     5.800569726461665
+    ],
+    "min_amplitude_needed_over_calibrated": 2.1798142074773676,
+    "spin6_Q_in_observed_jk1_q50_q95_max": [
+     3.094681615407965,
+     8.505103440172928,
+     21.91362950408753
+    ]
+   },
+   "systematic_only_excl_8_47": {
+    "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+     2.7426205188553343,
+     5.440420308876211
+    ],
+    "min_amplitude_needed_over_calibrated": 2.0301776463322554,
+    "spin6_Q_in_observed_jk1_q50_q95_max": [
+     3.4864619136457637,
+     9.94223283899452,
+     25.03669926293816
+    ]
+   },
+   "tables": {
+    "all48__joint32": {
+     "draws": 300,
+     "draws_ge_observed": 6,
+     "null_max": 530.2210491967629,
+     "null_q50": 130.99958273394617,
+     "null_q95": 289.1947163504542,
+     "null_q99": 429.9096723690259,
+     "observed": 406.385070538911
+    },
+    "all48__magnetic16": {
+     "draws": 300,
+     "draws_ge_observed": 0,
+     "null_max": 122.18761247950314,
+     "null_q50": 22.1074794174088,
+     "null_q95": 47.19399361909816,
+     "null_q99": 67.44806542005604,
+     "observed": 171.9805476095276
+    },
+    "all48__spin6": {
+     "draws": 300,
+     "draws_ge_observed": 0,
+     "null_max": 31.834243340183015,
+     "null_q50": 5.165440429922166,
+     "null_q95": 15.075925337384984,
+     "null_q99": 20.4877927740574,
+     "observed": 104.12458235777473
+    },
+    "all48_jk2__joint32": {
+     "draws": 300,
+     "draws_ge_observed": 3,
+     "null_max": 468.8329599122259,
+     "null_q50": 123.01008804298701,
+     "null_q95": 265.64959284568107,
+     "null_q99": 372.9897654171504,
+     "observed": 396.614882560647
+    },
+    "all48_jk2__magnetic16": {
+     "draws": 300,
+     "draws_ge_observed": 0,
+     "null_max": 119.58720281336656,
+     "null_q50": 21.849573368151084,
+     "null_q95": 46.6873037510518,
+     "null_q99": 66.50757357922821,
+     "observed": 169.83443757949405
+    },
+    "all48_jk2__spin6": {
+     "draws": 300,
+     "draws_ge_observed": 0,
+     "null_max": 31.589852165834923,
+     "null_q50": 5.137341779646907,
+     "null_q95": 14.943926627457367,
+     "null_q99": 20.325011055704273,
+     "observed": 103.55299053686419
+    },
+    "excl__joint32": {
+     "draws": 300,
+     "draws_ge_observed": 2,
+     "null_max": 916.8733697378002,
+     "null_q50": 156.87696015029752,
+     "null_q95": 434.58215689613,
+     "null_q99": 624.9348326063058,
+     "observed": 762.9905563786845
+    },
+    "excl__magnetic16": {
+     "draws": 300,
+     "draws_ge_observed": 0,
+     "null_max": 106.10160772288475,
+     "null_q50": 26.324963303498425,
+     "null_q95": 56.22675890078114,
+     "null_q99": 82.84846138821287,
+     "observed": 199.84655511871495
+    },
+    "excl__spin6": {
+     "draws": 300,
+     "draws_ge_observed": 0,
+     "null_max": 36.73966016512151,
+     "null_q50": 6.434434358451341,
+     "null_q95": 17.805633135658923,
+     "null_q99": 26.22000190763029,
+     "observed": 103.19179235460663
+    },
+    "excl_jk2__joint32": {
+     "draws": 300,
+     "draws_ge_observed": 2,
+     "null_max": 716.3953013357307,
+     "null_q50": 145.31727746650122,
+     "null_q95": 378.8683123355256,
+     "null_q99": 520.2226874284966,
+     "observed": 694.5285411488791
+    },
+    "excl_jk2__magnetic16": {
+     "draws": 300,
+     "draws_ge_observed": 0,
+     "null_max": 103.82534337821431,
+     "null_q50": 26.01674110397661,
+     "null_q95": 55.13099352906387,
+     "null_q99": 80.60629920070495,
+     "observed": 195.85319190563902
+    },
+    "excl_jk2__spin6": {
+     "draws": 300,
+     "draws_ge_observed": 0,
+     "null_max": 36.40066156915005,
+     "null_q50": 6.394727139700455,
+     "null_q95": 17.638948773386304,
+     "null_q99": 26.077582619569693,
+     "observed": 102.58190465652973
+    }
+   }
+  },
+  "sys_colour_tau21600": {
+   "command": [
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r108/gaia_scan_null.py",
+    "run",
+    "--kind",
+    "sys_colour_tau21600",
+    "--draws",
+    "400",
+    "--seed",
+    "108322",
+    "--scan-dir",
+    "/home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products",
+    "--calibration",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json",
+    "--out-dir",
+    "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null"
+   ],
+   "receipt": {
+    "amplitude_from": null,
+    "amplitude_mas_per_yr_per_unit_e": 0.39070437160508464,
+    "calibration_sha256": "95888422a46d03e1f3450b71a6d584fb50195608dddcae802921b4ecc49fd0aa",
+    "draws": 400,
+    "npz_sha256": "1e6e40a6a2eaff1a3bba465a4f271ef8af1b1132e016df5bc1d5a73d09b35501",
+    "runtime_s": 872.3923768710229,
+    "seed": 108322
+   },
+   "receipt_path": "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null/scan_null_sys_colour_tau21600.json",
+   "receipt_sha256": "01d3b82e8f8dacad8d91c0b9f42a8ad8ed81b48d724615aa2efd67d5ff05f29f",
+   "replay_check": {
+    "arrays_compared": 32,
+    "draws_compared": 2,
+    "mismatched_arrays": [],
+    "replay_amplitude_mas_per_yr_per_unit_e": 0.39070437160508464,
+    "replay_gaia_estimator_py_sha256": "84cdf08db5c8ba4c84d1f5c0be97677b0f51de91610703da79d15f404ebd7402",
+    "replay_gaia_scan_null_py_sha256": "ad3e7b2cb8b47ad7350d3aeb4b8167909e6fc4dc825b2ede3949bee6d58157f2",
+    "replay_receipt": "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2/scan_null_sys_colour_tau21600.json",
+    "replay_receipt_sha256": "ad387ec4a9f1691f7ec7accb0dc291dddd82798f20a79342b68bef0fddf14d48",
+    "replay_seed": 108322,
+    "status": "BIT_IDENTICAL"
+   },
+   "script_version": {
+    "gaia_estimator_py_sha256": "f32017b7c1444c5f8adf1a12b2196a98f1ecd0ca940a638ee57d3620c4def63c",
+    "gaia_scan_null_py_sha256": null,
+    "group": "pre_fix_A (primary systematic run written before run() recorded amplitude_from)"
+   },
+   "systematic_only_all48": {
+    "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+     1.0795881792542108,
+     2.2428342888339152
+    ],
+    "min_amplitude_needed_over_calibrated": 0.9190944564179383,
+    "spin6_Q_in_observed_jk1_q50_q95_max": [
+     20.699519525168682,
+     61.514850378412426,
+     123.26306974394603
+    ]
+   },
+   "systematic_only_excl_8_47": {
+    "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+     1.039323620875578,
+     2.1183469248884412
+    ],
+    "min_amplitude_needed_over_calibrated": 0.9319198319684912,
+    "spin6_Q_in_observed_jk1_q50_q95_max": [
+     22.996089836273242,
+     70.92284904358382,
+     118.81958958505987
+    ]
+   },
+   "tables": {
+    "all48__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 35,
+     "null_max": 1161.1567661381232,
+     "null_q50": 185.96241924472093,
+     "null_q95": 492.784276341965,
+     "null_q99": 778.0987255553919,
+     "observed": 406.385070538911
+    },
+    "all48__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 3,
+     "null_max": 199.37655306421013,
+     "null_q50": 37.6628309067945,
+     "null_q95": 102.64345988123104,
+     "null_q99": 165.1818330240569,
+     "observed": 171.9805476095276
+    },
+    "all48__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 2,
+     "null_max": 126.2716079277121,
+     "null_q50": 18.17126080823291,
+     "null_q95": 56.88964760480808,
+     "null_q99": 85.31673561203114,
+     "observed": 104.12458235777473
+    },
+    "all48_jk2__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 30,
+     "null_max": 990.4914855658806,
+     "null_q50": 173.89178872842314,
+     "null_q95": 438.38275333637336,
+     "null_q99": 673.5901664241148,
+     "observed": 396.614882560647
+    },
+    "all48_jk2__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 3,
+     "null_max": 196.61325321047985,
+     "null_q50": 37.323840471950454,
+     "null_q95": 101.41856904127523,
+     "null_q99": 163.31060166804437,
+     "observed": 169.83443757949405
+    },
+    "all48_jk2__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 2,
+     "null_max": 125.12535771418558,
+     "null_q50": 18.0171271442272,
+     "null_q95": 56.545665132066844,
+     "null_q99": 84.7249968492877,
+     "observed": 103.55299053686419
+    },
+    "excl__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 11,
+     "null_max": 1384.6102250475774,
+     "null_q50": 229.2401880371925,
+     "null_q95": 642.0682253072895,
+     "null_q99": 953.9051118418704,
+     "observed": 762.9905563786845
+    },
+    "excl__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 1,
+     "null_max": 226.55499228412722,
+     "null_q50": 43.635635042893924,
+     "null_q95": 114.43751656366369,
+     "null_q99": 170.92688823482584,
+     "observed": 199.84655511871495
+    },
+    "excl__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 3,
+     "null_max": 126.4100008387568,
+     "null_q50": 20.30712042142104,
+     "null_q95": 60.93797889969683,
+     "null_q99": 91.35664816558491,
+     "observed": 103.19179235460663
+    },
+    "excl_jk2__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 10,
+     "null_max": 1168.499052648151,
+     "null_q50": 212.70904971189628,
+     "null_q95": 575.307837089869,
+     "null_q99": 818.3042537885827,
+     "observed": 694.5285411488791
+    },
+    "excl_jk2__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 1,
+     "null_max": 223.14409801819272,
+     "null_q50": 43.05420357780943,
+     "null_q95": 111.65815936715416,
+     "null_q99": 168.57824610879496,
+     "observed": 195.85319190563902
+    },
+    "excl_jk2__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 3,
+     "null_max": 125.19585346443992,
+     "null_q50": 20.100078392068667,
+     "null_q95": 60.467719221288476,
+     "null_q99": 90.5061820779356,
+     "observed": 102.58190465652973
+    }
+   }
+  },
+  "sys_colour_tau21600__amp_complement_cross": {
+   "command": [
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r108/gaia_scan_null.py",
+    "run",
+    "--kind",
+    "sys_colour_tau21600",
+    "--amplitude-from",
+    "complement_cross",
+    "--draws",
+    "400",
+    "--seed",
+    "108322",
+    "--scan-dir",
+    "/home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products",
+    "--calibration",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json",
+    "--out-dir",
+    "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null"
+   ],
+   "receipt": {
+    "amplitude_from": "complement_cross_colour (sensitivity)",
+    "amplitude_mas_per_yr_per_unit_e": 0.30566775694664894,
+    "calibration_sha256": "95888422a46d03e1f3450b71a6d584fb50195608dddcae802921b4ecc49fd0aa",
+    "draws": 400,
+    "npz_sha256": "a0fdec7aa33c916db8a1d3c43daf120940409ae23fa15c7567283b10deb7317d",
+    "runtime_s": 195.81642463896424,
+    "seed": 108322
+   },
+   "receipt_path": "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null/scan_null_sys_colour_tau21600__amp_complement_cross.json",
+   "receipt_sha256": "d1fb5f181b5c28ccce221537c749e3f5379a650c43a3079b04f26ddcf38a3965",
+   "replay_check": {
+    "arrays_compared": 32,
+    "draws_compared": 2,
+    "mismatched_arrays": [],
+    "replay_amplitude_mas_per_yr_per_unit_e": 0.30566775694664894,
+    "replay_gaia_estimator_py_sha256": "84cdf08db5c8ba4c84d1f5c0be97677b0f51de91610703da79d15f404ebd7402",
+    "replay_gaia_scan_null_py_sha256": "ad3e7b2cb8b47ad7350d3aeb4b8167909e6fc4dc825b2ede3949bee6d58157f2",
+    "replay_receipt": "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2/scan_null_sys_colour_tau21600__amp_complement_cross.json",
+    "replay_receipt_sha256": "8db5d58adf75c65c99142bc0abf0c460d9775c5c9a6efef48f0462b84a90f87b",
+    "replay_seed": 108322,
+    "status": "BIT_IDENTICAL"
+   },
+   "script_version": {
+    "gaia_estimator_py_sha256": "f32017b7c1444c5f8adf1a12b2196a98f1ecd0ca940a638ee57d3620c4def63c",
+    "gaia_scan_null_py_sha256": null,
+    "group": "pre_fix_B (amplitude_from recorded)"
+   },
+   "systematic_only_all48": {
+    "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+     1.3799290621333489,
+     2.866789648298229
+    ],
+    "min_amplitude_needed_over_calibrated": 1.1747860671584143,
+    "spin6_Q_in_observed_jk1_q50_q95_max": [
+     12.669602332369031,
+     37.651535383805864,
+     75.44590945813935
+    ]
+   },
+   "systematic_only_excl_8_47": {
+    "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+     1.328462924074091,
+     2.707669962960991
+    ],
+    "min_amplitude_needed_over_calibrated": 1.1911794556699553,
+    "spin6_Q_in_observed_jk1_q50_q95_max": [
+     14.075269383463683,
+     43.40991067779506,
+     72.72617837856501
+    ]
+   },
+   "tables": {
+    "all48__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 22,
+     "null_max": 897.0523788631524,
+     "null_q50": 174.41233189105827,
+     "null_q95": 419.85989011930553,
+     "null_q99": 716.0879509317264,
+     "observed": 406.385070538911
+    },
+    "all48__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 1,
+     "null_max": 183.9375786322854,
+     "null_q50": 34.347965055714965,
+     "null_q95": 88.59573516261442,
+     "null_q99": 135.94062612427777,
+     "observed": 171.9805476095276
+    },
+    "all48__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 98.20477179694937,
+     "null_q50": 15.048236024247139,
+     "null_q95": 46.953674351636565,
+     "null_q99": 69.13345193375154,
+     "observed": 104.12458235777473
+    },
+    "all48_jk2__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 17,
+     "null_max": 736.3336687521908,
+     "null_q50": 165.8948288962452,
+     "null_q95": 374.6732895401675,
+     "null_q99": 646.717319843668,
+     "observed": 396.614882560647
+    },
+    "all48_jk2__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 1,
+     "null_max": 181.3819528338364,
+     "null_q50": 34.042975409482075,
+     "null_q95": 86.739758718319,
+     "null_q99": 134.29353262621,
+     "observed": 169.83443757949405
+    },
+    "all48_jk2__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 97.27896192740687,
+     "null_q50": 14.970043478067344,
+     "null_q95": 46.67548032289468,
+     "null_q99": 68.8017914363572,
+     "observed": 103.55299053686419
+    },
+    "excl__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 9,
+     "null_max": 1124.5171928678997,
+     "null_q50": 218.94097880090337,
+     "null_q95": 595.4417574104967,
+     "null_q99": 843.7946946506696,
+     "observed": 762.9905563786845
+    },
+    "excl__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 1,
+     "null_max": 202.68561824961125,
+     "null_q50": 39.94599673163822,
+     "null_q95": 93.79677621712727,
+     "null_q99": 137.96323599014718,
+     "observed": 199.84655511871495
+    },
+    "excl__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 2,
+     "null_max": 133.5077411706382,
+     "null_q50": 16.39153321110483,
+     "null_q95": 48.33631127707257,
+     "null_q99": 66.91660266073936,
+     "observed": 103.19179235460663
+    },
+    "excl_jk2__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 5,
+     "null_max": 914.8674753243545,
+     "null_q50": 202.983351525488,
+     "null_q95": 525.0899146405649,
+     "null_q99": 740.8339982971949,
+     "observed": 694.5285411488791
+    },
+    "excl_jk2__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 1,
+     "null_max": 199.63889676828282,
+     "null_q50": 39.42999911432717,
+     "null_q95": 92.15778849356332,
+     "null_q99": 135.35932406636195,
+     "observed": 195.85319190563902
+    },
+    "excl_jk2__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 2,
+     "null_max": 132.2819238095479,
+     "null_q50": 16.286361141961557,
+     "null_q95": 48.050850698149326,
+     "null_q99": 66.48879996839212,
+     "observed": 102.58190465652973
+    }
+   }
+  },
+  "sys_colour_tau21600__amp_quaia_cross": {
+   "command": [
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r108/gaia_scan_null.py",
+    "run",
+    "--kind",
+    "sys_colour_tau21600",
+    "--amplitude-from",
+    "quaia_cross",
+    "--draws",
+    "400",
+    "--seed",
+    "108322",
+    "--scan-dir",
+    "/home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products",
+    "--calibration",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json",
+    "--out-dir",
+    "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null"
+   ],
+   "receipt": {
+    "amplitude_from": "quaia_cross_colour (sensitivity)",
+    "amplitude_mas_per_yr_per_unit_e": 0.23438620833351578,
+    "calibration_sha256": "95888422a46d03e1f3450b71a6d584fb50195608dddcae802921b4ecc49fd0aa",
+    "draws": 400,
+    "npz_sha256": "45edc7b13008d5168be0b4c654ef87235f754bbcd3e452552f1e4dc61e8c0293",
+    "runtime_s": 374.19042445602827,
+    "seed": 108322
+   },
+   "receipt_path": "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null/scan_null_sys_colour_tau21600__amp_quaia_cross.json",
+   "receipt_sha256": "1efba3a91780f5c46b6ecc509a7f27e3e3a7b8b341e38b902c8852ec22fd1426",
+   "replay_check": {
+    "arrays_compared": 32,
+    "draws_compared": 2,
+    "mismatched_arrays": [],
+    "replay_amplitude_mas_per_yr_per_unit_e": 0.23438620833351578,
+    "replay_gaia_estimator_py_sha256": "84cdf08db5c8ba4c84d1f5c0be97677b0f51de91610703da79d15f404ebd7402",
+    "replay_gaia_scan_null_py_sha256": "ad3e7b2cb8b47ad7350d3aeb4b8167909e6fc4dc825b2ede3949bee6d58157f2",
+    "replay_receipt": "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2/scan_null_sys_colour_tau21600__amp_quaia_cross.json",
+    "replay_receipt_sha256": "c3baebaab608bd83742e31aeef3d1244a1c2a0e1a84589ece1295059cca2bbf6",
+    "replay_seed": 108322,
+    "status": "BIT_IDENTICAL"
+   },
+   "script_version": {
+    "gaia_estimator_py_sha256": "f32017b7c1444c5f8adf1a12b2196a98f1ecd0ca940a638ee57d3620c4def63c",
+    "gaia_scan_null_py_sha256": null,
+    "group": "pre_fix_B (amplitude_from recorded)"
+   },
+   "systematic_only_all48": {
+    "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+     1.799593176436394,
+     3.7386378988063083
+    ],
+    "min_amplitude_needed_over_calibrated": 1.5320620807582712,
+    "spin6_Q_in_observed_jk1_q50_q95_max": [
+     7.449512112169618,
+     22.138466664170227,
+     44.36092006503962
+    ]
+   },
+   "systematic_only_excl_8_47": {
+    "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+     1.7324751531912073,
+     3.5311267246254365
+    ],
+    "min_amplitude_needed_over_calibrated": 1.5534410276285051,
+    "spin6_Q_in_observed_jk1_q50_q95_max": [
+     8.276020588765927,
+     25.524294046407437,
+     42.76176414146573
+    ]
+   },
+   "tables": {
+    "all48__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 18,
+     "null_max": 723.3545912748514,
+     "null_q50": 159.61790395324277,
+     "null_q95": 386.11672304794814,
+     "null_q99": 530.3691578840197,
+     "observed": 406.385070538911
+    },
+    "all48__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 157.46365090479702,
+     "null_q50": 31.11747953986547,
+     "null_q95": 75.43775794905606,
+     "null_q99": 115.5156050480515,
+     "observed": 171.9805476095276
+    },
+    "all48__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 83.61904398488797,
+     "null_q50": 11.855570883577652,
+     "null_q95": 36.13474658111819,
+     "null_q99": 55.85622312532748,
+     "observed": 104.12458235777473
+    },
+    "all48_jk2__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 15,
+     "null_max": 615.9403439429659,
+     "null_q50": 151.86232470807514,
+     "null_q95": 348.16692705375897,
+     "null_q99": 485.1261538783228,
+     "observed": 396.614882560647
+    },
+    "all48_jk2__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 155.39694489199738,
+     "null_q50": 30.815184330364872,
+     "null_q95": 74.45930399822004,
+     "null_q99": 114.30833882536047,
+     "observed": 169.83443757949405
+    },
+    "all48_jk2__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 82.899392343671,
+     "null_q50": 11.779268532415347,
+     "null_q95": 35.910271313838294,
+     "null_q99": 55.609662947681436,
+     "observed": 103.55299053686419
+    },
+    "excl__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 5,
+     "null_max": 1150.1545215760689,
+     "null_q50": 208.7273287889854,
+     "null_q95": 518.872612655443,
+     "null_q99": 765.588913652698,
+     "observed": 762.9905563786845
+    },
+    "excl__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 170.39015002324663,
+     "null_q50": 37.02033158646195,
+     "null_q95": 82.90496368420662,
+     "null_q99": 121.8329699755074,
+     "observed": 199.84655511871495
+    },
+    "excl__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 100.96915182697275,
+     "null_q50": 13.430357752870762,
+     "null_q95": 40.40099919540114,
+     "null_q99": 55.83352306119911,
+     "observed": 103.19179235460663
+    },
+    "excl_jk2__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 4,
+     "null_max": 928.5891271757349,
+     "null_q50": 187.55719793264265,
+     "null_q95": 453.29418166648486,
+     "null_q99": 628.0100181639053,
+     "observed": 694.5285411488791
+    },
+    "excl_jk2__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 167.97120782803654,
+     "null_q50": 36.38589759040701,
+     "null_q95": 82.24607642759874,
+     "null_q99": 118.94603603666091,
+     "observed": 195.85319190563902
+    },
+    "excl_jk2__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 99.90831132693472,
+     "null_q50": 13.347561350881282,
+     "null_q95": 40.12798007442785,
+     "null_q99": 55.48312521161061,
+     "observed": 102.58190465652973
+    }
+   }
+  },
+  "sys_colour_tau600": {
+   "command": [
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r108/gaia_scan_null.py",
+    "run",
+    "--kind",
+    "sys_colour_tau600",
+    "--draws",
+    "400",
+    "--seed",
+    "108321",
+    "--scan-dir",
+    "/home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products",
+    "--calibration",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json",
+    "--out-dir",
+    "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null"
+   ],
+   "receipt": {
+    "amplitude_from": null,
+    "amplitude_mas_per_yr_per_unit_e": 0.40145034780739824,
+    "calibration_sha256": "95888422a46d03e1f3450b71a6d584fb50195608dddcae802921b4ecc49fd0aa",
+    "draws": 400,
+    "npz_sha256": "240f3735f6b4e311f578da4435fdce75cb9826cdcfce99be75ef86374a3dc8fa",
+    "runtime_s": 948.4358956629876,
+    "seed": 108321
+   },
+   "receipt_path": "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null/scan_null_sys_colour_tau600.json",
+   "receipt_sha256": "aff2d6e8fc963145183a825995e87e4706e96157f918579c09fb0c5aa1cf7aaf",
+   "replay_check": {
+    "arrays_compared": 32,
+    "draws_compared": 2,
+    "mismatched_arrays": [],
+    "replay_amplitude_mas_per_yr_per_unit_e": 0.40145034780739824,
+    "replay_gaia_estimator_py_sha256": "84cdf08db5c8ba4c84d1f5c0be97677b0f51de91610703da79d15f404ebd7402",
+    "replay_gaia_scan_null_py_sha256": "ad3e7b2cb8b47ad7350d3aeb4b8167909e6fc4dc825b2ede3949bee6d58157f2",
+    "replay_receipt": "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2/scan_null_sys_colour_tau600.json",
+    "replay_receipt_sha256": "4600b151e5eba94b62ee322c609b217eebef675ea859baa3a42ec485d2677e1d",
+    "replay_seed": 108321,
+    "status": "BIT_IDENTICAL"
+   },
+   "script_version": {
+    "gaia_estimator_py_sha256": "f32017b7c1444c5f8adf1a12b2196a98f1ecd0ca940a638ee57d3620c4def63c",
+    "gaia_scan_null_py_sha256": null,
+    "group": "pre_fix_A (primary systematic run written before run() recorded amplitude_from)"
+   },
+   "systematic_only_all48": {
+    "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+     3.760007766811364,
+     6.656687981008833
+    ],
+    "min_amplitude_needed_over_calibrated": 3.088362427587842,
+    "spin6_Q_in_observed_jk1_q50_q95_max": [
+     2.3498368915221572,
+     5.3599391080679215,
+     10.9168351410748
+    ]
+   },
+   "systematic_only_excl_8_47": {
+    "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+     3.463434428540437,
+     6.094838469442488
+    ],
+    "min_amplitude_needed_over_calibrated": 2.5244984032610085,
+    "spin6_Q_in_observed_jk1_q50_q95_max": [
+     2.7779265396976296,
+     6.3410071695853505,
+     16.191793451194247
+    ]
+   },
+   "tables": {
+    "all48__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 10,
+     "null_max": 913.0412600053046,
+     "null_q50": 136.07710798488552,
+     "null_q95": 368.54729696516017,
+     "null_q99": 501.2677875103698,
+     "observed": 406.385070538911
+    },
+    "all48__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 115.50274086288513,
+     "null_q50": 23.974786461546138,
+     "null_q95": 53.876084632123074,
+     "null_q99": 69.37187000472682,
+     "observed": 171.9805476095276
+    },
+    "all48__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 35.00899532037805,
+     "null_q50": 5.364487893927058,
+     "null_q95": 17.417472589906126,
+     "null_q99": 25.39150714259773,
+     "observed": 104.12458235777473
+    },
+    "all48_jk2__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 7,
+     "null_max": 713.8973174817843,
+     "null_q50": 127.915809065407,
+     "null_q95": 326.59287387533396,
+     "null_q99": 444.37061160021227,
+     "observed": 396.614882560647
+    },
+    "all48_jk2__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 114.00275288202937,
+     "null_q50": 23.6737995881231,
+     "null_q95": 53.268578139212,
+     "null_q99": 68.18939715038937,
+     "observed": 169.83443757949405
+    },
+    "all48_jk2__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 34.78514513369116,
+     "null_q50": 5.34612224782057,
+     "null_q95": 17.32807768863065,
+     "null_q99": 25.18650342818704,
+     "observed": 103.55299053686419
+    },
+    "excl__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 3,
+     "null_max": 912.0139416270671,
+     "null_q50": 170.4304763706279,
+     "null_q95": 467.56013995504526,
+     "null_q99": 729.6274036845113,
+     "observed": 762.9905563786845
+    },
+    "excl__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 156.8944434518774,
+     "null_q50": 27.44585570091832,
+     "null_q95": 65.26713246590616,
+     "null_q99": 101.29708584066752,
+     "observed": 199.84655511871495
+    },
+    "excl__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 33.300895152749526,
+     "null_q50": 6.377459989725442,
+     "null_q95": 20.640925175603982,
+     "null_q99": 29.70220796079356,
+     "observed": 103.19179235460663
+    },
+    "excl_jk2__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 2,
+     "null_max": 725.0163672648223,
+     "null_q50": 159.21064124805167,
+     "null_q95": 397.4279064010801,
+     "null_q99": 567.0931616104698,
+     "observed": 694.5285411488791
+    },
+    "excl_jk2__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 149.94054456264922,
+     "null_q50": 26.932658372242223,
+     "null_q95": 64.4179652557178,
+     "null_q99": 99.48307751258737,
+     "observed": 195.85319190563902
+    },
+    "excl_jk2__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 32.954775494864876,
+     "null_q50": 6.347425903379085,
+     "null_q95": 20.493160539627755,
+     "null_q99": 29.420226891286323,
+     "observed": 102.58190465652973
+    }
+   }
+  },
+  "sys_gmag_tau10": {
+   "command": [
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r108/gaia_scan_null.py",
+    "run",
+    "--kind",
+    "sys_gmag_tau10",
+    "--draws",
+    "300",
+    "--seed",
+    "108343",
+    "--scan-dir",
+    "/home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products",
+    "--calibration",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json",
+    "--out-dir",
+    "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null"
+   ],
+   "receipt": {
+    "amplitude_from": "complement_cross_gmag",
+    "amplitude_mas_per_yr_per_unit_e": 1.634730763331523,
+    "calibration_sha256": "95888422a46d03e1f3450b71a6d584fb50195608dddcae802921b4ecc49fd0aa",
+    "draws": 300,
+    "npz_sha256": "61ff2bf2f0057a4e7938704bf81a8197e83fbb63d544026abab6fa19ade73a25",
+    "runtime_s": 236.69789152604062,
+    "seed": 108343
+   },
+   "receipt_path": "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null/scan_null_sys_gmag_tau10.json",
+   "receipt_sha256": "c2cb635a1b1ad483c0b9e9d558e5966d7183955ccdae1cf6b0a870c99fdb3d1d",
+   "replay_check": {
+    "arrays_compared": 32,
+    "draws_compared": 2,
+    "mismatched_arrays": [],
+    "replay_amplitude_mas_per_yr_per_unit_e": 1.634730763331523,
+    "replay_gaia_estimator_py_sha256": "84cdf08db5c8ba4c84d1f5c0be97677b0f51de91610703da79d15f404ebd7402",
+    "replay_gaia_scan_null_py_sha256": "ad3e7b2cb8b47ad7350d3aeb4b8167909e6fc4dc825b2ede3949bee6d58157f2",
+    "replay_receipt": "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2/scan_null_sys_gmag_tau10.json",
+    "replay_receipt_sha256": "319aa463675d74c3c97bfcfa89f112afd72f45c4761e0f6b60bb967eca41d09f",
+    "replay_seed": 108343,
+    "status": "BIT_IDENTICAL"
+   },
+   "script_version": {
+    "gaia_estimator_py_sha256": "f32017b7c1444c5f8adf1a12b2196a98f1ecd0ca940a638ee57d3620c4def63c",
+    "gaia_scan_null_py_sha256": null,
+    "group": "pre_fix_B (amplitude_from recorded)"
+   },
+   "systematic_only_all48": {
+    "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+     0.5357538265700371,
+     1.0698126519272448
+    ],
+    "min_amplitude_needed_over_calibrated": 0.4213797643245985,
+    "spin6_Q_in_observed_jk1_q50_q95_max": [
+     90.9783391143927,
+     249.3067190149492,
+     586.4161477384239
+    ]
+   },
+   "systematic_only_excl_8_47": {
+    "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+     0.49790468157063617,
+     1.0000877826496037
+    ],
+    "min_amplitude_needed_over_calibrated": 0.40123854240468637,
+    "spin6_Q_in_observed_jk1_q50_q95_max": [
+     103.17402609940088,
+     284.0908968196186,
+     640.9731945282607
+    ]
+   },
+   "tables": {
+    "all48__joint32": {
+     "draws": 300,
+     "draws_ge_observed": 6,
+     "null_max": 790.3302628638282,
+     "null_q50": 137.41905078642907,
+     "null_q95": 329.67973741198574,
+     "null_q99": 548.5450578850379,
+     "observed": 406.385070538911
+    },
+    "all48__magnetic16": {
+     "draws": 300,
+     "draws_ge_observed": 0,
+     "null_max": 92.76380927144633,
+     "null_q50": 22.77203996969329,
+     "null_q95": 54.29507477958009,
+     "null_q99": 77.36898546848704,
+     "observed": 171.9805476095276
+    },
+    "all48__spin6": {
+     "draws": 300,
+     "draws_ge_observed": 0,
+     "null_max": 29.94272034755555,
+     "null_q50": 5.866642465059554,
+     "null_q95": 14.720530068959972,
+     "null_q99": 19.027297219121916,
+     "observed": 104.12458235777473
+    },
+    "all48_jk2__joint32": {
+     "draws": 300,
+     "draws_ge_observed": 6,
+     "null_max": 642.6385705613791,
+     "null_q50": 129.91415791887994,
+     "null_q95": 299.8943018605952,
+     "null_q99": 433.12177216013646,
+     "observed": 396.614882560647
+    },
+    "all48_jk2__magnetic16": {
+     "draws": 300,
+     "draws_ge_observed": 0,
+     "null_max": 90.86704864542727,
+     "null_q50": 22.493916609582627,
+     "null_q95": 53.58917013042155,
+     "null_q99": 76.32925127000142,
+     "observed": 169.83443757949405
+    },
+    "all48_jk2__spin6": {
+     "draws": 300,
+     "draws_ge_observed": 0,
+     "null_max": 29.65905276556869,
+     "null_q50": 5.832736780844423,
+     "null_q95": 14.64987178703408,
+     "null_q99": 18.947256223190344,
+     "observed": 103.55299053686419
+    },
+    "excl__joint32": {
+     "draws": 300,
+     "draws_ge_observed": 5,
+     "null_max": 2027.109347009585,
+     "null_q50": 172.92316455725705,
+     "null_q95": 446.08529886590674,
+     "null_q99": 908.8793397824104,
+     "observed": 762.9905563786845
+    },
+    "excl__magnetic16": {
+     "draws": 300,
+     "draws_ge_observed": 0,
+     "null_max": 110.15628633354208,
+     "null_q50": 26.402713224637687,
+     "null_q95": 61.638280679851206,
+     "null_q99": 102.90219125911392,
+     "observed": 199.84655511871495
+    },
+    "excl__spin6": {
+     "draws": 300,
+     "draws_ge_observed": 0,
+     "null_max": 31.885210634718188,
+     "null_q50": 6.085962853644503,
+     "null_q95": 18.23472684389932,
+     "null_q99": 24.46587999340098,
+     "observed": 103.19179235460663
+    },
+    "excl_jk2__joint32": {
+     "draws": 300,
+     "draws_ge_observed": 3,
+     "null_max": 1520.805705340408,
+     "null_q50": 155.3762257487304,
+     "null_q95": 376.63193237304904,
+     "null_q99": 638.6800325387217,
+     "observed": 694.5285411488791
+    },
+    "excl_jk2__magnetic16": {
+     "draws": 300,
+     "draws_ge_observed": 0,
+     "null_max": 107.14717533687863,
+     "null_q50": 26.094653745557537,
+     "null_q95": 60.29551696572038,
+     "null_q99": 99.55697007056672,
+     "observed": 195.85319190563902
+    },
+    "excl_jk2__spin6": {
+     "draws": 300,
+     "draws_ge_observed": 0,
+     "null_max": 31.715850228993702,
+     "null_q50": 6.061258987609602,
+     "null_q95": 18.078346917106884,
+     "null_q99": 24.13318757718613,
+     "observed": 102.58190465652973
+    }
+   }
+  },
+  "sys_gmag_tau21600": {
+   "command": [
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r108/gaia_scan_null.py",
+    "run",
+    "--kind",
+    "sys_gmag_tau21600",
+    "--draws",
+    "400",
+    "--seed",
+    "108342",
+    "--scan-dir",
+    "/home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products",
+    "--calibration",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json",
+    "--out-dir",
+    "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null"
+   ],
+   "receipt": {
+    "amplitude_from": null,
+    "amplitude_mas_per_yr_per_unit_e": 0.38504323386408335,
+    "calibration_sha256": "95888422a46d03e1f3450b71a6d584fb50195608dddcae802921b4ecc49fd0aa",
+    "draws": 400,
+    "npz_sha256": "9c41637428eeaaa487b5d187129e067558d370828585a625c49bc2287449e39b",
+    "runtime_s": 399.9133985119988,
+    "seed": 108342
+   },
+   "receipt_path": "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null/scan_null_sys_gmag_tau21600.json",
+   "receipt_sha256": "83fc584981982bc70fe964307fd80453836e92909143c07ef27553d5fef021c1",
+   "replay_check": {
+    "arrays_compared": 32,
+    "draws_compared": 2,
+    "mismatched_arrays": [],
+    "replay_amplitude_mas_per_yr_per_unit_e": 0.38504323386408335,
+    "replay_gaia_estimator_py_sha256": "84cdf08db5c8ba4c84d1f5c0be97677b0f51de91610703da79d15f404ebd7402",
+    "replay_gaia_scan_null_py_sha256": "ad3e7b2cb8b47ad7350d3aeb4b8167909e6fc4dc825b2ede3949bee6d58157f2",
+    "replay_receipt": "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2/scan_null_sys_gmag_tau21600.json",
+    "replay_receipt_sha256": "1025b1c96e53058138d124d461119aa161a8a3d0e2f59a78164113996f1fa622",
+    "replay_seed": 108342,
+    "status": "BIT_IDENTICAL"
+   },
+   "script_version": {
+    "gaia_estimator_py_sha256": "f32017b7c1444c5f8adf1a12b2196a98f1ecd0ca940a638ee57d3620c4def63c",
+    "gaia_scan_null_py_sha256": null,
+    "group": "pre_fix_A (primary systematic run written before run() recorded amplitude_from)"
+   },
+   "systematic_only_all48": {
+    "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+     0.5729744934933801,
+     1.2058069841855261
+    ],
+    "min_amplitude_needed_over_calibrated": 0.5067278249134531,
+    "spin6_Q_in_observed_jk1_q50_q95_max": [
+     71.61432303637993,
+     236.91639358615845,
+     405.51205326541907
+    ]
+   },
+   "systematic_only_excl_8_47": {
+    "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+     0.5433375664067688,
+     1.168671390701984
+    ],
+    "min_amplitude_needed_over_calibrated": 0.49011251818359164,
+    "spin6_Q_in_observed_jk1_q50_q95_max": [
+     75.55480487104265,
+     257.44774098385693,
+     429.58940869762694
+    ]
+   },
+   "tables": {
+    "all48__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 19,
+     "null_max": 1360.2378643359752,
+     "null_q50": 166.15653446744506,
+     "null_q95": 397.3012108057674,
+     "null_q99": 763.9702632045556,
+     "observed": 406.385070538911
+    },
+    "all48__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 1,
+     "null_max": 199.98721617383086,
+     "null_q50": 31.293199647689658,
+     "null_q95": 74.09165516793571,
+     "null_q99": 97.65732180255702,
+     "observed": 171.9805476095276
+    },
+    "all48__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 1,
+     "null_max": 132.3507873095412,
+     "null_q50": 11.730931178056032,
+     "null_q95": 33.80994311498785,
+     "null_q99": 55.81881267538734,
+     "observed": 104.12458235777473
+    },
+    "all48_jk2__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 12,
+     "null_max": 946.5256167319033,
+     "null_q50": 155.45299040669477,
+     "null_q95": 355.4494528055412,
+     "null_q99": 698.4032125202579,
+     "observed": 396.614882560647
+    },
+    "all48_jk2__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 1,
+     "null_max": 197.0048789474686,
+     "null_q50": 31.041528285119327,
+     "null_q95": 73.04960801794111,
+     "null_q99": 95.99050025931756,
+     "observed": 169.83443757949405
+    },
+    "all48_jk2__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 1,
+     "null_max": 130.97617024663668,
+     "null_q50": 11.636722354313257,
+     "null_q95": 33.63759276239478,
+     "null_q99": 55.24280815084987,
+     "observed": 103.55299053686419
+    },
+    "excl__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 7,
+     "null_max": 1607.3229585104255,
+     "null_q50": 208.85258618280113,
+     "null_q95": 561.3934127057546,
+     "null_q99": 776.6566683849171,
+     "observed": 762.9905563786845
+    },
+    "excl__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 193.24110690663275,
+     "null_q50": 33.54757572429024,
+     "null_q95": 76.57905962900725,
+     "null_q99": 101.97823283599686,
+     "observed": 199.84655511871495
+    },
+    "excl__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 1,
+     "null_max": 125.81545008755786,
+     "null_q50": 12.443292476952806,
+     "null_q95": 35.83136388191235,
+     "null_q99": 49.02922122160897,
+     "observed": 103.19179235460663
+    },
+    "excl_jk2__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 3,
+     "null_max": 1196.1377450419225,
+     "null_q50": 188.18347738841308,
+     "null_q95": 479.67896733654385,
+     "null_q99": 654.3030949903781,
+     "observed": 694.5285411488791
+    },
+    "excl_jk2__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 189.77188873448955,
+     "null_q50": 33.13695369192908,
+     "null_q95": 74.87525837641645,
+     "null_q99": 100.18506998960534,
+     "observed": 195.85319190563902
+    },
+    "excl_jk2__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 1,
+     "null_max": 124.25127240634748,
+     "null_q50": 12.33833797166737,
+     "null_q95": 35.63839588199179,
+     "null_q99": 48.5507763679201,
+     "observed": 102.58190465652973
+    }
+   }
+  },
+  "sys_gmag_tau21600__amp_complement_cross": {
+   "command": [
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r108/gaia_scan_null.py",
+    "run",
+    "--kind",
+    "sys_gmag_tau21600",
+    "--amplitude-from",
+    "complement_cross",
+    "--draws",
+    "400",
+    "--seed",
+    "108342",
+    "--scan-dir",
+    "/home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products",
+    "--calibration",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json",
+    "--out-dir",
+    "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null"
+   ],
+   "receipt": {
+    "amplitude_from": "complement_cross_gmag (sensitivity)",
+    "amplitude_mas_per_yr_per_unit_e": 0.38504323386408335,
+    "calibration_sha256": "95888422a46d03e1f3450b71a6d584fb50195608dddcae802921b4ecc49fd0aa",
+    "draws": 400,
+    "npz_sha256": "9c41637428eeaaa487b5d187129e067558d370828585a625c49bc2287449e39b",
+    "runtime_s": 176.77650422602892,
+    "seed": 108342
+   },
+   "receipt_path": "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null/scan_null_sys_gmag_tau21600__amp_complement_cross.json",
+   "receipt_sha256": "368ce9657e874c1ff61ff441740f727aef7aa18d3c5463f12c77c4e1aaf7500d",
+   "replay_check": {
+    "arrays_compared": 32,
+    "draws_compared": 2,
+    "mismatched_arrays": [],
+    "replay_amplitude_mas_per_yr_per_unit_e": 0.38504323386408335,
+    "replay_gaia_estimator_py_sha256": "84cdf08db5c8ba4c84d1f5c0be97677b0f51de91610703da79d15f404ebd7402",
+    "replay_gaia_scan_null_py_sha256": "ad3e7b2cb8b47ad7350d3aeb4b8167909e6fc4dc825b2ede3949bee6d58157f2",
+    "replay_receipt": "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2/scan_null_sys_gmag_tau21600__amp_complement_cross.json",
+    "replay_receipt_sha256": "430ad5e9c9f152ac102f4e8d9acb8513e2aac7ad95b0d70bea2f6269e5d3287c",
+    "replay_seed": 108342,
+    "status": "BIT_IDENTICAL"
+   },
+   "script_version": {
+    "gaia_estimator_py_sha256": "f32017b7c1444c5f8adf1a12b2196a98f1ecd0ca940a638ee57d3620c4def63c",
+    "gaia_scan_null_py_sha256": null,
+    "group": "pre_fix_B (amplitude_from recorded)"
+   },
+   "systematic_only_all48": {
+    "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+     0.5729744934933801,
+     1.2058069841855261
+    ],
+    "min_amplitude_needed_over_calibrated": 0.5067278249134531,
+    "spin6_Q_in_observed_jk1_q50_q95_max": [
+     71.61432303637993,
+     236.91639358615845,
+     405.51205326541907
+    ]
+   },
+   "systematic_only_excl_8_47": {
+    "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+     0.5433375664067688,
+     1.168671390701984
+    ],
+    "min_amplitude_needed_over_calibrated": 0.49011251818359164,
+    "spin6_Q_in_observed_jk1_q50_q95_max": [
+     75.55480487104265,
+     257.44774098385693,
+     429.58940869762694
+    ]
+   },
+   "tables": {
+    "all48__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 19,
+     "null_max": 1360.2378643359752,
+     "null_q50": 166.15653446744506,
+     "null_q95": 397.3012108057674,
+     "null_q99": 763.9702632045556,
+     "observed": 406.385070538911
+    },
+    "all48__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 1,
+     "null_max": 199.98721617383086,
+     "null_q50": 31.293199647689658,
+     "null_q95": 74.09165516793571,
+     "null_q99": 97.65732180255702,
+     "observed": 171.9805476095276
+    },
+    "all48__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 1,
+     "null_max": 132.3507873095412,
+     "null_q50": 11.730931178056032,
+     "null_q95": 33.80994311498785,
+     "null_q99": 55.81881267538734,
+     "observed": 104.12458235777473
+    },
+    "all48_jk2__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 12,
+     "null_max": 946.5256167319033,
+     "null_q50": 155.45299040669477,
+     "null_q95": 355.4494528055412,
+     "null_q99": 698.4032125202579,
+     "observed": 396.614882560647
+    },
+    "all48_jk2__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 1,
+     "null_max": 197.0048789474686,
+     "null_q50": 31.041528285119327,
+     "null_q95": 73.04960801794111,
+     "null_q99": 95.99050025931756,
+     "observed": 169.83443757949405
+    },
+    "all48_jk2__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 1,
+     "null_max": 130.97617024663668,
+     "null_q50": 11.636722354313257,
+     "null_q95": 33.63759276239478,
+     "null_q99": 55.24280815084987,
+     "observed": 103.55299053686419
+    },
+    "excl__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 7,
+     "null_max": 1607.3229585104255,
+     "null_q50": 208.85258618280113,
+     "null_q95": 561.3934127057546,
+     "null_q99": 776.6566683849171,
+     "observed": 762.9905563786845
+    },
+    "excl__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 193.24110690663275,
+     "null_q50": 33.54757572429024,
+     "null_q95": 76.57905962900725,
+     "null_q99": 101.97823283599686,
+     "observed": 199.84655511871495
+    },
+    "excl__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 1,
+     "null_max": 125.81545008755786,
+     "null_q50": 12.443292476952806,
+     "null_q95": 35.83136388191235,
+     "null_q99": 49.02922122160897,
+     "observed": 103.19179235460663
+    },
+    "excl_jk2__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 3,
+     "null_max": 1196.1377450419225,
+     "null_q50": 188.18347738841308,
+     "null_q95": 479.67896733654385,
+     "null_q99": 654.3030949903781,
+     "observed": 694.5285411488791
+    },
+    "excl_jk2__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 189.77188873448955,
+     "null_q50": 33.13695369192908,
+     "null_q95": 74.87525837641645,
+     "null_q99": 100.18506998960534,
+     "observed": 195.85319190563902
+    },
+    "excl_jk2__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 1,
+     "null_max": 124.25127240634748,
+     "null_q50": 12.33833797166737,
+     "null_q95": 35.63839588199179,
+     "null_q99": 48.5507763679201,
+     "observed": 102.58190465652973
+    }
+   }
+  },
+  "sys_gmag_tau21600__amp_quaia_cross": {
+   "command": [
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r108/gaia_scan_null.py",
+    "run",
+    "--kind",
+    "sys_gmag_tau21600",
+    "--amplitude-from",
+    "quaia_cross",
+    "--draws",
+    "400",
+    "--seed",
+    "108342",
+    "--scan-dir",
+    "/home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products",
+    "--calibration",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json",
+    "--out-dir",
+    "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null"
+   ],
+   "receipt": {
+    "amplitude_from": "quaia_cross_gmag (sensitivity)",
+    "amplitude_mas_per_yr_per_unit_e": 0.0941372135615902,
+    "calibration_sha256": "95888422a46d03e1f3450b71a6d584fb50195608dddcae802921b4ecc49fd0aa",
+    "draws": 400,
+    "npz_sha256": "435b38772bb006360ca6d95aa74d3f55bc21a12fadd0f5973a874a962a208e6c",
+    "runtime_s": 178.91182160697645,
+    "seed": 108342
+   },
+   "receipt_path": "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null/scan_null_sys_gmag_tau21600__amp_quaia_cross.json",
+   "receipt_sha256": "6d204ef7d7669d13feb623f0ee623b99dad3eb816a897dbbe1e8da3208b65230",
+   "replay_check": {
+    "arrays_compared": 32,
+    "draws_compared": 2,
+    "mismatched_arrays": [],
+    "replay_amplitude_mas_per_yr_per_unit_e": 0.0941372135615902,
+    "replay_gaia_estimator_py_sha256": "84cdf08db5c8ba4c84d1f5c0be97677b0f51de91610703da79d15f404ebd7402",
+    "replay_gaia_scan_null_py_sha256": "ad3e7b2cb8b47ad7350d3aeb4b8167909e6fc4dc825b2ede3949bee6d58157f2",
+    "replay_receipt": "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2/scan_null_sys_gmag_tau21600__amp_quaia_cross.json",
+    "replay_receipt_sha256": "00d63df87c7ae898249a3a21b9bb965122c27651893ad753f54bd186c77990f3",
+    "replay_seed": 108342,
+    "status": "BIT_IDENTICAL"
+   },
+   "script_version": {
+    "gaia_estimator_py_sha256": "f32017b7c1444c5f8adf1a12b2196a98f1ecd0ca940a638ee57d3620c4def63c",
+    "gaia_scan_null_py_sha256": null,
+    "group": "pre_fix_B (amplitude_from recorded)"
+   },
+   "systematic_only_all48": {
+    "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+     2.3435997683528615,
+     4.932032753475625
+    ],
+    "min_amplitude_needed_over_calibrated": 2.0726353905295385,
+    "spin6_Q_in_observed_jk1_q50_q95_max": [
+     4.280589450599431,
+     14.161158998093047,
+     24.238595628657542
+    ]
+   },
+   "systematic_only_excl_8_47": {
+    "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+     2.2223778008069717,
+     4.780139485496006
+    ],
+    "min_amplitude_needed_over_calibrated": 2.00467489761858,
+    "spin6_Q_in_observed_jk1_q50_q95_max": [
+     4.516123129569872,
+     15.388375361396951,
+     25.677766862728838
+    ]
+   },
+   "tables": {
+    "all48__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 12,
+     "null_max": 1137.1284065223444,
+     "null_q50": 137.8579450720439,
+     "null_q95": 350.57872443047575,
+     "null_q99": 537.7245077127864,
+     "observed": 406.385070538911
+    },
+    "all48__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 134.83911646152376,
+     "null_q50": 27.40308614799897,
+     "null_q95": 57.176715676260216,
+     "null_q99": 79.27920460039861,
+     "observed": 171.9805476095276
+    },
+    "all48__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 59.88252795655062,
+     "null_q50": 8.356004939960513,
+     "null_q95": 23.355473803536064,
+     "null_q99": 35.26872240152895,
+     "observed": 104.12458235777473
+    },
+    "all48_jk2__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 10,
+     "null_max": 1007.4104665837831,
+     "null_q50": 128.02667229945868,
+     "null_q95": 307.2180327239187,
+     "null_q99": 486.3230408931186,
+     "observed": 396.614882560647
+    },
+    "all48_jk2__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 133.03166357721415,
+     "null_q50": 27.16142614599142,
+     "null_q95": 56.47315602599187,
+     "null_q99": 78.43577102993743,
+     "observed": 169.83443757949405
+    },
+    "all48_jk2__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 59.53920857658679,
+     "null_q50": 8.298759151784683,
+     "null_q95": 23.188932925641126,
+     "null_q99": 34.9605221085551,
+     "observed": 103.55299053686419
+    },
+    "excl__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 5,
+     "null_max": 1320.1406652355995,
+     "null_q50": 173.34147569404138,
+     "null_q95": 503.10628908234605,
+     "null_q99": 797.7812294695865,
+     "observed": 762.9905563786845
+    },
+    "excl__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 147.73650659201445,
+     "null_q50": 31.780638820415803,
+     "null_q95": 68.1097005013435,
+     "null_q99": 85.36780598139869,
+     "observed": 199.84655511871495
+    },
+    "excl__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 93.34245793364593,
+     "null_q50": 9.579368207307798,
+     "null_q95": 25.545628571378156,
+     "null_q99": 36.93872623168086,
+     "observed": 103.19179235460663
+    },
+    "excl_jk2__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 2,
+     "null_max": 1041.007813709836,
+     "null_q50": 159.43698007008592,
+     "null_q95": 424.1643668160399,
+     "null_q99": 639.3568601164708,
+     "observed": 694.5285411488791
+    },
+    "excl_jk2__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 145.64468791460018,
+     "null_q50": 31.302395401372237,
+     "null_q95": 66.93961008517554,
+     "null_q99": 83.8106941191635,
+     "observed": 195.85319190563902
+    },
+    "excl_jk2__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 92.29793984328612,
+     "null_q50": 9.500793470331708,
+     "null_q95": 25.37422275720488,
+     "null_q99": 36.55027492312581,
+     "observed": 102.58190465652973
+    }
+   }
+  },
+  "sys_gmag_tau600": {
+   "command": [
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r108/gaia_scan_null.py",
+    "run",
+    "--kind",
+    "sys_gmag_tau600",
+    "--draws",
+    "400",
+    "--seed",
+    "108341",
+    "--scan-dir",
+    "/home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products",
+    "--calibration",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json",
+    "--out-dir",
+    "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null"
+   ],
+   "receipt": {
+    "amplitude_from": null,
+    "amplitude_mas_per_yr_per_unit_e": 0.40190000489508027,
+    "calibration_sha256": "95888422a46d03e1f3450b71a6d584fb50195608dddcae802921b4ecc49fd0aa",
+    "draws": 400,
+    "npz_sha256": "c581003de619c91cfa20d8901fcff119291774d50d714160a5fe8cacd86a5066",
+    "runtime_s": 883.6867215210223,
+    "seed": 108341
+   },
+   "receipt_path": "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null/scan_null_sys_gmag_tau600.json",
+   "receipt_sha256": "360468c12e5fa8779910496772c95e1e9f7dcd7738f5afeb57ee7bcd5bf532eb",
+   "replay_check": {
+    "arrays_compared": 32,
+    "draws_compared": 2,
+    "mismatched_arrays": [],
+    "replay_amplitude_mas_per_yr_per_unit_e": 0.40190000489508027,
+    "replay_gaia_estimator_py_sha256": "84cdf08db5c8ba4c84d1f5c0be97677b0f51de91610703da79d15f404ebd7402",
+    "replay_gaia_scan_null_py_sha256": "ad3e7b2cb8b47ad7350d3aeb4b8167909e6fc4dc825b2ede3949bee6d58157f2",
+    "replay_receipt": "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2/scan_null_sys_gmag_tau600.json",
+    "replay_receipt_sha256": "e2c153744d17561d1f379b440899bc8226b46c0a9d086a3bf6bffdddbd102724",
+    "replay_seed": 108341,
+    "status": "BIT_IDENTICAL"
+   },
+   "script_version": {
+    "gaia_estimator_py_sha256": "f32017b7c1444c5f8adf1a12b2196a98f1ecd0ca940a638ee57d3620c4def63c",
+    "gaia_scan_null_py_sha256": null,
+    "group": "pre_fix_A (primary systematic run written before run() recorded amplitude_from)"
+   },
+   "systematic_only_all48": {
+    "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+     1.0039473079350985,
+     1.9317507307638757
+    ],
+    "min_amplitude_needed_over_calibrated": 0.9700939224661632,
+    "spin6_Q_in_observed_jk1_q50_q95_max": [
+     27.903027299393873,
+     79.31721883947796,
+     110.64344891582803
+    ]
+   },
+   "systematic_only_excl_8_47": {
+    "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+     0.9368618965958652,
+     1.8495177006150123
+    ],
+    "min_amplitude_needed_over_calibrated": 0.8675232253290353,
+    "spin6_Q_in_observed_jk1_q50_q95_max": [
+     30.16672587707251,
+     90.72964588028627,
+     137.11435806678034
+    ]
+   },
+   "tables": {
+    "all48__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 6,
+     "null_max": 927.0461817864409,
+     "null_q50": 141.80084957434605,
+     "null_q95": 323.1771999386115,
+     "null_q99": 480.551270149504,
+     "observed": 406.385070538911
+    },
+    "all48__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 71.33573818187274,
+     "null_q50": 23.0251891876392,
+     "null_q95": 45.17836382040095,
+     "null_q99": 60.10312784733655,
+     "observed": 171.9805476095276
+    },
+    "all48__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 34.48561284787019,
+     "null_q50": 5.695362949192068,
+     "null_q95": 13.247048033698448,
+     "null_q99": 18.051734202771197,
+     "observed": 104.12458235777473
+    },
+    "all48_jk2__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 5,
+     "null_max": 728.9412878066626,
+     "null_q50": 132.20400864646766,
+     "null_q95": 281.97101584502457,
+     "null_q99": 401.05705122921285,
+     "observed": 396.614882560647
+    },
+    "all48_jk2__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 70.04675825088671,
+     "null_q50": 22.734210011932795,
+     "null_q95": 44.611817020416254,
+     "null_q99": 59.29193635794996,
+     "observed": 169.83443757949405
+    },
+    "all48_jk2__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 34.19282285971482,
+     "null_q50": 5.656528616783822,
+     "null_q95": 13.159139493739696,
+     "null_q99": 17.8143711867614,
+     "observed": 103.55299053686419
+    },
+    "excl__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 2,
+     "null_max": 2683.805947906955,
+     "null_q50": 180.02981886959012,
+     "null_q95": 449.54373528466095,
+     "null_q99": 673.5096723915134,
+     "observed": 762.9905563786845
+    },
+    "excl__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 111.54496355983852,
+     "null_q50": 25.603097460189705,
+     "null_q95": 51.590956902862644,
+     "null_q99": 72.86394516500103,
+     "observed": 199.84655511871495
+    },
+    "excl__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 26.679622624462006,
+     "null_q50": 6.551160857812905,
+     "null_q95": 14.944369236831456,
+     "null_q99": 21.297441648378754,
+     "observed": 103.19179235460663
+    },
+    "excl_jk2__joint32": {
+     "draws": 400,
+     "draws_ge_observed": 1,
+     "null_max": 961.8116706565543,
+     "null_q50": 163.98332951505822,
+     "null_q95": 381.0321935547607,
+     "null_q99": 552.333791104684,
+     "observed": 694.5285411488791
+    },
+    "excl_jk2__magnetic16": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 109.36936433859833,
+     "null_q50": 25.25311113436161,
+     "null_q95": 50.94718143140723,
+     "null_q99": 70.47574434641407,
+     "observed": 195.85319190563902
+    },
+    "excl_jk2__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 26.450492136980724,
+     "null_q50": 6.512609448892904,
+     "null_q95": 14.855517411967941,
+     "null_q99": 20.987548076963407,
+     "observed": 102.58190465652973
+    }
+   }
+  }
+ },
+ "observed_pixel_power": {
+  "complement_auto_blind": {
+   "pixels": 2847,
+   "power_mas2_per_yr2": 0.009738689370153287,
+   "standard_error": 0.0014104264500367672,
+   "upper_97p5": 0.01250312521222535
+  },
+  "complement_auto_colour": {
+   "pixels": 1775,
+   "power_mas2_per_yr2": 0.051010270247502695,
+   "standard_error": 0.010862513261663535,
+   "upper_97p5": 0.07230079624036323
+  },
+  "complement_auto_gmag": {
+   "pixels": 2625,
+   "power_mas2_per_yr2": 0.03193670844554386,
+   "standard_error": 0.004435065781885748,
+   "upper_97p5": 0.04062943737803992
+  },
+  "complement_cross_blind": {
+   "pixels": 2674,
+   "power_mas2_per_yr2": 0.001505610938265205,
+   "standard_error": 0.0019006556139937942,
+   "upper_97p5": 0.005230895941693041
+  },
+  "complement_cross_colour": {
+   "pixels": 789,
+   "power_mas2_per_yr2": -0.005486376132989858,
+   "standard_error": 0.011141782953783283,
+   "upper_97p5": 0.016351518456425372
+  },
+  "complement_cross_gmag": {
+   "pixels": 1657,
+   "power_mas2_per_yr2": 0.0006583409777447102,
+   "standard_error": 0.005124141597097214,
+   "upper_97p5": 0.01070165850805525
+  },
+  "quaia_cross_blind": {
+   "pixels": 2719,
+   "power_mas2_per_yr2": -0.0001421066454741578,
+   "standard_error": 0.0003161509084963638,
+   "upper_97p5": 0.0004775491351787153
+  },
+  "quaia_cross_colour": {
+   "pixels": 2478,
+   "power_mas2_per_yr2": 0.0009727249747171553,
+   "standard_error": 0.0007061329758377657,
+   "upper_97p5": 0.002356745607359176
+  },
+  "quaia_cross_gmag": {
+   "pixels": 2656,
+   "power_mas2_per_yr2": -6.796179869071552e-05,
+   "standard_error": 0.0005032065590965563,
+   "upper_97p5": 0.0009183230571385349
+  }
+ },
+ "physical_GF": null,
+ "physical_Pi": null,
+ "r106_observed_sha256": "6c76b5c27086fafdf4b603c8c8fb98391971f86bd03ad8dbfa4fb812fb640aef",
+ "schema": "htt.r108.gaia_scan_null/2",
+ "script_versions": {
+  "note": "Receipts in the pre_fix groups were written before gaia_estimator.provenance() hashed the __main__ script, so they carry no gaia_scan_null.py SHA-256 (their gaia_estimator.py SHA-256 is recorded per kind). The pre_fix_A / pre_fix_B split is the only receipt-visible difference between those earlier versions. replay_check reruns the first draws of every stored run (same kind, seed, calibration and amplitude) with the current script, whose SHA-256 is recorded in the replay receipt; BIT_IDENTICAL means every stored array agrees bit for bit on those draws, i.e. the stored run is reproduced by that identified script version for the compared draws (later draws of the same loop are not re-executed).",
+  "receipts_by_version_group": {
+   "pre_fix_A (primary systematic run written before run() recorded amplitude_from)": [
+    "sys_blind_tau600",
+    "sys_blind_tau21600",
+    "sys_colour_tau10",
+    "sys_colour_tau600",
+    "sys_colour_tau21600",
+    "sys_gmag_tau600",
+    "sys_gmag_tau21600"
+   ],
+   "pre_fix_B (amplitude_from recorded)": [
+    "sys_blind_tau10",
+    "sys_gmag_tau10",
+    "sys_colour_tau21600__amp_complement_cross",
+    "sys_colour_tau21600__amp_quaia_cross",
+    "sys_gmag_tau21600__amp_complement_cross",
+    "sys_gmag_tau21600__amp_quaia_cross"
+   ],
+   "pre_fix_noise_kind (amplitude_from not applicable; version not separable from the receipt)": [
+    "noise_catalogue",
+    "noise_scanshape"
+   ]
+  },
+  "replay_dir": "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2",
+  "replay_status_by_kind": {
+   "noise_catalogue": "BIT_IDENTICAL",
+   "noise_scanshape": "BIT_IDENTICAL",
+   "sys_blind_tau10": "BIT_IDENTICAL",
+   "sys_blind_tau21600": "BIT_IDENTICAL",
+   "sys_blind_tau600": "BIT_IDENTICAL",
+   "sys_colour_tau10": "BIT_IDENTICAL",
+   "sys_colour_tau21600": "BIT_IDENTICAL",
+   "sys_colour_tau21600__amp_complement_cross": "BIT_IDENTICAL",
+   "sys_colour_tau21600__amp_quaia_cross": "BIT_IDENTICAL",
+   "sys_colour_tau600": "BIT_IDENTICAL",
+   "sys_gmag_tau10": "BIT_IDENTICAL",
+   "sys_gmag_tau21600": "BIT_IDENTICAL",
+   "sys_gmag_tau21600__amp_complement_cross": "BIT_IDENTICAL",
+   "sys_gmag_tau21600__amp_quaia_cross": "BIT_IDENTICAL",
+   "sys_gmag_tau600": "BIT_IDENTICAL"
+  },
+  "summarize_script": {
+   "path": "scripts/r108/gaia_scan_null.py",
+   "sha256": "ad3e7b2cb8b47ad7350d3aeb4b8167909e6fc4dc825b2ede3949bee6d58157f2"
+  }
+ },
+ "significance_sigma": null,
+ "units": "Q dimensionless; amplitudes relative to the calibrated amplitude"
+}

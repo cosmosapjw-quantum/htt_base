@@ -23,9 +23,16 @@ factor; here kappa multiplies the cos term of that variant, so kappa = +1 is the
 printed formula and kappa = -1 is this module's extension).  Both published
 forms are available (``variant``); deciding which one agrees with exact geodesic
 transport is the purpose of the matched comparison with ``hybrid_los_transfer``
-(R107 handoff).  The angles are the template's own coordinates (VII_h axis = z); the
-relation to an observing direction and a rotation onto the sky are applied by the
-caller.
+(R107 handoff).  The angles (theta, phi) of ``bjs_temperature`` are the template's own
+coordinates (VII_h axis = z) and, as in both papers, they give the direction of the
+*incoming photon* (its propagation direction): McEwen et al. 2006 below eq. A3,
+"theta_0 and phi_0 specify the direction of the incoming photon ... theta_ob = pi -
+theta_0 and phi_ob = pi + phi_0"; Kogut, Hinshaw & Banday 1997, footnote 2.  An outward
+observing (sky) direction n therefore corresponds to the template evaluated at -n; use
+``bjs_temperature_sky`` for sky directions, e.g. those of ``hybrid_los_transfer``.  This
+matters because the antipodal map is a handedness flip composed with a rotation, so a
+fit over rotations and both handedness values would otherwise silently select the wrong
+handedness (R108 review R3).
 
 Parameter dictionary for the native H-normalised Lie geometry (isotropic open-dust
 limit, derived in R107 THEORY_FOUNDATIONS.md): a/H = sqrt(1 - Omega) along the VII_h
@@ -40,7 +47,8 @@ from typing import Literal
 
 import numpy as np
 
-__all__ = ["BJSParameters", "bjs_coefficients", "bjs_temperature", "bjs_vorticity_over_hubble", "bjs_lie_geometry_today"]
+__all__ = ["BJSParameters", "bjs_coefficients", "bjs_temperature", "bjs_temperature_sky", "bjs_vorticity_over_hubble",
+           "bjs_lie_geometry_today"]
 
 Variant = Literal["mcewen2006", "kogut1997"]
 
@@ -159,3 +167,18 @@ def bjs_temperature(theta: np.ndarray, phi: np.ndarray, p: BJSParameters) -> np.
     else:
         out = A * np.sin(ph) + p.handedness * B * np.cos(ph)
     return p.sigma_over_h * out
+
+
+def bjs_temperature_sky(directions: np.ndarray, p: BJSParameters) -> np.ndarray:
+    """dT/T for outward observing unit vectors ``directions`` (template frame, VII_h axis = z).
+
+    The published template is written in incoming-photon angles; the photon seen in sky
+    direction n propagates along -n, so theta_0 = pi - theta_ob and phi_0 = phi_ob - pi.
+    """
+    n = np.asarray(directions, dtype=np.float64)
+    if n.ndim != 2 or n.shape[1] != 3:
+        raise ValueError("directions must have shape (n, 3)")
+    m = -n / np.linalg.norm(n, axis=1, keepdims=True)
+    theta0 = np.arccos(np.clip(m[:, 2], -1.0, 1.0))
+    phi0 = np.arctan2(m[:, 1], m[:, 0])
+    return bjs_temperature(theta0, phi0, p)

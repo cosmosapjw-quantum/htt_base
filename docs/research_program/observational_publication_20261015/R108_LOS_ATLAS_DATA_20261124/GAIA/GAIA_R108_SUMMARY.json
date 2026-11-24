@@ -1,0 +1,1523 @@
+{
+ "claim_ceiling": "no physical Pi/G_F, no Bianchi family attribution, no calibrated p",
+ "commands_jsonl_sha256": "de82963d57c7489ff238f9b742165f2ff2507ba1fca697bd46dccd9b9eb136d8",
+ "git": {
+  "diff_head_sha256": "68355025a0522cde3a0af3a1995f8e67d41869fe07d780ffd110cf17e261df45",
+  "dirty_code_paths": [
+   " M htt/bass/background/tilted_bianchi_state.py",
+   " M htt/bass/transport/bjs_bianchi_vii_h.py",
+   " M htt/bass/transport/coupled_einstein_boltzmann.py",
+   " M htt/bass/transport/hybrid_los_transfer.py",
+   " M htt/bass/transport/test_bjs_bianchi_vii_h.py",
+   " M htt/bass/transport/test_hybrid_los_transfer.py",
+   " M scripts/r107_cloud/acquisition.py",
+   " M tests/r107_cloud/test_acquisition.py",
+   "?? htt/bass/background/test_compensating_tilt_root.py",
+   "?? htt/bass/transport/hybrid_los_parallel.py",
+   "?? htt/bass/transport/test_hybrid_los_parallel.py",
+   "?? htt/obsstat/catalogue_frame_registry.py",
+   "?? scripts/r108/__init__.py",
+   "?? scripts/r108/build_results.py",
+   "?? scripts/r108/cf4_2mpp_field.py",
+   "?? scripts/r108/cf4_acquire.py",
+   "?? scripts/r108/cf4_cf3_table3_overlap.py",
+   "?? scripts/r108/cf4_kband_contrast.py",
+   "?? scripts/r108/cf4_receipts.py",
+   "?? scripts/r108/commander_splits.py",
+   "?? scripts/r108/commander_status.py",
+   "?? scripts/r108/common.py",
+   "?? scripts/r108/f2_coupled_los.py",
+   "?? scripts/r108/frame_cf4_joint.py",
+   "?? scripts/r108/frame_input_receipts.py",
+   "?? scripts/r108/frame_lie_flux.py",
+   "?? scripts/r108/frame_registry_build.py",
+   "?? scripts/r108/frame_w1tf_joint.py",
+   "?? scripts/r108/frame_w1tf_probe.py",
+   "?? scripts/r108/gaia_acquire.py",
+   "?? scripts/r108/gaia_agn_split.py",
+   "?? scripts/r108/gaia_cmdlog.py",
+   "?? scripts/r108/gaia_estimator.py",
+   "?? scripts/r108/gaia_frame_leakage.py",
+   "?? scripts/r108/gaia_input_receipts.py",
+   "?? scripts/r108/gaia_scan_null.py",
+   "?? scripts/r108/gaia_scanlaw.py",
+   "?? scripts/r108/gaia_summary.py",
+   "?? scripts/r108/gaia_supersede.py",
+   "?? scripts/r108/radio_cmdlog.py",
+   "?? scripts/r108/radio_input_receipts.py",
+   "?? scripts/r108/radio_p_of_c1.py",
+   "?? scripts/r108/radio_racs_dipole.py",
+   "?? scripts/r108/radio_racs_fetch.py",
+   "?? scripts/r108/radio_summary.py",
+   "?? scripts/r108/radio_theory_c1.py",
+   "?? scripts/r108/radio_v3_diag.py",
+   "?? scripts/r108/review_r107_claims.py",
+   "?? scripts/r108/s1_family_atlas.py",
+   "?? scripts/r108/s4_aggregate.py",
+   "?? scripts/r108/s4_bjs_comparator.py",
+   "?? scripts/r108/s4_cmdlog.py",
+   "?? scripts/r108/s4_lit_fetch.py",
+   "?? scripts/r108/s4_posthoc_checks.py",
+   "?? scripts/r108/s5_photon_moments.py",
+   "?? scripts/r108/s6_b03_templates.py",
+   "?? scripts/r108/s7_los_performance.py",
+   "?? scripts/r108/s8_cmdlog.py",
+   "?? scripts/r108/s8_lowz_feasibility.py",
+   "?? scripts/r108/s8_lowz_tau.py",
+   "?? scripts/r108/s8_replay_compare.py",
+   "?? scripts/r108/s8_uvb_vo_probe.py",
+   "?? tests/obsstat/test_r108_cf4_2mpp.py",
+   "?? tests/obsstat/test_r108_cf4_acquire.py",
+   "?? tests/obsstat/test_r108_cf4_cf3_overlap.py",
+   "?? tests/obsstat/test_r108_cf4_kband.py",
+   "?? tests/obsstat/test_r108_cf4_receipts.py",
+   "?? tests/obsstat/test_r108_frame_cf4_joint.py",
+   "?? tests/obsstat/test_r108_frame_input_receipts.py",
+   "?? tests/obsstat/test_r108_frame_lie_flux.py",
+   "?? tests/obsstat/test_r108_frame_registry.py",
+   "?? tests/obsstat/test_r108_gaia_acquire.py",
+   "?? tests/obsstat/test_r108_gaia_agn_split.py",
+   "?? tests/obsstat/test_r108_gaia_estimator.py",
+   "?? tests/obsstat/test_r108_gaia_frame_leakage.py",
+   "?? tests/obsstat/test_r108_gaia_scan_null.py",
+   "?? tests/obsstat/test_r108_gaia_scanlaw.py",
+   "?? tests/obsstat/test_r108_gaia_supersede.py",
+   "?? tests/obsstat/test_r108_radio_input_receipts.py",
+   "?? tests/obsstat/test_r108_radio_p_of_c1.py",
+   "?? tests/obsstat/test_r108_radio_racs_dipole.py",
+   "?? tests/obsstat/test_r108_radio_theory_c1.py",
+   "?? tests/obsstat/test_r108_s4_rotation_fitter.py",
+   "?? tests/obsstat/test_r108_s6_kernel.py",
+   "?? tests/obsstat/test_r108_s8_lowz_feasibility.py",
+   "?? tests/obsstat/test_r108_s8_lowz_tau.py"
+  ],
+  "dirty_code_sha256": {
+   "htt/bass/background/test_compensating_tilt_root.py": "cbdd64e0b7a536464a25c8fd7f759c2ddc4f94dfadb77ed0abf9647e338b0584",
+   "htt/bass/background/tilted_bianchi_state.py": "dd6bd75fb358b3c738d555414471066d14f40707ee43bd4afed683f07f7a7b2f",
+   "htt/bass/transport/bjs_bianchi_vii_h.py": "1b7e9c72ab1cb9f66bc9c2996c58e53b82bff572e4a27fefd42a15b609ddfd9e",
+   "htt/bass/transport/coupled_einstein_boltzmann.py": "b564041da20eb830a6099960909f7236a2dfae977842ebcb1d04629cbe25c56a",
+   "htt/bass/transport/hybrid_los_parallel.py": "85b40325ef1c0e2b8695bf846eb944e90deb0598f4dab3a8b60b6b17ae49d9f3",
+   "htt/bass/transport/hybrid_los_transfer.py": "96744df0f361d4c07aee3e30016450072d797df13c2bee57919c2a9cb66810db",
+   "htt/bass/transport/test_bjs_bianchi_vii_h.py": "b7709ab0bc3b7878f3b6778c00643038dd5aaedc27b377a27c99335633c119ac",
+   "htt/bass/transport/test_hybrid_los_parallel.py": "14a68cf9aba2e7e79d05771e99cc7637eaee6644af3c73eaf5b8a3ab69289bef",
+   "htt/bass/transport/test_hybrid_los_transfer.py": "42040c8514df07cdfb36eb79c494c9ccecedaea89c27baab1c2cdcbefd007505",
+   "htt/obsstat/catalogue_frame_registry.py": "f69967dddaeaa52f801a1e1662dbe12a5c5c9d51ffa8fb04feae526cab5d4298",
+   "scripts/r107_cloud/acquisition.py": "97037c43513c7c7973a6941781c26d3407da6cae1a31a1f2770ef6711ce833db",
+   "scripts/r108/__init__.py": "8d579afbf258026e1054383aed56826844a30771b57e9cb3eea11f72464079bc",
+   "scripts/r108/build_results.py": "c1f71936d542cb9a55811e9a8c33cbade1037e1cc1f0dd544741b09c54a1c29d",
+   "scripts/r108/cf4_2mpp_field.py": "6b24f23caf5f1f5bae3b7b48874947457d9c1da678ab0553e20a0e55feff6e67",
+   "scripts/r108/cf4_acquire.py": "d7510d7c6d27f796eb2898a3791cb2c00c1706244cc2fa339688bf4eba322112",
+   "scripts/r108/cf4_cf3_table3_overlap.py": "c28bc6b941fc56198b95329efd92a83e96d01408a15ae1250a3288bcb5ab6c06",
+   "scripts/r108/cf4_kband_contrast.py": "7f6f67a4245fae903e6bf79b7ef82cce16baeab61a8799b04f0d4a92df558245",
+   "scripts/r108/cf4_receipts.py": "b18b79316f9c13614f0065b532ff1f3353ce968e30d9ee3290b16016609d89f1",
+   "scripts/r108/commander_splits.py": "01926d899d66e06d6831f47346c6449d5face457d72f4af56fe19489fad5643c",
+   "scripts/r108/commander_status.py": "8a9a3a14774ec5ee65036be1442f2a6c4d778733e2199042bb4835fa8460f5fe",
+   "scripts/r108/common.py": "dded5b978a15680df0975cb2921e0931824c27cee7d508ea81721a1ceaaff41e",
+   "scripts/r108/f2_coupled_los.py": "0b60e9fcbb798493fd6aac322433439573ebd582491112f126bcc6ca9a4e14a4",
+   "scripts/r108/frame_cf4_joint.py": "51a39b27428abd53d256f22b442fa22279ec601d9fb68d95f4fc268b009eff21",
+   "scripts/r108/frame_input_receipts.py": "ec599d241d8ed66e95defaf87faebbb82d962b492a738634b3e73aed207cf88e",
+   "scripts/r108/frame_lie_flux.py": "f09a661fd9840f8b3e39e7ffa20bbf10790efc66769c5c3413fe59364151f018",
+   "scripts/r108/frame_registry_build.py": "f05d0b22dae211cc48e9d0d969f1a112b3d1401974b960fc819c33007f2ef4a1",
+   "scripts/r108/frame_w1tf_joint.py": "239137f2805a5927dd8398a459212b6b096208aa03483a70a48f19c668d43672",
+   "scripts/r108/frame_w1tf_probe.py": "ae56a67fa55c4b0506aaff3d2096289cc3e1e63e36d186228c5bbc1dc3f50cf0",
+   "scripts/r108/gaia_acquire.py": "b5ce4997fd7bd52a81bc451768c13a6f6de52cae7e7a5bab2b2aca1981eda6e0",
+   "scripts/r108/gaia_agn_split.py": "cf7f5d1f133e1c49330b053123dfafcada4c93233289a083e94bcc0743444dff",
+   "scripts/r108/gaia_cmdlog.py": "eff796ab73f20e224ada67d37c95ba63f6e67cf1a56bbf7eab55558d2a47da4b",
+   "scripts/r108/gaia_estimator.py": "84cdf08db5c8ba4c84d1f5c0be97677b0f51de91610703da79d15f404ebd7402",
+   "scripts/r108/gaia_frame_leakage.py": "b2d7537004954f35e1723562fa6799fd91985c6bcf241fe7ccdf942cad78c454",
+   "scripts/r108/gaia_input_receipts.py": "8a52ee575497ab47f751d1d05a70c0612f19cc64a9d7ef41fce0efd813924f34",
+   "scripts/r108/gaia_scan_null.py": "ad3e7b2cb8b47ad7350d3aeb4b8167909e6fc4dc825b2ede3949bee6d58157f2",
+   "scripts/r108/gaia_scanlaw.py": "a10b2b83bcd028625870d6bc3439d91d2b69bb5a1e2f59123f04fe1feb699a1b",
+   "scripts/r108/gaia_summary.py": "5f236da9f59c5ed43f2baf46f39e6c17dcf0a36a10569fd00674fcb18fa16780",
+   "scripts/r108/gaia_supersede.py": "75d253087aec1d7c91a57bed185023cedf5c11615d1ef41e542308fdf2954560",
+   "scripts/r108/radio_cmdlog.py": "18d83a9d3421348ce149e02d47439b85fd91589be538ff777d87746e134fe0c2",
+   "scripts/r108/radio_input_receipts.py": "5def968ebaa0ab53228d0fd501286fc2fd40bb7c2be563290a563ad2edc31e99",
+   "scripts/r108/radio_p_of_c1.py": "08dd5bcc983c4ceec2153f1c67b6d30ac6a2092d9f34af2fb16fe1c4f32f8570",
+   "scripts/r108/radio_racs_dipole.py": "18f2f4088bb2a086b444d80100709bfb7b3fda65319e4493e41082015c911080",
+   "scripts/r108/radio_racs_fetch.py": "98acf036ae5bc6fbd56161584b992034e1e19cf63480d2aec0192deef8a392c7",
+   "scripts/r108/radio_summary.py": "e8c3ba53d4f2059d40f437a617d508014dfa427c50cc70ab5e5f92280e85f96c",
+   "scripts/r108/radio_theory_c1.py": "8e0bfde578a0f7ca0d13857766e29794ae97d5b7cfddf086d8f0142a7cbe41c6",
+   "scripts/r108/radio_v3_diag.py": "416bbfec06daac2de9641ddd6993bd279f178deb4c30c95506aabe631ae018bf",
+   "scripts/r108/review_r107_claims.py": "cdb61ed26c39dff78ca18cb491aa48b7789c92843c1a8b6e248241895621df97",
+   "scripts/r108/s1_family_atlas.py": "5d70606693bcac06653daa1a917252ce557d551919115aa5b38e1112905a9cbc",
+   "scripts/r108/s4_aggregate.py": "c06616ccf1bc72b416d799ecb41d4ad34f4d0e37ac541655c10a5df99702c572",
+   "scripts/r108/s4_bjs_comparator.py": "7b0ba3ca9a930643481ec371ca2318f015e394010f76440af222814fd1b81d7b",
+   "scripts/r108/s4_cmdlog.py": "eddbeca9f8d8c08f7f89e5450f8c3accede25f0ed9c28037042d8588de707b95",
+   "scripts/r108/s4_lit_fetch.py": "1f74fbb626681f7adfe3b85c61de35e1a95af056c5e21e8e79f6b403301030d6",
+   "scripts/r108/s4_posthoc_checks.py": "be30727555d33751f0c8d0511a98fad6e923782b1da210e804e500f7772ed7b5",
+   "scripts/r108/s5_photon_moments.py": "b1eb89d9e6648fe7d2d0737b48f50b2443b2ef71b2380c27908d1b7558fa88fd",
+   "scripts/r108/s6_b03_templates.py": "8bf0aeeab51bbd2efc92af82aea1829bb4dbaa7a166dff00286bb953cbeef23c",
+   "scripts/r108/s7_los_performance.py": "8bede5caa6342a00c659ad5ebab59e2829fb0b5c93403374a33d4084bc80707c",
+   "scripts/r108/s8_cmdlog.py": "f664ae05bdf77f50c3e8b7242773a1d0b10ee5033778b68c6d97f4f51db1d83a",
+   "scripts/r108/s8_lowz_feasibility.py": "1c996109a700d24d08adc3523f6675e31b5078d98f45f170c849327ebafc59dd",
+   "scripts/r108/s8_lowz_tau.py": "724c95700c82f00513b4a3061d79a70ec6d2d211ca38732a3d446035a7e2a902",
+   "scripts/r108/s8_replay_compare.py": "a7ba16bfecf70c4f8dbd7e8858e98d387489b47c990754263e788f3d03084a5e",
+   "scripts/r108/s8_uvb_vo_probe.py": "d2c40c8dd4a44001b4826717d9a57f9e5a734fb164b34e20bb7ed0ea78a73c94",
+   "tests/obsstat/test_r108_cf4_2mpp.py": "630204a57bf14620ec3c4b326e86b570bd7995c8f5d06628acf5be21be96888e",
+   "tests/obsstat/test_r108_cf4_acquire.py": "6ef6695a5a9ef1be378619452848bda534dbba113fc9cde82c656673fc6ebdcd",
+   "tests/obsstat/test_r108_cf4_cf3_overlap.py": "f319cdeff11a34d8e64ed8c46f4ebaf4d44b148f03591f8dbb43c343fa8837ca",
+   "tests/obsstat/test_r108_cf4_kband.py": "610302e9736fadb35147d051131c0b7326d89f473498462534cc9bbb3355a975",
+   "tests/obsstat/test_r108_cf4_receipts.py": "4ff0beae6f7b1dbe8d1b070b1820b3bfed1928d461a2fca3f8b5ce7ac633fe20",
+   "tests/obsstat/test_r108_frame_cf4_joint.py": "a68866f4eda34d81971cd7def89c266c13d835e27f63696af398519674d9d57c",
+   "tests/obsstat/test_r108_frame_input_receipts.py": "cca13b432cc2b06e77baeb76d6865bf6e47649fb9bdfa35a5c8d81a762dd16ee",
+   "tests/obsstat/test_r108_frame_lie_flux.py": "66976c8e087d5ed311a5d9b9f0d43d47d281dddab191ab7b2598b1e913f47257",
+   "tests/obsstat/test_r108_frame_registry.py": "94499c9cb941dbb40051dcc1552e6a1cef83ca590bb4f259c5a333a6d25190bc",
+   "tests/obsstat/test_r108_gaia_acquire.py": "f563e84706747f6a68f0b7ee4633976b94e0a063d62106a3450e4a819ab1dfd6",
+   "tests/obsstat/test_r108_gaia_agn_split.py": "2f3db18a458a291dc0c7a8a364242861e1c3b815af200c7626938be494bcefc5",
+   "tests/obsstat/test_r108_gaia_estimator.py": "a1260756f239f90ea1b331dfb221c4f0b0fa5670e3d5292c55ac53013031fac1",
+   "tests/obsstat/test_r108_gaia_frame_leakage.py": "8c8b879c8131a82f1e1c81657b85a9c6ff5b848e2b61bbbb00af8fb625e63e9d",
+   "tests/obsstat/test_r108_gaia_scan_null.py": "66791d9fc9406c1e1b39f454ce7e2e9cd3b90dda93892f3a24c600bbfb0df8db",
+   "tests/obsstat/test_r108_gaia_scanlaw.py": "9bb22d639f9fda641827cfdb7b8acb6d6132188897f5a05f40317fa34a62cad8",
+   "tests/obsstat/test_r108_gaia_supersede.py": "1ff159a166feb1613b5921a7975e5d9e855a261b3ae2ac28f1bd5a54b8200994",
+   "tests/obsstat/test_r108_radio_input_receipts.py": "8671dd32518ce6aa2e67274bbee88bc4e390f66197eda44c9a367b0c2c11e84a",
+   "tests/obsstat/test_r108_radio_p_of_c1.py": "0add58f756d41e04ab224cf5fb8d51a587a166d6796fe74618a24343dd67edc1",
+   "tests/obsstat/test_r108_radio_racs_dipole.py": "e20c96a0001b1b52940ab4fe95fceb7e31319d5e9e9da8d6be3ac485f6e8b9be",
+   "tests/obsstat/test_r108_radio_theory_c1.py": "a8dcbbfffae34d0c25214106c9dff4ad1b3297e52cb1e6c0b3e4470e38f06bca",
+   "tests/obsstat/test_r108_s4_rotation_fitter.py": "c2a736a7763c5343a55afb00c11268c575c4ec2d29401a4fa451759d86f61f2b",
+   "tests/obsstat/test_r108_s6_kernel.py": "72da1c58314cc3056a3b9c9407a9f0f977fc20e0f33e622755b78184ef486fbc",
+   "tests/obsstat/test_r108_s8_lowz_feasibility.py": "d28006c352d9685142a15d88e327a5f5f2ba9f0ef63956e6f57bc08562e9d708",
+   "tests/obsstat/test_r108_s8_lowz_tau.py": "057a0552612c555ebd1c646c49cce3c11a36e54541ce994487d257a1d78e8fbf",
+   "tests/r107_cloud/test_acquisition.py": "fde7b4acaf42a9973e6ae30a5c3559cb4881462498cfb3f4f1eafcdacc0820a6"
+  },
+  "head": "b79b9526b1817cc5946858f5891f7e7b567b87a2"
+ },
+ "headline": {
+  "AGN_SPLIT.json": {
+   "agn_vs_non_agn": "BLOCKED: every qualified R106 row is in gaiadr3.gaia_crf3_xm by construction of the R106 sample (CRF3 BP-RP join required), so no non-CRF3 subset exists inside it; agn_cross_id membership not checked (D10 blocked). An empty non-AGN subset is a property of the sample construction, not a measured property of Quaia.",
+   "membership": {
+    "flag_counts": {
+     "alma19": 1319,
+     "aw15": 341938,
+     "b19": 487493,
+     "bzcat5": 1838,
+     "c75": 503266,
+     "cat2qz": 11931,
+     "cat2whspj": 151,
+     "dr14q": 145823,
+     "guw": 627794,
+     "icrf3k": 374,
+     "icrf3sx": 1892,
+     "icrf3xka": 341,
+     "lamost5": 32435,
+     "lqac5": 163275,
+     "lqrf": 66363,
+     "m65": 480227,
+     "ocars": 2772,
+     "r90": 473282
+    },
+    "gaia_crf3_xm_rows": 1614173,
+    "in_agn_cross_id": "D10 not acquired (BLOCKED)",
+    "in_gaia_crf3_xm": 634233,
+    "non_agn_in_r106_sample": 0,
+    "quaia_qualified": 634233
+   },
+   "splits": {
+    "ident": {
+     "A_null": null,
+     "B_null": null,
+     "definition": "A: in an optical-spectroscopic or radio/VLBI/blazar catalogue; B: photometric/mid-IR only",
+     "difference_spin6": null,
+     "n_A": 173021,
+     "n_B": 461212,
+     "status": "BLOCKED"
+    },
+    "ruwe": {
+     "A_null": {
+      "draws": 200,
+      "draws_ge_observed": 0,
+      "exact_conditional_permutation_p": 0.004975124378109453,
+      "null_max": 25.718801957403254,
+      "null_q50": 5.209099705572413,
+      "null_q99": 21.669162549276674,
+      "observed": 54.24981025313262
+     },
+     "B_null": {
+      "draws": 200,
+      "draws_ge_observed": 0,
+      "exact_conditional_permutation_p": 0.004975124378109453,
+      "null_max": 25.603913664283294,
+      "null_q50": 5.396245835161518,
+      "null_q99": 19.136507383351418,
+      "observed": 72.93222873202942
+     },
+     "definition": "A: RUWE < 1.012038 (Quaia median), B: RUWE >= median",
+     "difference_spin6": {
+      "draws": 200,
+      "draws_ge_observed": 86,
+      "exact_conditional_permutation_p": 0.43283582089552236,
+      "null_q50": 5.239724798864307,
+      "null_q95": 13.870585335766249,
+      "null_q99": 16.913855781410447,
+      "observed": 5.7269350453464565
+     },
+     "n_A": 317116,
+     "n_B": 317117,
+     "status": "RUN"
+    }
+   }
+  },
+  "FRAME_LEAKAGE.json": {
+   "A_census": {
+    "ambiguous_second_within_100mas": 0,
+    "defining": 303,
+    "gaia_crf3_xm_icrf3sx_flags_total": 3142,
+    "icrf3_rows": 4536,
+    "matched_flagged_icrf3sx_in_gaia_crf3_xm": 3142,
+    "matched_within_100mas": 3142,
+    "offset_mas_q50_q90_q99": [
+     0.5164152315221103,
+     2.3693463634155263,
+     13.698446360815947
+    ],
+    "usable_offsets": 3142
+   },
+   "A_constraint": {
+    "observed_R106_spin6_Q_jk1_all48": 104.12458235777513,
+    "pm_equivalent_spin6_Q_by_clip": {
+     "clip_X_gt_5": 422.92037879321606,
+     "no_clip": 3923.584531220751
+    },
+    "statement": "Part A (offset curvature / EDR3 baseline) is a scale, not a bound: a static radio-optical offset produces no proper motion, a varying centroid can produce proper motion unrelated to the net offset, and the noise of the offset curvature is kept. Its Q exceeds the observed spin6 Q for every clip, so it cannot constrain frame leakage; only Part B constrains a G/BP-RP-dependent frame.",
+    "status": "NON_CONSTRAINING"
+   },
+   "A_global_clip5": {
+    "glide_chi2_vs_zero": 37.69068867082307,
+    "glide_vector": [
+     -22.787363755165682,
+     -4.591670411450894,
+     18.359949309883586
+    ],
+    "n_used": 2715,
+    "spin_chi2_vs_zero": 3.5441628204114743,
+    "spin_vector": [
+     -6.8608417701154005,
+     -6.261924995946217,
+     1.9382191287599828
+    ]
+   },
+   "A_shell_curvature": {
+    "clip_X_gt_5": {
+     "all48": {
+      "label": "clip_X_gt_5",
+      "n_used_per_shell": [
+       475,
+       657,
+       276,
+       261
+      ],
+      "offset_curvature_microas_per_z2": [
+       -86.96709125853086,
+       348.32395495676764,
+       -79.87803938526861,
+       183.2534437659582,
+       43.75720698314702,
+       -195.1229634543199,
+       -129.82602053554612,
+       56.655579969263826,
+       -232.3796100475835,
+       -40.36044845327372,
+       -18.628499888057018,
+       385.72509064006994,
+       267.95052923294475,
+       266.5376067610025,
+       36.058821597783435,
+       -73.98937333320009,
+       -46.081919917055785,
+       -338.07765150421125,
+       -50.151100471217376,
+       -91.14193421643493,
+       7.811484118806864,
+       -5.503207906725768,
+       428.70551616048243,
+       -24.68458016679766,
+       289.23524946093545,
+       223.23103900530913,
+       152.0743698290349,
+       -599.028675925563,
+       92.1042865623632,
+       -128.27046851547905,
+       -161.14576892666665,
+       290.3592238603346
+      ],
+      "offset_curvature_spin6": [
+       183.2534437659582,
+       43.75720698314702,
+       -195.1229634543199,
+       -91.14193421643493,
+       7.811484118806864,
+       -5.503207906725768
+      ],
+      "offset_curvature_spin6_chi2_vs_zero_own_cov": 23.03886123452411,
+      "pm_equivalent_scale_microasyr_per_z2_spin6": [
+       64.48745449071896,
+       15.398296675780395,
+       -68.6643752350161,
+       -32.073128963867674,
+       2.7488854575627277,
+       -1.9365959086214344
+      ],
+      "pm_equivalent_spin6_Q_in_R106_jk1_cov": 422.92037879321606,
+      "shell_coef_microas": [
+       [
+        -13.88704812579734,
+        15.583133712709522,
+        20.143755544201593,
+        26.181742964329192,
+        -3.9473196176747147,
+        -30.283185609718497,
+        27.20856435001508,
+        -45.05745705151818,
+        34.21627926438755,
+        20.11890446665277,
+        52.96324380237445,
+        -12.084331551005366,
+        11.400771449569762,
+        31.590772323328075,
+        7.949176461700651,
+        -1.9356150185642187
+       ],
+       [
+        -6.400952511630023,
+        -36.87344592318485,
+        34.01137667489306,
+        -17.84434899041394,
+        -16.560574833612602,
+        22.887750058622146,
+        16.909506226115724,
+        -50.722056289850684,
+        17.41713923064012,
+        -1.6155049894012774,
+        41.716893794862955,
+        -15.475004386709655,
+        -29.691903362822167,
+        -38.33996871818579,
+        22.081162638055762,
+        -13.11464993103483
+       ],
+       [
+        -28.6224260895882,
+        29.089358653244332,
+        20.769271586819297,
+        0.015919881167958675,
+        -14.449578657715453,
+        10.322525340226955,
+        -38.27888729876362,
+        -37.05322021911524,
+        -79.68958251062394,
+        -37.772345696150865,
+        23.783199606319897,
+        113.64782671103947,
+        20.291667048155286,
+        -18.407155653552284,
+        48.9651801108417,
+        -50.01049050281388
+       ],
+       [
+        -75.75211625329995,
+        -45.166778456248046,
+        -17.548882717008453,
+        -19.91088280778955,
+        -8.423772151363735,
+        -7.057666298666654,
+        89.62380172745024,
+        -31.97864893343379,
+        -64.3872320385306,
+        20.030383188456085,
+        71.10237886708619,
+        -3.4049217284109967,
+        121.09359959907803,
+        -52.620885848274995,
+        8.167187531264348,
+        37.1896278814428
+       ]
+      ]
+     }
+    },
+    "no_clip": {
+     "all48": {
+      "label": "no_clip",
+      "n_used_per_shell": [
+       535,
+       727,
+       324,
+       306
+      ],
+      "offset_curvature_microas_per_z2": [
+       -486.3551150015005,
+       77.53055019657437,
+       450.87800655734236,
+       -130.84134117837726,
+       134.17636447637213,
+       -559.1089146825158,
+       -624.2742478987905,
+       1145.855410107074,
+       359.6306816851449,
+       -63.69597698846199,
+       -844.3720982674896,
+       521.8551831564157,
+       576.0564357342834,
+       1008.6521948318019,
+       -249.12974036700226,
+       1052.1208659048916,
+       11.756975728437714,
+       175.4555888035918,
+       -1143.6539070182594,
+       555.0672464347616,
+       -264.2877467810789,
+       115.31780266438344,
+       1042.8740503858603,
+       -980.0465598559902,
+       -712.1545371981615,
+       465.40195855312703,
+       -139.8381184704988,
+       -1379.7827849008586,
+       511.5084980866114,
+       -379.81253044859494,
+       238.03387253655632,
+       -1735.4057549394704
+      ],
+      "offset_curvature_spin6": [
+       -130.84134117837726,
+       134.17636447637213,
+       -559.1089146825158,
+       555.0672464347616,
+       -264.2877467810789,
+       115.31780266438344
+      ],
+      "offset_curvature_spin6_chi2_vs_zero_own_cov": 201.72919420594386,
+      "pm_equivalent_scale_microasyr_per_z2_spin6": [
+       -46.0434732431077,
+       47.21707827194199,
+       -196.75215892254795,
+       195.32988334705314,
+       -93.00367672634972,
+       40.5806919557087
+      ],
+      "pm_equivalent_spin6_Q_in_R106_jk1_cov": 3923.584531220751,
+      "shell_coef_microas": [
+       [
+        -60.063516582335104,
+        41.57768644615617,
+        -13.415505246914577,
+        39.88867927427823,
+        -16.492471926502173,
+        -91.15498700839045,
+        56.83196571902772,
+        54.235414328373984,
+        -26.693584557758957,
+        27.385256993891094,
+        -72.02120339317436,
+        -88.57261243644076,
+        120.36971549210034,
+        134.94979239300721,
+        -11.755726521293134,
+        -159.69005951488117
+       ],
+       [
+        15.114439115612589,
+        -5.0207106944160405,
+        27.972530351443584,
+        -18.555439544092557,
+        -11.87090257390574,
+        36.55666087966193,
+        113.74302733264915,
+        -116.98664892406991,
+        -26.538272361360423,
+        -14.774696526080042,
+        106.48614926867481,
+        -73.10473905245186,
+        -51.155534819753115,
+        -105.89251042989403,
+        31.095898566664683,
+        -144.55577572945538
+       ],
+       [
+        -75.0045585146434,
+        -26.141475621338348,
+        225.40021852121652,
+        -123.45161197623003,
+        38.99237686551364,
+        -24.714572234104487,
+        -42.51519332024606,
+        101.38052054723941,
+        97.24957671715393,
+        -79.89393730399004,
+        -0.7725144879021961,
+        122.14887176351085,
+        -28.976425583230487,
+        -6.066365152480242,
+        -10.6144423725474,
+        232.64288437883047
+       ],
+       [
+        -176.5547233751631,
+        27.943365973993476,
+        -56.280994403685284,
+        2.5004002258622275,
+        -19.889051247134574,
+        -45.35642600893535,
+        242.52995214985273,
+        -81.689175930675,
+        -77.14649092722922,
+        52.78337579243419,
+        -191.01151790929302,
+        -268.5999911762211,
+        228.0020726423475,
+        -58.993076896509585,
+        47.279421260375834,
+        -102.75683845145899
+       ]
+      ]
+     }
+    }
+   },
+   "A_shells": {
+    "matched_in_quaia_qualified": 1892,
+    "per_shell_counts": [
+     535,
+     727,
+     324,
+     306
+    ]
+   },
+   "B_bound": {
+    "draws": 1000,
+    "observed_spin6_Q_jk1": {
+     "all48": 104.12458235777513,
+     "excl_8_47": 103.19179235460695
+    },
+    "scope": "Cell frames drawn from N(complement fit, complement fit covariance); the noise-only row draws N(0, same covariance) and shows how much of the leak is fit noise.",
+    "seed": 108201,
+    "spin6_leak_Q_in_observed_jk1": {
+     "all48": {
+      "max": 37.76293519569347,
+      "q50": 10.45643472648884,
+      "q95": 22.752793458925908,
+      "q99": 29.607637669861045
+     },
+     "excl_8_47": {
+      "max": 40.611984313241436,
+      "q50": 10.536895415598893,
+      "q95": 22.894844128256402,
+      "q99": 29.82081105002538
+     }
+    },
+    "spin6_leak_Q_noise_only_cell_frames": {
+     "all48": {
+      "q50": 3.5057865568174154,
+      "q95": 9.980226090333256
+     },
+     "excl_8_47": {
+      "q50": 3.6953708267069922,
+      "q95": 10.645272853624624
+     }
+    }
+   },
+   "B_global_complement": {
+    "glide_vector": [
+     -2.363223414180289,
+     -4.1947194368425285,
+     -3.1744650409191735
+    ],
+    "n_used": 31458,
+    "spin_chi2_vs_zero": 35.256294667877704,
+    "spin_vector": [
+     7.110472174888706,
+     1.9260406616810286,
+     -0.822493650674096
+    ]
+   },
+   "B_insample_diagnostic": {
+    "all48": {
+     "leak_Q_in_observed_jk1_cov": {
+      "glide6": 0.3447659852185539,
+      "joint32": 13.970043404957822,
+      "magnetic16": 5.482387025380029,
+      "spin6": 3.94192327496238
+     },
+     "leak_curvature_spin6": [
+      4.078968786685983,
+      -2.1179568956125454,
+      -2.5158098999492324,
+      -8.727876986355868,
+      0.9786116253782283,
+      3.4271593306029504
+     ],
+     "leak_spin6_norm_over_observed_spin6_norm": 0.26036428962611596,
+     "observed_jk1": {
+      "joint32": 406.38507053891203,
+      "magnetic16": 171.9805476095284,
+      "spin6": 104.12458235777513
+     },
+     "observed_plus_leak_recomputed_jk1": {
+      "joint32": 551.3713388393699,
+      "magnetic16": 224.89910458527788,
+      "spin6": 135.86153643900047
+     }
+    },
+    "excl_8_47": {
+     "leak_Q_in_observed_jk1_cov": {
+      "glide6": 0.35909039536201753,
+      "joint32": 19.716238899400654,
+      "magnetic16": 8.411927274137273,
+      "spin6": 3.648175874484573
+     },
+     "leak_curvature_spin6": [
+      3.9389347614555836,
+      -2.0942762222041607,
+      -2.542962910806832,
+      -8.607555608100094,
+      0.979842735004589,
+      3.4281813053308388
+     ],
+     "leak_spin6_norm_over_observed_spin6_norm": 0.2425032139962863
+    },
+    "label": "Quaia (G,BP-RP) cell frames ignoring z (in-sample degeneracy diagnostic)"
+   },
+   "B_leak_point": {
+    "all48": {
+     "leak_Q_in_observed_jk1_cov": {
+      "glide6": 23.55403459290035,
+      "joint32": 226.68060423235696,
+      "magnetic16": 68.90237012640992,
+      "spin6": 7.084912062702741
+     },
+     "leak_curvature_spin6": [
+      1.0142679639177286,
+      -14.381689664024075,
+      3.3154394283537645,
+      -2.655263412863597,
+      14.140204652824313,
+      -4.2570681065148275
+     ],
+     "leak_spin6_norm_over_observed_spin6_norm": 0.5086392029701708,
+     "observed_jk1": {
+      "joint32": 406.38507053891203,
+      "magnetic16": 171.9805476095284,
+      "spin6": 104.12458235777513
+     },
+     "observed_plus_leak_recomputed_jk1": {
+      "joint32": 545.152109994591,
+      "magnetic16": 261.3542678977326,
+      "spin6": 114.7077799476307
+     }
+    },
+    "excl_8_47": {
+     "leak_Q_in_observed_jk1_cov": {
+      "glide6": 19.831421193746998,
+      "joint32": 218.55409139532952,
+      "magnetic16": 85.44012128398833,
+      "spin6": 7.093424476427311
+     },
+     "leak_curvature_spin6": [
+      0.7158564507449137,
+      -14.674830947639384,
+      3.4184404158489348,
+      -1.8677249449603093,
+      14.061360702455001,
+      -4.447070155382916
+     ],
+     "leak_spin6_norm_over_observed_spin6_norm": 0.48278027634334164
+    },
+    "label": "complement (G,BP-RP) cell frames, point estimate"
+   },
+   "C": {
+    "curvature_max_abs_microasyr_per_z2": 1.0909650155606643e-13,
+    "injected": "global CRF3-complement 16-term frame (microarcsec/yr)"
+   },
+   "claim_class": {
+    "A_icrf3_minus_gaia": "NUMERICAL scale only (non-constraining when its Q exceeds the observed spin6 Q; see A_icrf3_minus_gaia.constraint)",
+    "B_crf3_agn_pm_frames": "CONDITIONAL on a Gaia frame systematic that depends on G and BP-RP only, measured on the disjoint R106-quality CRF3 complement in the 16 R106 (G, BP-RP) quartile cells and transferred to Quaia sources of the same cell; frame variation inside a cell, position dependence beyond 16 VSH terms and redshift dependence at fixed (G, BP-RP) are not covered; Gaussian cell-fit draws",
+    "C_constant_frame_annihilation": "NUMERICAL (round-off check of the estimator)",
+    "label": "CONDITIONAL",
+    "not_claimed": "no calibrated p, no physical Pi/G_F, no Bianchi family identification, no physical attribution"
+   },
+   "constraint_summary": {
+    "A_icrf3_minus_gaia": "NON_CONSTRAINING",
+    "B_crf3_agn_pm_frames": "CONDITIONAL: spin6 leak Q from Gaussian cell-frame draws (bound_draws) versus observed_spin6_Q_jk1",
+    "constraining_part": "B only"
+   },
+   "d10_consistency": {
+    "reason": "D10 (agn_cross_id x gaia_source) not acquired: the anonymous ESA async limit (60 s) aborted the single job and, after bisection, a source_id range in a dense region; part B uses the R106-pinned CRF3 FITS (gaia_crf3_xm x gaia_source, 1,614,173 rows) instead",
+    "status": "BLOCKED"
+   }
+  },
+  "SCANLAW_PIXEL_STATISTICS.json": {
+   "per_pixel/nside64/passes_per_pixel_q01_q50_q99": [
+    37.0,
+    82.0,
+    182.0
+   ],
+   "per_pixel/nside64/scan_anisotropy_abs_mean_exp2ipsi_q05_q50_q95": [
+    0.042576552554774376,
+    0.24952847862640692,
+    0.6096243111231513
+   ],
+   "rows/rows": 8967691,
+   "samples_outside_edr3_interval": {
+    "fov1": 57,
+    "fov2": 12
+   },
+   "scan_angle_convention_check/fov1/frac_abs_diff_lt_1deg_standard": 0.999999888487854
+  },
+  "SCANLAW_VALIDATION.json": {
+   "mirrored_convention_control": "not computed (R108 review GAIA-3): the former 'pearson_if_east_axis_mirrored' was corr(-pred, cat) = -corr(pred, cat) identically and recomputed no mirrored design (which would also change the parallax column); the scan-angle convention test is scan_angle_convention_check in SCANLAW_PIXEL_STATISTICS.json (FOV-centre position angle versus the scan-law angle)",
+   "pearson_pred_vs_catalogue_log_sigma_ratio": 0.7728980963659701,
+   "pearson_pred_vs_catalogue_pm_corr": 0.7517018191513166
+  },
+  "SCAN_NULL.json": {
+   "noise_catalogue": {
+    "all48__spin6": {
+     "draws": 1000,
+     "draws_ge_observed": 0,
+     "null_max": 32.40318689314327,
+     "null_q50": 5.602949316420663,
+     "null_q95": 14.660752987859837,
+     "null_q99": 22.4848596627537,
+     "observed": 104.12458235777473
+    },
+    "excl__spin6": {
+     "draws": 1000,
+     "draws_ge_observed": 0,
+     "null_max": 35.117058929515075,
+     "null_q50": 6.4699901594996625,
+     "null_q95": 17.17045644472358,
+     "null_q99": 22.649833818387304,
+     "observed": 103.19179235460663
+    }
+   },
+   "noise_scanshape": {
+    "all48__spin6": {
+     "draws": 1000,
+     "draws_ge_observed": 0,
+     "null_max": 31.685579222264025,
+     "null_q50": 5.247728499501402,
+     "null_q95": 14.308922304402822,
+     "null_q99": 20.44742370699163,
+     "observed": 104.12458235777473
+    },
+    "excl__spin6": {
+     "draws": 1000,
+     "draws_ge_observed": 0,
+     "null_max": 36.82830426049097,
+     "null_q50": 6.234816340007665,
+     "null_q95": 16.440089923878823,
+     "null_q99": 24.32905290455809,
+     "observed": 103.19179235460663
+    }
+   },
+   "sys_blind_tau10": {
+    "all48__spin6": {
+     "draws": 300,
+     "draws_ge_observed": 0,
+     "null_max": 21.78507638298492,
+     "null_q50": 5.387880446301266,
+     "null_q95": 14.6937640262458,
+     "null_q99": 20.388892152455078,
+     "observed": 104.12458235777473
+    },
+    "excl__spin6": {
+     "draws": 300,
+     "draws_ge_observed": 0,
+     "null_max": 25.398629324704572,
+     "null_q50": 6.100337776331506,
+     "null_q95": 15.704542433210362,
+     "null_q99": 21.332644860356147,
+     "observed": 103.19179235460663
+    },
+    "systematic_only_all48": {
+     "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+      1.8239345466708567,
+      3.646087152013114
+     ],
+     "min_amplitude_needed_over_calibrated": 1.5429977025301826,
+     "spin6_Q_in_observed_jk1_q50_q95_max": [
+      7.832478334443675,
+      22.150614388274175,
+      43.73435376781809
+     ]
+    }
+   },
+   "sys_blind_tau21600": {
+    "all48__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 37.62996729361463,
+     "null_q50": 5.490909936519195,
+     "null_q95": 15.595034995401706,
+     "null_q99": 24.069909482772353,
+     "observed": 104.12458235777473
+    },
+    "excl__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 36.213657599568265,
+     "null_q50": 6.415365171207132,
+     "null_q95": 18.67283936506992,
+     "null_q99": 29.385386099730304,
+     "observed": 103.19179235460663
+    },
+    "systematic_only_all48": {
+     "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+      3.083205283575518,
+      5.791191375907943
+     ],
+     "min_amplitude_needed_over_calibrated": 2.702673598759217,
+     "spin6_Q_in_observed_jk1_q50_q95_max": [
+      3.1046923103637907,
+      8.10850956818734,
+      14.25496233108373
+     ]
+    }
+   },
+   "sys_blind_tau600": {
+    "all48__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 22.202467157650588,
+     "null_q50": 5.628421695670303,
+     "null_q95": 14.102243158258432,
+     "null_q99": 17.369742745535724,
+     "observed": 104.12458235777473
+    },
+    "excl__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 28.58232454583519,
+     "null_q50": 6.493443052297208,
+     "null_q95": 17.35635169654948,
+     "null_q99": 22.02881694985307,
+     "observed": 103.19179235460663
+    },
+    "systematic_only_all48": {
+     "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+      3.0468112587433835,
+      5.6078957374102965
+     ],
+     "min_amplitude_needed_over_calibrated": 2.361433124705863,
+     "spin6_Q_in_observed_jk1_q50_q95_max": [
+      3.310956256668555,
+      8.367415405587675,
+      18.67247860755276
+     ]
+    }
+   },
+   "sys_colour_tau10": {
+    "all48__spin6": {
+     "draws": 300,
+     "draws_ge_observed": 0,
+     "null_max": 31.834243340183015,
+     "null_q50": 5.165440429922166,
+     "null_q95": 15.075925337384984,
+     "null_q99": 20.4877927740574,
+     "observed": 104.12458235777473
+    },
+    "excl__spin6": {
+     "draws": 300,
+     "draws_ge_observed": 0,
+     "null_max": 36.73966016512151,
+     "null_q50": 6.434434358451341,
+     "null_q95": 17.805633135658923,
+     "null_q99": 26.22000190763029,
+     "observed": 103.19179235460663
+    },
+    "systematic_only_all48": {
+     "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+      2.7702987958793797,
+      5.800569726461665
+     ],
+     "min_amplitude_needed_over_calibrated": 2.1798142074773676,
+     "spin6_Q_in_observed_jk1_q50_q95_max": [
+      3.094681615407965,
+      8.505103440172928,
+      21.91362950408753
+     ]
+    }
+   },
+   "sys_colour_tau21600": {
+    "all48__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 2,
+     "null_max": 126.2716079277121,
+     "null_q50": 18.17126080823291,
+     "null_q95": 56.88964760480808,
+     "null_q99": 85.31673561203114,
+     "observed": 104.12458235777473
+    },
+    "excl__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 3,
+     "null_max": 126.4100008387568,
+     "null_q50": 20.30712042142104,
+     "null_q95": 60.93797889969683,
+     "null_q99": 91.35664816558491,
+     "observed": 103.19179235460663
+    },
+    "systematic_only_all48": {
+     "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+      1.0795881792542108,
+      2.2428342888339152
+     ],
+     "min_amplitude_needed_over_calibrated": 0.9190944564179383,
+     "spin6_Q_in_observed_jk1_q50_q95_max": [
+      20.699519525168682,
+      61.514850378412426,
+      123.26306974394603
+     ]
+    }
+   },
+   "sys_colour_tau21600__amp_complement_cross": {
+    "all48__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 98.20477179694937,
+     "null_q50": 15.048236024247139,
+     "null_q95": 46.953674351636565,
+     "null_q99": 69.13345193375154,
+     "observed": 104.12458235777473
+    },
+    "excl__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 2,
+     "null_max": 133.5077411706382,
+     "null_q50": 16.39153321110483,
+     "null_q95": 48.33631127707257,
+     "null_q99": 66.91660266073936,
+     "observed": 103.19179235460663
+    },
+    "systematic_only_all48": {
+     "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+      1.3799290621333489,
+      2.866789648298229
+     ],
+     "min_amplitude_needed_over_calibrated": 1.1747860671584143,
+     "spin6_Q_in_observed_jk1_q50_q95_max": [
+      12.669602332369031,
+      37.651535383805864,
+      75.44590945813935
+     ]
+    }
+   },
+   "sys_colour_tau21600__amp_quaia_cross": {
+    "all48__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 83.61904398488797,
+     "null_q50": 11.855570883577652,
+     "null_q95": 36.13474658111819,
+     "null_q99": 55.85622312532748,
+     "observed": 104.12458235777473
+    },
+    "excl__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 100.96915182697275,
+     "null_q50": 13.430357752870762,
+     "null_q95": 40.40099919540114,
+     "null_q99": 55.83352306119911,
+     "observed": 103.19179235460663
+    },
+    "systematic_only_all48": {
+     "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+      1.799593176436394,
+      3.7386378988063083
+     ],
+     "min_amplitude_needed_over_calibrated": 1.5320620807582712,
+     "spin6_Q_in_observed_jk1_q50_q95_max": [
+      7.449512112169618,
+      22.138466664170227,
+      44.36092006503962
+     ]
+    }
+   },
+   "sys_colour_tau600": {
+    "all48__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 35.00899532037805,
+     "null_q50": 5.364487893927058,
+     "null_q95": 17.417472589906126,
+     "null_q99": 25.39150714259773,
+     "observed": 104.12458235777473
+    },
+    "excl__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 33.300895152749526,
+     "null_q50": 6.377459989725442,
+     "null_q95": 20.640925175603982,
+     "null_q99": 29.70220796079356,
+     "observed": 103.19179235460663
+    },
+    "systematic_only_all48": {
+     "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+      3.760007766811364,
+      6.656687981008833
+     ],
+     "min_amplitude_needed_over_calibrated": 3.088362427587842,
+     "spin6_Q_in_observed_jk1_q50_q95_max": [
+      2.3498368915221572,
+      5.3599391080679215,
+      10.9168351410748
+     ]
+    }
+   },
+   "sys_gmag_tau10": {
+    "all48__spin6": {
+     "draws": 300,
+     "draws_ge_observed": 0,
+     "null_max": 29.94272034755555,
+     "null_q50": 5.866642465059554,
+     "null_q95": 14.720530068959972,
+     "null_q99": 19.027297219121916,
+     "observed": 104.12458235777473
+    },
+    "excl__spin6": {
+     "draws": 300,
+     "draws_ge_observed": 0,
+     "null_max": 31.885210634718188,
+     "null_q50": 6.085962853644503,
+     "null_q95": 18.23472684389932,
+     "null_q99": 24.46587999340098,
+     "observed": 103.19179235460663
+    },
+    "systematic_only_all48": {
+     "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+      0.5357538265700371,
+      1.0698126519272448
+     ],
+     "min_amplitude_needed_over_calibrated": 0.4213797643245985,
+     "spin6_Q_in_observed_jk1_q50_q95_max": [
+      90.9783391143927,
+      249.3067190149492,
+      586.4161477384239
+     ]
+    }
+   },
+   "sys_gmag_tau21600": {
+    "all48__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 1,
+     "null_max": 132.3507873095412,
+     "null_q50": 11.730931178056032,
+     "null_q95": 33.80994311498785,
+     "null_q99": 55.81881267538734,
+     "observed": 104.12458235777473
+    },
+    "excl__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 1,
+     "null_max": 125.81545008755786,
+     "null_q50": 12.443292476952806,
+     "null_q95": 35.83136388191235,
+     "null_q99": 49.02922122160897,
+     "observed": 103.19179235460663
+    },
+    "systematic_only_all48": {
+     "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+      0.5729744934933801,
+      1.2058069841855261
+     ],
+     "min_amplitude_needed_over_calibrated": 0.5067278249134531,
+     "spin6_Q_in_observed_jk1_q50_q95_max": [
+      71.61432303637993,
+      236.91639358615845,
+      405.51205326541907
+     ]
+    }
+   },
+   "sys_gmag_tau21600__amp_complement_cross": {
+    "all48__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 1,
+     "null_max": 132.3507873095412,
+     "null_q50": 11.730931178056032,
+     "null_q95": 33.80994311498785,
+     "null_q99": 55.81881267538734,
+     "observed": 104.12458235777473
+    },
+    "excl__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 1,
+     "null_max": 125.81545008755786,
+     "null_q50": 12.443292476952806,
+     "null_q95": 35.83136388191235,
+     "null_q99": 49.02922122160897,
+     "observed": 103.19179235460663
+    },
+    "systematic_only_all48": {
+     "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+      0.5729744934933801,
+      1.2058069841855261
+     ],
+     "min_amplitude_needed_over_calibrated": 0.5067278249134531,
+     "spin6_Q_in_observed_jk1_q50_q95_max": [
+      71.61432303637993,
+      236.91639358615845,
+      405.51205326541907
+     ]
+    }
+   },
+   "sys_gmag_tau21600__amp_quaia_cross": {
+    "all48__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 59.88252795655062,
+     "null_q50": 8.356004939960513,
+     "null_q95": 23.355473803536064,
+     "null_q99": 35.26872240152895,
+     "observed": 104.12458235777473
+    },
+    "excl__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 93.34245793364593,
+     "null_q50": 9.579368207307798,
+     "null_q95": 25.545628571378156,
+     "null_q99": 36.93872623168086,
+     "observed": 103.19179235460663
+    },
+    "systematic_only_all48": {
+     "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+      2.3435997683528615,
+      4.932032753475625
+     ],
+     "min_amplitude_needed_over_calibrated": 2.0726353905295385,
+     "spin6_Q_in_observed_jk1_q50_q95_max": [
+      4.280589450599431,
+      14.161158998093047,
+      24.238595628657542
+     ]
+    }
+   },
+   "sys_gmag_tau600": {
+    "all48__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 34.48561284787019,
+     "null_q50": 5.695362949192068,
+     "null_q95": 13.247048033698448,
+     "null_q99": 18.051734202771197,
+     "observed": 104.12458235777473
+    },
+    "excl__spin6": {
+     "draws": 400,
+     "draws_ge_observed": 0,
+     "null_max": 26.679622624462006,
+     "null_q50": 6.551160857812905,
+     "null_q95": 14.944369236831456,
+     "null_q99": 21.297441648378754,
+     "observed": 103.19179235460663
+    },
+    "systematic_only_all48": {
+     "amplitude_needed_for_observed_spin6_over_calibrated_q01_q50": [
+      1.0039473079350985,
+      1.9317507307638757
+     ],
+     "min_amplitude_needed_over_calibrated": 0.9700939224661632,
+     "spin6_Q_in_observed_jk1_q50_q95_max": [
+      27.903027299393873,
+      79.31721883947796,
+      110.64344891582803
+     ]
+    }
+   }
+  },
+  "SCAN_NULL.json__script_versions": {
+   "note": "Receipts in the pre_fix groups were written before gaia_estimator.provenance() hashed the __main__ script, so they carry no gaia_scan_null.py SHA-256 (their gaia_estimator.py SHA-256 is recorded per kind). The pre_fix_A / pre_fix_B split is the only receipt-visible difference between those earlier versions. replay_check reruns the first draws of every stored run (same kind, seed, calibration and amplitude) with the current script, whose SHA-256 is recorded in the replay receipt; BIT_IDENTICAL means every stored array agrees bit for bit on those draws, i.e. the stored run is reproduced by that identified script version for the compared draws (later draws of the same loop are not re-executed).",
+   "receipts_by_version_group": {
+    "pre_fix_A (primary systematic run written before run() recorded amplitude_from)": [
+     "sys_blind_tau600",
+     "sys_blind_tau21600",
+     "sys_colour_tau10",
+     "sys_colour_tau600",
+     "sys_colour_tau21600",
+     "sys_gmag_tau600",
+     "sys_gmag_tau21600"
+    ],
+    "pre_fix_B (amplitude_from recorded)": [
+     "sys_blind_tau10",
+     "sys_gmag_tau10",
+     "sys_colour_tau21600__amp_complement_cross",
+     "sys_colour_tau21600__amp_quaia_cross",
+     "sys_gmag_tau21600__amp_complement_cross",
+     "sys_gmag_tau21600__amp_quaia_cross"
+    ],
+    "pre_fix_noise_kind (amplitude_from not applicable; version not separable from the receipt)": [
+     "noise_catalogue",
+     "noise_scanshape"
+    ]
+   },
+   "replay_dir": "/home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2",
+   "replay_status_by_kind": {
+    "noise_catalogue": "BIT_IDENTICAL",
+    "noise_scanshape": "BIT_IDENTICAL",
+    "sys_blind_tau10": "BIT_IDENTICAL",
+    "sys_blind_tau21600": "BIT_IDENTICAL",
+    "sys_blind_tau600": "BIT_IDENTICAL",
+    "sys_colour_tau10": "BIT_IDENTICAL",
+    "sys_colour_tau21600": "BIT_IDENTICAL",
+    "sys_colour_tau21600__amp_complement_cross": "BIT_IDENTICAL",
+    "sys_colour_tau21600__amp_quaia_cross": "BIT_IDENTICAL",
+    "sys_colour_tau600": "BIT_IDENTICAL",
+    "sys_gmag_tau10": "BIT_IDENTICAL",
+    "sys_gmag_tau21600": "BIT_IDENTICAL",
+    "sys_gmag_tau21600__amp_complement_cross": "BIT_IDENTICAL",
+    "sys_gmag_tau21600__amp_quaia_cross": "BIT_IDENTICAL",
+    "sys_gmag_tau600": "BIT_IDENTICAL"
+   },
+   "summarize_script": {
+    "path": "scripts/r108/gaia_scan_null.py",
+    "sha256": "ad3e7b2cb8b47ad7350d3aeb4b8167909e6fc4dc825b2ede3949bee6d58157f2"
+   }
+  }
+ },
+ "products": {
+  "D08": [
+   {
+    "bytes": 2148506,
+    "expected_rows": 4536,
+    "fetched_at_utc": "2026-11-24T01:31:44.559443+00:00",
+    "final_url": "https://vizier.idia.ac.za/viz-bin/votable?-source=J/A+A/644/A159/table10&-out=**&-out.max=unlimited",
+    "job_id": null,
+    "name": "icrf3_sx_table10.vot",
+    "query": {
+     "tool": "astroquery 0.4.11 Vizier(columns=['**'], row_limit=-1, vizier_server='vizier.idia.ac.za').get_catalogs('J/A+A/644/A159/table10')"
+    },
+    "rows": 4536,
+    "sha256": "720043b5918e76fb103ba8e1b36ac55d4e872ef8af5712d3e14e708e3c09c5db",
+    "status": "FETCHED",
+    "url": "https://vizier.idia.ac.za/viz-bin/votable"
+   }
+  ],
+  "D08G": [
+   {
+    "archive_count": {
+     "n_rows": 3142
+    },
+    "bytes": 345600,
+    "fetched_at_utc": "2026-11-24T02:32:50.689241+00:00",
+    "final_url": "https://gea.esac.esa.int/tap-server/tap/async/3de652c8-e7af-11f1-89b3-bc97e148b76b-O",
+    "job_id": "3de652c8-e7af-11f1-89b3-bc97e148b76b-O",
+    "name": "icrf3sx_gaia_dr3_astrometry.fits",
+    "query": "SELECT x.source_id, x.icrf_name, x.iers_name, x.icrf3sx, x.icrf3k, x.icrf3xka, x.ocars, x.aw15, x.r90, x.m65, x.c75, x.dr14q, x.lqac5, x.lamost5, x.lqrf, x.cat2qz, x.bzcat5, x.cat2whspj, x.alma19, x.guw, x.b19, g.ref_epoch, g.ra, g.dec, g.ra_error, g.dec_error, g.ra_dec_corr, g.ruwe, g.astrometric_params_solved, g.nu_eff_used_in_astrometry FROM gaiadr3.gaia_crf3_xm AS x JOIN gaiadr3.gaia_source AS g USING (source_id) WHERE x.icrf3sx = 'true'",
+    "rows": 3142,
+    "sha256": "914013c61ced4bb544c19e5a34d82183e5d7849a3b0e76ed29150bef7867b7d7",
+    "status": "FETCHED",
+    "url": "https://gea.esac.esa.int/tap-server/tap"
+   }
+  ],
+  "D09": [
+   {
+    "bytes": 569780480,
+    "fetched_at_utc": "2026-11-24T01:22:23.352743+00:00",
+    "final_url": "https://cdn.gea.esac.esa.int/Gaia/gedr3/auxiliary/commanded_scan_law/CommandedScanLaw_001.csv.gz",
+    "md5": "82d24407396f6008a9d72608839533a8",
+    "name": "CommandedScanLaw_001.csv.gz",
+    "sha256": "c0c55b1dad49a19b182955ade5693c7c74d8c313725f6679f48a3f6bfe157bf4",
+    "status": "FETCHED",
+    "url": "https://cdn.gea.esac.esa.int/Gaia/gedr3/auxiliary/commanded_scan_law/CommandedScanLaw_001.csv.gz"
+   },
+   {
+    "bytes": 62,
+    "fetched_at_utc": "2026-11-24T01:22:23.846737+00:00",
+    "final_url": "https://cdn.gea.esac.esa.int/Gaia/gedr3/auxiliary/commanded_scan_law/_MD5SUM.txt",
+    "md5": "39ab9f2da003b8bdc60e3ceb0b1f0296",
+    "name": "CommandedScanLaw_MD5SUM.txt",
+    "sha256": "e8c14ceb0b99fbb66c437a3a7d112c980c91d9ad3ab0d362734ea3ac3b5572b5",
+    "status": "FETCHED",
+    "url": "https://cdn.gea.esac.esa.int/Gaia/gedr3/auxiliary/commanded_scan_law/_MD5SUM.txt"
+   }
+  ],
+  "D10F": [
+   {
+    "archive_count": {
+     "n_rows": 1614173,
+     "n_sources": 1614173
+    },
+    "bytes": 75885120,
+    "fetched_at_utc": "2026-11-24T02:41:22.968528+00:00",
+    "final_url": [
+     "https://gea.esac.esa.int/tap-server/tap/async/5d5ea99c-e7af-11f1-89b3-bc97e148b76b-O",
+     "https://gea.esac.esa.int/tap-server/tap/async/630420da-e7af-11f1-89b3-bc97e148b76b-O",
+     "https://gea.esac.esa.int/tap-server/tap/async/69964208-e7af-11f1-89b3-bc97e148b76b-O",
+     "https://gea.esac.esa.int/tap-server/tap/async/792ff14b-e7af-11f1-89b3-bc97e148b76b-O",
+     "https://gea.esac.esa.int/tap-server/tap/async/86048cf1-e7af-11f1-89b3-bc97e148b76b-O",
+     "https://gea.esac.esa.int/tap-server/tap/async/946790d7-e7af-11f1-89b3-bc97e148b76b-O",
+     "https://gea.esac.esa.int/tap-server/tap/async/a46bc1a1-e7af-11f1-89b3-bc97e148b76b-O",
+     "https://gea.esac.esa.int/tap-server/tap/async/cee9723e-e7af-11f1-89b3-bc97e148b76b-O",
+     "https://gea.esac.esa.int/tap-server/tap/async/d53b5614-e7af-11f1-89b3-bc97e148b76b-O",
+     "https://gea.esac.esa.int/tap-server/tap/async/eee5eceb-e7af-11f1-89b3-bc97e148b76b-O",
+     "https://gea.esac.esa.int/tap-server/tap/async/f9de7587-e7af-11f1-89b3-bc97e148b76b-O",
+     "https://gea.esac.esa.int/tap-server/tap/async/0265d70c-e7b0-11f1-89b3-bc97e148b76b-O",
+     "https://gea.esac.esa.int/tap-server/tap/async/0d82feaa-e7b0-11f1-89b3-bc97e148b76b-O",
+     "https://gea.esac.esa.int/tap-server/tap/async/1adafb38-e7b0-11f1-89b3-bc97e148b76b-O",
+     "https://gea.esac.esa.int/tap-server/tap/async/25cccd28-e7b0-11f1-89b3-bc97e148b76b-O",
+     "https://gea.esac.esa.int/tap-server/tap/async/2987d972-e7b0-11f1-89b3-bc97e148b76b-O",
+     "https://gea.esac.esa.int/tap-server/tap/async/36e0e76c-e7b0-11f1-89b3-bc97e148b76b-O",
+     "https://gea.esac.esa.int/tap-server/tap/async/426387a3-e7b0-11f1-89b3-bc97e148b76b-O",
+     "https://gea.esac.esa.int/tap-server/tap/async/552e047d-e7b0-11f1-89b3-bc97e148b76b-O",
+     "https://gea.esac.esa.int/tap-server/tap/async/5b69ef57-e7b0-11f1-89b3-bc97e148b76b-O",
+     "https://gea.esac.esa.int/tap-server/tap/async/625b207a-e7b0-11f1-89b3-bc97e148b76b-O",
+     "https://gea.esac.esa.int/tap-server/tap/async/663db1f3-e7b0-11f1-89b3-bc97e148b76b-O",
+     "https://gea.esac.esa.int/tap-server/tap/async/6d4be0f5-e7b0-11f1-89b3-bc97e148b76b-O",
+     "https://gea.esac.esa.int/tap-server/tap/async/791219d8-e7b0-11f1-89b3-bc97e148b76b-O"
+    ],
+    "job_id": [
+     "5d5ea99c-e7af-11f1-89b3-bc97e148b76b-O",
+     "630420da-e7af-11f1-89b3-bc97e148b76b-O",
+     "69964208-e7af-11f1-89b3-bc97e148b76b-O",
+     "792ff14b-e7af-11f1-89b3-bc97e148b76b-O",
+     "86048cf1-e7af-11f1-89b3-bc97e148b76b-O",
+     "946790d7-e7af-11f1-89b3-bc97e148b76b-O",
+     "a46bc1a1-e7af-11f1-89b3-bc97e148b76b-O",
+     "cee9723e-e7af-11f1-89b3-bc97e148b76b-O",
+     "d53b5614-e7af-11f1-89b3-bc97e148b76b-O",
+     "eee5eceb-e7af-11f1-89b3-bc97e148b76b-O",
+     "f9de7587-e7af-11f1-89b3-bc97e148b76b-O",
+     "0265d70c-e7b0-11f1-89b3-bc97e148b76b-O",
+     "0d82feaa-e7b0-11f1-89b3-bc97e148b76b-O",
+     "1adafb38-e7b0-11f1-89b3-bc97e148b76b-O",
+     "25cccd28-e7b0-11f1-89b3-bc97e148b76b-O",
+     "2987d972-e7b0-11f1-89b3-bc97e148b76b-O",
+     "36e0e76c-e7b0-11f1-89b3-bc97e148b76b-O",
+     "426387a3-e7b0-11f1-89b3-bc97e148b76b-O",
+     "552e047d-e7b0-11f1-89b3-bc97e148b76b-O",
+     "5b69ef57-e7b0-11f1-89b3-bc97e148b76b-O",
+     "625b207a-e7b0-11f1-89b3-bc97e148b76b-O",
+     "663db1f3-e7b0-11f1-89b3-bc97e148b76b-O",
+     "6d4be0f5-e7b0-11f1-89b3-bc97e148b76b-O",
+     "791219d8-e7b0-11f1-89b3-bc97e148b76b-O"
+    ],
+    "n_jobs_aborted_and_bisected": 0,
+    "n_jobs_completed": 24,
+    "name": "gaia_crf3_xm_flags.fits",
+    "query": "SELECT x.source_id, x.icrf_name, x.icrf3sx, x.icrf3k, x.icrf3xka, x.ocars, x.aw15, x.r90, x.m65, x.c75, x.dr14q, x.lqac5, x.lamost5, x.lqrf, x.cat2qz, x.bzcat5, x.cat2whspj, x.alma19, x.guw, x.b19 FROM gaiadr3.gaia_crf3_xm AS x",
+    "rows": 1614173,
+    "sha256": "f9e7c0d8b6288ccf87a81e392a04dfa268c1ed76db7321a5bcb5d220d93d7352",
+    "status": "FETCHED",
+    "unique_source_id": 1614173,
+    "url": "https://gea.esac.esa.int/tap-server/tap"
+   }
+  ],
+  "PRE:R106_GAIA_OBSERVED": [
+   {
+    "bytes": 35427,
+    "name": "GAIA_OBSERVED.json",
+    "sha256": "6c76b5c27086fafdf4b603c8c8fb98391971f86bd03ad8dbfa4fb812fb640aef",
+    "status": "PRE_EXISTING_INPUT",
+    "url": null
+   }
+  ],
+  "PRE:R98_GAIA_FULL_SHARED_PATCH": [
+   {
+    "bytes": 153706,
+    "name": "GAIA_FULL_SHARED_PATCH.json",
+    "sha256": "0a56bc358b6048f4b018d93d2b55be2f2ac5526e22191a44ca6a9f1148a9d800",
+    "status": "PRE_EXISTING_INPUT",
+    "url": null
+   }
+  ],
+  "PRE:R98_patch_cache": [
+   {
+    "bytes": 924116,
+    "name": "gaia_joint_patch_statistics.npz",
+    "sha256": "70d1bc9c959ccfa0197923fc7d7e950ac790eaa1345ca0aca507ade446464c92",
+    "status": "PRE_EXISTING_INPUT",
+    "url": null
+   }
+  ],
+  "PRE:gaia_crf3_astrometry_full": [
+   {
+    "bytes": 143677440,
+    "name": "gaia_crf3_astrometry_full.fits",
+    "sha256": "e69cfff82f762c00d1d6a259c6d003fd20f805f3b1fcd4acc81d847c485120c0",
+    "status": "PRE_EXISTING_INPUT",
+    "url": null
+   }
+  ],
+  "PRE:quaia_crf3_join": [
+   {
+    "bytes": 95846569,
+    "name": "quaia_crf3_join.npz",
+    "sha256": "2fbaa40a8afe58066064efa8a7784ac508c5b2c67b41c779676eab7df8cf9ef4",
+    "status": "PRE_EXISTING_INPUT",
+    "url": null
+   }
+  ],
+  "PRE:quaia_gaia_full_join": [
+   {
+    "bytes": 104598751,
+    "name": "quaia_gaia_full_join.npz",
+    "sha256": "4cd83b1e8bb9f71f89aacfc2db5daba87f9a79f2af8ccd2e7e94b0be57252dae",
+    "status": "PRE_EXISTING_INPUT",
+    "url": null
+   }
+  ]
+ },
+ "result_files_sha256": {
+  "AGN_SPLIT.json": "ec5af28a838f4d99c191adaee08244131b98f5f6bb5bcc07ea1af73237d48fd0",
+  "FRAME_LEAKAGE.json": "276bbc940074e248e9df65159782228ea9cb0e1c55245c4651a6e41b18e2a622",
+  "SCANLAW_PIXEL_STATISTICS.json": "4274c530f5bb7f81a702deb65f449c50eaa4b35c592116570d68782128c8c4e3",
+  "SCANLAW_VALIDATION.json": "938a5a073b355f022a75773510ede8e571b85862da55607e61bc8ef60f493f01",
+  "SCAN_NULL.json": "6799e6be6f788a06b315233a985d1964eb265428b02bb47bb0717b9b957e331b",
+  "SCAN_NULL_CALIBRATION.json": "95888422a46d03e1f3450b71a6d584fb50195608dddcae802921b4ecc49fd0aa"
+ },
+ "schema": "htt.r108.gaia_summary/1",
+ "tap_attempts": {
+  "D10S_attempt1_joined_supplement": {
+   "abort_messages_prefix": [
+    "(TAP) Cannot execute query 'SELECT \"x\".\"source_id\" AS \"sourc",
+    "Maximum execution time (60 s) reached. Job aborted."
+   ],
+   "aborted": 17,
+   "archive_count_logged_by_script": {
+    "n_rows": 1614173
+   },
+   "completed": 47,
+   "directory": "/home/cosmosapjw/Downloads/htt_r108/gaia/D10S_gaia_crf3_xm_flags",
+   "jobs": 64,
+   "jobs_jsonl_sha256": "6f629d2dccd4eed13765e2f153095cbab057f7e432c4f1d84ea3efcb8d34e70b",
+   "last_job": {
+    "hi": 4323455642275676160,
+    "job_id": "07fce529-e7af-11f1-89b3-bc97e148b76b-O",
+    "lo": 4179340454199820288,
+    "phase": "COMPLETED"
+   },
+   "last_job_error_tail": "",
+   "rows_in_completed_jobs": 1072347
+  },
+  "D10_attempt1": {
+   "directory": "/home/cosmosapjw/Downloads/htt_r108/gaia/D10_agn_cross_id_gaia_source",
+   "job": {
+    "job_id": "0713c051-e7a7-11f1-89b3-bc97e148b76b-O",
+    "job_url": "https://gea.esac.esa.int/tap-server/tap/async/0713c051-e7a7-11f1-89b3-bc97e148b76b-O",
+    "query": "SELECT a.source_id, a.catalogue_name, a.source_name_in_catalogue, g.ra, g.dec, g.pmra, g.pmdec, g.pmra_error, g.pmdec_error, g.pmra_pmdec_corr, g.phot_g_mean_mag, g.bp_rp FROM gaiadr3.agn_cross_id AS a JOIN gaiadr3.gaia_source AS g USING (source_id)",
+    "submitted_utc": "2026-11-24T01:33:20.530711+00:00"
+   }
+  },
+  "D10_attempt2": {
+   "abort_messages_prefix": [
+    "(TAP) Cannot execute query 'SELECT \"a\".\"source_id\" AS \"sourc",
+    "Maximum execution time (60 s) reached. Job aborted."
+   ],
+   "aborted": 18,
+   "archive_count_logged_by_script": {
+    "n_rows": 1614173,
+    "n_sources": 1614173
+   },
+   "completed": 27,
+   "directory": "/home/cosmosapjw/Downloads/htt_r108/gaia/D10_agn_cross_id_gaia_source_attempt2",
+   "jobs": 45,
+   "jobs_jsonl_sha256": "6c9fbe38dac5ca602178c1a5f1889d97da4fc98750a228b2d9bd3a2052bdefb7",
+   "last_job": {
+    "hi": 2060396829522001920,
+    "job_id": "a3521307-e7ad-11f1-89b3-bc97e148b76b-O",
+    "lo": 2059270929615159296,
+    "phase": "ABORTED"
+   },
+   "last_job_error_tail": "urce_id\" < 2060396829522001920\nLimit 3000000\nBecause: ERROR: canceling statement due to user request, duration:59862.820",
+   "rows_in_completed_jobs": 560968
+  }
+ }
+}

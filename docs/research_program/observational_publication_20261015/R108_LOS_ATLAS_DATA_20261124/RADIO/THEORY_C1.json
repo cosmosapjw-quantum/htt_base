@@ -1,0 +1,1655 @@
+{
+ "schema": "htt.r108.radio.theory_c1/1",
+ "node": "SQ-RADIO",
+ "theory": "R107 THEORY_FOUNDATIONS.md TF7",
+ "command": "/usr/bin/python3 -m scripts.r108.radio_theory_c1 --out docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO/THEORY_C1.json",
+ "git_head": "b79b9526b1817cc5946858f5891f7e7b567b87a2",
+ "python": "3.12.3",
+ "started_utc": "2026-11-24T03:35:32.525368+00:00",
+ "script_sha256": "8e0bfde578a0f7ca0d13857766e29794ae97d5b7cfddf086d8f0142a7cbe41c6",
+ "cosmology": {
+  "H0": 67.66,
+  "ombh2": 0.02242,
+  "omch2": 0.11933,
+  "tau": 0.0561,
+  "ln10As": 3.047,
+  "ns": 0.9665,
+  "mnu": 0.06,
+  "locator": "Planck 2018 VI (arXiv:1807.06209) Table 2, column TT,TE,EE+lowE+lensing+BAO"
+ },
+ "nz_locators": {
+  "DZ10": "de Zotti et al. 2010, A&ARv 18, 1 (arXiv:0908.1896), Sect. 9.1 Eq. (26): N(z)=1.29+32.37z-32.89z^2+11.13z^3-1.25z^4 (CENSORS); truncated at its first positive root",
+  "TN16": "Tiwari & Nusser 2016, JCAP 03 (2016) 062 (arXiv:1509.02532), Eq. (3.11): N ~ z^0.74 exp[-(z/0.71)^1.06] (NT15 best fit)",
+  "H08": "Ho et al. 2008, PRD 78, 043519 (arXiv:0801.0642), Sect. V.D.1 Eq. (33): z^1.18 exp(-1.18 z/0.79), b_eff = 1.98"
+ },
+ "bias_locators": {
+  "NT15": "Nusser & Tiwari 2015, ApJ 812, 85 (arXiv:1505.06817); Tiwari & Nusser 2016 Eq. (3.12): b = 0.33 z^2 + 0.85 z + 1.6",
+  "NT15cap": "NT15 with b(z>1.5) = b(1.5), Tiwari & Nusser 2016 Sect. 4",
+  "const2": "b = 2, Tiwari & Nusser 2016 Sect. 3.3 / Table 2",
+  "const3": "b = 3, Tiwari & Nusser 2016 Sect. 3.3 / Table 2",
+  "H08beff": "b_eff = 1.98, Ho et al. 2008 text after Eq. (33)"
+ },
+ "primary_pairings": [
+  [
+   "TN16",
+   "NT15cap"
+  ],
+  [
+   "TN16",
+   "NT15"
+  ],
+  [
+   "TN16",
+   "const2"
+  ],
+  [
+   "TN16",
+   "const3"
+  ],
+  [
+   "DZ10",
+   "NT15"
+  ],
+  [
+   "H08",
+   "H08beff"
+  ]
+ ],
+ "conventions": {
+  "C1": "(2/pi) int dk k^2 W_1(k)^2, fractional count contrast; per-component dipole RMS sqrt(3 C1/4pi); TN16 Eq. (3.9) C1=(4pi/9) D^2",
+  "matter_variable": "CAMB delta_nonu (CDM+baryons) for P(k,z); growth D from linear P at k=1e-3/Mpc",
+  "magnification": "coefficient alpha_mu = 2(x-1) for N(>S) ~ S^-x; C1(alpha_mu) = C_dd + 2 alpha_mu C_dk + alpha_mu^2 C_kk",
+  "rsd": "W_rsd = -int n_chi f T_lin j_1''; C1(rsd) = C_dd + 2 C_dr + C_rr"
+ },
+ "camb_version": "2.0.5",
+ "numpy": "2.4.2",
+ "camb_sigma8_0": 0.810223295217173,
+ "camb_omega_m": 0.3110501722139858,
+ "sigma8_reference": {
+  "value": 0.8102,
+  "locator": "Planck 2018 VI (arXiv:1807.06209) Table 2, column TT,TE,EE+lowE+lensing+BAO"
+ },
+ "V1_powerlaw_identity": {
+  "description": "P = k^-2: k-space integrator vs exact real-space double integral",
+  "k_range": [
+   1e-06,
+   5.0
+  ],
+  "nk": 801,
+  "results": [
+   {
+    "case": "gauss_chi2000_sig500",
+    "ell": 1,
+    "kspace": 0.00011649036125882193,
+    "realspace_exact": 0.00011649036136838138,
+    "rel_err": -9.405022316499867e-10
+   },
+   {
+    "case": "gauss_chi2000_sig500",
+    "ell": 2,
+    "kspace": 5.6179807301864564e-05,
+    "realspace_exact": 5.617980731393518e-05,
+    "rel_err": -2.1485679901900312e-10
+   },
+   {
+    "case": "gauss_chi2000_sig500",
+    "ell": 5,
+    "kspace": 1.5594263421912582e-05,
+    "realspace_exact": 1.5594263431027304e-05,
+    "rel_err": -5.844920103470486e-10
+   },
+   {
+    "case": "TN16",
+    "ell": 1,
+    "kspace": 5.372385654897413e-05,
+    "realspace_exact": 5.372385629144248e-05,
+    "rel_err": 4.793618169074421e-09
+   },
+   {
+    "case": "TN16",
+    "ell": 2,
+    "kspace": 2.2289691939086153e-05,
+    "realspace_exact": 2.228969205156097e-05,
+    "rel_err": -5.046046358536671e-09
+   },
+   {
+    "case": "TN16",
+    "ell": 5,
+    "kspace": 5.1365815137350665e-06,
+    "realspace_exact": 5.136581253498495e-06,
+    "rel_err": 5.066338082393429e-08
+   },
+   {
+    "case": "DZ10",
+    "ell": 1,
+    "kspace": 5.121192706858884e-05,
+    "realspace_exact": 5.121196979679516e-05,
+    "rel_err": -8.343402232435793e-07
+   },
+   {
+    "case": "DZ10",
+    "ell": 2,
+    "kspace": 2.1757852810987463e-05,
+    "realspace_exact": 2.1757861031558104e-05,
+    "rel_err": -3.7782071637959547e-07
+   },
+   {
+    "case": "DZ10",
+    "ell": 5,
+    "kspace": 5.146774822859132e-06,
+    "realspace_exact": 5.146796556657179e-06,
+    "rel_err": -4.222781648355323e-06
+   }
+  ]
+ },
+ "V2_limber_high_ell": [
+  {
+   "nz": "TN16",
+   "bias": "NT15cap",
+   "ell": 100,
+   "exact": 2.2789609886085327e-06,
+   "limber": 2.2791257117917028e-06,
+   "rel_diff": -7.227472460946682e-05
+  },
+  {
+   "nz": "TN16",
+   "bias": "NT15cap",
+   "ell": 300,
+   "exact": 4.903620794636291e-07,
+   "limber": 4.903787041076341e-07,
+   "rel_diff": -3.3901643496703215e-05
+  },
+  {
+   "nz": "H08",
+   "bias": "H08beff",
+   "ell": 100,
+   "exact": 9.93824949350791e-07,
+   "limber": 9.938979922161597e-07,
+   "rel_diff": -7.349130991385344e-05
+  },
+  {
+   "nz": "H08",
+   "bias": "H08beff",
+   "ell": 300,
+   "exact": 2.244996684381638e-07,
+   "limber": 2.245039413386461e-07,
+   "rel_diff": -1.903263014813028e-05
+  }
+ ],
+ "V3_camb_number_counts": {
+  "description": "CAMB 2.0.5 SplinedSourceWindow non-Limber C_l (raw), massless neutrinos, b=2, smooth Gaussian test windows in z (z0, sigma) = (0.5, 0.15), (1.0, 0.30); magnification test with x=0.5 (dlog10Ndm=0.2, coefficient 5s-2=-1); last column: CAMB all GR source terms vs density+RSD+lensing at x=1 (size of omitted velocity/potential terms)",
+  "results": [
+   {
+    "nz": "gauss_z0p5_s0p15",
+    "ell": 2,
+    "density": {
+     "mine": 1.3296386718715598e-05,
+     "camb": 1.363118500926371e-05,
+     "rel": -0.02456120214937907
+    },
+    "density_rsd": {
+     "mine": 1.6676523708434984e-05,
+     "camb": 1.7048997025499504e-05,
+     "rel": -0.021847227523556167
+    },
+    "density_magnification_x0p5": {
+     "mine": 1.282485159595909e-05,
+     "camb": 1.3154744269077222e-05,
+     "rel": -0.025077847685234578
+    },
+    "camb_all_terms_over_density_rsd_lensing_x1": 0.0013581614432756073
+   },
+   {
+    "nz": "gauss_z0p5_s0p15",
+    "ell": 3,
+    "density": {
+     "mine": 1.6045277951165037e-05,
+     "camb": 1.629578437305474e-05,
+     "rel": -0.015372467882179275
+    },
+    "density_rsd": {
+     "mine": 1.890524643066924e-05,
+     "camb": 1.9176930945450777e-05,
+     "rel": -0.014167257292334812
+    },
+    "density_magnification_x0p5": {
+     "mine": 1.5524763810659065e-05,
+     "camb": 1.5772311048447718e-05,
+     "rel": -0.01569505172883434
+    },
+    "camb_all_terms_over_density_rsd_lensing_x1": -0.0003495601393022074
+   },
+   {
+    "nz": "gauss_z0p5_s0p15",
+    "ell": 4,
+    "density": {
+     "mine": 1.858297968114821e-05,
+     "camb": 1.8778842993120817e-05,
+     "rel": -0.010429998911240523
+    },
+    "density_rsd": {
+     "mine": 2.100115989894182e-05,
+     "camb": 2.1209547086716563e-05,
+     "rel": -0.009825159722776755
+    },
+    "density_magnification_x0p5": {
+     "mine": 1.8020476001635782e-05,
+     "camb": 1.8214342695072412e-05,
+     "rel": -0.010643628303374175
+    },
+    "camb_all_terms_over_density_rsd_lensing_x1": -0.0010325509574550251
+   },
+   {
+    "nz": "gauss_z0p5_s0p15",
+    "ell": 5,
+    "density": {
+     "mine": 2.0873120380058943e-05,
+     "camb": 2.1031321538864943e-05,
+     "rel": -0.007522169185310124
+    },
+    "density_rsd": {
+     "mine": 2.2931767577598203e-05,
+     "camb": 2.3097839191063888e-05,
+     "rel": -0.007189919892157448
+    },
+    "density_magnification_x0p5": {
+     "mine": 2.0276465547997597e-05,
+     "camb": 2.043319102783369e-05,
+     "rel": -0.007670142153646253
+    },
+    "camb_all_terms_over_density_rsd_lensing_x1": -0.0012873652859499707
+   },
+   {
+    "nz": "gauss_z0p5_s0p15",
+    "ell": 6,
+    "density": {
+     "mine": 2.2910744947883598e-05,
+     "camb": 2.3041797599148076e-05,
+     "rel": -0.0056876053485220845
+    },
+    "density_rsd": {
+     "mine": 2.4678358249573663e-05,
+     "camb": 2.4814572906396043e-05,
+     "rel": -0.005489300877198233
+    },
+    "density_magnification_x0p5": {
+     "mine": 2.228733101037412e-05,
+     "camb": 2.2417212357280305e-05,
+     "rel": -0.005793822391302106
+    },
+    "camb_all_terms_over_density_rsd_lensing_x1": -0.0013564322509062032
+   },
+   {
+    "nz": "gauss_z0p5_s0p15",
+    "ell": 7,
+    "density": {
+     "mine": 2.4704075437689396e-05,
+     "camb": 2.4814872726282406e-05,
+     "rel": -0.004464954941141408
+    },
+    "density_rsd": {
+     "mine": 2.6234846051242174e-05,
+     "camb": 2.6349100715011443e-05,
+     "rel": -0.004336188358192272
+    },
+    "density_magnification_x0p5": {
+     "mine": 2.4060514198573318e-05,
+     "camb": 2.4170344214390322e-05,
+     "rel": -0.004543998829425688
+    },
+    "camb_all_terms_over_density_rsd_lensing_x1": -0.0013428117601046452
+   },
+   {
+    "nz": "gauss_z0p5_s0p15",
+    "ell": 8,
+    "density": {
+     "mine": 2.626620200168317e-05,
+     "camb": 2.6361753406164625e-05,
+     "rel": -0.0036246224979522568
+    },
+    "density_rsd": {
+     "mine": 2.7602406058123592e-05,
+     "camb": 2.7700348635306624e-05,
+     "rel": -0.003535788609468793
+    },
+    "density_magnification_x0p5": {
+     "mine": 2.5608277373822217e-05,
+     "camb": 2.570301710338512e-05,
+     "rel": -0.0036859380819703746
+    },
+    "camb_all_terms_over_density_rsd_lensing_x1": -0.00129395784937969
+   },
+   {
+    "nz": "gauss_z0p5_s0p15",
+    "ell": 9,
+    "density": {
+     "mine": 2.761188755925352e-05,
+     "camb": 2.7696064593359633e-05,
+     "rel": -0.0030393139004410985
+    },
+    "density_rsd": {
+     "mine": 2.87864690939649e-05,
+     "camb": 2.8872390981943433e-05,
+     "rel": -0.0029759186910521818
+    },
+    "density_magnification_x0p5": {
+     "mine": 2.6944596605666486e-05,
+     "camb": 2.702805843848912e-05,
+     "rel": -0.003087969970635429
+    },
+    "camb_all_terms_over_density_rsd_lensing_x1": -0.001232078574044837
+   },
+   {
+    "nz": "gauss_z0p5_s0p15",
+    "ell": 10,
+    "density": {
+     "mine": 2.875662750754456e-05,
+     "camb": 2.8832363020373376e-05,
+     "rel": -0.002626753581567387
+    },
+    "density_rsd": {
+     "mine": 2.9795493878030867e-05,
+     "camb": 2.987256035870808e-05,
+     "rel": -0.0025798418264721956
+    },
+    "density_magnification_x0p5": {
+     "mine": 2.80842500707023e-05,
+     "camb": 2.815932360951254e-05,
+     "rel": -0.0026660277729427806
+    },
+    "camb_all_terms_over_density_rsd_lensing_x1": -0.0011671451101330499
+   },
+   {
+    "nz": "gauss_z1p0_s0p30",
+    "ell": 2,
+    "density": {
+     "mine": 1.171292924530531e-06,
+     "camb": 1.2693436451784022e-06,
+     "rel": -0.07724521331974732
+    },
+    "density_rsd": {
+     "mine": 1.6008497318455662e-06,
+     "camb": 1.712425536459488e-06,
+     "rel": -0.06515658768124277
+    },
+    "density_magnification_x0p5": {
+     "mine": 1.050178237634571e-06,
+     "camb": 1.143096013702991e-06,
+     "rel": -0.08128606429779972
+    },
+    "camb_all_terms_over_density_rsd_lensing_x1": -0.032959159050183984
+   },
+   {
+    "nz": "gauss_z1p0_s0p30",
+    "ell": 3,
+    "density": {
+     "mine": 1.414412613166515e-06,
+     "camb": 1.4873410877269442e-06,
+     "rel": -0.049032784182600375
+    },
+    "density_rsd": {
+     "mine": 1.7870011013796102e-06,
+     "camb": 1.8673892756616755e-06,
+     "rel": -0.043048428803673655
+    },
+    "density_magnification_x0p5": {
+     "mine": 1.2764584437671773e-06,
+     "camb": 1.346443615490256e-06,
+     "rel": -0.05197779611261044
+    },
+    "camb_all_terms_over_density_rsd_lensing_x1": -0.023398087805170498
+   },
+   {
+    "nz": "gauss_z1p0_s0p30",
+    "ell": 4,
+    "density": {
+     "mine": 1.655403275688018e-06,
+     "camb": 1.7142481765449722e-06,
+     "rel": -0.03432694382417534
+    },
+    "density_rsd": {
+     "mine": 1.9786241209840763e-06,
+     "camb": 2.042500832538201e-06,
+     "rel": -0.03127377503917361
+    },
+    "density_magnification_x0p5": {
+     "mine": 1.5008719526362234e-06,
+     "camb": 1.5576879901853388e-06,
+     "rel": -0.0364745943392395
+    },
+    "camb_all_terms_over_density_rsd_lensing_x1": -0.01762323798127219
+   },
+   {
+    "nz": "gauss_z1p0_s0p30",
+    "ell": 5,
+    "density": {
+     "mine": 1.8886177384871367e-06,
+     "camb": 1.9376775671301137e-06,
+     "rel": -0.025318881466765086
+    },
+    "density_rsd": {
+     "mine": 2.1706633367162136e-06,
+     "camb": 2.223201667848929e-06,
+     "rel": -0.023631833266637092
+    },
+    "density_magnification_x0p5": {
+     "mine": 1.7184832014808546e-06,
+     "camb": 1.7660167828707528e-06,
+     "rel": -0.026915701963279193
+    },
+    "camb_all_terms_over_density_rsd_lensing_x1": -0.01382408009992131
+   },
+   {
+    "nz": "gauss_z1p0_s0p30",
+    "ell": 6,
+    "density": {
+     "mine": 2.1113190157898117e-06,
+     "camb": 2.1528814504782945e-06,
+     "rel": -0.019305491567707556
+    },
+    "density_rsd": {
+     "mine": 2.3592378033370702e-06,
+     "camb": 2.403204714334376e-06,
+     "rel": -0.01829511682257312
+    },
+    "density_magnification_x0p5": {
+     "mine": 1.9268238254381374e-06,
+     "camb": 1.967182290701292e-06,
+     "rel": -0.02051587463649185
+    },
+    "camb_all_terms_over_density_rsd_lensing_x1": -0.011138974770795729
+   },
+   {
+    "nz": "gauss_z1p0_s0p30",
+    "ell": 7,
+    "density": {
+     "mine": 2.3222186937727544e-06,
+     "camb": 2.357930188146738e-06,
+     "rel": -0.01514527213464778
+    },
+    "density_rsd": {
+     "mine": 2.5417381418331487e-06,
+     "camb": 2.5791569831879385e-06,
+     "rel": -0.014508167435600905
+    },
+    "density_magnification_x0p5": {
+     "mine": 2.124682156003715e-06,
+     "camb": 2.1594193914239952e-06,
+     "rel": -0.016086377457865342
+    },
+    "camb_all_terms_over_density_rsd_lensing_x1": -0.009171422385804151
+   },
+   {
+    "nz": "gauss_z1p0_s0p30",
+    "ell": 8,
+    "density": {
+     "mine": 2.5208061954159874e-06,
+     "camb": 2.5518936921224357e-06,
+     "rel": -0.012182128433646633
+    },
+    "density_rsd": {
+     "mine": 2.71651297022502e-06,
+     "camb": 2.7488503712029285e-06,
+     "rel": -0.011763972792654176
+    },
+    "density_magnification_x0p5": {
+     "mine": 2.311537006001527e-06,
+     "camb": 2.341823926614131e-06,
+     "rel": -0.012933047727628821
+    },
+    "camb_all_terms_over_density_rsd_lensing_x1": -0.0076926512686157356
+   },
+   {
+    "nz": "gauss_z1p0_s0p30",
+    "ell": 9,
+    "density": {
+     "mine": 2.707008469306313e-06,
+     "camb": 2.734389986133547e-06,
+     "rel": -0.010013756986417155
+    },
+    "density_rsd": {
+     "mine": 2.8825756034899013e-06,
+     "camb": 2.9108951141472705e-06,
+     "rel": -0.009728798031826469
+    },
+    "density_magnification_x0p5": {
+     "mine": 2.4872640420929514e-06,
+     "camb": 2.513966888229082e-06,
+     "rel": -0.01062179707344546
+    },
+    "camb_all_terms_over_density_rsd_lensing_x1": -0.006555099131602349
+   },
+   {
+    "nz": "gauss_z1p0_s0p30",
+    "ell": 10,
+    "density": {
+     "mine": 2.8810060736778245e-06,
+     "camb": 2.905376630683196e-06,
+     "rel": -0.008388088741403843
+    },
+    "density_rsd": {
+     "mine": 3.0393917652549363e-06,
+     "camb": 3.0644806975242e-06,
+     "rel": -0.008187009397557343
+    },
+    "density_magnification_x0p5": {
+     "mine": 2.6519740020927993e-06,
+     "camb": 2.675751114085055e-06,
+     "rel": -0.008886144853717415
+    },
+    "camb_all_terms_over_density_rsd_lensing_x1": -0.005661626062200109
+   }
+  ]
+ },
+ "V3_low_l_systematic": {
+  "per_window": {
+   "gauss_z0p5_s0p15": {
+    "ells": [
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "power_law_exponent": -1.419732972490046,
+    "rel_l2": -0.02456120214937907,
+    "rel_lmax": -0.002626753581567387,
+    "extrapolated_abs_rel_l1": 0.07081154532768685,
+    "all_negative": true
+   },
+   "gauss_z1p0_s0p30": {
+    "ells": [
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "power_law_exponent": -1.392316760658254,
+    "rel_l2": -0.07724521331974732,
+    "rel_lmax": -0.008388088741403843,
+    "extrapolated_abs_rel_l1": 0.22253853293645592,
+    "all_negative": true
+   }
+  },
+  "worst_window": "gauss_z1p0_s0p30",
+  "s_abs_rel_l1": 0.22253853293645592,
+  "factor_up": 1.2862373794253488,
+  "factor_down": 1.0,
+  "integrator_below_camb_at_every_tested_l": true,
+  "method": "power-law fit of |C_l^integrator/C_l^CAMB - 1| over the tested l per V3 window, extrapolated to l = 1; s = max over windows; integrator below CAMB at all tested l => one-sided upward factor 1/(1 - s) (the CAMB-like value if the deficit is a fractional deficit of the integrator)",
+  "transfer_caveat": "taken from the worst smooth Gaussian test window (b = 2); the radio n(z) brackets were not run through CAMB (runtime), so the factor is transferred, not measured, for them",
+  "status": "unexplained low-l offset to CAMB counts_density: not the integrator P(k) sampling or matter variable, CAMB accuracy variation recorded (V3_DIAGNOSTIC.json); carried as a systematic, not a correction"
+ },
+ "C1_l1": {
+  "TN16|NT15": {
+   "nz": "TN16",
+   "bias": "NT15",
+   "primary": true,
+   "z_support": [
+    0.0,
+    7.0
+   ],
+   "linear": {
+    "C1_density": 6.7694205935226265e-06,
+    "C1_density_plus_rsd": 7.5902547876474055e-06,
+    "C_dr": 3.949778838993243e-07,
+    "C_rr": 3.08784263261303e-08,
+    "C_dk": 4.1690404551019393e-07,
+    "C_kk": 2.7019141081798574e-08,
+    "C1_density_magnification_by_alpha_mu": {
+     "-0.6": 6.2788626296998415e-06,
+     "-0.3": 6.521709888913872e-06,
+     "+0.3": 7.021994743526105e-06,
+     "+0.6": 7.279432338924306e-06
+    },
+    "max_rel_change_rsd": 0.12125619656580368,
+    "max_rel_change_magnification_abs_alpha_le_0p6": 0.07534053149093567,
+    "rms_dipole_per_component": 0.001271251400782236,
+    "expected_dipole_amplitude_rms": 0.0022018720153479383,
+    "frac_kgt0p1": 0.005860626626032649
+   },
+   "hmcode2020": {
+    "C1_density": 6.765567916785274e-06,
+    "C1_density_plus_rsd": 7.58612763987667e-06,
+    "C_dr": 3.9484064838263266e-07,
+    "C_rr": 3.08784263261303e-08,
+    "C_dk": 4.166144408408927e-07,
+    "C_kk": 2.7019141081798574e-08,
+    "C1_density_magnification_by_alpha_mu": {
+     "-0.6": 6.2753574785656505e-06,
+     "-0.3": 6.5180309749781e-06,
+     "+0.3": 7.017968303987172e-06,
+     "+0.6": 7.275232136583793e-06
+    },
+    "max_rel_change_rsd": 0.12128467752952403,
+    "max_rel_change_magnification_abs_alpha_le_0p6": 0.07533206762052447,
+    "rms_dipole_per_component": 0.001270889595980103,
+    "expected_dipole_amplitude_rms": 0.002201245351048222,
+    "frac_kgt0p1": 0.008266834628627356
+   },
+   "linear_TF7_growth_form_C1": 6.769266561249459e-06,
+   "linear_C1_z_lt_0p1_only": 4.377982026168417e-06,
+   "linear_C1_z_ge_0p1_only": 2.760436899932307e-06
+  },
+  "TN16|NT15cap": {
+   "nz": "TN16",
+   "bias": "NT15cap",
+   "primary": true,
+   "z_support": [
+    0.0,
+    7.0
+   ],
+   "linear": {
+    "C1_density": 6.769183210417767e-06,
+    "C1_density_plus_rsd": 7.589960381185104e-06,
+    "C_dr": 3.9494937222060346e-07,
+    "C_rr": 3.08784263261303e-08,
+    "C_dk": 4.1637594722593105e-07,
+    "C_kk": 2.7019141081798574e-08,
+    "C1_density_magnification_by_alpha_mu": {
+     "-0.6": 6.279258964536097e-06,
+     "-0.3": 6.52178936477957e-06,
+     "+0.3": 7.021440501450688e-06,
+     "+0.6": 7.278561237878332e-06
+    },
+    "max_rel_change_rsd": 0.12125202483870755,
+    "max_rel_change_magnification_abs_alpha_le_0p6": 0.07524955546728762,
+    "rms_dipole_per_component": 0.0012712291111160803,
+    "expected_dipole_amplitude_rms": 0.0022018334085136732,
+    "frac_kgt0p1": 0.005860863138202974
+   },
+   "hmcode2020": {
+    "C1_density": 6.765331127301158e-06,
+    "C1_density_plus_rsd": 7.585833827080642e-06,
+    "C_dr": 3.948121367266772e-07,
+    "C_rr": 3.08784263261303e-08,
+    "C_dk": 4.160863424359266e-07,
+    "C_kk": 2.7019141081798574e-08,
+    "C1_density_magnification_by_alpha_mu": {
+     "-0.6": 6.2757544071674936e-06,
+     "-0.3": 6.518111044536964e-06,
+     "+0.3": 7.0174146554600755e-06,
+     "+0.6": 7.274361629013717e-06
+    },
+    "max_rel_change_rsd": 0.12128049379111494,
+    "max_rel_change_magnification_abs_alpha_le_0p6": 0.0752410328680575,
+    "rms_dipole_per_component": 0.0012708673557240999,
+    "expected_dipole_amplitude_rms": 0.0022012068297948507,
+    "frac_kgt0p1": 0.008267158348087104
+   },
+   "linear_TF7_growth_form_C1": 6.769011722416046e-06,
+   "linear_C1_z_lt_0p1_only": 4.377982026168417e-06,
+   "linear_C1_z_ge_0p1_only": 2.760234931777698e-06
+  },
+  "TN16|const2": {
+   "nz": "TN16",
+   "bias": "const2",
+   "primary": true,
+   "z_support": [
+    0.0,
+    7.0
+   ],
+   "linear": {
+    "C1_density": 9.261127319347639e-06,
+    "C1_density_plus_rsd": 1.0157534197379277e-05,
+    "C_dr": 4.3276422585275385e-07,
+    "C_rr": 3.08784263261303e-08,
+    "C_dk": 4.780698386622228e-07,
+    "C_kk": 2.7019141081798574e-08,
+    "C1_density_magnification_by_alpha_mu": {
+     "-0.6": 8.69717040374242e-06,
+     "-0.3": 8.976717138847667e-06,
+     "+0.3": 9.550400945242336e-06,
+     "+0.6": 9.844538016531755e-06
+    },
+    "max_rel_change_rsd": 0.0967924149103245,
+    "max_rel_change_magnification_abs_alpha_le_0p6": 0.06299564589348638,
+    "rms_dipole_per_component": 0.0014869200675276248,
+    "expected_dipole_amplitude_rms": 0.002575421103751592,
+    "frac_kgt0p1": 0.006677648746823043
+   },
+   "hmcode2020": {
+    "C1_density": 9.255591877972571e-06,
+    "C1_density_plus_rsd": 1.0151663447286907e-05,
+    "C_dr": 4.3259657149410243e-07,
+    "C_rr": 3.08784263261303e-08,
+    "C_dk": 4.777128544203237e-07,
+    "C_kk": 2.7019141081798574e-08,
+    "C1_density_magnification_by_alpha_mu": {
+     "-0.6": 8.692063343457631e-06,
+     "-0.3": 8.971395888017739e-06,
+     "+0.3": 9.544651313322127e-06,
+     "+0.6": 9.838574194066407e-06
+    },
+    "max_rel_change_rsd": 0.09681407533178946,
+    "max_rel_change_magnification_abs_alpha_le_0p6": 0.0629870378664037,
+    "rms_dipole_per_component": 0.0014864756297803205,
+    "expected_dipole_amplitude_rms": 0.002574651314992459,
+    "frac_kgt0p1": 0.00942196620833358
+   },
+   "linear_TF7_growth_form_C1": 9.260775204406326e-06,
+   "linear_C1_z_lt_0p1_only": 6.529608153594382e-06,
+   "linear_C1_z_ge_0p1_only": 3.238142114209072e-06
+  },
+  "TN16|const3": {
+   "nz": "TN16",
+   "bias": "const3",
+   "primary": true,
+   "z_support": [
+    0.0,
+    7.0
+   ],
+   "linear": {
+    "C1_density": 2.083753646853219e-05,
+    "C1_density_plus_rsd": 2.216670757241658e-05,
+    "C_dr": 6.491463387791306e-07,
+    "C_rr": 3.08784263261303e-08,
+    "C_dk": 7.171047579933343e-07,
+    "C_kk": 2.7019141081798574e-08,
+    "C1_density_magnification_by_alpha_mu": {
+     "-0.6": 1.9986737649729637e-05,
+     "-0.3": 2.0409705336433547e-05,
+     "+0.3": 2.127023104602555e-05,
+     "+0.6": 2.1707789068913637e-05
+    },
+    "max_rel_change_rsd": 0.06378734385860053,
+    "max_rel_change_magnification_abs_alpha_le_0p6": 0.04176369897159682,
+    "rms_dipole_per_component": 0.002230380101291437,
+    "expected_dipole_amplitude_rms": 0.003863131655627388,
+    "frac_kgt0p1": 0.006677648746823041
+   },
+   "hmcode2020": {
+    "C1_density": 2.0825081725438284e-05,
+    "C1_density_plus_rsd": 2.215374986624672e-05,
+    "C_dr": 6.488948572411537e-07,
+    "C_rr": 3.08784263261303e-08,
+    "C_dk": 7.165692816304855e-07,
+    "C_kk": 2.7019141081798574e-08,
+    "C1_density_magnification_by_alpha_mu": {
+     "-0.6": 1.997492547827115e-05,
+     "-0.3": 2.0397571879157353e-05,
+     "+0.3": 2.1257455017113936e-05,
+     "+0.6": 2.1694691754184316e-05
+    },
+    "max_rel_change_rsd": 0.06380134101396784,
+    "max_rel_change_magnification_abs_alpha_le_0p6": 0.041757820699631854,
+    "rms_dipole_per_component": 0.0022297134446704805,
+    "expected_dipole_amplitude_rms": 0.003861976972488689,
+    "frac_kgt0p1": 0.00942196620833358
+   },
+   "linear_TF7_growth_form_C1": 2.0836744209914236e-05,
+   "linear_C1_z_lt_0p1_only": 1.4691618345587361e-05,
+   "linear_C1_z_ge_0p1_only": 7.285819756970412e-06
+  },
+  "TN16|H08beff": {
+   "nz": "TN16",
+   "bias": "H08beff",
+   "primary": false,
+   "z_support": [
+    0.0,
+    7.0
+   ],
+   "linear": {
+    "C1_density": 9.076830885692622e-06,
+    "C1_density_plus_rsd": 9.964582479207205e-06,
+    "C_dr": 4.284365835942262e-07,
+    "C_rr": 3.08784263261303e-08,
+    "C_dk": 4.732891402756005e-07,
+    "C_kk": 2.7019141081798574e-08,
+    "C1_density_magnification_by_alpha_mu": {
+     "-0.6": 8.518610808151349e-06,
+     "-0.3": 8.795289124224624e-06,
+     "+0.3": 9.363236092555343e-06,
+     "+0.6": 9.65450474481279e-06
+    },
+    "max_rel_change_rsd": 0.09780413502182832,
+    "max_rel_change_magnification_abs_alpha_le_0p6": 0.06364268172394061,
+    "rms_dipole_per_component": 0.0014720508668523485,
+    "expected_dipole_amplitude_rms": 0.002549666892714076,
+    "frac_kgt0p1": 0.0066776487468230405
+   },
+   "hmcode2020": {
+    "C1_density": 9.071405599600916e-06,
+    "C1_density_plus_rsd": 9.95882523748537e-06,
+    "C_dr": 4.282706057791614e-07,
+    "C_rr": 3.08784263261303e-08,
+    "C_dk": 4.7293572587612043e-07,
+    "C_kk": 2.7019141081798574e-08,
+    "C1_density_magnification_by_alpha_mu": {
+     "-0.6": 8.51360961933902e-06,
+     "-0.3": 8.790075886772607e-06,
+     "+0.3": 9.35759875782395e-06,
+     "+0.6": 9.64865536144171e-06
+    },
+    "max_rel_change_rsd": 0.09782603458095776,
+    "max_rel_change_magnification_abs_alpha_le_0p6": 0.06363399315605389,
+    "rms_dipole_per_component": 0.0014716108734825172,
+    "expected_dipole_amplitude_rms": 0.0025489048018425345,
+    "frac_kgt0p1": 0.009421966208333576
+   },
+   "linear_TF7_growth_form_C1": 9.07648577783864e-06,
+   "linear_C1_z_lt_0p1_only": 6.399668951337853e-06,
+   "linear_C1_z_ge_0p1_only": 3.173703086136311e-06
+  },
+  "DZ10|NT15": {
+   "nz": "DZ10",
+   "bias": "NT15",
+   "primary": true,
+   "z_support": [
+    0.0,
+    3.7382913269617672
+   ],
+   "linear": {
+    "C1_density": 4.827035893228651e-06,
+    "C1_density_plus_rsd": 5.580344915326605e-06,
+    "C_dr": 3.600704689337647e-07,
+    "C_rr": 3.3168084230424934e-08,
+    "C_dk": 3.287272341377956e-07,
+    "C_kk": 2.8795286484772116e-08,
+    "C1_density_magnification_by_alpha_mu": {
+     "-0.6": 4.442929515397815e-06,
+     "-0.3": 4.632391128529603e-06,
+     "+0.3": 5.026863809494957e-06,
+     "+0.6": 5.2318748773285235e-06
+    },
+    "max_rel_change_rsd": 0.15606037302409406,
+    "max_rel_change_magnification_abs_alpha_le_0p6": 0.0838690643812654,
+    "rms_dipole_per_component": 0.001073484948350005,
+    "expected_dipole_amplitude_rms": 0.0018593304717026608,
+    "frac_kgt0p1": 0.08895119479497493
+   },
+   "hmcode2020": {
+    "C1_density": 5.382162549579173e-06,
+    "C1_density_plus_rsd": 6.172152244316953e-06,
+    "C_dr": 3.784108052536777e-07,
+    "C_rr": 3.3168084230424934e-08,
+    "C_dk": 3.2897477555827224e-07,
+    "C_kk": 2.8795286484772116e-08,
+    "C1_density_magnification_by_alpha_mu": {
+     "-0.6": 4.997759122043764e-06,
+     "-0.3": 5.187369260027839e-06,
+     "+0.3": 5.582138990697765e-06,
+     "+0.6": 5.787298583383618e-06
+    },
+    "max_rel_change_rsd": 0.14677923371146587,
+    "max_rel_change_magnification_abs_alpha_le_0p6": 0.07527383836374879,
+    "rms_dipole_per_component": 0.0011335328232717414,
+    "expected_dipole_amplitude_rms": 0.0019633364419536494,
+    "frac_kgt0p1": 0.18675218399792848
+   },
+   "linear_TF7_growth_form_C1": 4.827008466741703e-06,
+   "linear_C1_z_lt_0p1_only": 3.4473523646231247e-06,
+   "linear_C1_z_ge_0p1_only": 1.547844629879507e-06
+  },
+  "DZ10|NT15cap": {
+   "nz": "DZ10",
+   "bias": "NT15cap",
+   "primary": false,
+   "z_support": [
+    0.0,
+    3.7382913269617672
+   ],
+   "linear": {
+    "C1_density": 4.820233163214045e-06,
+    "C1_density_plus_rsd": 5.572472996168203e-06,
+    "C_dr": 3.595358743618665e-07,
+    "C_rr": 3.3168084230424934e-08,
+    "C_dk": 3.280890333157724e-07,
+    "C_kk": 2.8795286484772116e-08,
+    "C1_density_magnification_by_alpha_mu": {
+     "-0.6": 4.436892626369637e-06,
+     "-0.3": 4.625971319008211e-06,
+     "+0.3": 5.019678158987138e-06,
+     "+0.6": 5.224306306327491e-06
+    },
+    "max_rel_change_rsd": 0.15605880617869902,
+    "max_rel_change_magnification_abs_alpha_le_0p6": 0.08382854717426502,
+    "rms_dipole_per_component": 0.0010727282517821078,
+    "expected_dipole_amplitude_rms": 0.0018580198348011497,
+    "frac_kgt0p1": 0.08907516051285473
+   },
+   "hmcode2020": {
+    "C1_density": 5.375350178316747e-06,
+    "C1_density_plus_rsd": 6.1642706628054725e-06,
+    "C_dr": 3.778762001291504e-07,
+    "C_rr": 3.3168084230424934e-08,
+    "C_dk": 3.283365735132955e-07,
+    "C_kk": 2.8795286484772116e-08,
+    "C1_density_magnification_by_alpha_mu": {
+     "-0.6": 4.99171259323531e-06,
+     "-0.3": 5.180939809992399e-06,
+     "+0.3": 5.574943698208354e-06,
+     "+0.6": 5.77972036966722e-06
+    },
+    "max_rel_change_rsd": 0.14676634234381558,
+    "max_rel_change_magnification_abs_alpha_le_0p6": 0.07522676252453908,
+    "rms_dipole_per_component": 0.0011328152221759368,
+    "expected_dipole_amplitude_rms": 0.0019620935203961483,
+    "frac_kgt0p1": 0.18698736040934436
+   },
+   "linear_TF7_growth_form_C1": 4.820199482161308e-06,
+   "linear_C1_z_lt_0p1_only": 3.4473523646231247e-06,
+   "linear_C1_z_ge_0p1_only": 1.5399506612143293e-06
+  },
+  "DZ10|const2": {
+   "nz": "DZ10",
+   "bias": "const2",
+   "primary": false,
+   "z_support": [
+    0.0,
+    3.7382913269617672
+   ],
+   "linear": {
+    "C1_density": 6.649237760868985e-06,
+    "C1_density_plus_rsd": 7.489324144988288e-06,
+    "C_dr": 4.034591499444392e-07,
+    "C_rr": 3.3168084230424934e-08,
+    "C_dk": 3.738514251665445e-07,
+    "C_kk": 2.8795286484772116e-08,
+    "C1_density_magnification_by_alpha_mu": {
+     "-0.6": 6.21098235380365e-06,
+     "-0.3": 6.427518481552688e-06,
+     "+0.3": 6.876140191752541e-06,
+     "+0.6": 7.108225774203357e-06
+    },
+    "max_rel_change_rsd": 0.12634326133790003,
+    "max_rel_change_magnification_abs_alpha_le_0p6": 0.06902866611802239,
+    "rms_dipole_per_component": 0.0012599161028232703,
+    "expected_dipole_amplitude_rms": 0.002182238703364078,
+    "frac_kgt0p1": 0.10069245084949376
+   },
+   "hmcode2020": {
+    "C1_density": 7.51634833171657e-06,
+    "C1_density_plus_rsd": 8.402276978257131e-06,
+    "C_dr": 4.263802811550686e-07,
+    "C_rr": 3.3168084230424934e-08,
+    "C_dk": 3.7416495661492304e-07,
+    "C_kk": 2.8795286484772116e-08,
+    "C1_density_magnification_by_alpha_mu": {
+     "-0.6": 7.077716686913181e-06,
+     "-0.3": 7.294440933531246e-06,
+     "+0.3": 7.743438881469155e-06,
+     "+0.6": 7.975712582788995e-06
+    },
+    "max_rel_change_rsd": 0.11786689592367992,
+    "max_rel_change_magnification_abs_alpha_le_0p6": 0.06111534894332338,
+    "rms_dipole_per_component": 0.001339550665891298,
+    "expected_dipole_amplitude_rms": 0.00232016981263645,
+    "frac_kgt0p1": 0.20866798680234513
+   },
+   "linear_TF7_growth_form_C1": 6.6490762549282855e-06,
+   "linear_C1_z_lt_0p1_only": 5.227897130380596e-06,
+   "linear_C1_z_ge_0p1_only": 1.6498421935595298e-06
+  },
+  "DZ10|const3": {
+   "nz": "DZ10",
+   "bias": "const3",
+   "primary": false,
+   "z_support": [
+    0.0,
+    3.7382913269617672
+   ],
+   "linear": {
+    "C1_density": 1.4960784961955218e-05,
+    "C1_density_plus_rsd": 1.620433049601896e-05,
+    "C_dr": 6.051887249166587e-07,
+    "C_rr": 3.3168084230424934e-08,
+    "C_dk": 5.607771377498167e-07,
+    "C_kk": 2.8795286484772116e-08,
+    "C1_density_magnification_by_alpha_mu": {
+     "-0.6": 1.4298218699789956e-05,
+     "-0.3": 1.4626910255088959e-05,
+     "+0.3": 1.529984282038874e-05,
+     "+0.6": 1.5644083830389517e-05
+    },
+    "max_rel_change_rsd": 0.08312034009084668,
+    "max_rel_change_magnification_abs_alpha_le_0p6": 0.045672661573032736,
+    "rms_dipole_per_component": 0.0018898741542349056,
+    "expected_dipole_amplitude_rms": 0.003273358055046117,
+    "frac_kgt0p1": 0.10069245084949377
+   },
+   "hmcode2020": {
+    "C1_density": 1.6911783746362278e-05,
+    "C1_density_plus_rsd": 1.8224092674057908e-05,
+    "C_dr": 6.395704217326029e-07,
+    "C_rr": 3.3168084230424934e-08,
+    "C_dk": 5.612474349223845e-07,
+    "C_kk": 2.8795286484772116e-08,
+    "C1_density_magnification_by_alpha_mu": {
+     "-0.6": 1.6248653127589935e-05,
+     "-0.3": 1.657762686119248e-05,
+     "+0.3": 1.725112378309934e-05,
+     "+0.6": 1.7595646971403656e-05
+    },
+    "max_rel_change_rsd": 0.07759731009911407,
+    "max_rel_change_magnification_abs_alpha_le_0p6": 0.04043708430155846,
+    "rms_dipole_per_component": 0.0020093259988369465,
+    "expected_dipole_amplitude_rms": 0.0034802547189546748,
+    "frac_kgt0p1": 0.20866798680234522
+   },
+   "linear_TF7_growth_form_C1": 1.4960421573588642e-05,
+   "linear_C1_z_lt_0p1_only": 1.1762768543356341e-05,
+   "linear_C1_z_ge_0p1_only": 3.712144935508941e-06
+  },
+  "DZ10|H08beff": {
+   "nz": "DZ10",
+   "bias": "H08beff",
+   "primary": false,
+   "z_support": [
+    0.0,
+    3.7382913269617672
+   ],
+   "linear": {
+    "C1_density": 6.516917929427693e-06,
+    "C1_density_plus_rsd": 7.348935130548108e-06,
+    "C_dr": 3.994245584449948e-07,
+    "C_rr": 3.3168084230424934e-08,
+    "C_dk": 3.70112910914879e-07,
+    "C_kk": 2.8795286484772116e-08,
+    "C1_density_magnification_by_alpha_mu": {
+     "-0.6": 6.083148739464356e-06,
+     "-0.3": 6.297441758662394e-06,
+     "+0.3": 6.74157725176025e-06,
+     "+0.6": 6.971419725660066e-06
+    },
+    "max_rel_change_rsd": 0.12767035125045395,
+    "max_rel_change_magnification_abs_alpha_le_0p6": 0.06974183212896268,
+    "rms_dipole_per_component": 0.0012473169417950376,
+    "expected_dipole_amplitude_rms": 0.002160416316330437,
+    "frac_kgt0p1": 0.10069245084949376
+   },
+   "hmcode2020": {
+    "C1_density": 7.366772999915409e-06,
+    "C1_density_plus_rsd": 8.244174040832868e-06,
+    "C_dr": 4.221164783435179e-07,
+    "C_rr": 3.3168084230424934e-08,
+    "C_dk": 3.704233070487738e-07,
+    "C_kk": 2.8795286484772116e-08,
+    "C1_density_magnification_by_alpha_mu": {
+     "-0.6": 6.932631334591399e-06,
+     "-0.3": 7.147110591469774e-06,
+     "+0.3": 7.591618559928303e-06,
+     "+0.6": 7.821647271508456e-06
+    },
+    "max_rel_change_rsd": 0.11910249452881685,
+    "max_rel_change_magnification_abs_alpha_le_0p6": 0.06174674740191799,
+    "rms_dipole_per_component": 0.001326155159232385,
+    "expected_dipole_amplitude_rms": 0.0022969681145100854,
+    "frac_kgt0p1": 0.2086679868023452
+   },
+   "linear_TF7_growth_form_C1": 6.516759637455213e-06,
+   "linear_C1_z_lt_0p1_only": 5.123861977486023e-06,
+   "linear_C1_z_ge_0p1_only": 1.617010333907695e-06
+  },
+  "H08|NT15": {
+   "nz": "H08",
+   "bias": "NT15",
+   "primary": false,
+   "z_support": [
+    0.0,
+    7.0
+   ],
+   "linear": {
+    "C1_density": 1.1447934089281944e-06,
+    "C1_density_plus_rsd": 1.2682970443906205e-06,
+    "C_dr": 5.7341521499878507e-08,
+    "C_rr": 8.820592462668958e-09,
+    "C_dk": 1.7799819984034076e-07,
+    "C_kk": 3.101935163976001e-08,
+    "C1_density_magnification_by_alpha_mu": {
+     "-0.6": 9.423625357100991e-07,
+     "-0.3": 1.0407862306715685e-06,
+     "+0.3": 1.2543840704799774e-06,
+     "+0.6": 1.369558215326917e-06
+    },
+    "max_rel_change_rsd": 0.10788290227671339,
+    "max_rel_change_magnification_abs_alpha_le_0p6": 0.1963365657469649,
+    "rms_dipole_per_component": 0.0005227803504101082,
+    "expected_dipole_amplitude_rms": 0.0009054821281089685,
+    "frac_kgt0p1": 0.00018167294819836883
+   },
+   "hmcode2020": {
+    "C1_density": 1.1442780391605255e-06,
+    "C1_density_plus_rsd": 1.267797991707351e-06,
+    "C_dr": 5.734968004207822e-08,
+    "C_rr": 8.820592462668958e-09,
+    "C_dk": 1.7793052489587078e-07,
+    "C_kk": 3.101935163976001e-08,
+    "C1_density_magnification_by_alpha_mu": {
+     "-0.6": 9.419283758757941e-07,
+     "-0.3": 1.0403114658705815e-06,
+     "+0.3": 1.2538280957456265e-06,
+     "+0.6": 1.368961635625884e-06
+    },
+    "max_rel_change_rsd": 0.10794575122445163,
+    "max_rel_change_magnification_abs_alpha_le_0p6": 0.19635402303988347,
+    "rms_dipole_per_component": 0.0005226626630110942,
+    "expected_dipole_amplitude_rms": 0.0009052782875544655,
+    "frac_kgt0p1": 0.00023077263446341471
+   },
+   "linear_TF7_growth_form_C1": 1.144921156014325e-06,
+   "linear_C1_z_lt_0p1_only": 2.801584020467053e-07,
+   "linear_C1_z_ge_0p1_only": 9.151128813416763e-07
+  },
+  "H08|NT15cap": {
+   "nz": "H08",
+   "bias": "NT15cap",
+   "primary": false,
+   "z_support": [
+    0.0,
+    7.0
+   ],
+   "linear": {
+    "C1_density": 1.1355736033248592e-06,
+    "C1_density_plus_rsd": 1.2574020421873455e-06,
+    "C_dr": 5.650392319990863e-08,
+    "C_rr": 8.820592462668958e-09,
+    "C_dk": 1.7690947515128738e-07,
+    "C_kk": 3.101935163976001e-08,
+    "C1_density_magnification_by_alpha_mu": {
+     "-0.6": 9.344491997336279e-07,
+     "-0.3": 1.0322196598816653e-06,
+     "+0.3": 1.2445110300632101e-06,
+     "+0.6": 1.3590319400967177e-06
+    },
+    "max_rel_change_rsd": 0.10728361288584316,
+    "max_rel_change_magnification_abs_alpha_le_0p6": 0.1967801436363017,
+    "rms_dipole_per_component": 0.0005206709405380137,
+    "expected_dipole_amplitude_rms": 0.0009018285230365134,
+    "frac_kgt0p1": 0.00018322681481948186
+   },
+   "hmcode2020": {
+    "C1_density": 1.135058371434652e-06,
+    "C1_density_plus_rsd": 1.2569031277310625e-06,
+    "C_dr": 5.65120819168707e-08,
+    "C_rr": 8.820592462668958e-09,
+    "C_dk": 1.7684180003185985e-07,
+    "C_kk": 3.101935163976001e-08,
+    "C1_density_magnification_by_alpha_mu": {
+     "-0.6": 9.340151779867337e-07,
+     "-0.3": 1.0317450330631145e-06,
+     "+0.3": 1.2439551931013465e-06,
+     "+0.6": 1.3584354980631973e-06
+    },
+    "max_rel_change_rsd": 0.10734668750330895,
+    "max_rel_change_magnification_abs_alpha_le_0p6": 0.19679792004547636,
+    "rms_dipole_per_component": 0.0005205528078566979,
+    "expected_dipole_amplitude_rms": 0.0009016239112304401,
+    "frac_kgt0p1": 0.00023275220610392304
+   },
+   "linear_TF7_growth_form_C1": 1.13566253996939e-06,
+   "linear_C1_z_lt_0p1_only": 2.801584020467053e-07,
+   "linear_C1_z_ge_0p1_only": 9.058960286746249e-07
+  },
+  "H08|const2": {
+   "nz": "H08",
+   "bias": "const2",
+   "primary": false,
+   "z_support": [
+    0.0,
+    7.0
+   ],
+   "linear": {
+    "C1_density": 1.233328210846331e-06,
+    "C1_density_plus_rsd": 1.3236520995828566e-06,
+    "C_dr": 4.075164813692834e-08,
+    "C_rr": 8.820592462668958e-09,
+    "C_dk": 1.9090553738844247e-07,
+    "C_kk": 3.101935163976001e-08,
+    "C1_density_magnification_by_alpha_mu": {
+     "-0.6": 1.0154085325705136e-06,
+     "-0.3": 1.121576630060844e-06,
+     "+0.3": 1.3506632749269749e-06,
+     "+0.6": 1.4735818223027754e-06
+    },
+    "max_rel_change_rsd": 0.07323588963763655,
+    "max_rel_change_magnification_abs_alpha_le_0p6": 0.19480103458557751,
+    "rms_dipole_per_component": 0.0005426190393050315,
+    "expected_dipole_amplitude_rms": 0.0009398437452305283,
+    "frac_kgt0p1": 0.000263084218174926
+   },
+   "hmcode2020": {
+    "C1_density": 1.2325399170634941e-06,
+    "C1_density_plus_rsd": 1.322883977892951e-06,
+    "C_dr": 4.0761734183393915e-08,
+    "C_rr": 8.820592462668958e-09,
+    "C_dk": 1.908218353073026e-07,
+    "C_kk": 3.101935163976001e-08,
+    "C1_density_magnification_by_alpha_mu": {
+     "-0.6": 1.0147206812850445e-06,
+     "-0.3": 1.1208385575266912e-06,
+     "+0.3": 1.3498247598954541e-06,
+     "+0.6": 1.472693086022571e-06
+    },
+    "max_rel_change_rsd": 0.07329909528991159,
+    "max_rel_change_magnification_abs_alpha_le_0p6": 0.19484413091564434,
+    "rms_dipole_per_component": 0.000542445601455201,
+    "expected_dipole_amplitude_rms": 0.0009395433420626662,
+    "frac_kgt0p1": 0.0003342934385789704
+   },
+   "linear_TF7_growth_form_C1": 1.2333409161183755e-06,
+   "linear_C1_z_lt_0p1_only": 4.118634384877871e-07,
+   "linear_C1_z_ge_0p1_only": 8.900153230901793e-07
+  },
+  "H08|const3": {
+   "nz": "H08",
+   "bias": "const3",
+   "primary": false,
+   "z_support": [
+    0.0,
+    7.0
+   ],
+   "linear": {
+    "C1_density": 2.7749884744042444e-06,
+    "C1_density_plus_rsd": 2.906064011277698e-06,
+    "C_dr": 6.112747220539249e-08,
+    "C_rr": 8.820592462668958e-09,
+    "C_dk": 2.863583060826637e-07,
+    "C_kk": 3.101935163976001e-08,
+    "C1_density_magnification_by_alpha_mu": {
+     "-0.6": 2.4425254736953614e-06,
+     "-0.3": 2.605965232402225e-06,
+     "+0.3": 2.949595199701421e-06,
+     "+0.6": 3.1297854082937545e-06
+    },
+    "max_rel_change_rsd": 0.04723462388491333,
+    "max_rel_change_magnification_abs_alpha_le_0p6": 0.12785528198119112,
+    "rms_dipole_per_component": 0.0008139285589575472,
+    "expected_dipole_amplitude_rms": 0.0014097656178457922,
+    "frac_kgt0p1": 0.00026308421817492633
+   },
+   "hmcode2020": {
+    "C1_density": 2.773214813392862e-06,
+    "C1_density_plus_rsd": 2.9043206084057128e-06,
+    "C_dr": 6.114260127509085e-08,
+    "C_rr": 8.820592462668958e-09,
+    "C_dk": 2.8623275296095387e-07,
+    "C_kk": 3.101935163976001e-08,
+    "C1_density_magnification_by_alpha_mu": {
+     "-0.6": 2.4409024764300313e-06,
+     "-0.3": 2.6042669032638682e-06,
+     "+0.3": 2.947746206817013e-06,
+     "+0.6": 3.12786108353632e-06
+    },
+    "max_rel_change_rsd": 0.047275744518489204,
+    "max_rel_change_magnification_abs_alpha_le_0p6": 0.1278827260083648,
+    "rms_dipole_per_component": 0.0008136684021828015,
+    "expected_dipole_amplitude_rms": 0.0014093150130939994,
+    "frac_kgt0p1": 0.0003342934385789702
+   },
+   "linear_TF7_growth_form_C1": 2.7750170612663453e-06,
+   "linear_C1_z_lt_0p1_only": 9.266927365975213e-07,
+   "linear_C1_z_ge_0p1_only": 2.0025344769529036e-06
+  },
+  "H08|H08beff": {
+   "nz": "H08",
+   "bias": "H08beff",
+   "primary": true,
+   "z_support": [
+    0.0,
+    7.0
+   ],
+   "linear": {
+    "C1_density": 1.2087849794504888e-06,
+    "C1_density_plus_rsd": 1.298293835224276e-06,
+    "C_dr": 4.0344131655559044e-08,
+    "C_rr": 8.820592462668958e-09,
+    "C_dk": 1.8899648201455807e-07,
+    "C_kk": 3.101935163976001e-08,
+    "C1_density_magnification_by_alpha_mu": {
+     "-0.6": 9.931561676233326e-07,
+     "-0.3": 1.0981788318893324e-06,
+     "+0.3": 1.3249746103068021e-06,
+     "+0.6": 1.446747724458272e-06
+    },
+    "max_rel_change_rsd": 0.07404861683049502,
+    "max_rel_change_magnification_abs_alpha_le_0p6": 0.19686110354875574,
+    "rms_dipole_per_component": 0.0005371928489119812,
+    "expected_dipole_amplitude_rms": 0.000930445307778223,
+    "frac_kgt0p1": 0.0002630842181749264
+   },
+   "hmcode2020": {
+    "C1_density": 1.208012372713931e-06,
+    "C1_density_plus_rsd": 1.29754119885972e-06,
+    "C_dr": 4.035411684155997e-08,
+    "C_rr": 8.820592462668958e-09,
+    "C_dk": 1.8891361695422958e-07,
+    "C_kk": 3.101935163976001e-08,
+    "C1_density_magnification_by_alpha_mu": {
+     "-0.6": 9.92482998959169e-07,
+     "-0.3": 1.0974559441889717e-06,
+     "+0.3": 1.3241522845340472e-06,
+     "+0.6": 1.44587567964932e-06
+    },
+    "max_rel_change_rsd": 0.0741125075934882,
+    "max_rel_change_magnification_abs_alpha_le_0p6": 0.19690469427974766,
+    "rms_dipole_per_component": 0.000537021145440649,
+    "expected_dipole_amplitude_rms": 0.0009301479086420396,
+    "frac_kgt0p1": 0.00033429343857897017
+   },
+   "linear_TF7_growth_form_C1": 1.20879743188762e-06,
+   "linear_C1_z_lt_0p1_only": 4.0366735606188026e-07,
+   "linear_C1_z_ge_0p1_only": 8.723040181606847e-07
+  }
+ },
+ "k_grid": {
+  "kmin": 1e-05,
+  "kmax": 2.0,
+  "nk": 601,
+  "per_period": 32
+ },
+ "V4_convergence": [
+  {
+   "nz": "TN16",
+   "bias": "NT15cap",
+   "kmax": 2.0,
+   "nk": 1201,
+   "per_period": 32,
+   "C1": 6.769232681425788e-06,
+   "rel_to_production": 7.308268439976118e-06
+  },
+  {
+   "nz": "TN16",
+   "bias": "NT15cap",
+   "kmax": 2.0,
+   "nk": 601,
+   "per_period": 64,
+   "C1": 6.7691699112878406e-06,
+   "rel_to_production": -1.964657996844643e-06
+  },
+  {
+   "nz": "TN16",
+   "bias": "NT15cap",
+   "kmax": 10.0,
+   "nk": 801,
+   "per_period": 32,
+   "C1": 6.769217091018902e-06,
+   "rel_to_production": 5.005123968615521e-06
+  },
+  {
+   "nz": "TN16",
+   "bias": "NT15cap",
+   "kmax": 0.5,
+   "nk": 601,
+   "per_period": 32,
+   "C1": 6.768573611277001e-06,
+   "rel_to_production": -9.005505122505753e-05
+  },
+  {
+   "nz": "DZ10",
+   "bias": "NT15",
+   "kmax": 2.0,
+   "nk": 1201,
+   "per_period": 32,
+   "C1": 4.8289738546357e-06,
+   "rel_to_production": 0.00040148062908906823
+  },
+  {
+   "nz": "DZ10",
+   "bias": "NT15",
+   "kmax": 2.0,
+   "nk": 601,
+   "per_period": 64,
+   "C1": 4.827033030286356e-06,
+   "rel_to_production": -5.93105657031856e-07
+  },
+  {
+   "nz": "DZ10",
+   "bias": "NT15",
+   "kmax": 10.0,
+   "nk": 801,
+   "per_period": 32,
+   "C1": 4.835139419567478e-06,
+   "rel_to_production": 0.0016787789687238153
+  },
+  {
+   "nz": "DZ10",
+   "bias": "NT15",
+   "kmax": 0.5,
+   "nk": 601,
+   "per_period": 32,
+   "C1": 4.776015386822678e-06,
+   "rel_to_production": -0.010569738351758451
+  }
+ ],
+ "envelope": {
+  "linear": {
+   "primary_min": 1.2087849794504888e-06,
+   "primary_max": 2.083753646853219e-05,
+   "primary_argmin": "H08|H08beff",
+   "primary_argmax": "TN16|const3",
+   "extended_min": 1.1355736033248592e-06,
+   "extended_max": 2.083753646853219e-05,
+   "extended_argmax": "TN16|const3",
+   "differential_pair_max": {
+    "C1": 1.401302110776449e-05,
+    "pair": [
+     "TN16|const3",
+     "H08|NT15"
+    ]
+   },
+   "differential_pair_min": {
+    "C1": 1.233328210846337e-10,
+    "pair": [
+     "H08|const2",
+     "H08|H08beff"
+    ]
+   },
+   "differential_triangle_bound_4max": 8.335014587412876e-05,
+   "note": "differential = C1 of [W_i - W_j] for two bracket members, i.e. the l=1 power of delta_resolved - delta_compact if each class follows one bracket member; 4 max C1 is the Minkowski bound (sqrt(C_i)+sqrt(C_j))^2 over the extended set; V4 is the numerical convergence of the integrator only; the unexplained V3 low-l offset to CAMB is carried separately in with_V3_low_l_systematic",
+   "with_V3_low_l_systematic": {
+    "factor_up": 1.2862373794253488,
+    "factor_down": 1.0,
+    "primary_min": 1.2087849794504888e-06,
+    "extended_min": 1.1355736033248592e-06,
+    "primary_max": 2.680201830096498e-05,
+    "extended_max": 2.680201830096498e-05,
+    "differential_pair_max": 1.8024071547483096e-05,
+    "differential_triangle_bound_4max": 0.00010720807320385992,
+    "note": "upper envelope values x factor_up, lower x factor_down; see V3_low_l_systematic for the method"
+   }
+  },
+  "hmcode2020": {
+   "primary_min": 1.208012372713931e-06,
+   "primary_max": 2.0825081725438284e-05,
+   "primary_argmin": "H08|H08beff",
+   "primary_argmax": "TN16|const3",
+   "extended_min": 1.135058371434652e-06,
+   "extended_max": 2.0825081725438284e-05,
+   "extended_argmax": "TN16|const3",
+   "differential_pair_max": {
+    "C1": 1.4008854834005121e-05,
+    "pair": [
+     "TN16|const3",
+     "H08|NT15"
+    ]
+   },
+   "differential_pair_min": {
+    "C1": 1.2325399170634969e-10,
+    "pair": [
+     "H08|const2",
+     "H08|H08beff"
+    ]
+   },
+   "differential_triangle_bound_4max": 8.330032690175314e-05,
+   "note": "differential = C1 of [W_i - W_j] for two bracket members, i.e. the l=1 power of delta_resolved - delta_compact if each class follows one bracket member; 4 max C1 is the Minkowski bound (sqrt(C_i)+sqrt(C_j))^2 over the extended set; V4 is the numerical convergence of the integrator only; the unexplained V3 low-l offset to CAMB is carried separately in with_V3_low_l_systematic",
+   "with_V3_low_l_systematic": {
+    "factor_up": 1.2862373794253488,
+    "factor_down": 1.0,
+    "primary_min": 1.208012372713931e-06,
+    "extended_min": 1.135058371434652e-06,
+    "primary_max": 2.6785998544846457e-05,
+    "extended_max": 2.6785998544846457e-05,
+    "differential_pair_max": 1.8018712730440875e-05,
+    "differential_triangle_bound_4max": 0.00010714399417938583,
+    "note": "upper envelope values x factor_up, lower x factor_down; see V3_low_l_systematic for the method"
+   }
+  }
+ },
+ "shot_noise_R65_NVSS": {
+  "mask_pixels": 33000,
+  "mask_solid_angle_sr": 8.436894333371027,
+  "joint_class_counts": [
+   [
+    1172716.0,
+    20345.0,
+    808.0,
+    113.0
+   ],
+   [
+    0.0,
+    106785.0,
+    11795.0,
+    434.0
+   ],
+   [
+    0.0,
+    0.0,
+    59520.0,
+    6782.0
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    56576.0
+   ]
+  ],
+  "selections": {
+   "peak_ge20": {
+    "N": 241892,
+    "Nbar_per_sr": 28670.739544909076,
+    "shot_noise_1_over_Nbar": 3.487876545471131e-05
+   },
+   "integrated_ge20": {
+    "N": 263158,
+    "Nbar_per_sr": 31191.335294921628,
+    "shot_noise_1_over_Nbar": 3.206018564273565e-05
+   },
+   "offdiag_resolved_migrating": {
+    "N": 40277,
+    "Nbar_per_sr": 4773.9130547943,
+    "shot_noise_1_over_Nbar": 0.0002094717663522861
+   },
+   "diag_selected": {
+    "N": 222881,
+    "Nbar_per_sr": 26417.42224012733,
+    "shot_noise_1_over_Nbar": 3.785380688964527e-05
+   }
+  },
+  "g_diff_shot_noise": 0.00024732557324193136,
+  "integral_count_slope_x_20_40mJy_peak": 0.977136416799054,
+  "integral_count_slope_x_20_40mJy_integrated": 0.9520256070557838,
+  "input": "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/RESULTS/PROVIDER_NVSS_CARRIERS.npz",
+  "input_sha256": "a51da9a98c3d0563446eb61f21aceff69fbfeed5446ec74471177170b8664e89",
+  "note": "R106's closed form Cov = Cov_{C1=0} + df^2 (3 C1/4pi) I_2 uses the clustering-only C1 of g_diff; Poisson noise is generated by the multinomial placement inside Cov_{C1=0}. The with-shot-noise numbers are C1 + 1/Nbar for the count fields (TN16 Eq. 3.4) and C1_diff + 1/Nbar_off + 1/Nbar_diag for g_diff; feeding them into p(C1) double counts Poisson noise."
+ },
+ "C1_forms_for_R106": {
+  "linear": {
+   "count_field_integrated_ge20": {
+    "shot_noise_free": [
+     1.1355736033248592e-06,
+     2.083753646853219e-05
+    ],
+    "with_shot_noise": [
+     3.319575924606051e-05,
+     5.289772211126784e-05
+    ],
+    "shot_noise_free_x_V3_factor_up": [
+     1.4606172156851674e-06,
+     2.680201830096498e-05
+    ],
+    "with_shot_noise_and_V3_factor_up": [
+     3.3520802858420815e-05,
+     5.8862203943700625e-05
+    ]
+   },
+   "g_diff": {
+    "shot_noise_free": [
+     0.0,
+     1.401302110776449e-05,
+     8.335014587412876e-05
+    ],
+    "with_shot_noise": [
+     0.00024732557324193136,
+     0.0002613385943496958,
+     0.0003306757191160601
+    ],
+    "labels": [
+     "identical classes (C1_diff = 0)",
+     "max over bracket pairs",
+     "Minkowski bound 4 max C1"
+    ],
+    "shot_noise_free_x_V3_factor_up": [
+     0.0,
+     1.8024071547483096e-05,
+     0.00010720807320385992
+    ],
+    "with_shot_noise_and_V3_factor_up": [
+     0.00024732557324193136,
+     0.00026534964478941447,
+     0.0003545336464457913
+    ]
+   },
+   "V3_low_l_systematic_factor_up": 1.2862373794253488
+  },
+  "hmcode2020": {
+   "count_field_integrated_ge20": {
+    "shot_noise_free": [
+     1.135058371434652e-06,
+     2.0825081725438284e-05
+    ],
+    "with_shot_noise": [
+     3.31952440141703e-05,
+     5.288526736817393e-05
+    ],
+    "shot_noise_free_x_V3_factor_up": [
+     1.4599545051689109e-06,
+     2.6785998544846457e-05
+    ],
+    "with_shot_noise_and_V3_factor_up": [
+     3.352014014790456e-05,
+     5.884618418758211e-05
+    ]
+   },
+   "g_diff": {
+    "shot_noise_free": [
+     0.0,
+     1.4008854834005121e-05,
+     8.330032690175314e-05
+    ],
+    "with_shot_noise": [
+     0.00024732557324193136,
+     0.00026133442807593646,
+     0.0003306259001436845
+    ],
+    "labels": [
+     "identical classes (C1_diff = 0)",
+     "max over bracket pairs",
+     "Minkowski bound 4 max C1"
+    ],
+    "shot_noise_free_x_V3_factor_up": [
+     0.0,
+     1.8018712730440875e-05,
+     0.00010714399417938583
+    ],
+    "with_shot_noise_and_V3_factor_up": [
+     0.00024732557324193136,
+     0.00026534428597237223,
+     0.0003544695674213172
+    ]
+   },
+   "V3_low_l_systematic_factor_up": 1.2862373794253488
+  }
+ },
+ "elapsed_s": 822.4719445705414
+}

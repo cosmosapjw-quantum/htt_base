@@ -207,23 +207,32 @@ def _hyrec_tables_present() -> bool:
 def test_coupled_solver_history_feeds_the_line_of_sight():
     """Coupled run -> history -> LoS must reproduce the native low-ell observer state.
 
-    Tolerances are the first-pass bound for 48 cells; the R107 handoff records the measured
-    differences for 48/96/192 cells and tightens this bound to 3x the 192-cell value.
+    R108 F2 (R108_LOS_ATLAS_DATA_20261124/F2_COUPLED_LOS.json, VII_h, ell_max 6, epsilon
+    2e-4, default depth cap): the LoS-minus-native difference is second order in the cell
+    width when the source is sampled at cell ends (T2 3.06e-2, 7.98e-3, 2.01e-3, 5.24e-4
+    for 48/96/192/384 cells) and drops to T2 3.9e-4, E2 9.4e-4 at 192 cells with the
+    optical-substep source nodes.  The R107 first-pass bound (2e-2 at 48 cells) failed
+    (T2 3.06e-2); per the handoff the test now runs at 192 cells with bounds of 3x the
+    measured 192-cell values for both node sets.
     """
     from bass.transport.coupled_einstein_boltzmann import CoupledSolverConfig, solve_coupled_einstein_boltzmann
     from bass.transport.hybrid_los_transfer import history_from_coupled_result
 
-    res = solve_coupled_einstein_boltzmann("VII_h", CoupledSolverConfig(n_cells=48, ell_max=6, epsilon=2e-4,
+    res = solve_coupled_einstein_boltzmann("VII_h", CoupledSolverConfig(n_cells=192, ell_max=6, epsilon=2e-4,
                                                                         record_history=True))
-    hist = history_from_coupled_result(res)
     op = GeneralLieStokesOperator(int(res.ell_max))
-    assert hist.emission.shape == (49, op.dim) and abs(hist.N[-1]) < 1e-12
-    opo, vec = _los_low_ell(hist, n_gl=24, L_out=3)
-    for ch, ell in (("T", 2), ("E", 2)):
-        nat = np.array([res.final_state[op.idx[ch][(ell, m)]] for m in range(-ell, ell + 1)])
-        if np.max(np.abs(nat)) > 0.0:
+    bounds = {"substeps": {("T", 1): 4.68e-4, ("T", 2): 1.18e-3, ("E", 2): 2.81e-3, ("B", 2): 3.04e-3},
+              "cell_ends": {("T", 1): 2.87e-3, ("T", 2): 6.04e-3, ("E", 2): 1.82e-2, ("B", 2): 1.993e-2}}
+    for mode, bound in bounds.items():
+        hist = history_from_coupled_result(res, substep_nodes=(mode == "substeps"))
+        assert abs(hist.N[-1]) < 1e-12 and hist.emission.shape[1] == op.dim
+        assert (hist.N.size > 193) if mode == "substeps" else (hist.N.size == 193)
+        opo, vec = _los_low_ell(hist, n_gl=24, L_out=3)
+        for (ch, ell), tol in bound.items():
+            nat = np.array([res.final_state[op.idx[ch][(ell, m)]] for m in range(-ell, ell + 1)])
+            assert np.max(np.abs(nat)) > 0.0, (ch, ell)
             los = np.array([vec[opo.idx[ch][(ell, m)]] for m in range(-ell, ell + 1)])
-            assert np.max(np.abs(los - nat)) <= 2e-2 * np.max(np.abs(nat)), ch
+            assert np.max(np.abs(los - nat)) <= tol * np.max(np.abs(nat)), (mode, ch, ell)
 
 
 def test_windowed_history_reproduces_the_native_state_at_an_intermediate_time():
@@ -246,3 +255,56 @@ def test_windowed_history_reproduces_the_native_state_at_an_intermediate_time():
         assert _max_rel(op, S, opo, vec, ch, ell) < tol, (ch, ell)
     with pytest.raises(ValueError):
         history_window(hist, 0)
+
+
+def test_redshift_accumulation_has_no_step_dependent_rounding_floor():
+    """R108 review R4: Delta is accumulated directly, so refining the ray step does not grow rounding.
+
+    Bianchi I with physical shear 1e-10: before the fix the T error was 6.8e-14 at step 0.02
+    and 6.6e-13 at step 0.002 (one ulp of |lnE| per step); after it both are about 2e-15.
+    """
+    s = 1e-10 * np.array([1.0, -0.4, -0.6])
+    g = pack_geometry14(np.diag(s), np.zeros(3), np.zeros((3, 3)))
+    op = GeneralLieStokesOperator(2)
+    rng = np.random.default_rng(1)
+    dirs = rng.normal(size=(200, 3))
+    dirs /= np.linalg.norm(dirs, axis=1, keepdims=True)
+    n_shell = -6.9
+    exact = 0.25 * np.expm1(-2.0 * np.log(np.sum(dirs ** 2 * np.exp(-2 * s * n_shell), axis=1)))
+    errs = []
+    for step in (0.02, 0.002):
+        sky = los_sky(_shell_history(op, np.zeros(op.dim, dtype=complex), g, n_shell), dirs, max_step=step)
+        errs.append(float(np.max(np.abs(sky.T - exact))))
+    assert max(errs) < 1e-14, errs
+    assert errs[1] < 2.0 * errs[0] + 1e-15, errs
+
+
+def test_top_native_shell_emission_fails_closed_in_automatic_mode():
+    """R108 review R5: emission on ell = L_native (L_native >= 4) means the native source was cut."""
+    op = GeneralLieStokesOperator(4)
+    em = np.zeros(op.dim, dtype=complex)
+    em[op.idx["T"][(0, 0)]] = 1e-5
+    em[op.idx["T"][(4, 0)]] = 1e-9
+    hist = _shell_history(op, em)
+    with pytest.raises(ValueError, match="top native shell"):
+        los_sky(hist, np.array([[0.0, 0.0, 1.0]]))
+    em[op.idx["T"][(4, 0)]] = 0.0
+    sky = los_sky(_shell_history(op, em), np.array([[0.0, 0.0, 1.0]]))
+    assert sky.diagnostics["top_shell_relative_norm"] == 0.0
+
+
+def test_history_from_coupled_result_refuses_a_non_moving_collision_model():
+    """R108 review R1/R9: read the solver's "picard_iterations" key and refuse rest-Thomson runs."""
+    from types import SimpleNamespace
+
+    from bass.transport.hybrid_los_transfer import history_from_coupled_result
+
+    with pytest.raises(ValueError, match="no recorded history"):
+        history_from_coupled_result(SimpleNamespace(history={"iterations": [{}]}, ell_max=4))
+    with pytest.raises(ValueError, match="include_moving_correction"):
+        history_from_coupled_result(SimpleNamespace(history={"picard_iterations": [{}],
+                                                             "include_moving_correction": False}, ell_max=4))
+    with pytest.raises(ValueError, match="stage_velocity_collision"):
+        history_from_coupled_result(SimpleNamespace(history={"picard_iterations": [{}],
+                                                             "include_moving_correction": True,
+                                                             "stage_velocity_collision": False}, ell_max=4))

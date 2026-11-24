@@ -281,6 +281,11 @@ class CoupledSolverConfig:
     # change hides unconverged late-time class-B stress.
     picard_rtol: float | None = 1e-6
     max_picard: int = 12
+    # R108: with record_history, also record the photon state after every optical substep
+    # of the cells whose start lies within this conserved-anchor depth of the observer
+    # (line-of-sight source nodes); 0 disables.  Observation only.  The default exceeds the
+    # total depth of the R106/R108 runs (about 33), so every cell is recorded there.
+    history_substep_tau_max: float = 40.0
 
 
 @dataclass(frozen=True)
@@ -386,7 +391,7 @@ def _stage_opacity_rate(opacity, n0, n_stop):
 
 
 def _advance_moving_photon_cell(op, state, delta_N, geometry, shear_source, sub_depths,
-                                baryon_velocity_at, *, sub_edges=None, opacity_rate_at=None):
+                                baryon_velocity_at, *, sub_edges=None, opacity_rate_at=None, trace=None):
     """SDIRK(2,2) photon cell with the electron velocity evaluated at each stage time.
 
     The source and Lie operator are expressed per unit cell coordinate u. Substep
@@ -402,6 +407,9 @@ def _advance_moving_photon_cell(op, state, delta_N, geometry, shear_source, sub_
     tight-coupling ramp the stage-time shape lowers the error constant by roughly
     30x, and the rescaling keeps the applied depth exact in visibility and
     transparent cells. For a constant rate the two forms are identical.
+
+    ``trace`` (a list, optional) receives ``(u_end, state_copy)`` after every substep;
+    it only observes the integration (R108 line-of-sight source nodes).
     """
     gamma = 1.0 - 1.0 / math.sqrt(2.0)
     edges = np.linspace(0.,1.,len(sub_depths)+1) if sub_edges is None else np.asarray(sub_edges,dtype=float)
@@ -437,6 +445,8 @@ def _advance_moving_photon_cell(op, state, delta_N, geometry, shear_source, sub_
         (solve1, inc1), (solve2, inc2) = stages
         y1 = solve1(y + inc1)
         y = solve2(y + ((1.0 - gamma) / gamma) * (y1 - y) + inc2)
+        if trace is not None:
+            trace.append((float(edges[j + 1]), y.copy()))
     if not np.all(np.isfinite(y)):
         raise FloatingPointError("moving photon cell produced a non-finite state")
     return y
@@ -785,6 +795,8 @@ def solve_coupled_einstein_boltzmann(
                 # native photon state at N_start and every cell end, electron velocity
                 # at the same nodes, and the H-normalised geometry on the exact ODE grid.
                 "N_start": float(N_eval[0]),
+                # R108: {cell: interior optical-substep nodes} for cells near the observer
+                "substep_nodes": {},
                 "stokes_initial": S_vec.copy(),
                 "stokes_state": np.zeros((n_c, S_vec.size), dtype=np.complex128),
                 "baryon_velocity": np.zeros((n_c + 1, 3)),
@@ -850,13 +862,25 @@ def solve_coupled_einstein_boltzmann(
                 u_edges, sub_depths = _optical_substeps(
                     opacity, n0, float(N_eval[i1]), cfg.substeps_per_cell, cfg.max_substep_depth,
                     cfg.max_substep_log_rate if cfg.stage_rate_collision else None)
+                sub_trace = ([] if cfg.record_history and len(sub_depths) > 1
+                             and float(np.sum(cell_depths[cell:n_c])) <= cfg.history_substep_tau_max else None)
                 S_vec = _advance_moving_photon_cell(
                     op_lie, S_vec, dN_cell, geom, src_vec, sub_depths, _baryon_velocity_at,
                     sub_edges=u_edges,
                     opacity_rate_at=(_stage_opacity_rate(opacity, n0, float(N_eval[i1]))
-                                     if cfg.stage_rate_collision else None))
+                                     if cfg.stage_rate_collision else None),
+                    trace=sub_trace)
                 if cfg.record_history:
                     record["photon_substeps"][cell] = len(sub_depths)
+                    if sub_trace is not None:
+                        # interior substep ends only; the cell end is stokes_state[cell]
+                        u_int = np.array([u for u, _ in sub_trace[:-1]], dtype=np.float64)
+                        record["substep_nodes"][cell] = {
+                            "N": n0 + u_int * dN_cell,
+                            "state": np.array([y for _, y in sub_trace[:-1]], dtype=np.complex128),
+                            "delta_tau": np.asarray(sub_depths, dtype=np.float64).copy(),
+                            "baryon_velocity": np.array([_baryon_velocity_at(u) for u in u_int]).reshape(-1, 3),
+                        }
             else:
                 moving = None
                 if dtau_cell > 0.0 and np.any(vb_mid):
@@ -961,5 +985,8 @@ def solve_coupled_einstein_boltzmann(
         total_optical_depth=float(recomb_hist.kappa[0]),
         neutrino_final_state=neutrino_final,
         history=({"radiation_species": [species_specs[i].species for i in radiation_indices],
-                  "picard_iterations": history_iterations} if cfg.record_history else None),
+                  "picard_iterations": history_iterations,
+                  # collision model of the photon cells, read by hybrid_los_transfer (R108 review R9)
+                  "include_moving_correction": bool(cfg.include_moving_correction),
+                  "stage_velocity_collision": bool(cfg.stage_velocity_collision)} if cfg.record_history else None),
     )

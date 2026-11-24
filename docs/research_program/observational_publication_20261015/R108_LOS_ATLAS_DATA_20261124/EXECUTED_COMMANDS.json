@@ -1,0 +1,2132 @@
+{
+ "lane_command_logs": {
+  "cf4_COMMANDS.jsonl": [
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r107_cloud.acquisition fetch --items D01 D02 --directory /home/cosmosapjw/Downloads/htt_r108/cf4 --max-bytes 60000000 --execute",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "cf4_acq_D01_D02.log",
+    "maxrss_kB": 22732,
+    "rc": 1,
+    "started_utc": "2026-11-24T01:21:22Z",
+    "wall_s": 0.82
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_acquire vizier --item D01 --source J/AJ/152/50/table3 --name J_AJ_152_50_table3.vot",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "frame_acq_vizier.log (stdout overwritten by later runs; receipts in ~/Downloads/htt_r108/cf4/RECEIPTS.jsonl)",
+    "maxrss_kB": 164192,
+    "note": "executed through a shared-scratchpad wrapper that another lane had replaced; the record was written to frame_COMMANDS.jsonl and is copied here verbatim",
+    "rc": 0,
+    "started_utc": "2026-11-24T01:34:30Z",
+    "wall_s": 16.61
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_acquire vizier --item D01 --source J/AJ/152/50/table2 --name J_AJ_152_50_table2.vot",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "frame_acq_vizier.log (stdout overwritten by later runs; receipts in ~/Downloads/htt_r108/cf4/RECEIPTS.jsonl)",
+    "maxrss_kB": 107472,
+    "note": "executed through a shared-scratchpad wrapper that another lane had replaced; the record was written to frame_COMMANDS.jsonl and is copied here verbatim",
+    "rc": 0,
+    "started_utc": "2026-11-24T01:34:46Z",
+    "wall_s": 4.27
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_acquire vizier --item D02 --source J/MNRAS/445/2677/table1 --name J_MNRAS_445_2677_table1.vot",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "frame_acq_vizier.log (stdout overwritten by later runs; receipts in ~/Downloads/htt_r108/cf4/RECEIPTS.jsonl)",
+    "maxrss_kB": 88768,
+    "note": "executed through a shared-scratchpad wrapper that another lane had replaced; the record was written to frame_COMMANDS.jsonl and is copied here verbatim",
+    "rc": 0,
+    "started_utc": "2026-11-24T01:34:51Z",
+    "wall_s": 16.28
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_acquire vizier --item D03 --source J/MNRAS/443/1231/FPsample --name J_MNRAS_443_1231_FPsample.vot",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "frame_acq_vizier.log (stdout overwritten by later runs; receipts in ~/Downloads/htt_r108/cf4/RECEIPTS.jsonl)",
+    "maxrss_kB": 113648,
+    "note": "executed through a shared-scratchpad wrapper that another lane had replaced; the record was written to frame_COMMANDS.jsonl and is copied here verbatim",
+    "rc": 0,
+    "started_utc": "2026-11-24T01:35:07Z",
+    "wall_s": 16.33
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_acquire vizier --item D03 --source VII/259/6dfgs --name VII_259_6dfgs.vot --columns 6dFGS RAJ2000 DEJ2000 cz e_cz q_cz r_cz f_cz PrID AV bJmag rFmag Target Nz Nm S/G",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "frame_acq_vizier.log (stdout overwritten by later runs; receipts in ~/Downloads/htt_r108/cf4/RECEIPTS.jsonl)",
+    "maxrss_kB": 244940,
+    "note": "executed through a shared-scratchpad wrapper that another lane had replaced; the record was written to frame_COMMANDS.jsonl and is copied here verbatim",
+    "rc": 0,
+    "started_utc": "2026-11-24T01:35:23Z",
+    "wall_s": 15.26
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_acquire https --item D03 --name vizier_VII_259_meta.html --url https://vizier.idia.ac.za/viz-bin/VizieR?-source=VII/259&-meta.all --max-bytes 2000000 --timeout 60",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "cf4_acq_meta.log",
+    "maxrss_kB": 23300,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:37:09Z",
+    "wall_s": 5.66
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_acquire https --item D02 --name vizier_J_MNRAS_445_2677_meta.html --url https://vizier.idia.ac.za/viz-bin/VizieR?-source=J/MNRAS/445/2677&-meta.all --max-bytes 2000000 --timeout 60",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "cf4_acq_meta.log",
+    "maxrss_kB": 23232,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:37:15Z",
+    "wall_s": 7.88
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_acquire https --item D01 --name vizier_J_AJ_152_50_meta.html --url https://vizier.idia.ac.za/viz-bin/VizieR?-source=J/AJ/152/50&-meta.all --max-bytes 2000000 --timeout 60",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "cf4_acq_meta.log",
+    "maxrss_kB": 22972,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:37:23Z",
+    "wall_s": 7.52
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_acquire https --item D03 --name vizier_J_MNRAS_443_1231_meta.html --url https://vizier.idia.ac.za/viz-bin/VizieR?-source=J/MNRAS/443/1231&-meta.all --max-bytes 2000000 --timeout 60",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "cf4_acq_meta.log",
+    "maxrss_kB": 23192,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:37:30Z",
+    "wall_s": 7.19
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_acquire https --item D04 --name portal_index.html --url https://git.aquila-consortium.org/guilhem_lavaux/cosmicflows-deployer/raw/branch/main/download/index.html --max-bytes 2000000 --timeout 60",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "cf4_D04_portal.log",
+    "maxrss_kB": 23332,
+    "rc": 2,
+    "started_utc": "2026-11-24T01:38:01Z",
+    "wall_s": 60.78
+   },
+   {
+    "cmd": "timeout 600 env -u PYTHONPATH /home/cosmosapjw/Downloads/htt_r103/manticore-2.0.1-venv/bin/python -B -m scripts.r103.manticore_cf4_pv fetch --indices 0 1 --directory /home/cosmosapjw/Downloads/htt_r108/cf4/D05 --max-bytes 800000000",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "cf4_D05_manticore.log",
+    "maxrss_kB": 73684,
+    "rc": 1,
+    "started_utc": "2026-11-24T01:38:01Z",
+    "wall_s": 135.11
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_kband_contrast --jobs 3 --only-gate --output /tmp/claude-1000/-home-cosmosapjw-Dropbox-bianchi-htt-base/61479529-04a2-4d98-a508-5eb3cb0f8ea3/scratchpad/cf4_lane/dev_kband_gate.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "cf4_kband_gate_dev.log",
+    "maxrss_kB": 756272,
+    "rc": 1,
+    "started_utc": "2026-11-24T01:49:42Z",
+    "wall_s": 37.33
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_2mpp_field --gate-only --output /tmp/claude-1000/-home-cosmosapjw-Dropbox-bianchi-htt-base/61479529-04a2-4d98-a508-5eb3cb0f8ea3/scratchpad/cf4_lane/dev_twompp.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "cf4_twompp_gate_dev.log",
+    "maxrss_kB": 342424,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:51:20Z",
+    "wall_s": 8.76
+   },
+   {
+    "cmd": ".venv/bin/python -B -m pytest -q -p no:cacheprovider tests/obsstat/test_r108_cf4_cf3_overlap.py tests/obsstat/test_r108_cf4_kband.py tests/obsstat/test_r108_cf4_2mpp.py tests/obsstat/test_r108_cf4_acquire.py --durations=5",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "cf4_pytest.log",
+    "maxrss_kB": 129744,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:52:29Z",
+    "wall_s": 1.95
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_cf3_table3_overlap",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "cf4_cf3_table3_overlap.log",
+    "maxrss_kB": 249488,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:52:43Z",
+    "wall_s": 23.42
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_acquire https --item D04 --name portal_index_attempt2.html --url https://git.aquila-consortium.org/guilhem_lavaux/cosmicflows-deployer/raw/branch/main/download/index.html --max-bytes 2000000 --timeout 120",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "cf4_D04_portal.log",
+    "maxrss_kB": 22920,
+    "rc": 2,
+    "started_utc": "2026-11-24T01:53:31Z",
+    "wall_s": 120.71
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_acquire probe --item D04 --hosts git.aquila-consortium.org cosmicflows.iap.fr cosmicflows.uwaterloo.ca www.aquila-consortium.org manticore.web.data-2-osu.iap.fr data-2-osu.iap.fr vizier.cfa.harvard.edu --timeout 20",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "cf4_D04_probe.log",
+    "maxrss_kB": 18652,
+    "rc": 2,
+    "started_utc": "2026-11-24T01:55:53Z",
+    "wall_s": 183.14
+   },
+   {
+    "cmd": "timeout 150 .venv/bin/python -B -m scripts.r108.cf4_acquire tap --item D01 --name tapvizier_table3_count.vot --query SELECT COUNT(*) AS n FROM \"J/AJ/152/50/table3\" --timeout 60",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "cf4_tap_attempt.log",
+    "maxrss_kB": 72536,
+    "rc": 2,
+    "started_utc": "2026-11-24T01:59:17Z",
+    "wall_s": 62.85
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_acquire registry --item D01 --name regtap_D01_D03_tables.vot --ivoid ivo://cds.vizier/j/aj/152/50 ivo://cds.vizier/j/mnras/445/2677 ivo://cds.vizier/vii/259 ivo://cds.vizier/j/mnras/443/1231 --timeout 60",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "cf4_regtap.log",
+    "maxrss_kB": 73348,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:00:27Z",
+    "wall_s": 3.53
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_2mpp_field --gate-only",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "cf4_twompp_field.log",
+    "maxrss_kB": 341296,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:01:38Z",
+    "wall_s": 12.09
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_receipts",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "cf4_receipts.log",
+    "maxrss_kB": 21344,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:02:36Z",
+    "wall_s": 0.61
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_kband_contrast --jobs 3 --only-gate --output /tmp/claude-1000/-home-cosmosapjw-Dropbox-bianchi-htt-base/61479529-04a2-4d98-a508-5eb3cb0f8ea3/scratchpad/cf4_lane/dev_kband_gate.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "cf4_kband_gate_dev.log",
+    "maxrss_kB": 757860,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:51:12Z",
+    "wall_s": 744.81
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_kband_contrast --jobs 3 --scorer-names R105_field_holdout CORAS_8draws_r24_l4_fft16 --output docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/CF4/KBAND_CONTRAST.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "cf4_kband_A.log",
+    "maxrss_kB": 757268,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:05:02Z",
+    "wall_s": 209.37
+   },
+   {
+    "cmd": ".venv/bin/python -B -m pytest -q -p no:cacheprovider tests/obsstat/test_r108_cf4_cf3_overlap.py tests/obsstat/test_r108_cf4_kband.py tests/obsstat/test_r108_cf4_2mpp.py tests/obsstat/test_r108_cf4_acquire.py",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "cf4_pytest_final.log",
+    "maxrss_kB": 130600,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:09:41Z",
+    "wall_s": 5.71
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_kband_contrast --jobs 3 --reduced --scorer-names CORAS_128draws_r36_l8_fft24 --output docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/CF4/KBAND_CONTRAST_CORAS128.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "cf4_kband_B.log",
+    "maxrss_kB": 757344,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:08:50Z",
+    "wall_s": 1184.17
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_receipts",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "cf4_receipts.log",
+    "maxrss_kB": 21552,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:29:19Z",
+    "wall_s": 0.42
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_cf3_table3_overlap --trace-opens /home/cosmosapjw/Downloads/htt_r108/cf4/input_trace/cf4_cf3_table3_overlap.jsonl",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "cf4_cf3_table3_overlap_review2.log",
+    "maxrss_kB": 250560,
+    "rc": 0,
+    "round": "R108 review-2 fixes (CF4-1..4, RCPT-1)",
+    "started_utc": "2026-11-24T03:41:27Z",
+    "time_format": "%C|rc=%x|wall=%e|maxrss_kB=%M",
+    "wall_s": 16.31
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_2mpp_field --gate-only --trace-opens /home/cosmosapjw/Downloads/htt_r108/cf4/input_trace/cf4_2mpp_field.jsonl",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "cf4_twompp_gate_review2.log",
+    "maxrss_kB": 343536,
+    "rc": 0,
+    "round": "R108 review-2 fixes (CF4-1..4, RCPT-1)",
+    "started_utc": "2026-11-24T03:41:58Z",
+    "time_format": "%C|rc=%x|wall=%e|maxrss_kB=%M",
+    "wall_s": 10.11
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_kband_contrast --jobs 3 --scorer-names R105_field_holdout CORAS_8draws_r24_l4_fft16 --output docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/CF4/KBAND_CONTRAST.json --trace-opens /home/cosmosapjw/Downloads/htt_r108/cf4/input_trace/cf4_kband_contrast_A.jsonl",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "cf4_kband_A_review2.log",
+    "maxrss_kB": 758104,
+    "rc": 0,
+    "round": "R108 review-2 fixes (CF4-1..4, RCPT-1)",
+    "started_utc": "2026-11-24T03:42:13Z",
+    "time_format": "%C|rc=%x|wall=%e|maxrss_kB=%M",
+    "wall_s": 177.07
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_kband_contrast --jobs 3 --reduced --scorer-names CORAS_128draws_r36_l8_fft24 --output docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/CF4/KBAND_CONTRAST_CORAS128.json --trace-opens /home/cosmosapjw/Downloads/htt_r108/cf4/input_trace/cf4_kband_contrast_B_coras128.jsonl",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "cf4_kband_B_review2_aborted.log",
+    "maxrss_kB": null,
+    "rc": null,
+    "round": "R108 review-2 fixes (CF4-1..4, RCPT-1)",
+    "started_utc": "2026-11-24T03:45:20Z",
+    "status": "ABORTED_BY_OPERATOR (SIGTERM after ~2 min, before any output was written) to apply a wording fix to the czbin comparability reason; /usr/bin/time line lost because the wrapper was terminated too; partial trace moved to cf4/input_trace/aborted/",
+    "wall_s": null
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_kband_contrast --jobs 3 --scorer-names R105_field_holdout CORAS_8draws_r24_l4_fft16 --output docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/CF4/KBAND_CONTRAST.json --trace-opens /home/cosmosapjw/Downloads/htt_r108/cf4/input_trace/cf4_kband_contrast_A_v2.jsonl",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "cf4_kband_A_review2_v2.log",
+    "maxrss_kB": 757748,
+    "rc": 0,
+    "round": "R108 review-2 fixes (CF4-1..4, RCPT-1)",
+    "started_utc": "2026-11-24T03:46:41Z",
+    "time_format": "%C|rc=%x|wall=%e|maxrss_kB=%M",
+    "wall_s": 155.04
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_kband_contrast --jobs 3 --reduced --scorer-names CORAS_128draws_r36_l8_fft24 --output docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/CF4/KBAND_CONTRAST_CORAS128.json --trace-opens /home/cosmosapjw/Downloads/htt_r108/cf4/input_trace/cf4_kband_contrast_B_coras128_v2.jsonl",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "cf4_kband_B_review2_v2.log",
+    "maxrss_kB": 758408,
+    "rc": 0,
+    "round": "R108 review-2 fixes (CF4-1..4, RCPT-1)",
+    "started_utc": "2026-11-24T03:49:16Z",
+    "time_format": "%C|rc=%x|wall=%e|maxrss_kB=%M",
+    "wall_s": 311.44
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_receipts --add-pre-existing /home/cosmosapjw/Downloads/htt_r108/cf4/input_trace/cf4_cf3_table3_overlap.jsonl /home/cosmosapjw/Downloads/htt_r108/cf4/input_trace/cf4_2mpp_field.jsonl /home/cosmosapjw/Downloads/htt_r108/cf4/input_trace/cf4_kband_contrast_A_v2.jsonl /home/cosmosapjw/Downloads/htt_r108/cf4/input_trace/cf4_kband_contrast_B_coras128_v2.jsonl",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "cf4_receipts_pre_existing_review2.log",
+    "maxrss_kB": 69368,
+    "rc": 0,
+    "round": "R108 review-2 fixes (CF4-1..4, RCPT-1)",
+    "started_utc": "2026-11-24T03:54:45Z",
+    "time_format": "%C|rc=%x|wall=%e|maxrss_kB=%M",
+    "wall_s": 1.51
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_receipts",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "cf4_receipts_review2.log",
+    "maxrss_kB": 23844,
+    "rc": 0,
+    "round": "R108 review-2 fixes (CF4-1..4, RCPT-1)",
+    "started_utc": "2026-11-24T03:54:46Z",
+    "time_format": "%C|rc=%x|wall=%e|maxrss_kB=%M",
+    "wall_s": 0.18
+   },
+   {
+    "cmd": ".venv/bin/python -B -m pytest -q -p no:cacheprovider tests/obsstat/test_r108_cf4_cf3_overlap.py tests/obsstat/test_r108_cf4_kband.py tests/obsstat/test_r108_cf4_2mpp.py tests/obsstat/test_r108_cf4_acquire.py tests/obsstat/test_r108_cf4_receipts.py",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "env": "PYTHONPATH=.:htt:htt/src OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 PYTHONDONTWRITEBYTECODE=1",
+    "log": "cf4_pytest_review2.log",
+    "maxrss_kB": 131544,
+    "rc": 0,
+    "round": "R108 review-2 fixes (CF4-1..4, RCPT-1)",
+    "started_utc": "2026-11-24T03:55:01Z",
+    "time_format": "%C|rc=%x|wall=%e|maxrss_kB=%M",
+    "wall_s": 1.21
+   }
+  ],
+  "frame_COMMANDS.jsonl": [
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_acquire icrf3 --directory /home/cosmosapjw/Downloads/htt_r108/gaia",
+    "maxrss_kB": 86476,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:31:30Z",
+    "wall_s": 13.73
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_acquire vizier --item D01 --source J/AJ/152/50/table3 --name J_AJ_152_50_table3.vot",
+    "maxrss_kB": 164192,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:34:30Z",
+    "wall_s": 16.61
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_acquire vizier --item D01 --source J/AJ/152/50/table2 --name J_AJ_152_50_table2.vot",
+    "maxrss_kB": 107472,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:34:46Z",
+    "wall_s": 4.27
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_acquire vizier --item D02 --source J/MNRAS/445/2677/table1 --name J_MNRAS_445_2677_table1.vot",
+    "maxrss_kB": 88768,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:34:51Z",
+    "wall_s": 16.28
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_acquire vizier --item D03 --source J/MNRAS/443/1231/FPsample --name J_MNRAS_443_1231_FPsample.vot",
+    "maxrss_kB": 113648,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:35:07Z",
+    "wall_s": 16.33
+   },
+   {
+    "cmd": ".venv/bin/python -B -m scripts.r108.cf4_acquire vizier --item D03 --source VII/259/6dfgs --name VII_259_6dfgs.vot --columns 6dFGS RAJ2000 DEJ2000 cz e_cz q_cz r_cz f_cz PrID AV bJmag rFmag Target Nz Nm S/G",
+    "maxrss_kB": 244940,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:35:23Z",
+    "wall_s": 15.26
+   },
+   {
+    "cmd": ".venv/bin/python -I -c import sys,runpy; sys.path[:0]=['.','htt','htt/src']; runpy.run_module('scripts.r108.frame_cf4_joint', run_name='__main__', alter_sys=True) --output docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/FRAME/CF4_BULK_HDIPOLE_JOINT.json",
+    "maxrss_kB": 215320,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:43:47Z",
+    "wall_s": 7.4
+   },
+   {
+    "cmd": ".venv/bin/python -I -c import sys,runpy; sys.path[:0]=['.','htt','htt/src']; runpy.run_module('scripts.r108.frame_registry_build', run_name='__main__', alter_sys=True) --downloads /home/cosmosapjw/Downloads/htt_r108/frame --output docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/FRAME/CATALOGUE_FRAME_REGISTRY.json",
+    "maxrss_kB": 106204,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:40:55Z",
+    "wall_s": 190.56
+   },
+   {
+    "cmd": ".venv/bin/python -m pytest -q -p no:cacheprovider tests/obsstat/test_r108_frame_registry.py",
+    "maxrss_kB": 52960,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:46:22Z",
+    "wall_s": 1.17
+   },
+   {
+    "cmd": ".venv/bin/python -I -c import sys,runpy; sys.path[:0]=['.','htt','htt/src']; runpy.run_module('scripts.r108.frame_cf4_joint', run_name='__main__', alter_sys=True) --output docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/FRAME/CF4_BULK_HDIPOLE_JOINT.json",
+    "maxrss_kB": 185804,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:47:18Z",
+    "wall_s": 4.07
+   },
+   {
+    "cmd": ".venv/bin/python -I -c import sys,runpy; sys.path[:0]=['.','htt','htt/src']; runpy.run_module('scripts.r108.frame_lie_flux', run_name='__main__', alter_sys=True) --output docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/FRAME/LIE_FLUX_FRAMES.json",
+    "maxrss_kB": 156576,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:49:55Z",
+    "wall_s": 4.61
+   },
+   {
+    "cmd": ".venv/bin/python -m pytest -q -p no:cacheprovider --durations=5 tests/obsstat/test_r108_frame_registry.py tests/obsstat/test_r108_frame_lie_flux.py tests/obsstat/test_r108_frame_cf4_joint.py",
+    "maxrss_kB": 77396,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:51:17Z",
+    "wall_s": 2.76
+   },
+   {
+    "cmd": "",
+    "maxrss_kB": 79376,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:51:53Z",
+    "wall_s": 2.57
+   },
+   {
+    "cmd": ".venv/bin/python -I -c import sys,runpy; sys.path[:0]=['.','htt','htt/src']; runpy.run_module('scripts.r108.frame_w1tf_joint', run_name='__main__', alter_sys=True) --output docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/FRAME/W1TF_BULK_HDIPOLE_JOINT.json",
+    "maxrss_kB": 136732,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:53:29Z",
+    "wall_s": 25.46
+   },
+   {
+    "cmd": ".venv/bin/python -I -c import sys,runpy; sys.path[:0]=['.','htt','htt/src']; runpy.run_module('scripts.r108.frame_cf4_joint', run_name='__main__', alter_sys=True) --output docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/FRAME/CF4_BULK_HDIPOLE_JOINT.json",
+    "maxrss_kB": 184856,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:54:13Z",
+    "wall_s": 6.88
+   },
+   {
+    "cmd": ".venv/bin/python -I -c import sys,runpy; sys.path[:0]=['.','htt','htt/src']; runpy.run_module('scripts.r108.frame_lie_flux', run_name='__main__', alter_sys=True) --output docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/FRAME/LIE_FLUX_FRAMES.json",
+    "maxrss_kB": 156920,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:54:20Z",
+    "wall_s": 4.15
+   },
+   {
+    "cmd": ".venv/bin/python -I -c '<inline probe: scripts.r108.frame_registry_build.vizier_votable(J/ApJ/902/145) -> R108_LOS_ATLAS_DATA_20261124/FRAME/W1TF_CATALOGUE_PROBE.json>'",
+    "maxrss_kB": 79376,
+    "note": "corrects the preceding line whose multi-line cmd was not captured by /usr/bin/time %C",
+    "rc": 0,
+    "started_utc": "2026-11-24T01:51:53Z",
+    "wall_s": 2.57
+   },
+   {
+    "cmd": ".venv/bin/python -m pytest -q -p no:cacheprovider tests/obsstat/test_r108_frame_registry.py tests/obsstat/test_r108_frame_lie_flux.py tests/obsstat/test_r108_frame_cf4_joint.py docs/research_program/observational_publication_20261015/READY_20261016/test_publication_frame_kinematics.py",
+    "maxrss_kB": 79272,
+    "rc": 2,
+    "started_utc": "2026-11-24T01:54:43Z",
+    "wall_s": 2.26
+   },
+   {
+    "cmd": ".venv/bin/python -m pytest -q -p no:cacheprovider tests/obsstat/test_r108_frame_registry.py tests/obsstat/test_r108_frame_lie_flux.py tests/obsstat/test_r108_frame_cf4_joint.py",
+    "maxrss_kB": 76032,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:54:52Z",
+    "wall_s": 2.49
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.frame_registry_build --replay-receipts --downloads /tmp/claude-1000/-home-cosmosapjw-Dropbox-bianchi-htt-base/61479529-04a2-4d98-a508-5eb3cb0f8ea3/scratchpad/dry --output /tmp/claude-1000/-home-cosmosapjw-Dropbox-bianchi-htt-base/61479529-04a2-4d98-a508-5eb3cb0f8ea3/scratchpad/dry/CATALOGUE_FRAME_REGISTRY.json",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/frame_review2_registry_replay_dryrun.log",
+    "maxrss_kB": 918728,
+    "note": "review-2 dry run: offline replay into scratchpad copy of RECEIPTS.jsonl (not a published output)",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:43:42Z",
+    "time_format": "%C|rc=%x|wall=%e|maxrss_kB=%M",
+    "wall_s": 97.17
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.frame_registry_build --replay-receipts --downloads /home/cosmosapjw/Downloads/htt_r108/frame --output docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/FRAME/CATALOGUE_FRAME_REGISTRY.json",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/frame_review2_registry_build.log",
+    "maxrss_kB": 834048,
+    "note": "review-2 FRAME-3/RCPT-1: registry regenerated by offline replay of the R108 receipts; release_id-gated transforms; pre-existing input receipts",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:45:52Z",
+    "time_format": "%C|rc=%x|wall=%e|maxrss_kB=%M",
+    "wall_s": 55.24
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.frame_cf4_joint --output docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/FRAME/CF4_BULK_HDIPOLE_JOINT.json",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/frame_review2_cf4_joint.log",
+    "maxrss_kB": 187976,
+    "note": "review-2 FRAME-3: rerun after release_id-gated registry transforms (numbers expected unchanged)",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:46:57Z",
+    "time_format": "%C|rc=%x|wall=%e|maxrss_kB=%M",
+    "wall_s": 4.4
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.frame_lie_flux --output docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/FRAME/LIE_FLUX_FRAMES.json",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/frame_review2_lie_flux.log",
+    "maxrss_kB": 155508,
+    "note": "review-2 FRAME-1/2/4: radio proxy demoted (no radio flux candidate), production-sign Codazzi map, full blind subspaces",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:47:18Z",
+    "time_format": "%C|rc=%x|wall=%e|maxrss_kB=%M",
+    "wall_s": 5.52
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.frame_w1tf_probe --output docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/FRAME/W1TF_CATALOGUE_PROBE.json",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/frame_review2_w1tf_probe.log",
+    "maxrss_kB": 56600,
+    "note": "review-2 C3: W1TF_CATALOGUE_PROBE.json regenerated with identity (git, script sha, command) by replay of its R108 receipt",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:47:52Z",
+    "time_format": "%C|rc=%x|wall=%e|maxrss_kB=%M",
+    "wall_s": 1.1
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.frame_w1tf_joint --replay-receipts --output docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/FRAME/W1TF_BULK_HDIPOLE_JOINT.json",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/frame_review2_w1tf_joint.log",
+    "maxrss_kB": 126016,
+    "note": "review-2 C3 (same defect class): BLOCKED W1TF joint regenerated by replay of its receipts with writer-script sha",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:48:23Z",
+    "time_format": "%C|rc=%x|wall=%e|maxrss_kB=%M",
+    "wall_s": 2.38
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.frame_input_receipts --receipts /home/cosmosapjw/Downloads/htt_r108/frame/RECEIPTS.jsonl",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/frame_review2_input_receipts.log",
+    "maxrss_kB": 837504,
+    "note": "review-2 RCPT-1: pre-existing input receipt lines for every FRAME-lane input not fetched in R108 (idempotent)",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:48:32Z",
+    "time_format": "%C|rc=%x|wall=%e|maxrss_kB=%M",
+    "wall_s": 36.84
+   },
+   {
+    "cmd": ".venv/bin/python -m pytest -q -p no:cacheprovider tests/obsstat/test_r108_frame_registry.py tests/obsstat/test_r108_frame_lie_flux.py tests/obsstat/test_r108_frame_cf4_joint.py tests/obsstat/test_r108_frame_input_receipts.py",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/frame_review2_pytest.log",
+    "maxrss_kB": 769472,
+    "note": "review-2: FRAME lane tests after fixes",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:49:53Z",
+    "time_format": "%C|rc=%x|wall=%e|maxrss_kB=%M",
+    "wall_s": 10.19
+   },
+   {
+    "cmd": "python3 /tmp/claude-1000/-home-cosmosapjw-Dropbox-bianchi-htt-base/61479529-04a2-4d98-a508-5eb3cb0f8ea3/scratchpad/write_pointer.py",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/frame_review2_superseded_pointer.log",
+    "maxrss_kB": 16396,
+    "note": "review-2: pointer file for superseded FRAME outputs kept under superseded/",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:50:26Z",
+    "time_format": "%C|rc=%x|wall=%e|maxrss_kB=%M",
+    "wall_s": 0.02
+   },
+   {
+    "cmd": ".venv/bin/python -m pytest -q -p no:cacheprovider tests/obsstat/test_r108_frame_registry.py tests/obsstat/test_r108_frame_lie_flux.py tests/obsstat/test_r108_frame_cf4_joint.py tests/obsstat/test_r108_frame_input_receipts.py",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/frame_review2_pytest_final.log",
+    "maxrss_kB": 777600,
+    "note": "review-2: FRAME lane tests, final",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:50:49Z",
+    "time_format": "%C|rc=%x|wall=%e|maxrss_kB=%M",
+    "wall_s": 9.27
+   },
+   {
+    "cmd": ".venv/bin/python -m pytest -q -p no:cacheprovider tests/obsstat/test_r108_frame_registry.py",
+    "maxrss_kB": null,
+    "note": "review-2 FRAME-3 development test; recorded retroactively: run before the /usr/bin/time wrapper existed; wall from pytest output, maxrss not measured",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:2x",
+    "wall_s": 0.26
+   },
+   {
+    "cmd": ".venv/bin/python - <<inline: initial_conditions.project_shear_to_codazzi sign probe on VI_h (no file written)>>",
+    "maxrss_kB": null,
+    "note": "review-2 FRAME-2 read-only check (div sigma - kappa q rel 1.3e-13, div + kappa q rel 2.0); recorded retroactively: run before the /usr/bin/time wrapper existed; wall from pytest output, maxrss not measured",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:2x",
+    "wall_s": null
+   },
+   {
+    "cmd": ".venv/bin/python -m pytest -q -p no:cacheprovider tests/obsstat/test_r108_frame_lie_flux.py",
+    "maxrss_kB": null,
+    "note": "review-2 FRAME-1/2/4 development test; recorded retroactively: run before the /usr/bin/time wrapper existed; wall from pytest output, maxrss not measured",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:3x",
+    "wall_s": 2.96
+   },
+   {
+    "cmd": "python3 <scratchpad>/cmp_registry.py and inline JSON diffs of old vs regenerated FRAME outputs (read-only)",
+    "maxrss_kB": null,
+    "note": "review-2 regression comparisons against superseded/review2_20261124 copies; recorded retroactively: run before the /usr/bin/time wrapper existed; wall from pytest output, maxrss not measured",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:4x",
+    "wall_s": null
+   }
+  ],
+  "gaia_COMMANDS.jsonl": [
+   {
+    "cmd": ".venv/bin/python -m scripts.r107_cloud.acquisition fetch --items D09 --directory /home/cosmosapjw/Downloads/htt_r108/gaia --max-bytes 600000000 --execute",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_acq_D09.log",
+    "maxrss_kB": 24800,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:22:03Z",
+    "wall_s": 20.46
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_acquire icrf3 --directory /home/cosmosapjw/Downloads/htt_r108/gaia",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_acq_D08.log",
+    "maxrss_kB": 86476,
+    "note": "copy of the line that a shared-scratchpad wrapper collision wrote to frame_COMMANDS.jsonl (line left in place)",
+    "rc": 0,
+    "started_utc": "2026-11-24T01:31:30Z",
+    "wall_s": 13.73
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_acquire agn --directory /home/cosmosapjw/Downloads/htt_r108/gaia",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_acq_D10.log",
+    "maxrss_kB": 78668,
+    "rc": 1,
+    "started_utc": "2026-11-24T01:32:27Z",
+    "wall_s": 121.06
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_estimator replay",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_estimator_replay.log",
+    "maxrss_kB": 594760,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:37:35Z",
+    "wall_s": 8.97
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scanlaw --csv /home/cosmosapjw/Downloads/htt_r108/gaia/D09/CommandedScanLaw_001.csv.gz --md5sum /home/cosmosapjw/Downloads/htt_r108/gaia/D09/CommandedScanLaw_MD5SUM.txt --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --summary docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCANLAW_PIXEL_STATISTICS.json",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scanlaw.log",
+    "maxrss_kB": 1617412,
+    "rc": 1,
+    "started_utc": "2026-11-24T01:37:29Z",
+    "wall_s": 39.82
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scanlaw --csv /home/cosmosapjw/Downloads/htt_r108/gaia/D09/CommandedScanLaw_001.csv.gz --md5sum /home/cosmosapjw/Downloads/htt_r108/gaia/D09/CommandedScanLaw_MD5SUM.txt --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --summary docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCANLAW_PIXEL_STATISTICS.json",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scanlaw_run2.log",
+    "maxrss_kB": 3745632,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:39:13Z",
+    "wall_s": 198.51
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null validate --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --out docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCANLAW_VALIDATION.json",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_validate.log",
+    "maxrss_kB": 602932,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:43:04Z",
+    "wall_s": 10.84
+   },
+   {
+    "cmd": ".venv/bin/python -m pytest -q -p no:cacheprovider tests/obsstat/test_r108_gaia_scanlaw.py tests/obsstat/test_r108_gaia_estimator.py tests/obsstat/test_r108_gaia_frame_leakage.py tests/obsstat/test_r108_gaia_scan_null.py tests/obsstat/test_r108_gaia_agn_split.py --durations=10",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_pytest.log",
+    "maxrss_kB": 179876,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:46:01Z",
+    "wall_s": 6.41
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null calibrate --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --out docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --cal-draws 16 --seed 108300",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_calibrate.log",
+    "maxrss_kB": 2168808,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:43:24Z",
+    "wall_s": 221.88
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null calibrate --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --out docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --cal-draws 16 --seed 108300",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_calibrate_v2.log",
+    "maxrss_kB": 1783252,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:48:39Z",
+    "wall_s": 141.34
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind noise_catalogue --draws 1000 --seed 108311 --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_noise_catalogue.log",
+    "maxrss_kB": 718296,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:43:39Z",
+    "wall_s": 640.01
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind sys_blind_tau600 --draws 400 --seed 108331 --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --calibration /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_sys_blind_tau600.log",
+    "maxrss_kB": 1260648,
+    "rc": 143,
+    "started_utc": "2026-11-24T01:54:46Z",
+    "wall_s": 370.94
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind sys_colour_tau600 --draws 400 --seed 108321 --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --calibration /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_sys_colour_tau600.log",
+    "maxrss_kB": 1235544,
+    "rc": 143,
+    "started_utc": "2026-11-24T01:54:45Z",
+    "wall_s": 372.14
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind sys_blind_tau600 --draws 400 --seed 108331 --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --calibration /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_sys_blind_tau600.log",
+    "maxrss_kB": 2343428,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:02:31Z",
+    "wall_s": 943.69
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind sys_colour_tau600 --draws 400 --seed 108321 --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --calibration /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_sys_colour_tau600.log",
+    "maxrss_kB": 2343224,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:02:30Z",
+    "wall_s": 953.67
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_acquire agn --directory /home/cosmosapjw/Downloads/htt_r108/gaia --attempt 2 --chunks 48",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_acq_D10_attempt2.log",
+    "maxrss_kB": 184752,
+    "rc": 1,
+    "started_utc": "2026-11-24T01:36:18Z",
+    "wall_s": 2733.17
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_acquire icrf3gaia --directory /home/cosmosapjw/Downloads/htt_r108/gaia",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_acq_D08G.log",
+    "maxrss_kB": 82008,
+    "rc": 1,
+    "started_utc": "2026-11-24T02:29:39Z",
+    "wall_s": 73.97
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_acquire icrf3gaia --directory /home/cosmosapjw/Downloads/htt_r108/gaia --attempt 2",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_acq_D08G_attempt2.log",
+    "maxrss_kB": 81164,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:31:43Z",
+    "wall_s": 67.31
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind sys_colour_tau21600 --draws 400 --seed 108322 --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --calibration /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_sys_colour_tau21600.log",
+    "maxrss_kB": 2388492,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:18:24Z",
+    "wall_s": 876.85
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind sys_gmag_tau600 --draws 400 --seed 108341 --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --calibration /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_sys_gmag_tau600.log",
+    "maxrss_kB": 2343548,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:18:15Z",
+    "wall_s": 887.19
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_frame_leakage --icrf3 /home/cosmosapjw/Downloads/htt_r108/gaia/D08_icrf3_sx_vizier/icrf3_sx_table10.vot --flags /home/cosmosapjw/Downloads/htt_r108/gaia/D08G_icrf3sx_gaia_dr3_counterparts_attempt2/icrf3sx_gaia_dr3_astrometry.fits --out docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/FRAME_LEAKAGE.json --draws 1000 --seed 108201",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_frame_leakage.log",
+    "maxrss_kB": 1205984,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:33:42Z",
+    "wall_s": 38.46
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_acquire crf3flagsonly --directory /home/cosmosapjw/Downloads/htt_r108/gaia --chunks 24",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_acq_D10F.log",
+    "maxrss_kB": 1537488,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:32:56Z",
+    "wall_s": 506.49
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind sys_blind_tau21600 --draws 400 --seed 108332 --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --calibration /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_sys_blind_tau21600.log",
+    "maxrss_kB": 2387728,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:33:02Z",
+    "wall_s": 500.63
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind sys_colour_tau21600 --amplitude-from quaia_cross --draws 400 --seed 108324 --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --calibration /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_sys_colour_tau21600__amp_quaia_cross.log",
+    "maxrss_kB": 595716,
+    "rc": 143,
+    "started_utc": "2026-11-24T02:43:07Z",
+    "wall_s": 5.71
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind sys_colour_tau21600 --amplitude-from complement_cross --draws 400 --seed 108324 --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --calibration /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_sys_colour_tau21600__amp_complement_cross.log",
+    "maxrss_kB": 443872,
+    "rc": 143,
+    "started_utc": "2026-11-24T02:43:13Z",
+    "wall_s": 4.87
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind sys_colour_tau10 --draws 300 --seed 108323 --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --calibration /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_sys_colour_tau10.log",
+    "maxrss_kB": 3389248,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:33:01Z",
+    "wall_s": 753.67
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_agn_split --flags /home/cosmosapjw/Downloads/htt_r108/gaia/D10F_gaia_crf3_xm_flags_only/gaia_crf3_xm_flags.fits --out docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/AGN_SPLIT.json --draws 200 --seed 108400",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_agn_split.log",
+    "maxrss_kB": 1053044,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:41:42Z",
+    "wall_s": 290.93
+   },
+   {
+    "cmd": ".venv/bin/python -m pytest -q -p no:cacheprovider tests/obsstat/test_r108_gaia_acquire.py tests/obsstat/test_r108_gaia_scanlaw.py tests/obsstat/test_r108_gaia_estimator.py tests/obsstat/test_r108_gaia_frame_leakage.py tests/obsstat/test_r108_gaia_scan_null.py tests/obsstat/test_r108_gaia_agn_split.py --durations=5",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_pytest_final.log",
+    "maxrss_kB": 190324,
+    "rc": 1,
+    "started_utc": "2026-11-24T02:47:34Z",
+    "wall_s": 3.71
+   },
+   {
+    "cmd": ".venv/bin/python -m pytest -q -p no:cacheprovider tests/obsstat/test_r108_gaia_acquire.py tests/obsstat/test_r108_gaia_scanlaw.py tests/obsstat/test_r108_gaia_estimator.py tests/obsstat/test_r108_gaia_frame_leakage.py tests/obsstat/test_r108_gaia_scan_null.py tests/obsstat/test_r108_gaia_agn_split.py --durations=3",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_pytest_final2.log",
+    "maxrss_kB": 188460,
+    "rc": 1,
+    "started_utc": "2026-11-24T02:47:50Z",
+    "wall_s": 3.72
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind sys_gmag_tau21600 --draws 400 --seed 108342 --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --calibration /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_sys_gmag_tau21600.log",
+    "maxrss_kB": 2389668,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:41:23Z",
+    "wall_s": 401.69
+   },
+   {
+    "cmd": ".venv/bin/python -m pytest -q -p no:cacheprovider tests/obsstat/test_r108_gaia_acquire.py tests/obsstat/test_r108_gaia_scanlaw.py tests/obsstat/test_r108_gaia_estimator.py tests/obsstat/test_r108_gaia_frame_leakage.py tests/obsstat/test_r108_gaia_scan_null.py tests/obsstat/test_r108_gaia_agn_split.py",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_pytest_final3.log",
+    "maxrss_kB": 189604,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:48:05Z",
+    "wall_s": 3.07
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind sys_colour_tau21600 --amplitude-from quaia_cross --draws 400 --seed 108322 --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --calibration /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_sys_colour_tau21600__amp_quaia_cross_crn.log",
+    "maxrss_kB": 2388552,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:43:26Z",
+    "wall_s": 376.87
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind noise_scanshape --draws 1000 --seed 108312 --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --calibration /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_noise_scanshape.log",
+    "maxrss_kB": 719016,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:45:35Z",
+    "wall_s": 355.04
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind sys_colour_tau21600 --amplitude-from complement_cross --draws 400 --seed 108322 --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --calibration /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_sys_colour_tau21600__amp_complement_cross_crn.log",
+    "maxrss_kB": 2389100,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:49:43Z",
+    "wall_s": 197.25
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind sys_blind_tau10 --draws 300 --seed 108333 --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --calibration /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_sys_blind_tau10.log",
+    "maxrss_kB": 3392096,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:48:05Z",
+    "wall_s": 343.63
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind sys_gmag_tau10 --draws 300 --seed 108343 --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --calibration /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_sys_gmag_tau10.log",
+    "maxrss_kB": 3391924,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:53:48Z",
+    "wall_s": 237.87
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null summarize --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null --calibration docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL.json",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_summarize.log",
+    "maxrss_kB": 155196,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:58:16Z",
+    "wall_s": 1.15
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind sys_gmag_tau21600 --amplitude-from complement_cross --draws 400 --seed 108342 --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --calibration /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_sys_gmag_tau21600__amp_complement_cross.log",
+    "maxrss_kB": 2388504,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:58:31Z",
+    "wall_s": 178.19
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind sys_gmag_tau21600 --amplitude-from quaia_cross --draws 400 --seed 108342 --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --calibration /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_sys_gmag_tau21600__amp_quaia_cross.log",
+    "maxrss_kB": 2388808,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:58:31Z",
+    "wall_s": 180.32
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null summarize --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null --calibration docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL.json",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_summarize2.log",
+    "maxrss_kB": 155784,
+    "rc": 0,
+    "started_utc": "2026-11-24T03:01:50Z",
+    "wall_s": 1.57
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_summary --receipts /home/cosmosapjw/Downloads/htt_r108/gaia/RECEIPTS.jsonl --results-dir docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA --commands /home/cosmosapjw/Downloads/htt_r108/logs/gaia_COMMANDS.jsonl --out docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/GAIA_R108_SUMMARY.json",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_summary.log",
+    "maxrss_kB": 21480,
+    "rc": 0,
+    "started_utc": "2026-11-24T03:01:52Z",
+    "wall_s": 0.14
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind noise_catalogue --draws 2 --seed 108311 --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_replay_review2_noise_catalogue.log",
+    "maxrss_kB": 718852,
+    "note": "R108 review GAIA-2: 2-draw replay of the stored run by the current script (main-script SHA recorded)",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:37:02+00:00",
+    "wall_s": 5.43
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind noise_catalogue --draws 2 --seed 108311 --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_replay_review2_noise_catalogue.log",
+    "maxrss_kB": 719520,
+    "note": "R108 review GAIA-2: 2-draw replay of the stored run by the current script (main-script SHA recorded)",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:37:32+00:00",
+    "wall_s": 7.09
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind noise_scanshape --draws 2 --seed 108312 --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --calibration /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_replay_review2_noise_scanshape.log",
+    "maxrss_kB": 719764,
+    "note": "R108 review GAIA-2: 2-draw replay of the stored run by the current script (main-script SHA recorded)",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:37:32+00:00",
+    "wall_s": 7.56
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind sys_blind_tau21600 --draws 2 --seed 108332 --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --calibration /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_replay_review2_sys_blind_tau21600.log",
+    "maxrss_kB": 2389164,
+    "note": "R108 review GAIA-2: 2-draw replay of the stored run by the current script (main-script SHA recorded)",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:37:39+00:00",
+    "wall_s": 28.67
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind sys_blind_tau600 --draws 2 --seed 108331 --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --calibration /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_replay_review2_sys_blind_tau600.log",
+    "maxrss_kB": 2342580,
+    "note": "R108 review GAIA-2: 2-draw replay of the stored run by the current script (main-script SHA recorded)",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:37:40+00:00",
+    "wall_s": 29.38
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind sys_colour_tau21600 --amplitude-from complement_cross --draws 2 --seed 108322 --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --calibration /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_replay_review2_sys_colour_tau21600__amp_complement_cross.log",
+    "maxrss_kB": 2389468,
+    "note": "R108 review GAIA-2: 2-draw replay of the stored run by the current script (main-script SHA recorded)",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:38:09+00:00",
+    "wall_s": 27.98
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind sys_colour_tau21600 --draws 2 --seed 108322 --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --calibration /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_replay_review2_sys_colour_tau21600.log",
+    "maxrss_kB": 2389808,
+    "note": "R108 review GAIA-2: 2-draw replay of the stored run by the current script (main-script SHA recorded)",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:38:08+00:00",
+    "wall_s": 29.84
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind sys_colour_tau21600 --amplitude-from quaia_cross --draws 2 --seed 108322 --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --calibration /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_replay_review2_sys_colour_tau21600__amp_quaia_cross.log",
+    "maxrss_kB": 2388832,
+    "note": "R108 review GAIA-2: 2-draw replay of the stored run by the current script (main-script SHA recorded)",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:38:37+00:00",
+    "wall_s": 32.53
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind sys_colour_tau600 --draws 2 --seed 108321 --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --calibration /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_replay_review2_sys_colour_tau600.log",
+    "maxrss_kB": 2343776,
+    "note": "R108 review GAIA-2: 2-draw replay of the stored run by the current script (main-script SHA recorded)",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:38:38+00:00",
+    "wall_s": 32.49
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind sys_gmag_tau21600 --draws 2 --seed 108342 --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --calibration /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_replay_review2_sys_gmag_tau21600.log",
+    "maxrss_kB": 2389412,
+    "note": "R108 review GAIA-2: 2-draw replay of the stored run by the current script (main-script SHA recorded)",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:39:10+00:00",
+    "wall_s": 24.29
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind sys_gmag_tau21600 --amplitude-from complement_cross --draws 2 --seed 108342 --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --calibration /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_replay_review2_sys_gmag_tau21600__amp_complement_cross.log",
+    "maxrss_kB": 2389580,
+    "note": "R108 review GAIA-2: 2-draw replay of the stored run by the current script (main-script SHA recorded)",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:39:11+00:00",
+    "wall_s": 23.93
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind sys_gmag_tau21600 --amplitude-from quaia_cross --draws 2 --seed 108342 --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --calibration /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_replay_review2_sys_gmag_tau21600__amp_quaia_cross.log",
+    "maxrss_kB": 2388364,
+    "note": "R108 review GAIA-2: 2-draw replay of the stored run by the current script (main-script SHA recorded)",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:39:34+00:00",
+    "wall_s": 17.75
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind sys_gmag_tau600 --draws 2 --seed 108341 --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --calibration /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_replay_review2_sys_gmag_tau600.log",
+    "maxrss_kB": 2343612,
+    "note": "R108 review GAIA-2: 2-draw replay of the stored run by the current script (main-script SHA recorded)",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:39:35+00:00",
+    "wall_s": 17.87
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind sys_blind_tau10 --draws 2 --seed 108333 --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --calibration /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_replay_review2_sys_blind_tau10.log",
+    "maxrss_kB": 3391704,
+    "note": "R108 review GAIA-2: 2-draw replay of the stored run by the current script (main-script SHA recorded)",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:39:52+00:00",
+    "wall_s": 69.28
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind sys_colour_tau10 --draws 2 --seed 108323 --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --calibration /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_replay_review2_sys_colour_tau10.log",
+    "maxrss_kB": 3390136,
+    "note": "R108 review GAIA-2: 2-draw replay of the stored run by the current script (main-script SHA recorded)",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:39:53+00:00",
+    "wall_s": 77.86
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null run --kind sys_gmag_tau10 --draws 2 --seed 108343 --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --calibration /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_replay_review2_sys_gmag_tau10.log",
+    "maxrss_kB": 3391260,
+    "note": "R108 review GAIA-2: 2-draw replay of the stored run by the current script (main-script SHA recorded)",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:41:02+00:00",
+    "wall_s": 34.3
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_frame_leakage --icrf3 /home/cosmosapjw/Downloads/htt_r108/gaia/D08_icrf3_sx_vizier/icrf3_sx_table10.vot --flags /home/cosmosapjw/Downloads/htt_r108/gaia/D08G_icrf3sx_gaia_dr3_counterparts_attempt2/icrf3sx_gaia_dr3_astrometry.fits --out docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/FRAME_LEAKAGE.json --draws 1000 --seed 108201",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_frame_leakage_review2.log",
+    "maxrss_kB": 1207048,
+    "rc": 0,
+    "started_utc": "2026-11-24T03:41:58+00:00",
+    "wall_s": 39.52
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_supersede --old docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION_V1_SUPERSEDED.json --new docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --moved-name SCAN_NULL_CALIBRATION_V1.json --reason 'Calibration v1 (schema calibration/1) used the noise-subtracted auto power of the CRF3 complement only; that estimator is biased upward by catalogue-error mis-scaling and single-source contamination. Superseded by calibration v2 (schema calibration/2: largest of complement auto, complement random-half cross and Quaia random-half cross power), which SCAN_NULL.json and every scan-null run use (calibration_sha256 95888422...). v1 was written by gaia_scan_null.py calibrate as SCAN_NULL_CALIBRATION.json and renamed by hand before v2 was written; R108 review GAIA-4.' --evidence /home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_calibrate.log /home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_calibrate_v2.log",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_supersede_calibration_v1_review2.log",
+    "maxrss_kB": 18168,
+    "rc": 0,
+    "started_utc": "2026-11-24T03:43:15+00:00",
+    "wall_s": 0.1
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null validate --scan-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products --out docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCANLAW_VALIDATION.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_validate_review2.log",
+    "maxrss_kB": 602400,
+    "rc": 0,
+    "started_utc": "2026-11-24T03:43:46+00:00",
+    "wall_s": 15.39
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_scan_null summarize --out-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null --calibration docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json --out docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL.json --replay-dir /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_null_summarize_review2.log",
+    "maxrss_kB": 156732,
+    "rc": 0,
+    "started_utc": "2026-11-24T03:44:11+00:00",
+    "wall_s": 6.83
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_agn_split --flags /home/cosmosapjw/Downloads/htt_r108/gaia/D10F_gaia_crf3_xm_flags_only/gaia_crf3_xm_flags.fits --out docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/AGN_SPLIT.json --draws 200 --seed 108400",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_agn_split_review2.log",
+    "maxrss_kB": 1051516,
+    "rc": 0,
+    "started_utc": "2026-11-24T03:41:58+00:00",
+    "wall_s": 441.32
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_input_receipts",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_input_receipts_review2.log",
+    "maxrss_kB": 154888,
+    "rc": 0,
+    "started_utc": "2026-11-24T03:49:45+00:00",
+    "wall_s": 7.41
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.gaia_summary --receipts /home/cosmosapjw/Downloads/htt_r108/gaia/RECEIPTS.jsonl --results-dir docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA --commands /home/cosmosapjw/Downloads/htt_r108/logs/gaia_COMMANDS.jsonl --out docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/GAIA_R108_SUMMARY.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_summary_review2.log",
+    "maxrss_kB": 23380,
+    "rc": 0,
+    "started_utc": "2026-11-24T03:50:13+00:00",
+    "wall_s": 0.12
+   },
+   {
+    "cmd": ".venv/bin/python -m pytest -q -p no:cacheprovider tests/obsstat/test_r108_gaia_acquire.py tests/obsstat/test_r108_gaia_scanlaw.py tests/obsstat/test_r108_gaia_estimator.py tests/obsstat/test_r108_gaia_frame_leakage.py tests/obsstat/test_r108_gaia_scan_null.py tests/obsstat/test_r108_gaia_agn_split.py tests/obsstat/test_r108_gaia_supersede.py",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_pytest_review2.log",
+    "maxrss_kB": 192624,
+    "rc": 0,
+    "started_utc": "2026-11-24T03:50:41+00:00",
+    "wall_s": 2.75
+   },
+   {
+    "cmd": "rm -r /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2 && mkdir -p /home/cosmosapjw/Downloads/htt_r108/gaia/scan_null_replay_review2",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "maxrss_kB": null,
+    "note": "recorded after the fact; not run under /usr/bin/time (R108 review2 fix session); removed the single noise_catalogue 2-draw replay written at 03:37:02 by gaia_scan_null.py before its docstring was finalised (its main-script SHA 7d4f82cd... no longer matched the file); all 15 replays were then rerun with the final script (SHA ad3e7b2c...)",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:37:20+00:00",
+    "wall_s": null
+   },
+   {
+    "cmd": ".venv/bin/python -m pytest -q -p no:cacheprovider tests/obsstat/test_r108_gaia_{estimator,scan_null,frame_leakage,agn_split,supersede}.py (development runs)",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "maxrss_kB": null,
+    "note": "recorded after the fact; not run under /usr/bin/time (R108 review2 fix session); all passed; final run is gaia_pytest_review2",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:30:00+00:00",
+    "wall_s": null
+   }
+  ],
+  "radio_COMMANDS.jsonl": [
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.radio_racs_fetch --probe",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/radio_racs_probe.log",
+    "maxrss_kB": 74708,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:22:28+00:00",
+    "wall_s": 2.43
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.radio_racs_fetch --fetch --table AS110.racs_dr1_sources_galacticcut_v2021_08_v01 --columns id,source_name,source_id,tile_id,sbid,n_gaus,ra,dec,total_flux_source,e_total_flux_source,peak_flux,e_peak_flux,maj_axis,min_axis,dc_maj,dc_min,s_code,separation_tile_centre,noise,gal_lon,gal_lat,flag_close",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/radio_racs_fetch.log",
+    "maxrss_kB": 75280,
+    "rc": 1,
+    "started_utc": "2026-11-24T01:22:37+00:00",
+    "wall_s": 3.01
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.radio_racs_fetch --fetch --table AS110.racs_dr1_sources_galacticcut_v2021_08_v01 --columns id,source_name,source_id,tile_id,sbid,n_gaus,ra,dec,total_flux_source,e_total_flux_source,peak_flux,e_peak_flux,maj_axis,min_axis,dc_maj,dc_min,s_code,separation_tile_centre,noise,gal_lon,gal_lat,flag_close",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/radio_racs_fetch.log",
+    "maxrss_kB": 1293496,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:23:23+00:00",
+    "wall_s": 319.95
+   },
+   {
+    "cmd": ".venv/bin/python -m pytest -q -p no:cacheprovider tests/obsstat/test_r108_radio_theory_c1.py tests/obsstat/test_r108_radio_racs_dipole.py tests/obsstat/test_r108_radio_p_of_c1.py --durations=5",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/radio_pytest.log",
+    "maxrss_kB": 247136,
+    "rc": 1,
+    "started_utc": "2026-11-24T01:38:37+00:00",
+    "wall_s": 6.14
+   },
+   {
+    "cmd": ".venv/bin/python -m pytest -q -p no:cacheprovider tests/obsstat/test_r108_radio_theory_c1.py tests/obsstat/test_r108_radio_racs_dipole.py tests/obsstat/test_r108_radio_p_of_c1.py --durations=3",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/radio_pytest.log",
+    "maxrss_kB": 249288,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:39:18+00:00",
+    "wall_s": 5.53
+   },
+   {
+    "cmd": "python3 -m scripts.r108.radio_theory_c1 --out docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO/THEORY_C1.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/radio_theory_c1.log",
+    "maxrss_kB": null,
+    "note": "terminated by the agent (SIGTERM) during V3 after the sph_jn_dd l>=2 small-x fix; superseded, wrote no JSON; wall_s approximate from log/kill time",
+    "rc": -15,
+    "started_utc": "2026-11-24T01:33:49+00:00",
+    "wall_s": 351.0
+   },
+   {
+    "cmd": ".venv/bin/python -I -c '\nimport pyvo, json\ns = pyvo.dal.TAPService('\"'\"'https://casda.csiro.au/casda_vo_tools/tap'\"'\"')\nout = {}\nfor t in ('\"'\"'AS110.racs_dr1_sources_galacticcut_v2021_08_v01'\"'\"', '\"'\"'AS110.racs_dr1_sources_galacticcut_v2021_08_v02'\"'\"'):\n    q = f'\"'\"'SELECT COUNT(*) AS n FROM {t}'\"'\"'\n    out[t] = dict(query=q, n=int(s.run_sync(q)[0]['\"'\"'n'\"'\"']))\nq = '\"'\"'SELECT COUNT(*) AS n FROM AS110.racs_dr1_sources_galacticcut_v2021_08_v01 WHERE total_flux_source >= 28.15'\"'\"'\nout['\"'\"'v01_ge_28.15mJy'\"'\"'] = dict(query=q, n=int(s.run_sync(q)[0]['\"'\"'n'\"'\"']))\nprint(json.dumps(out))\n'",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/radio_racs_v2_count.log",
+    "maxrss_kB": 74508,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:39:54+00:00",
+    "wall_s": 2.0
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.radio_racs_fetch --versions-json docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO/RACS_CASDA_TABLE_VERSIONS.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/radio_racs_versions.log",
+    "maxrss_kB": 75344,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:40:07+00:00",
+    "wall_s": 1.81
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.radio_racs_dipole --out docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO/RACS_DIPOLE.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/radio_racs_dipole.log",
+    "maxrss_kB": 1129728,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:37:58+00:00",
+    "wall_s": 132.98
+   },
+   {
+    "cmd": ".venv/bin/python -m pytest -q -p no:cacheprovider tests/obsstat/test_r108_radio_racs_dipole.py",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/radio_pytest.log",
+    "maxrss_kB": 237496,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:41:11+00:00",
+    "wall_s": 4.81
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.radio_racs_dipole --out docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO/RACS_DIPOLE.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/radio_racs_dipole.log",
+    "maxrss_kB": 220396,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:41:15+00:00",
+    "wall_s": 21.49
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.radio_racs_dipole --out docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO/RACS_DIPOLE.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/radio_racs_dipole.log",
+    "maxrss_kB": 220396,
+    "note": "CORRECTION of the previous line for this start time: the run was terminated by the agent (SIGTERM) to change an output note; /usr/bin/time reported rc=0 for the signalled child; it wrote no JSON; superseded by the next racs_dipole run",
+    "rc": -15,
+    "started_utc": "2026-11-24T01:41:15+00:00",
+    "wall_s": 21.49
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.radio_racs_dipole --out docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO/RACS_DIPOLE.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/radio_racs_dipole.log",
+    "maxrss_kB": 545272,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:41:42+00:00",
+    "wall_s": 52.38
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.radio_racs_fetch --versions-json docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO/RACS_CASDA_TABLE_VERSIONS.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/radio_racs_versions.log",
+    "maxrss_kB": 74124,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:42:58+00:00",
+    "wall_s": 2.63
+   },
+   {
+    "cmd": "python3 -m scripts.r108.radio_theory_c1 --out docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO/THEORY_C1.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/radio_theory_c1.log",
+    "maxrss_kB": 4288860,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:39:46+00:00",
+    "wall_s": 1462.81
+   },
+   {
+    "cmd": "python3 -m scripts.r108.radio_theory_c1 --out docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO/THEORY_C1.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "maxrss_kB": 4288860,
+    "note": "CORRECTION of the previous line: terminated by the agent (SIGTERM) inside V3 because CAMB number-count runs with radio n(z) extending to z=1e-4 took >10 min each; /usr/bin/time reported rc=0 for the signalled child; no JSON written; superseded",
+    "rc": -15,
+    "started_utc": "2026-11-24T01:39:46+00:00",
+    "wall_s": 1462.81
+   },
+   {
+    "cmd": "python3 -c 'from scripts.r108 import radio_theory_c1 as T; T.camb_counts_cls(\"TN16\", 2.0, 10, (\"counts_density\",))' (timing probe, via bash with timeout 900)",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "maxrss_kB": null,
+    "note": "recorded after the fact; not run under /usr/bin/time; stopped by the agent after >600 s without finishing; diagnostic only",
+    "rc": -15,
+    "started_utc": "2026-11-24T02:07:00+00:00",
+    "wall_s": null
+   },
+   {
+    "cmd": ".venv/bin/python -I <scratchpad>/casda_dbg.py (CASDA async result-URL debug, 5-row query)",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "maxrss_kB": null,
+    "note": "recorded after the fact; diagnostic only; showed the CASDA UWS result href lacks the /casda_vo_tools prefix (404)",
+    "rc": 0,
+    "started_utc": "2026-11-24T01:23:00+00:00",
+    "wall_s": null
+   },
+   {
+    "cmd": "python3 - (heredoc: CAMB interpolator API check and integrator smoke test: sigma8, chi(1), V1 TN16 l=1, one C1 value)",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "maxrss_kB": null,
+    "note": "recorded after the fact; diagnostic only; no outputs used in results",
+    "rc": 0,
+    "started_utc": "2026-11-24T01:31:00+00:00",
+    "wall_s": null
+   },
+   {
+    "cmd": "python3 -c <timing probe: T.camb_counts_cls(gauss_z0p5_s0p15, 2.0, 10, (counts_density,)) at accuracy 1 then 2>",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/radio_camb_timing.log",
+    "maxrss_kB": null,
+    "note": "diagnostic; accuracy 1 call took 42.3 s (log); accuracy 2 call stopped by the agent after ~10 min; wrapper killed with it so this line is written by hand; started_utc approximate",
+    "rc": -15,
+    "started_utc": "2026-11-24T02:10:00+00:00",
+    "wall_s": null
+   },
+   {
+    "cmd": ".venv/bin/python -m pytest -q -p no:cacheprovider tests/obsstat/test_r108_radio_theory_c1.py tests/obsstat/test_r108_radio_racs_dipole.py tests/obsstat/test_r108_radio_p_of_c1.py",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/radio_pytest.log",
+    "maxrss_kB": 247880,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:15:43+00:00",
+    "wall_s": 11.39
+   },
+   {
+    "cmd": ".venv/bin/python -m pytest -q -p no:cacheprovider tests/obsstat/test_r108_radio_theory_c1.py",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/radio_pytest.log",
+    "maxrss_kB": 101992,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:16:03+00:00",
+    "wall_s": 3.22
+   },
+   {
+    "cmd": "python3 /tmp/claude-1000/-home-cosmosapjw-Dropbox-bianchi-htt-base/61479529-04a2-4d98-a508-5eb3cb0f8ea3/scratchpad/v3_diag.py",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/radio_v3_diag.log",
+    "maxrss_kB": 236120,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:28:48+00:00",
+    "wall_s": 40.52
+   },
+   {
+    "cmd": "python3 -m scripts.r108.radio_v3_diag --out docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO/V3_DIAGNOSTIC.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/radio_v3_diag.log",
+    "maxrss_kB": 237048,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:30:17+00:00",
+    "wall_s": 76.92
+   },
+   {
+    "cmd": "python3 -m scripts.r108.radio_theory_c1 --out docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO/THEORY_C1.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/radio_theory_c1.log",
+    "maxrss_kB": 374680,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:16:11+00:00",
+    "wall_s": 1154.17
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.radio_p_of_c1 --theory docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO/THEORY_C1.json --racs docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO/RACS_DIPOLE.json --out docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO/P_OF_C1_THEORY.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/radio_p_of_c1.log",
+    "maxrss_kB": 236896,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:35:36+00:00",
+    "wall_s": 5.55
+   },
+   {
+    "cmd": "python3 -m scripts.r108.radio_summary --dir docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/radio_summary.log",
+    "maxrss_kB": 18868,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:36:22+00:00",
+    "wall_s": 0.16
+   },
+   {
+    "cmd": ".venv/bin/python -m pytest -q -p no:cacheprovider tests/obsstat/test_r108_radio_theory_c1.py tests/obsstat/test_r108_radio_racs_dipole.py tests/obsstat/test_r108_radio_p_of_c1.py --durations=3",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/radio_pytest.log",
+    "maxrss_kB": 247264,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:36:37+00:00",
+    "wall_s": 11.61
+   },
+   {
+    "cmd": "python3 -m scripts.r108.radio_v3_diag --out docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO/V3_DIAGNOSTIC.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/radio_v3_diag_review2.log",
+    "maxrss_kB": 802800,
+    "rc": 0,
+    "started_utc": "2026-11-24T03:44:48+00:00",
+    "wall_s": 199.96
+   },
+   {
+    "cmd": "python3 -m scripts.r108.radio_theory_c1 --out docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO/THEORY_C1.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/radio_theory_c1_review2.log",
+    "maxrss_kB": 374976,
+    "rc": 0,
+    "started_utc": "2026-11-24T03:35:32+00:00",
+    "wall_s": 823.34
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.radio_p_of_c1 --theory docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO/THEORY_C1.json --racs docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO/RACS_DIPOLE.json --out docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO/P_OF_C1_THEORY.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/radio_p_of_c1_review2.log",
+    "maxrss_kB": 236032,
+    "rc": 0,
+    "started_utc": "2026-11-24T03:49:40+00:00",
+    "wall_s": 2.72
+   },
+   {
+    "cmd": "python3 -m scripts.r108.radio_input_receipts",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/radio_input_receipts_review2.log",
+    "maxrss_kB": 18356,
+    "rc": 0,
+    "started_utc": "2026-11-24T03:49:43+00:00",
+    "wall_s": 1.32
+   },
+   {
+    "cmd": "python3 -m scripts.r108.radio_summary --dir docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/radio_summary_review2.log",
+    "maxrss_kB": 18972,
+    "rc": 0,
+    "started_utc": "2026-11-24T03:50:13+00:00",
+    "wall_s": 0.05
+   },
+   {
+    "cmd": ".venv/bin/python -m pytest -q -p no:cacheprovider tests/obsstat/test_r108_radio_theory_c1.py tests/obsstat/test_r108_radio_racs_dipole.py tests/obsstat/test_r108_radio_p_of_c1.py tests/obsstat/test_r108_radio_input_receipts.py",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/radio_pytest_review2.log",
+    "maxrss_kB": 243960,
+    "rc": 0,
+    "started_utc": "2026-11-24T03:50:37+00:00",
+    "wall_s": 4.24
+   },
+   {
+    "cmd": "python3 -m scripts.r108.radio_input_receipts --dry-run",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "maxrss_kB": null,
+    "note": "recorded after the fact; not run under /usr/bin/time (R108 review2 fix session); dry run, nothing written",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:45:00+00:00",
+    "wall_s": 4.2
+   },
+   {
+    "cmd": ".venv/bin/python -m pytest -q -p no:cacheprovider tests/obsstat/test_r108_radio_{theory_c1,p_of_c1,input_receipts}.py (development runs)",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "maxrss_kB": null,
+    "note": "recorded after the fact; not run under /usr/bin/time (R108 review2 fix session); all passed; final run is radio_pytest_review2",
+    "rc": 0,
+    "started_utc": "2026-11-24T03:30:00+00:00",
+    "wall_s": null
+   }
+  ],
+  "s4_COMMANDS.jsonl": [
+   {
+    "cmd": "python -m scripts.r108.s4_bjs_comparator --omega0 0.3 --x 0.62 --nside 16 --no-fits --no-linearity --output /home/cosmosapjw/Downloads/htt_r108/s4/smoke.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s4_smoke.log",
+    "maxrss_kB": 130816,
+    "rc": 1,
+    "started_utc": "2026-11-24T01:43:42+00:00",
+    "wall_s": 4.45
+   },
+   {
+    "cmd": "python /tmp/claude-1000/-home-cosmosapjw-Dropbox-bianchi-htt-base/61479529-04a2-4d98-a508-5eb3cb0f8ea3/scratchpad/dbg1.py",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s4_debug.log",
+    "maxrss_kB": 122160,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:44:00+00:00",
+    "wall_s": 3.57
+   },
+   {
+    "cmd": "python /tmp/claude-1000/-home-cosmosapjw-Dropbox-bianchi-htt-base/61479529-04a2-4d98-a508-5eb3cb0f8ea3/scratchpad/dbg2.py",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s4_debug.log",
+    "maxrss_kB": 10892,
+    "rc": 2,
+    "started_utc": "2026-11-24T01:55:09+00:00",
+    "wall_s": 0.02
+   },
+   {
+    "cmd": "python /tmp/claude-1000/-home-cosmosapjw-Dropbox-bianchi-htt-base/61479529-04a2-4d98-a508-5eb3cb0f8ea3/scratchpad/dbg3.py",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s4_debug.log",
+    "maxrss_kB": 124636,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:16:00+00:00",
+    "wall_s": 20.95
+   },
+   {
+    "cmd": "python -m scripts.r108.s4_bjs_comparator --omega0 0.3 --x 0.62 --nside 16 --no-fits --no-linearity --output /home/cosmosapjw/Downloads/htt_r108/s4/smoke.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s4_smoke.log",
+    "maxrss_kB": 121264,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:05:45+00:00",
+    "wall_s": 652.11
+   },
+   {
+    "cmd": "python /tmp/claude-1000/-home-cosmosapjw-Dropbox-bianchi-htt-base/61479529-04a2-4d98-a508-5eb3cb0f8ea3/scratchpad/dbg5.py 1e-14 1e-12",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s4_atol_1e-14.log",
+    "maxrss_kB": 124944,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:25:32+00:00",
+    "wall_s": 5.31
+   },
+   {
+    "cmd": "python /tmp/claude-1000/-home-cosmosapjw-Dropbox-bianchi-htt-base/61479529-04a2-4d98-a508-5eb3cb0f8ea3/scratchpad/dbg5.py 1e-16 1e-12",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s4_atol_1e-16.log",
+    "maxrss_kB": 123916,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:25:32+00:00",
+    "wall_s": 7.23
+   },
+   {
+    "cmd": "python -m scripts.r108.s4_bjs_comparator --omega0 0.3 --x 0.62 --nside 16 --no-fits --no-linearity --output /home/cosmosapjw/Downloads/htt_r108/s4/smoke.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s4_smoke.log",
+    "maxrss_kB": 180700,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:25:54+00:00",
+    "wall_s": 15.14
+   },
+   {
+    "cmd": "python -m pytest -q -p no:cacheprovider tests/obsstat/test_r108_s4_rotation_fitter.py --durations=5",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s4_pytest.log",
+    "maxrss_kB": 211808,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:26:38+00:00",
+    "wall_s": 19.55
+   },
+   {
+    "cmd": "python -m scripts.r108.s4_bjs_comparator --omega0 0.5 --x 1.0 --nside 16 --grid-nside 8 --n-starts 4 --output /home/cosmosapjw/Downloads/htt_r108/s4/smoke_fit.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s4_smoke_fit.log",
+    "maxrss_kB": 253344,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:27:08+00:00",
+    "wall_s": 89.82
+   },
+   {
+    "cmd": "python -m scripts.r108.s4_bjs_comparator --omega0 0.5 --x 0.62 1.0 --nside 64 --grid-nside 16 --n-starts 8 --output /home/cosmosapjw/Downloads/htt_r108/s4/S4_prod_O0.5.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s4_prod_O0.5.log",
+    "maxrss_kB": 300032,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:28:59+00:00",
+    "wall_s": 723.89
+   },
+   {
+    "cmd": "python -m scripts.r108.s4_bjs_comparator --omega0 0.3 --x 0.62 1.0 --nside 64 --grid-nside 16 --n-starts 8 --output /home/cosmosapjw/Downloads/htt_r108/s4/S4_prod_O0.3.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s4_prod_O0.3.log",
+    "maxrss_kB": 301184,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:28:59+00:00",
+    "wall_s": 731.1
+   },
+   {
+    "cmd": "python -m scripts.r108.s4_bjs_comparator --omega0 0.7 --x 0.62 1.0 --nside 64 --grid-nside 16 --n-starts 8 --output /home/cosmosapjw/Downloads/htt_r108/s4/S4_prod_O0.7.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s4_prod_O0.7.log",
+    "maxrss_kB": 301676,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:28:59+00:00",
+    "wall_s": 736.51
+   },
+   {
+    "cmd": "python -m scripts.r108.s4_bjs_comparator --omega0 0.3 --x 0.62 --atol 1e-14 --no-fits --no-linearity --output /home/cosmosapjw/Downloads/htt_r108/s4/S4_conv_atol1e-14.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s4_conv_tol.log",
+    "maxrss_kB": 233380,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:41:29+00:00",
+    "wall_s": 59.39
+   },
+   {
+    "cmd": "python -m scripts.r108.s4_bjs_comparator --omega0 0.3 --x 0.62 --M 2800 --no-fits --no-linearity --output /home/cosmosapjw/Downloads/htt_r108/s4/S4_conv_M2800.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s4_conv_M.log",
+    "maxrss_kB": 233724,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:41:29+00:00",
+    "wall_s": 60.19
+   },
+   {
+    "cmd": "python -m scripts.r108.s4_bjs_comparator --omega0 0.3 --x 0.62 --max-step 0.01 --no-fits --no-linearity --output /home/cosmosapjw/Downloads/htt_r108/s4/S4_conv_step0.01.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s4_conv_step.log",
+    "maxrss_kB": 233272,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:41:29+00:00",
+    "wall_s": 95.2
+   },
+   {
+    "cmd": "python -m scripts.r108.s4_aggregate --runs /home/cosmosapjw/Downloads/htt_r108/s4/S4_prod_O0.3.json /home/cosmosapjw/Downloads/htt_r108/s4/S4_prod_O0.5.json /home/cosmosapjw/Downloads/htt_r108/s4/S4_prod_O0.7.json --convergence /home/cosmosapjw/Downloads/htt_r108/s4/S4_conv_step0.01.json /home/cosmosapjw/Downloads/htt_r108/s4/S4_conv_M2800.json /home/cosmosapjw/Downloads/htt_r108/s4/S4_conv_atol1e-14.json --output /home/cosmosapjw/Downloads/htt_r108/s4/S4_preliminary_summary.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s4_aggregate_pre.log",
+    "maxrss_kB": 36796,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:43:20+00:00",
+    "wall_s": 0.45
+   },
+   {
+    "cmd": "python -m scripts.r108.s4_bjs_comparator --omega0 0.3 --x 0.62 1.0 --nside 64 --grid-nside 16 --n-starts 8 --richardson --output /home/cosmosapjw/Downloads/htt_r108/s4/S4_richardson_O0.3.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s4_rich_O0.3.log",
+    "maxrss_kB": 295456,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:43:08+00:00",
+    "wall_s": 518.01
+   },
+   {
+    "cmd": "python -m scripts.r108.s4_bjs_comparator --omega0 0.7 --x 0.62 1.0 --nside 64 --grid-nside 16 --n-starts 8 --richardson --output /home/cosmosapjw/Downloads/htt_r108/s4/S4_richardson_O0.7.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s4_rich_O0.7.log",
+    "maxrss_kB": 290052,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:43:08+00:00",
+    "wall_s": 524.11
+   },
+   {
+    "cmd": "python -m scripts.r108.s4_bjs_comparator --omega0 0.5 --x 0.62 1.0 --nside 64 --grid-nside 16 --n-starts 8 --richardson --output /home/cosmosapjw/Downloads/htt_r108/s4/S4_richardson_O0.5.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s4_rich_O0.5.log",
+    "maxrss_kB": 272268,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:43:08+00:00",
+    "wall_s": 528.5
+   },
+   {
+    "cmd": "python -m scripts.r108.s4_aggregate --runs /home/cosmosapjw/Downloads/htt_r108/s4/S4_prod_O0.3.json /home/cosmosapjw/Downloads/htt_r108/s4/S4_prod_O0.5.json /home/cosmosapjw/Downloads/htt_r108/s4/S4_prod_O0.7.json --convergence /home/cosmosapjw/Downloads/htt_r108/s4/S4_conv_step0.01.json /home/cosmosapjw/Downloads/htt_r108/s4/S4_conv_M2800.json /home/cosmosapjw/Downloads/htt_r108/s4/S4_conv_atol1e-14.json --richardson /home/cosmosapjw/Downloads/htt_r108/s4/S4_richardson_O0.3.json /home/cosmosapjw/Downloads/htt_r108/s4/S4_richardson_O0.5.json /home/cosmosapjw/Downloads/htt_r108/s4/S4_richardson_O0.7.json --output docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/SOLVER/S4_BJS_COMPARATOR.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s4_aggregate.log",
+    "maxrss_kB": 36796,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:52:16+00:00",
+    "wall_s": 0.15
+   },
+   {
+    "cmd": "python -m pytest -q -p no:cacheprovider tests/obsstat/test_r108_s4_rotation_fitter.py",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s4_pytest.log",
+    "maxrss_kB": 210672,
+    "rc": 0,
+    "started_utc": "2026-11-24T02:52:16+00:00",
+    "wall_s": 7.43
+   },
+   {
+    "cmd": "python -m pytest -q -p no:cacheprovider tests/obsstat/test_r108_s4_rotation_fitter.py --durations=5",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s4_pytest_dev.log",
+    "maxrss_kB": 214164,
+    "rc": 0,
+    "started_utc": "2026-11-24T03:37:52+00:00",
+    "wall_s": 26.35
+   },
+   {
+    "cmd": "python -m scripts.r108.s4_posthoc_checks --runs /home/cosmosapjw/Downloads/htt_r108/s4/smoke_fit.json --check-nside 16 --output /home/cosmosapjw/Downloads/htt_r108/s4/S4_posthoc_smoke.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s4_posthoc_smoke.log",
+    "maxrss_kB": 253052,
+    "rc": 0,
+    "started_utc": "2026-11-24T03:38:56+00:00",
+    "wall_s": 91.71
+   },
+   {
+    "cmd": "python -I /home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r108/s4_lit_fetch.py",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s4_lit_fetch.log",
+    "maxrss_kB": 24468,
+    "rc": 0,
+    "started_utc": "2026-11-24T03:49:26+00:00",
+    "wall_s": 0.58
+   },
+   {
+    "cmd": "python -m scripts.r108.s4_aggregate --runs /home/cosmosapjw/Downloads/htt_r108/s4/S4_prod_O0.3.json /home/cosmosapjw/Downloads/htt_r108/s4/S4_prod_O0.5.json /home/cosmosapjw/Downloads/htt_r108/s4/S4_prod_O0.7.json --convergence /home/cosmosapjw/Downloads/htt_r108/s4/S4_conv_step0.01.json /home/cosmosapjw/Downloads/htt_r108/s4/S4_conv_M2800.json /home/cosmosapjw/Downloads/htt_r108/s4/S4_conv_atol1e-14.json --richardson /home/cosmosapjw/Downloads/htt_r108/s4/S4_richardson_O0.3.json /home/cosmosapjw/Downloads/htt_r108/s4/S4_richardson_O0.5.json /home/cosmosapjw/Downloads/htt_r108/s4/S4_richardson_O0.7.json --posthoc /home/cosmosapjw/Downloads/htt_r108/s4/S4_posthoc_O0.7.json --output /tmp/claude-1000/-home-cosmosapjw-Dropbox-bianchi-htt-base/61479529-04a2-4d98-a508-5eb3cb0f8ea3/scratchpad/S4_dry.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s4_aggregate_dryrun.log",
+    "maxrss_kB": 132484,
+    "rc": 0,
+    "started_utc": "2026-11-24T03:56:15+00:00",
+    "wall_s": 1.26
+   },
+   {
+    "cmd": "python -m scripts.r108.s4_posthoc_checks --runs /home/cosmosapjw/Downloads/htt_r108/s4/S4_prod_O0.7.json /home/cosmosapjw/Downloads/htt_r108/s4/S4_richardson_O0.7.json --output /home/cosmosapjw/Downloads/htt_r108/s4/S4_posthoc_O0.7.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s4_posthoc_O0.7.log",
+    "maxrss_kB": 250932,
+    "rc": 0,
+    "started_utc": "2026-11-24T03:40:38+00:00",
+    "wall_s": 2148.6
+   },
+   {
+    "cmd": "python -m scripts.r108.s4_posthoc_checks --runs /home/cosmosapjw/Downloads/htt_r108/s4/S4_prod_O0.5.json /home/cosmosapjw/Downloads/htt_r108/s4/S4_richardson_O0.5.json --output /home/cosmosapjw/Downloads/htt_r108/s4/S4_posthoc_O0.5.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s4_posthoc_O0.5.log",
+    "maxrss_kB": 251128,
+    "rc": 0,
+    "started_utc": "2026-11-24T03:40:37+00:00",
+    "wall_s": 3280.37
+   },
+   {
+    "cmd": "python -m scripts.r108.s4_posthoc_checks --runs /home/cosmosapjw/Downloads/htt_r108/s4/S4_prod_O0.3.json /home/cosmosapjw/Downloads/htt_r108/s4/S4_richardson_O0.3.json --output /home/cosmosapjw/Downloads/htt_r108/s4/S4_posthoc_O0.3.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s4_posthoc_O0.3.log",
+    "maxrss_kB": 249856,
+    "rc": 0,
+    "started_utc": "2026-11-24T03:40:37+00:00",
+    "wall_s": 4524.06
+   },
+   {
+    "cmd": "python -m scripts.r108.s4_aggregate --runs /home/cosmosapjw/Downloads/htt_r108/s4/S4_prod_O0.3.json /home/cosmosapjw/Downloads/htt_r108/s4/S4_prod_O0.5.json /home/cosmosapjw/Downloads/htt_r108/s4/S4_prod_O0.7.json --convergence /home/cosmosapjw/Downloads/htt_r108/s4/S4_conv_step0.01.json /home/cosmosapjw/Downloads/htt_r108/s4/S4_conv_M2800.json /home/cosmosapjw/Downloads/htt_r108/s4/S4_conv_atol1e-14.json --richardson /home/cosmosapjw/Downloads/htt_r108/s4/S4_richardson_O0.3.json /home/cosmosapjw/Downloads/htt_r108/s4/S4_richardson_O0.5.json /home/cosmosapjw/Downloads/htt_r108/s4/S4_richardson_O0.7.json --posthoc /home/cosmosapjw/Downloads/htt_r108/s4/S4_posthoc_O0.3.json /home/cosmosapjw/Downloads/htt_r108/s4/S4_posthoc_O0.5.json /home/cosmosapjw/Downloads/htt_r108/s4/S4_posthoc_O0.7.json --output docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/SOLVER/S4_BJS_COMPARATOR.json",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s4_aggregate.log",
+    "maxrss_kB": 133876,
+    "rc": 0,
+    "started_utc": "2026-11-24T04:56:14+00:00",
+    "wall_s": 1.01
+   },
+   {
+    "cmd": "python -m pytest -q -p no:cacheprovider tests/obsstat/test_r108_s4_rotation_fitter.py tests/obsstat/test_r108_s4_summary.py",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s4_pytest.log",
+    "maxrss_kB": 216092,
+    "rc": 0,
+    "started_utc": "2026-11-24T04:56:15+00:00",
+    "wall_s": 17.52
+   }
+  ],
+  "s8_COMMANDS.jsonl": [
+   {
+    "cmd": ".venv/bin/python -B scripts/r106/rei_restart_replay.py --out /home/cosmosapjw/Downloads/htt_r108/s8/replay_rerun --stages build,record,replay,analyze --workers 2",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s8_r106_replay_rerun.log",
+    "maxrss_kB": 629372,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:36:06+00:00",
+    "tag": "r106_replay_rerun",
+    "wall_s": 50.16
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.s8_replay_compare",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s8_replay_compare.log",
+    "maxrss_kB": 21636,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:38:11+00:00",
+    "tag": "replay_compare",
+    "wall_s": 0.33
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.s8_lowz_tau",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s8_lowz_tau.log",
+    "maxrss_kB": 137760,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:40:07+00:00",
+    "tag": "lowz_tau",
+    "wall_s": 3.02
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.s8_lowz_tau",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s8_lowz_tau.log",
+    "maxrss_kB": 137144,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:40:41+00:00",
+    "tag": "lowz_tau",
+    "wall_s": 3.18
+   },
+   {
+    "cmd": "python -m pytest -q -p no:cacheprovider tests/obsstat/test_r108_s8_lowz_tau.py htt/bass/recombination/test_rei_lowz_continuation.py",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s8_pytest_system.log",
+    "maxrss_kB": 153884,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:41:16+00:00",
+    "tag": "pytest_system",
+    "wall_s": 9.74
+   },
+   {
+    "cmd": ".venv/bin/python -m pytest -q -p no:cacheprovider tests/obsstat/test_r108_s8_lowz_tau.py htt/bass/recombination/test_rei_lowz_continuation.py",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s8_pytest_venv.log",
+    "maxrss_kB": 143916,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:41:26+00:00",
+    "tag": "pytest_venv",
+    "wall_s": 4.89
+   },
+   {
+    "cmd": "timeout 900 .venv/bin/python -m scripts.r108.s8_uvb_vo_probe --timeout 30",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s8_uvb_vo_probe.log",
+    "maxrss_kB": 83220,
+    "rc": 1,
+    "started_utc": "2026-11-24T01:46:27+00:00",
+    "tag": "uvb_vo_probe",
+    "wall_s": 156.78
+   },
+   {
+    "cmd": ".venv/bin/python -m pytest -q -p no:cacheprovider tests/obsstat/test_r106_rei_restart_replay.py",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s8_pytest_r106_replay_helpers.log",
+    "maxrss_kB": 90792,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:51:49+00:00",
+    "tag": "pytest_r106_replay_helpers",
+    "wall_s": 2.03
+   },
+   {
+    "cmd": "timeout 900 .venv/bin/python -m scripts.r108.s8_uvb_vo_probe --timeout 30",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s8_uvb_vo_probe.log",
+    "maxrss_kB": 82004,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:49:23+00:00",
+    "tag": "uvb_vo_probe",
+    "wall_s": 149.37
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.s8_lowz_feasibility",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s8_lowz_feasibility.log",
+    "maxrss_kB": 24240,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:52:16+00:00",
+    "tag": "lowz_feasibility",
+    "wall_s": 1.44
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.s8_lowz_feasibility",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s8_lowz_feasibility.log",
+    "maxrss_kB": 23976,
+    "rc": 0,
+    "started_utc": "2026-11-24T01:52:47+00:00",
+    "tag": "lowz_feasibility",
+    "wall_s": 1.0
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.s8_lowz_feasibility",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s8_lowz_feasibility.log",
+    "maxrss_kB": 23916,
+    "rc": 0,
+    "started_utc": "2026-11-24T03:49:37+00:00",
+    "tag": "lowz_feasibility",
+    "wall_s": 1.14
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.s8_lowz_feasibility",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s8_lowz_feasibility.log",
+    "maxrss_kB": 24432,
+    "rc": 0,
+    "started_utc": "2026-11-24T03:50:20+00:00",
+    "tag": "lowz_feasibility",
+    "wall_s": 0.45
+   },
+   {
+    "cmd": ".venv/bin/python -m pytest -q -p no:cacheprovider tests/obsstat/test_r108_s8_lowz_feasibility.py tests/obsstat/test_r108_s8_lowz_tau.py",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s8_pytest_feasibility.log",
+    "maxrss_kB": 150020,
+    "rc": 0,
+    "started_utc": "2026-11-24T03:50:21+00:00",
+    "tag": "pytest_feasibility",
+    "wall_s": 2.19
+   },
+   {
+    "cmd": ".venv/bin/python -m scripts.r108.s8_lowz_feasibility",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s8_lowz_feasibility.log",
+    "maxrss_kB": 24356,
+    "rc": 0,
+    "started_utc": "2026-11-24T04:35:46+00:00",
+    "tag": "lowz_feasibility",
+    "wall_s": 0.47
+   },
+   {
+    "cmd": ".venv/bin/python -m pytest -q -p no:cacheprovider tests/obsstat/test_r108_s8_lowz_feasibility.py tests/obsstat/test_r108_s8_lowz_tau.py htt/bass/recombination/test_rei_lowz_continuation.py",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "log": "/home/cosmosapjw/Downloads/htt_r108/logs/s8_pytest_feasibility.log",
+    "maxrss_kB": 148780,
+    "rc": 0,
+    "started_utc": "2026-11-24T04:35:46+00:00",
+    "tag": "pytest_feasibility",
+    "wall_s": 1.56
+   }
+  ]
+ },
+ "schema": "htt.r108.executed_commands.1",
+ "timed_commands": [
+  {
+   "cmd": ".venv/bin/python -m scripts.r105.commander_ensemble batch --start 7 --stop 300 --include docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/COMMANDER_TRANSFER.json docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/COMMANDER_PAIR_00001.json --directory /home/cosmosapjw/Downloads/htt_r105_commander/reductions --max-download-bytes 356352825600",
+   "log": "A3_commander_7_300.log",
+   "maxrss_kB": 3276056,
+   "rc": 1,
+   "wall_s": 5914.63
+  },
+  {
+   "cmd": ".venv/bin/python -m scripts.r108.commander_splits fetch --stop 7 --max-bytes 30000000000",
+   "log": "A3_commander_splits_fetch.log",
+   "maxrss_kB": 109640,
+   "rc": 1,
+   "wall_s": 75.99
+  },
+  {
+   "cmd": ".venv/bin/python -m scripts.r108.commander_splits fetch --stop 7 --max-bytes 30000000000",
+   "log": "A3_commander_splits_fetch_attempt2.log",
+   "maxrss_kB": 110980,
+   "rc": 1,
+   "wall_s": 414.14
+  },
+  {
+   "cmd": "python -m scripts.r108.f2_coupled_los --workers 8",
+   "log": "F2_v2.log",
+   "maxrss_kB": 146424,
+   "rc": 0,
+   "wall_s": 169.4
+  },
+  {
+   "cmd": ".venv/bin/python -m pytest -q -rs -p no:cacheprovider tests/obsstat/test_r108_cf4_2mpp.py tests/obsstat/test_r108_cf4_acquire.py tests/obsstat/test_r108_cf4_cf3_overlap.py tests/obsstat/test_r108_cf4_kband.py tests/obsstat/test_r108_cf4_receipts.py tests/obsstat/test_r108_frame_cf4_joint.py tests/obsstat/test_r108_frame_input_receipts.py tests/obsstat/test_r108_frame_lie_flux.py tests/obsstat/test_r108_frame_registry.py tests/obsstat/test_r108_gaia_acquire.py tests/obsstat/test_r108_gaia_agn_split.py tests/obsstat/test_r108_gaia_estimator.py tests/obsstat/test_r108_gaia_frame_leakage.py tests/obsstat/test_r108_gaia_scanlaw.py tests/obsstat/test_r108_gaia_scan_null.py tests/obsstat/test_r108_gaia_supersede.py tests/obsstat/test_r108_radio_input_receipts.py tests/obsstat/test_r108_radio_p_of_c1.py tests/obsstat/test_r108_radio_racs_dipole.py tests/obsstat/test_r108_radio_theory_c1.py tests/obsstat/test_r108_s4_rotation_fitter.py tests/obsstat/test_r108_s4_summary.py tests/obsstat/test_r108_s6_kernel.py tests/obsstat/test_r108_s8_lowz_feasibility.py tests/obsstat/test_r108_s8_lowz_tau.py tests/obsstat/test_r103_commander_ensemble.py tests/obsstat/test_r103_gaia_frame_curvature.py tests/obsstat/test_r103_manticore_cf4_pv.py tests/obsstat/test_r103_program.py tests/obsstat/test_r103_rei_material.py tests/obsstat/test_r104_velocity_normalization.py tests/obsstat/test_r106_cf3_overlap.py tests/obsstat/test_r106_coras_marks_influence.py tests/obsstat/test_r106_coras_stability.py tests/obsstat/test_r106_gaia_null_refit.py tests/obsstat/test_r106_radio_null_mocks.py tests/obsstat/test_r106_rei_restart_replay.py",
+   "log": "FINAL_obsstat_tests.log",
+   "maxrss_kB": 902408,
+   "rc": 0,
+   "wall_s": 28.65
+  },
+  {
+   "cmd": "python -m pytest -q -rs -p no:cacheprovider htt/bass/transport/test_hybrid_los_transfer.py htt/bass/transport/test_hybrid_los_parallel.py htt/bass/transport/test_bjs_bianchi_vii_h.py htt/bass/background/test_compensating_tilt_root.py tests/r49/test_gbi02_tilted_state_and_constraints.py htt/bass/recombination/test_rei_lowz_continuation.py tests/r107_cloud",
+   "log": "FINAL_solver_tests.log",
+   "maxrss_kB": 471064,
+   "rc": 0,
+   "wall_s": 132.69
+  },
+  {
+   "cmd": "python -m pytest -q -rs -p no:cacheprovider htt/bass/background/test_compensating_tilt_root.py tests/r49/test_gbi02_tilted_state_and_constraints.py htt/bass/recombination/test_rei_lowz_continuation.py tests/r107_cloud",
+   "log": "REGRESSION_misc.log",
+   "maxrss_kB": 149176,
+   "rc": 0,
+   "wall_s": 3.27
+  },
+  {
+   "cmd": "python -m pytest -q -rs -p no:cacheprovider -n 6 htt/bass/transport htt/bass/background/test_compensating_tilt_root.py tests/r49/test_gbi02_tilted_state_and_constraints.py htt/bass/recombination/test_rei_lowz_continuation.py tests/r107_cloud",
+   "log": "REGRESSION_solver.log",
+   "maxrss_kB": 90328,
+   "rc": 4,
+   "wall_s": 0.91
+  },
+  {
+   "cmd": "python -m pytest -q -rs -p no:cacheprovider htt/bass/transport",
+   "log": "REGRESSION_transport.log",
+   "maxrss_kB": 414368,
+   "rc": 0,
+   "wall_s": 1089.69
+  },
+  {
+   "cmd": "python -m scripts.r108.s1_family_atlas run --workers 10",
+   "log": "S1_atlas_run.log",
+   "maxrss_kB": 404144,
+   "rc": 0,
+   "wall_s": 4871.26
+  },
+  {
+   "cmd": "python -m scripts.r108.s1_family_atlas summarize",
+   "log": "S1_summarize_v2.log",
+   "maxrss_kB": 49640,
+   "rc": 0,
+   "wall_s": 0.33
+  },
+  {
+   "cmd": "python -m scripts.r108.s1_family_atlas run --workers 8",
+   "log": "S3_stepaxis_run.log",
+   "maxrss_kB": 288440,
+   "rc": 0,
+   "wall_s": 983.76
+  },
+  {
+   "cmd": "python -m scripts.r108.s5_photon_moments --workers 4",
+   "log": "S5.log",
+   "maxrss_kB": 128064,
+   "rc": 0,
+   "wall_s": 403.71
+  },
+  {
+   "cmd": "python -m scripts.r108.s6_b03_templates kernel",
+   "log": "S6_kernel.log",
+   "maxrss_kB": 3866660,
+   "rc": 0,
+   "wall_s": 1256.17
+  },
+  {
+   "cmd": "python -m scripts.r108.s6_b03_templates project",
+   "log": "S6_project.log",
+   "maxrss_kB": 121384,
+   "rc": 0,
+   "wall_s": 1909.17
+  },
+  {
+   "cmd": "python -m scripts.r108.s7_los_performance --workers 12",
+   "log": "S7.log",
+   "maxrss_kB": 443776,
+   "rc": 0,
+   "wall_s": 1295.93
+  },
+  {
+   "cmd": "python -m scripts.r108.s7_los_performance --workers 12",
+   "log": "S7_rerun.log",
+   "maxrss_kB": 438624,
+   "rc": 0,
+   "wall_s": 834.41
+  }
+ ]
+}

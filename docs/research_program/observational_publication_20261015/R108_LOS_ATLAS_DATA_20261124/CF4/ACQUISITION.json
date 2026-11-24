@@ -1,0 +1,3621 @@
+{
+ "all_fetched_files_verified": true,
+ "all_pre_existing_inputs_verified": true,
+ "all_result_inputs_receipted": true,
+ "classification": {
+  "label": "NUMERICAL",
+  "scope": "download and input receipts with on-disk SHA-256 verification; no scientific claim"
+ },
+ "command": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python -B -m scripts.r108.cf4_receipts",
+ "git": {
+  "diff_head_sha256": "68355025a0522cde3a0af3a1995f8e67d41869fe07d780ffd110cf17e261df45",
+  "dirty_code_paths": [
+   " M htt/bass/background/tilted_bianchi_state.py",
+   " M htt/bass/transport/bjs_bianchi_vii_h.py",
+   " M htt/bass/transport/coupled_einstein_boltzmann.py",
+   " M htt/bass/transport/hybrid_los_transfer.py",
+   " M htt/bass/transport/test_bjs_bianchi_vii_h.py",
+   " M htt/bass/transport/test_hybrid_los_transfer.py",
+   " M scripts/r107_cloud/acquisition.py",
+   " M tests/r107_cloud/test_acquisition.py",
+   "?? htt/bass/background/test_compensating_tilt_root.py",
+   "?? htt/bass/transport/hybrid_los_parallel.py",
+   "?? htt/bass/transport/test_hybrid_los_parallel.py",
+   "?? htt/obsstat/catalogue_frame_registry.py",
+   "?? scripts/r108/__init__.py",
+   "?? scripts/r108/build_results.py",
+   "?? scripts/r108/cf4_2mpp_field.py",
+   "?? scripts/r108/cf4_acquire.py",
+   "?? scripts/r108/cf4_cf3_table3_overlap.py",
+   "?? scripts/r108/cf4_kband_contrast.py",
+   "?? scripts/r108/cf4_receipts.py",
+   "?? scripts/r108/commander_splits.py",
+   "?? scripts/r108/commander_status.py",
+   "?? scripts/r108/common.py",
+   "?? scripts/r108/f2_coupled_los.py",
+   "?? scripts/r108/frame_cf4_joint.py",
+   "?? scripts/r108/frame_input_receipts.py",
+   "?? scripts/r108/frame_lie_flux.py",
+   "?? scripts/r108/frame_registry_build.py",
+   "?? scripts/r108/frame_w1tf_joint.py",
+   "?? scripts/r108/frame_w1tf_probe.py",
+   "?? scripts/r108/gaia_acquire.py",
+   "?? scripts/r108/gaia_agn_split.py",
+   "?? scripts/r108/gaia_cmdlog.py",
+   "?? scripts/r108/gaia_estimator.py",
+   "?? scripts/r108/gaia_frame_leakage.py",
+   "?? scripts/r108/gaia_input_receipts.py",
+   "?? scripts/r108/gaia_scan_null.py",
+   "?? scripts/r108/gaia_scanlaw.py",
+   "?? scripts/r108/gaia_summary.py",
+   "?? scripts/r108/gaia_supersede.py",
+   "?? scripts/r108/radio_cmdlog.py",
+   "?? scripts/r108/radio_input_receipts.py",
+   "?? scripts/r108/radio_p_of_c1.py",
+   "?? scripts/r108/radio_racs_dipole.py",
+   "?? scripts/r108/radio_racs_fetch.py",
+   "?? scripts/r108/radio_summary.py",
+   "?? scripts/r108/radio_theory_c1.py",
+   "?? scripts/r108/radio_v3_diag.py",
+   "?? scripts/r108/review_r107_claims.py",
+   "?? scripts/r108/s1_family_atlas.py",
+   "?? scripts/r108/s4_aggregate.py",
+   "?? scripts/r108/s4_bjs_comparator.py",
+   "?? scripts/r108/s4_cmdlog.py",
+   "?? scripts/r108/s4_lit_fetch.py",
+   "?? scripts/r108/s4_posthoc_checks.py",
+   "?? scripts/r108/s5_photon_moments.py",
+   "?? scripts/r108/s6_b03_templates.py",
+   "?? scripts/r108/s7_los_performance.py",
+   "?? scripts/r108/s8_cmdlog.py",
+   "?? scripts/r108/s8_lowz_feasibility.py",
+   "?? scripts/r108/s8_lowz_tau.py",
+   "?? scripts/r108/s8_replay_compare.py",
+   "?? scripts/r108/s8_uvb_vo_probe.py",
+   "?? tests/obsstat/test_r108_cf4_2mpp.py",
+   "?? tests/obsstat/test_r108_cf4_acquire.py",
+   "?? tests/obsstat/test_r108_cf4_cf3_overlap.py",
+   "?? tests/obsstat/test_r108_cf4_kband.py",
+   "?? tests/obsstat/test_r108_cf4_receipts.py",
+   "?? tests/obsstat/test_r108_frame_cf4_joint.py",
+   "?? tests/obsstat/test_r108_frame_input_receipts.py",
+   "?? tests/obsstat/test_r108_frame_lie_flux.py",
+   "?? tests/obsstat/test_r108_frame_registry.py",
+   "?? tests/obsstat/test_r108_gaia_acquire.py",
+   "?? tests/obsstat/test_r108_gaia_agn_split.py",
+   "?? tests/obsstat/test_r108_gaia_estimator.py",
+   "?? tests/obsstat/test_r108_gaia_frame_leakage.py",
+   "?? tests/obsstat/test_r108_gaia_scan_null.py",
+   "?? tests/obsstat/test_r108_gaia_scanlaw.py",
+   "?? tests/obsstat/test_r108_gaia_supersede.py",
+   "?? tests/obsstat/test_r108_radio_input_receipts.py",
+   "?? tests/obsstat/test_r108_radio_p_of_c1.py",
+   "?? tests/obsstat/test_r108_radio_racs_dipole.py",
+   "?? tests/obsstat/test_r108_radio_theory_c1.py",
+   "?? tests/obsstat/test_r108_s4_rotation_fitter.py",
+   "?? tests/obsstat/test_r108_s4_summary.py",
+   "?? tests/obsstat/test_r108_s6_kernel.py",
+   "?? tests/obsstat/test_r108_s8_lowz_feasibility.py",
+   "?? tests/obsstat/test_r108_s8_lowz_tau.py"
+  ],
+  "dirty_code_sha256": {
+   "htt/bass/background/test_compensating_tilt_root.py": "cbdd64e0b7a536464a25c8fd7f759c2ddc4f94dfadb77ed0abf9647e338b0584",
+   "htt/bass/background/tilted_bianchi_state.py": "dd6bd75fb358b3c738d555414471066d14f40707ee43bd4afed683f07f7a7b2f",
+   "htt/bass/transport/bjs_bianchi_vii_h.py": "1b7e9c72ab1cb9f66bc9c2996c58e53b82bff572e4a27fefd42a15b609ddfd9e",
+   "htt/bass/transport/coupled_einstein_boltzmann.py": "b564041da20eb830a6099960909f7236a2dfae977842ebcb1d04629cbe25c56a",
+   "htt/bass/transport/hybrid_los_parallel.py": "85b40325ef1c0e2b8695bf846eb944e90deb0598f4dab3a8b60b6b17ae49d9f3",
+   "htt/bass/transport/hybrid_los_transfer.py": "96744df0f361d4c07aee3e30016450072d797df13c2bee57919c2a9cb66810db",
+   "htt/bass/transport/test_bjs_bianchi_vii_h.py": "b7709ab0bc3b7878f3b6778c00643038dd5aaedc27b377a27c99335633c119ac",
+   "htt/bass/transport/test_hybrid_los_parallel.py": "14a68cf9aba2e7e79d05771e99cc7637eaee6644af3c73eaf5b8a3ab69289bef",
+   "htt/bass/transport/test_hybrid_los_transfer.py": "42040c8514df07cdfb36eb79c494c9ccecedaea89c27baab1c2cdcbefd007505",
+   "htt/obsstat/catalogue_frame_registry.py": "f69967dddaeaa52f801a1e1662dbe12a5c5c9d51ffa8fb04feae526cab5d4298",
+   "scripts/r107_cloud/acquisition.py": "97037c43513c7c7973a6941781c26d3407da6cae1a31a1f2770ef6711ce833db",
+   "scripts/r108/__init__.py": "8d579afbf258026e1054383aed56826844a30771b57e9cb3eea11f72464079bc",
+   "scripts/r108/build_results.py": "c1f71936d542cb9a55811e9a8c33cbade1037e1cc1f0dd544741b09c54a1c29d",
+   "scripts/r108/cf4_2mpp_field.py": "6b24f23caf5f1f5bae3b7b48874947457d9c1da678ab0553e20a0e55feff6e67",
+   "scripts/r108/cf4_acquire.py": "d7510d7c6d27f796eb2898a3791cb2c00c1706244cc2fa339688bf4eba322112",
+   "scripts/r108/cf4_cf3_table3_overlap.py": "c28bc6b941fc56198b95329efd92a83e96d01408a15ae1250a3288bcb5ab6c06",
+   "scripts/r108/cf4_kband_contrast.py": "7f6f67a4245fae903e6bf79b7ef82cce16baeab61a8799b04f0d4a92df558245",
+   "scripts/r108/cf4_receipts.py": "b18b79316f9c13614f0065b532ff1f3353ce968e30d9ee3290b16016609d89f1",
+   "scripts/r108/commander_splits.py": "01926d899d66e06d6831f47346c6449d5face457d72f4af56fe19489fad5643c",
+   "scripts/r108/commander_status.py": "8a9a3a14774ec5ee65036be1442f2a6c4d778733e2199042bb4835fa8460f5fe",
+   "scripts/r108/common.py": "dded5b978a15680df0975cb2921e0931824c27cee7d508ea81721a1ceaaff41e",
+   "scripts/r108/f2_coupled_los.py": "0b60e9fcbb798493fd6aac322433439573ebd582491112f126bcc6ca9a4e14a4",
+   "scripts/r108/frame_cf4_joint.py": "51a39b27428abd53d256f22b442fa22279ec601d9fb68d95f4fc268b009eff21",
+   "scripts/r108/frame_input_receipts.py": "ec599d241d8ed66e95defaf87faebbb82d962b492a738634b3e73aed207cf88e",
+   "scripts/r108/frame_lie_flux.py": "f09a661fd9840f8b3e39e7ffa20bbf10790efc66769c5c3413fe59364151f018",
+   "scripts/r108/frame_registry_build.py": "f05d0b22dae211cc48e9d0d969f1a112b3d1401974b960fc819c33007f2ef4a1",
+   "scripts/r108/frame_w1tf_joint.py": "239137f2805a5927dd8398a459212b6b096208aa03483a70a48f19c668d43672",
+   "scripts/r108/frame_w1tf_probe.py": "ae56a67fa55c4b0506aaff3d2096289cc3e1e63e36d186228c5bbc1dc3f50cf0",
+   "scripts/r108/gaia_acquire.py": "b5ce4997fd7bd52a81bc451768c13a6f6de52cae7e7a5bab2b2aca1981eda6e0",
+   "scripts/r108/gaia_agn_split.py": "cf7f5d1f133e1c49330b053123dfafcada4c93233289a083e94bcc0743444dff",
+   "scripts/r108/gaia_cmdlog.py": "eff796ab73f20e224ada67d37c95ba63f6e67cf1a56bbf7eab55558d2a47da4b",
+   "scripts/r108/gaia_estimator.py": "84cdf08db5c8ba4c84d1f5c0be97677b0f51de91610703da79d15f404ebd7402",
+   "scripts/r108/gaia_frame_leakage.py": "b2d7537004954f35e1723562fa6799fd91985c6bcf241fe7ccdf942cad78c454",
+   "scripts/r108/gaia_input_receipts.py": "8a52ee575497ab47f751d1d05a70c0612f19cc64a9d7ef41fce0efd813924f34",
+   "scripts/r108/gaia_scan_null.py": "ad3e7b2cb8b47ad7350d3aeb4b8167909e6fc4dc825b2ede3949bee6d58157f2",
+   "scripts/r108/gaia_scanlaw.py": "a10b2b83bcd028625870d6bc3439d91d2b69bb5a1e2f59123f04fe1feb699a1b",
+   "scripts/r108/gaia_summary.py": "5f236da9f59c5ed43f2baf46f39e6c17dcf0a36a10569fd00674fcb18fa16780",
+   "scripts/r108/gaia_supersede.py": "75d253087aec1d7c91a57bed185023cedf5c11615d1ef41e542308fdf2954560",
+   "scripts/r108/radio_cmdlog.py": "18d83a9d3421348ce149e02d47439b85fd91589be538ff777d87746e134fe0c2",
+   "scripts/r108/radio_input_receipts.py": "5def968ebaa0ab53228d0fd501286fc2fd40bb7c2be563290a563ad2edc31e99",
+   "scripts/r108/radio_p_of_c1.py": "08dd5bcc983c4ceec2153f1c67b6d30ac6a2092d9f34af2fb16fe1c4f32f8570",
+   "scripts/r108/radio_racs_dipole.py": "18f2f4088bb2a086b444d80100709bfb7b3fda65319e4493e41082015c911080",
+   "scripts/r108/radio_racs_fetch.py": "98acf036ae5bc6fbd56161584b992034e1e19cf63480d2aec0192deef8a392c7",
+   "scripts/r108/radio_summary.py": "e8c3ba53d4f2059d40f437a617d508014dfa427c50cc70ab5e5f92280e85f96c",
+   "scripts/r108/radio_theory_c1.py": "8e0bfde578a0f7ca0d13857766e29794ae97d5b7cfddf086d8f0142a7cbe41c6",
+   "scripts/r108/radio_v3_diag.py": "416bbfec06daac2de9641ddd6993bd279f178deb4c30c95506aabe631ae018bf",
+   "scripts/r108/review_r107_claims.py": "cdb61ed26c39dff78ca18cb491aa48b7789c92843c1a8b6e248241895621df97",
+   "scripts/r108/s1_family_atlas.py": "5d70606693bcac06653daa1a917252ce557d551919115aa5b38e1112905a9cbc",
+   "scripts/r108/s4_aggregate.py": "12d14c7c2ca2ca9e15efb0d349c466b6fe858d4cf2f6d2dc896d5446cd418483",
+   "scripts/r108/s4_bjs_comparator.py": "7b0ba3ca9a930643481ec371ca2318f015e394010f76440af222814fd1b81d7b",
+   "scripts/r108/s4_cmdlog.py": "eddbeca9f8d8c08f7f89e5450f8c3accede25f0ed9c28037042d8588de707b95",
+   "scripts/r108/s4_lit_fetch.py": "1f74fbb626681f7adfe3b85c61de35e1a95af056c5e21e8e79f6b403301030d6",
+   "scripts/r108/s4_posthoc_checks.py": "be30727555d33751f0c8d0511a98fad6e923782b1da210e804e500f7772ed7b5",
+   "scripts/r108/s5_photon_moments.py": "b1eb89d9e6648fe7d2d0737b48f50b2443b2ef71b2380c27908d1b7558fa88fd",
+   "scripts/r108/s6_b03_templates.py": "8bf0aeeab51bbd2efc92af82aea1829bb4dbaa7a166dff00286bb953cbeef23c",
+   "scripts/r108/s7_los_performance.py": "8bede5caa6342a00c659ad5ebab59e2829fb0b5c93403374a33d4084bc80707c",
+   "scripts/r108/s8_cmdlog.py": "f664ae05bdf77f50c3e8b7242773a1d0b10ee5033778b68c6d97f4f51db1d83a",
+   "scripts/r108/s8_lowz_feasibility.py": "1a1c69aeb1edb85aff0fb930657eb37068bc8c46fd768ce25d671bce2c337aeb",
+   "scripts/r108/s8_lowz_tau.py": "724c95700c82f00513b4a3061d79a70ec6d2d211ca38732a3d446035a7e2a902",
+   "scripts/r108/s8_replay_compare.py": "a7ba16bfecf70c4f8dbd7e8858e98d387489b47c990754263e788f3d03084a5e",
+   "scripts/r108/s8_uvb_vo_probe.py": "d2c40c8dd4a44001b4826717d9a57f9e5a734fb164b34e20bb7ed0ea78a73c94",
+   "tests/obsstat/test_r108_cf4_2mpp.py": "630204a57bf14620ec3c4b326e86b570bd7995c8f5d06628acf5be21be96888e",
+   "tests/obsstat/test_r108_cf4_acquire.py": "6ef6695a5a9ef1be378619452848bda534dbba113fc9cde82c656673fc6ebdcd",
+   "tests/obsstat/test_r108_cf4_cf3_overlap.py": "f319cdeff11a34d8e64ed8c46f4ebaf4d44b148f03591f8dbb43c343fa8837ca",
+   "tests/obsstat/test_r108_cf4_kband.py": "610302e9736fadb35147d051131c0b7326d89f473498462534cc9bbb3355a975",
+   "tests/obsstat/test_r108_cf4_receipts.py": "4ff0beae6f7b1dbe8d1b070b1820b3bfed1928d461a2fca3f8b5ce7ac633fe20",
+   "tests/obsstat/test_r108_frame_cf4_joint.py": "a68866f4eda34d81971cd7def89c266c13d835e27f63696af398519674d9d57c",
+   "tests/obsstat/test_r108_frame_input_receipts.py": "05a0bae97fbf87097843b2ddefe416e3783355a25e904697347253ec54eb8721",
+   "tests/obsstat/test_r108_frame_lie_flux.py": "66976c8e087d5ed311a5d9b9f0d43d47d281dddab191ab7b2598b1e913f47257",
+   "tests/obsstat/test_r108_frame_registry.py": "94499c9cb941dbb40051dcc1552e6a1cef83ca590bb4f259c5a333a6d25190bc",
+   "tests/obsstat/test_r108_gaia_acquire.py": "f563e84706747f6a68f0b7ee4633976b94e0a063d62106a3450e4a819ab1dfd6",
+   "tests/obsstat/test_r108_gaia_agn_split.py": "2f3db18a458a291dc0c7a8a364242861e1c3b815af200c7626938be494bcefc5",
+   "tests/obsstat/test_r108_gaia_estimator.py": "a1260756f239f90ea1b331dfb221c4f0b0fa5670e3d5292c55ac53013031fac1",
+   "tests/obsstat/test_r108_gaia_frame_leakage.py": "8c8b879c8131a82f1e1c81657b85a9c6ff5b848e2b61bbbb00af8fb625e63e9d",
+   "tests/obsstat/test_r108_gaia_scan_null.py": "66791d9fc9406c1e1b39f454ce7e2e9cd3b90dda93892f3a24c600bbfb0df8db",
+   "tests/obsstat/test_r108_gaia_scanlaw.py": "9bb22d639f9fda641827cfdb7b8acb6d6132188897f5a05f40317fa34a62cad8",
+   "tests/obsstat/test_r108_gaia_supersede.py": "1ff159a166feb1613b5921a7975e5d9e855a261b3ae2ac28f1bd5a54b8200994",
+   "tests/obsstat/test_r108_radio_input_receipts.py": "8671dd32518ce6aa2e67274bbee88bc4e390f66197eda44c9a367b0c2c11e84a",
+   "tests/obsstat/test_r108_radio_p_of_c1.py": "0add58f756d41e04ab224cf5fb8d51a587a166d6796fe74618a24343dd67edc1",
+   "tests/obsstat/test_r108_radio_racs_dipole.py": "e20c96a0001b1b52940ab4fe95fceb7e31319d5e9e9da8d6be3ac485f6e8b9be",
+   "tests/obsstat/test_r108_radio_theory_c1.py": "a8dcbbfffae34d0c25214106c9dff4ad1b3297e52cb1e6c0b3e4470e38f06bca",
+   "tests/obsstat/test_r108_s4_rotation_fitter.py": "c2a736a7763c5343a55afb00c11268c575c4ec2d29401a4fa451759d86f61f2b",
+   "tests/obsstat/test_r108_s4_summary.py": "7070033a99d8f4e8eb2bba74aef77bb1c2015bc050b67e31def8dea3fc54f154",
+   "tests/obsstat/test_r108_s6_kernel.py": "72da1c58314cc3056a3b9c9407a9f0f977fc20e0f33e622755b78184ef486fbc",
+   "tests/obsstat/test_r108_s8_lowz_feasibility.py": "d28006c352d9685142a15d88e327a5f5f2ba9f0ef63956e6f57bc08562e9d708",
+   "tests/obsstat/test_r108_s8_lowz_tau.py": "057a0552612c555ebd1c646c49cce3c11a36e54541ce994487d257a1d78e8fbf",
+   "tests/r107_cloud/test_acquisition.py": "fde7b4acaf42a9973e6ae30a5c3559cb4881462498cfb3f4f1eafcdacc0820a6"
+  },
+  "head": "b79b9526b1817cc5946858f5891f7e7b567b87a2"
+ },
+ "items": {
+  "D01": {
+   "failed": [
+    {
+     "error": null,
+     "fetched_at_utc": "2026-11-24T01:21:40.982776+00:00",
+     "name": "J_AJ_152_50_ReadMe",
+     "note": "scripts.r107_cloud.acquisition fetch --items D01 D02 raised urllib HTTPError 404 on the first file; no bytes written; see logs/cf4_acq_D01_D02.log",
+     "query": null,
+     "route": null,
+     "status": "FAILED_HTTP_404",
+     "url": "https://cdsarc.cds.unistra.fr/ftp/J/AJ/152/50/ReadMe"
+    },
+    {
+     "error": "ConnectTimeout(MaxRetryError(\"HTTPSConnectionPool(host='tapvizier.cds.unistra.fr', port=443): Max retries exceeded with url: /TAPVizieR/tap/async (Caused by ConnectTimeoutError(<HTTPSConnection(host='tapvizier.cds.unistra.fr', port=443) at 0x7909533d3f80>, 'Connection to tapvizier.cds.unistra.fr timed out. (connect timeout=60.0)'))\"))",
+     "fetched_at_utc": "2026-11-24T02:00:19.732327+00:00",
+     "name": "tapvizier_table3_count.vot",
+     "note": null,
+     "query": "SELECT COUNT(*) AS n FROM \"J/AJ/152/50/table3\"",
+     "route": "pyvo.dal.TAPService",
+     "status": "FAILED_EXCEPTION",
+     "url": "https://tapvizier.cds.unistra.fr/TAPVizieR/tap"
+    }
+   ],
+   "fetched": [
+    {
+     "bytes": 15946452,
+     "fetched_at_utc": "2026-11-24T01:34:46.450115+00:00",
+     "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+     "job_id": null,
+     "name": "J_AJ_152_50_table3.vot",
+     "path": "/home/cosmosapjw/Downloads/htt_r108/cf4/D01/J_AJ_152_50_table3.vot",
+     "query": "-source=J/AJ/152/50/table3\n-out.max=unlimited\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+     "route": "astroquery.vizier",
+     "rows": {
+      "J/AJ/152/50/table3": 17669
+     },
+     "sha256": "8ff91a41f05458892be2c5dd8a3855b99079c1362c17defba6ca8a2f58b9ffc4",
+     "sha256_on_disk_matches": true,
+     "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+    },
+    {
+     "bytes": 5182516,
+     "fetched_at_utc": "2026-11-24T01:34:50.828675+00:00",
+     "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+     "job_id": null,
+     "name": "J_AJ_152_50_table2.vot",
+     "path": "/home/cosmosapjw/Downloads/htt_r108/cf4/D01/J_AJ_152_50_table2.vot",
+     "query": "-source=J/AJ/152/50/table2\n-out.max=unlimited\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+     "route": "astroquery.vizier",
+     "rows": {
+      "J/AJ/152/50/table2": 11508
+     },
+     "sha256": "17124d39f6a09ba86e5506969a22963c278db7d786ebdeec07d6eea6e20b7e90",
+     "sha256_on_disk_matches": true,
+     "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+    },
+    {
+     "bytes": 21325,
+     "fetched_at_utc": "2026-11-24T01:37:30.687028+00:00",
+     "final_url": "https://vizier.idia.ac.za/viz-bin/VizieR?-source=J/AJ/152/50&-meta.all",
+     "job_id": null,
+     "name": "vizier_J_AJ_152_50_meta.html",
+     "path": "/home/cosmosapjw/Downloads/htt_r108/cf4/D01/vizier_J_AJ_152_50_meta.html",
+     "query": null,
+     "route": "scripts.r107_cloud.acquisition.fetch_file",
+     "rows": null,
+     "sha256": "37e6e2230a5d95ac0331def97c4073f65506163d3afd5e3727c631ce60dc2ea1",
+     "sha256_on_disk_matches": true,
+     "url": "https://vizier.idia.ac.za/viz-bin/VizieR?-source=J/AJ/152/50&-meta.all"
+    },
+    {
+     "bytes": 6302,
+     "fetched_at_utc": "2026-11-24T02:00:30.838241+00:00",
+     "final_url": "http://reg.g-vo.org/tap/sync",
+     "job_id": null,
+     "name": "regtap_D01_D03_tables.vot",
+     "path": "/home/cosmosapjw/Downloads/htt_r108/cf4/D01/regtap_D01_D03_tables.vot",
+     "query": "SELECT t.ivoid, t.table_name, t.table_description, t.nrows FROM rr.res_table AS t WHERE t.ivoid IN ('ivo://cds.vizier/j/aj/152/50','ivo://cds.vizier/j/mnras/445/2677','ivo://cds.vizier/vii/259','ivo://cds.vizier/j/mnras/443/1231')",
+     "route": "pyvo RegTAP",
+     "rows": {
+      "res_table": 8
+     },
+     "sha256": "e337ad29389048c5790f3e96c775ce611f6a053833ca6b7a3f1b6fc59c83fab8",
+     "sha256_on_disk_matches": true,
+     "url": "http://reg.g-vo.org/tap/sync"
+    }
+   ],
+   "probes": []
+  },
+  "D02": {
+   "failed": [
+    {
+     "error": null,
+     "fetched_at_utc": "2026-11-24T01:34:52.321980+00:00",
+     "name": "J_MNRAS_445_2677_table1.vot",
+     "note": null,
+     "query": "-source=J/MNRAS/445/2677/table1\n-out.max=unlimited\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+     "route": "astroquery.vizier",
+     "status": "FAILED_SERVICE_ERROR",
+     "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+    }
+   ],
+   "fetched": [
+    {
+     "bytes": 1811691,
+     "fetched_at_utc": "2026-11-24T01:35:07.137014+00:00",
+     "final_url": "https://vizier.idia.ac.za/viz-bin/votable",
+     "job_id": null,
+     "name": "J_MNRAS_445_2677_table1.vot",
+     "path": "/home/cosmosapjw/Downloads/htt_r108/cf4/D02/J_MNRAS_445_2677_table1.vot",
+     "query": "-source=J/MNRAS/445/2677/table1\n-out.max=unlimited\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+     "route": "astroquery.vizier",
+     "rows": {
+      "J/MNRAS/445/2677/table1": 8885
+     },
+     "sha256": "3a9fa69ffba01dc32720dcc034b0bfbb8c600a9604ee7fa89ed8fbf8e7371ef4",
+     "sha256_on_disk_matches": true,
+     "url": "https://vizier.idia.ac.za/viz-bin/votable"
+    },
+    {
+     "bytes": 36109,
+     "fetched_at_utc": "2026-11-24T01:37:23.154991+00:00",
+     "final_url": "https://vizier.idia.ac.za/viz-bin/VizieR?-source=J/MNRAS/445/2677&-meta.all",
+     "job_id": null,
+     "name": "vizier_J_MNRAS_445_2677_meta.html",
+     "path": "/home/cosmosapjw/Downloads/htt_r108/cf4/D02/vizier_J_MNRAS_445_2677_meta.html",
+     "query": null,
+     "route": "scripts.r107_cloud.acquisition.fetch_file",
+     "rows": null,
+     "sha256": "3a1b1c43cd729dcf8ae0264004f73a77e15ba86a1d3ea3c2ddcdb7311d0c8826",
+     "sha256_on_disk_matches": true,
+     "url": "https://vizier.idia.ac.za/viz-bin/VizieR?-source=J/MNRAS/445/2677&-meta.all"
+    }
+   ],
+   "probes": []
+  },
+  "D03": {
+   "failed": [],
+   "fetched": [
+    {
+     "bytes": 7464318,
+     "fetched_at_utc": "2026-11-24T01:35:23.577721+00:00",
+     "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+     "job_id": null,
+     "name": "J_MNRAS_443_1231_FPsample.vot",
+     "path": "/home/cosmosapjw/Downloads/htt_r108/cf4/D03/J_MNRAS_443_1231_FPsample.vot",
+     "query": "-source=J/MNRAS/443/1231/FPsample\n-out.max=unlimited\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+     "route": "astroquery.vizier",
+     "rows": {
+      "J/MNRAS/443/1231/FPsample": 11102
+     },
+     "sha256": "ac12360640076f9fc153c6b44217f50a9eb5836feda9548640ea9c0ada5f84b7",
+     "sha256_on_disk_matches": true,
+     "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+    },
+    {
+     "bytes": 28201181,
+     "fetched_at_utc": "2026-11-24T01:35:38.846504+00:00",
+     "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+     "job_id": null,
+     "name": "VII_259_6dfgs.vot",
+     "path": "/home/cosmosapjw/Downloads/htt_r108/cf4/D03/VII_259_6dfgs.vot",
+     "query": "-source=VII/259/6dfgs\n-out.max=unlimited\n-out=6dFGS,RAJ2000,DEJ2000,cz,e_cz,q_cz,r_cz,f_cz,PrID,AV,bJmag,rFmag,Target,Nz,Nm,S/G\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+     "route": "astroquery.vizier",
+     "rows": {
+      "VII/259/6dfgs": 124647
+     },
+     "sha256": "902b06ed9e7d5e34a6d02655cf46fcc65aabfa5fc70f7cf58037ab3f050c6ccb",
+     "sha256_on_disk_matches": true,
+     "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+    },
+    {
+     "bytes": 21392,
+     "fetched_at_utc": "2026-11-24T01:37:15.218615+00:00",
+     "final_url": "https://vizier.idia.ac.za/viz-bin/VizieR?-source=VII/259&-meta.all",
+     "job_id": null,
+     "name": "vizier_VII_259_meta.html",
+     "path": "/home/cosmosapjw/Downloads/htt_r108/cf4/D03/vizier_VII_259_meta.html",
+     "query": null,
+     "route": "scripts.r107_cloud.acquisition.fetch_file",
+     "rows": null,
+     "sha256": "fd567a5c7e325a47c04de8d6314603289dff99bfe73a496b4bc2335c050c60dd",
+     "sha256_on_disk_matches": true,
+     "url": "https://vizier.idia.ac.za/viz-bin/VizieR?-source=VII/259&-meta.all"
+    },
+    {
+     "bytes": 22296,
+     "fetched_at_utc": "2026-11-24T01:37:37.941979+00:00",
+     "final_url": "https://vizier.idia.ac.za/viz-bin/VizieR?-source=J/MNRAS/443/1231&-meta.all",
+     "job_id": null,
+     "name": "vizier_J_MNRAS_443_1231_meta.html",
+     "path": "/home/cosmosapjw/Downloads/htt_r108/cf4/D03/vizier_J_MNRAS_443_1231_meta.html",
+     "query": null,
+     "route": "scripts.r107_cloud.acquisition.fetch_file",
+     "rows": null,
+     "sha256": "9b82ce1b3674b62ce8f22e900aeeb5f1ee739bc348c90bfc79b3f839327d75c8",
+     "sha256_on_disk_matches": true,
+     "url": "https://vizier.idia.ac.za/viz-bin/VizieR?-source=J/MNRAS/443/1231&-meta.all"
+    }
+   ],
+   "probes": []
+  },
+  "D04": {
+   "failed": [
+    {
+     "error": "URLError(TimeoutError('timed out'))",
+     "fetched_at_utc": "2026-11-24T01:39:02.244420+00:00",
+     "name": "portal_index.html",
+     "note": null,
+     "query": null,
+     "route": "scripts.r107_cloud.acquisition.fetch_file",
+     "status": "FAILED_EXCEPTION",
+     "url": "https://git.aquila-consortium.org/guilhem_lavaux/cosmicflows-deployer/raw/branch/main/download/index.html"
+    },
+    {
+     "error": "URLError(TimeoutError('timed out'))",
+     "fetched_at_utc": "2026-11-24T01:55:32.119652+00:00",
+     "name": "portal_index_attempt2.html",
+     "note": null,
+     "query": null,
+     "route": "scripts.r107_cloud.acquisition.fetch_file",
+     "status": "FAILED_EXCEPTION",
+     "url": "https://git.aquila-consortium.org/guilhem_lavaux/cosmicflows-deployer/raw/branch/main/download/index.html"
+    }
+   ],
+   "fetched": [],
+   "probes": [
+    {
+     "dns_addresses": [
+      "194.57.221.134"
+     ],
+     "dns_canonical": "athos.iap.fr",
+     "error": "TimeoutError('timed out')",
+     "fetched_at_utc": "2026-11-24T01:56:14.097192+00:00",
+     "name": "probe:git.aquila-consortium.org",
+     "status": "FAILED_TCP_CONNECT"
+    },
+    {
+     "dns_addresses": [
+      "194.57.221.152",
+      "194.57.221.134"
+     ],
+     "dns_canonical": "llb.aquila-consortium.org",
+     "error": "TimeoutError('timed out')",
+     "fetched_at_utc": "2026-11-24T01:56:54.751204+00:00",
+     "name": "probe:cosmicflows.iap.fr",
+     "status": "FAILED_TCP_CONNECT"
+    },
+    {
+     "dns_addresses": [
+      "194.57.221.134",
+      "194.57.221.152"
+     ],
+     "dns_canonical": "llb.aquila-consortium.org",
+     "error": "TimeoutError('timed out')",
+     "fetched_at_utc": "2026-11-24T01:57:34.816257+00:00",
+     "name": "probe:cosmicflows.uwaterloo.ca",
+     "status": "FAILED_TCP_CONNECT"
+    },
+    {
+     "dns_addresses": [
+      "194.57.221.134",
+      "194.57.221.152"
+     ],
+     "dns_canonical": "llb.aquila-consortium.org",
+     "error": "TimeoutError('timed out')",
+     "fetched_at_utc": "2026-11-24T01:58:14.882314+00:00",
+     "name": "probe:www.aquila-consortium.org",
+     "status": "FAILED_TCP_CONNECT"
+    },
+    {
+     "dns_addresses": [
+      "194.57.221.153"
+     ],
+     "dns_canonical": "manticore.web.data-2-osu.iap.fr",
+     "error": "TimeoutError('timed out')",
+     "fetched_at_utc": "2026-11-24T01:58:35.535462+00:00",
+     "name": "probe:manticore.web.data-2-osu.iap.fr",
+     "status": "FAILED_TCP_CONNECT"
+    },
+    {
+     "dns_addresses": [
+      "194.57.221.153"
+     ],
+     "dns_canonical": "porthos.iap.fr",
+     "error": "TimeoutError('timed out')",
+     "fetched_at_utc": "2026-11-24T01:58:56.473263+00:00",
+     "name": "probe:data-2-osu.iap.fr",
+     "status": "FAILED_TCP_CONNECT"
+    },
+    {
+     "dns_addresses": [
+      "131.142.198.215"
+     ],
+     "dns_canonical": "slimbad.cfa.harvard.edu",
+     "error": null,
+     "fetched_at_utc": "2026-11-24T01:58:56.721450+00:00",
+     "name": "probe:vizier.cfa.harvard.edu",
+     "status": "TCP_CONNECTED"
+    }
+   ]
+  },
+  "D05": {
+   "failed": [
+    {
+     "error": null,
+     "fetched_at_utc": "2026-11-24T01:40:41.044429+00:00",
+     "name": "manticore_local_000.h5,manticore_local_001.h5",
+     "note": "one bounded attempt; RuntimeError 'Failed to fetch public keys for authentication' after 135.11 s; no bytes; see logs/cf4_D05_manticore.log",
+     "query": null,
+     "route": "scripts.r103.manticore_cf4_pv fetch via manticore-data 2.0.1 venv (~/Downloads/htt_r103/manticore-2.0.1-venv)",
+     "status": "FAILED_CONNECT_TIMEOUT",
+     "url": "https://manticore.web.data-2-osu.iap.fr/public-keys.json (manticore-data 2.0.1 public-key step)"
+    }
+   ],
+   "fetched": [],
+   "probes": []
+  },
+  "PRE_EXISTING": {
+   "failed": [],
+   "fetched": [],
+   "pre_existing": [
+    {
+     "bytes": 696070,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "table1.txt",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R100_SOURCE_LAW_OPTICAL_MULTIPROBE_20261123/CF4_UPSTREAM_KBAND_RESULTS.json",
+      "docs/research_program/observational_publication_20261015/R100_SOURCE_LAW_OPTICAL_MULTIPROBE_20261123/SOURCE_INTAKE_RECEIPT.json",
+      "docs/research_program/observational_publication_20261015/R101_SIXTH_SOLVER_RESPONSE_20261123/CF4_PREDICTIVE_RESPONSE.json",
+      "docs/research_program/observational_publication_20261015/R101_SIXTH_SOLVER_RESPONSE_20261123/CF4_RAW_SOURCE_RESULTS_KO.md",
+      "docs/research_program/observational_publication_20261015/R101_SIXTH_SOLVER_RESPONSE_20261123/DATA_ACQUISITION_PLAN.json"
+     ],
+     "originating_round": "R100",
+     "path": "/home/cosmosapjw/Downloads/htt_r100/source_intake/table1.txt",
+     "read_by": [
+      "scripts.r108.cf4_2mpp_field",
+      "scripts.r108.cf4_cf3_table3_overlap",
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "08f3d4b264e28efcb574bea4efa370d66e4f299f8254e21bd04979fb8301a14d",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 8388736,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "xVelocity.npy",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R104_DATA_SOLVER_CONTINUATION_20261124/CF4_2MRS_FIELD.json",
+      "docs/research_program/observational_publication_20261015/R104_DATA_SOLVER_CONTINUATION_20261124/R104_RESULTS.json",
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_CORAS_MARKS.json",
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_FIELD_HOLDOUT.json",
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_H05_AXES.json"
+     ],
+     "originating_round": "R104",
+     "path": "/home/cosmosapjw/Downloads/htt_r104_fields/2mrs_nn/xVelocity.npy",
+     "read_by": [
+      "scripts.r108.cf4_2mpp_field",
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "50edf12e9dd8a79959071eda57ccd197f2cfba2bae5233210ab6243541aa4643",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 8388736,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "yVelocity.npy",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R104_DATA_SOLVER_CONTINUATION_20261124/CF4_2MRS_FIELD.json",
+      "docs/research_program/observational_publication_20261015/R104_DATA_SOLVER_CONTINUATION_20261124/R104_RESULTS.json",
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_CORAS_MARKS.json",
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_FIELD_HOLDOUT.json",
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_H05_AXES.json"
+     ],
+     "originating_round": "R104",
+     "path": "/home/cosmosapjw/Downloads/htt_r104_fields/2mrs_nn/yVelocity.npy",
+     "read_by": [
+      "scripts.r108.cf4_2mpp_field",
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "c125f3d97aa8f9ed34110285e018df0849d955b62f0a472cebb34d196e2cb447",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 8388736,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "zVelocity.npy",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R104_DATA_SOLVER_CONTINUATION_20261124/CF4_2MRS_FIELD.json",
+      "docs/research_program/observational_publication_20261015/R104_DATA_SOLVER_CONTINUATION_20261124/R104_RESULTS.json",
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_CORAS_MARKS.json",
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_FIELD_HOLDOUT.json",
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_H05_AXES.json"
+     ],
+     "originating_round": "R104",
+     "path": "/home/cosmosapjw/Downloads/htt_r104_fields/2mrs_nn/zVelocity.npy",
+     "read_by": [
+      "scripts.r108.cf4_2mpp_field",
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "ae1e0dfadf48c27afcf7f30c53c2e978f7edeab3506c9e446ed7f73770b207d6",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 5037,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "configuration.hpp",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CORAS_BUILD_RECEIPT.json",
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/CF3/CF3_OVERLAP.json.gz",
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/REVIEW/DATA_SUBTASKS_FIRST_PASS.json",
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CORAS_BUILD_RECEIPT.json"
+     ],
+     "originating_round": "R105",
+     "path": "/home/cosmosapjw/Downloads/htt_r105_coras/deps/CORAS/configuration.hpp",
+     "read_by": [
+      "scripts.r108.cf4_cf3_table3_overlap",
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "73caeb95da7da53e069f9182feb4921c6b0dad7392157810ee1abda5ebe6b181",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 3471262,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "2MRS_group_member_catalog.dat",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_CORAS_DRAW_RUN.json",
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CORAS_BINARY_REPLAY.json",
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CORAS_BUILD_RECEIPT.json",
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CORAS_H02.json",
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/CF3/CF3_OVERLAP.json.gz"
+     ],
+     "originating_round": "R105",
+     "path": "/home/cosmosapjw/Downloads/htt_r105_coras/deps/CORAS/data/2MRS_group_member_catalog.dat",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "60cb3ece1aa773cc1263ac9d356b5f200853d465fa1de596ba9993101ea32dfc",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 8422,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "calibrated_parameters_CR1-50.dat",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/CF3/CF3_OVERLAP.json.gz",
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/REVIEW/DATA_SUBTASKS_FIRST_PASS.json"
+     ],
+     "originating_round": "R105",
+     "path": "/home/cosmosapjw/Downloads/htt_r105_coras/deps/CORAS/data/calibrated_parameters_CR1-50.dat",
+     "read_by": [
+      "scripts.r108.cf4_cf3_table3_overlap",
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "d4c1eceb688d3361aa13f453676da76d87d2c2ed2e90b11d68b70ed961b7a1a5",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 4936,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "cosmology.cpp",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CORAS_BUILD_RECEIPT.json",
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/CF3/CF3_OVERLAP.json.gz",
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/REVIEW/DATA_SUBTASKS_FIRST_PASS.json",
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CORAS_BUILD_RECEIPT.json"
+     ],
+     "originating_round": "R105",
+     "path": "/home/cosmosapjw/Downloads/htt_r105_coras/deps/CORAS/src/cosmology.cpp",
+     "read_by": [
+      "scripts.r108.cf4_cf3_table3_overlap",
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "0f72bacc50185b1e6b570b71082806a76c68b9a4cc1e5775dc8757cad651a429",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 40934,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "transformations.cpp",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CORAS_BUILD_RECEIPT.json",
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/CF3/CF3_OVERLAP.json.gz",
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/REVIEW/DATA_SUBTASKS_FIRST_PASS.json",
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CORAS_BUILD_RECEIPT.json"
+     ],
+     "originating_round": "R105",
+     "path": "/home/cosmosapjw/Downloads/htt_r105_coras/deps/CORAS/src/transformations.cpp",
+     "read_by": [
+      "scripts.r108.cf4_cf3_table3_overlap",
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "b3e557d552d218be9e338762459ca6718f792dfc743257556e9131dd8c727e31",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 186915,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "mean.tsv",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_CORAS_DRAW_RUN.json",
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_CORAS_MARKS.json",
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/CF3/CF3_OVERLAP.json.gz",
+      "/home/cosmosapjw/Downloads/htt_r105_coras/sixdf8/run.json"
+     ],
+     "originating_round": "R105",
+     "path": "/home/cosmosapjw/Downloads/htt_r105_coras/sixdf8/mean.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "c4e172eb0f5d560b04a9fb39d73e6d3a8460f4f097842d16fee886e94eaf92b3",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 190183,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_1.tsv",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_CORAS_DRAW_RUN.json",
+      "/home/cosmosapjw/Downloads/htt_r105_coras/sixdf8/run.json"
+     ],
+     "originating_round": "R105",
+     "path": "/home/cosmosapjw/Downloads/htt_r105_coras/sixdf8/residual_1.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "90084c39ca338f292ba6426c0e6f50ae40bc15171ec7296f79e25421f3961adc",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 188157,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_2.tsv",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_CORAS_DRAW_RUN.json",
+      "/home/cosmosapjw/Downloads/htt_r105_coras/sixdf8/run.json"
+     ],
+     "originating_round": "R105",
+     "path": "/home/cosmosapjw/Downloads/htt_r105_coras/sixdf8/residual_2.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "aa975b3fafcab2ce451de24f17c4ce0bd5238dcb03af31c63659b98177110e94",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189883,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_3.tsv",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_CORAS_DRAW_RUN.json",
+      "/home/cosmosapjw/Downloads/htt_r105_coras/sixdf8/run.json"
+     ],
+     "originating_round": "R105",
+     "path": "/home/cosmosapjw/Downloads/htt_r105_coras/sixdf8/residual_3.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "1735da95875154b1a793284f06036573df40a3fe3cb74aea5f02840804d7b34a",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 190278,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_4.tsv",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_CORAS_DRAW_RUN.json",
+      "/home/cosmosapjw/Downloads/htt_r105_coras/sixdf8/run.json"
+     ],
+     "originating_round": "R105",
+     "path": "/home/cosmosapjw/Downloads/htt_r105_coras/sixdf8/residual_4.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "58265a85dd8a123a7b5b511759bfa4b96e3405225952b60375aa125cce2cbb1b",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189433,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_5.tsv",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_CORAS_DRAW_RUN.json",
+      "/home/cosmosapjw/Downloads/htt_r105_coras/sixdf8/run.json"
+     ],
+     "originating_round": "R105",
+     "path": "/home/cosmosapjw/Downloads/htt_r105_coras/sixdf8/residual_5.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "bc7b055b2edcb1f54f5aa02c025056275485826ec4a8591e36f6d21468ef2b08",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189807,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_6.tsv",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_CORAS_DRAW_RUN.json",
+      "/home/cosmosapjw/Downloads/htt_r105_coras/sixdf8/run.json"
+     ],
+     "originating_round": "R105",
+     "path": "/home/cosmosapjw/Downloads/htt_r105_coras/sixdf8/residual_6.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "b066aa1ba8efbea445d0d51f3718e9e006394d59b8778a21f0a6d30dc0628610",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 191121,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_7.tsv",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_CORAS_DRAW_RUN.json",
+      "/home/cosmosapjw/Downloads/htt_r105_coras/sixdf8/run.json"
+     ],
+     "originating_round": "R105",
+     "path": "/home/cosmosapjw/Downloads/htt_r105_coras/sixdf8/residual_7.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "eae6c304796b2f2b02689f032720f4ff83264c8c286676bf0315a2de0d7d6fc5",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 190332,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_8.tsv",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_CORAS_DRAW_RUN.json",
+      "/home/cosmosapjw/Downloads/htt_r105_coras/sixdf8/run.json"
+     ],
+     "originating_round": "R105",
+     "path": "/home/cosmosapjw/Downloads/htt_r105_coras/sixdf8/residual_8.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "9a96dad264434e671e8aedac79f6c833f3483d675ff7064860c08f836d61f281",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 2296,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "run.json",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_CORAS_MARKS.json",
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/CF3/CF3_OVERLAP.json.gz",
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/REVIEW/DATA_SUBTASKS_FIRST_PASS.json"
+     ],
+     "originating_round": "R105",
+     "path": "/home/cosmosapjw/Downloads/htt_r105_coras/sixdf8/run.json",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "93d648a3f7c4439c17c15dfb111c8a33e8365d46e90b318469dbeb73afb0d363",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 549314,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "sites.tsv",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_CORAS_DRAW_RUN.json",
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/CF3/CF3_OVERLAP.json.gz",
+      "/home/cosmosapjw/Downloads/htt_r105_coras/sixdf8/run.json",
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R105",
+     "path": "/home/cosmosapjw/Downloads/htt_r105_coras/sixdf8/sites.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "be813eae09f87d569ef6af31934f7e6ffe58740d7c1cc681dc6a22067b15bc6f",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 11272,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "CF4_MARKS128.json",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/CF3/CF3_OVERLAP.json.gz",
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/CORAS/CF4_MARKS128_INFLUENCE.json",
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/R106_RESULTS.json",
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/REVIEW/DATA_SUBTASKS_FIRST_PASS.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/CF4_MARKS128.json",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "0b0ba74933184cdef8fc82e77b5a0e741ed11ca22046316c455b2eaa3835318a",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 1718997,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "SIXDF_CF3_2MRS_CROSSTABLE.tsv",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/CF3/CF3_OVERLAP.json.gz",
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/CF3/LARGE_OUTPUT_SHA256.txt"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/cf3/SIXDF_CF3_2MRS_CROSSTABLE.tsv",
+     "read_by": [
+      "scripts.r108.cf4_cf3_table3_overlap"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "38283acb2d4a2504908c68699b4862501f4871cf68b749e1ae59bd2ff6b881de",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 187010,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "mean.tsv",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/CF3/CF3_OVERLAP.json.gz",
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/CORAS/CF4_MARKS128.json",
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/CORAS/CF4_MARKS128_INFLUENCE.json",
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/CORAS/CF4_MARKS8_MAIN.json",
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/mean.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "17be9e05847de18ce23393e2d1d23e6571dcf48d29a8c95b25c0155dd06903eb",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189439,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_1.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_1.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "8a4c1baba55fe6d57ee86f7b30ea8a8f1057597b4f2dc3006efc3cb87c9cbd03",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 188981,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_10.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_10.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "a816469ec49291bc3eabf45cec2141f1f7af8509c1529c8c981ed2d4c5b5afab",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 190135,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_100.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_100.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "e1ea1244602a06f0d2118a192aa1207792645c27202832daa8ac04e72b80d95a",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 190175,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_101.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_101.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "ab84e1f17e1cb767b499b874186097f3bf82149626944d10b8d2522834b36134",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 190542,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_102.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_102.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "630b4ff5eadb08367ca641aea7ef5fa9f8dc2a26b85d92d50d9d8f2cff83bb07",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 188230,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_103.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_103.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "fdffd820ebd3d2bad6e6660174601168865a17cdc2c037138d4c29fc35a91b68",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 190647,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_104.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_104.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "4e2f40e1bbdd9842e3ec796629ad355905e324bf3c39e77610631e491b1ffbbc",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 188076,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_105.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_105.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "fd9dcc64a9517e50842a54b0157278843b64445fc5101a7beb67457ac279d187",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 188460,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_106.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_106.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "877a280d7c524cd239e1b05b1c2a22209b4241057e611a87f2d2d4d0f095643e",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 191095,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_107.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_107.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "5f402074849fcfeafb68d1bc46a34afadf51f5ef37c76eca0be036d6d5f411ad",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 190232,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_108.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_108.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "52a136d97d7d6c3e1ec0d2386a8fbdc36c8a9dc8630fbc4a80b1c0fcba44e6e2",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 188965,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_109.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_109.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "8ad29ef15f0a93bba48eeebae8b64eb090021e95851d85b0c1be6196ccb2e0e5",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189132,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_11.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_11.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "aa02adc162ec80157d7b2291dbb9706ab2ef45741ec12ffb15aaf3dcec536482",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 187144,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_110.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_110.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "70a19d4fe58049823a0c95c11127bdb275773d05e46f74140380db47c255f7dd",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 191423,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_111.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_111.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "9002dddba05015d7fc8994dfc0ffd850f3d95186dc24c32a84a2333b5f17fc16",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 187633,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_112.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_112.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "279c7be3384cdb3891f25e18c7a3f814c341055ea30c4509e8adb59f6d2ccd36",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189574,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_113.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_113.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "13af6487485f8972bcffa3ab7390329db1caae556bfa8168bfed2873f6cc7652",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 187683,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_114.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_114.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "1b6e4017b1809ed8494ababfce0d6e6a41209441e97b84620ffa61294a745c14",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 188402,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_115.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_115.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "cec0c05159924414adb662f8665376b9ff7a00e52f69faa2b204c79af3963a85",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 186672,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_116.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_116.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "5b208c9add28afb8691e5cff4c17374c6e1cd3b0f7f70740d5299a737cfa6502",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189174,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_117.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_117.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "038e0f1dc3c453d43ceda78a7cfc2fe670f03dae589c4e456c27f9a1a4d68e73",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 190240,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_118.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_118.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "085214c85457213bdc8f638bd27bd476bf1e2d7651814d54b1073b5f688c3cbf",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 187964,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_119.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_119.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "5935f04cf68ca1c84b9bb4a28af36e6f95c77f121a1329fe744301e183f77f2d",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 191107,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_12.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_12.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "cc1f930f9fa31b962f7ce9abada1d314ebdbf29bfd1e13a4d7373d3b4cc0edbb",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 187224,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_120.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_120.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "5a874d29d8764a3288313717bb54225e35addc4a6ec02454dbc830500bc7ad00",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 190842,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_121.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_121.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "67801d3b5292672c8f0e4c61ec2aede085a10bca0496b7a44ae234f55d3963c0",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 188073,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_122.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_122.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "d6b735487b87f18d26ccdab977a35247eeafb55720596d4859ae90ec43d09e22",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 188133,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_123.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_123.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "aa56fba415db969711618f690d62f5319cae942c6ade2076c621ba4cc4c64d96",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 190640,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_124.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_124.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "86dcd05040a8a0ac784783e5527c7ef6641cc1749f2629b1dd090e47a39f6e7b",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 187491,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_125.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_125.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "df20e7bf50acc6e219f51ea42a0db8c0d6f757b1899591fa069c9ec19120e450",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 188604,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_126.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_126.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "7405ea5d7a55d54ed1039f731d48f2f7adc44065e0078f2a5c8f3023331fee62",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 188485,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_127.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_127.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "ca56f02a1eadc82848f7a2c28e64f59adac984fa7712219baad20176b0a27061",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 188822,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_128.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_128.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "d5579b4f3ebd0ca3fb5d9f894a9f313c66f9c7c80611324ed5656e148e52e2b8",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 188794,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_13.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_13.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "40ef07a3a3016ee2dacfc9bc25b685fe4c9bd708e70b4cedec48cdd104ca8311",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 188280,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_14.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_14.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "7bed674bf0bd07f6cd14cdd208a5876822bb0d04facc15cb43d5eb556995dd6a",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 190377,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_15.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_15.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "65669594c5cb314c15556dd146b8f6bd88f6ad8975395fc8239d3775575d8493",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 190279,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_16.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_16.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "3e045265a931fa8a447beb5a2386c1936cfae8cbb1eab4a83c8d2fcbe3194278",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189309,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_17.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_17.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "631478b82f924fffe10236cd7851a3077c9183570e3975e8473cfbedc1e2e618",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189361,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_18.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_18.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "2ce0d8b3fd823005914ecf612cb51ad87d91519e7949fd9390c5098b264c8fa6",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 190329,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_19.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_19.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "8e49bb4277de006646a1cb36e21616af7a78b21798e04437c475cf0156a85d3e",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189404,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_2.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_2.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "1e8e3da71d30807e851fc9ccf02391efaf413167c21b814da0e0c3369fe1f684",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189856,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_20.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_20.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "f8baca8070b3ce2394f43a127be587b1722f74d13dd6a3d76b0eb3e42fce296a",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 187600,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_21.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_21.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "09816cb4442197bcef9f4e463eef2a14c94b66c6dce2bcfa97ab3afc890b1033",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 185523,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_22.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_22.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "fc4c7b1ef46381ef5e71614f14906c9640bd23ea7aeb79e5ecd45a75462c475d",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 192633,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_23.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_23.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "3c1cf3345026eb365e653571fcaf79da7513098ba733c818b44ca23211d623b5",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189695,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_24.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_24.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "5e08124ac474a7589bd853ffecb2eb2ca8df3ac7b3dc594f5877f1c3ea77cf72",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189320,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_25.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_25.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "6d75902d08c6fbe7778d021752334da904829cd896735c7ea572b59ed26f72e3",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189516,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_26.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_26.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "bed6febc5e3c377c692598521266c5655daf6267771c8a85eead8e8123da7438",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189726,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_27.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_27.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "41c484b9c5005527cde0f652262768f728394bed804344cb928337d92d207640",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 186335,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_28.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_28.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "3ecfc15a8e5f2f23a579eab3e7144f509847a468ee6cfb03a7d5ebddef3136e4",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189533,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_29.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_29.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "79ad6d5441b6e78d7995e20dae38d1aeccdbcbcc672b129486a8b94c56bc41e0",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 188144,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_3.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_3.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "326a7cd08bd024e1dc5dce7ca0749fba2333dfd549462263e606b32d568b0262",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189924,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_30.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_30.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "8f011b61fde5495b9ad42b976c03b5e0e17ad2bbec6c92d03d045c47fb34c440",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 186985,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_31.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_31.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "8a0e8c051709dce98127cdb0c11691ccfb7c37d50a17ec52ae5b927c669a2e2b",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 190545,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_32.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_32.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "a4b61a2265fcffc3c60b47965a52c48a88c5221875f3b4e4e3df76438a3a736d",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 188540,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_33.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_33.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "719cba0d4839e88ecea435f8d0f7521994c388c198e84d69cbb74a9480d2dbd2",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 188613,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_34.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_34.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "5751f8f6ea2dfde3bc549ad9d335cc5eb4698f5946df6e2afb7ddeb5cff82176",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 186941,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_35.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_35.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "6bfe9187833430440759ae227f02ab908766b0a341ad7accd17af0d17201f174",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189233,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_36.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_36.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "7e2f849d541e6d66008bc6663eddeeb0dd5d5d296e6c2a0ad74456a7eb831e40",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189691,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_37.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_37.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "1c21164f8aa6fde5978df9c7329b2882c91c5d92f1b86947886bb1d0ce84876d",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189093,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_38.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_38.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "0e4bdc6a1222b0c22971b12d8a3081dde555034297bc14375d80c8c2ca81d615",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 190900,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_39.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_39.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "fd24064c8d3678985755a6d0d56939c4f63b8d265cd680eac2b7fc3ba79781ca",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 190111,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_4.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_4.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "cc3004e1b11c3817c3bfa8b7160c483aa8e298f24d7f43759f4198124c87f62d",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 190655,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_40.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_40.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "3fb6789897d1f72f22af1f088a195c8e1f5829f7dcfe7aa4c5a6bd741db8b2b7",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189006,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_41.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_41.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "ea307eabf39de5985f7f0f9f2437030d50885a9320d98649621d5d82b82d9547",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 187912,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_42.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_42.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "31650ded3d7c66676ff4864686dcde092f6931fab298116a80b99e07689acd16",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189087,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_43.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_43.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "4fd5be867d026aa12135835d3fa8ace03942d3d1eee66ff7e99f05269ba26b02",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 188922,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_44.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_44.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "8b8c078d199c5aa834d28dfa7125e6b436c11b6002e31e77801d4421864acf7a",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 187534,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_45.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_45.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "a4c0fa48a9b0dda9a9371175c76aca8cc49b3213bfb09e575d418d97b27283cd",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 188640,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_46.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_46.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "0d801ad148c5b000eb37bcd055d3c525f74fa8f7d7fd445bfeb6d6ec8d0c1aa4",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 187557,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_47.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_47.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "648221ce316fb5d9740e7755df5d3eec3127f4db3d92bbc1a21db4a6127ddd20",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189186,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_48.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_48.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "1552cb7200e3fc46bf413900e3f932209f61724f9a5d18c9403037077b649083",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 186206,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_49.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_49.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "ff0933db335b25619420c636b62dbde45e4c8540cf56e7466085ddd70b9bcc72",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189495,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_5.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_5.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "98576aabaa9a7186289ca66ce912bad8a939cb14202dfd16a8348c63c46c19d5",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 190217,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_50.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_50.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "4eec01d61f83b35b8165710b4d9c9f8e177e76346666f69bb8a67beeb0f8308f",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 190479,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_51.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_51.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "12009326d21b986b9322f78250e28a686c14715556fd79226134aab6f65a8a33",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 187323,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_52.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_52.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "554c25fb019d9e5e340eb70d1b36855fe272376ce37f5e68636e5521441e3854",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189757,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_53.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_53.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "c60a141dd01d2c336f19fafded6243043df42b818c1ba83926ad1a57ec89b405",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189685,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_54.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_54.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "1d33e7f6780dcec6e6f72f32d5c715e0961c1d0c83a467a44c264a541627e3a7",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 188628,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_55.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_55.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "4d94b124ee1ee4fab7b2c7c0c90ff47fb1183617be5fd648a4f21522f03f7f04",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 188704,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_56.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_56.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "c6d700786244101d849d736276054cebda40d61076723d53ef317ca56f56d7b2",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189097,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_57.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_57.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "4f329b59b195ce9fadd98949a8be794cda2010a193a80900387b5efe62d2da6a",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 191142,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_58.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_58.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "64edd004b01570b393600046d692b17e2c58b3ae8baac6af2af6f74b298cec08",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 190339,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_59.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_59.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "567508d320bd4dd6ccf9723c4d47de917b72b2cbbe5bb8fd5000bf8aeabea61f",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189332,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_6.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_6.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "ad5fab8c3636b6afac29a7ed80a635ea52abc40f5933c83d56b925758df61554",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 192080,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_60.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_60.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "74e42d6adf44b2aeccd894da61cfd188057ea8b985eb69a0610797b867488bff",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189554,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_61.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_61.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "efc81ad349cdc35327e5daf47977fca723e66995a1bb6b913536fd9f4b18f892",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 190073,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_62.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_62.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "2dca3b8ab6b378462268eec4757868d0d084e24deed59b58ea705fbe8ce772e9",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189944,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_63.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_63.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "2e252e8fd073a67a9b02227968b70ab3d6fc94ce03ac92698e28ff011636c7f9",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 190310,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_64.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_64.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "ea36f737fb88c390fb7e12833b31c3a1a0b65f73c146590521a755fb59ddee87",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 188821,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_65.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_65.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "7c8d7b09a2ef38f939ba0d58e3d23324550e2cb5bcc3f41238f0473be88e7b70",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189936,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_66.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_66.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "ffe612fd10bbfed135828342edaa52146fa43fc986e23123f4bb8e5a189c27a8",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189698,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_67.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_67.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "747c1f7b3486e9e893b9c0374479d1d262c67266113ad2cdb4c1d12978b2db15",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189927,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_68.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_68.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "a39259fa4a428f5801a5c4c9ce8ce8cbd559cc460d469286402478e36d705bce",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 188168,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_69.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_69.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "01fb4ca634f180d3e956c0598f9683718909ff35c25dedb5f429eb453400d79d",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189776,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_7.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_7.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "67eeced037253f93dae4b2133f4a23a4f2e312a3f14cc5f33d0c6fe63fe76aa9",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 187827,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_70.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_70.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "471c4ccf429c654c131c0536b14af95148b2179b27ebdbccd59e2dae6a4375ed",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 190178,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_71.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_71.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "634d26213c9faa5d09553e751cd9c73c20e97cbe7286ca7b20fcb1a0f9e4465a",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 188968,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_72.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_72.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "91e49b9d8703e4c5a8220750a94e854e98eb05df578612430ac6ec58e33b59f5",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 190081,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_73.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_73.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "ff3d9da8d590fbb28ff2dfd0628d9d83ee585c6b95d1c3ed4181c1fd22a4be0a",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 188814,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_74.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_74.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "777dc4bd431b83ef6a1cbbbe4c923d2f4d27179ac23c1b7dcfebf2e6d6e05443",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 187766,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_75.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_75.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "6d61bb9f955021a0064c00dc469254a497f3ef9c97b9bb0b983a322006d48de4",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189846,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_76.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_76.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "fb86d7bd6394c001ba1ec5bea2b75d60fe160881c44a17fb22d7fce9e80852dc",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 188741,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_77.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_77.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "f0248e22c5a83b67070924da405fa585b9b9cc110919fc2c635f8c508368dbe4",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 190782,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_78.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_78.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "88f3e211d8cf475be51a158a1fc6d326105b68d37e04e2f8caec82fb5b0259b9",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 191398,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_79.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_79.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "2a92bbc87e86569950b0ee616cb1794686c83fe160e5d23b0205907e48cc80c4",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189940,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_8.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_8.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "4b2b6972b4d3611660138573b7768513f99d16952e0997f326932a18b1855f1f",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189841,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_80.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_80.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "85881be649d0e1cde674801d6c3eeb33d770f85f5a4f966373e4a68ce8e2fabb",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 190136,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_81.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_81.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "60fafafe7d2ffbe913bc0100c7aa5798db58685156bf31c99391bc20a5843c40",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 187452,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_82.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_82.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "8bdd60fa37920fe722f654120bd998a972c5f43641aa0df0ebec0955852587c2",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 191205,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_83.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_83.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "4897dd6ed0992b652421f33712606363a28605c45f5bafbf0561b4e4e28a8f0e",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189401,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_84.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_84.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "749c0b94398aac30936739ebef1a94d625d4a285e1eb9c86aa16a3592b09a2cf",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 186119,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_85.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_85.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "528bef398f4767abda65046c321a31af89afbde634333f30a873f83e83a1a4ca",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 191427,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_86.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_86.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "a61450de98e03e89abea0672eabed04e653af279db238498f26e6ff650eb5377",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189472,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_87.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_87.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "245096bc35813699a18fb8eac3d06ddf887cface546473dfe2ec14f501b75fd2",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 190342,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_88.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_88.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "322f668c7dca53fe9a6b70afc28577b8fa4dfd9553eb4a9305fdaf772bcf6def",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 190501,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_89.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_89.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "56802d3391c17f4056c498e6977613aff7c2edeb582a5c75faf104115b37e0fc",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189839,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_9.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_9.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "f1909df6c8062fb75fd6ffdafc952519049cae725ef980282afed61f71264d4a",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 189056,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_90.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_90.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "9977eff34052dcdf31beb6af94d30ef8021717dc6906b544f213889ab7720c4a",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 188955,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_91.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_91.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "b7e12817fdca6f19cfa8c7c2be298be6d61f173db3cf6613a58ed9b47793c30e",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 188863,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_92.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_92.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "bfd7272fd03f075930eea934e6b2e02e219a07745692e7b0b339e36b87aedafe",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 188605,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_93.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_93.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "d69915ae30eb057b4d2dd38e09db099f6bad13100b9e8d5c18b4e1d1d72b9877",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 188355,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_94.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_94.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "7fad6150703650fc3361e607ab8d7f647dafe83130b5aaa2462bf1055eaee621",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 187672,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_95.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_95.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "268a32975c686c48aa4b97652a3ba44f3100d834c9dc5501567e19d4eac72b8f",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 191692,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_96.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_96.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "ac5039c2a36ce9869889d1d3933ba086258a82638edb4cc3e93636132bc37bd4",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 188707,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_97.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_97.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "e33230a93d4df55466d5b7db278e9abfe63028d67d86d31b42f6a1536bb0339c",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 187830,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_98.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_98.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "a3f0191e67b6bf2022a70e9183858c2b368d0fc9b72027fa79b2248f50568711",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 187145,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "residual_99.tsv",
+     "origin_pointers": [
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/residual_99.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "880a14ea04c13472ed0494bb69d2140c2cb6893871735e74c00716f6cbdf155e",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 13301,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "run.json",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/CF3/CF3_OVERLAP.json.gz",
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/CORAS/CF4_MARKS128.json",
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/CORAS/CF4_MARKS128_INFLUENCE.json",
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/REVIEW/DATA_SUBTASKS_FIRST_PASS.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "79e5a513015a1c54d7d4b1b9cf659653c259ead57ccb1f77f45c81b307c1c9b2",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 549314,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "sites.tsv",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_CORAS_DRAW_RUN.json",
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/CF3/CF3_OVERLAP.json.gz",
+      "/home/cosmosapjw/Downloads/htt_r105_coras/sixdf8/run.json",
+      "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/run.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/marks128/sites.tsv",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "be813eae09f87d569ef6af31934f7e6ffe58740d7c1cc681dc6a22067b15bc6f",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 20112,
+     "git_head_blob_matches": true,
+     "git_tracked": true,
+     "in_repository": true,
+     "name": "CF3_ReadMe.txt",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/CF3/CF3_OVERLAP.json.gz",
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/REVIEW/DATA_SUBTASKS_FIRST_PASS.json"
+     ],
+     "originating_round": "R9",
+     "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.agent-harness/runs/R9-SELECTED-LAW-20260913/artifacts/calibration_candidate/sources/CF3_ReadMe.txt",
+     "read_by": [
+      "scripts.r108.cf4_cf3_table3_overlap"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "74ebe9ea1431f0612c350624fd64ed70089ff0a28ecc7d5fd02eb13ab7694f0f",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 11912,
+     "git_head_blob_matches": true,
+     "git_tracked": true,
+     "in_repository": true,
+     "name": "pr124_mes_authority_table.json",
+     "origin_pointers": [
+      "docs/generated/pr122_artifact_manifest.json",
+      "docs/generated/pr124_artifact_manifest.json"
+     ],
+     "originating_round": "pre-R108; round not encoded in the path",
+     "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/generated/pr124_mes_authority_table.json",
+     "read_by": [
+      "scripts.r108.cf4_2mpp_field",
+      "scripts.r108.cf4_cf3_table3_overlap",
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "81ad8c382fbe481eaf715b971680199fed5142e2498928cff57ae9d847cc20f3",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 1235181,
+     "git_head_blob_matches": true,
+     "git_tracked": true,
+     "in_repository": true,
+     "name": "selected_source_observables.npz",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_H05_AXES.json",
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CROSS_RESULTS.json",
+      "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/LOCAL_AGENT_CONTRACT.json",
+      "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L04_RESULT.json",
+      "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L05_CF4_EXACT.json"
+     ],
+     "originating_round": "pre-R108; round not encoded in the path",
+     "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/cf4_schur_loop8_20261015/inputs/selected_source_observables.npz",
+     "read_by": [
+      "scripts.r108.cf4_2mpp_field"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 28609,
+     "git_head_blob_matches": true,
+     "git_tracked": true,
+     "in_repository": true,
+     "name": "CF4_UPSTREAM_KBAND_RESULTS.json",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R100_SOURCE_LAW_OPTICAL_MULTIPROBE_20261123/ARTIFACT_MANIFEST.json",
+      "docs/research_program/observational_publication_20261015/R100_SOURCE_LAW_OPTICAL_MULTIPROBE_20261123/BIANCHI_SELFCONSISTENT_AND_PHY_RESULTS.json",
+      "docs/research_program/observational_publication_20261015/R100_SOURCE_LAW_OPTICAL_MULTIPROBE_20261123/NODE60_EXECUTION_PREPARATION.json",
+      "docs/research_program/observational_publication_20261015/R100_SOURCE_LAW_OPTICAL_MULTIPROBE_20261123/VALIDATION.json",
+      "docs/research_program/observational_publication_20261015/R101_SIXTH_SOLVER_RESPONSE_20261123/R100_REPLAY_VALIDATION.json"
+     ],
+     "originating_round": "R100",
+     "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R100_SOURCE_LAW_OPTICAL_MULTIPROBE_20261123/CF4_UPSTREAM_KBAND_RESULTS.json",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "54580599c10daef17c809a8b5ad28f59b50274f3873a632717458fd9b5ab1a25",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 12023,
+     "git_head_blob_matches": true,
+     "git_tracked": true,
+     "in_repository": true,
+     "name": "CF4_2MRS_FIELD.json",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R104_DATA_SOLVER_CONTINUATION_20261124/R104_RESULTS.json",
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_FIELD_HOLDOUT.json"
+     ],
+     "originating_round": "R104",
+     "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R104_DATA_SOLVER_CONTINUATION_20261124/CF4_2MRS_FIELD.json",
+     "read_by": [
+      "scripts.r108.cf4_2mpp_field"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "14a95a21ed81f4a9cab6a4f759190bd499594be763359b8e26de18fea1de712d",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 10286,
+     "git_head_blob_matches": true,
+     "git_tracked": true,
+     "in_repository": true,
+     "name": "CF4_CORAS_MARKS.json",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/NODE60_EXECUTION.json",
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/NODE_EVIDENCE.json",
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/CF3/CF3_OVERLAP.json.gz",
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/REVIEW/DATA_SUBTASKS_FIRST_PASS.json"
+     ],
+     "originating_round": "R105",
+     "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_CORAS_MARKS.json",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "ee4991e3490c6f7349135e59e72bd367fe89d8e476bb8f45b0682d58210eac9b",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 11271,
+     "git_head_blob_matches": true,
+     "git_tracked": true,
+     "in_repository": true,
+     "name": "CF4_FIELD_HOLDOUT.json",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_CORAS_MARKS.json",
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/NODE60_EXECUTION.json",
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/NODE_EVIDENCE.json",
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/CF3/CF3_OVERLAP.json.gz",
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/CORAS/CF4_MARKS128.json"
+     ],
+     "originating_round": "R105",
+     "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_FIELD_HOLDOUT.json",
+     "read_by": [
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "71de6766f163037e7e538ce11b4e3e2722b19e18bf4447073cee63702c8c1a25",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 225312,
+     "git_head_blob_matches": true,
+     "git_tracked": true,
+     "in_repository": true,
+     "name": "CF3_OVERLAP.json.gz",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/R106_RESULTS.json"
+     ],
+     "originating_round": "R106",
+     "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/CF3/CF3_OVERLAP.json.gz",
+     "read_by": [
+      "scripts.r108.cf4_cf3_table3_overlap",
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "3ff4dd319fc3b4dd8e7e2947240c61470c286a587707989614bcdf946670c119",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 1399,
+     "git_head_blob_matches": true,
+     "git_tracked": true,
+     "in_repository": true,
+     "name": "obs_defaults.json",
+     "origin_pointers": [
+      "docs/generated/pr121_hermetic_replay_receipt.json"
+     ],
+     "originating_round": "pre-R108; round not encoded in the path",
+     "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/workspace/data/obs_defaults.json",
+     "read_by": [
+      "scripts.r108.cf4_2mpp_field",
+      "scripts.r108.cf4_cf3_table3_overlap",
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "8c05bad58f2a85d23d5baae55e373421d84737456ca3dfd8b2538c9e70763d1a",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 10672507,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "table2.dat",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R100_SOURCE_LAW_OPTICAL_MULTIPROBE_20261123/CF4_UPSTREAM_KBAND_RESULTS.json",
+      "docs/research_program/observational_publication_20261015/R101_SIXTH_SOLVER_RESPONSE_20261123/CF4_PREDICTIVE_RESPONSE.json",
+      "docs/research_program/observational_publication_20261015/R101_SIXTH_SOLVER_RESPONSE_20261123/CF4_RAW_SOURCE_RESULTS_KO.md",
+      "docs/research_program/observational_publication_20261015/R103_SOLVER_SOURCE_CONTINUATION_20261123/CF4_SHARED_FIELD_HOLDOUT.json",
+      "docs/research_program/observational_publication_20261015/R104_DATA_SOLVER_CONTINUATION_20261124/R104_RESULTS.json"
+     ],
+     "originating_round": "pre-R108 external raw store (/mnt/extdrive); round not encoded in the path",
+     "path": "/mnt/extdrive/workdir/raw/cf4_full/table2.dat",
+     "read_by": [
+      "scripts.r108.cf4_2mpp_field",
+      "scripts.r108.cf4_cf3_table3_overlap",
+      "scripts.r108.cf4_kband_contrast"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "8e908928e68352b59292cf67020a4d70aaa6d30f278dfa6aa3e41a9df808332f",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 5104038,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "table3.dat",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R100_SOURCE_LAW_OPTICAL_MULTIPROBE_20261123/CF4_UPSTREAM_KBAND_RESULTS.json",
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_H05_AXES.json",
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CROSS_RESULTS.json",
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/CF3/CF3_OVERLAP.json.gz",
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/REVIEW/DATA_SUBTASKS_FIRST_PASS.json"
+     ],
+     "originating_round": "pre-R108 external raw store (/mnt/extdrive); round not encoded in the path",
+     "path": "/mnt/extdrive/workdir/raw/cf4_full/table3.dat",
+     "read_by": [
+      "scripts.r108.cf4_2mpp_field"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "c2351c52de3e38a7fd80256b6f0818c550dd9f105b91e84fbcc1eb7234160b4d",
+     "sha256_on_disk_matches": true
+    },
+    {
+     "bytes": 6012374,
+     "git_head_blob_matches": null,
+     "git_tracked": false,
+     "in_repository": false,
+     "name": "table4.dat",
+     "origin_pointers": [
+      "docs/research_program/observational_publication_20261015/R100_SOURCE_LAW_OPTICAL_MULTIPROBE_20261123/CF4_UPSTREAM_KBAND_RESULTS.json",
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_H05_AXES.json",
+      "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CROSS_RESULTS.json",
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/CF3/CF3_OVERLAP.json.gz",
+      "docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/REVIEW/DATA_SUBTASKS_FIRST_PASS.json"
+     ],
+     "originating_round": "pre-R108 external raw store (/mnt/extdrive); round not encoded in the path",
+     "path": "/mnt/extdrive/workdir/raw/cf4_full/table4.dat",
+     "read_by": [
+      "scripts.r108.cf4_2mpp_field"
+     ],
+     "recorded_at_utc": "2026-11-24T03:54:46.285401+00:00",
+     "sha256": "b6edfec68bdfddeada8f3b8f11938f3bbda98a8e2894ff136a369c2ad6594e94",
+     "sha256_on_disk_matches": true
+    }
+   ],
+   "probes": []
+  }
+ },
+ "n_pre_existing_inputs": 165,
+ "receipts_path": "/home/cosmosapjw/Downloads/htt_r108/cf4/RECEIPTS.jsonl",
+ "receipts_sha256": "367dc3a1be026b85aa624bb42706249f3ee2a13d1002afd0b9ccafd160f9197f",
+ "result_input_coverage": {
+  "CF3_TABLE3_OVERLAP.json": {
+   "missing": {},
+   "n_inputs_checked": 12
+  },
+  "KBAND_CONTRAST.json": {
+   "missing": {},
+   "n_inputs_checked": 12
+  },
+  "KBAND_CONTRAST_CORAS128.json": {
+   "missing": {},
+   "n_inputs_checked": 12
+  },
+  "TWOMPP_FIELD.json": {
+   "missing": {},
+   "n_inputs_checked": 1
+  }
+ },
+ "schema": "htt.r108.cf4.acquisition/2",
+ "script": {
+  "path": "scripts/r108/cf4_receipts.py",
+  "sha256": "b18b79316f9c13614f0065b532ff1f3353ce968e30d9ee3290b16016609d89f1"
+ }
+}

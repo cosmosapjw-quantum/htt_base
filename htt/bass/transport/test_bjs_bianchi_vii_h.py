@@ -71,3 +71,30 @@ def test_invalid_parameters_fail_closed(kwargs):
 def test_axis_is_rejected():
     with pytest.raises(ValueError):
         bjs_coefficients(np.array([0.0, 1.0]), BJSParameters(0.5, 1.0))
+
+
+def test_sky_directions_use_the_incoming_photon_convention():
+    """R108 review R3: sky direction n is the template at -n (McEwen et al. 2006 below eq. A3).
+
+    The antipodal map equals a handedness flip composed with a pi rotation about x, so
+    evaluating the template at n instead of -n would silently invert the handedness.
+    """
+    from bass.transport.bjs_bianchi_vii_h import bjs_temperature_sky
+
+    rng = np.random.default_rng(3)
+    n = rng.normal(size=(300, 3))
+    n /= np.linalg.norm(n, axis=1, keepdims=True)
+
+    def ang(v):
+        return np.arccos(np.clip(v[:, 2], -1.0, 1.0)), np.arctan2(v[:, 1], v[:, 0])
+
+    rx = np.diag([1.0, -1.0, -1.0])
+    for variant in ("mcewen2006", "kogut1997"):
+        for k in (1, -1):
+            p = BJSParameters(0.5, 0.62, handedness=k, variant=variant, n_quadrature=512)
+            q = BJSParameters(0.5, 0.62, handedness=-k, variant=variant, n_quadrature=512)
+            sky = bjs_temperature_sky(n, p)
+            scale = np.max(np.abs(sky))
+            assert np.max(np.abs(sky - bjs_temperature(*ang(-n), p))) <= 1e-12 * scale
+            assert np.max(np.abs(sky - bjs_temperature(*ang(n @ rx.T), q))) <= 1e-12 * scale
+            assert np.max(np.abs(sky - bjs_temperature(*ang(n), p))) > 0.5 * scale

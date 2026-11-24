@@ -78,16 +78,17 @@ and combine A sin phi + B cos phi. Both variants are implemented
 
 Derived here (dictionary to the native H-normalised Lie variables, isotropic limit):
 for a_b = a e_z and n_ab = diag(n, n, 0) the spatial curvature is
-3R = -6 a^2 - (1/2) tr(n^2) + (1/4) (tr n)^2 = -6 a^2 (Jacobi n a = 0), so
+3R = -6 a^2 - tr(n^2) + (1/2) (tr n)^2 = -6 a^2 (Jacobi n a = 0; R108 correction of a
+factor 2 in the n terms, as in `exact_spatial_ricci_from_compact`), so
 1 - Omega = Omega_k = (a/H)^2; the class-B parameter of VII_h is h = a^2/(n_2 n_3) =
 (a/n)^2; therefore x = sqrt(h/(1 - Omega)) = H/n, i.e. n/H = 1/x and a/H = sqrt(1 - Omega).
-Checks of the curvature formula: Bianchi IX gives +3 n^2/4 > 0, VII_0 gives 0, V gives
+Checks of the curvature formula: Bianchi IX (n_ab = n delta_ab) gives +3 n^2/2 > 0, VII_0 gives 0, V gives
 -6 a^2.
 
 Matched comparison protocol (local, task S4 of the handoff): evolve an open-dust
 (Omega_Lambda = Omega_r = 0) VII_h state with `evolve_general_tilted_bianchi`, record
 (sigma/H, a/H, n/H)(N), run `los_sky` with an instantaneous last-scattering shell at
-z_E = 1100 and zero source increment (pure geodesic redshift, the BJS assumption), and
+z_E = 1100 and zero source increment (pure geodesic redshift, the BJS assumption; but see the R108 errata: the template also contains observer and emitter Doppler terms), and
 compare with `bjs_temperature` after a fitted rotation and amplitude. Pass: shape
 correlation >= 0.99 over the sky for one of the two variants; the other variant and
 the handedness convention are then decided by data, not assumed.
@@ -134,3 +135,40 @@ y = (1+z)^{3/2}. Its integrator reproduces the R105 common-foreground depths
 0.0221961, 0.0224021, 0.0225124 for z_HeII = 3.0, 3.5, 3.9 (sensitivity only). A
 physical REI continuation below z = 4 needs a quasar HeII-ionizing emissivity and a UV
 background in the Rust driver (local task S8).
+
+## R108 errata (local review of the cloud diff)
+
+Values re-read from `RESULTS/HYBRID_LOS_CONVERGENCE.json` by
+`scripts/r108/review_r107_claims.py` (output
+`R108_LOS_ATLAS_DATA_20261124/REVIEW/R107_CLAIM_CHECK.json`); findings and fixes in
+`R108_LOS_ATLAS_DATA_20261124/REVIEW/CLOUD_DIFF_REVIEW.json`.
+
+- TF1: weak class-B LoS versus native at ell <= 4 is T 3.0e-6 (T4) and E/B 1.2e-4 (B4),
+  not 2e-6 and 1e-4. "Native and HEALPix conventions agree to 1e-14" is in no result
+  file; with the R108 code (direct Delta accumulation) T agrees to 1.1e-10 and E, B to
+  2e-15. "Falls by about 4 per halving" is in no R107 file; for the coupled VII_h
+  cell-end comparison the per-doubling ratios are 3.83 to 4.01 (R107_CLAIM_CHECK.json,
+  computed from F2_COUPLED_LOS.json).
+- TF2: the automatic `source_ell_max` made the truncation check vacuous; R108 checks the
+  top native shell instead.
+- TF3: focusing L=8 spans 7.8e-4 to 0.19 at ell <= 4 (not 1e-2 to 2e-1); L=12 is
+  4.21e-3; L=16 1.64e-4; ray step 1.005e-6 (TT, focusing); node doubling 5.22e-3 (BB,
+  focusing).
+- TF4: curvature formula corrected above (factor 2 in the n terms; IX gives 3 n^2/2).
+  The BJS template angles are incoming-photon angles; use `bjs_temperature_sky` for sky
+  directions (R108).
+- RESULTS_KO BJS numbers (quadrature 5e-13, m != +-1 power, 99% TT power at ell 8-20)
+  are in no R107 result file.
+- TF4 protocol: the BJS template is not pure geodesic redshift between normal observers.
+  Its C1 sin(theta) term is the Doppler shift of the tilted dust at the observer and its
+  C1 C2 term the Doppler shift at the emitter (Pontzen and Challinor 2007, sec. 5.7,
+  eq. 67). The zero-increment, normal-observer protocol map differs from the map with
+  both Doppler factors by 2.9-5.3% rms, and both template variants pass the
+  pre-registered 0.99 correlation on it (min 0.99965 McEwen et al. 2006, 0.99892 Kogut
+  et al. 1997; best handedness +1 in all six cases). Secondary post-acceptance
+  diagnostic, no pre-stated threshold: with the Doppler factors, McEwen 2006 leaves a
+  relative residual of 2.0-3.5e-4 (1.2-3.6e-5 after the post-hoc Richardson step) at
+  amplitude ratio 1.000004, Kogut 1997 3.1-5.3% at ratio 1.36-1.39 (R108
+  `SOLVER/S4_BJS_COMPARATOR.json` variant_comparison). The template (sigma/H)_0 equals
+  sigma_13/H = sigma_perp/sqrt(2) in the repository convention
+  sigma^2 = (1/2) sigma_ab sigma^ab.

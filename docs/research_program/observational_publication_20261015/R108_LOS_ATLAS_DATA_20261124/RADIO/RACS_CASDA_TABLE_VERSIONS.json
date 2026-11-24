@@ -1,0 +1,18 @@
+{
+ "service": "https://casda.csiro.au/casda_vo_tools/tap",
+ "time_utc": "2026-11-24T01:42:59+00:00",
+ "git_head": "b79b9526b1817cc5946858f5891f7e7b567b87a2",
+ "script_sha256": "98acf036ae5bc6fbd56161584b992034e1e19cf63480d2aec0192deef8a392c7",
+ "command": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python -m scripts.r108.radio_racs_fetch --versions-json docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO/RACS_CASDA_TABLE_VERSIONS.json",
+ "inputs": "none (network TAP queries)",
+ "counts": {
+  "AS110.racs_dr1_sources_galacticcut_v2021_08_v01": {
+   "query": "SELECT COUNT(*) AS n FROM AS110.racs_dr1_sources_galacticcut_v2021_08_v01",
+   "n": 2123638
+  },
+  "AS110.racs_dr1_sources_galacticcut_v2021_08_v02": {
+   "query": "SELECT COUNT(*) AS n FROM AS110.racs_dr1_sources_galacticcut_v2021_08_v02",
+   "n": 2123638
+  }
+ }
+}

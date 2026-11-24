@@ -1,0 +1,2523 @@
+{
+ "calibration_block": {
+  "Sigma_cal_7x7": [
+   [
+    0.007568999999999999,
+    0.007568999999999999,
+    0.007568999999999999,
+    0.007568999999999999,
+    0.007568999999999999,
+    0.007568999999999999,
+    0.007568999999999999
+   ],
+   [
+    0.007568999999999999,
+    0.0078106942986191285,
+    0.00772646297287258,
+    0.007720382696463947,
+    0.007684294268237439,
+    0.00772629882251015,
+    0.007568999999999999
+   ],
+   [
+    0.007568999999999999,
+    0.007726462972872579,
+    0.007837485605319792,
+    0.0077395718123224955,
+    0.007698162647112453,
+    0.007798079058311097,
+    0.007568999999999999
+   ],
+   [
+    0.007568999999999999,
+    0.007720382696463947,
+    0.0077395718123224955,
+    0.012082901517684408,
+    0.007755259877167508,
+    0.007727756267602321,
+    0.007568999999999999
+   ],
+   [
+    0.007568999999999999,
+    0.007684294268237439,
+    0.007698162647112453,
+    0.007755259877167508,
+    0.008102958366521768,
+    0.00771242304106307,
+    0.007568999999999999
+   ],
+   [
+    0.007568999999999999,
+    0.00772629882251015,
+    0.007798079058311097,
+    0.007727756267602321,
+    0.00771242304106307,
+    0.014176355580931832,
+    0.007568999999999999
+   ],
+   [
+    0.007568999999999999,
+    0.007568999999999999,
+    0.007568999999999999,
+    0.007568999999999999,
+    0.007568999999999999,
+    0.007568999999999999,
+    0.257569
+   ]
+  ],
+  "construction": "R98 cf4_p1: T=-(ln10/5) A W; Sigma = SNIa-gauge rank-5 overlap cov5 + 0.087^2 common + 0.5^2 DirectCal",
+  "method_order": [
+   "SNIa",
+   "FP",
+   "TFR",
+   "SBFm",
+   "SBFir",
+   "SNII",
+   "DirectCal"
+  ],
+  "trace_C_cal": 0.006559248100010358
+ },
+ "code_sha256": {
+  "htt/obsstat/catalogue_frame_registry.py": "f69967dddaeaa52f801a1e1662dbe12a5c5c9d51ffa8fb04feae526cab5d4298",
+  "htt/obsstat/cf4_p0b.py": "25bb4e117645a0f3569b6ccf3e4b73442f7b796705a672e65ee4b7a1772d668e",
+  "htt/obsstat/publication_frame_kinematics.py": "dae3574f98fce5c1fef52a461d0955808952b99188e2f49c61a1b54c3a3225e9",
+  "scripts/r108/common.py": "dded5b978a15680df0975cb2921e0931824c27cee7d508ea81721a1ceaaff41e",
+  "scripts/r108/frame_cf4_joint.py": "51a39b27428abd53d256f22b442fa22279ec601d9fb68d95f4fc268b009eff21",
+  "scripts/r108/frame_registry_build.py": "f05d0b22dae211cc48e9d0d969f1a112b3d1401974b960fc819c33007f2ef4a1",
+  "scripts/r97/cf4_genealogy_and_partial_id.py": "c582788022abf7d7ef1705e1736acf579874bde9fe66665605693a63040b01cb",
+  "scripts/r98/cf4_p1.py": "a5a2385778ff789eaa87f83e39fc29e7e2aecc76629c18c45874dd204c420c82"
+ },
+ "command": "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r108/frame_cf4_joint.py --output docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/FRAME/CF4_BULK_HDIPOLE_JOINT.json",
+ "definitions": {
+  "bulk_response": "1+z_obs=(1+z)(1+B.n/c); dy/dB = (1+z)(1/z + dlnf/dz) n / c, f from ReadMe Note 6 (Omega_m 0.27, Omega_L 0.73)",
+  "coefficients": "R98 36-vector: 4 windows x [monopole, nx, ny, nz (ICRS), 5 STF] of y = ln(fV3k/74.6) - (ln10/5)(DMzp-25)",
+  "expansion_dipole_response": "H(n)=Hbar(1+h.n) at fixed distance; dy/dh = (1 + z dlnf/dz) n",
+  "frame": "CF4 release CMB frame (V3k); conversion to the Planck 2018 frame is applied in frame_lie_flux.py with registry keys",
+  "holdout": "pre-fixed: train on all 18 inner-window coefficients (z=0.025, 0.040), predict the 6 outer-window dipole coefficients (z=0.060, 0.080)",
+  "literature_axes": "R105 CF4_H05_AXES.json unit_icrs (Boubel 2025 fig4 (142,52); Stiskalek 2026 sec4.1 (127,10)); as_mag = (h.axis)/(ln10/5)",
+  "nuisance": "free monopole and 5 STF coefficients in every window (a common zero point moves monopoles only)",
+  "window_weights_held_fixed": "weights use the observed z; second-order change of weights under B or h is neglected"
+ },
+ "frame_convention_systematic": {
+  "keys": [
+   "cf4_t4_helio_to_cmb",
+   "planck2018_solar_dipole"
+  ],
+  "registry_json_sha256": "ba01791d0a185a2ce3ade33664e610692431f2d0a3a1f07c8fedc0d0a95b5f82",
+  "release_id": "CF4_groups_J_ApJ_944_94_table4",
+  "release_reconstruction_V3k_minus_registry_kms": {
+   "max_abs": 0.5077397409804689,
+   "rms": 0.2894670308012994
+  },
+  "variants": {
+   "exact_relativistic_planck2018_beta": {
+    "MBH_bulk_plus_expansion_dipole": {
+     "bulk_kms": {
+      "amplitude": 324.07527937407883,
+      "amplitude_sd_linear": 38.38330662342145,
+      "b_deg": 39.499240155881985,
+      "galactic": [
+       -56.44737496041483,
+       -243.61299524687178,
+       206.13391062198667
+      ],
+      "l_deg": 256.95425994269664
+     },
+     "chi2": 26.591965573873114,
+     "expansion_dipole_h": {
+      "amplitude": 0.035617689139457676,
+      "amplitude_sd_linear": 0.005534516928562259,
+      "b_deg": -55.61463902579852,
+      "galactic": [
+       0.01994392214703538,
+       -0.0026202390361136987,
+       -0.029393776491319704
+      ],
+      "l_deg": 352.51532902101525
+     }
+    },
+    "MB_bulk": {
+     "bulk_kms": {
+      "amplitude": 274.08361347568683,
+      "amplitude_sd_linear": 19.616663085751878,
+      "b_deg": -3.440407455262561,
+      "galactic": [
+       82.09353475567673,
+       -260.9826560230381,
+       -16.447856467295964
+      ],
+      "l_deg": 287.46125632429977
+     },
+     "chi2": 77.10323092087707
+    },
+    "MH_expansion_dipole": {
+     "chi2": 104.59277167450789,
+     "expansion_dipole_h": {
+      "amplitude": 0.03541055385845497,
+      "amplitude_sd_linear": 0.002668643600528039,
+      "b_deg": -12.448676531811174,
+      "galactic": [
+       0.014786934561079743,
+       -0.031256791092335916,
+       -0.007633275932321331
+      ],
+      "l_deg": 295.3178525810071
+     }
+    },
+    "delta_dipole_icrs_per_window": [
+     [
+      -0.001052030267258205,
+      0.0002903216779219782,
+      -7.685328075372852e-05
+     ],
+     [
+      -0.0011110087884450611,
+      0.0002857709504033609,
+      -0.00010110200539917363
+     ],
+     [
+      -0.0011721756123913884,
+      0.0002819194883735748,
+      -0.00012224180052700846
+     ],
+     [
+      -0.001206642710443904,
+      0.00027975187621339417,
+      -0.0001343995313827269
+     ]
+    ],
+    "delta_monopole_per_window": [
+     -2.883777204239511e-05,
+     -1.8208843805256197e-05,
+     -1.636697170977326e-05,
+     -1.0125244265306179e-05
+    ],
+    "shift_vs_release_working": {
+     "MBH_bulk_plus_expansion_dipole": {
+      "bulk_kms": [
+       -0.4571834683388829,
+       0.817677352350529,
+       -0.8622567659037941
+      ],
+      "expansion_dipole_h": [
+       -8.452084083182543e-05,
+       -0.0008203489748296738,
+       0.0009232765696554762
+      ]
+     },
+     "MB_bulk": {
+      "bulk_kms": [
+       -1.2955606316543822,
+       -4.78698798165982,
+       6.248756963948395
+      ]
+     },
+     "MH_expansion_dipole": {
+      "expansion_dipole_h": [
+       -0.00014450551684960268,
+       -0.0007201361996569608,
+       0.0008331481682776424
+      ]
+     }
+    }
+   },
+   "exact_relativistic_release_beta": {
+    "MBH_bulk_plus_expansion_dipole": {
+     "bulk_kms": {
+      "amplitude": 325.16206865185023,
+      "amplitude_sd_linear": 38.3648206851093,
+      "b_deg": 39.54188374957464,
+      "galactic": [
+       -55.98337535561037,
+       -244.42242009546683,
+       207.01186711978264
+      ],
+      "l_deg": 257.0992943644843
+     },
+     "chi2": 26.591980110684567,
+     "expansion_dipole_h": {
+      "amplitude": 0.035617687754135055,
+      "amplitude_sd_linear": 0.005534516741215352,
+      "b_deg": -55.6146466612106,
+      "galactic": [
+       0.019943917326336304,
+       -0.0026202396514227733,
+       -0.02939377802869915
+      ],
+      "l_deg": 352.51532549469295
+     }
+    },
+    "MB_bulk": {
+     "bulk_kms": {
+      "amplitude": 274.94228476245127,
+      "amplitude_sd_linear": 19.604443349738457,
+      "b_deg": -3.2463823129315963,
+      "galactic": [
+       82.55750031852006,
+       -261.7920871963993,
+       -15.569912424521547
+      ],
+      "l_deg": 287.5029406669445
+     },
+     "chi2": 77.10324554089269
+    },
+    "MH_expansion_dipole": {
+     "chi2": 105.17440298903551,
+     "expansion_dipole_h": {
+      "amplitude": 0.03550396897524198,
+      "amplitude_sd_linear": 0.0026680635839664035,
+      "b_deg": -12.263718557674288,
+      "galactic": [
+       0.014847690478832254,
+       -0.03135608925164489,
+       -0.0075414565756635795
+      ],
+      "l_deg": 295.33842405588246
+     }
+    },
+    "delta_dipole_icrs_per_window": [
+     [
+      -0.001227714891500928,
+      0.00025926317242421534,
+      -0.00015199414084352266
+     ],
+     [
+      -0.0012368674384593715,
+      0.00026208984030585736,
+      -0.0001532505661631471
+     ],
+     [
+      -0.0012527422816492135,
+      0.00026558431017652636,
+      -0.00015424543882235553
+     ],
+     [
+      -0.0012670433734113824,
+      0.00026875371037400283,
+      -0.00015719595827811477
+     ]
+    ],
+    "delta_monopole_per_window": [
+     -3.327422866619568e-05,
+     -2.2926650729817596e-05,
+     -1.5957968604055608e-05,
+     -1.0729581033772582e-05
+    ],
+    "shift_vs_release_working": {
+     "MBH_bulk_plus_expansion_dipole": {
+      "bulk_kms": [
+       0.006816136465573663,
+       0.008252503755471707,
+       0.015699731892169666
+      ],
+      "expansion_dipole_h": [
+       -8.452566153090146e-05,
+       -0.0008203495901387484,
+       0.0009232750322760302
+      ]
+     },
+     "MB_bulk": {
+      "bulk_kms": [
+       -0.8315950688110547,
+       -5.59641915502101,
+       7.126701006722811
+      ]
+     },
+     "MH_expansion_dipole": {
+      "expansion_dipole_h": [
+       -8.37495990970924e-05,
+       -0.0008194343589659342,
+       0.0009249675249353943
+      ]
+     }
+    }
+   },
+   "linear_planck2018_beta": {
+    "MBH_bulk_plus_expansion_dipole": {
+     "bulk_kms": {
+      "amplitude": 324.0727639832917,
+      "amplitude_sd_linear": 38.38407727849184,
+      "b_deg": 39.49604307089767,
+      "galactic": [
+       -56.45411952472901,
+       -243.62124648784695,
+       206.11835678601167
+      ],
+      "l_deg": 256.9531812922572
+     },
+     "chi2": 26.58894944056258,
+     "expansion_dipole_h": {
+      "amplitude": 0.03637851123753859,
+      "amplitude_sd_linear": 0.005474597244309861,
+      "b_deg": -56.43898595285445,
+      "galactic": [
+       0.020029990427104273,
+       -0.0018025912774899018,
+       -0.03031412588276544
+      ],
+      "l_deg": 354.85754149940243
+     }
+    },
+    "MB_bulk": {
+     "bulk_kms": {
+      "amplitude": 269.5629272927067,
+      "amplitude_sd_linear": 19.704251161503468,
+      "b_deg": -5.012302280927323,
+      "galactic": [
+       82.9352125103439,
+       -255.40407924918196,
+       -23.55161564213269
+      ],
+      "l_deg": 287.9897313846337
+     },
+     "chi2": 80.40655962490693
+    },
+    "MH_expansion_dipole": {
+     "chi2": 104.58635971557209,
+     "expansion_dipole_h": {
+      "amplitude": 0.03494243517048375,
+      "amplitude_sd_linear": 0.0026747588462290935,
+      "b_deg": -14.17237239763094,
+      "galactic": [
+       0.014872235416575107,
+       -0.03044005901042102,
+       -0.00855530226231166
+      ],
+      "l_deg": 296.03895337335155
+     }
+    },
+    "delta_dipole_icrs_per_window": [
+     [
+      0.0001716269805706726,
+      3.03057680499138e-05,
+      7.368644290794892e-05
+     ],
+     [
+      0.00012177498827949884,
+      2.292798747382985e-05,
+      5.068172731572808e-05
+     ],
+     [
+      7.643526245144328e-05,
+      1.5574428925768557e-05,
+      3.0528647174021875e-05
+     ],
+     [
+      5.6223213218366134e-05,
+      1.022670233988456e-05,
+      2.1297913741557976e-05
+     ]
+    ],
+    "delta_monopole_per_window": [
+     4.227809011659259e-06,
+     4.572413962164405e-06,
+     -5.091153878088565e-07,
+     5.345156202933104e-07
+    ],
+    "shift_vs_release_working": {
+     "MBH_bulk_plus_expansion_dipole": {
+      "bulk_kms": [
+       -0.46392803265306526,
+       0.8094261113753589,
+       -0.8778106018787923
+      ],
+      "expansion_dipole_h": [
+       1.5474392370679046e-06,
+       -2.701216205876905e-06,
+       2.9271782097384236e-06
+      ]
+     },
+     "MB_bulk": {
+      "bulk_kms": [
+       -0.4538828769872083,
+       0.7915887921963076,
+       -0.8550022108883297
+      ]
+     },
+     "MH_expansion_dipole": {
+      "expansion_dipole_h": [
+       -5.9204661354238936e-05,
+       9.659588225793478e-05,
+       -8.887816171268548e-05
+      ]
+     }
+    }
+   },
+   "release_linear_fixsen_beta": {
+    "MBH_bulk_plus_expansion_dipole": {
+     "bulk_kms": {
+      "amplitude": 325.1594509835184,
+      "amplitude_sd_linear": 38.36559403013689,
+      "b_deg": 39.53867726458971,
+      "galactic": [
+       -55.990191492075944,
+       -244.4306725992223,
+       206.99616738789047
+      ],
+      "l_deg": 257.09819725650425
+     },
+     "chi2": 26.58894827856076,
+     "expansion_dipole_h": {
+      "amplitude": 0.03637996480279964,
+      "amplitude_sd_linear": 0.00547433904298002,
+      "b_deg": -56.44387472016814,
+      "galactic": [
+       0.020028442987867205,
+       -0.001799890061284025,
+       -0.03031705306097518
+      ],
+      "l_deg": 354.8648117386404
+     }
+    },
+    "MB_bulk": {
+     "bulk_kms": {
+      "amplitude": 270.37954400052683,
+      "amplitude_sd_linear": 19.69260851894819,
+      "b_deg": -4.815276486534197,
+      "galactic": [
+       83.38909538733111,
+       -256.19566804137827,
+       -22.69661343124436
+      ],
+      "l_deg": 288.02954417011154
+     },
+     "chi2": 80.4158685303833
+    },
+    "MH_expansion_dipole": {
+     "chi2": 105.16789970053927,
+     "expansion_dipole_h": {
+      "amplitude": 0.03503020884731593,
+      "amplitude_sd_linear": 0.002674316232856188,
+      "b_deg": -13.986261378105196,
+      "galactic": [
+       0.014931440077929346,
+       -0.030536654892678955,
+       -0.008466424100598974
+      ],
+      "l_deg": 296.05714295270326
+     }
+    },
+    "delta_dipole_icrs_per_window": [
+     [
+      0.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.0
+     ]
+    ],
+    "delta_monopole_per_window": [
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "shift_vs_release_working": {
+     "MBH_bulk_plus_expansion_dipole": {
+      "bulk_kms": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "expansion_dipole_h": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "MB_bulk": {
+      "bulk_kms": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "MH_expansion_dipole": {
+      "expansion_dipole_h": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     }
+    }
+   }
+  }
+ },
+ "git": {
+  "diff_head_sha256": "68355025a0522cde3a0af3a1995f8e67d41869fe07d780ffd110cf17e261df45",
+  "dirty_code_paths": [
+   " M htt/bass/background/tilted_bianchi_state.py",
+   " M htt/bass/transport/bjs_bianchi_vii_h.py",
+   " M htt/bass/transport/coupled_einstein_boltzmann.py",
+   " M htt/bass/transport/hybrid_los_transfer.py",
+   " M htt/bass/transport/test_bjs_bianchi_vii_h.py",
+   " M htt/bass/transport/test_hybrid_los_transfer.py",
+   " M scripts/r107_cloud/acquisition.py",
+   " M tests/r107_cloud/test_acquisition.py",
+   "?? htt/bass/background/test_compensating_tilt_root.py",
+   "?? htt/bass/transport/hybrid_los_parallel.py",
+   "?? htt/bass/transport/test_hybrid_los_parallel.py",
+   "?? htt/obsstat/catalogue_frame_registry.py",
+   "?? scripts/r108/__init__.py",
+   "?? scripts/r108/build_results.py",
+   "?? scripts/r108/cf4_2mpp_field.py",
+   "?? scripts/r108/cf4_acquire.py",
+   "?? scripts/r108/cf4_cf3_table3_overlap.py",
+   "?? scripts/r108/cf4_kband_contrast.py",
+   "?? scripts/r108/cf4_receipts.py",
+   "?? scripts/r108/commander_splits.py",
+   "?? scripts/r108/commander_status.py",
+   "?? scripts/r108/common.py",
+   "?? scripts/r108/f2_coupled_los.py",
+   "?? scripts/r108/frame_cf4_joint.py",
+   "?? scripts/r108/frame_input_receipts.py",
+   "?? scripts/r108/frame_lie_flux.py",
+   "?? scripts/r108/frame_registry_build.py",
+   "?? scripts/r108/frame_w1tf_joint.py",
+   "?? scripts/r108/gaia_acquire.py",
+   "?? scripts/r108/gaia_agn_split.py",
+   "?? scripts/r108/gaia_cmdlog.py",
+   "?? scripts/r108/gaia_estimator.py",
+   "?? scripts/r108/gaia_frame_leakage.py",
+   "?? scripts/r108/gaia_input_receipts.py",
+   "?? scripts/r108/gaia_scan_null.py",
+   "?? scripts/r108/gaia_scanlaw.py",
+   "?? scripts/r108/gaia_summary.py",
+   "?? scripts/r108/gaia_supersede.py",
+   "?? scripts/r108/radio_cmdlog.py",
+   "?? scripts/r108/radio_input_receipts.py",
+   "?? scripts/r108/radio_p_of_c1.py",
+   "?? scripts/r108/radio_racs_dipole.py",
+   "?? scripts/r108/radio_racs_fetch.py",
+   "?? scripts/r108/radio_summary.py",
+   "?? scripts/r108/radio_theory_c1.py",
+   "?? scripts/r108/radio_v3_diag.py",
+   "?? scripts/r108/review_r107_claims.py",
+   "?? scripts/r108/s1_family_atlas.py",
+   "?? scripts/r108/s4_aggregate.py",
+   "?? scripts/r108/s4_bjs_comparator.py",
+   "?? scripts/r108/s4_cmdlog.py",
+   "?? scripts/r108/s4_lit_fetch.py",
+   "?? scripts/r108/s4_posthoc_checks.py",
+   "?? scripts/r108/s5_photon_moments.py",
+   "?? scripts/r108/s6_b03_templates.py",
+   "?? scripts/r108/s7_los_performance.py",
+   "?? scripts/r108/s8_cmdlog.py",
+   "?? scripts/r108/s8_lowz_feasibility.py",
+   "?? scripts/r108/s8_lowz_tau.py",
+   "?? scripts/r108/s8_replay_compare.py",
+   "?? scripts/r108/s8_uvb_vo_probe.py",
+   "?? tests/obsstat/test_r108_cf4_2mpp.py",
+   "?? tests/obsstat/test_r108_cf4_acquire.py",
+   "?? tests/obsstat/test_r108_cf4_cf3_overlap.py",
+   "?? tests/obsstat/test_r108_cf4_kband.py",
+   "?? tests/obsstat/test_r108_cf4_receipts.py",
+   "?? tests/obsstat/test_r108_frame_cf4_joint.py",
+   "?? tests/obsstat/test_r108_frame_lie_flux.py",
+   "?? tests/obsstat/test_r108_frame_registry.py",
+   "?? tests/obsstat/test_r108_gaia_acquire.py",
+   "?? tests/obsstat/test_r108_gaia_agn_split.py",
+   "?? tests/obsstat/test_r108_gaia_estimator.py",
+   "?? tests/obsstat/test_r108_gaia_frame_leakage.py",
+   "?? tests/obsstat/test_r108_gaia_scan_null.py",
+   "?? tests/obsstat/test_r108_gaia_scanlaw.py",
+   "?? tests/obsstat/test_r108_gaia_supersede.py",
+   "?? tests/obsstat/test_r108_radio_input_receipts.py",
+   "?? tests/obsstat/test_r108_radio_p_of_c1.py",
+   "?? tests/obsstat/test_r108_radio_racs_dipole.py",
+   "?? tests/obsstat/test_r108_radio_theory_c1.py",
+   "?? tests/obsstat/test_r108_s4_rotation_fitter.py",
+   "?? tests/obsstat/test_r108_s6_kernel.py",
+   "?? tests/obsstat/test_r108_s8_lowz_tau.py"
+  ],
+  "dirty_code_sha256": {
+   "htt/bass/background/test_compensating_tilt_root.py": "cbdd64e0b7a536464a25c8fd7f759c2ddc4f94dfadb77ed0abf9647e338b0584",
+   "htt/bass/background/tilted_bianchi_state.py": "dd6bd75fb358b3c738d555414471066d14f40707ee43bd4afed683f07f7a7b2f",
+   "htt/bass/transport/bjs_bianchi_vii_h.py": "1b7e9c72ab1cb9f66bc9c2996c58e53b82bff572e4a27fefd42a15b609ddfd9e",
+   "htt/bass/transport/coupled_einstein_boltzmann.py": "b564041da20eb830a6099960909f7236a2dfae977842ebcb1d04629cbe25c56a",
+   "htt/bass/transport/hybrid_los_parallel.py": "85b40325ef1c0e2b8695bf846eb944e90deb0598f4dab3a8b60b6b17ae49d9f3",
+   "htt/bass/transport/hybrid_los_transfer.py": "96744df0f361d4c07aee3e30016450072d797df13c2bee57919c2a9cb66810db",
+   "htt/bass/transport/test_bjs_bianchi_vii_h.py": "b7709ab0bc3b7878f3b6778c00643038dd5aaedc27b377a27c99335633c119ac",
+   "htt/bass/transport/test_hybrid_los_parallel.py": "14a68cf9aba2e7e79d05771e99cc7637eaee6644af3c73eaf5b8a3ab69289bef",
+   "htt/bass/transport/test_hybrid_los_transfer.py": "42040c8514df07cdfb36eb79c494c9ccecedaea89c27baab1c2cdcbefd007505",
+   "htt/obsstat/catalogue_frame_registry.py": "f69967dddaeaa52f801a1e1662dbe12a5c5c9d51ffa8fb04feae526cab5d4298",
+   "scripts/r107_cloud/acquisition.py": "97037c43513c7c7973a6941781c26d3407da6cae1a31a1f2770ef6711ce833db",
+   "scripts/r108/__init__.py": "8d579afbf258026e1054383aed56826844a30771b57e9cb3eea11f72464079bc",
+   "scripts/r108/build_results.py": "c1f71936d542cb9a55811e9a8c33cbade1037e1cc1f0dd544741b09c54a1c29d",
+   "scripts/r108/cf4_2mpp_field.py": "6b24f23caf5f1f5bae3b7b48874947457d9c1da678ab0553e20a0e55feff6e67",
+   "scripts/r108/cf4_acquire.py": "d7510d7c6d27f796eb2898a3791cb2c00c1706244cc2fa339688bf4eba322112",
+   "scripts/r108/cf4_cf3_table3_overlap.py": "c28bc6b941fc56198b95329efd92a83e96d01408a15ae1250a3288bcb5ab6c06",
+   "scripts/r108/cf4_kband_contrast.py": "7f6f67a4245fae903e6bf79b7ef82cce16baeab61a8799b04f0d4a92df558245",
+   "scripts/r108/cf4_receipts.py": "a3b15bb8462a18b0fa4f59a47f5471e075239bbdbce8b82d747dfca779c706cd",
+   "scripts/r108/commander_splits.py": "01926d899d66e06d6831f47346c6449d5face457d72f4af56fe19489fad5643c",
+   "scripts/r108/commander_status.py": "8a9a3a14774ec5ee65036be1442f2a6c4d778733e2199042bb4835fa8460f5fe",
+   "scripts/r108/common.py": "dded5b978a15680df0975cb2921e0931824c27cee7d508ea81721a1ceaaff41e",
+   "scripts/r108/f2_coupled_los.py": "0b60e9fcbb798493fd6aac322433439573ebd582491112f126bcc6ca9a4e14a4",
+   "scripts/r108/frame_cf4_joint.py": "51a39b27428abd53d256f22b442fa22279ec601d9fb68d95f4fc268b009eff21",
+   "scripts/r108/frame_input_receipts.py": "ec599d241d8ed66e95defaf87faebbb82d962b492a738634b3e73aed207cf88e",
+   "scripts/r108/frame_lie_flux.py": "f09a661fd9840f8b3e39e7ffa20bbf10790efc66769c5c3413fe59364151f018",
+   "scripts/r108/frame_registry_build.py": "f05d0b22dae211cc48e9d0d969f1a112b3d1401974b960fc819c33007f2ef4a1",
+   "scripts/r108/frame_w1tf_joint.py": "5899bc805f70096b521a14e11d830b8877f36209f25da2f7fb9dffd44523c274",
+   "scripts/r108/gaia_acquire.py": "b5ce4997fd7bd52a81bc451768c13a6f6de52cae7e7a5bab2b2aca1981eda6e0",
+   "scripts/r108/gaia_agn_split.py": "cf7f5d1f133e1c49330b053123dfafcada4c93233289a083e94bcc0743444dff",
+   "scripts/r108/gaia_cmdlog.py": "eff796ab73f20e224ada67d37c95ba63f6e67cf1a56bbf7eab55558d2a47da4b",
+   "scripts/r108/gaia_estimator.py": "84cdf08db5c8ba4c84d1f5c0be97677b0f51de91610703da79d15f404ebd7402",
+   "scripts/r108/gaia_frame_leakage.py": "b2d7537004954f35e1723562fa6799fd91985c6bcf241fe7ccdf942cad78c454",
+   "scripts/r108/gaia_input_receipts.py": "8a52ee575497ab47f751d1d05a70c0612f19cc64a9d7ef41fce0efd813924f34",
+   "scripts/r108/gaia_scan_null.py": "ad3e7b2cb8b47ad7350d3aeb4b8167909e6fc4dc825b2ede3949bee6d58157f2",
+   "scripts/r108/gaia_scanlaw.py": "a10b2b83bcd028625870d6bc3439d91d2b69bb5a1e2f59123f04fe1feb699a1b",
+   "scripts/r108/gaia_summary.py": "5f236da9f59c5ed43f2baf46f39e6c17dcf0a36a10569fd00674fcb18fa16780",
+   "scripts/r108/gaia_supersede.py": "75d253087aec1d7c91a57bed185023cedf5c11615d1ef41e542308fdf2954560",
+   "scripts/r108/radio_cmdlog.py": "18d83a9d3421348ce149e02d47439b85fd91589be538ff777d87746e134fe0c2",
+   "scripts/r108/radio_input_receipts.py": "5def968ebaa0ab53228d0fd501286fc2fd40bb7c2be563290a563ad2edc31e99",
+   "scripts/r108/radio_p_of_c1.py": "08dd5bcc983c4ceec2153f1c67b6d30ac6a2092d9f34af2fb16fe1c4f32f8570",
+   "scripts/r108/radio_racs_dipole.py": "18f2f4088bb2a086b444d80100709bfb7b3fda65319e4493e41082015c911080",
+   "scripts/r108/radio_racs_fetch.py": "98acf036ae5bc6fbd56161584b992034e1e19cf63480d2aec0192deef8a392c7",
+   "scripts/r108/radio_summary.py": "e8c3ba53d4f2059d40f437a617d508014dfa427c50cc70ab5e5f92280e85f96c",
+   "scripts/r108/radio_theory_c1.py": "8e0bfde578a0f7ca0d13857766e29794ae97d5b7cfddf086d8f0142a7cbe41c6",
+   "scripts/r108/radio_v3_diag.py": "416bbfec06daac2de9641ddd6993bd279f178deb4c30c95506aabe631ae018bf",
+   "scripts/r108/review_r107_claims.py": "cdb61ed26c39dff78ca18cb491aa48b7789c92843c1a8b6e248241895621df97",
+   "scripts/r108/s1_family_atlas.py": "5d70606693bcac06653daa1a917252ce557d551919115aa5b38e1112905a9cbc",
+   "scripts/r108/s4_aggregate.py": "c06616ccf1bc72b416d799ecb41d4ad34f4d0e37ac541655c10a5df99702c572",
+   "scripts/r108/s4_bjs_comparator.py": "7b0ba3ca9a930643481ec371ca2318f015e394010f76440af222814fd1b81d7b",
+   "scripts/r108/s4_cmdlog.py": "eddbeca9f8d8c08f7f89e5450f8c3accede25f0ed9c28037042d8588de707b95",
+   "scripts/r108/s4_lit_fetch.py": "1f74fbb626681f7adfe3b85c61de35e1a95af056c5e21e8e79f6b403301030d6",
+   "scripts/r108/s4_posthoc_checks.py": "be30727555d33751f0c8d0511a98fad6e923782b1da210e804e500f7772ed7b5",
+   "scripts/r108/s5_photon_moments.py": "b1eb89d9e6648fe7d2d0737b48f50b2443b2ef71b2380c27908d1b7558fa88fd",
+   "scripts/r108/s6_b03_templates.py": "8bf0aeeab51bbd2efc92af82aea1829bb4dbaa7a166dff00286bb953cbeef23c",
+   "scripts/r108/s7_los_performance.py": "8bede5caa6342a00c659ad5ebab59e2829fb0b5c93403374a33d4084bc80707c",
+   "scripts/r108/s8_cmdlog.py": "f664ae05bdf77f50c3e8b7242773a1d0b10ee5033778b68c6d97f4f51db1d83a",
+   "scripts/r108/s8_lowz_feasibility.py": "d14d63f12e66b57372617b66bc0dc82bb51589ed84268c4bfbc7921043ba393d",
+   "scripts/r108/s8_lowz_tau.py": "724c95700c82f00513b4a3061d79a70ec6d2d211ca38732a3d446035a7e2a902",
+   "scripts/r108/s8_replay_compare.py": "a7ba16bfecf70c4f8dbd7e8858e98d387489b47c990754263e788f3d03084a5e",
+   "scripts/r108/s8_uvb_vo_probe.py": "d2c40c8dd4a44001b4826717d9a57f9e5a734fb164b34e20bb7ed0ea78a73c94",
+   "tests/obsstat/test_r108_cf4_2mpp.py": "630204a57bf14620ec3c4b326e86b570bd7995c8f5d06628acf5be21be96888e",
+   "tests/obsstat/test_r108_cf4_acquire.py": "6ef6695a5a9ef1be378619452848bda534dbba113fc9cde82c656673fc6ebdcd",
+   "tests/obsstat/test_r108_cf4_cf3_overlap.py": "f319cdeff11a34d8e64ed8c46f4ebaf4d44b148f03591f8dbb43c343fa8837ca",
+   "tests/obsstat/test_r108_cf4_kband.py": "610302e9736fadb35147d051131c0b7326d89f473498462534cc9bbb3355a975",
+   "tests/obsstat/test_r108_cf4_receipts.py": "92a323481558686cde7c5f03a88afb7d626f7b8184a0d904e9b39ba31e95eddb",
+   "tests/obsstat/test_r108_frame_cf4_joint.py": "a68866f4eda34d81971cd7def89c266c13d835e27f63696af398519674d9d57c",
+   "tests/obsstat/test_r108_frame_lie_flux.py": "66976c8e087d5ed311a5d9b9f0d43d47d281dddab191ab7b2598b1e913f47257",
+   "tests/obsstat/test_r108_frame_registry.py": "94499c9cb941dbb40051dcc1552e6a1cef83ca590bb4f259c5a333a6d25190bc",
+   "tests/obsstat/test_r108_gaia_acquire.py": "f563e84706747f6a68f0b7ee4633976b94e0a063d62106a3450e4a819ab1dfd6",
+   "tests/obsstat/test_r108_gaia_agn_split.py": "2f3db18a458a291dc0c7a8a364242861e1c3b815af200c7626938be494bcefc5",
+   "tests/obsstat/test_r108_gaia_estimator.py": "a1260756f239f90ea1b331dfb221c4f0b0fa5670e3d5292c55ac53013031fac1",
+   "tests/obsstat/test_r108_gaia_frame_leakage.py": "8c8b879c8131a82f1e1c81657b85a9c6ff5b848e2b61bbbb00af8fb625e63e9d",
+   "tests/obsstat/test_r108_gaia_scan_null.py": "66791d9fc9406c1e1b39f454ce7e2e9cd3b90dda93892f3a24c600bbfb0df8db",
+   "tests/obsstat/test_r108_gaia_scanlaw.py": "9bb22d639f9fda641827cfdb7b8acb6d6132188897f5a05f40317fa34a62cad8",
+   "tests/obsstat/test_r108_gaia_supersede.py": "1ff159a166feb1613b5921a7975e5d9e855a261b3ae2ac28f1bd5a54b8200994",
+   "tests/obsstat/test_r108_radio_input_receipts.py": "8671dd32518ce6aa2e67274bbee88bc4e390f66197eda44c9a367b0c2c11e84a",
+   "tests/obsstat/test_r108_radio_p_of_c1.py": "0add58f756d41e04ab224cf5fb8d51a587a166d6796fe74618a24343dd67edc1",
+   "tests/obsstat/test_r108_radio_racs_dipole.py": "e20c96a0001b1b52940ab4fe95fceb7e31319d5e9e9da8d6be3ac485f6e8b9be",
+   "tests/obsstat/test_r108_radio_theory_c1.py": "a8dcbbfffae34d0c25214106c9dff4ad1b3297e52cb1e6c0b3e4470e38f06bca",
+   "tests/obsstat/test_r108_s4_rotation_fitter.py": "c2a736a7763c5343a55afb00c11268c575c4ec2d29401a4fa451759d86f61f2b",
+   "tests/obsstat/test_r108_s6_kernel.py": "72da1c58314cc3056a3b9c9407a9f0f977fc20e0f33e622755b78184ef486fbc",
+   "tests/obsstat/test_r108_s8_lowz_tau.py": "057a0552612c555ebd1c646c49cce3c11a36e54541ce994487d257a1d78e8fbf",
+   "tests/r107_cloud/test_acquisition.py": "fde7b4acaf42a9973e6ae30a5c3559cb4881462498cfb3f4f1eafcdacc0820a6"
+  },
+  "head": "b79b9526b1817cc5946858f5891f7e7b567b87a2"
+ },
+ "inputs": {
+  "cf4_ReadMe": {
+   "path": "/mnt/extdrive/workdir/raw/cf4_full/ReadMe",
+   "sha256": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4"
+  },
+  "cf4_table3": {
+   "path": "/mnt/extdrive/workdir/raw/cf4_full/table3.dat",
+   "sha256": "c2351c52de3e38a7fd80256b6f0818c550dd9f105b91e84fbcc1eb7234160b4d"
+  },
+  "cf4_table4": {
+   "path": "/mnt/extdrive/workdir/raw/cf4_full/table4.dat",
+   "sha256": "b6edfec68bdfddeada8f3b8f11938f3bbda98a8e2894ff136a369c2ad6594e94"
+  },
+  "frame_registry": {
+   "path": "docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/FRAME/CATALOGUE_FRAME_REGISTRY.json",
+   "sha256": "ba01791d0a185a2ce3ade33664e610692431f2d0a3a1f07c8fedc0d0a95b5f82"
+  },
+  "h03_module": {
+   "path": "docs/research_program/observational_publication_20261015/H03_20261016/src/h03_tomography.py",
+   "sha256": "1c7fe777e3f44183f501e599877964aa212912b0c8c78c905e0aa9404ac03d40"
+  },
+  "r105_h05_axes": {
+   "path": "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CF4_H05_AXES.json",
+   "sha256": "f092e6b847e7911c3337b421719bf1347589309c5202c42b282b955bb4843b60"
+  },
+  "r98_results": {
+   "path": "docs/research_program/observational_publication_20261015/R98_FOURTH_RESEARCH_CYCLE_20261123/CF4_P1_RESULTS.json",
+   "sha256": "436630f094950d1d21d82ab61a9b587df788cc4f28c3976f5ff2b677a5350591"
+  },
+  "selected": {
+   "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/cf4_schur_loop8_20261015/inputs/selected_source_observables.npz",
+   "sha256": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c"
+  }
+ },
+ "label": "CONDITIONAL: working covariance without coherent large-scale peculiar-velocity covariance; CF4 all-method groups, not the W1 Tully-Fisher subset of the literature (not the same estimand)",
+ "nodes": [
+  "H05 (first executable step)",
+  "SQ-LIE-FLUX CF4 frame input"
+ ],
+ "not_included": [
+  "coherent large-scale peculiar-velocity covariance of the 36-vector (R98 computed it in-run; matrices not saved)",
+  "selection (Malmquist/boundary) covariance block of R98",
+  "W1 Tully-Fisher object list, photometry and line widths of Boubel 2025 / Stiskalek 2026 (same-estimand comparison)",
+  "cross-covariance of shared W1 objects between the two papers"
+ ],
+ "replay": {
+  "coefficients_max_abs_vs_R98": 1.7477339020466331e-16,
+  "covariance_max_abs_vs_R98": 0.0,
+  "fV3k_minus_f_V3k_kms": {
+   "max_abs": 0.5042992536218662,
+   "rms": 0.29090672192282935
+  },
+  "n_groups": 35970
+ },
+ "responses": {
+  "bulk_dipole_response_diag_per_kms": [
+   0.00014714265872045468,
+   0.0001049592837712205,
+   6.955234063023077e-05,
+   5.188514481409362e-05
+  ],
+  "hdipole_response_diag": [
+   1.0205036091318729,
+   1.0281787293762081,
+   1.040820524092921,
+   1.0534809156664735
+  ],
+  "implied_z_eff": [
+   0.02313424033428869,
+   0.03267586203369273,
+   0.049916415930339006,
+   0.06772717117816657
+  ]
+ },
+ "results": {
+  "working": {
+   "M0_none": {
+    "chi2": 278.17016855609137,
+    "dof": 12,
+    "n_params": 24
+   },
+   "MBH_bulk_plus_expansion_dipole": {
+    "bulk_kms": {
+     "amplitude": 325.1594509835184,
+     "amplitude_sd_linear": 38.36559403013689,
+     "b_deg": 39.53867726458971,
+     "galactic": [
+      -55.990191492075944,
+      -244.4306725992223,
+      206.99616738789047
+     ],
+     "galactic_cov": [
+      [
+       2207.443443083607,
+       19.92506930538732,
+       -159.24901959774172
+      ],
+      [
+       19.925069305387247,
+       2255.358158448742,
+       522.4625372038864
+      ],
+      [
+       -159.2490195977417,
+       522.4625372038864,
+       1460.695651695953
+      ]
+     ],
+     "icrs": [
+      -297.30656853416383,
+      116.6328930802616,
+      -61.10843740492919
+     ],
+     "icrs_cov": [
+      [
+       1192.7287509656242,
+       -118.88399183029605,
+       23.769820692325816
+      ],
+      [
+       -118.88399183029605,
+       2240.0755638754354,
+       -92.30100930514905
+      ],
+      [
+       23.769820692325816,
+       -92.30100930514905,
+       2490.692938387246
+      ]
+     ],
+     "l_deg": 257.09819725650425,
+     "wald_zero": 78.5789514219793
+    },
+    "chi2": 26.58894827856076,
+    "corr_bulk_h_icrs": [
+     [
+      -0.9021018249519799,
+      0.06295518899818611,
+      -0.04866910170949749
+     ],
+     [
+      0.06479895189980656,
+      -0.9130851897468671,
+      0.004507074307775283
+     ],
+     [
+      -0.053107372411369744,
+      0.006058802852965887,
+      -0.9131219639518712
+     ]
+    ],
+    "dof": 6,
+    "expansion_dipole_h": {
+     "amplitude": 0.03637996480279964,
+     "amplitude_sd_linear": 0.00547433904298002,
+     "b_deg": -56.44387472016814,
+     "galactic": [
+      0.020028442987867205,
+      -0.001799890061284025,
+      -0.03031705306097518
+     ],
+     "galactic_cov": [
+      [
+       3.767923070817849e-05,
+       -3.2792971144650643e-06,
+       -3.4620831366476533e-06
+      ],
+      [
+       -3.2792971144650647e-06,
+       3.771682075647647e-05,
+       8.240106074721263e-06
+      ],
+      [
+       -3.4620831366476538e-06,
+       8.240106074721263e-06,
+       2.0765810063401928e-05
+      ]
+     ],
+     "icrs": [
+      0.024316663684499404,
+      -0.010687848777161144,
+      -0.024859034470880503
+     ],
+     "icrs_cov": [
+      [
+       1.773794999717051e-05,
+       -1.8673294519222038e-06,
+       2.7730213203977716e-06
+      ],
+      [
+       -1.8673294519222038e-06,
+       3.472901282854871e-05,
+       1.1053662707324945e-06
+      ],
+      [
+       2.7730213203977716e-06,
+       1.1053662707324945e-06,
+       4.369489870233773e-05
+      ]
+     ],
+     "l_deg": 354.8648117386404,
+     "projection_on_literature_axes": {
+      "Boubel_2025_fig4": {
+       "as_mag_sd": 0.013021170431929517,
+       "as_mag_zero_point": -0.07445794224311801,
+       "h_dot_axis": -0.03428914957280304,
+       "literature_axis_galactic_lb_deg": [
+        142.0,
+        52.0
+       ],
+       "sd": 0.005996470585979149
+      },
+      "Stiskalek_2026_sec4_1": {
+       "as_mag_sd": 0.014274534044539499,
+       "as_mag_zero_point": -0.040281727359801095,
+       "h_dot_axis": -0.018550420987745682,
+       "literature_axis_galactic_lb_deg": [
+        127.0,
+        10.0
+       ],
+       "sd": 0.006573665860078531
+      }
+     },
+     "wald_zero": 53.826920251823445
+    },
+    "n_params": 30
+   },
+   "MB_bulk": {
+    "bulk_kms": {
+     "amplitude": 270.37954400052683,
+     "amplitude_sd_linear": 19.69260851894819,
+     "b_deg": -4.815276486534197,
+     "galactic": [
+      83.38909538733111,
+      -256.19566804137827,
+      -22.69661343124436
+     ],
+     "galactic_cov": [
+      [
+       364.81809189976354,
+       7.806222298708501,
+       -33.98908251289498
+      ],
+      [
+       7.806222298708499,
+       382.1543397432467,
+       69.29177153822123
+      ],
+      [
+       -33.98908251289499,
+       69.29177153822125,
+       250.6261162702437
+      ]
+     ],
+     "icrs": [
+      -111.47164589100574,
+      45.62398401006809,
+      -242.0694570971979
+     ],
+     "icrs_cov": [
+      [
+       220.0079936337912,
+       -32.78003054346719,
+       6.674874875758511
+      ],
+      [
+       -32.78003054346719,
+       370.2840724131602,
+       -12.88736140112523
+      ],
+      [
+       6.674874875758511,
+       -12.88736140112523,
+       407.30648186630333
+      ]
+     ],
+     "l_deg": 288.02954417011154,
+     "wald_zero": 197.75430002570795
+    },
+    "chi2": 80.4158685303833,
+    "dof": 9,
+    "n_params": 27
+   },
+   "MD_free_dipole_per_window": {
+    "chi2": 6.699751182111331e-27,
+    "dof": 0,
+    "n_params": 36
+   },
+   "MH_expansion_dipole": {
+    "chi2": 105.16789970053927,
+    "dof": 9,
+    "expansion_dipole_h": {
+     "amplitude": 0.03503020884731593,
+     "amplitude_sd_linear": 0.002674316232856188,
+     "b_deg": -13.986261378105196,
+     "galactic": [
+      0.014931440077929346,
+      -0.030536654892678955,
+      -0.008466424100598974
+     ],
+     "galactic_cov": [
+      [
+       6.219640718582953e-06,
+       -4.714903516258012e-07,
+       -6.769684486465356e-07
+      ],
+      [
+       -4.71490351625801e-07,
+       6.394317822415266e-06,
+       1.1039195346316865e-06
+      ],
+      [
+       -6.769684486465356e-07,
+       1.1039195346316863e-06,
+       3.5587254946320876e-06
+      ]
+     ],
+     "icrs": [
+      -0.008561792459333955,
+      0.002218936955530309,
+      -0.0338952439223742
+     ],
+     "icrs_cov": [
+      [
+       3.2735849202417112e-06,
+       -5.061048194583593e-07,
+       5.152637703864216e-07
+      ],
+      [
+       -5.061048194583593e-07,
+       5.743721087798614e-06,
+       2.0592620734194963e-07
+      ],
+      [
+       5.152637703864216e-07,
+       2.0592620734194963e-07,
+       7.155378027589995e-06
+      ]
+     ],
+     "l_deg": 296.05714295270326,
+     "projection_on_literature_axes": {
+      "Boubel_2025_fig4": {
+       "as_mag_sd": 0.005293621158715105,
+       "as_mag_zero_point": -0.055351206703870476,
+       "h_dot_axis": -0.02549017268711285,
+       "literature_axis_galactic_lb_deg": [
+        142.0,
+        52.0
+       ],
+       "sd": 0.002437802633603054
+      },
+      "Stiskalek_2026_sec4_1": {
+       "as_mag_sd": 0.005797422118171699,
+       "as_mag_zero_point": -0.07456137025293257,
+       "h_dot_axis": -0.03433677993152244,
+       "literature_axis_galactic_lb_deg": [
+        127.0,
+        10.0
+       ],
+       "sd": 0.002669811549419224
+      }
+     },
+     "wald_zero": 173.00226885555233
+    },
+    "n_params": 27
+   },
+   "delta_chi2_M0_none_to_MB_bulk": {
+    "delta_chi2": 197.75430002570806,
+    "delta_params": 3
+   },
+   "delta_chi2_M0_none_to_MH_expansion_dipole": {
+    "delta_chi2": 173.0022688555521,
+    "delta_params": 3
+   },
+   "delta_chi2_MBH_bulk_plus_expansion_dipole_to_MD_free_dipole_per_window": {
+    "delta_chi2": 26.58894827856076,
+    "delta_params": 6
+   },
+   "delta_chi2_MB_bulk_to_MBH_bulk_plus_expansion_dipole": {
+    "delta_chi2": 53.82692025182254,
+    "delta_params": 3
+   },
+   "delta_chi2_MH_expansion_dipole_to_MBH_bulk_plus_expansion_dipole": {
+    "delta_chi2": 78.5789514219785,
+    "delta_params": 3
+   },
+   "distance_holdout_inner_to_outer_dipoles": {
+    "M0_none": {
+     "chi2": 37.32239137309141,
+     "dof": 6,
+     "log_predictive_density": 8.963480539804596,
+     "observed": [
+      0.009424686030374987,
+      -0.006675118977213183,
+      -0.027779131388943036,
+      0.021165611262644567,
+      0.0010876394870658389,
+      -0.01910507973590503
+     ],
+     "pred_sd": [
+      0.002337199248122843,
+      0.0031171487436918556,
+      0.0033724384981456993,
+      0.004347645979772835,
+      0.006881936244855294,
+      0.009775816250857338
+     ],
+     "prediction": [
+      5.8966479733546356e-05,
+      -0.0040038664788252885,
+      -0.0197842845826619,
+      0.0005638599327419135,
+      -0.001068393371942689,
+      -0.004906114165641944
+     ]
+    },
+    "MBH_bulk_plus_expansion_dipole": {
+     "chi2": 26.588948278560707,
+     "dof": 6,
+     "log_predictive_density": 13.733188055728696,
+     "observed": [
+      0.009424686030374987,
+      -0.006675118977213183,
+      -0.027779131388943036,
+      0.021165611262644567,
+      0.0010876394870658389,
+      -0.01910507973590503
+     ],
+     "pred_sd": [
+      0.0027727767263621343,
+      0.003482159189364455,
+      0.003679911271734245,
+      0.005592466921925852,
+      0.008187707998507356,
+      0.01064049407302076
+     ],
+     "prediction": [
+      -0.0035670728408310004,
+      -0.004134804105004835,
+      -0.034203628844789884,
+      0.0001951617374741098,
+      -0.006829304543548666,
+      -0.03368783530697236
+     ]
+    },
+    "MB_bulk": {
+     "chi2": 54.1473054427864,
+     "dof": 6,
+     "log_predictive_density": 0.4499515501672109,
+     "observed": [
+      0.009424686030374987,
+      -0.006675118977213183,
+      -0.027779131388943036,
+      0.021165611262644567,
+      0.0010876394870658389,
+      -0.01910507973590503
+     ],
+     "pred_sd": [
+      0.0024235011326573597,
+      0.0032217498844202604,
+      0.0034771762663071983,
+      0.004412897324317829,
+      0.006950794903039646,
+      0.00983147100810904
+     ],
+     "prediction": [
+      -0.006125298342850796,
+      -0.0016716276518495793,
+      -0.029983303301356,
+      -0.006391250412500089,
+      0.001648542046370309,
+      -0.01726494888592868
+     ]
+    },
+    "MH_expansion_dipole": {
+     "chi2": 69.69332372349304,
+     "dof": 6,
+     "log_predictive_density": -7.50034660730921,
+     "observed": [
+      0.009424686030374987,
+      -0.006675118977213183,
+      -0.027779131388943036,
+      0.021165611262644567,
+      0.0010876394870658389,
+      -0.01910507973590503
+     ],
+     "pred_sd": [
+      0.0025854719093515955,
+      0.0033587740121464615,
+      0.003595573711694592,
+      0.004788888846833483,
+      0.007332559624525533,
+      0.010106936470665375
+     ],
+     "prediction": [
+      -0.008956428710641779,
+      -0.0018502098588116158,
+      -0.036213478346426235,
+      -0.015510039016567324,
+      0.002594585644224135,
+      -0.03784500402717252
+     ]
+    }
+   },
+   "leave_one_window_out_MBH": {
+    "drop_window_0": {
+     "bulk_kms": {
+      "amplitude": 611.0132050875839,
+      "amplitude_sd_linear": 76.81522999429917,
+      "b_deg": 36.343277730534425,
+      "galactic": [
+       -29.447520556498404,
+       -491.2776942883857,
+       362.0997202693807
+      ],
+      "galactic_cov": [
+       [
+        9194.90266592703,
+        -523.4222093654878,
+        -919.5512659638284
+       ],
+       [
+        -523.4222093654882,
+        9994.68118201596,
+        2637.248807959249
+       ],
+       [
+        -919.5512659638288,
+        2637.2488079592486,
+        5464.62410567632
+       ]
+      ],
+      "icrs": [
+       -555.3106586691993,
+       172.5320890172593,
+       -187.6163303636522
+      ],
+      "icrs_cov": [
+       [
+        4261.3689753214185,
+        -550.8774010239193,
+        439.5133980795296
+       ],
+       [
+        -550.8774010239193,
+        8946.63099878449,
+        -347.01012512937325
+       ],
+       [
+        439.5133980795296,
+        -347.01012512937325,
+        11446.207979513416
+       ]
+      ],
+      "l_deg": 266.5697560700731,
+      "wald_zero": 74.92459466135485
+     },
+     "chi2": 3.9082584851903808,
+     "dof": 3,
+     "expansion_dipole_h": {
+      "amplitude": 0.04974096379080594,
+      "amplitude_sd_linear": 0.00683792144560068,
+      "b_deg": -58.45767515097032,
+      "galactic": [
+       0.016832367070362238,
+       0.019843358891632048,
+       -0.04239193326028833
+      ],
+      "galactic_cov": [
+       [
+        9.270530659330494e-05,
+        -1.002483411783083e-05,
+        -9.297437214482074e-06
+       ],
+       [
+        -1.0024834117830839e-05,
+        9.784658507025254e-05,
+        2.5345345168282352e-05
+       ],
+       [
+        -9.297437214482074e-06,
+        2.534534516828235e-05,
+        4.838976705180258e-05
+       ]
+      ],
+      "icrs": [
+       0.04566314867575298,
+       -0.015132090005151068,
+       -0.012651489395733573
+      ],
+      "icrs_cov": [
+       [
+        3.8523859344562114e-05,
+        -4.509873008468033e-06,
+        7.851077056545355e-06
+       ],
+       [
+        -4.509873008468033e-06,
+        8.544335171113277e-05,
+        5.981299240692217e-07
+       ],
+       [
+        7.851077056545355e-06,
+        5.981299240692217e-07,
+        0.00011497444765966533
+       ]
+      ],
+      "l_deg": 49.69332477582829,
+      "wald_zero": 59.4394974447751
+     }
+    },
+    "drop_window_1": {
+     "bulk_kms": {
+      "amplitude": 431.8381181103736,
+      "amplitude_sd_linear": 46.31781056667019,
+      "b_deg": 36.73867571889247,
+      "galactic": [
+       -54.799677770920866,
+       -341.69664167447024,
+       258.31097661094645
+      ],
+      "galactic_cov": [
+       [
+        3294.682074420459,
+        38.95894189644734,
+        -219.39293121022814
+       ],
+       [
+        38.9589418964477,
+        3409.525845030889,
+        862.487308650151
+       ],
+       [
+        -219.39293121022808,
+        862.4873086501509,
+        2048.3649368418673
+       ]
+      ],
+      "icrs": [
+       -389.9560543135839,
+       148.69559873483368,
+       -110.94167329808897
+      ],
+      "icrs_cov": [
+       [
+        1621.8979071953563,
+        -175.47796674747724,
+        73.27763776320899
+       ],
+       [
+        -175.47796674747724,
+        3374.8566177816447,
+        -178.83036110615765
+       ],
+       [
+        73.27763776320899,
+        -178.83036110615765,
+        3755.818331316221
+       ]
+      ],
+      "l_deg": 260.88876180619474,
+      "wald_zero": 99.2017963743051
+     },
+     "chi2": 5.102453617786481,
+     "dof": 3,
+     "expansion_dipole_h": {
+      "amplitude": 0.042326525018553864,
+      "amplitude_sd_linear": 0.005735176765537815,
+      "b_deg": -58.76253205645218,
+      "galactic": [
+       0.019297287378353428,
+       0.01046017131480445,
+       -0.03619025056625679
+      ],
+      "galactic_cov": [
+       [
+        5.495563728515529e-05,
+        -4.379582721648288e-06,
+        -4.638311657621679e-06
+       ],
+       [
+        -4.379582721648288e-06,
+        5.540172959670211e-05,
+        1.3093832967063603e-05
+       ],
+       [
+        -4.638311657621679e-06,
+        1.30938329670636e-05,
+        2.87112966327497e-05
+       ]
+      ],
+      "icrs": [
+       0.03551057295048183,
+       -0.014339528611245444,
+       -0.01802531131720203
+      ],
+      "icrs_cov": [
+       [
+        2.3875216954414297e-05,
+        -2.618641317619319e-06,
+        4.407005960214933e-06
+       ],
+       [
+        -2.618641317619319e-06,
+        5.131350411798629e-05,
+        9.465319910331319e-07
+       ],
+       [
+        4.407005960214933e-06,
+        9.465319910331319e-07,
+        6.387994244220661e-05
+       ]
+      ],
+      "l_deg": 28.460082977342626,
+      "wald_zero": 64.3134368861741
+     }
+    },
+    "drop_window_2": {
+     "bulk_kms": {
+      "amplitude": 326.2615871333788,
+      "amplitude_sd_linear": 38.470802251047225,
+      "b_deg": 39.42036093368218,
+      "galactic": [
+       -59.34770928239479,
+       -244.952744003346,
+       207.1777638815394
+      ],
+      "galactic_cov": [
+       [
+        2209.6263079889686,
+        19.978369194817905,
+        -158.71984563439193
+       ],
+       [
+        19.978369194817724,
+        2260.132599229568,
+        522.6561666676879
+       ],
+       [
+        -158.7198456343919,
+        522.6561666676879,
+        1461.0212287818931
+       ]
+      ],
+      "icrs": [
+       -297.53784807304305,
+       119.76173642975763,
+       -59.7911255136039
+      ],
+      "icrs_cov": [
+       [
+        1194.027560028145,
+        -119.3319385595228,
+        25.573279793429954
+       ],
+       [
+        -119.3319385595228,
+        2242.9570042478963,
+        -93.24565787382555
+       ],
+       [
+        25.573279793429954,
+        -93.24565787382555,
+        2493.795571724393
+       ]
+      ],
+      "l_deg": 256.38068775499255,
+      "wald_zero": 78.77020136865715
+     },
+     "chi2": 16.004604519745115,
+     "dof": 3,
+     "expansion_dipole_h": {
+      "amplitude": 0.03594936333570102,
+      "amplitude_sd_linear": 0.005586461392168829,
+      "b_deg": -55.84724941066642,
+      "galactic": [
+       0.01991857677541126,
+       -0.0032502236319959764,
+       -0.029749673440666657
+      ],
+      "galactic_cov": [
+       [
+        3.800541581669683e-05,
+        -3.6036098065809684e-06,
+        -3.5742762347699803e-06
+       ],
+       [
+        -3.603609806580968e-06,
+        3.8366758658898166e-05,
+        8.372878230824214e-06
+       ],
+       [
+        -3.57427623476998e-06,
+        8.372878230824214e-06,
+        2.0933240529418334e-05
+       ]
+      ],
+      "icrs": [
+       0.023113773077118954,
+       -0.010059120555537569,
+       -0.025630534758971757
+      ],
+      "icrs_cov": [
+       [
+        1.7916718529271925e-05,
+        -1.8817191928703254e-06,
+        2.9457205080431456e-06
+       ],
+       [
+        -1.8817191928703254e-06,
+        3.484559724196366e-05,
+        1.1412792053228509e-06
+       ],
+       [
+        2.9457205080431456e-06,
+        1.1412792053228509e-06,
+        4.454309923377781e-05
+       ]
+      ],
+      "l_deg": 350.7324104702306,
+      "wald_zero": 50.76059709811312
+     }
+    },
+    "drop_window_3": {
+     "bulk_kms": {
+      "amplitude": 329.1515927662443,
+      "amplitude_sd_linear": 42.81313718774187,
+      "b_deg": 36.25297283867151,
+      "galactic": [
+       -88.34177707342172,
+       -250.30002747417387,
+       194.64428501883424
+      ],
+      "galactic_cov": [
+       [
+        2509.784212101121,
+        109.24460085083584,
+        -130.15959554718629
+       ],
+       [
+        109.24460085083605,
+        2491.7387022547728,
+        508.63055482659854
+       ],
+       [
+        -130.15959554718623,
+        508.6305548265985,
+        1666.6415177793472
+       ]
+      ],
+      "icrs": [
+       -287.7140475645387,
+       149.947445727397,
+       -55.472167565504606
+      ],
+      "icrs_cov": [
+       [
+        1416.18188369901,
+        -138.9439694942746,
+        29.88021571814636
+       ],
+       [
+        -138.9439694942746,
+        2602.617225911928,
+        -104.67501337301309
+       ],
+       [
+        29.88021571814636,
+        -104.67501337301309,
+        2649.3653225243083
+       ]
+      ],
+      "l_deg": 250.55984489156785,
+      "wald_zero": 64.92778738499163
+     },
+     "chi2": 22.67269798786556,
+     "dof": 3,
+     "expansion_dipole_h": {
+      "amplitude": 0.03784930171778823,
+      "amplitude_sd_linear": 0.00599124630885752,
+      "b_deg": -49.437545062187326,
+      "galactic": [
+       0.02458128132776095,
+       -0.0012395159745517623,
+       -0.028754023178652208
+      ],
+      "galactic_cov": [
+       [
+        4.362128807786455e-05,
+        -1.936343729810912e-06,
+        -2.9950338871163204e-06
+       ],
+       [
+        -1.9363437298109126e-06,
+        4.2327822536443026e-05,
+        7.681648731488677e-06
+       ],
+       [
+        -2.99503388711632e-06,
+        7.681648731488677e-06,
+        2.4310770447465154e-05
+       ]
+      ],
+      "icrs": [
+       0.022987521709865795,
+       -0.015223336757709096,
+       -0.02593055155842236
+      ],
+      "icrs_cov": [
+       [
+        2.2000891231218317e-05,
+        -2.335403354758477e-06,
+        3.274540500516846e-06
+       ],
+       [
+        -2.335403354758477e-06,
+        4.142039288126018e-05,
+        1.2316420530547956e-06
+       ],
+       [
+        3.274540500516846e-06,
+        1.2316420530547956e-06,
+        4.683859694929431e-05
+       ]
+      ],
+      "l_deg": 357.1132940011999,
+      "wald_zero": 45.98216045213059
+     }
+    }
+   }
+  },
+  "working_plus_calibration": {
+   "M0_none": {
+    "chi2": 270.73017701291934,
+    "dof": 12,
+    "n_params": 24
+   },
+   "MBH_bulk_plus_expansion_dipole": {
+    "bulk_kms": {
+     "amplitude": 312.3108680448155,
+     "amplitude_sd_linear": 41.62931713097439,
+     "b_deg": 38.136254180727455,
+     "galactic": [
+      -56.14156481937197,
+      -239.1448638737204,
+      192.8624823063266
+     ],
+     "galactic_cov": [
+      [
+       2219.03329845661,
+       7.805121664003141,
+       -158.4418223771027
+      ],
+      [
+       7.805121664003125,
+       2343.2642759991495,
+       440.390450685766
+      ],
+      [
+       -158.44182237710274,
+       440.39045068576604,
+       1747.7779462848082
+      ]
+     ],
+     "icrs": [
+      -282.42317390459704,
+      117.21337190432129,
+      -63.53152435900893
+     ],
+     "icrs_cov": [
+      [
+       1501.4600936461948,
+       -106.399652890433,
+       -18.643724057501856
+      ],
+      [
+       -106.399652890433,
+       2253.9736930471295,
+       -108.69635736168104
+      ],
+      [
+       -18.643724057501856,
+       -108.69635736168104,
+       2554.641734047248
+      ]
+     ],
+     "l_deg": 256.7884997790277,
+     "wald_zero": 58.85079091537344
+    },
+    "chi2": 25.38158487770148,
+    "corr_bulk_h_icrs": [
+     [
+      -0.9115133257898521,
+      0.054755659965438436,
+      -0.06960849742384377
+     ],
+     [
+      0.04507898128339786,
+      -0.9123089975179742,
+      0.006330475529615472
+     ],
+     [
+      -0.015511900462260243,
+      0.007321388559509119,
+      -0.9056845843889723
+     ]
+    ],
+    "dof": 6,
+    "expansion_dipole_h": {
+     "amplitude": 0.034974585109507315,
+     "amplitude_sd_linear": 0.005873697174928111,
+     "b_deg": -53.98137927756031,
+     "galactic": [
+      0.020315573173524178,
+      -0.003204415401671235,
+      -0.028288351174059048
+     ],
+     "galactic_cov": [
+      [
+       3.789462552145399e-05,
+       -4.045503453749121e-06,
+       -2.516821508411631e-06
+      ],
+      [
+       -4.045503453749122e-06,
+       4.1437494747785664e-05,
+       3.389280019358374e-06
+      ],
+      [
+       -2.516821508411631e-06,
+       3.389280019358376e-06,
+       2.761964650110994e-05
+      ]
+     ],
+     "icrs": [
+      0.021846682070770177,
+      -0.010715702143612518,
+      -0.025122058308391843
+     ],
+     "icrs_cov": [
+      [
+       2.809773019198605e-05,
+       -1.8557326198232135e-06,
+       4.079153101141918e-06
+      ],
+      [
+       -1.8557326198232135e-06,
+       3.47753333961939e-05,
+       1.0918119322832922e-06
+      ],
+      [
+       4.079153101141918e-06,
+       1.0918119322832922e-06,
+       4.407870318216974e-05
+      ]
+     ],
+     "l_deg": 351.03647255700554,
+     "projection_on_literature_axes": {
+      "Boubel_2025_fig4": {
+       "as_mag_sd": 0.013290433400668406,
+       "as_mag_zero_point": -0.07244505575836153,
+       "h_dot_axis": -0.03336218109006515,
+       "literature_axis_galactic_lb_deg": [
+        142.0,
+        52.0
+       ],
+       "sd": 0.006120470765561847
+      },
+      "Stiskalek_2026_sec4_1": {
+       "as_mag_sd": 0.0145653391114587,
+       "as_mag_zero_point": -0.042285032558661104,
+       "h_dot_axis": -0.019472977125268187,
+       "literature_axis_galactic_lb_deg": [
+        127.0,
+        10.0
+       ],
+       "sd": 0.006707586542489589
+      }
+     },
+     "wald_zero": 37.427602837044326
+    },
+    "n_params": 30
+   },
+   "MB_bulk": {
+    "bulk_kms": {
+     "amplitude": 290.32469747505803,
+     "amplitude_sd_linear": 20.520384638335997,
+     "b_deg": -2.3637488536892803,
+     "galactic": [
+      89.53610390776619,
+      -275.91364452635946,
+      -11.974006229471968
+     ],
+     "galactic_cov": [
+      [
+       369.27540201555416,
+       -1.2098649868586264,
+       -30.004825606808808
+      ],
+      [
+       -1.2098649868586189,
+       419.6901272374825,
+       63.373763247175944
+      ],
+      [
+       -30.0048256068088,
+       63.37376324717593,
+       273.01584890250024
+      ]
+     ],
+     "icrs": [
+      -130.85544846543425,
+      46.90220623199073,
+      -254.8832372312191
+     ],
+     "icrs_cov": [
+      [
+       251.98425285110494,
+       -31.939690549833692,
+       18.389267663673998
+      ],
+      [
+       -31.939690549833692,
+       375.31998245483146,
+       -20.685310760654453
+      ],
+      [
+       18.389267663673998,
+       -20.685310760654453,
+       434.6771428496014
+      ]
+     ],
+     "l_deg": 287.97864623248057,
+     "wald_zero": 207.92098929817374
+    },
+    "chi2": 62.80918771474591,
+    "dof": 9,
+    "n_params": 27
+   },
+   "MD_free_dipole_per_window": {
+    "chi2": 1.9687662833611875e-23,
+    "dof": 0,
+    "n_params": 36
+   },
+   "MH_expansion_dipole": {
+    "chi2": 84.23237579307558,
+    "dof": 9,
+    "expansion_dipole_h": {
+     "amplitude": 0.03845943473850664,
+     "amplitude_sd_linear": 0.0028166659731708424,
+     "b_deg": -7.773730921752219,
+     "galactic": [
+      0.01603333554177311,
+      -0.034568753225466514,
+      -0.005202073840995055
+     ],
+     "galactic_cov": [
+      [
+       6.309719365158386e-06,
+       -7.475975065435083e-07,
+       -4.761108943512974e-07
+      ],
+      [
+       -7.475975065435088e-07,
+       7.4786827497979695e-06,
+       4.1902344181489534e-07
+      ],
+      [
+       -4.761108943512974e-07,
+       4.1902344181489534e-07,
+       4.3211469943663934e-06
+      ]
+     ],
+     "icrs": [
+      -0.013446923716954707,
+      0.0024035072643476406,
+      -0.0359517943333303
+     ],
+     "icrs_cov": [
+      [
+       4.733942672752738e-06,
+       -5.395810597239894e-07,
+       1.0624520275282834e-06
+      ],
+      [
+       -5.395810597239894e-07,
+       5.791176124026338e-06,
+       1.1504923043206277e-07
+      ],
+      [
+       1.0624520275282834e-06,
+       1.1504923043206277e-07,
+       7.584430312543687e-06
+      ]
+     ],
+     "l_deg": 294.8823446992438,
+     "projection_on_literature_axes": {
+      "Boubel_2025_fig4": {
+       "as_mag_sd": 0.005377251502053035,
+       "as_mag_zero_point": -0.05424497514573564,
+       "h_dot_axis": -0.02498073422808068,
+       "literature_axis_galactic_lb_deg": [
+        142.0,
+        52.0
+       ],
+       "sd": 0.002476315829981432
+      },
+      "Stiskalek_2026_sec4_1": {
+       "as_mag_sd": 0.006096496692921803,
+       "as_mag_zero_point": -0.0816348745474882,
+       "h_dot_axis": -0.03759424904029708,
+       "literature_axis_galactic_lb_deg": [
+        127.0,
+        10.0
+       ],
+       "sd": 0.0028075404809218486
+      }
+     },
+     "wald_zero": 186.49780121984423
+    },
+    "n_params": 27
+   },
+   "delta_chi2_M0_none_to_MB_bulk": {
+    "delta_chi2": 207.92098929817342,
+    "delta_params": 3
+   },
+   "delta_chi2_M0_none_to_MH_expansion_dipole": {
+    "delta_chi2": 186.49780121984378,
+    "delta_params": 3
+   },
+   "delta_chi2_MBH_bulk_plus_expansion_dipole_to_MD_free_dipole_per_window": {
+    "delta_chi2": 25.38158487770148,
+    "delta_params": 6
+   },
+   "delta_chi2_MB_bulk_to_MBH_bulk_plus_expansion_dipole": {
+    "delta_chi2": 37.42760283704443,
+    "delta_params": 3
+   },
+   "delta_chi2_MH_expansion_dipole_to_MBH_bulk_plus_expansion_dipole": {
+    "delta_chi2": 58.85079091537409,
+    "delta_params": 3
+   },
+   "distance_holdout_inner_to_outer_dipoles": {
+    "M0_none": {
+     "chi2": 48.377367537771484,
+     "dof": 6,
+     "log_predictive_density": 3.22032264866282,
+     "observed": [
+      0.009424686030374987,
+      -0.006675118977213183,
+      -0.027779131388943036,
+      0.021165611262644567,
+      0.0010876394870658389,
+      -0.01910507973590503
+     ],
+     "pred_sd": [
+      0.002665174426498853,
+      0.003121839269086076,
+      0.0033776054272907224,
+      0.005189214800143699,
+      0.006886640851793857,
+      0.009859884229733523
+     ],
+     "prediction": [
+      -0.0041738648572433295,
+      -0.004569711473443493,
+      -0.0202403442682816,
+      -0.009046946784069369,
+      -0.0010397368560331882,
+      -0.0005872252271950672
+     ]
+    },
+    "MBH_bulk_plus_expansion_dipole": {
+     "chi2": 25.381584877701368,
+     "dof": 6,
+     "log_predictive_density": 14.256885861354057,
+     "observed": [
+      0.009424686030374987,
+      -0.006675118977213183,
+      -0.027779131388943036,
+      0.021165611262644567,
+      0.0010876394870658389,
+      -0.01910507973590503
+     ],
+     "pred_sd": [
+      0.0028755027855599867,
+      0.0034906429969098255,
+      0.003697994368557253,
+      0.005813763403806295,
+      0.008194820124484683,
+      0.010897556933656615
+     ],
+     "prediction": [
+      -0.003567072840830999,
+      -0.004134804105004819,
+      -0.03420362884478988,
+      0.0001951617374741592,
+      -0.0068293045435486475,
+      -0.03368783530697237
+     ]
+    },
+    "MB_bulk": {
+     "chi2": 36.91392137907584,
+     "dof": 6,
+     "log_predictive_density": 8.863772934381554,
+     "observed": [
+      0.009424686030374987,
+      -0.006675118977213183,
+      -0.027779131388943036,
+      0.021165611262644567,
+      0.0010876394870658389,
+      -0.01910507973590503
+     ],
+     "pred_sd": [
+      0.002698876854918004,
+      0.00322859398551037,
+      0.0034812615567323306,
+      0.005212730367436906,
+      0.006955688737429824,
+      0.009952417913248982
+     ],
+     "prediction": [
+      -0.005598016949258397,
+      -0.0015693665609395413,
+      -0.030039088160160245,
+      -0.00505980784239281,
+      0.001652715393405841,
+      -0.018076949181947976
+     ]
+    },
+    "MH_expansion_dipole": {
+     "chi2": 51.524532016335975,
+     "dof": 6,
+     "log_predictive_density": 1.437553895370816,
+     "observed": [
+      0.009424686030374987,
+      -0.006675118977213183,
+      -0.027779131388943036,
+      0.021165611262644567,
+      0.0010876394870658389,
+      -0.01910507973590503
+     ],
+     "pred_sd": [
+      0.0027692167446085204,
+      0.0033680344899319286,
+      0.0036070189873548797,
+      0.005322757761653185,
+      0.0073402199139264235,
+      0.010317469722275648
+     ],
+     "prediction": [
+      -0.007561063004374483,
+      -0.0015773284285054093,
+      -0.03653665800394003,
+      -0.01200394727510188,
+      0.002625477474098967,
+      -0.04108954610948096
+     ]
+    }
+   },
+   "leave_one_window_out_MBH": {
+    "drop_window_0": {
+     "bulk_kms": {
+      "amplitude": 611.8905177878884,
+      "amplitude_sd_linear": 80.74177788587332,
+      "b_deg": 36.46026108312508,
+      "galactic": [
+       -29.51441225227005,
+       -491.2388726377963,
+       363.62518509817244
+      ],
+      "galactic_cov": [
+       [
+        9202.603611552553,
+        -521.0852336891675,
+        -921.4669157170949
+       ],
+       [
+        -521.0852336891678,
+        10135.266507747418,
+        2492.0584338570357
+       ],
+       [
+        -921.4669157170953,
+        2492.058433857036,
+        6600.051283491439
+       ]
+      ],
+      "icrs": [
+       -556.6113999754555,
+       172.2710871928794,
+       -186.85937946348258
+      ],
+      "icrs_cov": [
+       [
+        5274.698852314888,
+        -430.5213367957437,
+        102.36367495759026
+       ],
+       [
+        -430.5213367957437,
+        9000.43932916496,
+        -442.5311147519566
+       ],
+       [
+        102.36367495759026,
+        -442.5311147519566,
+        11662.78322131158
+       ]
+      ],
+      "l_deg": 266.5617116996011,
+      "wald_zero": 63.011199162891906
+     },
+     "chi2": 3.9041607345378444,
+     "dof": 3,
+     "expansion_dipole_h": {
+      "amplitude": 0.049920444398181586,
+      "amplitude_sd_linear": 0.007902252313644097,
+      "b_deg": -58.52589965018561,
+      "galactic": [
+       0.016822664302643738,
+       0.019908193859325296,
+       -0.042575962137478676
+      ],
+      "galactic_cov": [
+       [
+        9.290487420412953e-05,
+        -1.0649549326008185e-05,
+        -7.818327396780778e-06
+       ],
+       [
+        -1.064954932600818e-05,
+        0.00010129078777410483,
+        1.8592079461922584e-05
+       ],
+       [
+        -7.818327396780781e-06,
+        1.859207946192258e-05,
+        6.434083415848477e-05
+       ]
+      ],
+      "icrs": [
+       0.04585539231598168,
+       -0.015116004002977397,
+       -0.012682278479883846
+      ],
+      "icrs_cov": [
+       [
+        5.7339292997684526e-05,
+        -3.070087958912302e-06,
+        6.431030521909678e-06
+       ],
+       [
+        -3.070087958912302e-06,
+        8.573923203329548e-05,
+        2.9214243562166973e-07
+       ],
+       [
+        6.431030521909678e-06,
+        2.9214243562166973e-07,
+        0.00011545797110573934
+       ]
+      ],
+      "l_deg": 49.801786285893996,
+      "wald_zero": 41.28488921935457
+     }
+    },
+    "drop_window_1": {
+     "bulk_kms": {
+      "amplitude": 430.02758279842374,
+      "amplitude_sd_linear": 49.935598262906126,
+      "b_deg": 36.57058991189878,
+      "galactic": [
+       -54.879644765132724,
+       -340.97706648454607,
+       256.2158985884784
+      ],
+      "galactic_cov": [
+       [
+        3303.7826897873115,
+        27.80364342746282,
+        -204.0608679558328
+       ],
+       [
+        27.803643427462866,
+        3509.190978291588,
+        751.931388064275
+       ],
+       [
+        -204.06086795583278,
+        751.931388064275,
+        2555.7373714145833
+       ]
+      ],
+      "icrs": [
+       -387.778288924429,
+       148.86034182037034,
+       -111.32079428130282
+      ],
+      "icrs_cov": [
+       [
+        2125.0910234562107,
+        -125.27070112557723,
+        -34.51009718981216
+       ],
+       [
+        -125.27070112557723,
+        3398.5814074267555,
+        -214.9041034192636
+       ],
+       [
+        -34.51009718981216,
+        -214.9041034192636,
+        3845.0386086105245
+       ]
+      ],
+      "l_deg": 260.85675920194217,
+      "wald_zero": 78.5753211690101
+     },
+     "chi2": 5.0889889338217245,
+     "dof": 3,
+     "expansion_dipole_h": {
+      "amplitude": 0.04204965189444991,
+      "amplitude_sd_linear": 0.006497965025618187,
+      "b_deg": -58.60581642769425,
+      "galactic": [
+       0.01934111183714338,
+       0.010282714019837533,
+       -0.035893737750947084
+      ],
+      "galactic_cov": [
+       [
+        5.521321469652051e-05,
+        -5.249241156868018e-06,
+        -3.1844571478724353e-06
+       ],
+       [
+        -5.2492411568680125e-06,
+        5.9148949429072555e-05,
+        7.136934574750215e-06
+       ],
+       [
+        -3.1844571478724323e-06,
+        7.136934574750208e-06,
+        3.9340810055026643e-05
+       ]
+      ],
+      "icrs": [
+       0.035163210601143274,
+       -0.014357600410696364,
+       -0.018043867520873558
+      ],
+      "icrs_cov": [
+       [
+        3.8086540234823084e-05,
+        -1.8475166912895482e-06,
+        4.927672977409591e-06
+       ],
+       [
+        -1.8475166912895482e-06,
+        5.144607320949798e-05,
+        8.80383798167531e-07
+       ],
+       [
+        4.927672977409591e-06,
+        8.80383798167531e-07,
+        6.417036073629877e-05
+       ]
+      ],
+      "l_deg": 27.997372776523875,
+      "wald_zero": 43.42373646401727
+     }
+    },
+    "drop_window_2": {
+     "bulk_kms": {
+      "amplitude": 315.0581777017625,
+      "amplitude_sd_linear": 41.690282307679524,
+      "b_deg": 38.11883977018384,
+      "galactic": [
+       -59.39329098223001,
+       -240.6453372576958,
+       194.483711346697
+      ],
+      "galactic_cov": [
+       [
+        2221.171247594698,
+        7.933646055083947,
+        -157.45748142269485
+       ],
+       [
+        7.9336460550837575,
+        2347.0838718916707,
+        441.53432655953
+       ],
+       [
+        -157.45748142269494,
+        441.5343265595299,
+        1751.112831589352
+       ]
+      ],
+      "icrs": [
+       -284.3928168915454,
+       120.39987806467454,
+       -62.33979787630824
+      ],
+      "icrs_cov": [
+       [
+        1504.01567081136,
+        -105.52966399877485,
+        -18.62765235372242
+       ],
+       [
+        -105.52966399877485,
+        2257.133398244602,
+        -110.11840121617882
+       ],
+       [
+        -18.62765235372242,
+        -110.11840121617882,
+        2558.2188820197634
+       ]
+      ],
+      "l_deg": 256.13599371738127,
+      "wald_zero": 59.71263195559057
+     },
+     "chi2": 15.25608366789915,
+     "dof": 3,
+     "expansion_dipole_h": {
+      "amplitude": 0.034718797651762896,
+      "amplitude_sd_linear": 0.005951032378472751,
+      "b_deg": -53.51739712721911,
+      "galactic": [
+       0.02014983815538284,
+       -0.0044855119564332566,
+       -0.027915212970432965
+      ],
+      "galactic_cov": [
+       [
+        3.8209028455043903e-05,
+        -4.32465800784091e-06,
+        -2.6908945113879407e-06
+       ],
+       [
+        -4.324658007840911e-06,
+        4.202775482581736e-05,
+        3.5680955936540003e-06
+       ],
+       [
+        -2.690894511387942e-06,
+        3.5680955936540003e-06,
+        2.775360969522567e-05
+       ]
+      ],
+      "icrs": [
+       0.020899015607317495,
+       -0.010074983063317302,
+       -0.02582868121494064
+      ],
+      "icrs_cov": [
+       [
+        2.8188876388943782e-05,
+        -1.9160124263509765e-06,
+        4.186209470260724e-06
+       ],
+       [
+        -1.9160124263509765e-06,
+        3.489160066278869e-05,
+        1.128417260298394e-06
+       ],
+       [
+        4.186209470260724e-06,
+        1.128417260298394e-06,
+        4.490991592435455e-05
+       ]
+      ],
+      "l_deg": 347.45013944768624,
+      "wald_zero": 36.11686829256026
+     }
+    },
+    "drop_window_3": {
+     "bulk_kms": {
+      "amplitude": 317.3673976753611,
+      "amplitude_sd_linear": 45.21500192507318,
+      "b_deg": 34.943771186333386,
+      "galactic": [
+       -89.83323871818726,
+       -244.14823643333824,
+       181.77924242091754
+      ],
+      "galactic_cov": [
+       [
+        2524.258150899162,
+        86.96352145647336,
+        -107.82962985404126
+       ],
+       [
+        86.96352145647344,
+        2594.805824901796,
+        434.9153146741374
+       ],
+       [
+        -107.82962985404133,
+        434.91531467413745,
+        1880.5580881999815
+       ]
+      ],
+      "icrs": [
+       -273.4299827964397,
+       151.06190461244347,
+       -56.02151899074761
+      ],
+      "icrs_cov": [
+       [
+        1668.9760277231153,
+        -119.13847254300418,
+        29.895538722195464
+       ],
+       [
+        -119.13847254300418,
+        2619.86897103972,
+        -123.2791362519514
+       ],
+       [
+        29.895538722195464,
+        -123.2791362519514,
+        2710.77706523811
+       ]
+      ],
+      "l_deg": 249.79913634355339,
+      "wald_zero": 52.172013661799944
+     },
+     "chi2": 21.382544872833257,
+     "dof": 3,
+     "expansion_dipole_h": {
+      "amplitude": 0.036863321094524705,
+      "amplitude_sd_linear": 0.006225821517669836,
+      "b_deg": -46.7651821728681,
+      "galactic": [
+       0.0250895242537997,
+       -0.0028511444111249326,
+       -0.02685686486511294
+      ],
+      "galactic_cov": [
+       [
+        4.40469253905079e-05,
+        -3.1827937897207578e-06,
+        -1.6398555457732212e-06
+       ],
+       [
+        -3.182793789720757e-06,
+        4.6538061204538474e-05,
+        3.1367288851509443e-06
+       ],
+       [
+        -1.6398555457732218e-06,
+        3.136728885150948e-06,
+        2.9698763563630343e-05
+       ]
+      ],
+      "icrs": [
+       0.020517210699014868,
+       -0.015326136902522181,
+       -0.02651524155830773
+      ],
+      "icrs_cov": [
+       [
+        3.118005785894924e-05,
+        -2.074480556109247e-06,
+        5.513877488051564e-06
+       ],
+       [
+        -2.074480556109247e-06,
+        4.1489031573938426e-05,
+        1.2553448438368258e-06
+       ],
+       [
+        5.513877488051564e-06,
+        1.2553448438368258e-06,
+        4.761466072578916e-05
+       ]
+      ],
+      "l_deg": 353.51678627865493,
+      "wald_zero": 37.0204991481739
+     }
+    }
+   }
+  }
+ },
+ "runtime_s": 3.209912438993342,
+ "schema": "htt.r108.frame.cf4_bulk_hdipole_joint/1"
+}

@@ -1,0 +1,2682 @@
+{
+ "schema": "htt.r108.radio.racs_dipole/1",
+ "node": "SQ-RADIO",
+ "acquisition_item": "D11",
+ "command": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python -m scripts.r108.radio_racs_dipole --out docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO/RACS_DIPOLE.json",
+ "git_head": "b79b9526b1817cc5946858f5891f7e7b567b87a2",
+ "started_utc": "2026-11-24T01:42:13.791450+00:00",
+ "script_sha256": "18f2f4088bb2a086b444d80100709bfb7b3fda65319e4493e41082015c911080",
+ "catalogue": {
+  "table": "AS110.racs_dr1_sources_galacticcut_v2021_08_v01",
+  "service": "https://casda.csiro.au/casda_vo_tools/tap",
+  "rows": 2123638,
+  "finite_positive_rows": 2123638,
+  "citation": "Hale et al. 2021, PASA 38, e058",
+  "strip_sha256": {
+   "racs_dr1_galcut_dec_+000.0_+010.0.vot": "46dd86c1245bf71530b1934fe9f5c4a9e9343a16be0f218fb271f5abce1bff4e",
+   "racs_dr1_galcut_dec_+010.0_+020.0.vot": "b58365932a854f64bcc46051d68d5a005253785261957ab72e02a675a1e110f8",
+   "racs_dr1_galcut_dec_+020.0_+031.0.vot": "fdbad806e52820c128730ca5a830596173d0ed0dc1a1650bad4ce290d5100294",
+   "racs_dr1_galcut_dec_+031.0_+090.0.vot": "0cd821ff66d03988dc2bee975bd84c7dd852e550956b56d700e9200937fa977a",
+   "racs_dr1_galcut_dec_-010.0_+000.0.vot": "384f3b5cb553dadb182eee2bba183ab17efd17da58a98e1be71380bddac75acc",
+   "racs_dr1_galcut_dec_-020.0_-010.0.vot": "7254ea625d9313a24e7ccd7c385acbdd6d1a64fd51764f95806396480254240f",
+   "racs_dr1_galcut_dec_-030.0_-020.0.vot": "f0c57dc4a01994edd91ca82946c7428a484e01f57212775ea98236c2f3ff8b9b",
+   "racs_dr1_galcut_dec_-040.0_-030.0.vot": "a2900efed9081a19986594150e4cd8b6bbca7c101576ebcd91699cb57f54ee00",
+   "racs_dr1_galcut_dec_-050.0_-040.0.vot": "e417dcc9b654a0b8bccda180b104935b6911854f60630f6028ffe6c6e2b6eb7e",
+   "racs_dr1_galcut_dec_-060.0_-050.0.vot": "16e035bccc0432bdeb45ae0062b4226fdf341481d0a121498ff9b1a72dd2b751",
+   "racs_dr1_galcut_dec_-075.0_-060.0.vot": "2fe46874b6ab38ade4ca9a33c56297352ace616d0af2839b5965f35034b0be4a",
+   "racs_dr1_galcut_dec_-090.0_-075.0.vot": "816681d7d95ea593c4f4231b2ef1a6726e31da25e8ba20fd3fa9feb27d36de88"
+  },
+  "cache": {
+   "cache": "/home/cosmosapjw/Downloads/htt_r108/radio/derived/racs_dr1_galcut_v01_columns.npz",
+   "cache_sha256": "fcfeb0347b1630594cb56950acee41d4d52acf5a5e9287d437cdd86043d5a1b4",
+   "source_key": "a09d60fc672c0081e9dde4a25ced00c56419d482898db735909f61072b2de00e"
+  },
+  "note": "CASDA reports Thisversion v1, Latestversion v2 for this table; v01 is used as specified by the R107 manifest"
+ },
+ "input_sha256": {
+  "PROVIDER_NVSS_CARRIERS.npz": "a51da9a98c3d0563446eb61f21aceff69fbfeed5446ec74471177170b8664e89",
+  "PROVIDER_NVSS_RESULT.json": "60735aa244272fc4d295813ab644c429c19cedca122bd9b308dcb7da0053806a"
+ },
+ "assumptions": {
+  "spectral_index_alpha": 0.75,
+  "edge_scale_1400_to_887p5": 1.4075692009581227,
+  "racs_edges_mJy": [
+   28.151384019162453,
+   56.302768038324906,
+   112.60553607664981
+  ],
+  "beta": 0.001233586736861806,
+  "cmb_direction_radec_deg": [
+   167.942,
+   -6.944
+  ]
+ },
+ "mask_racs": {
+  "nside": 64,
+  "galactic_latitude_cut_deg": 10.0,
+  "pixel_centre_dec_window_deg": [
+   -78.0,
+   28.0
+  ],
+  "coverage_rule": "all-flux RACS source count per pixel >= 0.5 x median over the base mask",
+  "median_all_flux_count_base": 63.0,
+  "base_pixels": 29869,
+  "removed_by_coverage": 946,
+  "retained_pixels": 28923,
+  "sky_fraction": 0.58843994140625,
+  "mask_sha256": "081743e39d5632abc2c5308fb9e1eac8bd00cc9763827bc2c52d6158beed4869"
+ },
+ "nvss_r65_replay": {
+  "dipole": {
+   "delta": [
+    -0.0013960439131920563,
+    0.0056270366013520525
+   ],
+   "r65_delta": [
+    -0.001396043913191444,
+    0.005627036601351938
+   ],
+   "max_abs_delta_diff": 6.123573870198129e-16,
+   "wald": 32.792386268357376,
+   "r65_wald": 32.792386268354115,
+   "rel_wald_diff": 9.947598300641403e-14
+  },
+  "dipole_stf": {
+   "delta": [
+    -0.0016440241048542026,
+    0.005524671826759816
+   ],
+   "r65_delta": [
+    -0.0016440241048542026,
+    0.005524671826759816
+   ],
+   "max_abs_delta_diff": 0.0,
+   "wald": 30.989468960483375,
+   "r65_wald": 30.989468960483375,
+   "rel_wald_diff": 0.0
+  }
+ },
+ "nvss_full_R65_mask": {
+  "retained_pixels": 33000,
+  "joint_class_counts": [
+   [
+    1172716,
+    20345,
+    808,
+    113
+   ],
+   [
+    0,
+    106785,
+    11795,
+    434
+   ],
+   [
+    0,
+    0,
+    59520,
+    6782
+   ],
+   [
+    0,
+    0,
+    0,
+    56576
+   ]
+  ],
+  "contrast_R65_estimator": {
+   "dipole": {
+    "delta_integrated_minus_peak_xy": [
+     -0.0013960439131920563,
+     0.0056270366013520525
+    ],
+    "covariance_contrast_poisson_sandwich": [
+     [
+      7.956309839670295e-07,
+      -4.327597054196084e-08
+     ],
+     [
+      -4.327597054196084e-08,
+      1.0179064268242683e-06
+     ]
+    ],
+    "wald_t_self": 32.792386268357376,
+    "poisson_chi2_2dof_p": 7.572230013795709e-08,
+    "peak_common_dipole_xy": [
+     -0.011580580896326824,
+     0.005704168001074278
+    ],
+    "integrated_common_dipole_xy": [
+     -0.01297662480951888,
+     0.01133120460242633
+    ],
+    "overdispersion_peak": 1.0635569327189316,
+    "overdispersion_integrated": 1.1044088343927705
+   },
+   "dipole_stf": {
+    "delta_integrated_minus_peak_xy": [
+     -0.0016440241048542026,
+     0.005524671826759816
+    ],
+    "covariance_contrast_poisson_sandwich": [
+     [
+      8.070559481235526e-07,
+      -5.946172890129335e-08
+     ],
+     [
+      -5.946172890129335e-08,
+      1.0607405393285214e-06
+     ]
+    ],
+    "wald_t_self": 30.989468960483375,
+    "poisson_chi2_2dof_p": 1.8651867287101537e-07,
+    "peak_common_dipole_xy": [
+     -0.012386035258121084,
+     0.006498074690725784
+    ],
+    "integrated_common_dipole_xy": [
+     -0.014030059362975286,
+     0.0120227465174856
+    ],
+    "overdispersion_peak": 1.0635607751362608,
+    "overdispersion_integrated": 1.1043439789403715
+   }
+  },
+  "offdiag_fraction_contrast": {
+   "df": 0.07445961301045968,
+   "f_off_peak": 0.0785929257685248,
+   "f_off_integrated": 0.15305253877898448
+  },
+  "required_offdiag_dipole_for_contrast": 0.07786270737990325,
+  "count_dipole_integrated_selection": {
+   "mono_dipole": {
+    "dipole_xyz": [
+     -0.013160838595255494,
+     0.011292498169635174,
+     -0.0028870211641644247
+    ],
+    "amplitude": 0.01758018994902824,
+    "cov_dipole_poisson": [
+     [
+      9.096579100504724e-06,
+      -5.533076432560634e-07,
+      1.0062604007784615e-06
+     ],
+     [
+      -5.533076432560636e-07,
+      1.1385094692415005e-05,
+      2.51172607229995e-07
+     ],
+     [
+      1.0062604007784615e-06,
+      2.5117260722999536e-07,
+      1.835501549292061e-05
+     ]
+    ],
+    "pearson_dispersion": 1.1827305887709425,
+    "C1_raw": 0.00043153346549491714,
+    "C1_debiased_poisson": 0.0003773072176059636,
+    "C1_debiased_pearson": 0.000367398423402376,
+    "direction_radec_deg": [
+     139.36915611192657,
+     -9.451933522866057
+    ],
+    "C1_raw_one_realisation_interval_68": [
+     0.000250573509950885,
+     0.0015421266821490066
+    ],
+    "C1_raw_one_realisation_interval_95": [
+     0.00013848357979132488,
+     0.005999206195536099
+    ],
+    "C1_transverse_raw": 0.0006298436429292287,
+    "C1_transverse_debiased_poisson": 0.0005869469256485225,
+    "C1_transverse_debiased_pearson": 0.0005791083832434783,
+    "C1_transverse_raw_one_realisation_interval_68": [
+     0.0003436920297343641,
+     0.003612454298959076
+    ],
+    "C1_transverse_raw_one_realisation_interval_95": [
+     0.00017074118326821725,
+     0.02487749505486641
+    ],
+    "kinematic_expected_xyz": [
+     -0.004390164496422006,
+     0.0009378041824417613,
+     -0.0005467525765835119
+    ],
+    "kinematic_expected_amplitude": 0.004522384257253054,
+    "ratio_amplitude_to_kinematic": 3.887372003127094,
+    "residual_xyz": [
+     -0.008770674098833487,
+     0.010354693987193412,
+     -0.0023402685875809127
+    ],
+    "C1_residual_raw": 0.0002647612377593569,
+    "C1_residual_debiased_poisson": 0.00021053498987040332,
+    "C1_residual_debiased_pearson": 0.00020062619566681576,
+    "C1_residual_one_realisation_interval_68": [
+     0.00015373582340413934,
+     0.0009461499554367943
+    ]
+   },
+   "mono_dipole_quadrupole": {
+    "dipole_xyz": [
+     -0.014155857662297433,
+     0.011969557901443913,
+     0.000257674256108013
+    ],
+    "amplitude": 0.018539822505447678,
+    "cov_dipole_poisson": [
+     [
+      9.373224269199448e-06,
+      -6.625181836282892e-07,
+      8.440661295687074e-07
+     ],
+     [
+      -6.625181836282891e-07,
+      1.194045027317587e-05,
+      2.50842881221743e-07
+     ],
+     [
+      8.440661295687069e-07,
+      2.5084288122174275e-07,
+      3.4507705732361304e-05
+     ]
+    ],
+    "pearson_dispersion": 1.1824129791002598,
+    "C1_raw": 0.0004799306635910543,
+    "C1_debiased_poisson": 0.00040198931328689664,
+    "C1_debiased_pearson": 0.0003877717993828183,
+    "direction_radec_deg": [
+     139.78363888023935,
+     0.7963464972322072
+    ],
+    "C1_raw_one_realisation_interval_68": [
+     0.00027867574713156135,
+     0.0017150787623305686
+    ],
+    "C1_raw_one_realisation_interval_95": [
+     0.00015401474430144305,
+     0.00667202717903026
+    ],
+    "C1_transverse_raw": 0.0007197569358827399,
+    "C1_transverse_debiased_poisson": 0.0006751176803071866,
+    "C1_transverse_debiased_pearson": 0.000666974900712832,
+    "C1_transverse_raw_one_realisation_interval_68": [
+     0.0003927557656348709,
+     0.004128150004250135
+    ],
+    "C1_transverse_raw_one_realisation_interval_95": [
+     0.00019511533104722305,
+     0.028428880427932825
+    ],
+    "kinematic_expected_xyz": [
+     -0.004390164496422006,
+     0.0009378041824417613,
+     -0.0005467525765835119
+    ],
+    "kinematic_expected_amplitude": 0.004522384257253054,
+    "ratio_amplitude_to_kinematic": 4.099568159364894,
+    "residual_xyz": [
+     -0.009765693165875427,
+     0.011031753719002151,
+     0.0008044268326915249
+    ],
+    "C1_residual_raw": 0.0003039881226940104,
+    "C1_residual_debiased_poisson": 0.0002260467723898527,
+    "C1_residual_debiased_pearson": 0.0002118292584857744,
+    "C1_residual_one_realisation_interval_68": [
+     0.00017651324167746533,
+     0.0010863310323457197
+    ]
+   }
+  },
+  "count_dipole_peak_selection": {
+   "mono_dipole": {
+    "dipole_xyz": [
+     -0.011851642838611468,
+     0.005633331618579602,
+     -0.0062905157204205565
+    ],
+    "amplitude": 0.014552197467315968,
+    "cov_dipole_poisson": [
+     [
+      9.892089659698939e-06,
+      -6.017041683146655e-07,
+      1.0967183487823229e-06
+     ],
+     [
+      -6.017041683146654e-07,
+      1.2381571036830928e-05,
+      2.6206348244392333e-07
+     ],
+     [
+      1.0967183487823229e-06,
+      2.6206348244392333e-07,
+      1.9970244629159713e-05
+     ]
+    ],
+    "pearson_dispersion": 1.0951661977327938,
+    "C1_raw": 0.0002956817453954419,
+    "C1_debiased_poisson": 0.00023669812644871782,
+    "C1_debiased_pearson": 0.00023108487970503812,
+    "direction_radec_deg": [
+     154.5772898341963,
+     -25.61186948835409
+    ],
+    "C1_raw_one_realisation_interval_68": [
+     0.00017169007434259458,
+     0.0010566473876498714
+    ],
+    "C1_raw_one_realisation_interval_95": [
+     9.488734908275654e-05,
+     0.004110586781140745
+    ],
+    "C1_transverse_raw": 0.0003606461723267035,
+    "C1_transverse_debiased_poisson": 0.00031399632645152356,
+    "C1_transverse_debiased_pearson": 0.00030955683799476185,
+    "C1_transverse_raw_one_realisation_interval_68": [
+     0.00019679680246740468,
+     0.002068478153666345
+    ],
+    "C1_transverse_raw_one_realisation_interval_95": [
+     9.776577869046422e-05,
+     0.014244762917488373
+    ],
+    "kinematic_expected_xyz": [
+     -0.004390164496422006,
+     0.0009378041824417613,
+     -0.0005467525765835119
+    ],
+    "kinematic_expected_amplitude": 0.004522384257253054,
+    "ratio_amplitude_to_kinematic": 3.217815346844307,
+    "residual_xyz": [
+     -0.007461478342189461,
+     0.004695527436137841,
+     -0.0057437631438370445
+    ],
+    "C1_residual_raw": 0.00015458374483824934,
+    "C1_residual_debiased_poisson": 9.560012589152529e-05,
+    "C1_residual_debiased_pearson": 8.998687914784558e-05,
+    "C1_residual_one_realisation_interval_68": [
+     8.976034218122157e-05,
+     0.0005524200012348426
+    ]
+   },
+   "mono_dipole_quadrupole": {
+    "dipole_xyz": [
+     -0.012580720710942659,
+     0.006428654168851939,
+     -0.007957853865630972
+    ],
+    "amplitude": 0.016215103026998526,
+    "cov_dipole_poisson": [
+     [
+      1.0179811493366233e-05,
+      -7.184012194762122e-07,
+      9.340442201842762e-07
+     ],
+     [
+      -7.184012194762124e-07,
+      1.2999443688832287e-05,
+      2.664291550559506e-07
+     ],
+     [
+      9.340442201842761e-07,
+      2.6642915505595064e-07,
+      3.742625614262372e-05
+     ]
+    ],
+    "pearson_dispersion": 1.0950277212008819,
+    "C1_raw": 0.0003671189304491681,
+    "C1_debiased_poisson": 0.0002824976730513394,
+    "C1_debiased_pearson": 0.0002744563077956705,
+    "direction_radec_deg": [
+     152.9333074554409,
+     -29.391073235809174
+    ],
+    "C1_raw_one_realisation_interval_68": [
+     0.0002131706723291114,
+     0.0013119350952732446
+    ],
+    "C1_raw_one_realisation_interval_95": [
+     0.00011781228517110696,
+     0.005103711156035886
+    ],
+    "C1_transverse_raw": 0.0004180457193721165,
+    "C1_transverse_debiased_poisson": 0.00036949920084139784,
+    "C1_transverse_debiased_pearson": 0.0003648859358131872,
+    "C1_transverse_raw_one_realisation_interval_68": [
+     0.00022811849166970053,
+     0.0023976919876238707
+    ],
+    "C1_transverse_raw_one_realisation_interval_95": [
+     0.0001133259366623924,
+     0.01651192392451672
+    ],
+    "kinematic_expected_xyz": [
+     -0.004390164496422006,
+     0.0009378041824417613,
+     -0.0005467525765835119
+    ],
+    "kinematic_expected_amplitude": 0.004522384257253054,
+    "ratio_amplitude_to_kinematic": 3.5855208457778773,
+    "residual_xyz": [
+     -0.008190556214520653,
+     0.005490849986410178,
+     -0.00741110128904746
+    ],
+    "C1_residual_raw": 0.00021245413646324445,
+    "C1_residual_debiased_poisson": 0.00012783287906541576,
+    "C1_residual_debiased_pearson": 0.00011979151380974684,
+    "C1_residual_one_realisation_interval_68": [
+     0.0001233632682835498,
+     0.0007592254570503396
+    ]
+   }
+  },
+  "differential_offdiag_dipole": {
+   "mono_dipole": {
+    "dipole_xyz": [
+     -0.020648060020125574,
+     0.032447045758310936,
+     0.005767259993619372
+    ],
+    "amplitude": 0.03888977306272993,
+    "cov_dipole_poisson": [
+     [
+      7.023929879746915e-05,
+      -4.5801452887718515e-06,
+      7.25302728218556e-06
+     ],
+     [
+      -4.580145288771851e-06,
+      8.79010621864551e-05,
+      2.3555987357003443e-06
+     ],
+     [
+      7.25302728218556e-06,
+      2.3555987357003435e-06,
+      0.00014168865362689464
+     ]
+    ],
+    "pearson_dispersion": 1.1304450836195954,
+    "C1_raw": 0.00211172894300224,
+    "C1_debiased_poisson": 0.0016930886631647225,
+    "C1_debiased_pearson": 0.0016384790968547865,
+    "direction_radec_deg": [
+     122.47111686978644,
+     8.52828283356098
+    ],
+    "C1_raw_one_realisation_interval_68": [
+     0.001226193043234966,
+     0.0075464681394644476
+    ],
+    "C1_raw_one_realisation_interval_95": [
+     0.0006776757933258026,
+     0.0293573925804861
+    ],
+    "C1_transverse_raw": 0.0030979311361645353,
+    "C1_transverse_debiased_poisson": 0.002766722738629112,
+    "C1_transverse_debiased_pearson": 0.002723518231517092,
+    "C1_transverse_raw_one_realisation_interval_68": [
+     0.0016904739011318576,
+     0.01776811558924351
+    ],
+    "C1_transverse_raw_one_realisation_interval_95": [
+     0.0008398027570973188,
+     0.12236174387951965
+    ],
+    "offdiag_fraction_mean": 0.15305253877898448,
+    "note": "logit dipole of the resolved/migrating fraction among selected sources; logit(n_off/(n_off+n_diag)) = log(n_off/n_diag), so this is the dipole of the R106 g_diff (log-density of off-diagonal classes relative to the diagonal classes)"
+   },
+   "mono_dipole_quadrupole": {
+    "dipole_xyz": [
+     -0.019835119108932823,
+     0.02987897985867132,
+     0.0387894599031162
+    ],
+    "amplitude": 0.052828094675427185,
+    "cov_dipole_poisson": [
+     [
+      7.280995422792306e-05,
+      -5.3804256089592275e-06,
+      6.596938127890069e-06
+     ],
+     [
+      -5.3804256089592275e-06,
+      9.166287142213023e-05,
+      1.8885505347909561e-06
+     ],
+     [
+      6.596938127890067e-06,
+      1.888550534790953e-06,
+      0.0002686823254528971
+     ]
+    ],
+    "pearson_dispersion": 1.1294310339391342,
+    "C1_raw": 0.0038967024946731706,
+    "C1_debiased_poisson": 0.0032919038099755685,
+    "C1_debiased_pearson": 0.0032136240908901288,
+    "direction_radec_deg": [
+     123.57814000030457,
+     47.24456920838008
+    ],
+    "C1_raw_one_realisation_interval_68": [
+     0.0022626528401564414,
+     0.013925244204502776
+    ],
+    "C1_raw_one_realisation_interval_95": [
+     0.0012504923812229408,
+     0.05417221054082909
+    ],
+    "C1_transverse_raw": 0.0026937803762668365,
+    "C1_transverse_debiased_poisson": 0.0023493092957485953,
+    "C1_transverse_debiased_pearson": 0.002304724047634988,
+    "C1_transverse_raw_one_realisation_interval_68": [
+     0.0014699375877987191,
+     0.015450117834705457
+    ],
+    "C1_transverse_raw_one_realisation_interval_95": [
+     0.0007302435359503715,
+     0.10639864153872927
+    ],
+    "offdiag_fraction_mean": 0.15305253877898448,
+    "note": "logit dipole of the resolved/migrating fraction among selected sources; logit(n_off/(n_off+n_diag)) = log(n_off/n_diag), so this is the dipole of the R106 g_diff (log-density of off-diagonal classes relative to the diagonal classes)"
+   }
+  },
+  "solid_angle_sr": 8.436894333371027,
+  "Nbar_per_sr_integrated_selection": 31191.335294921628,
+  "shot_noise_integrated_selection": 3.206018564273565e-05,
+  "integral_slope_x_20_40": 0.9520256070557838
+ },
+ "mask_overlap": {
+  "retained_pixels": 21935,
+  "mask_sha256": "1c4b81c16f5620c59ded044a53f6bb7b560dd3285c5ee4bf83b6f31d41bd1f19",
+  "rule": "RACS mask AND R65 NVSS carrier pixels (dec > -37, |b| > 10)"
+ },
+ "racs_full_mask_alpha0p75": {
+  "retained_pixels": 28923,
+  "joint_class_counts": [
+   [
+    1625098,
+    45655,
+    4661,
+    542
+   ],
+   [
+    62,
+    70804,
+    22018,
+    2684
+   ],
+   [
+    0,
+    18,
+    39647,
+    12918
+   ],
+   [
+    0,
+    0,
+    1,
+    43473
+   ]
+  ],
+  "contrast_R65_estimator": {
+   "dipole": {
+    "delta_integrated_minus_peak_xy": [
+     -0.003497683346338267,
+     -0.002113410158071513
+    ],
+    "covariance_contrast_poisson_sandwich": [
+     [
+      2.5974257267802133e-06,
+      -1.3636886565129846e-07
+     ],
+     [
+      -1.3636886565129846e-07,
+      3.1995602257896726e-06
+     ]
+    ],
+    "wald_t_self": 6.362770210955523,
+    "poisson_chi2_2dof_p": 0.041528094475453976,
+    "peak_common_dipole_xy": [
+     -0.015006639457229564,
+     -0.003991884603716045
+    ],
+    "integrated_common_dipole_xy": [
+     -0.01850432280356783,
+     -0.006105294761787558
+    ],
+    "overdispersion_peak": 1.0247791213283144,
+    "overdispersion_integrated": 1.0338975628232487
+   },
+   "dipole_stf": {
+    "delta_integrated_minus_peak_xy": [
+     -0.004125966290373647,
+     -0.0033658238805671977
+    ],
+    "covariance_contrast_poisson_sandwich": [
+     [
+      2.927992628116653e-06,
+      -2.104149254268279e-07
+     ],
+     [
+      -2.104149254268279e-07,
+      3.715394932657555e-06
+     ]
+    ],
+    "wald_t_self": 9.438858259806766,
+    "poisson_chi2_2dof_p": 0.008920269410250986,
+    "peak_common_dipole_xy": [
+     -0.013205096551602055,
+     -0.006845541776452272
+    ],
+    "integrated_common_dipole_xy": [
+     -0.017331062841975702,
+     -0.01021136565701947
+    ],
+    "overdispersion_peak": 1.0247973963729762,
+    "overdispersion_integrated": 1.0338917793028402
+   }
+  },
+  "offdiag_fraction_contrast": {
+   "df": 0.16831136768900468,
+   "f_off_peak": 0.1967436399217221,
+   "f_off_integrated": 0.3650550076107268
+  },
+  "required_offdiag_dipole_for_contrast": 0.024279993941944463,
+  "jackknife_nside4_p2": {
+   "blocks": 151,
+   "contrast_covariance_xy": [
+    [
+     2.97972055303685e-06,
+     -2.2133921029990307e-07
+    ],
+    [
+     -2.2133921029990307e-07,
+     3.428038764448274e-06
+    ]
+   ],
+   "delta_xy": [
+    -0.0034976833463377915,
+    -0.0021134101580713473
+   ],
+   "wald_jk": 5.756580070235438,
+   "gaussian_chi2_2dof_p": 0.05623083342251239
+  },
+  "count_dipole_integrated_selection": {
+   "mono_dipole": {
+    "dipole_xyz": [
+     -0.018686252303037693,
+     -0.00633167114638116,
+     0.00180891573063389
+    ],
+    "amplitude": 0.01981257834708123,
+    "cov_dipole_poisson": [
+     [
+      9.758083034166877e-06,
+      -5.639637096212976e-07,
+      1.4251872114204136e-06
+     ],
+     [
+      -5.639637096212977e-07,
+      1.2072310183770105e-05,
+      3.205851210763004e-07
+     ],
+     [
+      1.4251872114204134e-06,
+      3.2058512107630054e-07,
+      2.4218366161084974e-05
+     ]
+    ],
+    "pearson_dispersion": 1.083905159083383,
+    "C1_raw": 0.0005480868072240522,
+    "C1_debiased_poisson": 0.0004837906098142481,
+    "C1_debiased_pearson": 0.0004783958271421218,
+    "direction_radec_deg": [
+     198.71849497107343,
+     5.238478903826305
+    ],
+    "C1_raw_one_realisation_interval_68": [
+     0.0003182511810211448,
+     0.0019586413502941298
+    ],
+    "C1_raw_one_realisation_interval_95": [
+     0.00017588676005402074,
+     0.007619538303522053
+    ],
+    "C1_transverse_raw": 0.0008152769811950624,
+    "C1_transverse_debiased_poisson": 0.0007695555125560976,
+    "C1_transverse_debiased_pearson": 0.0007657192454564193,
+    "C1_transverse_raw_one_realisation_interval_68": [
+     0.0004448789848215086,
+     0.004676003113825836
+    ],
+    "C1_transverse_raw_one_realisation_interval_95": [
+     0.0002210093854614425,
+     0.032201720690075354
+    ],
+    "kinematic_expected_xyz": [
+     -0.004374880166376028,
+     0.00093453922308668,
+     -0.0005448490609314668
+    ],
+    "kinematic_expected_amplitude": 0.004506639604942434,
+    "ratio_amplitude_to_kinematic": 4.3963085766504975,
+    "residual_xyz": [
+     -0.014311372136661664,
+     -0.00726621036946784,
+     0.0023537647915653566
+    ],
+    "C1_residual_raw": 0.0003674314534128012,
+    "C1_residual_debiased_poisson": 0.00030313525600299707,
+    "C1_residual_debiased_pearson": 0.00029774047333087087,
+    "C1_residual_one_realisation_interval_68": [
+     0.0002133521413974442,
+     0.0013130519263872581
+    ]
+   },
+   "mono_dipole_quadrupole": {
+    "dipole_xyz": [
+     -0.017260705956672458,
+     -0.010379404590656267,
+     -0.0067946094870170075
+    ],
+    "amplitude": 0.02125631030683138,
+    "cov_dipole_poisson": [
+     [
+      1.0933420729490718e-05,
+      -7.735680288986884e-07,
+      1.1432152275159258e-06
+     ],
+     [
+      -7.735680288986881e-07,
+      1.3847448164895221e-05,
+      3.186014928815614e-07
+     ],
+     [
+      1.1432152275159237e-06,
+      3.186014928815604e-07,
+      6.390593514430118e-05
+     ]
+    ],
+    "pearson_dispersion": 1.0835648039205221,
+    "C1_raw": 0.000630874709027585,
+    "C1_debiased_poisson": 0.0005070445703438974,
+    "C1_debiased_pearson": 0.000496696729085344,
+    "direction_radec_deg": [
+     211.0198147445589,
+     -18.64184474470167
+    ],
+    "C1_raw_one_realisation_interval_68": [
+     0.0003663226674644709,
+     0.002254491944833625
+    ],
+    "C1_raw_one_realisation_interval_95": [
+     0.00020245425926759204,
+     0.008770461078064179
+    ],
+    "C1_transverse_raw": 0.0008496207152988349,
+    "C1_transverse_debiased_poisson": 0.0007977197848533851,
+    "C1_transverse_debiased_pearson": 0.0007933826937774184,
+    "C1_transverse_raw_one_realisation_interval_68": [
+     0.0004636196164295173,
+     0.0048729808420259445
+    ],
+    "C1_transverse_raw_one_realisation_interval_95": [
+     0.00023031945767469183,
+     0.03355822572894299
+    ],
+    "kinematic_expected_xyz": [
+     -0.004374880166376028,
+     0.00093453922308668,
+     -0.0005448490609314668
+    ],
+    "kinematic_expected_amplitude": 0.004506639604942434,
+    "ratio_amplitude_to_kinematic": 4.716665225131288,
+    "residual_xyz": [
+     -0.012885825790296429,
+     -0.011313943813742946,
+     -0.006249760426085541
+    ],
+    "C1_residual_raw": 0.0004651083750080503,
+    "C1_residual_debiased_poisson": 0.00034127823632436273,
+    "C1_residual_debiased_pearson": 0.00033093039506580934,
+    "C1_residual_one_realisation_interval_68": [
+     0.0002700690615029308,
+     0.0016621098768510893
+    ]
+   }
+  },
+  "count_dipole_peak_selection": {
+   "mono_dipole": {
+    "dipole_xyz": [
+     -0.015227183444689872,
+     -0.0042198069318604235,
+     -0.00034991592856526685
+    ],
+    "amplitude": 0.01580494629403967,
+    "cov_dipole_poisson": [
+     [
+      1.2349571940244236e-05,
+      -7.134030661890844e-07,
+      1.7910971899663758e-06
+     ],
+     [
+      -7.134030661890846e-07,
+      1.527594964626695e-05,
+      3.9874613728315084e-07
+     ],
+     [
+      1.7910971899663758e-06,
+      3.9874613728315074e-07,
+      3.063142111519631e-05
+     ]
+    ],
+    "pearson_dispersion": 1.0534715489411919,
+    "C1_raw": 0.00034878146974220655,
+    "C1_debiased_poisson": 0.0002674394327589685,
+    "C1_debiased_pearson": 0.000263089948047443,
+    "direction_radec_deg": [
+     195.4892910946195,
+     -1.268611973643516
+    ],
+    "C1_raw_one_realisation_interval_68": [
+     0.00020252287265577662,
+     0.0012464044013637185
+    ],
+    "C1_raw_one_realisation_interval_95": [
+     0.00011192760320311551,
+     0.004848782589238789
+    ],
+    "C1_transverse_raw": 0.0005229157644536243,
+    "C1_transverse_debiased_poisson": 0.0004650570073417778,
+    "C1_transverse_debiased_pearson": 0.00046196320997919513,
+    "C1_transverse_raw_one_realisation_interval_68": [
+     0.0002853438031529945,
+     0.0029991718143072884
+    ],
+    "C1_transverse_raw_one_realisation_interval_95": [
+     0.00014175463605091646,
+     0.020654069450961248
+    ],
+    "kinematic_expected_xyz": [
+     -0.004374880166376028,
+     0.00093453922308668,
+     -0.0005448490609314668
+    ],
+    "kinematic_expected_amplitude": 0.004506639604942434,
+    "ratio_amplitude_to_kinematic": 3.5070357693360656,
+    "residual_xyz": [
+     -0.010852303278313845,
+     -0.0051543461549471035,
+     0.00019493313236619998
+    ],
+    "C1_residual_raw": 0.00020158939577411325,
+    "C1_residual_debiased_poisson": 0.00012024735879087513,
+    "C1_residual_debiased_pearson": 0.00011589787407934966,
+    "C1_residual_one_realisation_interval_68": [
+     0.00011705456588416695,
+     0.0007203992527092154
+    ]
+   },
+   "mono_dipole_quadrupole": {
+    "dipole_xyz": [
+     -0.013015768922083488,
+     -0.006968391840933658,
+     -0.018170631929628013
+    ],
+    "amplitude": 0.023412402486799218,
+    "cov_dipole_poisson": [
+     [
+      1.3842785139155407e-05,
+      -9.769137451915075e-07,
+      1.3820265174985695e-06
+     ],
+     [
+      -9.769137451915075e-07,
+      1.7535711786594902e-05,
+      3.2137354391534686e-07
+     ],
+     [
+      1.38202651749857e-06,
+      3.2137354391534807e-07,
+      8.107646765023433e-05
+     ]
+    ],
+    "pearson_dispersion": 1.053128401774742,
+    "C1_raw": 0.0007653486450306176,
+    "C1_debiased_poisson": 0.0006083318936654559,
+    "C1_debiased_pearson": 0.0005999898446135629,
+    "direction_radec_deg": [
+     208.16373831936906,
+     -50.90590276475203
+    ],
+    "C1_raw_one_realisation_interval_68": [
+     0.00044440608123296214,
+     0.0027350475942686907
+    ],
+    "C1_raw_one_realisation_interval_95": [
+     0.00024560834472182625,
+     0.010639926448686795
+    ],
+    "C1_transverse_raw": 0.00045651263112410524,
+    "C1_transverse_debiased_poisson": 0.00039079366084235383,
+    "C1_transverse_debiased_pearson": 0.00038730211698500264,
+    "C1_transverse_raw_one_realisation_interval_68": [
+     0.0002491090519874447,
+     0.0026183181101324454
+    ],
+    "C1_transverse_raw_one_realisation_interval_95": [
+     0.000123753740614915,
+     0.018031285781430168
+    ],
+    "kinematic_expected_xyz": [
+     -0.004374880166376028,
+     0.00093453922308668,
+     -0.0005448490609314668
+    ],
+    "kinematic_expected_amplitude": 0.004506639604942434,
+    "ratio_amplitude_to_kinematic": 5.195090918990466,
+    "residual_xyz": [
+     -0.008640888755707461,
+     -0.007902931064020338,
+     -0.017625782868696545
+    ],
+    "C1_residual_raw": 0.000625232089945979,
+    "C1_residual_debiased_poisson": 0.0004682153385808173,
+    "C1_residual_debiased_pearson": 0.00045987328952892424,
+    "C1_residual_one_realisation_interval_68": [
+     0.00036304623358008535,
+     0.002234327498414694
+    ]
+   }
+  },
+  "differential_offdiag_dipole": {
+   "mono_dipole": {
+    "dipole_xyz": [
+     -0.01405377040971595,
+     -0.009908050747409709,
+     0.012129367672840362
+    ],
+    "amplitude": 0.02104280144099636,
+    "cov_dipole_poisson": [
+     [
+      4.200033318440857e-05,
+      -2.567506740288533e-06,
+      6.0547143357893575e-06
+     ],
+     [
+      -2.567506740288533e-06,
+      5.209770953334914e-05,
+      1.7972212709231473e-06
+     ],
+     [
+      6.0547143357893575e-06,
+      1.7972212709231467e-06,
+      0.00010472313792617823
+     ]
+    ],
+    "pearson_dispersion": 1.0318375837223737,
+    "C1_raw": 0.0006182647256021283,
+    "C1_debiased_poisson": 0.00034065798760700016,
+    "C1_debiased_pearson": 0.0003318196598441852,
+    "direction_radec_deg": [
+     215.18422498996662,
+     35.19872347506922
+    ],
+    "C1_raw_one_realisation_interval_68": [
+     0.00035900057529784056,
+     0.0022094289463485566
+    ],
+    "C1_raw_one_realisation_interval_95": [
+     0.00019840758436171017,
+     0.008595156271506832
+    ],
+    "C1_transverse_raw": 0.0006192664133833627,
+    "C1_transverse_debiased_poisson": 0.0004221879335705054,
+    "C1_transverse_debiased_pearson": 0.0004159134309695854,
+    "C1_transverse_raw_one_realisation_interval_68": [
+     0.00033792026473777203,
+     0.00355178883258025
+    ],
+    "C1_transverse_raw_one_realisation_interval_95": [
+     0.00016787385467224758,
+     0.02445971680358852
+    ],
+    "offdiag_fraction_mean": 0.3652173554434744,
+    "note": "logit dipole of the resolved/migrating fraction among selected sources; logit(n_off/(n_off+n_diag)) = log(n_off/n_diag), so this is the dipole of the R106 g_diff (log-density of off-diagonal classes relative to the diagonal classes)"
+   },
+   "mono_dipole_quadrupole": {
+    "dipole_xyz": [
+     -0.014979185865810093,
+     -0.015700663136293796,
+     0.05550463986512215
+    ],
+    "amplitude": 0.05959573708478457,
+    "cov_dipole_poisson": [
+     [
+      4.703414020875812e-05,
+      -3.3002752099974505e-06,
+      5.050299079666005e-06
+     ],
+     [
+      -3.30027520999745e-06,
+      5.972792701773158e-05,
+      2.2178457457394695e-06
+     ],
+     [
+      5.050299079666005e-06,
+      2.217845745739473e-06,
+      0.0002741112419796297
+     ]
+    ],
+    "pearson_dispersion": 1.0314583061049216,
+    "C1_raw": 0.004959041533406933,
+    "C1_debiased_poisson": 0.004427242071117877,
+    "C1_debiased_pearson": 0.004410512560846755,
+    "direction_radec_deg": [
+     226.34713782322657,
+     68.64663909259514
+    ],
+    "C1_raw_one_realisation_interval_68": [
+     0.002879508873298797,
+     0.017721615768040662
+    ],
+    "C1_raw_one_realisation_interval_95": [
+     0.0015914080338877957,
+     0.06894091668421513
+    ],
+    "C1_transverse_raw": 0.00098622307497747,
+    "C1_transverse_debiased_poisson": 0.0007626211242569368,
+    "C1_transverse_debiased_pearson": 0.0007555869856455126,
+    "C1_transverse_raw_one_realisation_interval_68": [
+     0.0005381605644751407,
+     0.0056564606580228926
+    ],
+    "C1_transverse_raw_one_realisation_interval_95": [
+     0.00026735031253938323,
+     0.038953730733301946
+    ],
+    "offdiag_fraction_mean": 0.3652173554434744,
+    "note": "logit dipole of the resolved/migrating fraction among selected sources; logit(n_off/(n_off+n_diag)) = log(n_off/n_diag), so this is the dipole of the R106 g_diff (log-density of off-diagonal classes relative to the diagonal classes)"
+   }
+  },
+  "solid_angle_sr": 7.3945543880027325,
+  "Nbar_per_sr_integrated_selection": 32783.71992142151,
+  "shot_noise_integrated_selection": 3.0502944827398337e-05,
+  "edges_mJy": [
+   28.151384019162453,
+   56.302768038324906,
+   112.60553607664981
+  ],
+  "integral_slope_x": 0.9447322859550843,
+  "N_ge_cut": 242421,
+  "N_ge_2cut": 125944
+ },
+ "racs_full_mask_alpha0p75_cut_x1p5": {
+  "retained_pixels": 28923,
+  "joint_class_counts": [
+   [
+    1700574,
+    33519,
+    3543,
+    429
+   ],
+   [
+    25,
+    51095,
+    15196,
+    1769
+   ],
+   [
+    0,
+    6,
+    27389,
+    8281
+   ],
+   [
+    0,
+    0,
+    2,
+    25753
+   ]
+  ],
+  "contrast_R65_estimator": {
+   "dipole": {
+    "delta_integrated_minus_peak_xy": [
+     -0.004018524207091787,
+     -0.0027469294215768415
+    ],
+    "covariance_contrast_poisson_sandwich": [
+     [
+      4.125239072695335e-06,
+      -2.1015832649524009e-07
+     ],
+     [
+      -2.1015832649524009e-07,
+      5.0703841537645076e-06
+     ]
+    ],
+    "wald_t_self": 5.636467111466609,
+    "poisson_chi2_2dof_p": 0.05971132633444648,
+    "peak_common_dipole_xy": [
+     -0.015216845017718503,
+     -0.0033282196886566823
+    ],
+    "integrated_common_dipole_xy": [
+     -0.01923536922481029,
+     -0.006075149110233524
+    ],
+    "overdispersion_peak": 1.0128362883821223,
+    "overdispersion_integrated": 1.028484152873434
+   },
+   "dipole_stf": {
+    "delta_integrated_minus_peak_xy": [
+     -0.004062855234885955,
+     -0.004552308643513548
+    ],
+    "covariance_contrast_poisson_sandwich": [
+     [
+      4.660773613890368e-06,
+      -3.2219082603590343e-07
+     ],
+     [
+      -3.2219082603590343e-07,
+      5.855742905450303e-06
+     ]
+    ],
+    "wald_t_self": 7.5460334838760375,
+    "poisson_chi2_2dof_p": 0.022982625951072033,
+    "peak_common_dipole_xy": [
+     -0.01368836851716623,
+     -0.003741461779663483
+    ],
+    "integrated_common_dipole_xy": [
+     -0.017751223752052184,
+     -0.00829377042317703
+    ],
+    "overdispersion_peak": 1.0128603251533754,
+    "overdispersion_integrated": 1.0285638047213943
+   }
+  },
+  "offdiag_fraction_contrast": {
+   "df": 0.18057854561406456,
+   "f_off_peak": 0.195180518237129,
+   "f_off_integrated": 0.37575906385119356
+  },
+  "required_offdiag_dipole_for_contrast": 0.02695594053543738,
+  "jackknife_nside4_p2": {
+   "blocks": 151,
+   "contrast_covariance_xy": [
+    [
+     3.8614218129057975e-06,
+     -1.0261194042486193e-06
+    ],
+    [
+     -1.026119404248619e-06,
+     5.971789413967078e-06
+    ]
+   ],
+   "delta_xy": [
+    -0.004018524207091421,
+    -0.0027469294215768914
+   ],
+   "wald_jk": 6.735516527395065,
+   "gaussian_chi2_2dof_p": 0.03446681631706657
+  },
+  "count_dipole_integrated_selection": {
+   "mono_dipole": {
+    "dipole_xyz": [
+     -0.019224422677574383,
+     -0.006245614180286989,
+     -0.001324428247959553
+    ],
+    "amplitude": 0.02025685646784889,
+    "cov_dipole_poisson": [
+     [
+      1.417169724885452e-05,
+      -8.188254278688247e-07,
+      2.0725759482685402e-06
+     ],
+     [
+      -8.188254278688249e-07,
+      1.7531878045881895e-05,
+      4.656588449030351e-07
+     ],
+     [
+      2.072575948268541e-06,
+      4.656588449030348e-07,
+      3.5159528598519136e-05
+     ]
+    ],
+    "pearson_dispersion": 1.0575106715670748,
+    "C1_raw": 0.0005729430508791156,
+    "C1_debiased_poisson": 0.0004795845459958876,
+    "C1_debiased_pearson": 0.00047421543568355515,
+    "direction_radec_deg": [
+     197.99789890578714,
+     -3.74877107966374
+    ],
+    "C1_raw_one_realisation_interval_68": [
+     0.000332684166443725,
+     0.002047467547155846
+    ],
+    "C1_raw_one_realisation_interval_95": [
+     0.00018386338730718362,
+     0.00796509141320311
+    ],
+    "C1_transverse_raw": 0.0008557407765402597,
+    "C1_transverse_debiased_poisson": 0.0007893409637146099,
+    "C1_transverse_debiased_pearson": 0.0007855222658870787,
+    "C1_transverse_raw_one_realisation_interval_68": [
+     0.0004669592012515241,
+     0.004908082318066344
+    ],
+    "C1_transverse_raw_one_realisation_interval_95": [
+     0.0002319785146640981,
+     0.03379995523590593
+    ],
+    "kinematic_expected_xyz": [
+     -0.00453186518233138,
+     0.0009680735484322568,
+     -0.0005644000281056004
+    ],
+    "kinematic_expected_amplitude": 0.004668352580699883,
+    "ratio_amplitude_to_kinematic": 4.339187350928829,
+    "residual_xyz": [
+     -0.014692557495243003,
+     -0.007213687728719246,
+     -0.0007600282198539526
+    ],
+    "C1_residual_raw": 0.0003748774259816704,
+    "C1_residual_debiased_poisson": 0.0002815189210984426,
+    "C1_residual_debiased_pearson": 0.0002761498107861101,
+    "C1_residual_one_realisation_interval_68": [
+     0.00021767570754182135,
+     0.0013396608313532578
+    ]
+   },
+   "mono_dipole_quadrupole": {
+    "dipole_xyz": [
+     -0.017521494368602033,
+     -0.00843149049542161,
+     -0.006833181312903351
+    ],
+    "amplitude": 0.020610316924743036,
+    "cov_dipole_poisson": [
+     [
+      1.5894975631461484e-05,
+      -1.148113468678623e-06,
+      1.6388294686880415e-06
+     ],
+     [
+      -1.148113468678623e-06,
+      2.0112240624808493e-05,
+      3.476484132785264e-07
+     ],
+     [
+      1.638829468688042e-06,
+      3.4764841327852485e-07,
+      9.279714028632334e-05
+     ]
+    ],
+    "pearson_dispersion": 1.0573954645569914,
+    "C1_raw": 0.0005931119776685936,
+    "C1_debiased_poisson": 0.00041326716866211724,
+    "C1_debiased_pearson": 0.0004029448923010272,
+    "direction_radec_deg": [
+     205.69725119818992,
+     -19.362382452117856
+    ],
+    "C1_raw_one_realisation_interval_68": [
+     0.00034439542219021925,
+     0.0021195431626974876
+    ],
+    "C1_raw_one_realisation_interval_95": [
+     0.00019033580580004084,
+     0.008245481140136523
+    ],
+    "C1_transverse_raw": 0.0007918757020426077,
+    "C1_transverse_debiased_poisson": 0.0007164623646646631,
+    "C1_transverse_debiased_pearson": 0.000712133981132063,
+    "C1_transverse_raw_one_realisation_interval_68": [
+     0.0004321094138008619,
+     0.0045417855942486395
+    ],
+    "C1_transverse_raw_one_realisation_interval_95": [
+     0.00021466564898440558,
+     0.031277419535450296
+    ],
+    "kinematic_expected_xyz": [
+     -0.00453186518233138,
+     0.0009680735484322568,
+     -0.0005644000281056004
+    ],
+    "kinematic_expected_amplitude": 0.004668352580699883,
+    "ratio_amplitude_to_kinematic": 4.414901524351685,
+    "residual_xyz": [
+     -0.012989629186270652,
+     -0.009399564043853866,
+     -0.006268781284797751
+    ],
+    "C1_residual_raw": 0.0004138243925492391,
+    "C1_residual_debiased_poisson": 0.00023397958354276274,
+    "C1_residual_debiased_pearson": 0.00022365730718167267,
+    "C1_residual_one_realisation_interval_68": [
+     0.0002402905888780416,
+     0.0014788415928354063
+    ]
+   }
+  },
+  "count_dipole_peak_selection": {
+   "mono_dipole": {
+    "dipole_xyz": [
+     -0.01521269642356547,
+     -0.003498429199160405,
+     -0.0046891078756971
+    ],
+    "amplitude": 0.01629886106471935,
+    "cov_dipole_poisson": [
+     [
+      1.8281471370079925e-05,
+      -1.0556441149216172e-06,
+      2.6521144044804326e-06
+     ],
+     [
+      -1.0556441149216172e-06,
+      2.261144791505721e-05,
+      5.874264708716326e-07
+     ],
+     [
+      2.6521144044804334e-06,
+      5.874264708716327e-07,
+      4.531832508510086e-05
+     ]
+    ],
+    "pearson_dispersion": 1.035455225999104,
+    "C1_raw": 0.0003709213827121322,
+    "C1_debiased_poisson": 0.0002505477773919658,
+    "C1_debiased_pearson": 0.0002462799040110124,
+    "direction_radec_deg": [
+     192.9510082298329,
+     -16.72003509192386
+    ],
+    "C1_raw_one_realisation_interval_68": [
+     0.00021537859798525686,
+     0.0013255235271358572
+    ],
+    "C1_raw_one_realisation_interval_95": [
+     0.00011903253167216793,
+     0.005156573093749203
+    ],
+    "C1_transverse_raw": 0.0005103310744515772,
+    "C1_transverse_debiased_poisson": 0.00042468514457822575,
+    "C1_transverse_debiased_pearson": 0.0004216485487786627,
+    "C1_transverse_raw_one_realisation_interval_68": [
+     0.0002784766104791656,
+     0.0029269926028326235
+    ],
+    "C1_transverse_raw_one_realisation_interval_95": [
+     0.00013834311497559038,
+     0.020157000746993822
+    ],
+    "kinematic_expected_xyz": [
+     -0.00453186518233138,
+     0.0009680735484322568,
+     -0.0005644000281056004
+    ],
+    "kinematic_expected_amplitude": 0.004668352580699883,
+    "ratio_amplitude_to_kinematic": 3.4913517740932525,
+    "residual_xyz": [
+     -0.01068083124123409,
+     -0.004466502747592662,
+     -0.0041247078475915005
+    ],
+    "C1_residual_raw": 0.00021089583757766346,
+    "C1_residual_debiased_poisson": 9.052223225749721e-05,
+    "C1_residual_debiased_pearson": 8.625435887654379e-05,
+    "C1_residual_one_realisation_interval_68": [
+     0.00012245842902417799,
+     0.0007536567248838517
+    ]
+   },
+   "mono_dipole_quadrupole": {
+    "dipole_xyz": [
+     -0.01336311105735667,
+     -0.0038776530213164287,
+     -0.01762700462820287
+    ],
+    "amplitude": 0.0224570751044667,
+    "cov_dipole_poisson": [
+     [
+      2.0521877566393833e-05,
+      -1.4773263627886253e-06,
+      2.0672915773623284e-06
+     ],
+     [
+      -1.4773263627886255e-06,
+      2.5960103949125693e-05,
+      2.839089396231565e-07
+     ],
+     [
+      2.067291577362324e-06,
+      2.83908939623157e-07,
+      0.00011999585444954152
+     ]
+    ],
+    "pearson_dispersion": 1.0353736293096272,
+    "C1_raw": 0.0007041638690088951,
+    "C1_debiased_poisson": 0.0004717169594740673,
+    "C1_debiased_pearson": 0.0004634944686620138,
+    "direction_radec_deg": [
+     196.18145603362055,
+     -51.71326846950302
+    ],
+    "C1_raw_one_realisation_interval_68": [
+     0.00040887863015627996,
+     0.002516397864435581
+    ],
+    "C1_raw_one_realisation_interval_95": [
+     0.00022597351338261376,
+     0.009789331728388492
+    ],
+    "C1_transverse_raw": 0.00040549359494955304,
+    "C1_transverse_debiased_poisson": 0.00030814196051391786,
+    "C1_transverse_debiased_pearson": 0.0003046982798847054,
+    "C1_transverse_raw_one_realisation_interval_68": [
+     0.00022126906932702897,
+     0.0023256995553108664
+    ],
+    "C1_transverse_raw_one_realisation_interval_95": [
+     0.0001099232436281798,
+     0.01601614149223221
+    ],
+    "kinematic_expected_xyz": [
+     -0.00453186518233138,
+     0.0009680735484322568,
+     -0.0005644000281056004
+    ],
+    "kinematic_expected_amplitude": 0.004668352580699883,
+    "ratio_amplitude_to_kinematic": 4.810492505923775,
+    "residual_xyz": [
+     -0.00883124587502529,
+     -0.004845726569748686,
+     -0.01706260460009727
+    ],
+    "C1_residual_raw": 0.0005481792184620325,
+    "C1_residual_debiased_poisson": 0.00031573230892720477,
+    "C1_residual_debiased_pearson": 0.00030750981811515133,
+    "C1_residual_one_realisation_interval_68": [
+     0.000318304840378092,
+     0.001958971590813614
+    ]
+   }
+  },
+  "differential_offdiag_dipole": {
+   "mono_dipole": {
+    "dipole_xyz": [
+     -0.019122490277820543,
+     -0.014039932218649716,
+     0.016075043798906972
+    ],
+    "amplitude": 0.028656523938998552,
+    "cov_dipole_poisson": [
+     [
+      6.031778244749058e-05,
+      -3.7678886289466015e-06,
+      8.662886741755813e-06
+     ],
+     [
+      -3.7678886289466023e-06,
+      7.475695840552271e-05,
+      2.318401761847382e-06
+     ],
+     [
+      8.662886741755815e-06,
+      2.318401761847383e-06,
+      0.00015011217253846153
+     ]
+    ],
+    "pearson_dispersion": 1.023796625685825,
+    "C1_raw": 0.001146606428948427,
+    "C1_debiased_poisson": 0.0007484103791659354,
+    "C1_debiased_pearson": 0.0007389346568196874,
+    "direction_radec_deg": [
+     216.28650445066714,
+     34.12192466007063
+    ],
+    "C1_raw_one_realisation_interval_68": [
+     0.0006657865968850138,
+     0.004097509253371649
+    ],
+    "C1_raw_one_realisation_interval_95": [
+     0.0003679579351057209,
+     0.015940196861672938
+    ],
+    "C1_transverse_raw": 0.0011787032187970175,
+    "C1_transverse_debiased_poisson": 0.0008958033430974363,
+    "C1_transverse_debiased_pearson": 0.0008890712806488469,
+    "C1_transverse_raw_one_realisation_interval_68": [
+     0.0006431928086766366,
+     0.006760426270458732
+    ],
+    "C1_transverse_raw_one_realisation_interval_95": [
+     0.0003195287982323458,
+     0.046556290320568926
+    ],
+    "offdiag_fraction_mean": 0.37585250917626206,
+    "note": "logit dipole of the resolved/migrating fraction among selected sources; logit(n_off/(n_off+n_diag)) = log(n_off/n_diag), so this is the dipole of the R106 g_diff (log-density of off-diagonal classes relative to the diagonal classes)"
+   },
+   "mono_dipole_quadrupole": {
+    "dipole_xyz": [
+     -0.018592560318073843,
+     -0.019650160753588077,
+     0.07516141335985825
+    ],
+    "amplitude": 0.07988147579429504,
+    "cov_dipole_poisson": [
+     [
+      6.755651778308739e-05,
+      -4.909774750750592e-06,
+      6.924631631111218e-06
+     ],
+     [
+      -4.9097747507505916e-06,
+      8.57644256148171e-05,
+      2.6153308463677568e-06
+     ],
+     [
+      6.924631631111218e-06,
+      2.615330846367753e-06,
+      0.0003926815401330061
+     ]
+    ],
+    "pearson_dispersion": 1.0234234909251072,
+    "C1_raw": 0.008909626823200914,
+    "C1_debiased_poisson": 0.008147263538266471,
+    "C1_debiased_pearson": 0.008129406328780175,
+    "direction_radec_deg": [
+     226.58410800489912,
+     70.205228618959
+    ],
+    "C1_raw_one_realisation_interval_68": [
+     0.005173449208351842,
+     0.031839415365598
+    ],
+    "C1_raw_one_realisation_interval_95": [
+     0.002859191964791442,
+     0.1238622093337767
+    ],
+    "C1_transverse_raw": 0.001532703713346229,
+    "C1_transverse_debiased_poisson": 0.0012115890803993535,
+    "C1_transverse_debiased_pearson": 0.0012040674547086033,
+    "C1_transverse_raw_one_realisation_interval_68": [
+     0.000836363208766327,
+     0.008790788286054448
+    ],
+    "C1_transverse_raw_one_realisation_interval_95": [
+     0.0004154930331585971,
+     0.060538562986862735
+    ],
+    "offdiag_fraction_mean": 0.37585250917626206,
+    "note": "logit dipole of the resolved/migrating fraction among selected sources; logit(n_off/(n_off+n_diag)) = log(n_off/n_diag), so this is the dipole of the R106 g_diff (log-density of off-diagonal classes relative to the diagonal classes)"
+   }
+  },
+  "solid_angle_sr": 7.3945543880027325,
+  "Nbar_per_sr_integrated_selection": 22581.75290061012,
+  "shot_noise_integrated_selection": 4.42835418668044e-05,
+  "edges_mJy": [
+   42.22707602874368,
+   84.45415205748736,
+   168.90830411497473
+  ],
+  "integral_slope_x": 1.0196418257200974,
+  "N_ge_cut": 166982,
+  "N_ge_2cut": 82362
+ },
+ "racs_overlap_with_R65_NVSS_mask": {
+  "retained_pixels": 21935,
+  "joint_class_counts": [
+   [
+    1166962,
+    34608,
+    3518,
+    361
+   ],
+   [
+    51,
+    53907,
+    16748,
+    2018
+   ],
+   [
+    0,
+    15,
+    30250,
+    9753
+   ],
+   [
+    0,
+    0,
+    1,
+    32999
+   ]
+  ],
+  "contrast_R65_estimator": {
+   "dipole": {
+    "delta_integrated_minus_peak_xy": [
+     -0.003080124786808863,
+     -0.003122940887766702
+    ],
+    "covariance_contrast_poisson_sandwich": [
+     [
+      2.873753113822879e-06,
+      -1.785826310434192e-07
+     ],
+     [
+      -1.785826310434192e-07,
+      3.649327643903826e-06
+     ]
+    ],
+    "wald_t_self": 6.3206150873723415,
+    "poisson_chi2_2dof_p": 0.04241269531788476,
+    "peak_common_dipole_xy": [
+     -0.014950479078791932,
+     -0.003904594128943563
+    ],
+    "integrated_common_dipole_xy": [
+     -0.018030603865600795,
+     -0.007027535016710265
+    ],
+    "overdispersion_peak": 1.026801148834492,
+    "overdispersion_integrated": 1.0344621514249746
+   },
+   "dipole_stf": {
+    "delta_integrated_minus_peak_xy": [
+     -0.003676612670824836,
+     -0.0034353957018655136
+    ],
+    "covariance_contrast_poisson_sandwich": [
+     [
+      2.984298866764406e-06,
+      -2.1226612645054552e-07
+     ],
+     [
+      -2.1226612645054552e-07,
+      3.8073099848026507e-06
+     ]
+    ],
+    "wald_t_self": 8.13352543827811,
+    "poisson_chi2_2dof_p": 0.01713276239250431,
+    "peak_common_dipole_xy": [
+     -0.013483180813273939,
+     -0.005788293919557913
+    ],
+    "integrated_common_dipole_xy": [
+     -0.017159793484098775,
+     -0.009223689621423427
+    ],
+    "overdispersion_peak": 1.0267463135776835,
+    "overdispersion_integrated": 1.034364882681941
+   }
+  },
+  "offdiag_fraction_contrast": {
+   "df": 0.1677568421702802,
+   "f_off_peak": 0.19614112609954576,
+   "f_off_integrated": 0.36389796826982596
+  },
+  "required_offdiag_dipole_for_contrast": 0.02614697696851701,
+  "jackknife_nside4_p2": {
+   "blocks": 125,
+   "contrast_covariance_xy": [
+    [
+     3.5322255012205978e-06,
+     -3.1031428131889334e-07
+    ],
+    [
+     -3.1031428131889334e-07,
+     3.823828781631499e-06
+    ]
+   ],
+   "delta_xy": [
+    -0.0030801247868085663,
+    -0.0031229408877664895
+   ],
+   "wald_jk": 5.719181254630386,
+   "gaussian_chi2_2dof_p": 0.05729220933098877
+  },
+  "count_dipole_integrated_selection": {
+   "mono_dipole": {
+    "dipole_xyz": [
+     -0.01800227008840467,
+     -0.007218855021930662,
+     -0.004822278431754267
+    ],
+    "amplitude": 0.01998619437103736,
+    "cov_dipole_poisson": [
+     [
+      1.0823911748499603e-05,
+      -7.243169534818772e-07,
+      1.1108756399764226e-06
+     ],
+     [
+      -7.243169534818771e-07,
+      1.3805085522806614e-05,
+      1.4366331794765497e-07
+     ],
+     [
+      1.1108756399764228e-06,
+      1.4366331794765476e-07,
+      5.6498532075700834e-05
+     ]
+    ],
+    "pearson_dispersion": 1.0797469667741557,
+    "C1_raw": 0.0005577345749812928,
+    "C1_debiased_poisson": 0.00044445917489220485,
+    "C1_debiased_pearson": 0.0004354258053249712,
+    "direction_radec_deg": [
+     201.8506337841863,
+     -13.962127235934972
+    ],
+    "C1_raw_one_realisation_interval_68": [
+     0.00032385323792616415,
+     0.001993118583860602
+    ],
+    "C1_raw_one_realisation_interval_95": [
+     0.0001789828291259424,
+     0.007753662195943584
+    ],
+    "C1_transverse_raw": 0.0007878980253565661,
+    "C1_transverse_debiased_poisson": 0.0007363151740946869,
+    "C1_transverse_debiased_pearson": 0.0007322015981689897,
+    "C1_transverse_raw_one_realisation_interval_68": [
+     0.0004299388818137568,
+     0.004518971717494191
+    ],
+    "C1_transverse_raw_one_realisation_interval_95": [
+     0.00021358736037792764,
+     0.031120309698433213
+    ],
+    "kinematic_expected_xyz": [
+     -0.004376057402144031,
+     0.0009347906980890069,
+     -0.0005449956742736153
+    ],
+    "kinematic_expected_amplitude": 0.004507852295835596,
+    "ratio_amplitude_to_kinematic": 4.433640026205124,
+    "residual_xyz": [
+     -0.013626212686260639,
+     -0.008153645720019668,
+     -0.004277282757480651
+    ],
+    "C1_residual_raw": 0.00037762049600808,
+    "C1_residual_debiased_poisson": 0.0002643450959189922,
+    "C1_residual_debiased_pearson": 0.0002553117263517585,
+    "C1_residual_one_realisation_interval_68": [
+     0.0002192684940566985,
+     0.0013494634580716236
+    ]
+   },
+   "mono_dipole_quadrupole": {
+    "dipole_xyz": [
+     -0.01707665051079422,
+     -0.009390217792457212,
+     -0.007511724716390225
+    ],
+    "amplitude": 0.020885741334039747,
+    "cov_dipole_poisson": [
+     [
+      1.1180319454108407e-05,
+      -7.941125890485176e-07,
+      1.0494043984396536e-06
+     ],
+     [
+      -7.94112589048518e-07,
+      1.4250725139044101e-05,
+      3.3947377453271314e-07
+     ],
+     [
+      1.049404398439653e-06,
+      3.394737745327116e-07,
+      6.770466159383126e-05
+     ]
+    ],
+    "pearson_dispersion": 1.0791307906118264,
+    "C1_raw": 0.0006090699102509855,
+    "C1_debiased_poisson": 0.000479027932320352,
+    "C1_debiased_pearson": 0.00046873760779397525,
+    "direction_radec_deg": [
+     208.80579613490386,
+     -21.079196357163525
+    ],
+    "C1_raw_one_realisation_interval_68": [
+     0.00035366152898947664,
+     0.0021765703821253436
+    ],
+    "C1_raw_one_realisation_interval_95": [
+     0.00019545687243051354,
+     0.00846732935278079
+    ],
+    "C1_transverse_raw": 0.0007954265101237448,
+    "C1_transverse_debiased_poisson": 0.0007421638548791033,
+    "C1_transverse_debiased_pearson": 0.0007379491388595096,
+    "C1_transverse_raw_one_realisation_interval_68": [
+     0.0004340470128388192,
+     0.004562151175550416
+    ],
+    "C1_transverse_raw_one_realisation_interval_95": [
+     0.00021562821990202586,
+     0.03141766896317881
+    ],
+    "kinematic_expected_xyz": [
+     -0.004376057402144031,
+     0.0009347906980890069,
+     -0.0005449956742736153
+    ],
+    "kinematic_expected_amplitude": 0.004507852295835596,
+    "ratio_amplitude_to_kinematic": 4.6331911436703965,
+    "residual_xyz": [
+     -0.012700593108650191,
+     -0.010325008490546218,
+     -0.006966729042116609
+    ],
+    "C1_residual_raw": 0.00044184221857438723,
+    "C1_residual_debiased_poisson": 0.0003118002406437536,
+    "C1_residual_debiased_pearson": 0.0003015099161173769,
+    "C1_residual_one_realisation_interval_68": [
+     0.00025655937350234164,
+     0.0015789660108562345
+    ]
+   }
+  },
+  "count_dipole_peak_selection": {
+   "mono_dipole": {
+    "dipole_xyz": [
+     -0.014846485412076059,
+     -0.004049385031966569,
+     -0.020511471880577663
+    ],
+    "amplitude": 0.025642467255235606,
+    "cov_dipole_poisson": [
+     [
+      1.3680332916339676e-05,
+      -9.159610311363298e-07,
+      1.4028088917953719e-06
+     ],
+     [
+      -9.159610311363299e-07,
+      1.744862228465063e-05,
+      1.7888189929814986e-07
+     ],
+     [
+      1.4028088917953727e-06,
+      1.7888189929814975e-07,
+      7.140722127946433e-05
+     ]
+    ],
+    "pearson_dispersion": 1.0523229517864916,
+    "C1_raw": 0.0009180936292673289,
+    "C1_debiased_poisson": 0.0007749261187081364,
+    "C1_debiased_pearson": 0.0007674351719557559,
+    "direction_radec_deg": [
+     195.25635276202604,
+     -53.12078615968875
+    ],
+    "C1_raw_one_realisation_interval_68": [
+     0.0005330987317176466,
+     0.0032808966062003882
+    ],
+    "C1_raw_one_realisation_interval_95": [
+     0.00029462579969026,
+     0.012763397115600195
+    ],
+    "C1_transverse_raw": 0.0004959855338190068,
+    "C1_transverse_debiased_poisson": 0.00043078920250343557,
+    "C1_transverse_debiased_pearson": 0.0004273779380033548,
+    "C1_transverse_raw_one_realisation_interval_68": [
+     0.00027064855976690504,
+     0.0028447140714688572
+    ],
+    "C1_transverse_raw_one_realisation_interval_95": [
+     0.00013445425365306277,
+     0.01959038215815422
+    ],
+    "kinematic_expected_xyz": [
+     -0.004376057402144031,
+     0.0009347906980890069,
+     -0.0005449956742736153
+    ],
+    "kinematic_expected_amplitude": 0.004507852295835596,
+    "ratio_amplitude_to_kinematic": 5.688400056702036,
+    "residual_xyz": [
+     -0.010470428009932028,
+     -0.004984175730055576,
+     -0.019966476206304047
+    ],
+    "C1_residual_raw": 0.0007443927591831367,
+    "C1_residual_debiased_poisson": 0.0006012252486239444,
+    "C1_residual_debiased_pearson": 0.0005937343018715637,
+    "C1_residual_one_realisation_interval_68": [
+     0.00043223787113850023,
+     0.002660159704226592
+    ]
+   },
+   "mono_dipole_quadrupole": {
+    "dipole_xyz": [
+     -0.013351332168038675,
+     -0.005932563923283563,
+     -0.017623678476451996
+    ],
+    "amplitude": 0.02289208222085766,
+    "cov_dipole_poisson": [
+     [
+      1.4155007370627115e-05,
+      -1.0011015317897451e-06,
+      1.2384377296666107e-06
+     ],
+     [
+      -1.0011015317897453e-06,
+      1.803549365557965e-05,
+      3.677424508178563e-07
+     ],
+     [
+      1.238437729666611e-06,
+      3.6774245081785714e-07,
+      8.55506403048293e-05
+     ]
+    ],
+    "pearson_dispersion": 1.0518445188141494,
+    "C1_raw": 0.0007317082449842251,
+    "C1_debiased_poisson": 0.0005673105984816205,
+    "C1_debiased_pearson": 0.0005587874816045143,
+    "direction_radec_deg": [
+     203.95760986549712,
+     -50.34124043378549
+    ],
+    "C1_raw_one_realisation_interval_68": [
+     0.0004248725020559475,
+     0.002614830362795783
+    ],
+    "C1_raw_one_realisation_interval_95": [
+     0.0002348127902711563,
+     0.010172255427744836
+    ],
+    "C1_transverse_raw": 0.00044705572489801745,
+    "C1_transverse_debiased_poisson": 0.00037963609720514685,
+    "C1_transverse_debiased_pearson": 0.00037614075904878093,
+    "C1_transverse_raw_one_realisation_interval_68": [
+     0.0002439486231534954,
+     0.002564078233403036
+    ],
+    "C1_transverse_raw_one_realisation_interval_95": [
+     0.00012119011490046094,
+     0.017657757937631212
+    ],
+    "kinematic_expected_xyz": [
+     -0.004376057402144031,
+     0.0009347906980890069,
+     -0.0005449956742736153
+    ],
+    "kinematic_expected_amplitude": 0.004507852295835596,
+    "ratio_amplitude_to_kinematic": 5.078268035091926,
+    "residual_xyz": [
+     -0.008975274765894645,
+     -0.006867354621372571,
+     -0.01707868280217838
+    ],
+    "C1_residual_raw": 0.0005855894119121358,
+    "C1_residual_debiased_poisson": 0.0004211917654095312,
+    "C1_residual_debiased_pearson": 0.00041266864853242496,
+    "C1_residual_one_realisation_interval_68": [
+     0.0003400273815719322,
+     0.0020926605445488597
+    ]
+   }
+  },
+  "differential_offdiag_dipole": {
+   "mono_dipole": {
+    "dipole_xyz": [
+     -0.01156747470640762,
+     -0.013993651881160534,
+     0.07484802131611554
+    ],
+    "amplitude": 0.07701853711277677,
+    "cov_dipole_poisson": [
+     [
+      4.666061273044005e-05,
+      -3.288898874179049e-06,
+      4.495340246462124e-06
+     ],
+     [
+      -3.288898874179049e-06,
+      5.9753141586178215e-05,
+      1.5470885743944192e-06
+     ],
+     [
+      4.495340246462124e-06,
+      1.5470885743944197e-06,
+      0.00024437517865657176
+     ]
+    ],
+    "pearson_dispersion": 1.031636918005008,
+    "C1_raw": 0.008282432122439672,
+    "C1_debiased_poisson": 0.007792638373644481,
+    "C1_debiased_pearson": 0.007777142808974483,
+    "direction_radec_deg": [
+     230.42208105836332,
+     76.36526458307159
+    ],
+    "C1_raw_one_realisation_interval_68": [
+     0.004809263368414498,
+     0.029598074287132407
+    ],
+    "C1_raw_one_realisation_interval_95": [
+     0.002657918658472193,
+     0.11514290796905191
+    ],
+    "C1_transverse_raw": 0.0006903728690436414,
+    "C1_transverse_debiased_poisson": 0.0004675004231756434,
+    "C1_transverse_debiased_pearson": 0.0004604494258801419,
+    "C1_transverse_raw_one_realisation_interval_68": [
+     0.0003767215169968883,
+     0.003959618338073218
+    ],
+    "C1_transverse_raw_one_realisation_interval_95": [
+     0.00018714975038658946,
+     0.02726827178213964
+    ],
+    "offdiag_fraction_mean": 0.3640740600014113,
+    "note": "logit dipole of the resolved/migrating fraction among selected sources; logit(n_off/(n_off+n_diag)) = log(n_off/n_diag), so this is the dipole of the R106 g_diff (log-density of off-diagonal classes relative to the diagonal classes)"
+   },
+   "mono_dipole_quadrupole": {
+    "dipole_xyz": [
+     -0.012733474721360449,
+     -0.015514873865434075,
+     0.05411101840529432
+    ],
+    "amplitude": 0.05771355995256189,
+    "cov_dipole_poisson": [
+     [
+      4.8154956716519206e-05,
+      -3.4215640537767757e-06,
+      4.862705237724558e-06
+     ],
+     [
+      -3.421564053776776e-06,
+      6.145726022068405e-05,
+      1.964308009292247e-06
+     ],
+     [
+      4.862705237724562e-06,
+      1.964308009292253e-06,
+      0.0002916412584571702
+     ]
+    ],
+    "pearson_dispersion": 1.031296897254734,
+    "C1_raw": 0.004650750935869435,
+    "C1_debiased_poisson": 0.004090495393413286,
+    "C1_debiased_pearson": 0.004072961133264641,
+    "direction_radec_deg": [
+     230.62335207368443,
+     69.64886675792991
+    ],
+    "C1_raw_one_realisation_interval_68": [
+     0.0027004973636787243,
+     0.01661990942465665
+    ],
+    "C1_raw_one_realisation_interval_95": [
+     0.0014924743729397732,
+     0.06465504082369217
+    ],
+    "C1_transverse_raw": 0.0008437326999581983,
+    "C1_transverse_debiased_poisson": 0.0006141614096424594,
+    "C1_transverse_debiased_pearson": 0.000606976540556811,
+    "C1_transverse_raw_one_realisation_interval_68": [
+     0.00046040665402805693,
+     0.0048392102601229545
+    ],
+    "C1_transverse_raw_one_realisation_interval_95": [
+     0.00022872330485542038,
+     0.03332566154549196
+    ],
+    "offdiag_fraction_mean": 0.3640740600014113,
+    "note": "logit dipole of the resolved/migrating fraction among selected sources; logit(n_off/(n_off+n_diag)) = log(n_off/n_diag), so this is the dipole of the R106 g_diff (log-density of off-diagonal classes relative to the diagonal classes)"
+   }
+  },
+  "solid_angle_sr": 5.607978097045257,
+  "Nbar_per_sr_integrated_selection": 32842.1396825783,
+  "shot_noise_integrated_selection": 3.0448686037666048e-05,
+  "edges_mJy": [
+   28.151384019162453,
+   56.302768038324906,
+   112.60553607664981
+  ],
+  "integral_slope_x": 0.9452940350432975,
+  "N_ge_cut": 184178,
+  "N_ge_2cut": 95648
+ },
+ "nvss_on_overlap_pixels": {
+  "retained_pixels": 21935,
+  "joint_class_counts": [
+   [
+    781362,
+    13410,
+    454,
+    31
+   ],
+   [
+    0,
+    71303,
+    7966,
+    249
+   ],
+   [
+    0,
+    0,
+    39859,
+    4549
+   ],
+   [
+    0,
+    0,
+    0,
+    37323
+   ]
+  ],
+  "contrast_R65_estimator": {
+   "dipole": {
+    "delta_integrated_minus_peak_xy": [
+     -0.0005527038507461505,
+     0.0030063811544770364
+    ],
+    "covariance_contrast_poisson_sandwich": [
+     [
+      9.827280237220486e-07,
+      -6.756017977511823e-08
+     ],
+     [
+      -6.756017977511823e-08,
+      1.2506917142045745e-06
+     ]
+    ],
+    "wald_t_self": 7.382255837999938,
+    "poisson_chi2_2dof_p": 0.02494385152544124,
+    "peak_common_dipole_xy": [
+     -0.01132849780452019,
+     0.0034948616329953876
+    ],
+    "integrated_common_dipole_xy": [
+     -0.01188120165526634,
+     0.006501242787472424
+    ],
+    "overdispersion_peak": 1.0637358960859291,
+    "overdispersion_integrated": 1.0794068689348117
+   },
+   "dipole_stf": {
+    "delta_integrated_minus_peak_xy": [
+     -0.0005518394260010124,
+     0.003152528306800917
+    ],
+    "covariance_contrast_poisson_sandwich": [
+     [
+      1.0300904429040598e-06,
+      -8.135152961699226e-08
+     ],
+     [
+      -8.135152961699226e-08,
+      1.3142738405008678e-06
+     ]
+    ],
+    "wald_t_self": 7.686047705544987,
+    "poisson_chi2_2dof_p": 0.021428706025466305,
+    "peak_common_dipole_xy": [
+     -0.01044944894850462,
+     0.001980737939116458
+    ],
+    "integrated_common_dipole_xy": [
+     -0.011001288374505633,
+     0.005133266245917375
+    ],
+    "overdispersion_peak": 1.0637197656104287,
+    "overdispersion_integrated": 1.0792810268441209
+   }
+  },
+  "offdiag_fraction_contrast": {
+   "df": 0.07305481416885483,
+   "f_off_peak": 0.07915708004390724,
+   "f_off_integrated": 0.15221189421276207
+  },
+  "required_offdiag_dipole_for_contrast": 0.04184206793469425,
+  "jackknife_nside4_p2": {
+   "blocks": 125,
+   "contrast_covariance_xy": [
+    [
+     9.5578460940247e-07,
+     2.2476792566715318e-09
+    ],
+    [
+     2.2476792566715318e-09,
+     1.5212660344957408e-06
+    ]
+   ],
+   "delta_xy": [
+    -0.0005527038507462875,
+    0.003006381154476977
+   ],
+   "wald_jk": 6.266092017242839,
+   "gaussian_chi2_2dof_p": 0.043584835070190564
+  },
+  "count_dipole_integrated_selection": {
+   "mono_dipole": {
+    "dipole_xyz": [
+     -0.011772768117817727,
+     0.006421318737447752,
+     6.840635687567176e-05
+    ],
+    "amplitude": 0.013410297644476954,
+    "cov_dipole_poisson": [
+     [
+      1.138095646160366e-05,
+      -7.635125498436426e-07,
+      1.1633127114915813e-06
+     ],
+     [
+      -7.635125498436423e-07,
+      1.451323500649126e-05,
+      1.3833609378865803e-07
+     ],
+     [
+      1.163312711491581e-06,
+      1.3833609378865813e-07,
+      5.94042054597291e-05
+     ]
+    ],
+    "pearson_dispersion": 1.1177525292855943,
+    "C1_raw": 0.0002510985408583573,
+    "C1_debiased_poisson": 0.00013199951101327368,
+    "C1_debiased_pearson": 0.0001179752990135546,
+    "direction_radec_deg": [
+     151.39025729525014,
+     0.2922688699688365
+    ],
+    "C1_raw_one_realisation_interval_68": [
+     0.0001458024643680048,
+     0.0008973249832715842
+    ],
+    "C1_raw_one_realisation_interval_95": [
+     8.058013479571759e-05,
+     0.003490788183205862
+    ],
+    "C1_transverse_raw": 0.0003766380107129719,
+    "C1_transverse_debiased_poisson": 0.0003224053429217622,
+    "C1_transverse_debiased_pearson": 0.00031601930911944197,
+    "C1_transverse_raw_one_realisation_interval_68": [
+     0.00020552320219511947,
+     0.0021601989894249832
+    ],
+    "C1_transverse_raw_one_realisation_interval_95": [
+     0.00010210092669006445,
+     0.014876406794248622
+    ],
+    "kinematic_expected_xyz": [
+     -0.004390164496422006,
+     0.0009378041824417613,
+     -0.0005467525765835119
+    ],
+    "kinematic_expected_amplitude": 0.004522384257253054,
+    "ratio_amplitude_to_kinematic": 2.9653158337815633,
+    "residual_xyz": [
+     -0.007382603621395721,
+     0.005483514555005991,
+     0.0006151589334591836
+    ],
+    "C1_residual_raw": 0.00011861283932737246,
+    "C1_residual_debiased_poisson": -4.861905177111377e-07,
+    "C1_residual_debiased_pearson": -1.4510402517430215e-05,
+    "C1_residual_one_realisation_interval_68": [
+     6.887353554703664e-05,
+     0.00042387448250951143
+    ]
+   },
+   "mono_dipole_quadrupole": {
+    "dipole_xyz": [
+     -0.010859460430209326,
+     0.005015012443562604,
+     0.0049734349062619376
+    ],
+    "amplitude": 0.012954276722812222,
+    "cov_dipole_poisson": [
+     [
+      1.1749639150110164e-05,
+      -8.489365840481276e-07,
+      1.0679018144503924e-06
+     ],
+     [
+      -8.489365840481272e-07,
+      1.4978548334457246e-05,
+      2.2898795417273707e-07
+     ],
+     [
+      1.0679018144503924e-06,
+      2.2898795417273602e-07,
+      7.079039672446309e-05
+     ]
+    ],
+    "pearson_dispersion": 1.1172115520449806,
+    "C1_raw": 0.0002343115487211449,
+    "C1_debiased_poisson": 9.814991861467033e-05,
+    "C1_debiased_pearson": 8.219020262091588e-05,
+    "direction_radec_deg": [
+     155.21201304619498,
+     22.57684774243488
+    ],
+    "C1_raw_one_realisation_interval_68": [
+     0.0001360549572157727,
+     0.0008373350391356624
+    ],
+    "C1_raw_one_realisation_interval_95": [
+     7.51930143265697e-05,
+     0.0032574143309173037
+    ],
+    "C1_transverse_raw": 0.00029966234552065226,
+    "C1_transverse_debiased_poisson": 0.00024368296055712717,
+    "C1_transverse_debiased_pearson": 0.00023712152996302897,
+    "C1_transverse_raw_one_realisation_interval_68": [
+     0.0001635192494568462,
+     0.0017187067623287507
+    ],
+    "C1_transverse_raw_one_realisation_interval_95": [
+     8.123397612965122e-05,
+     0.01183603042200959
+    ],
+    "kinematic_expected_xyz": [
+     -0.004390164496422006,
+     0.0009378041824417613,
+     -0.0005467525765835119
+    ],
+    "kinematic_expected_amplitude": 0.004522384257253054,
+    "ratio_amplitude_to_kinematic": 2.864479439586762,
+    "residual_xyz": [
+     -0.00646929593378732,
+     0.0040772082611208425,
+     0.00552018748284545
+    ],
+    "C1_residual_raw": 0.00012419467916853922,
+    "C1_residual_debiased_poisson": -1.1966950937935358e-05,
+    "C1_residual_debiased_pearson": -2.7926666931689806e-05,
+    "C1_residual_one_realisation_interval_68": [
+     7.211467745796758e-05,
+     0.0004438217284193353
+    ]
+   }
+  },
+  "count_dipole_peak_selection": {
+   "mono_dipole": {
+    "dipole_xyz": [
+     -0.011245610673683201,
+     0.003435349634518677,
+     -0.011853265855434007
+    ],
+    "amplitude": 0.01669626598898816,
+    "cov_dipole_poisson": [
+     [
+      1.2363180927699196e-05,
+      -8.288867905712332e-07,
+      1.2642892655266364e-06
+     ],
+     [
+      -8.288867905712329e-07,
+      1.5766844060066294e-05,
+      1.537338246666169e-07
+     ],
+     [
+      1.2642892655266368e-06,
+      1.5373382466661693e-07,
+      6.453068709265928e-05
+     ]
+    ],
+    "pearson_dispersion": 1.0902251100265383,
+    "C1_raw": 0.00038922978319740623,
+    "C1_debiased_poisson": 0.00025985102215373454,
+    "C1_debiased_pearson": 0.000248177809203472,
+    "direction_radec_deg": [
+     163.01294747696124,
+     -45.229638011317576
+    ],
+    "C1_raw_one_realisation_interval_68": [
+     0.00022600952359822218,
+     0.0013909503715253879
+    ],
+    "C1_raw_one_realisation_interval_95": [
+     0.00012490788791260726,
+     0.005411097663461643
+    ],
+    "C1_transverse_raw": 0.00028958234839033837,
+    "C1_transverse_debiased_poisson": 0.00023066696182576417,
+    "C1_transverse_debiased_pearson": 0.0002253513145907194,
+    "C1_transverse_raw_one_realisation_interval_68": [
+     0.0001580188134163678,
+     0.0016608931614840261
+    ],
+    "C1_transverse_raw_one_realisation_interval_95": [
+     7.850143979830746e-05,
+     0.011437891802087648
+    ],
+    "kinematic_expected_xyz": [
+     -0.004390164496422006,
+     0.0009378041824417613,
+     -0.0005467525765835119
+    ],
+    "kinematic_expected_amplitude": 0.004522384257253054,
+    "ratio_amplitude_to_kinematic": 3.6919167057090494,
+    "residual_xyz": [
+     -0.006855446177261195,
+     0.0024975454520769157,
+     -0.011306513278850495
+    ],
+    "C1_residual_raw": 0.0002528243715514769,
+    "C1_residual_debiased_poisson": 0.00012344561050780517,
+    "C1_residual_debiased_pearson": 0.00011177239755754267,
+    "C1_residual_one_realisation_interval_68": [
+     0.00014680458237027836,
+     0.0009034924065968623
+    ]
+   },
+   "mono_dipole_quadrupole": {
+    "dipole_xyz": [
+     -0.010335867335945562,
+     0.0019037955975118117,
+     -0.00988522896808424
+    ],
+    "amplitude": 0.014428178783714305,
+    "cov_dipole_poisson": [
+     [
+      1.2779591933037367e-05,
+      -9.317448596286853e-07,
+      1.1686515192646374e-06
+     ],
+     [
+      -9.317448596286856e-07,
+      1.6291414505524604e-05,
+      2.7203288251202406e-07
+     ],
+     [
+      1.168651519264638e-06,
+      2.7203288251202406e-07,
+      7.722088138810467e-05
+     ]
+    ],
+    "pearson_dispersion": 1.0897304450798773,
+    "C1_raw": 0.00029066342377597517,
+    "C1_debiased_poisson": 0.00014225195091711022,
+    "C1_debiased_pearson": 0.00012893492340252413,
+    "direction_radec_deg": [
+     169.56348952370897,
+     -43.24610892150585
+    ],
+    "C1_raw_one_realisation_interval_68": [
+     0.00016877614399234925,
+     0.001038713928746263
+    ],
+    "C1_raw_one_realisation_interval_95": [
+     9.327691745235932e-05,
+     0.004040821748859484
+    ],
+    "C1_transverse_raw": 0.00023133555497884803,
+    "C1_transverse_debiased_poisson": 0.00017044938147228278,
+    "C1_transverse_debiased_pearson": 0.00016498603802432804,
+    "C1_transverse_raw_one_realisation_interval_68": [
+     0.00012623480022856985,
+     0.0013268199647119786
+    ],
+    "C1_transverse_raw_one_realisation_interval_95": [
+     6.271160601923615e-05,
+     0.009137266351115215
+    ],
+    "kinematic_expected_xyz": [
+     -0.004390164496422006,
+     0.0009378041824417613,
+     -0.0005467525765835119
+    ],
+    "kinematic_expected_amplitude": 0.004522384257253054,
+    "ratio_amplitude_to_kinematic": 3.1903920505149954,
+    "residual_xyz": [
+     -0.0059457028395235555,
+     0.0009659914150700504,
+     -0.00933847639150073
+    ],
+    "C1_residual_raw": 0.0001724268894274521,
+    "C1_residual_debiased_poisson": 2.401541656858705e-05,
+    "C1_residual_debiased_pearson": 1.0698389054000968e-05,
+    "C1_residual_one_realisation_interval_68": [
+     0.00010012111307334683,
+     0.0006161842085666987
+    ]
+   }
+  },
+  "differential_offdiag_dipole": {
+   "mono_dipole": {
+    "dipole_xyz": [
+     -0.0108910204318349,
+     0.006456275962372063,
+     0.0713228327866526
+    ],
+    "amplitude": 0.0724378651125346,
+    "cov_dipole_poisson": [
+     [
+      8.807231643759876e-05,
+      -6.329516455726203e-06,
+      8.375875980431597e-06
+     ],
+     [
+      -6.329516455726203e-06,
+      0.0001127348849554326,
+      2.1766876085817204e-06
+     ],
+     [
+      8.3758759804316e-06,
+      2.1766876085817196e-06,
+      0.0004588428494337239
+     ]
+    ],
+    "pearson_dispersion": 1.0716845674361142,
+    "C1_raw": 0.007326535178199163,
+    "C1_debiased_poisson": 0.006405489954369176,
+    "C1_debiased_pearson": 0.006339465225909825,
+    "direction_radec_deg": [
+     149.3402300660531,
+     79.9339935024681
+    ],
+    "C1_raw_one_realisation_interval_68": [
+     0.004254213826208156,
+     0.02618208386931543
+    ],
+    "C1_raw_one_realisation_interval_95": [
+     0.002351161381610259,
+     0.10185396671949028
+    ],
+    "C1_transverse_raw": 0.0003357269803351177,
+    "C1_transverse_debiased_poisson": -8.484263878773123e-05,
+    "C1_transverse_debiased_pearson": -0.00011499099001132396,
+    "C1_transverse_raw_one_realisation_interval_68": [
+     0.00018319893929759134,
+     0.0019255546785353825
+    ],
+    "C1_transverse_raw_one_realisation_interval_95": [
+     9.101055876485911e-05,
+     0.013260507408202239
+    ],
+    "offdiag_fraction_mean": 0.15221189421276207,
+    "note": "logit dipole of the resolved/migrating fraction among selected sources; logit(n_off/(n_off+n_diag)) = log(n_off/n_diag), so this is the dipole of the R106 g_diff (log-density of off-diagonal classes relative to the diagonal classes)"
+   },
+   "mono_dipole_quadrupole": {
+    "dipole_xyz": [
+     -0.012809554362895366,
+     0.007043031882322152,
+     0.09000549356155119
+    ],
+    "amplitude": 0.09118485538909304,
+    "cov_dipole_poisson": [
+     [
+      9.059801738844476e-05,
+      -6.352126455783332e-06,
+      1.001747476422907e-05
+     ],
+     [
+      -6.35212645578333e-06,
+      0.00011564773193572146,
+      1.7115556791739845e-06
+     ],
+     [
+      1.001747476422907e-05,
+      1.7115556791739915e-06,
+      0.0005387272613873476
+     ]
+    ],
+    "pearson_dispersion": 1.0716717960399758,
+    "C1_raw": 0.011609480381264484,
+    "C1_debiased_poisson": 0.010569301831231613,
+    "C1_debiased_pearson": 0.010494750366348499,
+    "direction_radec_deg": [
+     151.1968408438829,
+     80.774944054653
+    ],
+    "C1_raw_one_realisation_interval_68": [
+     0.0067411417200357185,
+     0.04148760384388834
+    ],
+    "C1_raw_one_realisation_interval_95": [
+     0.0037256030673560765,
+     0.1613957484163115
+    ],
+    "C1_transverse_raw": 0.0004475491553912863,
+    "C1_transverse_debiased_poisson": 1.558906811733793e-05,
+    "C1_transverse_debiased_pearson": -1.5370287155170648e-05,
+    "C1_transverse_raw_one_realisation_interval_68": [
+     0.0002442178774829917,
+     0.0025669082930958776
+    ],
+    "C1_transverse_raw_one_realisation_interval_95": [
+     0.00012132387652086807,
+     0.017677247401078247
+    ],
+    "offdiag_fraction_mean": 0.15221189421276207,
+    "note": "logit dipole of the resolved/migrating fraction among selected sources; logit(n_off/(n_off+n_diag)) = log(n_off/n_diag), so this is the dipole of the R106 g_diff (log-density of off-diagonal classes relative to the diagonal classes)"
+   }
+  },
+  "solid_angle_sr": 5.607978097045257,
+  "Nbar_per_sr_integrated_selection": 31231.220409416404,
+  "shot_noise_integrated_selection": 3.2019241864096154e-05
+ },
+ "claim_labels": {
+  "contrast": "CONDITIONAL: Poisson-sandwich and jackknife-Gaussian p are not calibrated (R106: overdispersion; no RACS null mocks run)",
+  "count_C1": "CONDITIONAL: single-realisation dipole power on a partial sky; includes kinematic, clustering, systematic and mask-leakage parts; kinematic subtraction assumes alpha = 0.75 and the measured x",
+  "differential_C1": "CONDITIONAL: empirical dipole of the resolved/migrating fraction; not an LSS prediction"
+ },
+ "status": "OK",
+ "elapsed_s": 49.64699172973633
+}

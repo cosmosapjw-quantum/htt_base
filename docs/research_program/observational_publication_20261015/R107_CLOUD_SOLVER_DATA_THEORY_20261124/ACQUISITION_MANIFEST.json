@@ -94,13 +94,13 @@
    "files": [
     {
      "name": "J_MNRAS_445_2677_ReadMe",
-     "url": "https://cdsarc.cds.unistra.fr/ftp/cats/J/other/MNRAS/445/2677/ReadMe",
+     "url": "https://cdsarc.cds.unistra.fr/ftp/J/MNRAS/445/2677/ReadMe",
      "expected_bytes": null,
      "sha256": null
     },
     {
      "name": "J_MNRAS_445_2677_table1.dat.gz",
-     "url": "https://cdsarc.cds.unistra.fr/ftp/cats/J/other/MNRAS/445/2677/table1.dat.gz",
+     "url": "https://cdsarc.cds.unistra.fr/ftp/J/MNRAS/445/2677/table1.dat.gz",
      "expected_bytes": null,
      "sha256": null
     }
@@ -169,13 +169,18 @@
   {
    "id": "D07",
    "priority": "P0",
-   "kind": "portal",
+   "kind": "existing_fetcher",
    "nodes": [
     "SQ-CMB-NULL",
     "L03"
    ],
    "purpose": "Commander half-mission (HM1/HM2) and odd-even (OE1/OE2) observed maps and the matching FFP10 noise splits for split-difference nulls (R106: split products absent).",
    "portal": "https://pla.esac.esa.int/pla/",
+   "resolved_ids": {
+    "observed": "https://pla.esac.esa.int/pla/aio/product-action?MAP.MAP_ID=COM_CMB_IQU-commander_2048_R3.00_{hm1,hm2,oe1,oe2}.fits",
+    "noise": "https://pla.esac.esa.int/pla/aio/product-action?SIMULATED_MAP.FILE_ID=dx12_v3_commander_noise_{hm1,hm2,oe1,oe2}_mc_NNNNN_raw.fits"
+   },
+   "command": "python -m scripts.r108.commander_splits fetch --stop 7 --max-bytes 30000000000",
    "instruction": "Planck 2018 VII states 300 noise realizations per frequency for full-mission, HM and OE splits, processed through component separation. Resolve the exact Commander split file IDs in the PLA (Maps > CMB maps for data; Simulations > component-separated noise for sims), then fetch 00000..00006 HM1/HM2 first through product-action URLs with this script (add them to ITEMS as https_file with expected_bytes from the PLA listing).",
    "citation": "Planck 2018 results VII (arXiv:1906.02552) section 4",
    "verification": "same Nside, beam and mask as R106 Commander pairs; HM1-HM2 half difference has zero signal",

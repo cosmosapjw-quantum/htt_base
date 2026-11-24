@@ -1,0 +1,1537 @@
+{
+ "schema": "htt.r108.radio.summary/2",
+ "node": "SQ-RADIO",
+ "git_head": "b79b9526b1817cc5946858f5891f7e7b567b87a2",
+ "command": "/usr/bin/python3 -m scripts.r108.radio_summary --dir docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO",
+ "result_files": {
+  "P_OF_C1_THEORY.json": {
+   "path": "docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO/P_OF_C1_THEORY.json",
+   "sha256": "eda34529e520928035f73dda118d97f5a28bee8b3e9699ee6ac7ae4d04d1dca4",
+   "bytes": 115822
+  },
+  "RACS_CASDA_TABLE_VERSIONS.json": {
+   "path": "docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO/RACS_CASDA_TABLE_VERSIONS.json",
+   "sha256": "7baf0422a264c7d1ed7030d6c8593cc37c92943d15fd94b3b88444ad618cac36",
+   "bytes": 878
+  },
+  "RACS_DIPOLE.json": {
+   "path": "docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO/RACS_DIPOLE.json",
+   "sha256": "ea7ff4a273d91bf3a24cb97c69f41cd5c160b201d85f8fd6af4bb686d6e6a3f9",
+   "bytes": 75519
+  },
+  "THEORY_C1.json": {
+   "path": "docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO/THEORY_C1.json",
+   "sha256": "358f9dff1955c4a9d88b135096d4d1aff16431eddb102160be512bb3e30f67b5",
+   "bytes": 51438
+  },
+  "V3_DIAGNOSTIC.json": {
+   "path": "docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO/V3_DIAGNOSTIC.json",
+   "sha256": "90042d9627b4d92a171f8ad26c64be998667d7212571077b5199f8f31469255b",
+   "bytes": 3075
+  }
+ },
+ "downloads": {
+  "receipts": "/home/cosmosapjw/Downloads/htt_r108/radio/RECEIPTS.jsonl",
+  "receipts_sha256": "bc4972ef8fab5857dcd723d9c88afc90d5db47e95b70e174afa5246ca08ed2e8",
+  "strips": 12,
+  "rows": 2123638,
+  "bytes": 797541552,
+  "service": "https://casda.csiro.au/casda_vo_tools/tap",
+  "table_query_example": "SELECT id, source_name, source_id, tile_id, sbid, n_gaus, ra, dec, total_flux_source, e_total_flux_source, peak_flux, e_peak_flux, maj_axis, min_axis, dc_maj, dc_min, s_code, separation_tile_centre, noise, gal_lon, gal_lat, flag_close FROM AS110.racs_dr1_sources_galacticcut_v2021_08_v01 WHERE dec >= -90.0 AND dec < -75.0",
+  "job_ids": [
+   "1795483402957A",
+   "1795483410742A",
+   "1795483430889A",
+   "1795483451813A",
+   "1795483473822A",
+   "1795483497004A",
+   "1795483578326A",
+   "1795483635556A",
+   "1795483660367A",
+   "1795483680494A",
+   "1795483700976A",
+   "1795483721134A"
+  ],
+  "derived_cache": {
+   "cache": "/home/cosmosapjw/Downloads/htt_r108/radio/derived/racs_dr1_galcut_v01_columns.npz",
+   "cache_sha256": "fcfeb0347b1630594cb56950acee41d4d52acf5a5e9287d437cdd86043d5a1b4",
+   "source_key": "a09d60fc672c0081e9dde4a25ced00c56419d482898db735909f61072b2de00e"
+  },
+  "non_download_receipt_lines": [
+   {
+    "id": "PRE:R106_C1ZERO_DRAWS",
+    "name": "C1ZERO_DRAWS.npz",
+    "path": "/home/cosmosapjw/Downloads/htt_r106_analysis/nvss/review_followup/C1ZERO_DRAWS.npz",
+    "sha256": "cf288192ba5bb953c4905b91285b870dcaeb9b2addd9c151949a0b5470e310f0",
+    "bytes": 771096,
+    "status": "PRE_EXISTING_INPUT"
+   },
+   {
+    "id": "PRE:R106_NVSS_REVIEW_CORRECTIONS",
+    "name": "NVSS_REVIEW_CORRECTIONS.json",
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/NVSS/NVSS_REVIEW_CORRECTIONS.json",
+    "sha256": "735ae72014af311e7bfa0649adce4584b136aaa15feecb551360e0123feaae0d",
+    "bytes": 179273,
+    "status": "PRE_EXISTING_INPUT"
+   },
+   {
+    "id": "PRE:R65_PROVIDER_NVSS_CARRIERS",
+    "name": "PROVIDER_NVSS_CARRIERS.npz",
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/RESULTS/PROVIDER_NVSS_CARRIERS.npz",
+    "sha256": "a51da9a98c3d0563446eb61f21aceff69fbfeed5446ec74471177170b8664e89",
+    "bytes": 981001,
+    "status": "PRE_EXISTING_INPUT"
+   },
+   {
+    "id": "PRE:R65_PROVIDER_NVSS_RESULT",
+    "name": "PROVIDER_NVSS_RESULT.json",
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/RESULTS/PROVIDER_NVSS_RESULT.json",
+    "sha256": "60735aa244272fc4d295813ab644c429c19cedca122bd9b308dcb7da0053806a",
+    "bytes": 276745,
+    "status": "PRE_EXISTING_INPUT"
+   },
+   {
+    "id": "R108:racs_casda_probe",
+    "name": "racs_casda_probe.json",
+    "path": "/home/cosmosapjw/Downloads/htt_r108/radio/racs_casda_probe.json",
+    "sha256": "1048b95d62a43f3fc130bdb9f9713ad12f1e8c42272bd805f63a2c56fea662b2",
+    "bytes": 5912,
+    "status": "R108_PROBE_OUTPUT"
+   },
+   {
+    "id": "R108:racs_dr1_columns_cache",
+    "name": "racs_dr1_galcut_v01_columns.npz",
+    "path": "/home/cosmosapjw/Downloads/htt_r108/radio/derived/racs_dr1_galcut_v01_columns.npz",
+    "sha256": "fcfeb0347b1630594cb56950acee41d4d52acf5a5e9287d437cdd86043d5a1b4",
+    "bytes": 152904706,
+    "status": "R108_DERIVED_CACHE"
+   }
+  ]
+ },
+ "claim_class": {
+  "label": "CONDITIONAL",
+  "calibrated_p": null,
+  "p_of_C1": {
+   "label": "CONDITIONAL",
+   "calibrated_p": null,
+   "scope": "p conditional on the R106 EMPIRICAL_DIFF_SELECTION null families (RED / MID / FLAT) and on C1",
+   "statement": "every p here (p_mc, p_mc_display, gaussian_p, p_conditional) is conditional on the empirical DIFF family shape and on the C1 value fed in; the R106 C1 = 0 CRN mocks do not reproduce the observed overdispersion (overdispersion-reproducing mocks are open); not a calibrated significance; no physical attribution (R106 NVSS_REVIEW_CORRECTIONS.json claim_classes.conditional_prediction / physical_attribution)",
+   "empirical_points": "RACS points use RACS's own resolved/migrating class definition (25 arcsec beam, 887.5 MHz, edges scaled by an assumed alpha = 0.75) and include RACS tile/PSF systematics: they set a scale only and are not an independent estimate of the NVSS g_diff C1; the NVSS point is circular",
+   "not_claimed": "no calibrated p, no physical attribution, no family identification"
+  },
+  "racs_contrast_p": "CONDITIONAL: Poisson-sandwich and jackknife-Gaussian p are not calibrated (R106: overdispersion; no RACS null mocks run)",
+  "statement": "every p in this file is CONDITIONAL: p_of_C1 p values are conditional on the R106 EMPIRICAL_DIFF_SELECTION family shape and on C1 (the C1 = 0 mocks do not reproduce overdispersion); the RACS/NVSS contrast p are Poisson-sandwich / jackknife-Gaussian and uncalibrated; none is a calibrated significance; no physical attribution, no family identification"
+ },
+ "theory_C1": {
+  "source": "docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO/THEORY_C1.json",
+  "validation": {
+   "V1_max_abs_rel_err": 4.222781648355323e-06,
+   "V2_max_abs_rel_diff_limber": 7.349130991385344e-05,
+   "V3_max_abs_rel_density_vs_camb": 0.07724521331974732,
+   "V3_max_abs_rel_density_rsd_vs_camb": 0.06515658768124277,
+   "V3_max_abs_rel_density_magnification_vs_camb": 0.08128606429779972,
+   "V3_max_abs_camb_GR_terms_rel_l2_10": 0.032959159050183984,
+   "V4_max_abs_rel_convergence": 0.010569738351758451,
+   "camb_sigma8_0": 0.810223295217173
+  },
+  "per_bracket": {
+   "TN16|NT15": {
+    "linear": 6.7694205935226265e-06,
+    "hmcode2020": 6.765567916785274e-06,
+    "tf7_growth_form": 6.769266561249459e-06,
+    "primary": true,
+    "rsd_rel": 0.12125619656580368,
+    "magnification_rel_abs_alpha_le_0p6": 0.07534053149093567,
+    "z_lt_0p1_only": 4.377982026168417e-06,
+    "z_ge_0p1_only": 2.760436899932307e-06
+   },
+   "TN16|NT15cap": {
+    "linear": 6.769183210417767e-06,
+    "hmcode2020": 6.765331127301158e-06,
+    "tf7_growth_form": 6.769011722416046e-06,
+    "primary": true,
+    "rsd_rel": 0.12125202483870755,
+    "magnification_rel_abs_alpha_le_0p6": 0.07524955546728762,
+    "z_lt_0p1_only": 4.377982026168417e-06,
+    "z_ge_0p1_only": 2.760234931777698e-06
+   },
+   "TN16|const2": {
+    "linear": 9.261127319347639e-06,
+    "hmcode2020": 9.255591877972571e-06,
+    "tf7_growth_form": 9.260775204406326e-06,
+    "primary": true,
+    "rsd_rel": 0.0967924149103245,
+    "magnification_rel_abs_alpha_le_0p6": 0.06299564589348638,
+    "z_lt_0p1_only": 6.529608153594382e-06,
+    "z_ge_0p1_only": 3.238142114209072e-06
+   },
+   "TN16|const3": {
+    "linear": 2.083753646853219e-05,
+    "hmcode2020": 2.0825081725438284e-05,
+    "tf7_growth_form": 2.0836744209914236e-05,
+    "primary": true,
+    "rsd_rel": 0.06378734385860053,
+    "magnification_rel_abs_alpha_le_0p6": 0.04176369897159682,
+    "z_lt_0p1_only": 1.4691618345587361e-05,
+    "z_ge_0p1_only": 7.285819756970412e-06
+   },
+   "TN16|H08beff": {
+    "linear": 9.076830885692622e-06,
+    "hmcode2020": 9.071405599600916e-06,
+    "tf7_growth_form": 9.07648577783864e-06,
+    "primary": false,
+    "rsd_rel": 0.09780413502182832,
+    "magnification_rel_abs_alpha_le_0p6": 0.06364268172394061,
+    "z_lt_0p1_only": 6.399668951337853e-06,
+    "z_ge_0p1_only": 3.173703086136311e-06
+   },
+   "DZ10|NT15": {
+    "linear": 4.827035893228651e-06,
+    "hmcode2020": 5.382162549579173e-06,
+    "tf7_growth_form": 4.827008466741703e-06,
+    "primary": true,
+    "rsd_rel": 0.15606037302409406,
+    "magnification_rel_abs_alpha_le_0p6": 0.0838690643812654,
+    "z_lt_0p1_only": 3.4473523646231247e-06,
+    "z_ge_0p1_only": 1.547844629879507e-06
+   },
+   "DZ10|NT15cap": {
+    "linear": 4.820233163214045e-06,
+    "hmcode2020": 5.375350178316747e-06,
+    "tf7_growth_form": 4.820199482161308e-06,
+    "primary": false,
+    "rsd_rel": 0.15605880617869902,
+    "magnification_rel_abs_alpha_le_0p6": 0.08382854717426502,
+    "z_lt_0p1_only": 3.4473523646231247e-06,
+    "z_ge_0p1_only": 1.5399506612143293e-06
+   },
+   "DZ10|const2": {
+    "linear": 6.649237760868985e-06,
+    "hmcode2020": 7.51634833171657e-06,
+    "tf7_growth_form": 6.6490762549282855e-06,
+    "primary": false,
+    "rsd_rel": 0.12634326133790003,
+    "magnification_rel_abs_alpha_le_0p6": 0.06902866611802239,
+    "z_lt_0p1_only": 5.227897130380596e-06,
+    "z_ge_0p1_only": 1.6498421935595298e-06
+   },
+   "DZ10|const3": {
+    "linear": 1.4960784961955218e-05,
+    "hmcode2020": 1.6911783746362278e-05,
+    "tf7_growth_form": 1.4960421573588642e-05,
+    "primary": false,
+    "rsd_rel": 0.08312034009084668,
+    "magnification_rel_abs_alpha_le_0p6": 0.045672661573032736,
+    "z_lt_0p1_only": 1.1762768543356341e-05,
+    "z_ge_0p1_only": 3.712144935508941e-06
+   },
+   "DZ10|H08beff": {
+    "linear": 6.516917929427693e-06,
+    "hmcode2020": 7.366772999915409e-06,
+    "tf7_growth_form": 6.516759637455213e-06,
+    "primary": false,
+    "rsd_rel": 0.12767035125045395,
+    "magnification_rel_abs_alpha_le_0p6": 0.06974183212896268,
+    "z_lt_0p1_only": 5.123861977486023e-06,
+    "z_ge_0p1_only": 1.617010333907695e-06
+   },
+   "H08|NT15": {
+    "linear": 1.1447934089281944e-06,
+    "hmcode2020": 1.1442780391605255e-06,
+    "tf7_growth_form": 1.144921156014325e-06,
+    "primary": false,
+    "rsd_rel": 0.10788290227671339,
+    "magnification_rel_abs_alpha_le_0p6": 0.1963365657469649,
+    "z_lt_0p1_only": 2.801584020467053e-07,
+    "z_ge_0p1_only": 9.151128813416763e-07
+   },
+   "H08|NT15cap": {
+    "linear": 1.1355736033248592e-06,
+    "hmcode2020": 1.135058371434652e-06,
+    "tf7_growth_form": 1.13566253996939e-06,
+    "primary": false,
+    "rsd_rel": 0.10728361288584316,
+    "magnification_rel_abs_alpha_le_0p6": 0.1967801436363017,
+    "z_lt_0p1_only": 2.801584020467053e-07,
+    "z_ge_0p1_only": 9.058960286746249e-07
+   },
+   "H08|const2": {
+    "linear": 1.233328210846331e-06,
+    "hmcode2020": 1.2325399170634941e-06,
+    "tf7_growth_form": 1.2333409161183755e-06,
+    "primary": false,
+    "rsd_rel": 0.07323588963763655,
+    "magnification_rel_abs_alpha_le_0p6": 0.19480103458557751,
+    "z_lt_0p1_only": 4.118634384877871e-07,
+    "z_ge_0p1_only": 8.900153230901793e-07
+   },
+   "H08|const3": {
+    "linear": 2.7749884744042444e-06,
+    "hmcode2020": 2.773214813392862e-06,
+    "tf7_growth_form": 2.7750170612663453e-06,
+    "primary": false,
+    "rsd_rel": 0.04723462388491333,
+    "magnification_rel_abs_alpha_le_0p6": 0.12785528198119112,
+    "z_lt_0p1_only": 9.266927365975213e-07,
+    "z_ge_0p1_only": 2.0025344769529036e-06
+   },
+   "H08|H08beff": {
+    "linear": 1.2087849794504888e-06,
+    "hmcode2020": 1.208012372713931e-06,
+    "tf7_growth_form": 1.20879743188762e-06,
+    "primary": true,
+    "rsd_rel": 0.07404861683049502,
+    "magnification_rel_abs_alpha_le_0p6": 0.19686110354875574,
+    "z_lt_0p1_only": 4.0366735606188026e-07,
+    "z_ge_0p1_only": 8.723040181606847e-07
+   }
+  },
+  "envelope": {
+   "linear": {
+    "primary_min": 1.2087849794504888e-06,
+    "primary_max": 2.083753646853219e-05,
+    "primary_argmin": "H08|H08beff",
+    "primary_argmax": "TN16|const3",
+    "extended_min": 1.1355736033248592e-06,
+    "extended_max": 2.083753646853219e-05,
+    "extended_argmax": "TN16|const3",
+    "differential_pair_max": {
+     "C1": 1.401302110776449e-05,
+     "pair": [
+      "TN16|const3",
+      "H08|NT15"
+     ]
+    },
+    "differential_pair_min": {
+     "C1": 1.233328210846337e-10,
+     "pair": [
+      "H08|const2",
+      "H08|H08beff"
+     ]
+    },
+    "differential_triangle_bound_4max": 8.335014587412876e-05,
+    "note": "differential = C1 of [W_i - W_j] for two bracket members, i.e. the l=1 power of delta_resolved - delta_compact if each class follows one bracket member; 4 max C1 is the Minkowski bound (sqrt(C_i)+sqrt(C_j))^2 over the extended set; V4 is the numerical convergence of the integrator only; the unexplained V3 low-l offset to CAMB is carried separately in with_V3_low_l_systematic",
+    "with_V3_low_l_systematic": {
+     "factor_up": 1.2862373794253488,
+     "factor_down": 1.0,
+     "primary_min": 1.2087849794504888e-06,
+     "extended_min": 1.1355736033248592e-06,
+     "primary_max": 2.680201830096498e-05,
+     "extended_max": 2.680201830096498e-05,
+     "differential_pair_max": 1.8024071547483096e-05,
+     "differential_triangle_bound_4max": 0.00010720807320385992,
+     "note": "upper envelope values x factor_up, lower x factor_down; see V3_low_l_systematic for the method"
+    }
+   },
+   "hmcode2020": {
+    "primary_min": 1.208012372713931e-06,
+    "primary_max": 2.0825081725438284e-05,
+    "primary_argmin": "H08|H08beff",
+    "primary_argmax": "TN16|const3",
+    "extended_min": 1.135058371434652e-06,
+    "extended_max": 2.0825081725438284e-05,
+    "extended_argmax": "TN16|const3",
+    "differential_pair_max": {
+     "C1": 1.4008854834005121e-05,
+     "pair": [
+      "TN16|const3",
+      "H08|NT15"
+     ]
+    },
+    "differential_pair_min": {
+     "C1": 1.2325399170634969e-10,
+     "pair": [
+      "H08|const2",
+      "H08|H08beff"
+     ]
+    },
+    "differential_triangle_bound_4max": 8.330032690175314e-05,
+    "note": "differential = C1 of [W_i - W_j] for two bracket members, i.e. the l=1 power of delta_resolved - delta_compact if each class follows one bracket member; 4 max C1 is the Minkowski bound (sqrt(C_i)+sqrt(C_j))^2 over the extended set; V4 is the numerical convergence of the integrator only; the unexplained V3 low-l offset to CAMB is carried separately in with_V3_low_l_systematic",
+    "with_V3_low_l_systematic": {
+     "factor_up": 1.2862373794253488,
+     "factor_down": 1.0,
+     "primary_min": 1.208012372713931e-06,
+     "extended_min": 1.135058371434652e-06,
+     "primary_max": 2.6785998544846457e-05,
+     "extended_max": 2.6785998544846457e-05,
+     "differential_pair_max": 1.8018712730440875e-05,
+     "differential_triangle_bound_4max": 0.00010714399417938583,
+     "note": "upper envelope values x factor_up, lower x factor_down; see V3_low_l_systematic for the method"
+    }
+   }
+  },
+  "shot_noise": {
+   "mask_pixels": 33000,
+   "mask_solid_angle_sr": 8.436894333371027,
+   "joint_class_counts": [
+    [
+     1172716.0,
+     20345.0,
+     808.0,
+     113.0
+    ],
+    [
+     0.0,
+     106785.0,
+     11795.0,
+     434.0
+    ],
+    [
+     0.0,
+     0.0,
+     59520.0,
+     6782.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     56576.0
+    ]
+   ],
+   "selections": {
+    "peak_ge20": {
+     "N": 241892,
+     "Nbar_per_sr": 28670.739544909076,
+     "shot_noise_1_over_Nbar": 3.487876545471131e-05
+    },
+    "integrated_ge20": {
+     "N": 263158,
+     "Nbar_per_sr": 31191.335294921628,
+     "shot_noise_1_over_Nbar": 3.206018564273565e-05
+    },
+    "offdiag_resolved_migrating": {
+     "N": 40277,
+     "Nbar_per_sr": 4773.9130547943,
+     "shot_noise_1_over_Nbar": 0.0002094717663522861
+    },
+    "diag_selected": {
+     "N": 222881,
+     "Nbar_per_sr": 26417.42224012733,
+     "shot_noise_1_over_Nbar": 3.785380688964527e-05
+    }
+   },
+   "g_diff_shot_noise": 0.00024732557324193136,
+   "integral_count_slope_x_20_40mJy_peak": 0.977136416799054,
+   "integral_count_slope_x_20_40mJy_integrated": 0.9520256070557838,
+   "input": "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/RESULTS/PROVIDER_NVSS_CARRIERS.npz",
+   "input_sha256": "a51da9a98c3d0563446eb61f21aceff69fbfeed5446ec74471177170b8664e89",
+   "note": "R106's closed form Cov = Cov_{C1=0} + df^2 (3 C1/4pi) I_2 uses the clustering-only C1 of g_diff; Poisson noise is generated by the multinomial placement inside Cov_{C1=0}. The with-shot-noise numbers are C1 + 1/Nbar for the count fields (TN16 Eq. 3.4) and C1_diff + 1/Nbar_off + 1/Nbar_diag for g_diff; feeding them into p(C1) double counts Poisson noise."
+  },
+  "forms_for_R106": {
+   "linear": {
+    "count_field_integrated_ge20": {
+     "shot_noise_free": [
+      1.1355736033248592e-06,
+      2.083753646853219e-05
+     ],
+     "with_shot_noise": [
+      3.319575924606051e-05,
+      5.289772211126784e-05
+     ],
+     "shot_noise_free_x_V3_factor_up": [
+      1.4606172156851674e-06,
+      2.680201830096498e-05
+     ],
+     "with_shot_noise_and_V3_factor_up": [
+      3.3520802858420815e-05,
+      5.8862203943700625e-05
+     ]
+    },
+    "g_diff": {
+     "shot_noise_free": [
+      0.0,
+      1.401302110776449e-05,
+      8.335014587412876e-05
+     ],
+     "with_shot_noise": [
+      0.00024732557324193136,
+      0.0002613385943496958,
+      0.0003306757191160601
+     ],
+     "labels": [
+      "identical classes (C1_diff = 0)",
+      "max over bracket pairs",
+      "Minkowski bound 4 max C1"
+     ],
+     "shot_noise_free_x_V3_factor_up": [
+      0.0,
+      1.8024071547483096e-05,
+      0.00010720807320385992
+     ],
+     "with_shot_noise_and_V3_factor_up": [
+      0.00024732557324193136,
+      0.00026534964478941447,
+      0.0003545336464457913
+     ]
+    },
+    "V3_low_l_systematic_factor_up": 1.2862373794253488
+   },
+   "hmcode2020": {
+    "count_field_integrated_ge20": {
+     "shot_noise_free": [
+      1.135058371434652e-06,
+      2.0825081725438284e-05
+     ],
+     "with_shot_noise": [
+      3.31952440141703e-05,
+      5.288526736817393e-05
+     ],
+     "shot_noise_free_x_V3_factor_up": [
+      1.4599545051689109e-06,
+      2.6785998544846457e-05
+     ],
+     "with_shot_noise_and_V3_factor_up": [
+      3.352014014790456e-05,
+      5.884618418758211e-05
+     ]
+    },
+    "g_diff": {
+     "shot_noise_free": [
+      0.0,
+      1.4008854834005121e-05,
+      8.330032690175314e-05
+     ],
+     "with_shot_noise": [
+      0.00024732557324193136,
+      0.00026133442807593646,
+      0.0003306259001436845
+     ],
+     "labels": [
+      "identical classes (C1_diff = 0)",
+      "max over bracket pairs",
+      "Minkowski bound 4 max C1"
+     ],
+     "shot_noise_free_x_V3_factor_up": [
+      0.0,
+      1.8018712730440875e-05,
+      0.00010714399417938583
+     ],
+     "with_shot_noise_and_V3_factor_up": [
+      0.00024732557324193136,
+      0.00026534428597237223,
+      0.0003544695674213172
+     ]
+    },
+    "V3_low_l_systematic_factor_up": 1.2862373794253488
+   }
+  },
+  "V3_low_l_systematic": {
+   "per_window": {
+    "gauss_z0p5_s0p15": {
+     "ells": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+     ],
+     "power_law_exponent": -1.419732972490046,
+     "rel_l2": -0.02456120214937907,
+     "rel_lmax": -0.002626753581567387,
+     "extrapolated_abs_rel_l1": 0.07081154532768685,
+     "all_negative": true
+    },
+    "gauss_z1p0_s0p30": {
+     "ells": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+     ],
+     "power_law_exponent": -1.392316760658254,
+     "rel_l2": -0.07724521331974732,
+     "rel_lmax": -0.008388088741403843,
+     "extrapolated_abs_rel_l1": 0.22253853293645592,
+     "all_negative": true
+    }
+   },
+   "worst_window": "gauss_z1p0_s0p30",
+   "s_abs_rel_l1": 0.22253853293645592,
+   "factor_up": 1.2862373794253488,
+   "factor_down": 1.0,
+   "integrator_below_camb_at_every_tested_l": true,
+   "method": "power-law fit of |C_l^integrator/C_l^CAMB - 1| over the tested l per V3 window, extrapolated to l = 1; s = max over windows; integrator below CAMB at all tested l => one-sided upward factor 1/(1 - s) (the CAMB-like value if the deficit is a fractional deficit of the integrator)",
+   "transfer_caveat": "taken from the worst smooth Gaussian test window (b = 2); the radio n(z) brackets were not run through CAMB (runtime), so the factor is transferred, not measured, for them",
+   "status": "unexplained low-l offset to CAMB counts_density: not the integrator P(k) sampling or matter variable, CAMB accuracy variation recorded (V3_DIAGNOSTIC.json); carried as a systematic, not a correction",
+   "source": "docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO/THEORY_C1.json V3_low_l_systematic",
+   "gap_status": "unexplained (not integrator P(k) sampling / matter variable, not CAMB accuracy)",
+   "gap_status_source": "docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO/V3_DIAGNOSTIC.json gap_status",
+   "integrator_variant_max_rel_spread": 6.720326675013766e-05,
+   "camb_accuracy_variation": {
+    "description": "CAMB 2.0.5 counts_density, SplinedSourceWindow, b = 2, massless neutrinos, AccuracyBoost = lAccuracyBoost = b, lSampleBoost = 50; window (1.0, 0.30) only (sets the V3 low-l systematic; the (0.5, 0.15) accuracy-2 run exceeded 10 min in R108)",
+    "accuracy_boosts": [
+     1.0,
+     2.0
+    ],
+    "windows": {
+     "gauss_z1p0_s0p30": {
+      "C_l": {
+       "accuracy_1": {
+        "2": 1.2693330112897986e-06,
+        "3": 1.4873333917586625e-06,
+        "4": 1.7142421386067873e-06
+       },
+       "accuracy_2": {
+        "2": 1.271078006044123e-06,
+        "3": 1.4894086929681486e-06,
+        "4": 1.715312551940692e-06
+       }
+      },
+      "rel_change_vs_accuracy_1": {
+       "accuracy_2": {
+        "2": 0.0013747336111200603,
+        "3": 0.0013953167601732375,
+        "4": 0.0006244236504269196
+       }
+      }
+     }
+    },
+    "max_abs_rel_change": 0.0013953167601732375,
+    "rel_integrator_minus_camb_at_highest_accuracy": {
+     "2": -0.07850429790213365,
+     "3": -0.0503529218113562,
+     "4": -0.03492615534717458
+    }
+   },
+   "applied_to": "THEORY_C1 envelope.<pv>.with_V3_low_l_systematic, C1_forms_for_R106 *_x_V3_factor_up / *_and_V3_factor_up, P_OF_C1_THEORY points labelled 'x V3 low-l systematic', p_of_C1_margins *_x_V3"
+  },
+  "magnification_at_measured_NVSS_x": {
+   "integrated": {
+    "x": 0.9520256070557838,
+    "alpha_mu": -0.09594878588843248,
+    "rel_change_per_bracket": {
+     "TN16|NT15": -0.011781529911254729,
+     "TN16|NT15cap": -0.01176697216636941,
+     "TN16|const2": -0.009879110310360754,
+     "TN16|const3": -0.0065920421630976936,
+     "TN16|H08beff": -0.0099786252619412,
+     "DZ10|NT15": -0.013013548088076084,
+     "DZ10|NT15cap": -0.01300650661669333,
+     "DZ10|const2": -0.010749515805684092,
+     "DZ10|const3": -0.0071752035088119915,
+     "DZ10|H08beff": -0.010857689994797706,
+     "H08|NT15": -0.02958774278088608,
+     "H08|NT15cap": -0.029643987142617793,
+     "H08|const2": -0.02947207347934018,
+     "H08|const3": -0.019699503147573297,
+     "H08|H08beff": -0.029767408741236807
+    }
+   },
+   "peak": {
+    "x": 0.977136416799054,
+    "alpha_mu": -0.045727166401891894,
+    "rel_change_per_bracket": {
+     "TN16|NT15": -0.005623994621798109,
+     "TN16|NT15cap": -0.005617057029258912,
+     "TN16|const2": -0.004714875447460047,
+     "TN16|const3": -0.003144605936358197,
+     "TN16|H08beff": -0.004762438209645064,
+     "DZ10|NT15": -0.006215681910820811,
+     "DZ10|NT15cap": -0.0062123454281378335,
+     "DZ10|const2": -0.005132937593106667,
+     "DZ10|const3": -0.003423970662415645,
+     "DZ10|H08beff": -0.005184693056994282,
+     "H08|NT15": -0.01416311959021568,
+     "H08|NT15cap": -0.014190429681981982,
+     "H08|const2": -0.014103527145089237,
+     "H08|const3": -0.009414038082189852,
+     "H08|H08beff": -0.014245450438008856
+    }
+   }
+  }
+ },
+ "p_of_C1_margins": {
+  "EMPIRICAL_DIFF_SELECTION_RED": {
+   "crossing_0p05": 0.001616830922432542,
+   "over_count_field_max": 77.59223000637333,
+   "over_differential_pair_max": 115.380609934047,
+   "over_minkowski_4max": 19.398057501593332,
+   "over_count_field_max_x_V3": 60.32496897348695,
+   "over_differential_pair_max_x_V3": 89.70397827001071,
+   "over_minkowski_4max_x_V3": 15.081242243371738,
+   "V3_factor_up": 1.2862373794253488
+  },
+  "EMPIRICAL_DIFF_SELECTION_MID": {
+   "crossing_0p05": 0.0020561843239505634,
+   "over_count_field_max": 98.67693942879048,
+   "over_differential_pair_max": 146.7338347768027,
+   "over_minkowski_4max": 24.66923485719762,
+   "over_count_field_max_x_V3": 76.71751809364791,
+   "over_differential_pair_max_x_V3": 114.0799024534327,
+   "over_minkowski_4max_x_V3": 19.179379523411978,
+   "V3_factor_up": 1.2862373794253488
+  },
+  "EMPIRICAL_DIFF_SELECTION_FLAT": {
+   "crossing_0p05": 0.002391037256520678,
+   "over_count_field_max": 114.74663812257766,
+   "over_differential_pair_max": 170.62967636549305,
+   "over_minkowski_4max": 28.686659530644416,
+   "over_count_field_max_x_V3": 89.21108961538881,
+   "over_differential_pair_max_x_V3": 132.65799851169396,
+   "over_minkowski_4max_x_V3": 22.302772403847204,
+   "V3_factor_up": 1.2862373794253488
+  }
+ },
+ "p_of_C1_margins_note": "crossing_0p05 = C1 at which the conditional p of the EMPIRICAL_DIFF family reaches 0.05 (R106); margins are crossing / theory C1 (linear P(k)), without and with the V3 low-l systematic factor (x_V3: theory C1 x factor_up, so the margin is divided by factor_up)",
+ "p_of_C1": {
+  "source": "docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO/P_OF_C1_THEORY.json",
+  "claim_class": {
+   "label": "CONDITIONAL",
+   "calibrated_p": null,
+   "scope": "p conditional on the R106 EMPIRICAL_DIFF_SELECTION null families (RED / MID / FLAT) and on C1",
+   "statement": "every p here (p_mc, p_mc_display, gaussian_p, p_conditional) is conditional on the empirical DIFF family shape and on the C1 value fed in; the R106 C1 = 0 CRN mocks do not reproduce the observed overdispersion (overdispersion-reproducing mocks are open); not a calibrated significance; no physical attribution (R106 NVSS_REVIEW_CORRECTIONS.json claim_classes.conditional_prediction / physical_attribution)",
+   "empirical_points": "RACS points use RACS's own resolved/migrating class definition (25 arcsec beam, 887.5 MHz, edges scaled by an assumed alpha = 0.75) and include RACS tile/PSF systematics: they set a scale only and are not an independent estimate of the NVSS g_diff C1; the NVSS point is circular",
+   "not_claimed": "no calibrated p, no physical attribution, no family identification"
+  },
+  "classification": {
+   "label": "CONDITIONAL",
+   "calibrated_p": null,
+   "scope": "p conditional on R106 EMPIRICAL_DIFF_SELECTION null families"
+  },
+  "reproduction_passed": {
+   "LSS_DIFF_RED|dipole": true,
+   "LSS_DIFF_RED|dipole_stf": true,
+   "LSS_DIFF_MID|dipole": true,
+   "LSS_DIFF_MID|dipole_stf": true,
+   "LSS_DIFF_FLAT|dipole": true,
+   "LSS_DIFF_FLAT|dipole_stf": true
+  },
+  "r106_crossings_0p05": {
+   "EMPIRICAL_DIFF_SELECTION_RED": 0.001616830922432542,
+   "EMPIRICAL_DIFF_SELECTION_MID": 0.0020561843239505634,
+   "EMPIRICAL_DIFF_SELECTION_FLAT": 0.002391037256520678
+  },
+  "dipole_t_self": {
+   "EMPIRICAL_DIFF_SELECTION_RED": [
+    {
+     "label": "zero (identical resolved/compact classes)",
+     "form": "shot_noise_free",
+     "C1": 0.0,
+     "p_conditional": "0.007 (6/1000)",
+     "gaussian_p_conditional": 0.0055243230931762465,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "linear: count-field C1 primary min (H08|H08beff)",
+     "form": "shot_noise_free",
+     "C1": 1.2087849794504888e-06,
+     "p_conditional": "0.007 (6/1000)",
+     "gaussian_p_conditional": 0.005538557931674258,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "linear: count-field C1 primary max (TN16|const3)",
+     "form": "shot_noise_free",
+     "C1": 2.083753646853219e-05,
+     "p_conditional": "0.006 (5/1000)",
+     "gaussian_p_conditional": 0.00577286545222156,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "linear: count-field C1 extended max (TN16|const3)",
+     "form": "shot_noise_free",
+     "C1": 2.083753646853219e-05,
+     "p_conditional": "0.006 (5/1000)",
+     "gaussian_p_conditional": 0.00577286545222156,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "linear: differential C1 max over bracket pairs (TN16|const3 - H08|NT15)",
+     "form": "shot_noise_free",
+     "C1": 1.401302110776449e-05,
+     "p_conditional": "0.006 (5/1000)",
+     "gaussian_p_conditional": 0.005690726495474693,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "linear: differential Minkowski bound 4 max C1",
+     "form": "shot_noise_free",
+     "C1": 8.335014587412876e-05,
+     "p_conditional": "0.007 (6/1000)",
+     "gaussian_p_conditional": 0.00655892662601676,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "linear: count-field C1 extended max x V3 low-l systematic 1.2862",
+     "form": "shot_noise_free_x_V3_factor_up",
+     "C1": 2.680201830096498e-05,
+     "p_conditional": "0.006 (5/1000)",
+     "gaussian_p_conditional": 0.0058452435020702,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "linear: differential C1 max over bracket pairs x V3 low-l systematic 1.2862",
+     "form": "shot_noise_free_x_V3_factor_up",
+     "C1": 1.8024071547483096e-05,
+     "p_conditional": "0.006 (5/1000)",
+     "gaussian_p_conditional": 0.005738915681480445,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "linear: differential Minkowski bound 4 max C1 x V3 low-l systematic 1.2862",
+     "form": "shot_noise_free_x_V3_factor_up",
+     "C1": 0.00010720807320385992,
+     "p_conditional": "0.006 (5/1000)",
+     "gaussian_p_conditional": 0.0068750184478542095,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "hmcode2020: count-field C1 primary min (H08|H08beff)",
+     "form": "shot_noise_free",
+     "C1": 1.208012372713931e-06,
+     "p_conditional": "0.007 (6/1000)",
+     "gaussian_p_conditional": 0.005538548826146475,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "hmcode2020: count-field C1 primary max (TN16|const3)",
+     "form": "shot_noise_free",
+     "C1": 2.0825081725438284e-05,
+     "p_conditional": "0.006 (5/1000)",
+     "gaussian_p_conditional": 0.005772714892259769,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "hmcode2020: count-field C1 extended max (TN16|const3)",
+     "form": "shot_noise_free",
+     "C1": 2.0825081725438284e-05,
+     "p_conditional": "0.006 (5/1000)",
+     "gaussian_p_conditional": 0.005772714892259769,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "hmcode2020: differential C1 max over bracket pairs (TN16|const3 - H08|NT15)",
+     "form": "shot_noise_free",
+     "C1": 1.4008854834005121e-05,
+     "p_conditional": "0.006 (5/1000)",
+     "gaussian_p_conditional": 0.005690676570740593,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "hmcode2020: differential Minkowski bound 4 max C1",
+     "form": "shot_noise_free",
+     "C1": 8.330032690175314e-05,
+     "p_conditional": "0.007 (6/1000)",
+     "gaussian_p_conditional": 0.006558275909333657,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "hmcode2020: count-field C1 extended max x V3 low-l systematic 1.2862",
+     "form": "shot_noise_free_x_V3_factor_up",
+     "C1": 2.6785998544846457e-05,
+     "p_conditional": "0.006 (5/1000)",
+     "gaussian_p_conditional": 0.00584504836670261,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "hmcode2020: differential C1 max over bracket pairs x V3 low-l systematic 1.2862",
+     "form": "shot_noise_free_x_V3_factor_up",
+     "C1": 1.8018712730440875e-05,
+     "p_conditional": "0.006 (5/1000)",
+     "gaussian_p_conditional": 0.005738851134092123,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "hmcode2020: differential Minkowski bound 4 max C1 x V3 low-l systematic 1.2862",
+     "form": "shot_noise_free_x_V3_factor_up",
+     "C1": 0.00010714399417938583,
+     "p_conditional": "0.006 (5/1000)",
+     "gaussian_p_conditional": 0.006874157512599007,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "empirical RACS full mask (RACS class definition; scale only, not an NVSS estimate): C1_transverse_debiased_pearson",
+     "form": "empirical_other_survey_class_definition (scale only)",
+     "C1": 0.0004159134309695854,
+     "p_conditional": "0.012 (11/1000)",
+     "gaussian_p_conditional": 0.011774756354017549,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "empirical RACS full mask (RACS class definition; scale only, not an NVSS estimate): C1_transverse_raw",
+     "form": "empirical_other_survey_class_definition (scale only)",
+     "C1": 0.0006192664133833627,
+     "p_conditional": "0.014 (13/1000)",
+     "gaussian_p_conditional": 0.0158165244493655,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "empirical RACS on NVSS overlap (RACS class definition; scale only, not an NVSS estimate): C1_transverse_debiased_pearson",
+     "form": "empirical_other_survey_class_definition (scale only)",
+     "C1": 0.0004604494258801419,
+     "p_conditional": "0.013 (12/1000)",
+     "gaussian_p_conditional": 0.012605407590714053,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "empirical RACS on NVSS overlap (RACS class definition; scale only, not an NVSS estimate): C1_transverse_raw",
+     "form": "empirical_other_survey_class_definition (scale only)",
+     "C1": 0.0006903728690436414,
+     "p_conditional": "0.016 (15/1000)",
+     "gaussian_p_conditional": 0.017377819555406654,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "empirical RACS full mask, edges x1.5 (RACS class definition; scale only, not an NVSS estimate): C1_transverse_debiased_pearson",
+     "form": "empirical_other_survey_class_definition (scale only)",
+     "C1": 0.0008890712806488469,
+     "p_conditional": "0.023 (22/1000)",
+     "gaussian_p_conditional": 0.022130084746861747,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "empirical RACS full mask, edges x1.5 (RACS class definition; scale only, not an NVSS estimate): C1_transverse_raw",
+     "form": "empirical_other_survey_class_definition (scale only)",
+     "C1": 0.0011787032187970175,
+     "p_conditional": "0.03 (29/1000)",
+     "gaussian_p_conditional": 0.030017210517141027,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "empirical NVSS itself (circular: same data as the tested contrast; scale only): C1_transverse_debiased_pearson",
+     "form": "empirical_circular",
+     "C1": 0.002723518231517092,
+     "p_conditional": "0.091 (90/1000)",
+     "gaussian_p_conditional": 0.08564272497190946,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "empirical NVSS itself (circular: same data as the tested contrast; scale only): C1_transverse_raw",
+     "form": "empirical_circular",
+     "C1": 0.0030979311361645353,
+     "p_conditional": "0.11 (112/1000)",
+     "gaussian_p_conditional": 0.10111460709760793,
+     "claim_class": "CONDITIONAL"
+    }
+   ],
+   "EMPIRICAL_DIFF_SELECTION_MID": [
+    {
+     "label": "zero (identical resolved/compact classes)",
+     "form": "shot_noise_free",
+     "C1": 0.0,
+     "p_conditional": "0.004 (3/1000)",
+     "gaussian_p_conditional": 0.0014158433257671018,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "linear: count-field C1 primary min (H08|H08beff)",
+     "form": "shot_noise_free",
+     "C1": 1.2087849794504888e-06,
+     "p_conditional": "0.004 (3/1000)",
+     "gaussian_p_conditional": 0.0014216607525993558,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "linear: count-field C1 primary max (TN16|const3)",
+     "form": "shot_noise_free",
+     "C1": 2.083753646853219e-05,
+     "p_conditional": "0.004 (3/1000)",
+     "gaussian_p_conditional": 0.0015184612383094503,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "linear: count-field C1 extended max (TN16|const3)",
+     "form": "shot_noise_free",
+     "C1": 2.083753646853219e-05,
+     "p_conditional": "0.004 (3/1000)",
+     "gaussian_p_conditional": 0.0015184612383094503,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "linear: differential C1 max over bracket pairs (TN16|const3 - H08|NT15)",
+     "form": "shot_noise_free",
+     "C1": 1.401302110776449e-05,
+     "p_conditional": "0.003 (2/1000)",
+     "gaussian_p_conditional": 0.0014843043990903284,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "linear: differential Minkowski bound 4 max C1",
+     "form": "shot_noise_free",
+     "C1": 8.335014587412876e-05,
+     "p_conditional": "0.004 (3/1000)",
+     "gaussian_p_conditional": 0.001856912066858287,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "linear: count-field C1 extended max x V3 low-l systematic 1.2862",
+     "form": "shot_noise_free_x_V3_factor_up",
+     "C1": 2.680201830096498e-05,
+     "p_conditional": "0.004 (3/1000)",
+     "gaussian_p_conditional": 0.0015487551431771366,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "linear: differential C1 max over bracket pairs x V3 low-l systematic 1.2862",
+     "form": "shot_noise_free_x_V3_factor_up",
+     "C1": 1.8024071547483096e-05,
+     "p_conditional": "0.004 (3/1000)",
+     "gaussian_p_conditional": 0.001504314664587434,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "linear: differential Minkowski bound 4 max C1 x V3 low-l systematic 1.2862",
+     "form": "shot_noise_free_x_V3_factor_up",
+     "C1": 0.00010720807320385992,
+     "p_conditional": "0.003 (2/1000)",
+     "gaussian_p_conditional": 0.001998608526246528,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "hmcode2020: count-field C1 primary min (H08|H08beff)",
+     "form": "shot_noise_free",
+     "C1": 1.208012372713931e-06,
+     "p_conditional": "0.004 (3/1000)",
+     "gaussian_p_conditional": 0.0014216570290442173,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "hmcode2020: count-field C1 primary max (TN16|const3)",
+     "form": "shot_noise_free",
+     "C1": 2.0825081725438284e-05,
+     "p_conditional": "0.004 (3/1000)",
+     "gaussian_p_conditional": 0.0015183984119691298,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "hmcode2020: count-field C1 extended max (TN16|const3)",
+     "form": "shot_noise_free",
+     "C1": 2.0825081725438284e-05,
+     "p_conditional": "0.004 (3/1000)",
+     "gaussian_p_conditional": 0.0015183984119691298,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "hmcode2020: differential C1 max over bracket pairs (TN16|const3 - H08|NT15)",
+     "form": "shot_noise_free",
+     "C1": 1.4008854834005121e-05,
+     "p_conditional": "0.003 (2/1000)",
+     "gaussian_p_conditional": 0.0014842837107562157,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "hmcode2020: differential Minkowski bound 4 max C1",
+     "form": "shot_noise_free",
+     "C1": 8.330032690175314e-05,
+     "p_conditional": "0.004 (3/1000)",
+     "gaussian_p_conditional": 0.0018566235631263287,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "hmcode2020: count-field C1 extended max x V3 low-l systematic 1.2862",
+     "form": "shot_noise_free_x_V3_factor_up",
+     "C1": 2.6785998544846457e-05,
+     "p_conditional": "0.004 (3/1000)",
+     "gaussian_p_conditional": 0.0015486732239689942,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "hmcode2020: differential C1 max over bracket pairs x V3 low-l systematic 1.2862",
+     "form": "shot_noise_free_x_V3_factor_up",
+     "C1": 1.8018712730440875e-05,
+     "p_conditional": "0.004 (3/1000)",
+     "gaussian_p_conditional": 0.0015042878068508708,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "hmcode2020: differential Minkowski bound 4 max C1 x V3 low-l systematic 1.2862",
+     "form": "shot_noise_free_x_V3_factor_up",
+     "C1": 0.00010714399417938583,
+     "p_conditional": "0.003 (2/1000)",
+     "gaussian_p_conditional": 0.0019982184364268755,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "empirical RACS full mask (RACS class definition; scale only, not an NVSS estimate): C1_transverse_debiased_pearson",
+     "form": "empirical_other_survey_class_definition (scale only)",
+     "C1": 0.0004159134309695854,
+     "p_conditional": "0.004 (3/1000)",
+     "gaussian_p_conditional": 0.004522442537649151,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "empirical RACS full mask (RACS class definition; scale only, not an NVSS estimate): C1_transverse_raw",
+     "form": "empirical_other_survey_class_definition (scale only)",
+     "C1": 0.0006192664133833627,
+     "p_conditional": "0.006 (5/1000)",
+     "gaussian_p_conditional": 0.00695152179321409,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "empirical RACS on NVSS overlap (RACS class definition; scale only, not an NVSS estimate): C1_transverse_debiased_pearson",
+     "form": "empirical_other_survey_class_definition (scale only)",
+     "C1": 0.0004604494258801419,
+     "p_conditional": "0.006 (5/1000)",
+     "gaussian_p_conditional": 0.005000093686436669,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "empirical RACS on NVSS overlap (RACS class definition; scale only, not an NVSS estimate): C1_transverse_raw",
+     "form": "empirical_other_survey_class_definition (scale only)",
+     "C1": 0.0006903728690436414,
+     "p_conditional": "0.007 (6/1000)",
+     "gaussian_p_conditional": 0.007953036473135479,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "empirical RACS full mask, edges x1.5 (RACS class definition; scale only, not an NVSS estimate): C1_transverse_debiased_pearson",
+     "form": "empirical_other_survey_class_definition (scale only)",
+     "C1": 0.0008890712806488469,
+     "p_conditional": "0.01 (9/1000)",
+     "gaussian_p_conditional": 0.011175195592026567,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "empirical RACS full mask, edges x1.5 (RACS class definition; scale only, not an NVSS estimate): C1_transverse_raw",
+     "form": "empirical_other_survey_class_definition (scale only)",
+     "C1": 0.0011787032187970175,
+     "p_conditional": "0.016 (15/1000)",
+     "gaussian_p_conditional": 0.01697431346937596,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "empirical NVSS itself (circular: same data as the tested contrast; scale only): C1_transverse_debiased_pearson",
+     "form": "empirical_circular",
+     "C1": 0.002723518231517092,
+     "p_conditional": "0.078 (77/1000)",
+     "gaussian_p_conditional": 0.06557111517607929,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "empirical NVSS itself (circular: same data as the tested contrast; scale only): C1_transverse_raw",
+     "form": "empirical_circular",
+     "C1": 0.0030979311361645353,
+     "p_conditional": "0.1 (99/1000)",
+     "gaussian_p_conditional": 0.08030060842417676,
+     "claim_class": "CONDITIONAL"
+    }
+   ],
+   "EMPIRICAL_DIFF_SELECTION_FLAT": [
+    {
+     "label": "zero (identical resolved/compact classes)",
+     "form": "shot_noise_free",
+     "C1": 0.0,
+     "p_conditional": "0.001 (0/1000)",
+     "gaussian_p_conditional": 0.0005712287522557542,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "linear: count-field C1 primary min (H08|H08beff)",
+     "form": "shot_noise_free",
+     "C1": 1.2087849794504888e-06,
+     "p_conditional": "0.001 (0/1000)",
+     "gaussian_p_conditional": 0.0005742789379514091,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "linear: count-field C1 primary max (TN16|const3)",
+     "form": "shot_noise_free",
+     "C1": 2.083753646853219e-05,
+     "p_conditional": "0.001 (0/1000)",
+     "gaussian_p_conditional": 0.0006254898841735362,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "linear: count-field C1 extended max (TN16|const3)",
+     "form": "shot_noise_free",
+     "C1": 2.083753646853219e-05,
+     "p_conditional": "0.001 (0/1000)",
+     "gaussian_p_conditional": 0.0006254898841735362,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "linear: differential C1 max over bracket pairs (TN16|const3 - H08|NT15)",
+     "form": "shot_noise_free",
+     "C1": 1.401302110776449e-05,
+     "p_conditional": "0.001 (0/1000)",
+     "gaussian_p_conditional": 0.0006073227999187389,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "linear: differential Minkowski bound 4 max C1",
+     "form": "shot_noise_free",
+     "C1": 8.335014587412876e-05,
+     "p_conditional": "0.001 (0/1000)",
+     "gaussian_p_conditional": 0.0008107274077805172,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "linear: count-field C1 extended max x V3 low-l systematic 1.2862",
+     "form": "shot_noise_free_x_V3_factor_up",
+     "C1": 2.680201830096498e-05,
+     "p_conditional": "0.001 (0/1000)",
+     "gaussian_p_conditional": 0.0006416883874849921,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "linear: differential C1 max over bracket pairs x V3 low-l systematic 1.2862",
+     "form": "shot_noise_free_x_V3_factor_up",
+     "C1": 1.8024071547483096e-05,
+     "p_conditional": "0.001 (0/1000)",
+     "gaussian_p_conditional": 0.000617953122080472,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "linear: differential Minkowski bound 4 max C1 x V3 low-l systematic 1.2862",
+     "form": "shot_noise_free_x_V3_factor_up",
+     "C1": 0.00010720807320385992,
+     "p_conditional": "0.001 (0/1000)",
+     "gaussian_p_conditional": 0.0008908352074356696,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "hmcode2020: count-field C1 primary min (H08|H08beff)",
+     "form": "shot_noise_free",
+     "C1": 1.208012372713931e-06,
+     "p_conditional": "0.001 (0/1000)",
+     "gaussian_p_conditional": 0.0005742769846050978,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "hmcode2020: count-field C1 primary max (TN16|const3)",
+     "form": "shot_noise_free",
+     "C1": 2.0825081725438284e-05,
+     "p_conditional": "0.001 (0/1000)",
+     "gaussian_p_conditional": 0.000625456373602741,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "hmcode2020: count-field C1 extended max (TN16|const3)",
+     "form": "shot_noise_free",
+     "C1": 2.0825081725438284e-05,
+     "p_conditional": "0.001 (0/1000)",
+     "gaussian_p_conditional": 0.000625456373602741,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "hmcode2020: differential C1 max over bracket pairs (TN16|const3 - H08|NT15)",
+     "form": "shot_noise_free",
+     "C1": 1.4008854834005121e-05,
+     "p_conditional": "0.001 (0/1000)",
+     "gaussian_p_conditional": 0.0006073118279415713,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "hmcode2020: differential Minkowski bound 4 max C1",
+     "form": "shot_noise_free",
+     "C1": 8.330032690175314e-05,
+     "p_conditional": "0.001 (0/1000)",
+     "gaussian_p_conditional": 0.0008105657478569984,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "hmcode2020: count-field C1 extended max x V3 low-l systematic 1.2862",
+     "form": "shot_noise_free_x_V3_factor_up",
+     "C1": 2.6785998544846457e-05,
+     "p_conditional": "0.001 (0/1000)",
+     "gaussian_p_conditional": 0.0006416444767881219,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "hmcode2020: differential C1 max over bracket pairs x V3 low-l systematic 1.2862",
+     "form": "shot_noise_free_x_V3_factor_up",
+     "C1": 1.8018712730440875e-05,
+     "p_conditional": "0.001 (0/1000)",
+     "gaussian_p_conditional": 0.0006179388301445325,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "hmcode2020: differential Minkowski bound 4 max C1 x V3 low-l systematic 1.2862",
+     "form": "shot_noise_free_x_V3_factor_up",
+     "C1": 0.00010714399417938583,
+     "p_conditional": "0.001 (0/1000)",
+     "gaussian_p_conditional": 0.0008906127729892295,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "empirical RACS full mask (RACS class definition; scale only, not an NVSS estimate): C1_transverse_debiased_pearson",
+     "form": "empirical_other_survey_class_definition (scale only)",
+     "C1": 0.0004159134309695854,
+     "p_conditional": "0.004 (3/1000)",
+     "gaussian_p_conditional": 0.0024865464137878266,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "empirical RACS full mask (RACS class definition; scale only, not an NVSS estimate): C1_transverse_raw",
+     "form": "empirical_other_survey_class_definition (scale only)",
+     "C1": 0.0006192664133833627,
+     "p_conditional": "0.006 (5/1000)",
+     "gaussian_p_conditional": 0.004208777407342363,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "empirical RACS on NVSS overlap (RACS class definition; scale only, not an NVSS estimate): C1_transverse_debiased_pearson",
+     "form": "empirical_other_survey_class_definition (scale only)",
+     "C1": 0.0004604494258801419,
+     "p_conditional": "0.004 (3/1000)",
+     "gaussian_p_conditional": 0.002814140654483958,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "empirical RACS on NVSS overlap (RACS class definition; scale only, not an NVSS estimate): C1_transverse_raw",
+     "form": "empirical_other_survey_class_definition (scale only)",
+     "C1": 0.0006903728690436414,
+     "p_conditional": "0.006 (5/1000)",
+     "gaussian_p_conditional": 0.004953057334472114,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "empirical RACS full mask, edges x1.5 (RACS class definition; scale only, not an NVSS estimate): C1_transverse_debiased_pearson",
+     "form": "empirical_other_survey_class_definition (scale only)",
+     "C1": 0.0008890712806488469,
+     "p_conditional": "0.009 (8/1000)",
+     "gaussian_p_conditional": 0.007444704277203276,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "empirical RACS full mask, edges x1.5 (RACS class definition; scale only, not an NVSS estimate): C1_transverse_raw",
+     "form": "empirical_other_survey_class_definition (scale only)",
+     "C1": 0.0011787032187970175,
+     "p_conditional": "0.017 (16/1000)",
+     "gaussian_p_conditional": 0.01218951008068912,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "empirical NVSS itself (circular: same data as the tested contrast; scale only): C1_transverse_debiased_pearson",
+     "form": "empirical_circular",
+     "C1": 0.002723518231517092,
+     "p_conditional": "0.068 (67/1000)",
+     "gaussian_p_conditional": 0.05678804300470089,
+     "claim_class": "CONDITIONAL"
+    },
+    {
+     "label": "empirical NVSS itself (circular: same data as the tested contrast; scale only): C1_transverse_raw",
+     "form": "empirical_circular",
+     "C1": 0.0030979311361645353,
+     "p_conditional": "0.084 (83/1000)",
+     "gaussian_p_conditional": 0.07102797728112449,
+     "claim_class": "CONDITIONAL"
+    }
+   ]
+  }
+ },
+ "racs_d11": {
+  "source": "docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/RADIO/RACS_DIPOLE.json",
+  "mask": {
+   "nside": 64,
+   "galactic_latitude_cut_deg": 10.0,
+   "pixel_centre_dec_window_deg": [
+    -78.0,
+    28.0
+   ],
+   "coverage_rule": "all-flux RACS source count per pixel >= 0.5 x median over the base mask",
+   "median_all_flux_count_base": 63.0,
+   "base_pixels": 29869,
+   "removed_by_coverage": 946,
+   "retained_pixels": 28923,
+   "sky_fraction": 0.58843994140625,
+   "mask_sha256": "081743e39d5632abc2c5308fb9e1eac8bd00cc9763827bc2c52d6158beed4869"
+  },
+  "overlap": {
+   "retained_pixels": 21935,
+   "mask_sha256": "1c4b81c16f5620c59ded044a53f6bb7b560dd3285c5ee4bf83b6f31d41bd1f19",
+   "rule": "RACS mask AND R65 NVSS carrier pixels (dec > -37, |b| > 10)"
+  },
+  "assumptions": {
+   "spectral_index_alpha": 0.75,
+   "edge_scale_1400_to_887p5": 1.4075692009581227,
+   "racs_edges_mJy": [
+    28.151384019162453,
+    56.302768038324906,
+    112.60553607664981
+   ],
+   "beta": 0.001233586736861806,
+   "cmb_direction_radec_deg": [
+    167.942,
+    -6.944
+   ]
+  },
+  "nvss_replay": {
+   "dipole": {
+    "delta": [
+     -0.0013960439131920563,
+     0.0056270366013520525
+    ],
+    "r65_delta": [
+     -0.001396043913191444,
+     0.005627036601351938
+    ],
+    "max_abs_delta_diff": 6.123573870198129e-16,
+    "wald": 32.792386268357376,
+    "r65_wald": 32.792386268354115,
+    "rel_wald_diff": 9.947598300641403e-14
+   },
+   "dipole_stf": {
+    "delta": [
+     -0.0016440241048542026,
+     0.005524671826759816
+    ],
+    "r65_delta": [
+     -0.0016440241048542026,
+     0.005524671826759816
+    ],
+    "max_abs_delta_diff": 0.0,
+    "wald": 30.989468960483375,
+    "r65_wald": 30.989468960483375,
+    "rel_wald_diff": 0.0
+   }
+  },
+  "blocks": {
+   "nvss_full_R65_mask": {
+    "pixels": 33000,
+    "contrast_delta_xy": [
+     -0.0013960439131920563,
+     0.0056270366013520525
+    ],
+    "wald_t_self": 32.792386268357376,
+    "p_claim_class": "CONDITIONAL: Poisson-sandwich and jackknife-Gaussian p are not calibrated (R106: overdispersion; no RACS null mocks run)",
+    "poisson_p_uncalibrated": 7.572230013795709e-08,
+    "jackknife": null,
+    "jackknife_p_uncalibrated": null,
+    "df": 0.07445961301045968,
+    "required_offdiag_dipole": 0.07786270737990325,
+    "count_dipole_amplitude": 0.01758018994902824,
+    "count_dipole_radec": [
+     139.36915611192657,
+     -9.451933522866057
+    ],
+    "count_dipole_over_kinematic": 3.887372003127094,
+    "count_C1_raw": 0.00043153346549491714,
+    "count_C1_residual_debiased_pearson": 0.00020062619566681576,
+    "diff_C1_transverse_raw": 0.0030979311361645353,
+    "diff_C1_transverse_debiased_pearson": 0.002723518231517092,
+    "diff_C1_transverse_interval_68": [
+     0.0016904739011318576,
+     0.01776811558924351
+    ],
+    "shot_noise": 3.206018564273565e-05
+   },
+   "nvss_on_overlap_pixels": {
+    "pixels": 21935,
+    "contrast_delta_xy": [
+     -0.0005527038507461505,
+     0.0030063811544770364
+    ],
+    "wald_t_self": 7.382255837999938,
+    "p_claim_class": "CONDITIONAL: Poisson-sandwich and jackknife-Gaussian p are not calibrated (R106: overdispersion; no RACS null mocks run)",
+    "poisson_p_uncalibrated": 0.02494385152544124,
+    "jackknife": 6.266092017242839,
+    "jackknife_p_uncalibrated": 0.043584835070190564,
+    "df": 0.07305481416885483,
+    "required_offdiag_dipole": 0.04184206793469425,
+    "count_dipole_amplitude": 0.013410297644476954,
+    "count_dipole_radec": [
+     151.39025729525014,
+     0.2922688699688365
+    ],
+    "count_dipole_over_kinematic": 2.9653158337815633,
+    "count_C1_raw": 0.0002510985408583573,
+    "count_C1_residual_debiased_pearson": -1.4510402517430215e-05,
+    "diff_C1_transverse_raw": 0.0003357269803351177,
+    "diff_C1_transverse_debiased_pearson": -0.00011499099001132396,
+    "diff_C1_transverse_interval_68": [
+     0.00018319893929759134,
+     0.0019255546785353825
+    ],
+    "shot_noise": 3.2019241864096154e-05
+   },
+   "racs_full_mask_alpha0p75": {
+    "pixels": 28923,
+    "contrast_delta_xy": [
+     -0.003497683346338267,
+     -0.002113410158071513
+    ],
+    "wald_t_self": 6.362770210955523,
+    "p_claim_class": "CONDITIONAL: Poisson-sandwich and jackknife-Gaussian p are not calibrated (R106: overdispersion; no RACS null mocks run)",
+    "poisson_p_uncalibrated": 0.041528094475453976,
+    "jackknife": 5.756580070235438,
+    "jackknife_p_uncalibrated": 0.05623083342251239,
+    "df": 0.16831136768900468,
+    "required_offdiag_dipole": 0.024279993941944463,
+    "count_dipole_amplitude": 0.01981257834708123,
+    "count_dipole_radec": [
+     198.71849497107343,
+     5.238478903826305
+    ],
+    "count_dipole_over_kinematic": 4.3963085766504975,
+    "count_C1_raw": 0.0005480868072240522,
+    "count_C1_residual_debiased_pearson": 0.00029774047333087087,
+    "diff_C1_transverse_raw": 0.0006192664133833627,
+    "diff_C1_transverse_debiased_pearson": 0.0004159134309695854,
+    "diff_C1_transverse_interval_68": [
+     0.00033792026473777203,
+     0.00355178883258025
+    ],
+    "shot_noise": 3.0502944827398337e-05
+   },
+   "racs_overlap_with_R65_NVSS_mask": {
+    "pixels": 21935,
+    "contrast_delta_xy": [
+     -0.003080124786808863,
+     -0.003122940887766702
+    ],
+    "wald_t_self": 6.3206150873723415,
+    "p_claim_class": "CONDITIONAL: Poisson-sandwich and jackknife-Gaussian p are not calibrated (R106: overdispersion; no RACS null mocks run)",
+    "poisson_p_uncalibrated": 0.04241269531788476,
+    "jackknife": 5.719181254630386,
+    "jackknife_p_uncalibrated": 0.05729220933098877,
+    "df": 0.1677568421702802,
+    "required_offdiag_dipole": 0.02614697696851701,
+    "count_dipole_amplitude": 0.01998619437103736,
+    "count_dipole_radec": [
+     201.8506337841863,
+     -13.962127235934972
+    ],
+    "count_dipole_over_kinematic": 4.433640026205124,
+    "count_C1_raw": 0.0005577345749812928,
+    "count_C1_residual_debiased_pearson": 0.0002553117263517585,
+    "diff_C1_transverse_raw": 0.0006903728690436414,
+    "diff_C1_transverse_debiased_pearson": 0.0004604494258801419,
+    "diff_C1_transverse_interval_68": [
+     0.0003767215169968883,
+     0.003959618338073218
+    ],
+    "shot_noise": 3.0448686037666048e-05
+   },
+   "racs_full_mask_alpha0p75_cut_x1p5": {
+    "pixels": 28923,
+    "contrast_delta_xy": [
+     -0.004018524207091787,
+     -0.0027469294215768415
+    ],
+    "wald_t_self": 5.636467111466609,
+    "p_claim_class": "CONDITIONAL: Poisson-sandwich and jackknife-Gaussian p are not calibrated (R106: overdispersion; no RACS null mocks run)",
+    "poisson_p_uncalibrated": 0.05971132633444648,
+    "jackknife": 6.735516527395065,
+    "jackknife_p_uncalibrated": 0.03446681631706657,
+    "df": 0.18057854561406456,
+    "required_offdiag_dipole": 0.02695594053543738,
+    "count_dipole_amplitude": 0.02025685646784889,
+    "count_dipole_radec": [
+     197.99789890578714,
+     -3.74877107966374
+    ],
+    "count_dipole_over_kinematic": 4.339187350928829,
+    "count_C1_raw": 0.0005729430508791156,
+    "count_C1_residual_debiased_pearson": 0.0002761498107861101,
+    "diff_C1_transverse_raw": 0.0011787032187970175,
+    "diff_C1_transverse_debiased_pearson": 0.0008890712806488469,
+    "diff_C1_transverse_interval_68": [
+     0.0006431928086766366,
+     0.006760426270458732
+    ],
+    "shot_noise": 4.42835418668044e-05
+   }
+  }
+ }
+}

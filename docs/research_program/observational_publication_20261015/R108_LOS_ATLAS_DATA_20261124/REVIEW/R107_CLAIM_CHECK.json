@@ -1,0 +1,324 @@
+{
+ "checks": [
+  {
+   "claim": "class-B LoS vs native at ell <= 4: T 2e-6, E/B 1e-4 (weak case, L=16)",
+   "doc": "TF1/RESULTS_KO",
+   "file_value": {
+    "EB": {
+     "at": "B4",
+     "max": 0.00011825464447327947
+    },
+    "T": {
+     "at": "T4",
+     "max": 3.017259592480145e-06
+    }
+   }
+  },
+  {
+   "claim": "focusing: native L=8 deviates 1e-2 to 2e-1 at ell <= 4 (T4 0.11, E4 0.19)",
+   "doc": "TF3",
+   "file_value": {
+    "E4": 0.18715591312749436,
+    "T4": 0.1088570869560915,
+    "max": {
+     "at": "E4",
+     "max": 0.18715591312749436
+    },
+    "min": 0.0007769941806955479
+   }
+  },
+  {
+   "claim": "focusing: L=12 <= 4e-3",
+   "doc": "TF3",
+   "file_value": {
+    "at": "E4",
+    "max": 0.0042069630472019535
+   }
+  },
+  {
+   "claim": "focusing: L=16 <= 1.6e-4",
+   "doc": "TF3",
+   "file_value": {
+    "at": "B4",
+    "max": 0.00016402209803268255
+   }
+  },
+  {
+   "claim": "weak: L=8 already converged",
+   "doc": "TF3",
+   "file_value": {
+    "at": "B4",
+    "max": 0.00011980694490545028
+   }
+  },
+  {
+   "claim": "Nside 32 vs 64 <= 5e-5 (ell <= 56)",
+   "doc": "TF3",
+   "file_value": {
+    "focusing_class_B": {
+     "BB": 1.0678899932399509e-05,
+     "EE": 1.2244006396561454e-05,
+     "TT": 2.6193007667101632e-05
+    },
+    "weak_class_B": {
+     "BB": 1.3457143603564153e-05,
+     "EE": 4.579439932657398e-05,
+     "TT": 2.1770637199977143e-05
+    }
+   }
+  },
+  {
+   "claim": "ray step 0.02 vs 0.01 <= 1e-6",
+   "doc": "TF3",
+   "file_value": {
+    "focusing_class_B": {
+     "BB": 2.9874738861497183e-08,
+     "EE": 1.791844513716861e-08,
+     "TT": 1.0048854587113077e-06
+    },
+    "weak_class_B": {
+     "BB": 1.696370439614582e-08,
+     "EE": 1.68614481679253e-08,
+     "TT": 8.428973770464292e-08
+    }
+   }
+  },
+  {
+   "claim": "node doubling <= 5e-3 (EE, BB) and 7e-4 (TT)",
+   "doc": "TF3",
+   "file_value": {
+    "focusing_class_B": {
+     "BB": 0.00521625254773004,
+     "EE": 0.0051268605598944915,
+     "TT": 0.0006975071148644115
+    },
+    "weak_class_B": {
+     "BB": 0.0037988163152595372,
+     "EE": 0.0033482092641568565,
+     "TT": 0.00037796706258226445
+    }
+   }
+  },
+  {
+   "claim": "native and HEALPix (T,E,B) conventions agree to 1e-14",
+   "doc": "TF1/handoff",
+   "file_value": "not in any R107 result file (test bound 1e-7)",
+   "recomputed_with_R108_code": {
+    "B": 2.172074862801047e-15,
+    "E": 1.7652151491418258e-15,
+    "T": 1.0663377946799199e-10
+   }
+  },
+  {
+   "R108_F2_cell_end_ratio_per_doubling": {
+    "cell_ends_cap0.25": {
+     "B2": [
+      3.8816527567155172,
+      3.9699129513000715,
+      4.0084175084332685
+     ],
+     "E2": [
+      3.8838970765308938,
+      3.9703233677168503,
+      4.012314165727324
+     ],
+     "T1": [
+      3.8952863602667165,
+      3.9543421078812826,
+      3.9464764725154224
+     ],
+     "T2": [
+      3.8307956870428947,
+      3.94875005662818,
+      3.8535161214348403
+     ]
+    },
+    "cell_ends_cap1.0": {
+     "B2": [
+      3.8861515907778323,
+      3.9951415920864397,
+      3.984979760697206
+     ],
+     "E2": [
+      3.8883667008168263,
+      3.995317042895389,
+      3.9890719981483067
+     ],
+     "T1": [
+      3.8952836054393134,
+      3.9549107979804647,
+      3.9464078713124118
+     ],
+     "T2": [
+      3.8344390564107766,
+      3.968288962076106,
+      3.8360900111740914
+     ]
+    }
+   },
+   "claim": "residual falls by about 4 when node spacing halves",
+   "doc": "TF1",
+   "file_value": "not in any R107 result file"
+  },
+  {
+   "claim": "BJS quadrature 5e-13, m != +-1 power <= 1e-19, 99% TT power at ell 8-20",
+   "doc": "RESULTS_KO",
+   "file_value": "not in any R107 result file"
+  }
+ ],
+ "git": {
+  "diff_head_sha256": "68355025a0522cde3a0af3a1995f8e67d41869fe07d780ffd110cf17e261df45",
+  "dirty_code_paths": [
+   " M htt/bass/background/tilted_bianchi_state.py",
+   " M htt/bass/transport/bjs_bianchi_vii_h.py",
+   " M htt/bass/transport/coupled_einstein_boltzmann.py",
+   " M htt/bass/transport/hybrid_los_transfer.py",
+   " M htt/bass/transport/test_bjs_bianchi_vii_h.py",
+   " M htt/bass/transport/test_hybrid_los_transfer.py",
+   " M scripts/r107_cloud/acquisition.py",
+   " M tests/r107_cloud/test_acquisition.py",
+   "?? htt/bass/background/test_compensating_tilt_root.py",
+   "?? htt/bass/transport/hybrid_los_parallel.py",
+   "?? htt/bass/transport/test_hybrid_los_parallel.py",
+   "?? htt/obsstat/catalogue_frame_registry.py",
+   "?? scripts/r108/__init__.py",
+   "?? scripts/r108/build_results.py",
+   "?? scripts/r108/cf4_2mpp_field.py",
+   "?? scripts/r108/cf4_acquire.py",
+   "?? scripts/r108/cf4_cf3_table3_overlap.py",
+   "?? scripts/r108/cf4_kband_contrast.py",
+   "?? scripts/r108/cf4_receipts.py",
+   "?? scripts/r108/commander_splits.py",
+   "?? scripts/r108/common.py",
+   "?? scripts/r108/f2_coupled_los.py",
+   "?? scripts/r108/frame_cf4_joint.py",
+   "?? scripts/r108/frame_lie_flux.py",
+   "?? scripts/r108/frame_registry_build.py",
+   "?? scripts/r108/frame_w1tf_joint.py",
+   "?? scripts/r108/gaia_acquire.py",
+   "?? scripts/r108/gaia_agn_split.py",
+   "?? scripts/r108/gaia_estimator.py",
+   "?? scripts/r108/gaia_frame_leakage.py",
+   "?? scripts/r108/gaia_scan_null.py",
+   "?? scripts/r108/gaia_scanlaw.py",
+   "?? scripts/r108/gaia_summary.py",
+   "?? scripts/r108/radio_cmdlog.py",
+   "?? scripts/r108/radio_p_of_c1.py",
+   "?? scripts/r108/radio_racs_dipole.py",
+   "?? scripts/r108/radio_racs_fetch.py",
+   "?? scripts/r108/radio_summary.py",
+   "?? scripts/r108/radio_theory_c1.py",
+   "?? scripts/r108/radio_v3_diag.py",
+   "?? scripts/r108/review_r107_claims.py",
+   "?? scripts/r108/s1_family_atlas.py",
+   "?? scripts/r108/s4_aggregate.py",
+   "?? scripts/r108/s4_bjs_comparator.py",
+   "?? scripts/r108/s4_cmdlog.py",
+   "?? scripts/r108/s5_photon_moments.py",
+   "?? scripts/r108/s6_b03_templates.py",
+   "?? scripts/r108/s7_los_performance.py",
+   "?? scripts/r108/s8_cmdlog.py",
+   "?? scripts/r108/s8_lowz_feasibility.py",
+   "?? scripts/r108/s8_lowz_tau.py",
+   "?? scripts/r108/s8_replay_compare.py",
+   "?? scripts/r108/s8_uvb_vo_probe.py",
+   "?? tests/obsstat/test_r108_cf4_2mpp.py",
+   "?? tests/obsstat/test_r108_cf4_acquire.py",
+   "?? tests/obsstat/test_r108_cf4_cf3_overlap.py",
+   "?? tests/obsstat/test_r108_cf4_kband.py",
+   "?? tests/obsstat/test_r108_frame_cf4_joint.py",
+   "?? tests/obsstat/test_r108_frame_lie_flux.py",
+   "?? tests/obsstat/test_r108_frame_registry.py",
+   "?? tests/obsstat/test_r108_gaia_acquire.py",
+   "?? tests/obsstat/test_r108_gaia_agn_split.py",
+   "?? tests/obsstat/test_r108_gaia_estimator.py",
+   "?? tests/obsstat/test_r108_gaia_frame_leakage.py",
+   "?? tests/obsstat/test_r108_gaia_scan_null.py",
+   "?? tests/obsstat/test_r108_gaia_scanlaw.py",
+   "?? tests/obsstat/test_r108_radio_p_of_c1.py",
+   "?? tests/obsstat/test_r108_radio_racs_dipole.py",
+   "?? tests/obsstat/test_r108_radio_theory_c1.py",
+   "?? tests/obsstat/test_r108_s4_rotation_fitter.py",
+   "?? tests/obsstat/test_r108_s6_kernel.py",
+   "?? tests/obsstat/test_r108_s8_lowz_tau.py"
+  ],
+  "dirty_code_sha256": {
+   "htt/bass/background/test_compensating_tilt_root.py": "cbdd64e0b7a536464a25c8fd7f759c2ddc4f94dfadb77ed0abf9647e338b0584",
+   "htt/bass/background/tilted_bianchi_state.py": "dd6bd75fb358b3c738d555414471066d14f40707ee43bd4afed683f07f7a7b2f",
+   "htt/bass/transport/bjs_bianchi_vii_h.py": "1b7e9c72ab1cb9f66bc9c2996c58e53b82bff572e4a27fefd42a15b609ddfd9e",
+   "htt/bass/transport/coupled_einstein_boltzmann.py": "b564041da20eb830a6099960909f7236a2dfae977842ebcb1d04629cbe25c56a",
+   "htt/bass/transport/hybrid_los_parallel.py": "85b40325ef1c0e2b8695bf846eb944e90deb0598f4dab3a8b60b6b17ae49d9f3",
+   "htt/bass/transport/hybrid_los_transfer.py": "96744df0f361d4c07aee3e30016450072d797df13c2bee57919c2a9cb66810db",
+   "htt/bass/transport/test_bjs_bianchi_vii_h.py": "b7709ab0bc3b7878f3b6778c00643038dd5aaedc27b377a27c99335633c119ac",
+   "htt/bass/transport/test_hybrid_los_parallel.py": "14a68cf9aba2e7e79d05771e99cc7637eaee6644af3c73eaf5b8a3ab69289bef",
+   "htt/bass/transport/test_hybrid_los_transfer.py": "42040c8514df07cdfb36eb79c494c9ccecedaea89c27baab1c2cdcbefd007505",
+   "htt/obsstat/catalogue_frame_registry.py": "b03189c7d3f4a700d8f70c7be90683a19575d9404dae701b215f9be998f5838f",
+   "scripts/r107_cloud/acquisition.py": "97037c43513c7c7973a6941781c26d3407da6cae1a31a1f2770ef6711ce833db",
+   "scripts/r108/__init__.py": "8d579afbf258026e1054383aed56826844a30771b57e9cb3eea11f72464079bc",
+   "scripts/r108/build_results.py": "8405bb08bb077549a7f8dc2c7d699ae82a67b211c90ff2e13f849135838ada2d",
+   "scripts/r108/cf4_2mpp_field.py": "5ccd79fa3428eea30a29c3a865907c6c8353d72e771b4e1cf7cb5a1b9b96e54e",
+   "scripts/r108/cf4_acquire.py": "d7510d7c6d27f796eb2898a3791cb2c00c1706244cc2fa339688bf4eba322112",
+   "scripts/r108/cf4_cf3_table3_overlap.py": "b1995fa1264504984384a3b5862efb772f5681d2168a11049ed0d586c72b06f5",
+   "scripts/r108/cf4_kband_contrast.py": "add6a0b565eeedcb5635564e1e3c7e7410b7e5aff616c00cc3748c0984183243",
+   "scripts/r108/cf4_receipts.py": "8cf03850863fc560dafcb62c0119b1a7043c9a3fd5d2948817c15d32544fe06e",
+   "scripts/r108/commander_splits.py": "01926d899d66e06d6831f47346c6449d5face457d72f4af56fe19489fad5643c",
+   "scripts/r108/common.py": "dded5b978a15680df0975cb2921e0931824c27cee7d508ea81721a1ceaaff41e",
+   "scripts/r108/f2_coupled_los.py": "0b60e9fcbb798493fd6aac322433439573ebd582491112f126bcc6ca9a4e14a4",
+   "scripts/r108/frame_cf4_joint.py": "d7da5b7226c28bc4f99381cf492fb90d77e5bad2d373868cab5e9a1c79227a28",
+   "scripts/r108/frame_lie_flux.py": "e8f5379988526cfe8d73e21020a7e353b98c109fd746a80c4555eaf2d37db27e",
+   "scripts/r108/frame_registry_build.py": "f86b32b1261c0e31a640a9c5583873f135d69877929979bc0fe391d46ec25e7d",
+   "scripts/r108/frame_w1tf_joint.py": "5899bc805f70096b521a14e11d830b8877f36209f25da2f7fb9dffd44523c274",
+   "scripts/r108/gaia_acquire.py": "b5ce4997fd7bd52a81bc451768c13a6f6de52cae7e7a5bab2b2aca1981eda6e0",
+   "scripts/r108/gaia_agn_split.py": "1a53b6d0217edc96317f22edae6df43269fcdc088cd9ebcd51a684be26f7f072",
+   "scripts/r108/gaia_estimator.py": "f32017b7c1444c5f8adf1a12b2196a98f1ecd0ca940a638ee57d3620c4def63c",
+   "scripts/r108/gaia_frame_leakage.py": "a9235d2f020561e68dd6c5ee40a300122ff3305b0d7d1b02df972521919ef58a",
+   "scripts/r108/gaia_scan_null.py": "9e39214f0bce136f8a9ff2bdf243184e48be943171379b8ff9d557bf43acd670",
+   "scripts/r108/gaia_scanlaw.py": "a10b2b83bcd028625870d6bc3439d91d2b69bb5a1e2f59123f04fe1feb699a1b",
+   "scripts/r108/gaia_summary.py": "bfa4c651d95c8b9b4ca461499394350693b4a5ac0fa20e56ef4d5d6b9db21561",
+   "scripts/r108/radio_cmdlog.py": "18d83a9d3421348ce149e02d47439b85fd91589be538ff777d87746e134fe0c2",
+   "scripts/r108/radio_p_of_c1.py": "fc2d6e89180c389a38cd8e7213a2fbd5ae6afcb575f5678dee4fb8d6ca4f815a",
+   "scripts/r108/radio_racs_dipole.py": "18f2f4088bb2a086b444d80100709bfb7b3fda65319e4493e41082015c911080",
+   "scripts/r108/radio_racs_fetch.py": "98acf036ae5bc6fbd56161584b992034e1e19cf63480d2aec0192deef8a392c7",
+   "scripts/r108/radio_summary.py": "b536ace96bfd351ba5e3f46cfb343271b827fb79e54901eebbc357ea5356984c",
+   "scripts/r108/radio_theory_c1.py": "72aeb7f1980dbc61801397ec07c06eee7c32d6f7208fc98f24a20264ed3dca6a",
+   "scripts/r108/radio_v3_diag.py": "bcbf74aeafbe2cfcab78c39a50378ad4e5216127ec9bbe1e6d9519c648771388",
+   "scripts/r108/review_r107_claims.py": "cdb61ed26c39dff78ca18cb491aa48b7789c92843c1a8b6e248241895621df97",
+   "scripts/r108/s1_family_atlas.py": "5d70606693bcac06653daa1a917252ce557d551919115aa5b38e1112905a9cbc",
+   "scripts/r108/s4_aggregate.py": "b193aa70662ab838c91336ae73288e82eff5e98302f5fcd873499f6307b71536",
+   "scripts/r108/s4_bjs_comparator.py": "c025bdfb98969db3288df2df143375c8deea22ea9c9fc9af0735a62206ddc31c",
+   "scripts/r108/s4_cmdlog.py": "eddbeca9f8d8c08f7f89e5450f8c3accede25f0ed9c28037042d8588de707b95",
+   "scripts/r108/s5_photon_moments.py": "b1eb89d9e6648fe7d2d0737b48f50b2443b2ef71b2380c27908d1b7558fa88fd",
+   "scripts/r108/s6_b03_templates.py": "8bf0aeeab51bbd2efc92af82aea1829bb4dbaa7a166dff00286bb953cbeef23c",
+   "scripts/r108/s7_los_performance.py": "8bede5caa6342a00c659ad5ebab59e2829fb0b5c93403374a33d4084bc80707c",
+   "scripts/r108/s8_cmdlog.py": "f664ae05bdf77f50c3e8b7242773a1d0b10ee5033778b68c6d97f4f51db1d83a",
+   "scripts/r108/s8_lowz_feasibility.py": "7182b07b01cfbc125984772215835579e73da7b4338bad1aeeb59353521d48da",
+   "scripts/r108/s8_lowz_tau.py": "724c95700c82f00513b4a3061d79a70ec6d2d211ca38732a3d446035a7e2a902",
+   "scripts/r108/s8_replay_compare.py": "a7ba16bfecf70c4f8dbd7e8858e98d387489b47c990754263e788f3d03084a5e",
+   "scripts/r108/s8_uvb_vo_probe.py": "d2c40c8dd4a44001b4826717d9a57f9e5a734fb164b34e20bb7ed0ea78a73c94",
+   "tests/obsstat/test_r108_cf4_2mpp.py": "630204a57bf14620ec3c4b326e86b570bd7995c8f5d06628acf5be21be96888e",
+   "tests/obsstat/test_r108_cf4_acquire.py": "6ef6695a5a9ef1be378619452848bda534dbba113fc9cde82c656673fc6ebdcd",
+   "tests/obsstat/test_r108_cf4_cf3_overlap.py": "dda19901ff32f248f7c3350e1f01ddf0f1f7f7b7f81db5791cc26ab0a12ec9ed",
+   "tests/obsstat/test_r108_cf4_kband.py": "cb16c8c6ccdc5c3013ec07b99647465394e2bbf74b2fea643f8360a86802fff4",
+   "tests/obsstat/test_r108_frame_cf4_joint.py": "a68866f4eda34d81971cd7def89c266c13d835e27f63696af398519674d9d57c",
+   "tests/obsstat/test_r108_frame_lie_flux.py": "fcee7a0d8ce7d804de912c9218cf31fe3bd0e8fc7c3d18e9301d0b7ba66f935a",
+   "tests/obsstat/test_r108_frame_registry.py": "53e97a88d39015dae363d5eddc3dade311bc49222c2be2dade98e6eacc84ed70",
+   "tests/obsstat/test_r108_gaia_acquire.py": "f563e84706747f6a68f0b7ee4633976b94e0a063d62106a3450e4a819ab1dfd6",
+   "tests/obsstat/test_r108_gaia_agn_split.py": "04243537c29fbcd89dff1c32ba28ec9253ae96c0a85886bd5c5a17f938b253db",
+   "tests/obsstat/test_r108_gaia_estimator.py": "d419f2cd59abd9592860339a781f53a8cf85d182e7f695decc5c3d6a73b09c1e",
+   "tests/obsstat/test_r108_gaia_frame_leakage.py": "071da8e3d2c95093b848d08a0a0edac525d9c0857abfc6231f57987f653d58cf",
+   "tests/obsstat/test_r108_gaia_scan_null.py": "3c0aadff2938e71dc35476ad74926141ea1f8f111ce89abdd644bc34e127b7b6",
+   "tests/obsstat/test_r108_gaia_scanlaw.py": "9bb22d639f9fda641827cfdb7b8acb6d6132188897f5a05f40317fa34a62cad8",
+   "tests/obsstat/test_r108_radio_p_of_c1.py": "59f37b7e0f2b18d45c9f8ecf4e6bf97a80b749883a3311d6fe72d481bfecc2c8",
+   "tests/obsstat/test_r108_radio_racs_dipole.py": "e20c96a0001b1b52940ab4fe95fceb7e31319d5e9e9da8d6be3ac485f6e8b9be",
+   "tests/obsstat/test_r108_radio_theory_c1.py": "80f9f5267d94e277968df665483be043b371f10b41f5afcac4b1990017589888",
+   "tests/obsstat/test_r108_s4_rotation_fitter.py": "dd17190ea3bce43253af44854ea68fd8498e4dbe79931b11a83845b758a75f22",
+   "tests/obsstat/test_r108_s6_kernel.py": "72da1c58314cc3056a3b9c9407a9f0f977fc20e0f33e622755b78184ef486fbc",
+   "tests/obsstat/test_r108_s8_lowz_tau.py": "057a0552612c555ebd1c646c49cce3c11a36e54541ce994487d257a1d78e8fbf",
+   "tests/r107_cloud/test_acquisition.py": "fde7b4acaf42a9973e6ae30a5c3559cb4881462498cfb3f4f1eafcdacc0820a6"
+  },
+  "head": "b79b9526b1817cc5946858f5891f7e7b567b87a2"
+ },
+ "schema": "htt.r108.r107_claim_check.1",
+ "source_file": "docs/research_program/observational_publication_20261015/R107_CLOUD_SOLVER_DATA_THEORY_20261124/RESULTS/HYBRID_LOS_CONVERGENCE.json",
+ "source_sha256": "ce263e2cb5dfb46b46ef10f9f536331d9d64d3d313ef48729831dcba66be82d8"
+}

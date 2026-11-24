@@ -1,0 +1,707 @@
+{
+  "schema": "htt.r108.s8.lowz_tau/1",
+  "script": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r108/s8_lowz_tau.py",
+    "sha256": "724c95700c82f00513b4a3061d79a70ec6d2d211ca38732a3d446035a7e2a902"
+  },
+  "module": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/bass/recombination/rei_lowz_continuation.py",
+    "sha256": "17a37bc1cbb6e4d4f1415c52037a700ce727ee29492278c70fc6e170c28252b6"
+  },
+  "inputs": {
+    "rerun_result": "/home/cosmosapjw/Downloads/htt_r108/s8/replay_rerun/REI_RESTART_REPLAY.json",
+    "rerun_result_sha256": "fdb40a83e89275f139fac8159bddd6dd9efb0cb159c67c53a76b6c32a69503c4",
+    "r107_test_constants": {
+      "N_H0": 1.898198450714027e-07,
+      "F_HE": 0.08130135170951498,
+      "BG": [
+        67.4,
+        0.315,
+        9.2e-05
+      ],
+      "locator": {
+        "N_H0": "htt/bass/recombination/test_rei_lowz_continuation.py:20",
+        "F_HE": "htt/bass/recombination/test_rei_lowz_continuation.py:21",
+        "BG": "htt/bass/recombination/test_rei_lowz_continuation.py:22"
+      }
+    },
+    "tf8_locator": "docs/research_program/observational_publication_20261015/R107_CLOUD_SOLVER_DATA_THEORY_20261124/THEORY_FOUNDATIONS.md:132-135",
+    "tf8_donor_x_e4": 1.08339435
+  },
+  "cosmology_from_solver_configuration": {
+    "source": {
+      "source": "git:56dc609ea9b801c88d3364aed3eee140b3a20d46:research/axbi_goal_20261014/scenario/SCENARIO_LOCK.json",
+      "sha256": "07aa11d2d3fd47d2ed95e9d9161f6205e4d9ba386c27ad43d2b298fcd86d1696"
+    },
+    "lock_values": {
+      "h0_km_s_mpc": 67.4,
+      "mpc_cm": 3.085677581491367e+24,
+      "omega_m": 0.315,
+      "omega_r": 9.2e-05,
+      "omega_lambda_formula": "1-0.315-0.000092",
+      "helium_mass_fraction": 0.2454,
+      "omega_b_formula": "0.0224/(0.674^2)"
+    },
+    "module_background": {
+      "h0_km_s_mpc": 67.4,
+      "omega_m": 0.315,
+      "omega_r": 9.2e-05,
+      "omega_l": 0.6849080000000001
+    },
+    "checks": {
+      "module_omega_l_equals_lock_formula": true,
+      "module_Mpc_equals_lock_mpc_cm": true,
+      "module_H0_per_s_bitwise_equals_lock_formula": false,
+      "module_H0_per_s_relative_minus_lock_formula": -2.220446049250313e-16,
+      "module_H0_per_s_formula": "h0_km_s_mpc * 1e3 / MPC_M (m based); lock: 67.4*1e5/mpc_cm (cm based)",
+      "r107_test_background_equals_lock": true
+    },
+    "driver_new_literals": {
+      "d7676": {
+        "h0_per_s": {
+          "file": "/home/cosmosapjw/Downloads/htt_r108/s8/replay_rerun/native/tree_d7676/rust/rei_microphysics/src/axbi_driver.rs",
+          "lines": [
+            202,
+            1091
+          ],
+          "text": "let h0 = 67.4 * 1e5 / 3.0856775814913673e24;"
+        },
+        "omega_r": {
+          "file": "/home/cosmosapjw/Downloads/htt_r108/s8/replay_rerun/native/tree_d7676/rust/rei_microphysics/src/axbi_driver.rs",
+          "lines": [
+            207,
+            224
+          ],
+          "text": "omega_r: 9.2e-5,"
+        },
+        "omega_m": {
+          "file": "/home/cosmosapjw/Downloads/htt_r108/s8/replay_rerun/native/tree_d7676/rust/rei_microphysics/src/axbi_driver.rs",
+          "lines": [
+            208,
+            223
+          ],
+          "text": "omega_m: 0.315,"
+        },
+        "omega_lambda": {
+          "file": "/home/cosmosapjw/Downloads/htt_r108/s8/replay_rerun/native/tree_d7676/rust/rei_microphysics/src/axbi_driver.rs",
+          "lines": [
+            210,
+            225
+          ],
+          "text": "omega_lambda: 1.0 - 0.315 - 9.2e-5,"
+        },
+        "f_he": {
+          "file": "/home/cosmosapjw/Downloads/htt_r108/s8/replay_rerun/native/tree_d7676/rust/rei_microphysics/src/axbi_driver.rs",
+          "lines": [
+            218
+          ],
+          "text": "let f_he = 0.2454 / (4.0 * (1.0 - 0.2454));"
+        }
+      },
+      "4de69": {
+        "h0_per_s": {
+          "file": "/home/cosmosapjw/Downloads/htt_r108/s8/replay_rerun/native/tree_4de69/rust/rei_microphysics/src/axbi_driver.rs",
+          "lines": [
+            204,
+            1093
+          ],
+          "text": "let h0 = 67.4 * 1e5 / 3.0856775814913673e24;"
+        },
+        "omega_r": {
+          "file": "/home/cosmosapjw/Downloads/htt_r108/s8/replay_rerun/native/tree_4de69/rust/rei_microphysics/src/axbi_driver.rs",
+          "lines": [
+            209,
+            226
+          ],
+          "text": "omega_r: 9.2e-5,"
+        },
+        "omega_m": {
+          "file": "/home/cosmosapjw/Downloads/htt_r108/s8/replay_rerun/native/tree_4de69/rust/rei_microphysics/src/axbi_driver.rs",
+          "lines": [
+            210,
+            225
+          ],
+          "text": "omega_m: 0.315,"
+        },
+        "omega_lambda": {
+          "file": "/home/cosmosapjw/Downloads/htt_r108/s8/replay_rerun/native/tree_4de69/rust/rei_microphysics/src/axbi_driver.rs",
+          "lines": [
+            212,
+            227
+          ],
+          "text": "omega_lambda: 1.0 - 0.315 - 9.2e-5,"
+        },
+        "f_he": {
+          "file": "/home/cosmosapjw/Downloads/htt_r108/s8/replay_rerun/native/tree_4de69/rust/rei_microphysics/src/axbi_driver.rs",
+          "lines": [
+            220
+          ],
+          "text": "let f_he = 0.2454 / (4.0 * (1.0 - 0.2454));"
+        }
+      }
+    },
+    "module_allows_solver_cosmology": "YES for the flat FLRW part (FlrwBackground(h0, omega_m, omega_r), omega_l = 1 - omega_m - omega_r as in the lock). NO for the shear term of the locked H law (H = hypot(H_FLRW, s)): FlrwBackground has no shear field; its effect is evaluated separately below (shear_term_sensitivity)."
+  },
+  "donor_band_recomputed": {
+    "by_z_HeII": {
+      "3.0": {
+        "tau_0_to_4": 0.022196130294236036,
+        "tf8_quoted": 0.0221961,
+        "recomputed_minus_quoted": 3.0294236036398914e-08,
+        "rounds_to_quoted_7_decimals": true
+      },
+      "3.5": {
+        "tau_0_to_4": 0.022402137360058406,
+        "tf8_quoted": 0.0224021,
+        "recomputed_minus_quoted": 3.7360058404573016e-08,
+        "rounds_to_quoted_7_decimals": true
+      },
+      "3.9": {
+        "tau_0_to_4": 0.022512385922865797,
+        "tf8_quoted": 0.0225124,
+        "recomputed_minus_quoted": -1.4077134201373465e-08,
+        "rounds_to_quoted_7_decimals": true
+      }
+    },
+    "band_min": 0.022196130294236036,
+    "band_max": 0.022512385922865797,
+    "all_round_to_tf8_quoted": true,
+    "dtau_dxe4_by_z_HeII": {
+      "3.0": 0.006570177856761589,
+      "3.5": 0.003969352856239919,
+      "3.9": 0.0025774723531299714
+    },
+    "constants": "R107 test N_H0, F_HE, BG (inputs.r107_test_constants)"
+  },
+  "cases": {
+    "ZERO": {
+      "q_ref": 0.0,
+      "checkpoint": "/home/cosmosapjw/Dropbox/bianchi/rei_bianchi/research/axbi_goal_20261014/runs/flrw/32d11e733155/ZERO_continuation_001/checkpoint.txt",
+      "checkpoint_sha256": "352eae297cbc239bed29de412e0ee1f72cbdf954069ed673abdad87dba5724a2",
+      "a_checkpoint": 0.2,
+      "x_HII": 0.9999973170987931,
+      "x_HeII": 0.9742081012374538,
+      "x_HeIII": 0.025784317574366333,
+      "n_h0_cm3_native": 1.898198450714027e-07,
+      "n_he0_cm3_native": 1.5432609985595753e-08,
+      "f_He_native": 0.08130135170951498,
+      "x_e4_from_checkpoint": 1.083394352319165,
+      "x_e4_equals_r106_inventory": true,
+      "x_e4_minus_tf8_donor": 2.3191648601539328e-09,
+      "n_h0_minus_r107_constant": 0.0,
+      "f_he_minus_r107_constant": 0.0,
+      "by_z_HeII": {
+        "3.0": {
+          "tau_0_to_4": 0.022196130309473358,
+          "inside_donor_band": true,
+          "minus_donor_same_z_HeII": 1.5237321820960048e-11,
+          "relative_to_donor_same_z_HeII": 6.864855350841026e-10,
+          "above_band_max_by": 0.0,
+          "below_band_min_by": 0.0,
+          "decomposition": {
+            "x_e4_term_exact": 1.5237321820960048e-11,
+            "x_e4_term_affine_prediction": 1.5237325610362955e-11,
+            "n_H0_term": 0.0,
+            "f_He_and_background_term": 0.0,
+            "sum_minus_total": 0.0
+          },
+          "shear_term_sensitivity": {
+            "tau_with_locked_H_hypot_extension": 0.022196130309473358,
+            "minus_flrw_module": 0.0,
+            "relative": 0.0,
+            "label": "EXTENSION_OUTSIDE_LOCKED_DOMAIN: SCENARIO_LOCK background.H = sqrt(H_flrw^2 + s^2) on [a_ref, a_end=0.2] only; evaluated at a > 0.2 for sensitivity, independent integrand (scipy quad epsrel 1e-12)"
+          }
+        },
+        "3.5": {
+          "tau_0_to_4": 0.022402137369263986,
+          "inside_donor_band": true,
+          "minus_donor_same_z_HeII": 9.20558074213318e-12,
+          "relative_to_donor_same_z_HeII": 4.109241835692501e-10,
+          "above_band_max_by": 0.0,
+          "below_band_min_by": 0.0,
+          "decomposition": {
+            "x_e4_term_exact": 9.20558074213318e-12,
+            "x_e4_term_affine_prediction": 9.205583661743265e-12,
+            "n_H0_term": 0.0,
+            "f_He_and_background_term": 0.0,
+            "sum_minus_total": 0.0
+          },
+          "shear_term_sensitivity": {
+            "tau_with_locked_H_hypot_extension": 0.022402137369263986,
+            "minus_flrw_module": 0.0,
+            "relative": 0.0,
+            "label": "EXTENSION_OUTSIDE_LOCKED_DOMAIN: SCENARIO_LOCK background.H = sqrt(H_flrw^2 + s^2) on [a_ref, a_end=0.2] only; evaluated at a > 0.2 for sensitivity, independent integrand (scipy quad epsrel 1e-12)"
+          }
+        },
+        "3.9": {
+          "tau_0_to_4": 0.02251238592884338,
+          "inside_donor_band": false,
+          "minus_donor_same_z_HeII": 5.977583011906873e-12,
+          "relative_to_donor_same_z_HeII": 2.655242692384263e-10,
+          "above_band_max_by": 5.977583011906873e-12,
+          "below_band_min_by": 0.0,
+          "decomposition": {
+            "x_e4_term_exact": 5.977583011906873e-12,
+            "x_e4_term_affine_prediction": 5.977583309397298e-12,
+            "n_H0_term": 0.0,
+            "f_He_and_background_term": 0.0,
+            "sum_minus_total": 0.0
+          },
+          "shear_term_sensitivity": {
+            "tau_with_locked_H_hypot_extension": 0.02251238592884338,
+            "minus_flrw_module": 0.0,
+            "relative": 0.0,
+            "label": "EXTENSION_OUTSIDE_LOCKED_DOMAIN: SCENARIO_LOCK background.H = sqrt(H_flrw^2 + s^2) on [a_ref, a_end=0.2] only; evaluated at a > 0.2 for sensitivity, independent integrand (scipy quad epsrel 1e-12)"
+          }
+        }
+      },
+      "r106_tanh_foreground_for_context": {
+        "H_and_first_He": 0.021127959231591706,
+        "with_HeII_to_HeIII": 0.022430454251735874
+      }
+    },
+    "SHEAR_HALF_PLUS": {
+      "q_ref": 0.005,
+      "checkpoint": "/home/cosmosapjw/Dropbox/bianchi/rei_bianchi/research/axbi_goal_20261014/runs/paired/32d11e733155/SHEAR_HALF_PLUS_continuation_001/checkpoint.txt",
+      "checkpoint_sha256": "3b3bac5c062126b05960da69f10424773704fcf105afb2140f4f565589574d36",
+      "a_checkpoint": 0.2,
+      "x_HII": 0.999997317098235,
+      "x_HeII": 0.9742081031950104,
+      "x_HeIII": 0.025784315615954703,
+      "n_h0_cm3_native": 1.898198450714027e-07,
+      "n_he0_cm3_native": 1.5432609985595753e-08,
+      "f_He_native": 0.08130135170951498,
+      "x_e4_from_checkpoint": 1.0833943521593157,
+      "x_e4_equals_r106_inventory": true,
+      "x_e4_minus_tf8_donor": 2.1593156152022175e-09,
+      "n_h0_minus_r107_constant": 0.0,
+      "f_he_minus_r107_constant": 0.0,
+      "by_z_HeII": {
+        "3.0": {
+          "tau_0_to_4": 0.022196130308423122,
+          "inside_donor_band": true,
+          "minus_donor_same_z_HeII": 1.418708553413417e-11,
+          "relative_to_donor_same_z_HeII": 6.391693840868129e-10,
+          "above_band_max_by": 0.0,
+          "below_band_min_by": 0.0,
+          "decomposition": {
+            "x_e4_term_exact": 1.418708553413417e-11,
+            "x_e4_term_affine_prediction": 1.4187087640761136e-11,
+            "n_H0_term": 0.0,
+            "f_He_and_background_term": 0.0,
+            "sum_minus_total": 0.0
+          },
+          "shear_term_sensitivity": {
+            "tau_with_locked_H_hypot_extension": 0.022196128950778708,
+            "minus_flrw_module": -1.3576444135576793e-09,
+            "relative": -6.116581563464507e-08,
+            "label": "EXTENSION_OUTSIDE_LOCKED_DOMAIN: SCENARIO_LOCK background.H = sqrt(H_flrw^2 + s^2) on [a_ref, a_end=0.2] only; evaluated at a > 0.2 for sensitivity, independent integrand (scipy quad epsrel 1e-12)"
+          }
+        },
+        "3.5": {
+          "tau_0_to_4": 0.02240213736862949,
+          "inside_donor_band": true,
+          "minus_donor_same_z_HeII": 8.57108481411295e-12,
+          "relative_to_donor_same_z_HeII": 3.826012839880377e-10,
+          "above_band_max_by": 0.0,
+          "below_band_min_by": 0.0,
+          "decomposition": {
+            "x_e4_term_exact": 8.57108481411295e-12,
+            "x_e4_term_affine_prediction": 8.57108560472638e-12,
+            "n_H0_term": 0.0,
+            "f_He_and_background_term": 0.0,
+            "sum_minus_total": 0.0
+          },
+          "shear_term_sensitivity": {
+            "tau_with_locked_H_hypot_extension": 0.022402135991026348,
+            "minus_flrw_module": -1.3776031426715463e-09,
+            "relative": -6.149427267398977e-08,
+            "label": "EXTENSION_OUTSIDE_LOCKED_DOMAIN: SCENARIO_LOCK background.H = sqrt(H_flrw^2 + s^2) on [a_ref, a_end=0.2] only; evaluated at a > 0.2 for sensitivity, independent integrand (scipy quad epsrel 1e-12)"
+          }
+        },
+        "3.9": {
+          "tau_0_to_4": 0.022512385928431373,
+          "inside_donor_band": false,
+          "minus_donor_same_z_HeII": 5.565575778021525e-12,
+          "relative_to_donor_same_z_HeII": 2.472229088112954e-10,
+          "above_band_max_by": 5.565575778021525e-12,
+          "below_band_min_by": 0.0,
+          "decomposition": {
+            "x_e4_term_exact": 5.565575778021525e-12,
+            "x_e4_term_affine_prediction": 5.565576299865551e-12,
+            "n_H0_term": 0.0,
+            "f_He_and_background_term": 0.0,
+            "sum_minus_total": 0.0
+          },
+          "shear_term_sensitivity": {
+            "tau_with_locked_H_hypot_extension": 0.02251238453797788,
+            "minus_flrw_module": -1.3904534919284561e-09,
+            "relative": -6.176393285706183e-08,
+            "label": "EXTENSION_OUTSIDE_LOCKED_DOMAIN: SCENARIO_LOCK background.H = sqrt(H_flrw^2 + s^2) on [a_ref, a_end=0.2] only; evaluated at a > 0.2 for sensitivity, independent integrand (scipy quad epsrel 1e-12)"
+          }
+        }
+      },
+      "r106_tanh_foreground_for_context": {
+        "H_and_first_He": 0.021127957912193383,
+        "with_HeII_to_HeIII": 0.022430452870437826
+      }
+    },
+    "SHEAR_HALF_MINUS": {
+      "q_ref": -0.005,
+      "checkpoint": "/home/cosmosapjw/Dropbox/bianchi/rei_bianchi/research/axbi_goal_20261014/runs/paired/32d11e733155/SHEAR_HALF_MINUS_continuation_001/checkpoint.txt",
+      "checkpoint_sha256": "7626bee34c885473387ea8bf329831ca6a4b0ccaf3e42e15bcd769a59dfcae8b",
+      "a_checkpoint": 0.2,
+      "x_HII": 0.999997317098235,
+      "x_HeII": 0.9742081031950096,
+      "x_HeIII": 0.025784315615955587,
+      "n_h0_cm3_native": 1.898198450714027e-07,
+      "n_he0_cm3_native": 1.5432609985595753e-08,
+      "f_He_native": 0.08130135170951498,
+      "x_e4_from_checkpoint": 1.083394352159316,
+      "x_e4_equals_r106_inventory": true,
+      "x_e4_minus_tf8_donor": 2.1593158372468224e-09,
+      "n_h0_minus_r107_constant": 0.0,
+      "f_he_minus_r107_constant": 0.0,
+      "by_z_HeII": {
+        "3.0": {
+          "tau_0_to_4": 0.022196130308423125,
+          "inside_donor_band": true,
+          "minus_donor_same_z_HeII": 1.4187089003581121e-11,
+          "relative_to_donor_same_z_HeII": 6.391693840868129e-10,
+          "above_band_max_by": 0.0,
+          "below_band_min_by": 0.0,
+          "decomposition": {
+            "x_e4_term_exact": 1.4187089003581121e-11,
+            "x_e4_term_affine_prediction": 1.4187089099633683e-11,
+            "n_H0_term": 0.0,
+            "f_He_and_background_term": 0.0,
+            "sum_minus_total": 0.0
+          },
+          "shear_term_sensitivity": {
+            "tau_with_locked_H_hypot_extension": 0.022196128950778708,
+            "minus_flrw_module": -1.3576444170271262e-09,
+            "relative": -6.116581574566737e-08,
+            "label": "EXTENSION_OUTSIDE_LOCKED_DOMAIN: SCENARIO_LOCK background.H = sqrt(H_flrw^2 + s^2) on [a_ref, a_end=0.2] only; evaluated at a > 0.2 for sensitivity, independent integrand (scipy quad epsrel 1e-12)"
+          }
+        },
+        "3.5": {
+          "tau_0_to_4": 0.02240213736862949,
+          "inside_donor_band": true,
+          "minus_donor_same_z_HeII": 8.57108481411295e-12,
+          "relative_to_donor_same_z_HeII": 3.826012839880377e-10,
+          "above_band_max_by": 0.0,
+          "below_band_min_by": 0.0,
+          "decomposition": {
+            "x_e4_term_exact": 8.57108481411295e-12,
+            "x_e4_term_affine_prediction": 8.571086486099767e-12,
+            "n_H0_term": 0.0,
+            "f_He_and_background_term": 0.0,
+            "sum_minus_total": 0.0
+          },
+          "shear_term_sensitivity": {
+            "tau_with_locked_H_hypot_extension": 0.022402135991026348,
+            "minus_flrw_module": -1.3776031426715463e-09,
+            "relative": -6.149427267398977e-08,
+            "label": "EXTENSION_OUTSIDE_LOCKED_DOMAIN: SCENARIO_LOCK background.H = sqrt(H_flrw^2 + s^2) on [a_ref, a_end=0.2] only; evaluated at a > 0.2 for sensitivity, independent integrand (scipy quad epsrel 1e-12)"
+          }
+        },
+        "3.9": {
+          "tau_0_to_4": 0.02251238592843137,
+          "inside_donor_band": false,
+          "minus_donor_same_z_HeII": 5.5655723085745734e-12,
+          "relative_to_donor_same_z_HeII": 2.4722268676669046e-10,
+          "above_band_max_by": 5.5655723085745734e-12,
+          "below_band_min_by": 0.0,
+          "decomposition": {
+            "x_e4_term_exact": 5.5655723085745734e-12,
+            "x_e4_term_affine_prediction": 5.565576872179382e-12,
+            "n_H0_term": 0.0,
+            "f_He_and_background_term": 0.0,
+            "sum_minus_total": 0.0
+          },
+          "shear_term_sensitivity": {
+            "tau_with_locked_H_hypot_extension": 0.02251238453797788,
+            "minus_flrw_module": -1.3904534884590092e-09,
+            "relative": -6.176393263501723e-08,
+            "label": "EXTENSION_OUTSIDE_LOCKED_DOMAIN: SCENARIO_LOCK background.H = sqrt(H_flrw^2 + s^2) on [a_ref, a_end=0.2] only; evaluated at a > 0.2 for sensitivity, independent integrand (scipy quad epsrel 1e-12)"
+          }
+        }
+      },
+      "r106_tanh_foreground_for_context": {
+        "H_and_first_He": 0.021127957912193383,
+        "with_HeII_to_HeIII": 0.022430452870437826
+      }
+    },
+    "SHEAR_PLUS": {
+      "q_ref": 0.01,
+      "checkpoint": "/home/cosmosapjw/Dropbox/bianchi/rei_ax08_plus_recovery_20261115/SHEAR_PLUS_continuation_002/checkpoint.txt",
+      "checkpoint_sha256": "671f1295428dc652304e9dd7f9d097e3330aaf272aba271fe99cd987acb521a5",
+      "a_checkpoint": 0.2,
+      "x_HII": 0.9999973170965606,
+      "x_HeII": 0.9742081090684189,
+      "x_HeIII": 0.025784309739995306,
+      "n_h0_cm3_native": 1.898198450714027e-07,
+      "n_he0_cm3_native": 1.5432609985595753e-08,
+      "f_He_native": 0.08130135170951498,
+      "x_e4_from_checkpoint": 1.0833943516797104,
+      "x_e4_equals_r106_inventory": true,
+      "x_e4_minus_tf8_donor": 1.6797103707943961e-09,
+      "n_h0_minus_r107_constant": 0.0,
+      "f_he_minus_r107_constant": 0.0,
+      "by_z_HeII": {
+        "3.0": {
+          "tau_0_to_4": 0.022196130305272038,
+          "inside_donor_band": true,
+          "minus_donor_same_z_HeII": 1.1036001973385723e-11,
+          "relative_to_donor_same_z_HeII": 4.972038336603646e-10,
+          "above_band_max_by": 0.0,
+          "below_band_min_by": 0.0,
+          "decomposition": {
+            "x_e4_term_exact": 1.1036001973385723e-11,
+            "x_e4_term_affine_prediction": 1.103599588396614e-11,
+            "n_H0_term": 0.0,
+            "f_He_and_background_term": 0.0,
+            "sum_minus_total": 0.0
+          },
+          "shear_term_sensitivity": {
+            "tau_with_locked_H_hypot_extension": 0.02219612487469681,
+            "minus_flrw_module": -5.430575229087298e-09,
+            "relative": -2.4466315318161236e-07,
+            "label": "EXTENSION_OUTSIDE_LOCKED_DOMAIN: SCENARIO_LOCK background.H = sqrt(H_flrw^2 + s^2) on [a_ref, a_end=0.2] only; evaluated at a > 0.2 for sensitivity, independent integrand (scipy quad epsrel 1e-12)"
+          }
+        },
+        "3.5": {
+          "tau_0_to_4": 0.022402137366725767,
+          "inside_donor_band": true,
+          "minus_donor_same_z_HeII": 6.667361107659531e-12,
+          "relative_to_donor_same_z_HeII": 2.976217050587593e-10,
+          "above_band_max_by": 0.0,
+          "below_band_min_by": 0.0,
+          "decomposition": {
+            "x_e4_term_exact": 6.667361107659531e-12,
+            "x_e4_term_affine_prediction": 6.667363157968549e-12,
+            "n_H0_term": 0.0,
+            "f_He_and_background_term": 0.0,
+            "sum_minus_total": 0.0
+          },
+          "shear_term_sensitivity": {
+            "tau_with_locked_H_hypot_extension": 0.02240213185631569,
+            "minus_flrw_module": -5.510410076153827e-09,
+            "relative": -2.459769791185451e-07,
+            "label": "EXTENSION_OUTSIDE_LOCKED_DOMAIN: SCENARIO_LOCK background.H = sqrt(H_flrw^2 + s^2) on [a_ref, a_end=0.2] only; evaluated at a > 0.2 for sensitivity, independent integrand (scipy quad epsrel 1e-12)"
+          }
+        },
+        "3.9": {
+          "tau_0_to_4": 0.022512385927195202,
+          "inside_donor_band": false,
+          "minus_donor_same_z_HeII": 4.329404890146549e-12,
+          "relative_to_donor_same_z_HeII": 1.9231216619175484e-10,
+          "above_band_max_by": 4.329404890146549e-12,
+          "below_band_min_by": 0.0,
+          "decomposition": {
+            "x_e4_term_exact": 4.329404890146549e-12,
+            "x_e4_term_affine_prediction": 4.329407041988249e-12,
+            "n_H0_term": 0.0,
+            "f_He_and_background_term": 0.0,
+            "sum_minus_total": 0.0
+          },
+          "shear_term_sensitivity": {
+            "tau_with_locked_H_hypot_extension": 0.022512380365383736,
+            "minus_flrw_module": -5.561811466242572e-09,
+            "relative": -2.4705562018390026e-07,
+            "label": "EXTENSION_OUTSIDE_LOCKED_DOMAIN: SCENARIO_LOCK background.H = sqrt(H_flrw^2 + s^2) on [a_ref, a_end=0.2] only; evaluated at a > 0.2 for sensitivity, independent integrand (scipy quad epsrel 1e-12)"
+          }
+        }
+      },
+      "r106_tanh_foreground_for_context": {
+        "H_and_first_He": 0.02112795395400081,
+        "with_HeII_to_HeIII": 0.022430448726546183
+      }
+    },
+    "SHEAR_MINUS": {
+      "q_ref": -0.01,
+      "checkpoint": "/home/cosmosapjw/Dropbox/bianchi/rei_bianchi/research/axbi_goal_20261014/runs/paired/32d11e733155/SHEAR_MINUS_continuation_001/checkpoint.txt",
+      "checkpoint_sha256": "d338724e4172b4db44c2fbb1be1fe960430119a9f2e71fc031b23135189863fe",
+      "a_checkpoint": 0.2,
+      "x_HII": 0.9999973170965605,
+      "x_HeII": 0.9742081090684215,
+      "x_HeIII": 0.025784309740003234,
+      "n_h0_cm3_native": 1.898198450714027e-07,
+      "n_he0_cm3_native": 1.5432609985595753e-08,
+      "f_He_native": 0.08130135170951498,
+      "x_e4_from_checkpoint": 1.083394351679712,
+      "x_e4_equals_r106_inventory": true,
+      "x_e4_minus_tf8_donor": 1.6797119251066306e-09,
+      "n_h0_minus_r107_constant": 0.0,
+      "f_he_minus_r107_constant": 0.0,
+      "by_z_HeII": {
+        "3.0": {
+          "tau_0_to_4": 0.022196130305272045,
+          "inside_donor_band": true,
+          "minus_donor_same_z_HeII": 1.1036008912279627e-11,
+          "relative_to_donor_same_z_HeII": 4.972042777495744e-10,
+          "above_band_max_by": 0.0,
+          "below_band_min_by": 0.0,
+          "decomposition": {
+            "x_e4_term_exact": 1.1036008912279627e-11,
+            "x_e4_term_affine_prediction": 1.1036006096073965e-11,
+            "n_H0_term": 0.0,
+            "f_He_and_background_term": 0.0,
+            "sum_minus_total": 0.0
+          },
+          "shear_term_sensitivity": {
+            "tau_with_locked_H_hypot_extension": 0.022196124874696823,
+            "minus_flrw_module": -5.430575222148404e-09,
+            "relative": -2.4466315284854545e-07,
+            "label": "EXTENSION_OUTSIDE_LOCKED_DOMAIN: SCENARIO_LOCK background.H = sqrt(H_flrw^2 + s^2) on [a_ref, a_end=0.2] only; evaluated at a > 0.2 for sensitivity, independent integrand (scipy quad epsrel 1e-12)"
+          }
+        },
+        "3.5": {
+          "tau_0_to_4": 0.02240213736672577,
+          "inside_donor_band": true,
+          "minus_donor_same_z_HeII": 6.667364577106483e-12,
+          "relative_to_donor_same_z_HeII": 2.976217050587593e-10,
+          "above_band_max_by": 0.0,
+          "below_band_min_by": 0.0,
+          "decomposition": {
+            "x_e4_term_exact": 6.667364577106483e-12,
+            "x_e4_term_affine_prediction": 6.667369327582257e-12,
+            "n_H0_term": 0.0,
+            "f_He_and_background_term": 0.0,
+            "sum_minus_total": 0.0
+          },
+          "shear_term_sensitivity": {
+            "tau_with_locked_H_hypot_extension": 0.022402131856315698,
+            "minus_flrw_module": -5.51041007268438e-09,
+            "relative": -2.459769790075228e-07,
+            "label": "EXTENSION_OUTSIDE_LOCKED_DOMAIN: SCENARIO_LOCK background.H = sqrt(H_flrw^2 + s^2) on [a_ref, a_end=0.2] only; evaluated at a > 0.2 for sensitivity, independent integrand (scipy quad epsrel 1e-12)"
+          }
+        },
+        "3.9": {
+          "tau_0_to_4": 0.02251238592719521,
+          "inside_donor_band": false,
+          "minus_donor_same_z_HeII": 4.329411829040453e-12,
+          "relative_to_donor_same_z_HeII": 1.9231238823635977e-10,
+          "above_band_max_by": 4.329411829040453e-12,
+          "below_band_min_by": 0.0,
+          "decomposition": {
+            "x_e4_term_exact": 4.329411829040453e-12,
+            "x_e4_term_affine_prediction": 4.329411048185061e-12,
+            "n_H0_term": 0.0,
+            "f_He_and_background_term": 0.0,
+            "sum_minus_total": 0.0
+          },
+          "shear_term_sensitivity": {
+            "tau_with_locked_H_hypot_extension": 0.02251238036538374,
+            "minus_flrw_module": -5.561811469712019e-09,
+            "relative": -2.4705562029492256e-07,
+            "label": "EXTENSION_OUTSIDE_LOCKED_DOMAIN: SCENARIO_LOCK background.H = sqrt(H_flrw^2 + s^2) on [a_ref, a_end=0.2] only; evaluated at a > 0.2 for sensitivity, independent integrand (scipy quad epsrel 1e-12)"
+          }
+        }
+      },
+      "r106_tanh_foreground_for_context": {
+        "H_and_first_He": 0.02112795395400081,
+        "with_HeII_to_HeIII": 0.022430448726546183
+      }
+    }
+  },
+  "summary": {
+    "tau_table_rows_cases_cols_z_HeII": {
+      "cases": [
+        "ZERO",
+        "SHEAR_HALF_PLUS",
+        "SHEAR_HALF_MINUS",
+        "SHEAR_PLUS",
+        "SHEAR_MINUS"
+      ],
+      "z_HeII": [
+        3.0,
+        3.5,
+        3.9
+      ],
+      "tau": [
+        [
+          0.022196130309473358,
+          0.022402137369263986,
+          0.02251238592884338
+        ],
+        [
+          0.022196130308423122,
+          0.02240213736862949,
+          0.022512385928431373
+        ],
+        [
+          0.022196130308423125,
+          0.02240213736862949,
+          0.02251238592843137
+        ],
+        [
+          0.022196130305272038,
+          0.022402137366725767,
+          0.022512385927195202
+        ],
+        [
+          0.022196130305272045,
+          0.02240213736672577,
+          0.02251238592719521
+        ]
+      ]
+    },
+    "max_abs_case_minus_donor_same_z_HeII": 1.5237321820960048e-11,
+    "max_case_to_case_spread_same_z_HeII": 4.201319847574325e-12,
+    "all_case_depths_inside_donor_band": false,
+    "n_case_depths_outside_band": 5
+  },
+  "units_check": {
+    "ZERO_case_z_HeII_3.5": {
+      "astropy_version": "8.0.2",
+      "constants_used": {
+        "c_m_s": 299792458.0,
+        "sigma_T_m2": 6.6524587321e-29,
+        "codata": "astropy.constants.codata2018",
+        "Mpc_m": 3.085677581491367e+22,
+        "H0_per_s": 2.184285241085502e-18
+      },
+      "module_constants": {
+        "C_LIGHT": 299792458.0,
+        "SIGMA_T": 6.6524587321e-29,
+        "MPC_M": 3.085677581491367e+22
+      },
+      "tau_module": 0.022402137369263986,
+      "tau_astropy_quad": 0.022402137369263986,
+      "tau_astropy_gauss_legendre_400": 0.022402137369264084,
+      "relative_astropy_quad_minus_module": 0.0,
+      "relative_astropy_gauss_legendre_minus_module": 4.440892098500626e-15,
+      "astropy_default_constants_sigma_T_m2": 6.6524587051e-29,
+      "astropy_default_sigma_T_reference": "CODATA 2022",
+      "codata2022_sigma_T_m2": 6.6524587051e-29,
+      "relative_tau_shift_if_codata2022_sigma_T": -4.05864974961645e-09
+    },
+    "TF8_donor_z_HeII_3.5": {
+      "astropy_version": "8.0.2",
+      "constants_used": {
+        "c_m_s": 299792458.0,
+        "sigma_T_m2": 6.6524587321e-29,
+        "codata": "astropy.constants.codata2018",
+        "Mpc_m": 3.085677581491367e+22,
+        "H0_per_s": 2.184285241085502e-18
+      },
+      "module_constants": {
+        "C_LIGHT": 299792458.0,
+        "SIGMA_T": 6.6524587321e-29,
+        "MPC_M": 3.085677581491367e+22
+      },
+      "tau_module": 0.022402137360058406,
+      "tau_astropy_quad": 0.022402137360058402,
+      "tau_astropy_gauss_legendre_400": 0.0224021373600585,
+      "relative_astropy_quad_minus_module": -1.1102230246251565e-16,
+      "relative_astropy_gauss_legendre_minus_module": 4.218847493575595e-15,
+      "astropy_default_constants_sigma_T_m2": 6.6524587051e-29,
+      "astropy_default_sigma_T_reference": "CODATA 2022",
+      "codata2022_sigma_T_m2": 6.6524587051e-29,
+      "relative_tau_shift_if_codata2022_sigma_T": -4.05864974961645e-09
+    }
+  },
+  "claim_class": "CONDITIONAL_CLOSURE: donor-matched continuation with declared HeII timing (sensitivity only); not an REI computation below z = 4; no family attribution, no likelihood",
+  "wall_s": 0.6409347057342529
+}

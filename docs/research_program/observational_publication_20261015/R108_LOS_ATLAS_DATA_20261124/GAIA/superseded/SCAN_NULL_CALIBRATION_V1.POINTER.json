@@ -1,0 +1,25 @@
+{
+ "schema": "htt.r108.superseded_pointer/1",
+ "status": "SUPERSEDED",
+ "superseded_file": "docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/superseded/SCAN_NULL_CALIBRATION_V1.json",
+ "superseded_sha256": "4569c21d8504a145ac5eb2f34cc312d9ab5539d0e18c589eb8d9107a1ee24f24",
+ "superseded_schema": "htt.r108.gaia_scan_null.calibration/1",
+ "original_path": "docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION_V1_SUPERSEDED.json",
+ "superseded_by": "docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/GAIA/SCAN_NULL_CALIBRATION.json",
+ "superseded_by_sha256": "95888422a46d03e1f3450b71a6d584fb50195608dddcae802921b4ecc49fd0aa",
+ "superseded_by_schema": "htt.r108.gaia_scan_null.calibration/2",
+ "reason": "Calibration v1 (schema calibration/1) used the noise-subtracted auto power of the CRF3 complement only; that estimator is biased upward by catalogue-error mis-scaling and single-source contamination. Superseded by calibration v2 (schema calibration/2: largest of complement auto, complement random-half cross and Quaia random-half cross power), which SCAN_NULL.json and every scan-null run use (calibration_sha256 95888422...). v1 was written by gaia_scan_null.py calibrate as SCAN_NULL_CALIBRATION.json and renamed by hand before v2 was written; R108 review GAIA-4.",
+ "evidence": [
+  {
+   "path": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_calibrate.log",
+   "sha256": "20cd1ef59e9a1941330fb9ec6854978a3dc7657bceb40e9bbaf64702e8d5a4a0"
+  },
+  {
+   "path": "/home/cosmosapjw/Downloads/htt_r108/logs/gaia_scan_calibrate_v2.log",
+   "sha256": "8498ffe643db467b30eeb22b7024f10a62e9d1f51ab271b0900a07fb411003b5"
+  }
+ ],
+ "recorded_at_utc": "2026-11-24T03:43:15+00:00",
+ "recorded_by": "scripts/r108/gaia_supersede.py (sha256 75d253087aec1d7c91a57bed185023cedf5c11615d1ef41e542308fdf2954560)",
+ "use": "do not read amplitudes from the superseded file; use superseded_by"
+}

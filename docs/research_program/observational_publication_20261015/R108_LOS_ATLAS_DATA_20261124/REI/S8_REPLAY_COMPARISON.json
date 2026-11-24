@@ -1,0 +1,1198 @@
+{
+  "schema": "htt.r108.s8.rei_replay_comparison/1",
+  "purpose": "R108 S8 acceptance 'restart replay identical as in R106': fresh rebuild + native replay of the five REI z=4 restart checkpoints at the current tree, compared with the original run and with the committed R106 result",
+  "script": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r108/s8_replay_compare.py",
+    "sha256": "a7ba16bfecf70c4f8dbd7e8858e98d387489b47c990754263e788f3d03084a5e"
+  },
+  "htt_base": {
+    "head": "b79b9526b1817cc5946858f5891f7e7b567b87a2",
+    "n_modified_tracked_paths": 18
+  },
+  "inputs": {
+    "rerun_result": "/home/cosmosapjw/Downloads/htt_r108/s8/replay_rerun/REI_RESTART_REPLAY.json",
+    "rerun_result_sha256": "fdb40a83e89275f139fac8159bddd6dd9efb0cb159c67c53a76b6c32a69503c4",
+    "r106_result": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/R106_RESEARCH_20261124/REI/REI_RESTART_REPLAY.json",
+    "r106_result_sha256": "b0029c27c9f6851c56089bda653ae3e8d44552688b82283f9b4962aef2cc1963",
+    "r106_native_cache": "/home/cosmosapjw/Downloads/htt_r106_analysis/rei"
+  },
+  "rerun": {
+    "native_outputs_mode": "NATIVE_RUN_IN_THIS_INVOCATION",
+    "replay_script_sha256": "c78b430710a5e6bb79129b09cd7ef548bb2f2f309727b1b09a4d09a2e6941a90",
+    "r106_script_sha256": "c78b430710a5e6bb79129b09cd7ef548bb2f2f309727b1b09a4d09a2e6941a90",
+    "replay_script_unchanged": true,
+    "invocation": {
+      "argv": [
+        ".venv/bin/python",
+        "-B",
+        "scripts/r106/rei_restart_replay.py",
+        "--out",
+        "/home/cosmosapjw/Downloads/htt_r108/s8/replay_rerun",
+        "--stages",
+        "build,record,replay,analyze",
+        "--workers",
+        "2"
+      ],
+      "python_executable": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "stages": [
+        "build",
+        "record",
+        "replay",
+        "analyze"
+      ]
+    },
+    "native_command_records": {
+      "build_d7676": {
+        "command": "cargo build --release --offline --locked -j 3 --manifest-path /home/cosmosapjw/Downloads/htt_r108/s8/replay_rerun/native/tree_d7676/rust/rei_microphysics/Cargo.toml --example rei_restart_replay",
+        "return_code": 0,
+        "wall_s": 6.22,
+        "maxrss_kB": 259224
+      },
+      "build_4de69": {
+        "command": "cargo build --release --offline --locked -j 3 --manifest-path /home/cosmosapjw/Downloads/htt_r108/s8/replay_rerun/native/tree_4de69/rust/rei_microphysics/Cargo.toml --example rei_restart_replay",
+        "return_code": 0,
+        "wall_s": 4.69,
+        "maxrss_kB": 262056
+      },
+      "replay_ZERO": {
+        "command": "/home/cosmosapjw/Downloads/htt_r108/s8/replay_rerun/native/target_d7676/release/examples/rei_restart_replay --config /home/cosmosapjw/Dropbox/bianchi/rei_bianchi/research/axbi_goal_20261014/runs/flrw/32d11e733155/ZERO_continuation_001/config.cfg --case ZERO --start /home/cosmosapjw/Dropbox/bianchi/rei_bianchi/research/axbi_goal_20261014/runs/flrw/32d11e733155/ZERO_continuation_001/checkpoints/00312120.txt --references /home/cosmosapjw/Dropbox/bianchi/rei_bianchi/research/axbi_goal_20261014/runs/flrw/32d11e733155/ZERO_continuation_001/checkpoints/00312180.txt,/home/cosmosapjw/Dropbox/bianchi/rei_bianchi/research/axbi_goal_20261014/runs/flrw/32d11e733155/ZERO_continuation_001/checkpoints/00312237.txt --terminal /home/cosmosapjw/Dropbox/bianchi/rei_bianchi/research/axbi_goal_20261014/runs/flrw/32d11e733155/ZERO_continuation_001/checkpoint.txt --caps 500000.0,1550054.0,20000000.0,15745.126871471 --out /home/cosmosapjw/Downloads/htt_r108/s8/replay_rerun/replay/ZERO",
+        "return_code": 0,
+        "wall_s": 4.72,
+        "maxrss_kB": 3520
+      },
+      "replay_SHEAR_HALF_PLUS": {
+        "command": "/home/cosmosapjw/Downloads/htt_r108/s8/replay_rerun/native/target_4de69/release/examples/rei_restart_replay --config /home/cosmosapjw/Dropbox/bianchi/rei_bianchi/research/axbi_goal_20261014/runs/paired/32d11e733155/SHEAR_HALF_PLUS_continuation_001/config.cfg --case SHEAR_HALF_PLUS --start /home/cosmosapjw/Dropbox/bianchi/rei_bianchi/research/axbi_goal_20261014/runs/paired/32d11e733155/SHEAR_HALF_PLUS_continuation_001/checkpoints/00312120.txt --references /home/cosmosapjw/Dropbox/bianchi/rei_bianchi/research/axbi_goal_20261014/runs/paired/32d11e733155/SHEAR_HALF_PLUS_continuation_001/checkpoints/00312180.txt,/home/cosmosapjw/Dropbox/bianchi/rei_bianchi/research/axbi_goal_20261014/runs/paired/32d11e733155/SHEAR_HALF_PLUS_continuation_001/checkpoints/00312237.txt --terminal /home/cosmosapjw/Dropbox/bianchi/rei_bianchi/research/axbi_goal_20261014/runs/paired/32d11e733155/SHEAR_HALF_PLUS_continuation_001/checkpoint.txt --caps 500000.0,1550054.0,20000000.0,17485.258274636 --out /home/cosmosapjw/Downloads/htt_r108/s8/replay_rerun/replay/SHEAR_HALF_PLUS",
+        "return_code": 0,
+        "wall_s": 5.66,
+        "maxrss_kB": 4284
+      },
+      "replay_SHEAR_HALF_MINUS": {
+        "command": "/home/cosmosapjw/Downloads/htt_r108/s8/replay_rerun/native/target_4de69/release/examples/rei_restart_replay --config /home/cosmosapjw/Dropbox/bianchi/rei_bianchi/research/axbi_goal_20261014/runs/paired/32d11e733155/SHEAR_HALF_MINUS_continuation_001/config.cfg --case SHEAR_HALF_MINUS --start /home/cosmosapjw/Dropbox/bianchi/rei_bianchi/research/axbi_goal_20261014/runs/paired/32d11e733155/SHEAR_HALF_MINUS_continuation_001/checkpoints/00312120.txt --references /home/cosmosapjw/Dropbox/bianchi/rei_bianchi/research/axbi_goal_20261014/runs/paired/32d11e733155/SHEAR_HALF_MINUS_continuation_001/checkpoints/00312180.txt,/home/cosmosapjw/Dropbox/bianchi/rei_bianchi/research/axbi_goal_20261014/runs/paired/32d11e733155/SHEAR_HALF_MINUS_continuation_001/checkpoints/00312237.txt --terminal /home/cosmosapjw/Dropbox/bianchi/rei_bianchi/research/axbi_goal_20261014/runs/paired/32d11e733155/SHEAR_HALF_MINUS_continuation_001/checkpoint.txt --caps 500000.0,1550054.0,20000000.0,17100.257425746 --out /home/cosmosapjw/Downloads/htt_r108/s8/replay_rerun/replay/SHEAR_HALF_MINUS",
+        "return_code": 0,
+        "wall_s": 6.18,
+        "maxrss_kB": 4360
+      },
+      "replay_SHEAR_PLUS": {
+        "command": "/home/cosmosapjw/Downloads/htt_r108/s8/replay_rerun/native/target_d7676/release/examples/rei_restart_replay --config /home/cosmosapjw/Dropbox/bianchi/rei_ax08_plus_recovery_20261115/SHEAR_PLUS_continuation_002/config.cfg --case SHEAR_PLUS --start /home/cosmosapjw/Dropbox/bianchi/rei_ax08_plus_recovery_20261115/SHEAR_PLUS_continuation_002/checkpoints/00312120.txt --references /home/cosmosapjw/Dropbox/bianchi/rei_ax08_plus_recovery_20261115/SHEAR_PLUS_continuation_002/checkpoints/00312180.txt,/home/cosmosapjw/Dropbox/bianchi/rei_ax08_plus_recovery_20261115/SHEAR_PLUS_continuation_002/checkpoints/00312237.txt --terminal /home/cosmosapjw/Dropbox/bianchi/rei_ax08_plus_recovery_20261115/SHEAR_PLUS_continuation_002/checkpoint.txt --caps 330480.0,1081494.0,8050500.0,10042.101283315 --out /home/cosmosapjw/Downloads/htt_r108/s8/replay_rerun/replay/SHEAR_PLUS",
+        "return_code": 0,
+        "wall_s": 6.67,
+        "maxrss_kB": 3996
+      },
+      "replay_SHEAR_MINUS": {
+        "command": "/home/cosmosapjw/Downloads/htt_r108/s8/replay_rerun/native/target_4de69/release/examples/rei_restart_replay --config /home/cosmosapjw/Dropbox/bianchi/rei_bianchi/research/axbi_goal_20261014/runs/paired/32d11e733155/SHEAR_MINUS_continuation_001/config.cfg --case SHEAR_MINUS --start /home/cosmosapjw/Dropbox/bianchi/rei_bianchi/research/axbi_goal_20261014/runs/paired/32d11e733155/SHEAR_MINUS_continuation_001/checkpoints/00312120.txt --references /home/cosmosapjw/Dropbox/bianchi/rei_bianchi/research/axbi_goal_20261014/runs/paired/32d11e733155/SHEAR_MINUS_continuation_001/checkpoints/00312180.txt,/home/cosmosapjw/Dropbox/bianchi/rei_bianchi/research/axbi_goal_20261014/runs/paired/32d11e733155/SHEAR_MINUS_continuation_001/checkpoints/00312237.txt --terminal /home/cosmosapjw/Dropbox/bianchi/rei_bianchi/research/axbi_goal_20261014/runs/paired/32d11e733155/SHEAR_MINUS_continuation_001/checkpoint.txt --caps 500000.0,1550054.0,20000000.0,17321.371473222 --out /home/cosmosapjw/Downloads/htt_r108/s8/replay_rerun/replay/SHEAR_MINUS",
+        "return_code": 0,
+        "wall_s": 5.91,
+        "maxrss_kB": 3588
+      }
+    },
+    "environment": {
+      "htt_base": {
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+        "head": "b79b9526b1817cc5946858f5891f7e7b567b87a2",
+        "dirty_tracked_files": true,
+        "n_modified_tracked_paths": 18
+      },
+      "rei_bianchi": {
+        "path": "/home/cosmosapjw/Dropbox/bianchi/rei_bianchi",
+        "head": "fef2baf960f57f37b838004fbb8a7d37b3824852"
+      },
+      "libraries": {
+        "numpy": "2.5.4",
+        "scipy": "1.18.1",
+        "pandas": "3.1.1"
+      },
+      "toolchain_now": {
+        "rustc_vV": "rustc 1.99.0 (b940084d7 2026-09-28)\nbinary: rustc\ncommit-hash: b940084d7eb6a299eb4bfeb8e34901bc051e7ac4\ncommit-date: 2026-09-28\nhost: x86_64-unknown-linux-gnu\nrelease: 1.99.0\nLLVM version: 23.1.1",
+        "cargo_V": "cargo 1.99.0 (5f94df478 2026-08-27)"
+      }
+    }
+  },
+  "build": {
+    "d7676": {
+      "compiled_source_identity_sha256": "d7676b9309ac9b084499bbf599e803baecd661c80765489be45839ef5a7cf185",
+      "identity_equal_r106": true,
+      "src_tree_sha256": "b31a549a8fa355da2b3696589ca0805d2ae0d1a4f22caefb7d5e12058e1afc7b",
+      "src_tree_equal_r106": true,
+      "binary_sha256": "2b4f5aeb2f35908138276ac36fca0526f8c023c0af1d810a21320ee6fb3d83bf",
+      "binary_equal_r106": true,
+      "replay_example_equal_r106": true,
+      "build_return_code": 0,
+      "build_wall_s": 6.22
+    },
+    "4de69": {
+      "compiled_source_identity_sha256": "4de69c1e68ebd395fe2d0b5580d901b9a82bde86cadbd11bdd07e5ad2042b4a1",
+      "identity_equal_r106": true,
+      "src_tree_sha256": "a654318ffd5b2c52ebcca6af3ffeb40abe7118b544e3a830fd46aedd4416cefd",
+      "src_tree_equal_r106": true,
+      "binary_sha256": "4b2571094731f9e58eee955b99d85f15059acdddc052c5bb42bac93999cebffa",
+      "binary_equal_r106": true,
+      "replay_example_equal_r106": true,
+      "build_return_code": 0,
+      "build_wall_s": 4.69
+    }
+  },
+  "cases": {
+    "ZERO": {
+      "q_ref": 0.0,
+      "restart_checkpoint_sha256": "352eae297cbc239bed29de412e0ee1f72cbdf954069ed673abdad87dba5724a2",
+      "restart_checkpoint_sha256_equal_r106": true,
+      "window": "117 accepted steps, zbar 4.0072954801941 -> 4.0, regime CONSTANT_STEP_NO_REJECTION_ENDPOINT_CLIPPED_FINAL_STEP, rejections in window 0",
+      "replay_identical_to_original_run": true,
+      "checkpoint_text_bytewise_identical": {
+        "continuous_00312180": true,
+        "continuous_00312237": true,
+        "restart_00312237_from_00312180": true
+      },
+      "last_two_output_intervals": {
+        "continuous_312120_to_312180_vs_original": {
+          "n_fields": 30,
+          "fields_with_nonzero_difference": [],
+          "all_zero": true
+        },
+        "continuous_312180_to_312237_vs_original": {
+          "n_fields": 30,
+          "fields_with_nonzero_difference": [],
+          "all_zero": true
+        },
+        "restart_312180_to_312237_vs_original": {
+          "n_fields": 30,
+          "fields_with_nonzero_difference": [],
+          "all_zero": true
+        }
+      },
+      "output_rows_all_bytewise_identical": true,
+      "headline_residual": {
+        "n_fields": 30,
+        "max_abs_difference_any_field": 0.0,
+        "all_bitwise_equal": true,
+        "unequal_fields": []
+      },
+      "restart_state_values": {
+        "x_e_per_H_at_restart": 1.083394352319165,
+        "x_HII": 0.9999973170987931,
+        "x_HeII": 0.9742081012374538,
+        "x_HeIII": 0.025784317574366333,
+        "temperature_K_native_eos": 7900.621365666492,
+        "time_s_since_mean_z20": 4.2794891441558e+16,
+        "photon_n_per_H": 2.2518080058259464,
+        "photon_u_eV_per_H": 44.804316297257444
+      },
+      "restart_inventory_vs_r106_exact": {
+        "charge": {
+          "n_leaves_compared": 18,
+          "n_unequal": 0,
+          "unequal": [],
+          "leaves_only_in_new": [],
+          "leaves_only_in_r106": [],
+          "max_abs_numeric_difference": 0.0,
+          "identical": true
+        },
+        "temperature": {
+          "n_leaves_compared": 6,
+          "n_unequal": 0,
+          "unequal": [],
+          "leaves_only_in_new": [],
+          "leaves_only_in_r106": [],
+          "max_abs_numeric_difference": 0.0,
+          "identical": true
+        },
+        "proper_time": {
+          "n_leaves_compared": 8,
+          "n_unequal": 0,
+          "unequal": [],
+          "leaves_only_in_new": [],
+          "leaves_only_in_r106": [],
+          "max_abs_numeric_difference": 0.0,
+          "identical": true
+        },
+        "photons": {
+          "n_leaves_compared": 29,
+          "n_unequal": 0,
+          "unequal": [],
+          "leaves_only_in_new": [],
+          "leaves_only_in_r106": [],
+          "max_abs_numeric_difference": 0.0,
+          "identical": true
+        },
+        "expansion": {
+          "n_leaves_compared": 9,
+          "n_unequal": 0,
+          "unequal": [],
+          "leaves_only_in_new": [],
+          "leaves_only_in_r106": [],
+          "max_abs_numeric_difference": 0.0,
+          "identical": true
+        }
+      },
+      "replay_reports_vs_r106_exact": {
+        "identical": true,
+        "n_leaves_compared": 435,
+        "n_unequal": 0,
+        "unequal": []
+      },
+      "derived_blocks_vs_r106_exact": {
+        "clock_H_consistency_and_quadrature": {
+          "identical": true,
+          "n_leaves_compared": 55,
+          "n_unequal": 0,
+          "unequal": [],
+          "max_abs_numeric_difference": 0.0
+        },
+        "foreground_sensitivity_z_0_to_4": {
+          "identical": true,
+          "n_leaves_compared": 36,
+          "n_unequal": 0,
+          "unequal": [],
+          "max_abs_numeric_difference": 0.0
+        }
+      },
+      "provenance_vs_r106_exact": {
+        "identical": true,
+        "n_leaves_compared": 249,
+        "n_unequal": 0,
+        "unequal": []
+      },
+      "native_replay_files_vs_r106_cache": {
+        "files": {
+          "continuous_00312180.txt": {
+            "sha256_new": "e8b0acb957ed7c5da82c83d99c4015fedd7095e8c0e66876f234499017bf5787",
+            "bytewise_identical_to_r106": true
+          },
+          "continuous_00312237.txt": {
+            "sha256_new": "6ac3c57af86d0061f1b49b1f9867379bae51a8e3b9f3186c4be94fbd0910545c",
+            "bytewise_identical_to_r106": true
+          },
+          "continuous_abundances.csv": {
+            "sha256_new": "82ea15bd5b12da4f990f35214b06eae8899b137e9294f3d1b594e159d562bef1",
+            "bytewise_identical_to_r106": true
+          },
+          "continuous_feedback.csv": {
+            "sha256_new": "5171aa872a22595850078b6ffe18384482dcc5ba1ab7daf0ed66957657ebf918",
+            "bytewise_identical_to_r106": true
+          },
+          "continuous_history.csv": {
+            "sha256_new": "bdd6d788644c76633119d81ec96ffe8c84cb4f266504e91fe8259b2b5dbf83ea",
+            "bytewise_identical_to_r106": true
+          },
+          "continuous_ledgers.csv": {
+            "sha256_new": "14c0eb85d1eb481cf2e44dcc05f24f49159a47052ff4240df6960176884276c3",
+            "bytewise_identical_to_r106": true
+          },
+          "continuous_spectra.csv": {
+            "sha256_new": "05133646a660c0ee6f31cdc48dfc8f745a3ef5a800c7d69ed7784dc2d0b9c3b5",
+            "bytewise_identical_to_r106": true
+          },
+          "replay.json": {
+            "compared": "all fields except wall-clock fields",
+            "identical": true,
+            "n_leaves_compared": 3205,
+            "n_unequal": 0,
+            "unequal": []
+          },
+          "restart_00312237_from_00312180.txt": {
+            "sha256_new": "6ac3c57af86d0061f1b49b1f9867379bae51a8e3b9f3186c4be94fbd0910545c",
+            "bytewise_identical_to_r106": true
+          },
+          "restart_from_00312180_abundances.csv": {
+            "sha256_new": "caca6cd419063f7eec21d92d8282e6911b27f502f2bcbdc611c2078caa8babee",
+            "bytewise_identical_to_r106": true
+          },
+          "restart_from_00312180_feedback.csv": {
+            "sha256_new": "3b038b529d56ded21db9b3677f98fe070ab56db4925a53f96503040835389f53",
+            "bytewise_identical_to_r106": true
+          },
+          "restart_from_00312180_history.csv": {
+            "sha256_new": "656f731ae089be79ceae91af71fee189193bf9fc3910e1aa2c8fda92f07c55c2",
+            "bytewise_identical_to_r106": true
+          },
+          "restart_from_00312180_ledgers.csv": {
+            "sha256_new": "fe390415f6aef2edfb6d7ab76088d8a1401b18551557f35db016786cd6de726f",
+            "bytewise_identical_to_r106": true
+          },
+          "restart_from_00312180_spectra.csv": {
+            "sha256_new": "31772cfc82ea73d15263b0ffb6bf2457e64ab8e16fae8e0afc8abf7d9d28f137",
+            "bytewise_identical_to_r106": true
+          },
+          "terminal_abundances.csv": {
+            "sha256_new": "fea1668f123acc7fdc9ce566f6d5baf9943767540dcbd999464dd427c31f8dd8",
+            "bytewise_identical_to_r106": true
+          },
+          "terminal_feedback.csv": {
+            "sha256_new": "81efb0e18c19087f7fd5516a51652e97151969d20373b91689a314da808ee1f0",
+            "bytewise_identical_to_r106": true
+          },
+          "terminal_history.csv": {
+            "sha256_new": "6826f453291eefde321871e181809eefe46787ec51ab4e6ec5d5be321925614d",
+            "bytewise_identical_to_r106": true
+          },
+          "terminal_ledgers.csv": {
+            "sha256_new": "bfc42df3a3cb120b469d819d3804f468bc33e55a4dccb9b1c5e66dc560c4ab05",
+            "bytewise_identical_to_r106": true
+          },
+          "terminal_spectra.csv": {
+            "sha256_new": "03096ca74d2c20c31ec7251ce6f7322885a631685051d46dc02a69b044d5fd81",
+            "bytewise_identical_to_r106": true
+          }
+        },
+        "all_identical": true,
+        "n_files": 19
+      },
+      "identical_to_r106": true,
+      "replay_wall_s": {
+        "continuous_312120_to_312237": 3.064981192,
+        "restart_312180_to_312237": 1.624927274
+      }
+    },
+    "SHEAR_HALF_PLUS": {
+      "q_ref": 0.005,
+      "restart_checkpoint_sha256": "3b3bac5c062126b05960da69f10424773704fcf105afb2140f4f565589574d36",
+      "restart_checkpoint_sha256_equal_r106": true,
+      "window": "117 accepted steps, zbar 4.0072954801941 -> 4.0, regime CONSTANT_STEP_NO_REJECTION_ENDPOINT_CLIPPED_FINAL_STEP, rejections in window 0",
+      "replay_identical_to_original_run": true,
+      "checkpoint_text_bytewise_identical": {
+        "continuous_00312180": true,
+        "continuous_00312237": true,
+        "restart_00312237_from_00312180": true
+      },
+      "last_two_output_intervals": {
+        "continuous_312120_to_312180_vs_original": {
+          "n_fields": 30,
+          "fields_with_nonzero_difference": [],
+          "all_zero": true
+        },
+        "continuous_312180_to_312237_vs_original": {
+          "n_fields": 30,
+          "fields_with_nonzero_difference": [],
+          "all_zero": true
+        },
+        "restart_312180_to_312237_vs_original": {
+          "n_fields": 30,
+          "fields_with_nonzero_difference": [],
+          "all_zero": true
+        }
+      },
+      "output_rows_all_bytewise_identical": true,
+      "headline_residual": {
+        "n_fields": 30,
+        "max_abs_difference_any_field": 0.0,
+        "all_bitwise_equal": true,
+        "unequal_fields": []
+      },
+      "restart_state_values": {
+        "x_e_per_H_at_restart": 1.0833943521593157,
+        "x_HII": 0.999997317098235,
+        "x_HeII": 0.9742081031950104,
+        "x_HeIII": 0.025784315615954703,
+        "temperature_K_native_eos": 7900.623351182352,
+        "time_s_since_mean_z20": 4.279482918209246e+16,
+        "photon_n_per_H": 2.251807199242161,
+        "photon_u_eV_per_H": 44.80430097613642
+      },
+      "restart_inventory_vs_r106_exact": {
+        "charge": {
+          "n_leaves_compared": 18,
+          "n_unequal": 0,
+          "unequal": [],
+          "leaves_only_in_new": [],
+          "leaves_only_in_r106": [],
+          "max_abs_numeric_difference": 0.0,
+          "identical": true
+        },
+        "temperature": {
+          "n_leaves_compared": 6,
+          "n_unequal": 0,
+          "unequal": [],
+          "leaves_only_in_new": [],
+          "leaves_only_in_r106": [],
+          "max_abs_numeric_difference": 0.0,
+          "identical": true
+        },
+        "proper_time": {
+          "n_leaves_compared": 8,
+          "n_unequal": 0,
+          "unequal": [],
+          "leaves_only_in_new": [],
+          "leaves_only_in_r106": [],
+          "max_abs_numeric_difference": 0.0,
+          "identical": true
+        },
+        "photons": {
+          "n_leaves_compared": 29,
+          "n_unequal": 0,
+          "unequal": [],
+          "leaves_only_in_new": [],
+          "leaves_only_in_r106": [],
+          "max_abs_numeric_difference": 0.0,
+          "identical": true
+        },
+        "expansion": {
+          "n_leaves_compared": 9,
+          "n_unequal": 0,
+          "unequal": [],
+          "leaves_only_in_new": [],
+          "leaves_only_in_r106": [],
+          "max_abs_numeric_difference": 0.0,
+          "identical": true
+        }
+      },
+      "replay_reports_vs_r106_exact": {
+        "identical": true,
+        "n_leaves_compared": 435,
+        "n_unequal": 0,
+        "unequal": []
+      },
+      "derived_blocks_vs_r106_exact": {
+        "clock_H_consistency_and_quadrature": {
+          "identical": true,
+          "n_leaves_compared": 55,
+          "n_unequal": 0,
+          "unequal": [],
+          "max_abs_numeric_difference": 0.0
+        },
+        "foreground_sensitivity_z_0_to_4": {
+          "identical": true,
+          "n_leaves_compared": 36,
+          "n_unequal": 0,
+          "unequal": [],
+          "max_abs_numeric_difference": 0.0
+        }
+      },
+      "provenance_vs_r106_exact": {
+        "identical": true,
+        "n_leaves_compared": 125,
+        "n_unequal": 0,
+        "unequal": []
+      },
+      "native_replay_files_vs_r106_cache": {
+        "files": {
+          "continuous_00312180.txt": {
+            "sha256_new": "0ff5525558493a083775342a2b4a4bbf55d4ef0b8680af20dbb11a51b29f6112",
+            "bytewise_identical_to_r106": true
+          },
+          "continuous_00312237.txt": {
+            "sha256_new": "ca4f23bb865dfb521caa5a304ab95228ebd25dec626fc702d6338ca0f01dcc93",
+            "bytewise_identical_to_r106": true
+          },
+          "continuous_abundances.csv": {
+            "sha256_new": "53f5fa1376180db706bc9ffe5407c243a0ed09087d207b905aa165350d668626",
+            "bytewise_identical_to_r106": true
+          },
+          "continuous_feedback.csv": {
+            "sha256_new": "63f147fa117bcf199121988c87966106e44e25149378d81273556be9f941e628",
+            "bytewise_identical_to_r106": true
+          },
+          "continuous_history.csv": {
+            "sha256_new": "03c01b75dad0d2f1cfe94bcf4f1ff3e4f6c341dfb7adba7fa8c4194ce1fb896c",
+            "bytewise_identical_to_r106": true
+          },
+          "continuous_ledgers.csv": {
+            "sha256_new": "4cddf82c56c000e0d8f3244bd4551d85669bc2e962f5125b49edc9d0325d910a",
+            "bytewise_identical_to_r106": true
+          },
+          "continuous_spectra.csv": {
+            "sha256_new": "cbfcd11a2d76d52b766ce0944aea72a37dc5df7c320787e4680b498b850302bb",
+            "bytewise_identical_to_r106": true
+          },
+          "replay.json": {
+            "compared": "all fields except wall-clock fields",
+            "identical": true,
+            "n_leaves_compared": 3205,
+            "n_unequal": 0,
+            "unequal": []
+          },
+          "restart_00312237_from_00312180.txt": {
+            "sha256_new": "ca4f23bb865dfb521caa5a304ab95228ebd25dec626fc702d6338ca0f01dcc93",
+            "bytewise_identical_to_r106": true
+          },
+          "restart_from_00312180_abundances.csv": {
+            "sha256_new": "5c06aa03d9e0f0c25190fff47b318323b92b0e30747af838f9b0e234a55bc7ee",
+            "bytewise_identical_to_r106": true
+          },
+          "restart_from_00312180_feedback.csv": {
+            "sha256_new": "2b0d23c3473a2fe2b75017ea8c7a1500d89e10de08ab218c04c01904cbd21673",
+            "bytewise_identical_to_r106": true
+          },
+          "restart_from_00312180_history.csv": {
+            "sha256_new": "01b1efd356210a54619a534608db82168f256c3a920f78a9d8b8d3b52694811e",
+            "bytewise_identical_to_r106": true
+          },
+          "restart_from_00312180_ledgers.csv": {
+            "sha256_new": "149a191c82325a3abac7a93bae5ea5951e3f26d08cba263ca13a848f9bd69ddb",
+            "bytewise_identical_to_r106": true
+          },
+          "restart_from_00312180_spectra.csv": {
+            "sha256_new": "40f1c77b7c18c6b28679dd7a683e6d895f559683809b094fefa012228b3d08eb",
+            "bytewise_identical_to_r106": true
+          },
+          "terminal_abundances.csv": {
+            "sha256_new": "a9f2067b46aaa2aa212b21221078064a18007d3ab98c60c1f62561179412570f",
+            "bytewise_identical_to_r106": true
+          },
+          "terminal_feedback.csv": {
+            "sha256_new": "de3e5159a4363ae72a9b862d4d84fe671280a2271a299a84b8aa257cd11f8f8a",
+            "bytewise_identical_to_r106": true
+          },
+          "terminal_history.csv": {
+            "sha256_new": "26a7b62866fa49bb2cd917d1d5f4c838ed33d0ebcd836202ee062926691c7fe6",
+            "bytewise_identical_to_r106": true
+          },
+          "terminal_ledgers.csv": {
+            "sha256_new": "532738d23daab79f4845c4b91ab30bcac9638d6ab56d6564387c382bd4823b7b",
+            "bytewise_identical_to_r106": true
+          },
+          "terminal_spectra.csv": {
+            "sha256_new": "1de85c5721fbaf0645084bca497ff02f3c3f350b28aecd9a6fb00ac5cb7eb6ad",
+            "bytewise_identical_to_r106": true
+          }
+        },
+        "all_identical": true,
+        "n_files": 19
+      },
+      "identical_to_r106": true,
+      "replay_wall_s": {
+        "continuous_312120_to_312237": 3.6256322279999997,
+        "restart_312180_to_312237": 1.989328456
+      }
+    },
+    "SHEAR_HALF_MINUS": {
+      "q_ref": -0.005,
+      "restart_checkpoint_sha256": "7626bee34c885473387ea8bf329831ca6a4b0ccaf3e42e15bcd769a59dfcae8b",
+      "restart_checkpoint_sha256_equal_r106": true,
+      "window": "117 accepted steps, zbar 4.0072954801941 -> 4.0, regime CONSTANT_STEP_NO_REJECTION_ENDPOINT_CLIPPED_FINAL_STEP, rejections in window 0",
+      "replay_identical_to_original_run": true,
+      "checkpoint_text_bytewise_identical": {
+        "continuous_00312180": true,
+        "continuous_00312237": true,
+        "restart_00312237_from_00312180": true
+      },
+      "last_two_output_intervals": {
+        "continuous_312120_to_312180_vs_original": {
+          "n_fields": 30,
+          "fields_with_nonzero_difference": [],
+          "all_zero": true
+        },
+        "continuous_312180_to_312237_vs_original": {
+          "n_fields": 30,
+          "fields_with_nonzero_difference": [],
+          "all_zero": true
+        },
+        "restart_312180_to_312237_vs_original": {
+          "n_fields": 30,
+          "fields_with_nonzero_difference": [],
+          "all_zero": true
+        }
+      },
+      "output_rows_all_bytewise_identical": true,
+      "headline_residual": {
+        "n_fields": 30,
+        "max_abs_difference_any_field": 0.0,
+        "all_bitwise_equal": true,
+        "unequal_fields": []
+      },
+      "restart_state_values": {
+        "x_e_per_H_at_restart": 1.083394352159316,
+        "x_HII": 0.999997317098235,
+        "x_HeII": 0.9742081031950096,
+        "x_HeIII": 0.025784315615955587,
+        "temperature_K_native_eos": 7900.623351185612,
+        "time_s_since_mean_z20": 4.279482918209246e+16,
+        "photon_n_per_H": 2.2518071992442525,
+        "photon_u_eV_per_H": 44.804300976277325
+      },
+      "restart_inventory_vs_r106_exact": {
+        "charge": {
+          "n_leaves_compared": 18,
+          "n_unequal": 0,
+          "unequal": [],
+          "leaves_only_in_new": [],
+          "leaves_only_in_r106": [],
+          "max_abs_numeric_difference": 0.0,
+          "identical": true
+        },
+        "temperature": {
+          "n_leaves_compared": 6,
+          "n_unequal": 0,
+          "unequal": [],
+          "leaves_only_in_new": [],
+          "leaves_only_in_r106": [],
+          "max_abs_numeric_difference": 0.0,
+          "identical": true
+        },
+        "proper_time": {
+          "n_leaves_compared": 8,
+          "n_unequal": 0,
+          "unequal": [],
+          "leaves_only_in_new": [],
+          "leaves_only_in_r106": [],
+          "max_abs_numeric_difference": 0.0,
+          "identical": true
+        },
+        "photons": {
+          "n_leaves_compared": 29,
+          "n_unequal": 0,
+          "unequal": [],
+          "leaves_only_in_new": [],
+          "leaves_only_in_r106": [],
+          "max_abs_numeric_difference": 0.0,
+          "identical": true
+        },
+        "expansion": {
+          "n_leaves_compared": 9,
+          "n_unequal": 0,
+          "unequal": [],
+          "leaves_only_in_new": [],
+          "leaves_only_in_r106": [],
+          "max_abs_numeric_difference": 0.0,
+          "identical": true
+        }
+      },
+      "replay_reports_vs_r106_exact": {
+        "identical": true,
+        "n_leaves_compared": 435,
+        "n_unequal": 0,
+        "unequal": []
+      },
+      "derived_blocks_vs_r106_exact": {
+        "clock_H_consistency_and_quadrature": {
+          "identical": true,
+          "n_leaves_compared": 55,
+          "n_unequal": 0,
+          "unequal": [],
+          "max_abs_numeric_difference": 0.0
+        },
+        "foreground_sensitivity_z_0_to_4": {
+          "identical": true,
+          "n_leaves_compared": 36,
+          "n_unequal": 0,
+          "unequal": [],
+          "max_abs_numeric_difference": 0.0
+        }
+      },
+      "provenance_vs_r106_exact": {
+        "identical": true,
+        "n_leaves_compared": 104,
+        "n_unequal": 0,
+        "unequal": []
+      },
+      "native_replay_files_vs_r106_cache": {
+        "files": {
+          "continuous_00312180.txt": {
+            "sha256_new": "2e6053771432c3e260fef56d58c13b0321f9c5de4ecabe471f26efb8d691679e",
+            "bytewise_identical_to_r106": true
+          },
+          "continuous_00312237.txt": {
+            "sha256_new": "9cbe51c402464da200e3163f00d2d36d072b6407a5518124c6744591ab46b0ee",
+            "bytewise_identical_to_r106": true
+          },
+          "continuous_abundances.csv": {
+            "sha256_new": "045895e032d9cea0ba57a90cde484d12d9aff92095b73ec1a4af03d941c1768e",
+            "bytewise_identical_to_r106": true
+          },
+          "continuous_feedback.csv": {
+            "sha256_new": "2c9c79a86b3e2c1969f88fb4654bf92359e1e2fc0a3b24720d0b7fb2ec344dc9",
+            "bytewise_identical_to_r106": true
+          },
+          "continuous_history.csv": {
+            "sha256_new": "606e08b89b073d7b5d4d95085262a79df0d8373c9e7a3421ded464c67ac9406d",
+            "bytewise_identical_to_r106": true
+          },
+          "continuous_ledgers.csv": {
+            "sha256_new": "8ce43e5a63d916d6f62dc7fc5cf965c16a8f06d43f8990b4d5be7e93017d241f",
+            "bytewise_identical_to_r106": true
+          },
+          "continuous_spectra.csv": {
+            "sha256_new": "e8dd3295d636ddd8a88ad7f484ac72bdd8a5a41a3d66e3d889b9c754cc8b10b7",
+            "bytewise_identical_to_r106": true
+          },
+          "replay.json": {
+            "compared": "all fields except wall-clock fields",
+            "identical": true,
+            "n_leaves_compared": 3205,
+            "n_unequal": 0,
+            "unequal": []
+          },
+          "restart_00312237_from_00312180.txt": {
+            "sha256_new": "9cbe51c402464da200e3163f00d2d36d072b6407a5518124c6744591ab46b0ee",
+            "bytewise_identical_to_r106": true
+          },
+          "restart_from_00312180_abundances.csv": {
+            "sha256_new": "53af7b3d841ad9c04af5116ecb60dc801b1acbe66626dcb3723ce7d522403001",
+            "bytewise_identical_to_r106": true
+          },
+          "restart_from_00312180_feedback.csv": {
+            "sha256_new": "6a5afee6673dfb8da1a8e64716a2a2c01a1bb1f6eea6afc5c88f6b6a23264960",
+            "bytewise_identical_to_r106": true
+          },
+          "restart_from_00312180_history.csv": {
+            "sha256_new": "8858f097097fcc64f2547b557d972f7269fcf497949f574b551dfe046e277cc1",
+            "bytewise_identical_to_r106": true
+          },
+          "restart_from_00312180_ledgers.csv": {
+            "sha256_new": "80d61b1557601eb6fbb4a2f8465b895705167c492e5b920ff197ccdd3888e488",
+            "bytewise_identical_to_r106": true
+          },
+          "restart_from_00312180_spectra.csv": {
+            "sha256_new": "dacae9f08c12cb3205ca7c98a0b1cb5820422873eedffe99aebad54d9a2ff184",
+            "bytewise_identical_to_r106": true
+          },
+          "terminal_abundances.csv": {
+            "sha256_new": "7ae240e6d9530a58ff8c55cce5d6831cc88c39d81f4bbe7652845903f54558ae",
+            "bytewise_identical_to_r106": true
+          },
+          "terminal_feedback.csv": {
+            "sha256_new": "92f87af83f13113ce5c04bfcd5477e146572f8bb48bd9f48944760c01f1e2e5e",
+            "bytewise_identical_to_r106": true
+          },
+          "terminal_history.csv": {
+            "sha256_new": "3cd4fa8f2cfcb90e73d7cc740d3cf419aa95aa6439219ee06b098c292dca8ee2",
+            "bytewise_identical_to_r106": true
+          },
+          "terminal_ledgers.csv": {
+            "sha256_new": "1387207567a8686e1598bb9e2005f7d3955f153e0cbac8329a265f3e16239f3b",
+            "bytewise_identical_to_r106": true
+          },
+          "terminal_spectra.csv": {
+            "sha256_new": "cadb7bccc7b90605acb2b35ca197e88437f55a067aee54e9060c1f004893a1aa",
+            "bytewise_identical_to_r106": true
+          }
+        },
+        "all_identical": true,
+        "n_files": 19
+      },
+      "identical_to_r106": true,
+      "replay_wall_s": {
+        "continuous_312120_to_312237": 4.430130721,
+        "restart_312180_to_312237": 1.698624801
+      }
+    },
+    "SHEAR_PLUS": {
+      "q_ref": 0.01,
+      "restart_checkpoint_sha256": "671f1295428dc652304e9dd7f9d097e3330aaf272aba271fe99cd987acb521a5",
+      "restart_checkpoint_sha256_equal_r106": true,
+      "window": "117 accepted steps, zbar 4.0072954801941 -> 4.0, regime CONSTANT_STEP_NO_REJECTION_ENDPOINT_CLIPPED_FINAL_STEP, rejections in window 0",
+      "replay_identical_to_original_run": true,
+      "checkpoint_text_bytewise_identical": {
+        "continuous_00312180": true,
+        "continuous_00312237": true,
+        "restart_00312237_from_00312180": true
+      },
+      "last_two_output_intervals": {
+        "continuous_312120_to_312180_vs_original": {
+          "n_fields": 30,
+          "fields_with_nonzero_difference": [],
+          "all_zero": true
+        },
+        "continuous_312180_to_312237_vs_original": {
+          "n_fields": 30,
+          "fields_with_nonzero_difference": [],
+          "all_zero": true
+        },
+        "restart_312180_to_312237_vs_original": {
+          "n_fields": 30,
+          "fields_with_nonzero_difference": [],
+          "all_zero": true
+        }
+      },
+      "output_rows_all_bytewise_identical": true,
+      "headline_residual": {
+        "n_fields": 30,
+        "max_abs_difference_any_field": 0.0,
+        "all_bitwise_equal": true,
+        "unequal_fields": []
+      },
+      "restart_state_values": {
+        "x_e_per_H_at_restart": 1.0833943516797104,
+        "x_HII": 0.9999973170965606,
+        "x_HeII": 0.9742081090684189,
+        "x_HeIII": 0.025784309739995306,
+        "temperature_K_native_eos": 7900.629307415599,
+        "time_s_since_mean_z20": 4.279464240897777e+16,
+        "photon_n_per_H": 2.251804779518487,
+        "photon_u_eV_per_H": 44.80425501303098
+      },
+      "restart_inventory_vs_r106_exact": {
+        "charge": {
+          "n_leaves_compared": 18,
+          "n_unequal": 0,
+          "unequal": [],
+          "leaves_only_in_new": [],
+          "leaves_only_in_r106": [],
+          "max_abs_numeric_difference": 0.0,
+          "identical": true
+        },
+        "temperature": {
+          "n_leaves_compared": 6,
+          "n_unequal": 0,
+          "unequal": [],
+          "leaves_only_in_new": [],
+          "leaves_only_in_r106": [],
+          "max_abs_numeric_difference": 0.0,
+          "identical": true
+        },
+        "proper_time": {
+          "n_leaves_compared": 8,
+          "n_unequal": 0,
+          "unequal": [],
+          "leaves_only_in_new": [],
+          "leaves_only_in_r106": [],
+          "max_abs_numeric_difference": 0.0,
+          "identical": true
+        },
+        "photons": {
+          "n_leaves_compared": 29,
+          "n_unequal": 0,
+          "unequal": [],
+          "leaves_only_in_new": [],
+          "leaves_only_in_r106": [],
+          "max_abs_numeric_difference": 0.0,
+          "identical": true
+        },
+        "expansion": {
+          "n_leaves_compared": 9,
+          "n_unequal": 0,
+          "unequal": [],
+          "leaves_only_in_new": [],
+          "leaves_only_in_r106": [],
+          "max_abs_numeric_difference": 0.0,
+          "identical": true
+        }
+      },
+      "replay_reports_vs_r106_exact": {
+        "identical": true,
+        "n_leaves_compared": 435,
+        "n_unequal": 0,
+        "unequal": []
+      },
+      "derived_blocks_vs_r106_exact": {
+        "clock_H_consistency_and_quadrature": {
+          "identical": true,
+          "n_leaves_compared": 55,
+          "n_unequal": 0,
+          "unequal": [],
+          "max_abs_numeric_difference": 0.0
+        },
+        "foreground_sensitivity_z_0_to_4": {
+          "identical": true,
+          "n_leaves_compared": 36,
+          "n_unequal": 0,
+          "unequal": [],
+          "max_abs_numeric_difference": 0.0
+        }
+      },
+      "provenance_vs_r106_exact": {
+        "identical": true,
+        "n_leaves_compared": 121,
+        "n_unequal": 0,
+        "unequal": []
+      },
+      "native_replay_files_vs_r106_cache": {
+        "files": {
+          "continuous_00312180.txt": {
+            "sha256_new": "812a5e25158a4c882e8fd47a102eda5b4b443332c9ce36ec7e991d22b98fbb60",
+            "bytewise_identical_to_r106": true
+          },
+          "continuous_00312237.txt": {
+            "sha256_new": "17ed7585ddb2aae200968ea5fdec2abcbd28f8d9e04fbc1899209adaa70ac0e9",
+            "bytewise_identical_to_r106": true
+          },
+          "continuous_abundances.csv": {
+            "sha256_new": "8c94d117afb51cd5126c7f033feb4d6cad3a57fc33181bdf0ed7c5a1f3e8f94e",
+            "bytewise_identical_to_r106": true
+          },
+          "continuous_feedback.csv": {
+            "sha256_new": "190b5ad4a27c52d84a15e340979a21fdd49d620caf86dd75e39bed3d315c95dd",
+            "bytewise_identical_to_r106": true
+          },
+          "continuous_history.csv": {
+            "sha256_new": "23db5c61a41660ec62dff80ab248721aa02404f739b9f0b7cf19d827f82a334d",
+            "bytewise_identical_to_r106": true
+          },
+          "continuous_ledgers.csv": {
+            "sha256_new": "96769a2fb5b8a7ca0f4ad2f28aeabb714ce21c1c7f1413b0919411d335b9203a",
+            "bytewise_identical_to_r106": true
+          },
+          "continuous_spectra.csv": {
+            "sha256_new": "659b2e617be6fbc58ddcb0ac8fbb6f1a980bd7b3b54bd55c28521a76a5b4d09d",
+            "bytewise_identical_to_r106": true
+          },
+          "replay.json": {
+            "compared": "all fields except wall-clock fields",
+            "identical": true,
+            "n_leaves_compared": 3205,
+            "n_unequal": 0,
+            "unequal": []
+          },
+          "restart_00312237_from_00312180.txt": {
+            "sha256_new": "17ed7585ddb2aae200968ea5fdec2abcbd28f8d9e04fbc1899209adaa70ac0e9",
+            "bytewise_identical_to_r106": true
+          },
+          "restart_from_00312180_abundances.csv": {
+            "sha256_new": "408adb2bd442158bb576cd1d1714ff29769c2a99027cad6323654660205630bc",
+            "bytewise_identical_to_r106": true
+          },
+          "restart_from_00312180_feedback.csv": {
+            "sha256_new": "970d1ff3e974bfd420f2efaabe135e2d8f5a50a47a8100c185ebe771d0387072",
+            "bytewise_identical_to_r106": true
+          },
+          "restart_from_00312180_history.csv": {
+            "sha256_new": "312fde8014956d55ca6b29bc285895f62c00b9798cf4f06078f923e889691fae",
+            "bytewise_identical_to_r106": true
+          },
+          "restart_from_00312180_ledgers.csv": {
+            "sha256_new": "9c1dc483090a149567b1ee1aa7a613e50511972bcb56e560a7a9ae7a38c74a09",
+            "bytewise_identical_to_r106": true
+          },
+          "restart_from_00312180_spectra.csv": {
+            "sha256_new": "d7b93addb9c010f3fe2885ecdb37dd4fc5068e0f96c188033f9e9b41098a0586",
+            "bytewise_identical_to_r106": true
+          },
+          "terminal_abundances.csv": {
+            "sha256_new": "e3299c805ff3a91dd7127b0ea5a0d71d06a3fea2c4de40e2700ac5a25825b4f5",
+            "bytewise_identical_to_r106": true
+          },
+          "terminal_feedback.csv": {
+            "sha256_new": "a53cc6ec7be3eef6550d83118ac263eeef33a77220042abdd85594c55d3b41ab",
+            "bytewise_identical_to_r106": true
+          },
+          "terminal_history.csv": {
+            "sha256_new": "577fddbaad48c30635116e33382d67768d26114a35bb46a029f70c14c9fefd6c",
+            "bytewise_identical_to_r106": true
+          },
+          "terminal_ledgers.csv": {
+            "sha256_new": "435d38a4ddb9a04a9dd2423a694018f895e2d59069fc8baab0038c941524f7a7",
+            "bytewise_identical_to_r106": true
+          },
+          "terminal_spectra.csv": {
+            "sha256_new": "93c095eb7d2ebd72f5a0a474c4e5dabaf07149077b44965b8285b1d4ee8422aa",
+            "bytewise_identical_to_r106": true
+          }
+        },
+        "all_identical": true,
+        "n_files": 19
+      },
+      "identical_to_r106": true,
+      "replay_wall_s": {
+        "continuous_312120_to_312237": 4.406881643,
+        "restart_312180_to_312237": 2.225377841
+      }
+    },
+    "SHEAR_MINUS": {
+      "q_ref": -0.01,
+      "restart_checkpoint_sha256": "d338724e4172b4db44c2fbb1be1fe960430119a9f2e71fc031b23135189863fe",
+      "restart_checkpoint_sha256_equal_r106": true,
+      "window": "117 accepted steps, zbar 4.0072954801941 -> 4.0, regime CONSTANT_STEP_NO_REJECTION_ENDPOINT_CLIPPED_FINAL_STEP, rejections in window 0",
+      "replay_identical_to_original_run": true,
+      "checkpoint_text_bytewise_identical": {
+        "continuous_00312180": true,
+        "continuous_00312237": true,
+        "restart_00312237_from_00312180": true
+      },
+      "last_two_output_intervals": {
+        "continuous_312120_to_312180_vs_original": {
+          "n_fields": 30,
+          "fields_with_nonzero_difference": [],
+          "all_zero": true
+        },
+        "continuous_312180_to_312237_vs_original": {
+          "n_fields": 30,
+          "fields_with_nonzero_difference": [],
+          "all_zero": true
+        },
+        "restart_312180_to_312237_vs_original": {
+          "n_fields": 30,
+          "fields_with_nonzero_difference": [],
+          "all_zero": true
+        }
+      },
+      "output_rows_all_bytewise_identical": true,
+      "headline_residual": {
+        "n_fields": 30,
+        "max_abs_difference_any_field": 0.0,
+        "all_bitwise_equal": true,
+        "unequal_fields": []
+      },
+      "restart_state_values": {
+        "x_e_per_H_at_restart": 1.083394351679712,
+        "x_HII": 0.9999973170965605,
+        "x_HeII": 0.9742081090684215,
+        "x_HeIII": 0.025784309740003234,
+        "temperature_K_native_eos": 7900.629307442252,
+        "time_s_since_mean_z20": 4.279464240897777e+16,
+        "photon_n_per_H": 2.251804779533009,
+        "photon_u_eV_per_H": 44.80425501409867
+      },
+      "restart_inventory_vs_r106_exact": {
+        "charge": {
+          "n_leaves_compared": 18,
+          "n_unequal": 0,
+          "unequal": [],
+          "leaves_only_in_new": [],
+          "leaves_only_in_r106": [],
+          "max_abs_numeric_difference": 0.0,
+          "identical": true
+        },
+        "temperature": {
+          "n_leaves_compared": 6,
+          "n_unequal": 0,
+          "unequal": [],
+          "leaves_only_in_new": [],
+          "leaves_only_in_r106": [],
+          "max_abs_numeric_difference": 0.0,
+          "identical": true
+        },
+        "proper_time": {
+          "n_leaves_compared": 8,
+          "n_unequal": 0,
+          "unequal": [],
+          "leaves_only_in_new": [],
+          "leaves_only_in_r106": [],
+          "max_abs_numeric_difference": 0.0,
+          "identical": true
+        },
+        "photons": {
+          "n_leaves_compared": 29,
+          "n_unequal": 0,
+          "unequal": [],
+          "leaves_only_in_new": [],
+          "leaves_only_in_r106": [],
+          "max_abs_numeric_difference": 0.0,
+          "identical": true
+        },
+        "expansion": {
+          "n_leaves_compared": 9,
+          "n_unequal": 0,
+          "unequal": [],
+          "leaves_only_in_new": [],
+          "leaves_only_in_r106": [],
+          "max_abs_numeric_difference": 0.0,
+          "identical": true
+        }
+      },
+      "replay_reports_vs_r106_exact": {
+        "identical": true,
+        "n_leaves_compared": 435,
+        "n_unequal": 0,
+        "unequal": []
+      },
+      "derived_blocks_vs_r106_exact": {
+        "clock_H_consistency_and_quadrature": {
+          "identical": true,
+          "n_leaves_compared": 55,
+          "n_unequal": 0,
+          "unequal": [],
+          "max_abs_numeric_difference": 0.0
+        },
+        "foreground_sensitivity_z_0_to_4": {
+          "identical": true,
+          "n_leaves_compared": 36,
+          "n_unequal": 0,
+          "unequal": [],
+          "max_abs_numeric_difference": 0.0
+        }
+      },
+      "provenance_vs_r106_exact": {
+        "identical": true,
+        "n_leaves_compared": 104,
+        "n_unequal": 0,
+        "unequal": []
+      },
+      "native_replay_files_vs_r106_cache": {
+        "files": {
+          "continuous_00312180.txt": {
+            "sha256_new": "8d3417f0702a743dd4e251e7034ed2aaff7701ae34603bfa649fe31aaf66f6f9",
+            "bytewise_identical_to_r106": true
+          },
+          "continuous_00312237.txt": {
+            "sha256_new": "ca57701e32ff9bea4d537704452524b265b836c5c5cbebefb9a3bfe2b42c172a",
+            "bytewise_identical_to_r106": true
+          },
+          "continuous_abundances.csv": {
+            "sha256_new": "0971a2f4df60c075fb7056747e146a8655a8e9248c1626fef53d3274b5760391",
+            "bytewise_identical_to_r106": true
+          },
+          "continuous_feedback.csv": {
+            "sha256_new": "54f223fba7e496c1ec6683d4005303d387b43ca25ad592b9b278d016854cf482",
+            "bytewise_identical_to_r106": true
+          },
+          "continuous_history.csv": {
+            "sha256_new": "48cddce2ac5c01652707e52f652683c1a625dbfc80ab43ccea58d3165b50e9b8",
+            "bytewise_identical_to_r106": true
+          },
+          "continuous_ledgers.csv": {
+            "sha256_new": "70bb2edc71102d8e4125bb2c74f2f14adb9b71d18fcc93ef4f152a6415b532ba",
+            "bytewise_identical_to_r106": true
+          },
+          "continuous_spectra.csv": {
+            "sha256_new": "2c89159f33ac25b51a2b463e5949be437c972370efc4b82d475490ba706b3e98",
+            "bytewise_identical_to_r106": true
+          },
+          "replay.json": {
+            "compared": "all fields except wall-clock fields",
+            "identical": true,
+            "n_leaves_compared": 3205,
+            "n_unequal": 0,
+            "unequal": []
+          },
+          "restart_00312237_from_00312180.txt": {
+            "sha256_new": "ca57701e32ff9bea4d537704452524b265b836c5c5cbebefb9a3bfe2b42c172a",
+            "bytewise_identical_to_r106": true
+          },
+          "restart_from_00312180_abundances.csv": {
+            "sha256_new": "4e4e23aad6ddf6a806d20f264c254ef54a71f4a1ac32360d8241cfeac179fd8e",
+            "bytewise_identical_to_r106": true
+          },
+          "restart_from_00312180_feedback.csv": {
+            "sha256_new": "64c5757648f69fa8595b96d337409700ab829de9093ae7b2f52e97a6320fffc6",
+            "bytewise_identical_to_r106": true
+          },
+          "restart_from_00312180_history.csv": {
+            "sha256_new": "bf2111a25c91fa02d5842891ef204537e4e3126f0bfd0017579b196ec4a63cbf",
+            "bytewise_identical_to_r106": true
+          },
+          "restart_from_00312180_ledgers.csv": {
+            "sha256_new": "035a1a119f066a051ccb14a632970e594d859bcc31850d72874da59ad92f2e93",
+            "bytewise_identical_to_r106": true
+          },
+          "restart_from_00312180_spectra.csv": {
+            "sha256_new": "a5c3e6fabb9275ca83adac5e20492800cb02f16a2f86124e82d06fde014586ed",
+            "bytewise_identical_to_r106": true
+          },
+          "terminal_abundances.csv": {
+            "sha256_new": "58b4da59cd0c80cf70f0f092abf9a0f95fbaea65a937cb8eceaa6b3cfbdc4a59",
+            "bytewise_identical_to_r106": true
+          },
+          "terminal_feedback.csv": {
+            "sha256_new": "e676a50b9c20f8dbc67934ea91fd21e227faab048b5aec8d335ae2c83913c32f",
+            "bytewise_identical_to_r106": true
+          },
+          "terminal_history.csv": {
+            "sha256_new": "f3ce59c1c081f08096fbdcb507cc48a2000d3b2f0ac27f08934257d570ba182a",
+            "bytewise_identical_to_r106": true
+          },
+          "terminal_ledgers.csv": {
+            "sha256_new": "5dbf27ba371d0d7ad9bfc6d67ee613e86cbacc525b9ce595e7f46e3a55fc03db",
+            "bytewise_identical_to_r106": true
+          },
+          "terminal_spectra.csv": {
+            "sha256_new": "a38971cf7b18aaef751bbefd2b4387912987f50a50a1b793c86e8e0ec77c51a8",
+            "bytewise_identical_to_r106": true
+          }
+        },
+        "all_identical": true,
+        "n_files": 19
+      },
+      "identical_to_r106": true,
+      "replay_wall_s": {
+        "continuous_312120_to_312237": 3.676616881,
+        "restart_312180_to_312237": 2.182197739
+      }
+    }
+  },
+  "verdict": {
+    "all_cases_identical_to_original_and_r106": true,
+    "statement": "PASS: restart replay identical as in R106 for every case",
+    "claim_class": "NUMERICAL_REPRODUCIBILITY of the frozen solver over the replayed window only"
+  },
+  "wall_s": 0.2524559497833252
+}

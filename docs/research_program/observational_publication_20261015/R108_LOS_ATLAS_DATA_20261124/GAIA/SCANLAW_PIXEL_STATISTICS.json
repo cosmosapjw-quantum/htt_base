@@ -1,0 +1,175 @@
+{
+ "assumptions": [
+  "commanded attitude = realised attitude; dead time and EDR3 data gaps not removed",
+  "observer at the Earth barycentric position (astropy built-in ephemeris), not at L2",
+  "a source is assigned the samples and passes of its HEALPix pixel (FOV-centre track)",
+  "equal along-scan weight per 10 s sample; across-scan information ignored",
+  "5-parameter design (2 positions, parallax, 2 PM) at reference epoch J2016.0"
+ ],
+ "edr3_interval_days_since_J2010": [
+  1666.4375,
+  2704.3652777997777
+ ],
+ "edr3_interval_locator": "Gaia Collaboration, Brown et al. 2021, A&A 649, A1, Sect. 1 (2014-07-25T10:30 to 2017-05-28T08:46 UTC)",
+ "git": {
+  "dirty_code_paths": [
+   "M htt/bass/transport/bjs_bianchi_vii_h.py",
+   " M htt/bass/transport/coupled_einstein_boltzmann.py",
+   " M htt/bass/transport/hybrid_los_transfer.py",
+   " M htt/bass/transport/test_bjs_bianchi_vii_h.py",
+   " M htt/bass/transport/test_hybrid_los_transfer.py",
+   " M scripts/r107_cloud/acquisition.py",
+   " M tests/r107_cloud/test_acquisition.py",
+   "?? htt/obsstat/catalogue_frame_registry.py",
+   "?? scripts/r108/",
+   "?? tests/obsstat/test_r108_radio_p_of_c1.py",
+   "?? tests/obsstat/test_r108_radio_racs_dipole.py",
+   "?? tests/obsstat/test_r108_radio_theory_c1.py",
+   "?? tests/obsstat/test_r108_s8_lowz_tau.py"
+  ],
+  "head": "b79b9526b1817cc5946858f5891f7e7b567b87a2"
+ },
+ "input": {
+  "csv": "/home/cosmosapjw/Downloads/htt_r108/gaia/D09/CommandedScanLaw_001.csv.gz",
+  "md5": "82d24407396f6008a9d72608839533a8",
+  "md5_matches_md5sum": true,
+  "md5sum_file": [
+   "82d24407396f6008a9d72608839533a8",
+   "CommandedScanLaw_001.csv.gz"
+  ],
+  "sha256": "c0c55b1dad49a19b182955ade5693c7c74d8c313725f6679f48a3f6bfe157bf4",
+  "sha256_matches_pinned": true
+ },
+ "maxrss_mb": 3657.84375,
+ "outputs": {
+  "mock_nside": 64,
+  "mock_sample_arrays": {
+   "mock_fov1_a.npy": "7f268794d012ccc0a498c28387f0de98ac227cad7c95bac642f6caaed1b7a936",
+   "mock_fov1_pix.npy": "74cb5de3dbe310cea7104e0cffa37a19a627dd7d464da34b3af9f12169d00619",
+   "mock_fov1_segment_start.npy": "eec75448ff539f3b7d9b9993d360b5692f0ba60dc4e56b8ab0fc1e6e0081bf25",
+   "mock_fov2_a.npy": "2db22951fc5a6c97b865591099ab5fae2e5dab654d76d712e3d25624bf2c8a23",
+   "mock_fov2_pix.npy": "956ccc060ec17b6049a23cd9d979c01489e336a93bc6b82b836fc4c534310032",
+   "mock_fov2_segment_start.npy": "4834adc6e92d1680ea0038a197b7044cb557a0eccaa16f7d529550a4b7eabb73"
+  },
+  "pixel_statistics_npz": "/home/cosmosapjw/Downloads/htt_r108/gaia/scanlaw_products/scanlaw_pixel_statistics.npz",
+  "pixel_statistics_sha256": "37f7731020cde6780fb299bd639d873c9e5b26c7cf8730e375908de02aa25af8"
+ },
+ "per_pixel": {
+  "nside32": {
+   "log10_condition_number_q50_q99_max": [
+    0.6245983878258357,
+    1.1201457184074137,
+    1.3938536635851893
+   ],
+   "passes_per_pixel_q01_q50_q99": [
+    76.0,
+    168.0,
+    356.0
+   ],
+   "pixels": 12288,
+   "pixels_singular_N": 0,
+   "pixels_without_samples": 0,
+   "predicted_pm_corr_q05_q50_q95": [
+    -0.34740241922735354,
+    -7.256978702402095e-05,
+    0.34678548794389497
+   ],
+   "predicted_sigma_ra_over_sigma_dec_q05_q50_q95": [
+    0.8130857810223702,
+    1.1413070604248758,
+    1.5699257454317097
+   ],
+   "samples_per_pixel_q01_q50_q99": [
+    703.0,
+    1435.0,
+    2974.0
+   ],
+   "scan_anisotropy_abs_mean_exp2ipsi_q05_q50_q95": [
+    0.03726885948302102,
+    0.2516956073261692,
+    0.5981557040190063
+   ]
+  },
+  "nside64": {
+   "log10_condition_number_q50_q99_max": [
+    0.6230932438033876,
+    1.1748536402314782,
+    1.65343302435088
+   ],
+   "passes_per_pixel_q01_q50_q99": [
+    37.0,
+    82.0,
+    182.0
+   ],
+   "pixels": 49152,
+   "pixels_singular_N": 0,
+   "pixels_without_samples": 0,
+   "predicted_pm_corr_q05_q50_q95": [
+    -0.34888314673628923,
+    -0.0004869342891438867,
+    0.3490735882706215
+   ],
+   "predicted_sigma_ra_over_sigma_dec_q05_q50_q95": [
+    0.8159155868320995,
+    1.1384149201957983,
+    1.5742564391041807
+   ],
+   "samples_per_pixel_q01_q50_q99": [
+    173.0,
+    357.0,
+    778.489999999998
+   ],
+   "scan_anisotropy_abs_mean_exp2ipsi_q05_q50_q95": [
+    0.042576552554774376,
+    0.24952847862640692,
+    0.6096243111231513
+   ]
+  }
+ },
+ "rows": {
+  "bjd_max_days_since_J2010": 2704.369034172967,
+  "bjd_min_days_since_J2010": 1666.4351936611347,
+  "obmt_unique": 8967691,
+  "read_s": 37.43936813896289,
+  "rows": 8967691
+ },
+ "runtime_s": 181.95900471595814,
+ "samples_outside_edr3_interval": {
+  "fov1": 57,
+  "fov2": 12
+ },
+ "scan_angle_convention_check": {
+  "fov1": {
+   "convention_used": "u=(sin psi, cos psi)",
+   "frac_abs_diff_lt_1deg_mirrored": 0.008688134315933758,
+   "frac_abs_diff_lt_1deg_standard": 0.999999888487854,
+   "frac_motion_pa_equals_scan_angle_mod360_within_1deg": 0.9999997769757081,
+   "median_abs_diff_standard_deg": 0.11468135072878738,
+   "obmt_step_ns_q01_q50_q99": [
+    9999999853.0,
+    9999999858.0,
+    9999999864.0
+   ],
+   "p99_abs_diff_standard_deg": 0.17070227203033425,
+   "pairs": 8967633,
+   "samples": 8967634
+  },
+  "fov2": {
+   "convention_used": "u=(sin psi, cos psi)",
+   "frac_abs_diff_lt_1deg_mirrored": 0.008783767659811157,
+   "frac_abs_diff_lt_1deg_standard": 0.9999998884884136,
+   "frac_motion_pa_equals_scan_angle_mod360_within_1deg": 0.9999997769768272,
+   "median_abs_diff_standard_deg": 0.11467205287738125,
+   "obmt_step_ns_q01_q50_q99": [
+    9999999853.0,
+    9999999858.0,
+    9999999864.0
+   ],
+   "p99_abs_diff_standard_deg": 0.17070399556007984,
+   "pairs": 8967678,
+   "samples": 8967679
+  }
+ },
+ "schema": "htt.r108.gaia_scanlaw/1",
+ "time_column_convention": "bjd_fov1/2 read as days since J2010.0 (JD 2455197.5); tau = (bjd - 2191.5)/365.25 yr"
+}

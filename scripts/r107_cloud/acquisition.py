@@ -26,7 +26,21 @@ import sys
 import tempfile
 from pathlib import Path
 from urllib.parse import urlparse
-from urllib.request import Request, urlopen
+from urllib.request import HTTPRedirectHandler, Request, build_opener
+
+
+class _HttpsOnlyRedirect(HTTPRedirectHandler):
+    """Follow redirects only to https URLs (R108 review R10: no silent https->http downgrade)."""
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        if urlparse(newurl).scheme != "https":
+            raise ValueError(f"refusing redirect from {req.full_url} to non-https {newurl}")
+        return super().redirect_request(req, fp, code, msg, headers, newurl)
+
+
+def urlopen(req, timeout=None):
+    """urlopen with the https-only redirect policy (file:// URLs are allowed only by the caller's check)."""
+    return build_opener(_HttpsOnlyRedirect).open(req, timeout=timeout)
 
 SCHEMA = "htt.r107.acquisition/1"
 CHECKED = "2026-11-24 web search (listing or catalogue page seen); byte size and digest are recorded at download"
@@ -54,8 +68,8 @@ ITEMS: list[dict] = [
      "verification": "table3 row count 17669 against ReadMe; byte layout per ReadMe", "checked": CHECKED},
     {"id": "D02", "priority": "P0", "kind": "https_file", "nodes": ["SQ-CF4", "H02"],
      "purpose": "6dFGSv peculiar-velocity table (Springob et al. 2014) for ID and FP cross-match of the 8,885 positions.",
-     "files": [{"name": "J_MNRAS_445_2677_ReadMe", "url": CDS + "cats/J/other/MNRAS/445/2677/ReadMe", "expected_bytes": None, "sha256": None},
-               {"name": "J_MNRAS_445_2677_table1.dat.gz", "url": CDS + "cats/J/other/MNRAS/445/2677/table1.dat.gz", "expected_bytes": None, "sha256": None}],
+     "files": [{"name": "J_MNRAS_445_2677_ReadMe", "url": CDS + "J/MNRAS/445/2677/ReadMe", "expected_bytes": None, "sha256": None},
+               {"name": "J_MNRAS_445_2677_table1.dat.gz", "url": CDS + "J/MNRAS/445/2677/table1.dat.gz", "expected_bytes": None, "sha256": None}],
      "citation": "Springob et al. 2014, MNRAS 445, 2677; VizieR J/MNRAS/445/2677",
      "verification": "row count per ReadMe; join on 6dFGS name with the R105 8,885 positions", "checked": CHECKED},
     {"id": "D03", "priority": "P0", "kind": "portal", "nodes": ["SQ-CF4"],
@@ -76,9 +90,14 @@ ITEMS: list[dict] = [
      "purpose": "Commander PR3/FFP10 CMB+noise pairs 00007..00299 (R106 inventory: 356,352,825,600 new bytes).",
      "command": "\"$PY\" -m scripts.r105.commander_ensemble batch --start 7 --stop 300 --directory \"$HOME/Downloads/htt_r105_commander/reductions\" --max-download-bytes <budget>",
      "citation": "Planck 2018 results IV and VII; FFP10", "verification": "per-pair input SHA, same 15-coefficient estimator and beam/mask SHA as R106", "checked": "R105 COMMANDER_DOWNLOAD_PLAN.json"},
-    {"id": "D07", "priority": "P0", "kind": "portal", "nodes": ["SQ-CMB-NULL", "L03"],
+    {"id": "D07", "priority": "P0", "kind": "existing_fetcher", "nodes": ["SQ-CMB-NULL", "L03"],
      "purpose": "Commander half-mission (HM1/HM2) and odd-even (OE1/OE2) observed maps and the matching FFP10 noise splits for split-difference nulls (R106: split products absent).",
      "portal": "https://pla.esac.esa.int/pla/",
+     # R108: identifiers resolved from the Content-Disposition of PLA product-action responses (2026-11-24);
+     # the PLA sends no Content-Length, so sizes and SHA-256 are recorded at download by the R108 fetcher.
+     "resolved_ids": {"observed": "https://pla.esac.esa.int/pla/aio/product-action?MAP.MAP_ID=COM_CMB_IQU-commander_2048_R3.00_{hm1,hm2,oe1,oe2}.fits",
+                      "noise": "https://pla.esac.esa.int/pla/aio/product-action?SIMULATED_MAP.FILE_ID=dx12_v3_commander_noise_{hm1,hm2,oe1,oe2}_mc_NNNNN_raw.fits"},
+     "command": "python -m scripts.r108.commander_splits fetch --stop 7 --max-bytes 30000000000",
      "instruction": "Planck 2018 VII states 300 noise realizations per frequency for full-mission, HM and OE splits, processed through component separation. Resolve the exact Commander split file IDs in the PLA (Maps > CMB maps for data; Simulations > component-separated noise for sims), then fetch 00000..00006 HM1/HM2 first through product-action URLs with this script (add them to ITEMS as https_file with expected_bytes from the PLA listing).",
      "citation": "Planck 2018 results VII (arXiv:1906.02552) section 4", "verification": "same Nside, beam and mask as R106 Commander pairs; HM1-HM2 half difference has zero signal", "checked": CHECKED},
     {"id": "D08", "priority": "P0", "kind": "https_file", "nodes": ["SQ-GAIA", "K03", "PHY-04"],
@@ -160,7 +179,9 @@ def fetch_file(spec: dict, destination: Path, budget: int, *, allow_file_urls: b
         ok = (spec.get("expected_bytes") in (None, dig["bytes"])) and (spec.get("sha256") in (None, dig["sha256"]))
         if not ok:
             raise FileExistsError(f"preserved conflicting product {target}")
-        return dict(receipt, **dig, status="REUSED_EXISTING", downloaded=False)
+        # Without a provider size or digest an existing file cannot be checked; say so (R108 review R10).
+        verified = spec.get("expected_bytes") is not None or spec.get("sha256") is not None
+        return dict(receipt, **dig, status="REUSED_EXISTING" if verified else "REUSED_UNVERIFIED", downloaded=False)
     cap = budget if spec.get("expected_bytes") is None else min(budget, int(spec["expected_bytes"]))
     if spec.get("expected_bytes") is not None and budget < int(spec["expected_bytes"]):
         raise ValueError(f"budget {budget} below expected size of {name}")
@@ -171,6 +192,7 @@ def fetch_file(spec: dict, destination: Path, budget: int, *, allow_file_urls: b
         req = Request(spec["url"], headers={"Accept-Encoding": "identity", "User-Agent": "htt-r107-acquisition"})
         with urlopen(req, timeout=timeout) as resp, open(tmp, "wb") as out:
             status = getattr(resp, "status", None)
+            final_url = resp.geturl() if hasattr(resp, "geturl") else spec["url"]
             headers = {k.lower(): v for k, v in resp.headers.items()} if getattr(resp, "headers", None) else {}
             while True:
                 chunk = resp.read(min(1 << 20, cap + 1 - n))
@@ -188,6 +210,7 @@ def fetch_file(spec: dict, destination: Path, budget: int, *, allow_file_urls: b
             raise ValueError(f"{name}: SHA-256 mismatch")
         os.link(tmp, target)
     return dict(receipt, bytes=n, sha256=sha.hexdigest(), md5=md5.hexdigest(), status="FETCHED", downloaded=True,
+                final_url=final_url,
                 http_status=status, etag=headers.get("etag"), last_modified=headers.get("last-modified"),
                 fetched_at_utc=_dt.datetime.now(_dt.timezone.utc).isoformat())
 

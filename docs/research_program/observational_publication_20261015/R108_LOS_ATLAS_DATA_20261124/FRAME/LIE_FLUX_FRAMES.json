@@ -1,0 +1,1562 @@
+{
+ "blocked": {
+  "codazzi_residual_with_measured_q": [
+   "independently sourced normal-frame shear sigma_ab/H with covariance (no data product in the repository)",
+   "structure constants (a, n)/H of the candidate family (not measured)",
+   "orientation of the group-invariant frame relative to Galactic axes (not in the frame registry)",
+   "identification of the normal frame among the CMB and CF4 frames",
+   "Hamiltonian-constraint consistency inputs (Omega_k, Sigma^2 of the same state)"
+  ],
+  "radio_axial_component": "R65 ring-conditioned estimator leaves the ICRS z dipole unidentified",
+  "radio_frame_velocity": {
+   "needed": [
+    "a radio estimator whose output is a calibrated frame velocity with covariance (source-count slope and spectral-index calibration of the response, clustering dipole separated)",
+    "the axial ICRS z component (unidentified by the R65 ring-conditioned estimator)"
+   ],
+   "not_produced": [
+    "radio candidate flux direction",
+    "radio minus CF4 flux difference",
+    "radio rows of the Codazzi flux-scale table"
+   ],
+   "reason": "no physical radio-source frame velocity exists in the repository: the R65 shared peak-response fit is labelled ['provider peak-selected unresolved-source proxy; not a physical speed measurement'] by R65, and its transverse amplitude is 2.73-3.10 times the CMB kinematic value (radio_proxy_comparisons)",
+   "status": "BLOCKED"
+  }
+ },
+ "candidate_flux_directions": {
+  "cf4_matter_in_cmb_frame": {
+   "beta_galactic": [
+    0.00027660856811615586,
+    -0.0008518768390118927,
+    -7.863586533389427e-05
+   ],
+   "cov_galactic": [
+    [
+     4.059148704016461e-09,
+     8.685593678225021e-11,
+     -3.781795456318367e-10
+    ],
+    [
+     8.68559367822502e-11,
+     4.252040475364571e-09,
+     7.709749348605639e-10
+    ],
+    [
+     -3.7817954563183676e-10,
+     7.709749348605642e-10,
+     2.788591623165874e-09
+    ]
+   ],
+   "direction": {
+    "b_deg": -5.017507797621881,
+    "l_deg": 287.9888666301414,
+    "norm": 0.0008991051374099554
+   },
+   "source": "MB_bulk|working (CF4 0.01<z<0.1 groups), Planck 2018 frame",
+   "speed_kms": 269.54493914455827
+  }
+ },
+ "codazzi": {
+  "VI_-1/9": {
+   "R75_R49_example_algebra": {
+    "a": [
+     0.005,
+     0.0,
+     0.0
+    ],
+    "blind_flux_dimension": 1,
+    "blind_flux_direction": [
+     0.0,
+     0.5547001962252294,
+     0.8320502943378436
+    ],
+    "n_diag": [
+     0.0,
+     0.01,
+     -0.0225
+    ],
+    "rank": 2,
+    "singular_values": [
+     0.02604083331999957,
+     0.022980970388562793,
+     3.2274894889267858e-18
+    ]
+   },
+   "R78_PHY05_recorded_matrix": {
+    "left_null_recomputed": [
+     0.0,
+     0.7071067811865476,
+     0.7071067811865475
+    ],
+    "left_null_recorded_normalised": [
+     0.0,
+     0.7071067811865476,
+     0.7071067811865476
+    ],
+    "note": "rank, singular values and left-null space are independent of the sign convention of the recorded matrix",
+    "rank": 2,
+    "recorded_residual_norm": 0.0,
+    "singular_values": [
+     6.708203932499369,
+     6.0,
+     4.440892098500626e-16
+    ]
+   },
+   "frame_note": "each blind direction is expressed in its own algebra (group-invariant) frame; mapping it to Galactic axes needs the orientation of that frame, which no registry entry measures",
+   "solver_atlas_algebra": {
+    "a": [
+     0.00019999999999999998,
+     0.0,
+     0.0
+    ],
+    "blind_flux_dimension": 1,
+    "blind_flux_direction": [
+     0.0,
+     0.44721359549995787,
+     0.8944271909999159
+    ],
+    "n": [
+     [
+      0.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0003,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      -0.0012
+     ]
+    ],
+    "rank": 2,
+    "singular_values": [
+     0.001168332144554792,
+     0.0010606601717798212,
+     5.421010862427522e-20
+    ]
+   }
+  },
+  "convention_used": "production: kappa q_i = (M s5)_i with M = -D, where D s5 = D_j sigma^j_i = exact_momentum_divergence(sigma, a, n, a_sign=+1) on the orthonormal STF-5 basis; equivalently D_j sigma^j_i + kappa q_i = 0 with q^i = T^{0i} in the synchronous (-,+,+,+) tetrad",
+  "families": {
+   "FLRW": {
+    "M_sigma_to_kappa_q_production": [
+     [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    ],
+    "a": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "blind_flux_basis": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "blind_flux_dimension": 3,
+    "blind_flux_note": "map identically zero: every flux direction is blind; the basis is arbitrary",
+    "blind_residual_norm_basisT_M": 0.0,
+    "left_null_dimension": 3,
+    "left_null_directions": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "max_abs_M_plus_production_divergence_matrix": 0.0,
+    "n": [
+     [
+      0.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.0
+     ]
+    ],
+    "production_rank": 0,
+    "rank": 0,
+    "relative_threshold": 1e-12,
+    "right_null_dimension": 5,
+    "sigma_min_over_sigma_max_in_range": null,
+    "singular_values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "singular_values_per_unit_structure_scale": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "structure_scale": 1e-300
+   },
+   "I": {
+    "M_sigma_to_kappa_q_production": [
+     [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    ],
+    "a": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "blind_flux_basis": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "blind_flux_dimension": 3,
+    "blind_flux_note": "map identically zero: every flux direction is blind; the basis is arbitrary",
+    "blind_residual_norm_basisT_M": 0.0,
+    "left_null_dimension": 3,
+    "left_null_directions": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "max_abs_M_plus_production_divergence_matrix": 0.0,
+    "n": [
+     [
+      0.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.0
+     ]
+    ],
+    "production_rank": 0,
+    "rank": 0,
+    "relative_threshold": 1e-12,
+    "right_null_dimension": 5,
+    "sigma_min_over_sigma_max_in_range": null,
+    "singular_values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "singular_values_per_unit_structure_scale": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "structure_scale": 1e-300
+   },
+   "IX": {
+    "M_sigma_to_kappa_q_production": [
+     [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      6.363961030678926e-05
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      -3.1819805153394655e-05,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      -3.18198051533946e-05,
+      0.0,
+      0.0
+     ]
+    ],
+    "a": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "blind_flux_basis": [],
+    "blind_flux_dimension": 0,
+    "blind_flux_note": "full rank: no blind flux direction",
+    "left_null_dimension": 0,
+    "left_null_directions": [],
+    "max_abs_M_plus_production_divergence_matrix": 0.0,
+    "n": [
+     [
+      0.0003,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.00034499999999999993,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.00025499999999999996
+     ]
+    ],
+    "production_rank": 3,
+    "rank": 3,
+    "relative_threshold": 1e-12,
+    "right_null_dimension": 2,
+    "sigma_min_over_sigma_max_in_range": 0.49999999999999956,
+    "singular_values": [
+     6.363961030678926e-05,
+     3.1819805153394655e-05,
+     3.18198051533946e-05
+    ],
+    "singular_values_per_unit_structure_scale": [
+     0.12156613477096614,
+     0.06078306738548312,
+     0.06078306738548302
+    ],
+    "structure_scale": 0.0005234978509984544
+   },
+   "V": {
+    "M_sigma_to_kappa_q_production": [
+     [
+      0.0006363961030678927,
+      0.0003674234614174768,
+      0.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.0006363961030678927,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      0.0006363961030678927,
+      0.0
+     ]
+    ],
+    "a": [
+     0.0003,
+     0.0,
+     0.0
+    ],
+    "blind_flux_basis": [],
+    "blind_flux_dimension": 0,
+    "blind_flux_note": "full rank: no blind flux direction",
+    "left_null_dimension": 0,
+    "left_null_directions": [],
+    "max_abs_M_plus_production_divergence_matrix": 0.0,
+    "n": [
+     [
+      0.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.0
+     ]
+    ],
+    "production_rank": 3,
+    "rank": 3,
+    "relative_threshold": 1e-12,
+    "right_null_dimension": 2,
+    "sigma_min_over_sigma_max_in_range": 0.8660254037844386,
+    "singular_values": [
+     0.0007348469228349534,
+     0.0006363961030678927,
+     0.0006363961030678927
+    ],
+    "singular_values_per_unit_structure_scale": [
+     2.449489742783178,
+     2.1213203435596424,
+     2.1213203435596424
+    ],
+    "structure_scale": 0.0003
+   },
+   "VII_h(+1)": {
+    "M_sigma_to_kappa_q_production": [
+     [
+      0.00031819805153394633,
+      0.0001837117307087384,
+      0.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.00031819805153394633,
+      0.00021213203435596422,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      -0.00021213203435596422,
+      0.00031819805153394633,
+      0.0
+     ]
+    ],
+    "a": [
+     0.00015,
+     0.0,
+     0.0
+    ],
+    "blind_flux_basis": [],
+    "blind_flux_dimension": 0,
+    "blind_flux_note": "full rank: no blind flux direction",
+    "left_null_dimension": 0,
+    "left_null_directions": [],
+    "max_abs_M_plus_production_divergence_matrix": 0.0,
+    "n": [
+     [
+      0.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0003,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.0003
+     ]
+    ],
+    "production_rank": 3,
+    "rank": 3,
+    "relative_threshold": 1e-12,
+    "right_null_dimension": 2,
+    "sigma_min_over_sigma_max_in_range": 0.9607689228305228,
+    "singular_values": [
+     0.0003824264635194588,
+     0.0003824264635194588,
+     0.0003674234614174767
+    ],
+    "singular_values_per_unit_structure_scale": [
+     0.9013878188659973,
+     0.9013878188659973,
+     0.8660254037844386
+    ],
+    "structure_scale": 0.0004242640687119285
+   },
+   "VII_h(-1)": {
+    "M_sigma_to_kappa_q_production": [
+     [
+      0.00031819805153394633,
+      0.0001837117307087384,
+      0.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.00031819805153394633,
+      -0.00021213203435596422,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.00021213203435596422,
+      0.00031819805153394633,
+      0.0
+     ]
+    ],
+    "a": [
+     0.00015,
+     0.0,
+     0.0
+    ],
+    "blind_flux_basis": [],
+    "blind_flux_dimension": 0,
+    "blind_flux_note": "full rank: no blind flux direction",
+    "left_null_dimension": 0,
+    "left_null_directions": [],
+    "max_abs_M_plus_production_divergence_matrix": 0.0,
+    "n": [
+     [
+      -0.0,
+      -0.0,
+      -0.0
+     ],
+     [
+      -0.0,
+      -0.0003,
+      -0.0
+     ],
+     [
+      -0.0,
+      -0.0,
+      -0.0003
+     ]
+    ],
+    "production_rank": 3,
+    "rank": 3,
+    "relative_threshold": 1e-12,
+    "right_null_dimension": 2,
+    "sigma_min_over_sigma_max_in_range": 0.9607689228305228,
+    "singular_values": [
+     0.0003824264635194588,
+     0.0003824264635194588,
+     0.0003674234614174767
+    ],
+    "singular_values_per_unit_structure_scale": [
+     0.9013878188659973,
+     0.9013878188659973,
+     0.8660254037844386
+    ],
+    "structure_scale": 0.0004242640687119285
+   },
+   "VI_-1/9": {
+    "M_sigma_to_kappa_q_production": [
+     [
+      0.00042426406871192844,
+      0.00024494897427831784,
+      0.0,
+      0.0,
+      0.001060660171779821
+     ],
+     [
+      0.0,
+      0.0,
+      0.00042426406871192844,
+      -0.0008485281374238569,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      -0.00021213203435596422,
+      0.00042426406871192844,
+      0.0
+     ]
+    ],
+    "a": [
+     0.00019999999999999998,
+     0.0,
+     0.0
+    ],
+    "blind_dot_a_hat": 0.0,
+    "blind_flux_basis": [
+     [
+      0.0,
+      0.44721359549995787,
+      0.8944271909999159
+     ]
+    ],
+    "blind_flux_dimension": 1,
+    "blind_flux_direction": [
+     0.0,
+     0.44721359549995787,
+     0.8944271909999159
+    ],
+    "blind_flux_note": "one blind direction (unique up to sign; largest component taken positive)",
+    "blind_in_n_eigenbasis": {
+     "components": [
+      0.8944271909999159,
+      0.0,
+      0.44721359549995787
+     ],
+     "n_eigenvalues": [
+      -0.0012,
+      0.0,
+      0.0003
+     ]
+    },
+    "blind_residual_norm_ellT_M": 6.06087439757635e-20,
+    "left_null_dimension": 1,
+    "left_null_directions": [
+     [
+      0.0,
+      0.44721359549995787,
+      0.8944271909999159
+     ]
+    ],
+    "max_abs_M_plus_production_divergence_matrix": 0.0,
+    "n": [
+     [
+      0.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0003,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      -0.0012
+     ]
+    ],
+    "production_rank": 2,
+    "rank": 2,
+    "relative_threshold": 1e-12,
+    "right_null_dimension": 3,
+    "sigma_min_over_sigma_max_in_range": 0.9078412990032038,
+    "singular_values": [
+     0.001168332144554792,
+     0.0010606601717798212,
+     5.421010862427522e-20
+    ],
+    "singular_values_per_unit_structure_scale": [
+     0.9445405564321193,
+     0.8574929257125441,
+     4.3826275261586986e-17
+    ],
+    "structure_scale": 0.0012369316876852982
+   },
+   "VI_h": {
+    "M_sigma_to_kappa_q_production": [
+     [
+      0.00031819805153394633,
+      0.0001837117307087384,
+      0.0,
+      0.0,
+      0.0006363961030678927
+     ],
+     [
+      0.0,
+      0.0,
+      0.00031819805153394633,
+      -0.00042426406871192844,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      -0.00021213203435596422,
+      0.00031819805153394633,
+      0.0
+     ]
+    ],
+    "a": [
+     0.00015,
+     0.0,
+     0.0
+    ],
+    "blind_flux_basis": [],
+    "blind_flux_dimension": 0,
+    "blind_flux_note": "full rank: no blind flux direction",
+    "left_null_dimension": 0,
+    "left_null_directions": [],
+    "max_abs_M_plus_production_divergence_matrix": 0.0,
+    "n": [
+     [
+      0.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0003,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      -0.0006
+     ]
+    ],
+    "production_rank": 3,
+    "rank": 3,
+    "relative_threshold": 1e-12,
+    "right_null_dimension": 2,
+    "sigma_min_over_sigma_max_in_range": 0.02342276269541912,
+    "singular_values": [
+     0.0007348469228349534,
+     0.0006536082481589146,
+     1.721214509102208e-05
+    ],
+    "singular_values_per_unit_structure_scale": [
+     1.0954451150103321,
+     0.9743416490252566,
+     0.02565835097474312
+    ],
+    "structure_scale": 0.0006708203932499369
+   }
+  },
+  "flux_scale_table": {
+   "meaning": "minimum |sigma|/H (largest singular direction) needed to source the measured |q| if the structure scale |a|,|n| were H; scale linearly by H/structure scale; blind directions need infinite shear; sign invariant (largest singular value)",
+   "omega_m": 0.3153,
+   "omega_m_locator": "Planck 2018 VI (A&A 641, A6) Table 2; htt/workspace/data/obs_defaults.json",
+   "rows": {
+    "cf4": {
+     "beta": 0.0008991051374099554,
+     "kappa_q_over_3H2": 0.0002834880789943007,
+     "min_shear_over_H_per_unit_structure_over_H_by_family": {
+      "FLRW": null,
+      "I": null,
+      "IX": 0.006995897653447645,
+      "V": 0.00034720057084892356,
+      "VII_h(+1)": 0.0009435053582739114,
+      "VII_h(-1)": 0.0009435053582739114,
+      "VI_-1/9": 0.0009003999152724809,
+      "VI_h": 0.000776364078244925
+     }
+    }
+   }
+  },
+  "opposite_sign_statements": {
+   "items": [
+    {
+     "file": "htt/bass/background/constraints.py",
+     "file_sha256": "ce19bbb2ded3e9a3bf66e512c79f509ccf7a3ead949dccd5f01d1ccd0f764db2",
+     "lines": [
+      122
+     ],
+     "meaning": "codazzi_constraint_residual executable residual div sigma - kappa q (kappa q = +div sigma)",
+     "needle": "return div_pstf2(sigma, geometry.Gamma) - kappa * matter.q"
+    },
+    {
+     "file": "htt/bass/background/initial_conditions.py",
+     "file_sha256": "69510bfc85e8cf18f89a26a6e927e770dac37003136d411d8873b59b3d4853a3",
+     "lines": [
+      207
+     ],
+     "meaning": "project_shear_to_codazzi: A = codazzi operator of evaluate_background_constraints (= div at q = 0); solves A x = +kappa q, i.e. div sigma = +kappa q",
+     "needle": "target = kappa * q"
+    },
+    {
+     "file": "htt/bass/background/codazzi_tilt_rhs.py",
+     "file_sha256": "8bb444ff48877db24926db33a701761f1cd224c53b11a5e525b2fb42f61614cb",
+     "lines": [
+      359
+     ],
+     "meaning": "comment: residual D_B sigma^AB - (2/3) D^A Theta - kappa q^A (kappa q = +div sigma); the module's executable gate is a Friedmann-slack surrogate",
+     "needle": "D_B \u03c3^{AB} \u2212 (2/3) D^A \u0398"
+    }
+   ],
+   "status": "pre-existing repository sign inconsistency; reported to the lead; files not edited in R108"
+  },
+  "production_sign_sources": [
+   {
+    "file": "htt/bass/background/convention_bridge.py",
+    "file_sha256": "28042f5a6ab15e3039f90a3dd6d2ce21d32f8b1192a69147f9844881e1b72a6b",
+    "lines": [
+     409
+    ],
+    "meaning": "exact_momentum_divergence docstring: q_i = T^{0i}, D_j sigma^j_i + kappa q_i = 0",
+    "needle": "D_j sigma^j_i + kappa q_i = 0"
+   },
+   {
+    "file": "htt/bass/background/tilted_bianchi_state.py",
+    "file_sha256": "dd6bd75fb358b3c738d555414471066d14f40707ee43bd4afed683f07f7a7b2f",
+    "lines": [
+     150
+    ],
+    "meaning": "MomentumConstraintMap convention",
+    "needle": "matrix @ shear_stf5 = -kappa*q_total"
+   },
+   {
+    "file": "htt/bass/background/tilted_bianchi_state.py",
+    "file_sha256": "dd6bd75fb358b3c738d555414471066d14f40707ee43bd4afed683f07f7a7b2f",
+    "lines": [
+     838
+    ],
+    "meaning": "evaluate_tilted_constraints derivation",
+    "needle": "G^{0i} = -D_j sigma^j_i == kappa T^{0i}"
+   },
+   {
+    "file": "htt/bass/background/tilted_bianchi_state.py",
+    "file_sha256": "dd6bd75fb358b3c738d555414471066d14f40707ee43bd4afed683f07f7a7b2f",
+    "lines": [
+     839
+    ],
+    "meaning": "evaluate_tilted_constraints executable residual div sigma + kappa q",
+    "needle": "cod_vec = div_sig + kq"
+   }
+  ],
+  "sign_convention_audit": {
+   "R107_route_q_equals_minus_div_sigma_max_rel": 2.1970666498678728e-16,
+   "consequence": "production sign confirmed: kappa q = -div sigma; the published maps (M_sigma_to_kappa_q_production) use it. constraints.codazzi_constraint_residual, the initial_conditions Codazzi projection that uses it, and the codazzi_tilt_rhs.py comment state the opposite sign: a pre-existing repository inconsistency reported to the lead (those files are not edited in R108). Ranks, singular values and blind directions are sign invariant; the sign of a residual or of a required shear is not",
+   "div_pstf2_vs_exact_momentum_divergence_max_rel": 4.834691661472673e-16,
+   "initial_conditions_projection_VI_h_full_rank": {
+    "div_sigma_minus_kappa_q_rel": 2.1499787838299927e-13,
+    "kappa": 1.0,
+    "norm_target_q": 6.271274522484684e-07,
+    "production_residual_div_plus_kappa_q_rel": 2.0000000000001683,
+    "projection_rank": 3,
+    "reading": "the projected shear satisfies div sigma = +kappa q, the opposite of the production constraint"
+   },
+   "production_state_VI_-1/9_eps1e-5": {
+    "codazzi_tilt_rhs_constraints_residual_div_minus_kappa_q_rel": 2.0000000000000306,
+    "norm_div_sigma": 7.348469228349535e-09,
+    "norm_kappa_q": 7.348469228349762e-09,
+    "production_residual_div_plus_kappa_q_rel": 3.666813204760652e-14,
+    "state_constraint_report_codazzi_norm": 2.6945464001289393e-22
+   },
+   "statement": {
+    "R107 GAP_REGISTER SQ-LIE-FLUX route (WE97/HBW01 form)": "q = 3 sigma a - eps sigma n = -div sigma",
+    "codazzi_tilt_rhs.py comment": "D_B sigma^AB - (2/3) D^A Theta - kappa q^A  =>  kappa q = +div sigma (opposite)",
+    "constraints.py codazzi_constraint_residual": "(div sigma)_a - kappa q_a  =>  kappa q = +div sigma (opposite)",
+    "convention_bridge.exact_momentum_divergence docstring / tilted_bianchi_state.evaluate_tilted_constraints / MomentumConstraintMap": "div sigma + kappa q = 0  =>  kappa q = -div sigma (production solver states)",
+    "initial_conditions.project_shear_to_codazzi": "targets div sigma = +kappa q (opposite; inherits constraints.py)"
+   }
+  }
+ },
+ "code_sha256": {
+  "htt/bass/background/codazzi_tilt_rhs.py": "8bb444ff48877db24926db33a701761f1cd224c53b11a5e525b2fb42f61614cb",
+  "htt/bass/background/constraints.py": "ce19bbb2ded3e9a3bf66e512c79f509ccf7a3ead949dccd5f01d1ccd0f764db2",
+  "htt/bass/background/convention_bridge.py": "28042f5a6ab15e3039f90a3dd6d2ce21d32f8b1192a69147f9844881e1b72a6b",
+  "htt/bass/background/geometry.py": "749e47c9e30709ed19d9ced4fdaa7d2d97e261903a3cf390ee9ead333287107a",
+  "htt/bass/background/initial_conditions.py": "69510bfc85e8cf18f89a26a6e927e770dac37003136d411d8873b59b3d4853a3",
+  "htt/bass/background/tilted_bianchi_state.py": "dd6bd75fb358b3c738d555414471066d14f40707ee43bd4afed683f07f7a7b2f",
+  "htt/bass/transport/coupled_einstein_boltzmann.py": "b564041da20eb830a6099960909f7236a2dfae977842ebcb1d04629cbe25c56a",
+  "htt/obsstat/catalogue_frame_registry.py": "f69967dddaeaa52f801a1e1662dbe12a5c5c9d51ffa8fb04feae526cab5d4298",
+  "htt/obsstat/publication_frame_kinematics.py": "dae3574f98fce5c1fef52a461d0955808952b99188e2f49c61a1b54c3a3225e9",
+  "scripts/r108/common.py": "dded5b978a15680df0975cb2921e0931824c27cee7d508ea81721a1ceaaff41e",
+  "scripts/r108/frame_cf4_joint.py": "51a39b27428abd53d256f22b442fa22279ec601d9fb68d95f4fc268b009eff21",
+  "scripts/r108/frame_lie_flux.py": "f09a661fd9840f8b3e39e7ffa20bbf10790efc66769c5c3413fe59364151f018",
+  "scripts/r108/frame_registry_build.py": "f05d0b22dae211cc48e9d0d969f1a112b3d1401974b960fc819c33007f2ef4a1"
+ },
+ "command": "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r108/frame_lie_flux.py --output docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/FRAME/LIE_FLUX_FRAMES.json",
+ "frames": {
+  "cf4": {
+   "MBH_bulk_plus_expansion_dipole|working": {
+    "B_cov_galactic_kms2": [
+     [
+      2207.443443083607,
+      19.92506930538732,
+      -159.24901959774172
+     ],
+     [
+      19.925069305387247,
+      2255.358158448742,
+      522.4625372038864
+     ],
+     [
+      -159.2490195977417,
+      522.4625372038864,
+      1460.695651695953
+     ]
+    ],
+    "B_planck2018_frame_galactic_kms": [
+     -56.45412458559437,
+     -243.62125646989816,
+     206.1183424497177
+    ],
+    "B_release_cmb_frame_galactic_kms": [
+     -55.990191492075944,
+     -244.4306725992223,
+     206.99616738789047
+    ],
+    "amplitude_sd_linear_kms": 38.36559403013689,
+    "direction_planck_frame": {
+     "b_deg": 39.49603989303,
+     "l_deg": 256.9531806789672,
+     "norm": 324.07276325065766
+    },
+    "planck_minus_release_kms": [
+     -0.4639330935184276,
+     0.8094161293241484,
+     -0.877824938172779
+    ]
+   },
+   "MBH_bulk_plus_expansion_dipole|working_plus_calibration": {
+    "B_cov_galactic_kms2": [
+     [
+      2219.03329845661,
+      7.805121664003141,
+      -158.4418223771027
+     ],
+     [
+      7.805121664003125,
+      2343.2642759991495,
+      440.390450685766
+     ],
+     [
+      -158.44182237710274,
+      440.39045068576604,
+      1747.7779462848082
+     ]
+    ],
+    "B_planck2018_frame_galactic_kms": [
+     -56.6054979187618,
+     -238.3354476785976,
+     191.98465727717854
+    ],
+    "B_release_cmb_frame_galactic_kms": [
+     -56.14156481937197,
+     -239.1448638737204,
+     192.8624823063266
+    ],
+    "amplitude_sd_linear_kms": 41.62931713097439,
+    "direction_planck_frame": {
+     "b_deg": 38.086581522048995,
+     "l_deg": 256.6395928834164,
+     "norm": 311.23315479656753
+    },
+    "planck_minus_release_kms": [
+     -0.46393309938982696,
+     0.8094161951227932,
+     -0.877825029148056
+    ]
+   },
+   "MB_bulk|working": {
+    "B_cov_galactic_kms2": [
+     [
+      364.81809189976354,
+      7.806222298708501,
+      -33.98908251289498
+     ],
+     [
+      7.806222298708499,
+      382.1543397432467,
+      69.29177153822123
+     ],
+     [
+      -33.98908251289499,
+      69.29177153822125,
+      250.6261162702437
+     ]
+    ],
+    "B_planck2018_frame_galactic_kms": [
+     82.92516253940279,
+     -255.3862514806456,
+     -23.574439355405154
+    ],
+    "B_release_cmb_frame_galactic_kms": [
+     83.38909538733111,
+     -256.19566804137827,
+     -22.69661343124436
+    ],
+    "amplitude_sd_linear_kms": 19.69260851894819,
+    "direction_planck_frame": {
+     "b_deg": -5.017507797621882,
+     "l_deg": 287.9888666301414,
+     "norm": 269.5449391445582
+    },
+    "planck_minus_release_kms": [
+     -0.46393284792831935,
+     0.8094165607326715,
+     -0.8778259241607955
+    ]
+   },
+   "MB_bulk|working_plus_calibration": {
+    "B_cov_galactic_kms2": [
+     [
+      369.27540201555416,
+      -1.2098649868586264,
+      -30.004825606808808
+     ],
+     [
+      -1.2098649868586189,
+      419.6901272374825,
+      63.373763247175944
+     ],
+     [
+      -30.0048256068088,
+      63.37376324717593,
+      273.01584890250024
+     ]
+    ],
+    "B_planck2018_frame_galactic_kms": [
+     89.07217112701285,
+     -275.10422809748195,
+     -12.851832136713668
+    ],
+    "B_release_cmb_frame_galactic_kms": [
+     89.53610390776619,
+     -275.91364452635946,
+     -11.974006229471968
+    ],
+    "amplitude_sd_linear_kms": 20.520384638335997,
+    "direction_planck_frame": {
+     "b_deg": -2.5448183092228174,
+     "l_deg": 287.9407132159979,
+     "norm": 289.45009513845645
+    },
+    "planck_minus_release_kms": [
+     -0.4639327807533391,
+     0.8094164288775119,
+     -0.8778259072417001
+    ]
+   },
+   "MB_bulk|working|exact_relativistic_planck2018_redshifts": {
+    "B_planck2018_frame_galactic_kms": [
+     82.09353475567673,
+     -260.9826560230381,
+     -16.447856467295964
+    ],
+    "direction_planck_frame": {
+     "b_deg": -3.440407455262561,
+     "l_deg": 287.46125632429977,
+     "norm": 274.08361347568683
+    },
+    "note": "bulk re-fitted after converting every heliocentric Vh exactly with the Planck 2018 beta (registry)"
+   }
+  },
+  "cmb": {
+   "beta_galactic": [
+    -8.555670324713574e-05,
+    -0.0008168976974525516,
+    0.0009203596418430745
+   ],
+   "beta_icrs": [
+    -0.0011975067767736774,
+    0.0002558073028548232,
+    -0.00014914359287132142
+   ],
+   "cov_galactic": [
+    [
+     2.5621466959466866e-14,
+     7.20916200283344e-15,
+     -9.67200087571747e-15
+    ],
+    [
+     7.209162002833438e-15,
+     9.369969705367853e-14,
+     -9.234852378907173e-14
+    ],
+    [
+     -9.67200087571747e-15,
+     -9.234852378907173e-14,
+     1.1563310970438718e-13
+    ]
+   ],
+   "cov_icrs": [
+    [
+     1.8787884549453433e-13,
+     -3.64687291528114e-14,
+     2.2724636743714056e-14
+    ],
+    [
+     -3.6468729152811404e-14,
+     2.860549033606992e-14,
+     1.4177226311006481e-15
+    ],
+    [
+     2.2724636743714072e-14,
+     1.4177226311006481e-15,
+     1.846993788692784e-14
+    ]
+   ],
+   "direction": {
+    "b_deg": 48.253,
+    "l_deg": 264.02099999999996,
+    "norm": 0.001233573535670781
+   },
+   "key": "planck2018_solar_dipole",
+   "locator": "Planck 2018 results I, A&A 641, A1 (2020), Sect. 5.1 Table 3 (3362.08+-0.99 uK, l=264.021+-0.011, b=48.253+-0.005); T0 Fixsen 2009 ApJ 707 916; repo constants htt/htt/htt/infer/physical_dipole.py",
+   "speed_kms": 369.81604238249406
+  },
+  "registry_release_for_cf4_transforms": "CF4_groups_J_ApJ_944_94_table4"
+ },
+ "git": {
+  "diff_head_sha256": "68355025a0522cde3a0af3a1995f8e67d41869fe07d780ffd110cf17e261df45",
+  "dirty_code_paths": [
+   " M htt/bass/background/tilted_bianchi_state.py",
+   " M htt/bass/transport/bjs_bianchi_vii_h.py",
+   " M htt/bass/transport/coupled_einstein_boltzmann.py",
+   " M htt/bass/transport/hybrid_los_transfer.py",
+   " M htt/bass/transport/test_bjs_bianchi_vii_h.py",
+   " M htt/bass/transport/test_hybrid_los_transfer.py",
+   " M scripts/r107_cloud/acquisition.py",
+   " M tests/r107_cloud/test_acquisition.py",
+   "?? htt/bass/background/test_compensating_tilt_root.py",
+   "?? htt/bass/transport/hybrid_los_parallel.py",
+   "?? htt/bass/transport/test_hybrid_los_parallel.py",
+   "?? htt/obsstat/catalogue_frame_registry.py",
+   "?? scripts/r108/__init__.py",
+   "?? scripts/r108/build_results.py",
+   "?? scripts/r108/cf4_2mpp_field.py",
+   "?? scripts/r108/cf4_acquire.py",
+   "?? scripts/r108/cf4_cf3_table3_overlap.py",
+   "?? scripts/r108/cf4_kband_contrast.py",
+   "?? scripts/r108/cf4_receipts.py",
+   "?? scripts/r108/commander_splits.py",
+   "?? scripts/r108/commander_status.py",
+   "?? scripts/r108/common.py",
+   "?? scripts/r108/f2_coupled_los.py",
+   "?? scripts/r108/frame_cf4_joint.py",
+   "?? scripts/r108/frame_input_receipts.py",
+   "?? scripts/r108/frame_lie_flux.py",
+   "?? scripts/r108/frame_registry_build.py",
+   "?? scripts/r108/frame_w1tf_joint.py",
+   "?? scripts/r108/gaia_acquire.py",
+   "?? scripts/r108/gaia_agn_split.py",
+   "?? scripts/r108/gaia_cmdlog.py",
+   "?? scripts/r108/gaia_estimator.py",
+   "?? scripts/r108/gaia_frame_leakage.py",
+   "?? scripts/r108/gaia_input_receipts.py",
+   "?? scripts/r108/gaia_scan_null.py",
+   "?? scripts/r108/gaia_scanlaw.py",
+   "?? scripts/r108/gaia_summary.py",
+   "?? scripts/r108/gaia_supersede.py",
+   "?? scripts/r108/radio_cmdlog.py",
+   "?? scripts/r108/radio_input_receipts.py",
+   "?? scripts/r108/radio_p_of_c1.py",
+   "?? scripts/r108/radio_racs_dipole.py",
+   "?? scripts/r108/radio_racs_fetch.py",
+   "?? scripts/r108/radio_summary.py",
+   "?? scripts/r108/radio_theory_c1.py",
+   "?? scripts/r108/radio_v3_diag.py",
+   "?? scripts/r108/review_r107_claims.py",
+   "?? scripts/r108/s1_family_atlas.py",
+   "?? scripts/r108/s4_aggregate.py",
+   "?? scripts/r108/s4_bjs_comparator.py",
+   "?? scripts/r108/s4_cmdlog.py",
+   "?? scripts/r108/s4_lit_fetch.py",
+   "?? scripts/r108/s4_posthoc_checks.py",
+   "?? scripts/r108/s5_photon_moments.py",
+   "?? scripts/r108/s6_b03_templates.py",
+   "?? scripts/r108/s7_los_performance.py",
+   "?? scripts/r108/s8_cmdlog.py",
+   "?? scripts/r108/s8_lowz_feasibility.py",
+   "?? scripts/r108/s8_lowz_tau.py",
+   "?? scripts/r108/s8_replay_compare.py",
+   "?? scripts/r108/s8_uvb_vo_probe.py",
+   "?? tests/obsstat/test_r108_cf4_2mpp.py",
+   "?? tests/obsstat/test_r108_cf4_acquire.py",
+   "?? tests/obsstat/test_r108_cf4_cf3_overlap.py",
+   "?? tests/obsstat/test_r108_cf4_kband.py",
+   "?? tests/obsstat/test_r108_cf4_receipts.py",
+   "?? tests/obsstat/test_r108_frame_cf4_joint.py",
+   "?? tests/obsstat/test_r108_frame_lie_flux.py",
+   "?? tests/obsstat/test_r108_frame_registry.py",
+   "?? tests/obsstat/test_r108_gaia_acquire.py",
+   "?? tests/obsstat/test_r108_gaia_agn_split.py",
+   "?? tests/obsstat/test_r108_gaia_estimator.py",
+   "?? tests/obsstat/test_r108_gaia_frame_leakage.py",
+   "?? tests/obsstat/test_r108_gaia_scan_null.py",
+   "?? tests/obsstat/test_r108_gaia_scanlaw.py",
+   "?? tests/obsstat/test_r108_gaia_supersede.py",
+   "?? tests/obsstat/test_r108_radio_input_receipts.py",
+   "?? tests/obsstat/test_r108_radio_p_of_c1.py",
+   "?? tests/obsstat/test_r108_radio_racs_dipole.py",
+   "?? tests/obsstat/test_r108_radio_theory_c1.py",
+   "?? tests/obsstat/test_r108_s4_rotation_fitter.py",
+   "?? tests/obsstat/test_r108_s6_kernel.py",
+   "?? tests/obsstat/test_r108_s8_lowz_tau.py"
+  ],
+  "dirty_code_sha256": {
+   "htt/bass/background/test_compensating_tilt_root.py": "cbdd64e0b7a536464a25c8fd7f759c2ddc4f94dfadb77ed0abf9647e338b0584",
+   "htt/bass/background/tilted_bianchi_state.py": "dd6bd75fb358b3c738d555414471066d14f40707ee43bd4afed683f07f7a7b2f",
+   "htt/bass/transport/bjs_bianchi_vii_h.py": "1b7e9c72ab1cb9f66bc9c2996c58e53b82bff572e4a27fefd42a15b609ddfd9e",
+   "htt/bass/transport/coupled_einstein_boltzmann.py": "b564041da20eb830a6099960909f7236a2dfae977842ebcb1d04629cbe25c56a",
+   "htt/bass/transport/hybrid_los_parallel.py": "85b40325ef1c0e2b8695bf846eb944e90deb0598f4dab3a8b60b6b17ae49d9f3",
+   "htt/bass/transport/hybrid_los_transfer.py": "96744df0f361d4c07aee3e30016450072d797df13c2bee57919c2a9cb66810db",
+   "htt/bass/transport/test_bjs_bianchi_vii_h.py": "b7709ab0bc3b7878f3b6778c00643038dd5aaedc27b377a27c99335633c119ac",
+   "htt/bass/transport/test_hybrid_los_parallel.py": "14a68cf9aba2e7e79d05771e99cc7637eaee6644af3c73eaf5b8a3ab69289bef",
+   "htt/bass/transport/test_hybrid_los_transfer.py": "42040c8514df07cdfb36eb79c494c9ccecedaea89c27baab1c2cdcbefd007505",
+   "htt/obsstat/catalogue_frame_registry.py": "f69967dddaeaa52f801a1e1662dbe12a5c5c9d51ffa8fb04feae526cab5d4298",
+   "scripts/r107_cloud/acquisition.py": "97037c43513c7c7973a6941781c26d3407da6cae1a31a1f2770ef6711ce833db",
+   "scripts/r108/__init__.py": "8d579afbf258026e1054383aed56826844a30771b57e9cb3eea11f72464079bc",
+   "scripts/r108/build_results.py": "c1f71936d542cb9a55811e9a8c33cbade1037e1cc1f0dd544741b09c54a1c29d",
+   "scripts/r108/cf4_2mpp_field.py": "6b24f23caf5f1f5bae3b7b48874947457d9c1da678ab0553e20a0e55feff6e67",
+   "scripts/r108/cf4_acquire.py": "d7510d7c6d27f796eb2898a3791cb2c00c1706244cc2fa339688bf4eba322112",
+   "scripts/r108/cf4_cf3_table3_overlap.py": "c28bc6b941fc56198b95329efd92a83e96d01408a15ae1250a3288bcb5ab6c06",
+   "scripts/r108/cf4_kband_contrast.py": "7f6f67a4245fae903e6bf79b7ef82cce16baeab61a8799b04f0d4a92df558245",
+   "scripts/r108/cf4_receipts.py": "34cc215af9cca03b4d373648be242d75ab9f936e30e92ad9a56c9dc7c85a041b",
+   "scripts/r108/commander_splits.py": "01926d899d66e06d6831f47346c6449d5face457d72f4af56fe19489fad5643c",
+   "scripts/r108/commander_status.py": "8a9a3a14774ec5ee65036be1442f2a6c4d778733e2199042bb4835fa8460f5fe",
+   "scripts/r108/common.py": "dded5b978a15680df0975cb2921e0931824c27cee7d508ea81721a1ceaaff41e",
+   "scripts/r108/f2_coupled_los.py": "0b60e9fcbb798493fd6aac322433439573ebd582491112f126bcc6ca9a4e14a4",
+   "scripts/r108/frame_cf4_joint.py": "51a39b27428abd53d256f22b442fa22279ec601d9fb68d95f4fc268b009eff21",
+   "scripts/r108/frame_input_receipts.py": "ec599d241d8ed66e95defaf87faebbb82d962b492a738634b3e73aed207cf88e",
+   "scripts/r108/frame_lie_flux.py": "f09a661fd9840f8b3e39e7ffa20bbf10790efc66769c5c3413fe59364151f018",
+   "scripts/r108/frame_registry_build.py": "f05d0b22dae211cc48e9d0d969f1a112b3d1401974b960fc819c33007f2ef4a1",
+   "scripts/r108/frame_w1tf_joint.py": "5899bc805f70096b521a14e11d830b8877f36209f25da2f7fb9dffd44523c274",
+   "scripts/r108/gaia_acquire.py": "b5ce4997fd7bd52a81bc451768c13a6f6de52cae7e7a5bab2b2aca1981eda6e0",
+   "scripts/r108/gaia_agn_split.py": "cf7f5d1f133e1c49330b053123dfafcada4c93233289a083e94bcc0743444dff",
+   "scripts/r108/gaia_cmdlog.py": "eff796ab73f20e224ada67d37c95ba63f6e67cf1a56bbf7eab55558d2a47da4b",
+   "scripts/r108/gaia_estimator.py": "84cdf08db5c8ba4c84d1f5c0be97677b0f51de91610703da79d15f404ebd7402",
+   "scripts/r108/gaia_frame_leakage.py": "b2d7537004954f35e1723562fa6799fd91985c6bcf241fe7ccdf942cad78c454",
+   "scripts/r108/gaia_input_receipts.py": "8a52ee575497ab47f751d1d05a70c0612f19cc64a9d7ef41fce0efd813924f34",
+   "scripts/r108/gaia_scan_null.py": "ad3e7b2cb8b47ad7350d3aeb4b8167909e6fc4dc825b2ede3949bee6d58157f2",
+   "scripts/r108/gaia_scanlaw.py": "a10b2b83bcd028625870d6bc3439d91d2b69bb5a1e2f59123f04fe1feb699a1b",
+   "scripts/r108/gaia_summary.py": "5f236da9f59c5ed43f2baf46f39e6c17dcf0a36a10569fd00674fcb18fa16780",
+   "scripts/r108/gaia_supersede.py": "75d253087aec1d7c91a57bed185023cedf5c11615d1ef41e542308fdf2954560",
+   "scripts/r108/radio_cmdlog.py": "18d83a9d3421348ce149e02d47439b85fd91589be538ff777d87746e134fe0c2",
+   "scripts/r108/radio_input_receipts.py": "5def968ebaa0ab53228d0fd501286fc2fd40bb7c2be563290a563ad2edc31e99",
+   "scripts/r108/radio_p_of_c1.py": "08dd5bcc983c4ceec2153f1c67b6d30ac6a2092d9f34af2fb16fe1c4f32f8570",
+   "scripts/r108/radio_racs_dipole.py": "18f2f4088bb2a086b444d80100709bfb7b3fda65319e4493e41082015c911080",
+   "scripts/r108/radio_racs_fetch.py": "98acf036ae5bc6fbd56161584b992034e1e19cf63480d2aec0192deef8a392c7",
+   "scripts/r108/radio_summary.py": "e8c3ba53d4f2059d40f437a617d508014dfa427c50cc70ab5e5f92280e85f96c",
+   "scripts/r108/radio_theory_c1.py": "8e0bfde578a0f7ca0d13857766e29794ae97d5b7cfddf086d8f0142a7cbe41c6",
+   "scripts/r108/radio_v3_diag.py": "416bbfec06daac2de9641ddd6993bd279f178deb4c30c95506aabe631ae018bf",
+   "scripts/r108/review_r107_claims.py": "cdb61ed26c39dff78ca18cb491aa48b7789c92843c1a8b6e248241895621df97",
+   "scripts/r108/s1_family_atlas.py": "5d70606693bcac06653daa1a917252ce557d551919115aa5b38e1112905a9cbc",
+   "scripts/r108/s4_aggregate.py": "c06616ccf1bc72b416d799ecb41d4ad34f4d0e37ac541655c10a5df99702c572",
+   "scripts/r108/s4_bjs_comparator.py": "7b0ba3ca9a930643481ec371ca2318f015e394010f76440af222814fd1b81d7b",
+   "scripts/r108/s4_cmdlog.py": "eddbeca9f8d8c08f7f89e5450f8c3accede25f0ed9c28037042d8588de707b95",
+   "scripts/r108/s4_lit_fetch.py": "1f74fbb626681f7adfe3b85c61de35e1a95af056c5e21e8e79f6b403301030d6",
+   "scripts/r108/s4_posthoc_checks.py": "be30727555d33751f0c8d0511a98fad6e923782b1da210e804e500f7772ed7b5",
+   "scripts/r108/s5_photon_moments.py": "b1eb89d9e6648fe7d2d0737b48f50b2443b2ef71b2380c27908d1b7558fa88fd",
+   "scripts/r108/s6_b03_templates.py": "8bf0aeeab51bbd2efc92af82aea1829bb4dbaa7a166dff00286bb953cbeef23c",
+   "scripts/r108/s7_los_performance.py": "8bede5caa6342a00c659ad5ebab59e2829fb0b5c93403374a33d4084bc80707c",
+   "scripts/r108/s8_cmdlog.py": "f664ae05bdf77f50c3e8b7242773a1d0b10ee5033778b68c6d97f4f51db1d83a",
+   "scripts/r108/s8_lowz_feasibility.py": "5abca80d2dc8ba64680e7323e72ca619f3eb7aeb31721da471f5972c9f7fd1d6",
+   "scripts/r108/s8_lowz_tau.py": "724c95700c82f00513b4a3061d79a70ec6d2d211ca38732a3d446035a7e2a902",
+   "scripts/r108/s8_replay_compare.py": "a7ba16bfecf70c4f8dbd7e8858e98d387489b47c990754263e788f3d03084a5e",
+   "scripts/r108/s8_uvb_vo_probe.py": "d2c40c8dd4a44001b4826717d9a57f9e5a734fb164b34e20bb7ed0ea78a73c94",
+   "tests/obsstat/test_r108_cf4_2mpp.py": "630204a57bf14620ec3c4b326e86b570bd7995c8f5d06628acf5be21be96888e",
+   "tests/obsstat/test_r108_cf4_acquire.py": "6ef6695a5a9ef1be378619452848bda534dbba113fc9cde82c656673fc6ebdcd",
+   "tests/obsstat/test_r108_cf4_cf3_overlap.py": "f319cdeff11a34d8e64ed8c46f4ebaf4d44b148f03591f8dbb43c343fa8837ca",
+   "tests/obsstat/test_r108_cf4_kband.py": "610302e9736fadb35147d051131c0b7326d89f473498462534cc9bbb3355a975",
+   "tests/obsstat/test_r108_cf4_receipts.py": "5d1620185c6988a0967afae855cea2c4c47cb0f51b20968214b0536ec19b0bf4",
+   "tests/obsstat/test_r108_frame_cf4_joint.py": "a68866f4eda34d81971cd7def89c266c13d835e27f63696af398519674d9d57c",
+   "tests/obsstat/test_r108_frame_lie_flux.py": "66976c8e087d5ed311a5d9b9f0d43d47d281dddab191ab7b2598b1e913f47257",
+   "tests/obsstat/test_r108_frame_registry.py": "94499c9cb941dbb40051dcc1552e6a1cef83ca590bb4f259c5a333a6d25190bc",
+   "tests/obsstat/test_r108_gaia_acquire.py": "f563e84706747f6a68f0b7ee4633976b94e0a063d62106a3450e4a819ab1dfd6",
+   "tests/obsstat/test_r108_gaia_agn_split.py": "2f3db18a458a291dc0c7a8a364242861e1c3b815af200c7626938be494bcefc5",
+   "tests/obsstat/test_r108_gaia_estimator.py": "a1260756f239f90ea1b331dfb221c4f0b0fa5670e3d5292c55ac53013031fac1",
+   "tests/obsstat/test_r108_gaia_frame_leakage.py": "8c8b879c8131a82f1e1c81657b85a9c6ff5b848e2b61bbbb00af8fb625e63e9d",
+   "tests/obsstat/test_r108_gaia_scan_null.py": "66791d9fc9406c1e1b39f454ce7e2e9cd3b90dda93892f3a24c600bbfb0df8db",
+   "tests/obsstat/test_r108_gaia_scanlaw.py": "9bb22d639f9fda641827cfdb7b8acb6d6132188897f5a05f40317fa34a62cad8",
+   "tests/obsstat/test_r108_gaia_supersede.py": "1ff159a166feb1613b5921a7975e5d9e855a261b3ae2ac28f1bd5a54b8200994",
+   "tests/obsstat/test_r108_radio_input_receipts.py": "8671dd32518ce6aa2e67274bbee88bc4e390f66197eda44c9a367b0c2c11e84a",
+   "tests/obsstat/test_r108_radio_p_of_c1.py": "0add58f756d41e04ab224cf5fb8d51a587a166d6796fe74618a24343dd67edc1",
+   "tests/obsstat/test_r108_radio_racs_dipole.py": "e20c96a0001b1b52940ab4fe95fceb7e31319d5e9e9da8d6be3ac485f6e8b9be",
+   "tests/obsstat/test_r108_radio_theory_c1.py": "a8dcbbfffae34d0c25214106c9dff4ad1b3297e52cb1e6c0b3e4470e38f06bca",
+   "tests/obsstat/test_r108_s4_rotation_fitter.py": "c2a736a7763c5343a55afb00c11268c575c4ec2d29401a4fa451759d86f61f2b",
+   "tests/obsstat/test_r108_s6_kernel.py": "72da1c58314cc3056a3b9c9407a9f0f977fc20e0f33e622755b78184ef486fbc",
+   "tests/obsstat/test_r108_s8_lowz_tau.py": "057a0552612c555ebd1c646c49cce3c11a36e54541ce994487d257a1d78e8fbf",
+   "tests/r107_cloud/test_acquisition.py": "fde7b4acaf42a9973e6ae30a5c3559cb4881462498cfb3f4f1eafcdacc0820a6"
+  },
+  "head": "b79b9526b1817cc5946858f5891f7e7b567b87a2"
+ },
+ "inputs": {
+  "CATALOGUE_FRAME_REGISTRY.json": {
+   "path": "docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/FRAME/CATALOGUE_FRAME_REGISTRY.json",
+   "sha256": "ba01791d0a185a2ce3ade33664e610692431f2d0a3a1f07c8fedc0d0a95b5f82"
+  },
+  "CF4_BULK_HDIPOLE_JOINT.json": {
+   "path": "docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/FRAME/CF4_BULK_HDIPOLE_JOINT.json",
+   "sha256": "703431b46ffb1a50e14df2fd90ab8ada76e0e3e0712c6c683dfccde3f7b079cb"
+  },
+  "CROSS_RESULTS.json": {
+   "path": "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/CROSS_RESULTS.json",
+   "sha256": "38d99aec401ad93cd400c0feaa85051c3dfdde3b228e2d998bef2e42f3cd71ae"
+  },
+  "INTEGRATED_DAG.json": {
+   "path": "docs/research_program/observational_publication_20261015/R78_UNIFIED_SCIENCE_DAG_20261119/INTEGRATED_DAG.json",
+   "sha256": "90aba8c1ca9c8e3a7744be0f071dcfe09b81e5353892aca13878191e20f58c11"
+  },
+  "PROVIDER_NVSS_RESULT.json": {
+   "path": "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/RESULTS/PROVIDER_NVSS_RESULT.json",
+   "sha256": "60735aa244272fc4d295813ab644c429c19cedca122bd9b308dcb7da0053806a"
+  },
+  "RADIO_MATCHED_REFITS.json": {
+   "path": "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/RADIO_MATCHED_REFITS.json",
+   "sha256": "5a2eca905b85890ba8d06f8df43fe2e57a9aa1f3bbfb837075519ca8888d3124"
+  }
+ },
+ "interpretation_boundary": "a q difference between frames is a measured frame difference; it is not a detection of a homogeneous tilt (V03/V04) and carries no Bianchi family attribution; the radio proxy is not a frame velocity",
+ "labels": {
+  "codazzi_map_ranks_blind_directions": "NUMERICAL",
+  "codazzi_residual_with_measured_q": "BLOCKED",
+  "flux_scale_table": "CONDITIONAL (CF4 bulk only; Omega_m and unmeasured structure scale / orientation)",
+  "frames_and_differences": "CONDITIONAL (CMB published dipole; CF4 working covariance)",
+  "radio_frame_velocity": "BLOCKED",
+  "radio_proxy_comparisons": "CONDITIONAL (R65 proxy response law; Poisson or jackknife covariance; ICRS z unidentified); a proxy, not a speed"
+ },
+ "measured_differences": {
+  "cf4_q_vs_cmb_dipole_direction_deg": 57.258857227666105,
+  "cf4_q_vs_zero_3dof": {
+   "speed_kms": 269.54493914455827,
+   "wald": 196.14723925179916
+  }
+ },
+ "node": "SQ-LIE-FLUX (handoff A7); PHY-05 blind direction",
+ "radio_count_dipole_proxy": {
+  "covariance_jackknife_nside4_R105": [
+   [
+    1.4490770539598961e-05,
+    -1.0143408786314334e-06
+   ],
+   [
+    -1.0143408786314334e-06,
+    1.862152323693554e-05
+   ]
+  ],
+  "covariance_jackknife_nside8_R105": [
+   [
+    1.196685075135874e-05,
+    -2.3166502133432634e-07
+   ],
+   [
+    -2.3166502133432634e-07,
+    1.553777261702877e-05
+   ]
+  ],
+  "covariance_poisson_R65": [
+   [
+    9.931284016762193e-06,
+    -5.93308456973092e-07
+   ],
+   [
+    -5.93308456973092e-07,
+    1.2385911110366544e-05
+   ]
+  ],
+  "estimator": "R65 ring-conditioned multinomial, provider peak flux bins 20-40/40-80/>=80 mJy, common transverse dipole (ICRS x,y); axial z unidentified",
+  "jackknife4_over_poisson_trace": 1.483712159521483,
+  "log_intensity_dipole_xy": [
+   -0.011580580896326199,
+   0.005704168001074463
+  ],
+  "r65_meaning": [
+   "provider peak-selected unresolved-source proxy; not a physical speed measurement"
+  ],
+  "r65_meaning_locator": "R65_DIPOLE_ANOMALY_20261117/RESULTS/PROVIDER_NVSS_RESULT.json models.provider_peak_dipole.conditional_peak_response_diagnostics[alpha].meaning",
+  "shared_peak_proxy_beta_by_alpha": {
+   "0.5": {
+    "covariance_jackknife4_scaled": [
+     [
+      1.2461411203002347e-06,
+      -8.722875539364389e-08
+     ],
+     [
+      -8.722875539364389e-08,
+      1.6013672816610563e-06
+     ]
+    ],
+    "covariance_poisson": [
+     [
+      8.540451717012263e-07,
+      -5.1024153213602366e-08
+     ],
+     [
+      -5.1024153213602366e-08,
+      1.0651332778975492e-06
+     ]
+    ],
+    "jackknife_scaling": "trace(C_beta,P)/trace(C_d,P) x C_d,jk4",
+    "meaning": "provider peak-selected unresolved-source proxy; not a physical speed measurement",
+    "per_bin_response": [
+     3.2282798662342245,
+     3.360705559409973,
+     3.8161411199095023
+    ],
+    "proxy_beta_xy_icrs": [
+     -0.003384469004578223,
+     0.0017245232856748437
+    ],
+    "proxy_beta_xy_norm": 0.0037985011525318068
+   },
+   "0.75": {
+    "covariance_jackknife4_scaled": [
+     [
+      1.0901165665377758e-06,
+      -7.630717724022502e-08
+     ],
+     [
+      -7.630717724022502e-08,
+      1.4008662216601067e-06
+     ]
+    ],
+    "covariance_poisson": [
+     [
+      7.471134581184752e-07,
+      -4.463580116516642e-08
+     ],
+     [
+      -4.463580116516642e-08,
+      9.317720131721675e-07
+     ]
+    ],
+    "jackknife_scaling": "trace(C_beta,P)/trace(C_d,P) x C_d,jk4",
+    "meaning": "provider peak-selected unresolved-source proxy; not a physical speed measurement",
+    "per_bin_response": [
+     3.432993177273262,
+     3.5874898193116347,
+     4.118831306561086
+    ],
+    "proxy_beta_xy_icrs": [
+     -0.003163768694609929,
+     0.0016169975476023365
+    ],
+    "proxy_beta_xy_norm": 0.003553042839869199
+   },
+   "1.0": {
+    "covariance_jackknife4_scaled": [
+     [
+      9.615974218878494e-07,
+      -6.731095293669848e-08
+     ],
+     [
+      -6.731095293669848e-08,
+      1.2357112885977327e-06
+     ]
+    ],
+    "covariance_poisson": [
+     [
+      6.590326327467006e-07,
+      -3.937361455452055e-08
+     ],
+     [
+      -3.937361455452055e-08,
+      8.219208637820623e-07
+     ]
+    ],
+    "jackknife_scaling": "trace(C_beta,P)/trace(C_d,P) x C_d,jk4",
+    "meaning": "provider peak-selected unresolved-source proxy; not a physical speed measurement",
+    "per_bin_response": [
+     3.6377064883122996,
+     3.8142740792132965,
+     4.421521493212669
+    ],
+    "proxy_beta_xy_icrs": [
+     -0.0029698934171794255,
+     0.0015219777940511103
+    ],
+    "proxy_beta_xy_norm": 0.0033371669594118854
+   }
+  },
+  "status": "PROXY: R65 count-dipole response proxy; not a frame velocity"
+ },
+ "radio_proxy_comparisons": {
+  "radio_count_dipole_proxy_minus_cmb_xy_alpha_0.5": {
+   "angle_xy_deg": 14.942577932613968,
+   "delta_proxy_beta_xy_icrs": [
+    -0.002186962227804546,
+    0.0014687159828200205
+   ],
+   "meaning": "R65: 'provider peak-selected unresolved-source proxy; not a physical speed measurement'. Proxy amplitude compared with the CMB kinematic dipole under the R65 response law; not a speed and not a frame-velocity difference",
+   "proxy_over_cmb_transverse_beta_ratio": 3.1020217661621206,
+   "wald_jackknife4_2dof": 4.923106817368064,
+   "wald_poisson_2dof": 7.28591516164275
+  },
+  "radio_count_dipole_proxy_minus_cmb_xy_alpha_0.75": {
+   "angle_xy_deg": 15.01341228897222,
+   "delta_proxy_beta_xy_icrs": [
+    -0.001966261917836252,
+    0.0013611902447475135
+   ],
+   "meaning": "R65: 'provider peak-selected unresolved-source proxy; not a physical speed measurement'. Proxy amplitude compared with the CMB kinematic dipole under the R65 response law; not a speed and not a frame-velocity difference",
+   "proxy_over_cmb_transverse_beta_ratio": 2.901569798928326,
+   "wald_jackknife4_2dof": 4.619354235526083,
+   "wald_poisson_2dof": 6.839692032814188
+  },
+  "radio_count_dipole_proxy_minus_cmb_xy_alpha_1.0": {
+   "angle_xy_deg": 15.075628361097106,
+   "delta_proxy_beta_xy_icrs": [
+    -0.001772386640405748,
+    0.0012661704911962873
+   ],
+   "meaning": "R65: 'provider peak-selected unresolved-source proxy; not a physical speed measurement'. Proxy amplitude compared with the CMB kinematic dipole under the R65 response law; not a speed and not a frame-velocity difference",
+   "proxy_over_cmb_transverse_beta_ratio": 2.7252761364868503,
+   "wald_jackknife4_2dof": 4.326437358931086,
+   "wald_poisson_2dof": 6.40924511286935
+  }
+ },
+ "runtime_s": 4.693961362005211,
+ "schema": "htt.r108.frame.lie_flux_frames/2"
+}

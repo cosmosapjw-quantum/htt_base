@@ -39,7 +39,9 @@ Scope and failure semantics
 ---------------------------
 * First-order source (the native state) and exact geodesic redshift factor.
 * The emission is truncated at ``source_ell_max``; the discarded norm is measured on
-  every node and the run fails closed above ``max_source_truncation``.
+  every node and the run fails closed above ``max_source_truncation``.  With the
+  automatic choice of ``source_ell_max`` that check is vacuous, so the emission on the
+  top native shell (ell = L_native, L_native >= 4) is checked against the same bound.
 * Geometry is interpolated linearly in N between recorded nodes.  The geodesic
   integration is RK4 with a bounded step; ``max_step`` controls convergence.
 * No family attribution, likelihood or null is made here.
@@ -211,30 +213,75 @@ def history_from_native_states(
                             beta=b, provenance=dict(provenance or {}))
 
 
-def history_from_coupled_result(result, *, op: GeneralLieStokesOperator | None = None) -> LosSourceHistory:
+def history_from_coupled_result(result, *, op: GeneralLieStokesOperator | None = None,
+                                substep_nodes: bool = True) -> LosSourceHistory:
     """Build the history from ``solve_coupled_einstein_boltzmann(..., record_history=True)``.
 
     Requires the LoS keys written by the coupled solver (``stokes_initial``,
     ``stokes_state``, ``baryon_velocity``, ``N_start``, ``geometry_N``, ``geometry14``) in
     the last (converged) Picard record.  Fails closed when they are absent.
+
+    With ``substep_nodes`` (default) the photon states the solver recorded after every
+    optical substep of the cells near the observer (``substep_nodes``, R108) are inserted
+    as additional source nodes with their exact substep depths; the source is then
+    sampled at conserved-anchor depth steps <= max_substep_depth through the visibility
+    peak instead of once per cell.  ``substep_nodes=False`` uses cell ends only (R107).
     """
     hist = getattr(result, "history", None)
-    if not hist or "iterations" not in hist:
+    # The coupled solver stores one record per Picard sweep under "picard_iterations";
+    # the last one is the converged sweep (R108 fix: R107 read a non-existent key).
+    iterations = hist.get("picard_iterations") if isinstance(hist, Mapping) else None
+    if not iterations:
         raise ValueError("coupled result has no recorded history; run with record_history=True")
-    rec = hist["iterations"][-1]
+    # The formal solution applies the full moving-electron gain and the (1 + n.beta) depth;
+    # a native run with rest Thomson plus a first-order dipole source would differ in
+    # physics, not only in discretisation, so it is refused (R108 review R9).
+    if hist.get("include_moving_correction") is not True:
+        raise ValueError("line of sight needs a coupled run with include_moving_correction=True "
+                         f"(history records {hist.get('include_moving_correction')!r})")
+    # With stage_velocity_collision=False the photon cells use one midpoint-velocity stage per
+    # cell and record no substep nodes, while the line of sight applies node velocities: the
+    # comparison would mix two collision discretisations (R108 independent review S-4).
+    if hist.get("stage_velocity_collision") is not True:
+        raise ValueError("line of sight needs a coupled run with stage_velocity_collision=True "
+                         f"(history records {hist.get('stage_velocity_collision')!r})")
+    rec = iterations[-1]
     needed = ("stokes_initial", "stokes_state", "baryon_velocity", "N_start", "geometry_N", "geometry14", "N_end", "delta_tau")
     missing = [k for k in needed if k not in rec]
     if missing:
         raise ValueError(f"coupled history lacks line-of-sight keys {missing}")
     op = GeneralLieStokesOperator(int(result.ell_max)) if op is None else op
-    N = np.concatenate([[float(rec["N_start"])], np.asarray(rec["N_end"], dtype=np.float64)])
-    states = np.concatenate([np.asarray(rec["stokes_initial"])[None, :], np.asarray(rec["stokes_state"])], axis=0)
-    beta = np.asarray(rec["baryon_velocity"], dtype=np.float64)
+    N_end = np.asarray(rec["N_end"], dtype=np.float64)
+    cell_tau = np.asarray(rec["delta_tau"], dtype=np.float64)
+    cell_state = np.asarray(rec["stokes_state"])
+    cell_beta = np.asarray(rec["baryon_velocity"], dtype=np.float64)
+    sub = dict(rec.get("substep_nodes") or {}) if substep_nodes else {}
+    N_list, S_list, B_list, dt_list = [float(rec["N_start"])], [np.asarray(rec["stokes_initial"])], [cell_beta[0]], []
+    n_sub_nodes = 0
+    for c in range(N_end.size):
+        s = sub.get(c)
+        if s is not None and len(s["N"]):
+            d = np.asarray(s["delta_tau"], dtype=np.float64)
+            if d.size != len(s["N"]) + 1 or abs(float(d.sum()) - cell_tau[c]) > 1e-9 * max(cell_tau[c], 1e-300):
+                raise ValueError(f"substep record of cell {c} is inconsistent with the cell depth")
+            N_list.extend(np.asarray(s["N"], dtype=np.float64).tolist())
+            S_list.extend(list(np.asarray(s["state"])))
+            B_list.extend(list(np.asarray(s["baryon_velocity"], dtype=np.float64)))
+            dt_list.extend(d.tolist())
+            n_sub_nodes += len(s["N"])
+        else:
+            dt_list.append(float(cell_tau[c]))
+        N_list.append(float(N_end[c]))
+        S_list.append(cell_state[c])
+        B_list.append(cell_beta[c + 1])
     prov = {"source": "solve_coupled_einstein_boltzmann", "family": getattr(result, "family", None),
             "ell_max_native": int(result.ell_max), "n_cells": int(result.n_cells),
-            "picard_iterations_used": int(getattr(result, "picard_iterations_used", 0))}
-    return history_from_native_states(op, N, states, rec["delta_tau"], rec["geometry_N"], rec["geometry14"],
-                                      beta=beta, provenance=prov)
+            "picard_iterations_used": int(getattr(result, "picard_iterations_used", 0)),
+            "include_moving_correction": True, "stage_velocity_collision": True,
+            "source_nodes": "cell_ends+optical_substeps" if n_sub_nodes else "cell_ends",
+            "n_substep_nodes": int(n_sub_nodes)}
+    return history_from_native_states(op, np.array(N_list), np.array(S_list), np.array(dt_list), rec["geometry_N"],
+                                      rec["geometry14"], beta=np.array(B_list), provenance=prov)
 
 
 def history_window(history: LosSourceHistory, node: int) -> LosSourceHistory:
@@ -301,8 +348,14 @@ def _renormalise(p: np.ndarray, s1: np.ndarray) -> tuple[np.ndarray, np.ndarray]
 
 
 def _rk4_segment(state, N_from: float, N_to: float, geometry_N, geometry14, max_step: float):
-    """Advance (lnE, p, s1) from N_from to N_to (any sign) with uniform RK4 sub-steps."""
-    lnE, p, s1 = state
+    """Advance (Delta, p, s1) from N_from to N_to (any sign) with uniform RK4 sub-steps.
+
+    Delta = ln(E/E_obs) + (N - N_obs) is accumulated directly with the stage rates
+    dDelta/dN = dlnE/dN + 1, which are small; accumulating lnE (of size |N|) and adding N
+    afterwards loses about one ulp of |N| per step (R108 review R4).  Identical in exact
+    arithmetic to the lnE form.
+    """
+    delta, p, s1 = state
     span = N_to - N_from
     n_sub = max(1, int(math.ceil(abs(span) / max_step)))
     h = span / n_sub
@@ -315,12 +368,12 @@ def _rk4_segment(state, N_from: float, N_to: float, geometry_N, geometry14, max_
         k2 = _ray_rhs(p + 0.5 * h * k1[1], s1 + 0.5 * h * k1[2], tm)
         k3 = _ray_rhs(p + 0.5 * h * k2[1], s1 + 0.5 * h * k2[2], tm)
         k4 = _ray_rhs(p + h * k3[1], s1 + h * k3[2], t2)
-        lnE = lnE + (h / 6.0) * (k1[0] + 2 * k2[0] + 2 * k3[0] + k4[0])
+        delta = delta + (h / 6.0) * ((k1[0] + 1.0) + 2 * (k2[0] + 1.0) + 2 * (k3[0] + 1.0) + (k4[0] + 1.0))
         p = p + (h / 6.0) * (k1[1] + 2 * k2[1] + 2 * k3[1] + k4[1])
         s1 = s1 + (h / 6.0) * (k1[2] + 2 * k2[2] + 2 * k3[2] + k4[2])
         p, s1 = _renormalise(p, s1)
         N_cur += h
-    return lnE, p, s1
+    return delta, p, s1
 
 
 def trace_rays(directions: np.ndarray, N_nodes: Sequence[float], geometry_N: Sequence[float], geometry14: np.ndarray,
@@ -328,7 +381,8 @@ def trace_rays(directions: np.ndarray, N_nodes: Sequence[float], geometry_N: Seq
     """Yield (k, n_k, Delta_k, chi_k) backward from the observer node to node 0.
 
     ``directions`` are outward observer sky vectors; n_k = -p is the sky direction of the
-    ray at N_k; Delta_k = ln(E_k/E_obs) + N_k; chi_k rotates e_theta(n_k) into s1.
+    ray at N_k; Delta_k = ln(E_k/E_obs) + (N_k - N_obs) with N_obs the last node (0 to
+    1e-9 by construction of LosSourceHistory); chi_k rotates e_theta(n_k) into s1.
     """
     n_obs = np.asarray(directions, dtype=np.float64)
     n_obs = n_obs / np.linalg.norm(n_obs, axis=1, keepdims=True)
@@ -336,16 +390,16 @@ def trace_rays(directions: np.ndarray, N_nodes: Sequence[float], geometry_N: Seq
     g14 = np.asarray(geometry14, dtype=np.float64)
     Nn = np.asarray(N_nodes, dtype=np.float64)
     e_th, _ = _spherical_screen_basis(n_obs)
-    state = (np.zeros(n_obs.shape[0]), -n_obs.copy(), e_th.copy())
+    state = (np.zeros(n_obs.shape[0]), -n_obs.copy(), e_th.copy())  # (Delta, p, s1) at the observer
     K = Nn.size - 1
     for k in range(K, -1, -1):
         if k < K:
             state = _rk4_segment(state, float(Nn[k + 1]), float(Nn[k]), gN, g14, max_step)
-        lnE, p, s1 = state
+        delta, p, s1 = state
         n_k = -p
         et, ep = _spherical_screen_basis(n_k)
         chi = np.arctan2(np.sum(s1 * ep, axis=1), np.sum(s1 * et, axis=1))
-        yield k, n_k, lnE + float(Nn[k]), chi
+        yield k, n_k, delta + 0.0, chi
 
 
 # ---------------------------------------------------------------- formal solution
@@ -401,6 +455,16 @@ def los_sky(history: LosSourceHistory, directions: np.ndarray, *, source_ell_max
     trunc = max(math.sqrt(sum(val for ell, val in v.items() if ell > source_ell_max) / total) for v in norms)
     if trunc > max_source_truncation:
         raise ValueError(f"emission beyond ell={source_ell_max} has relative norm {trunc:.3e} > {max_source_truncation:.1e}")
+    # Emission on the top native shell signals that the native hierarchy itself cut the
+    # source (e.g. the beta^ell tail of the moving-electron gain).  Rest-electron Thomson
+    # emission stops at ell = 2 and its first-order velocity correction at ell = 3, so the
+    # top shell of a hierarchy with L >= 4 must be empty to max_source_truncation (R108
+    # review R5: the automatic choice of source_ell_max alone can never trip the check above).
+    L_nat = int(history.ell_max_native)
+    top_shell = max(math.sqrt(v.get(L_nat, 0.0) / total) for v in norms)
+    if L_nat >= 4 and top_shell > max_source_truncation:
+        raise ValueError(f"emission on the top native shell ell={L_nat} has relative norm {top_shell:.3e} "
+                         f"> {max_source_truncation:.1e}; raise the native ell_max")
     v_slots = list(idx["V"].values())
     need_v = bool(v_slots) and (float(np.abs(em[:, v_slots]).max()) > 0.0
                                 or float(np.abs(np.asarray(history.initial_state)[v_slots]).max()) > 0.0)
@@ -417,7 +481,10 @@ def los_sky(history: LosSourceHistory, directions: np.ndarray, *, source_ell_max
         T_k, P_k, V_k = _evaluate_native(em[k], idx, n_k, source_ell_max, need_v)
         red = np.exp(-4.0 * delta_k)
         rot = np.exp(-2j * chi_k)
-        F_T = (1.0 + 4.0 * T_k / mu_k) * red
+        # F_T is the source function of 4 T minus the isotropic background 1: the weights of
+        # the isotropic part sum to exactly one, so 1 + 4 T_obs = 1 + sum(...) and the
+        # observed increment is formed without the 1 - 1 cancellation (R108 review R4).
+        F_T = np.expm1(-4.0 * delta_k) + 4.0 * (T_k / mu_k) * red
         F_P = (P_k / mu_k) * red * rot
         F_V = (V_k / mu_k) * red
         if prev is not None:
@@ -433,16 +500,17 @@ def los_sky(history: LosSourceHistory, directions: np.ndarray, *, source_ell_max
         if k == 0:
             x0T, x0P, x0V = _evaluate_native(np.asarray(history.initial_state), idx, n_k, history.ell_max_native, need_v)
             att = np.exp(-tau_acc)
-            accT += att * (1.0 + 4.0 * x0T) * red
+            accT += att * (np.expm1(-4.0 * delta_k) + 4.0 * x0T * red)
             accP += att * x0P * red * rot
             accV += att * x0V * red
             min_tau_pre = float(tau_acc.min())
     diag = {"schema": SCHEMA, "n_nodes": int(K + 1), "n_directions": int(n_dir), "source_ell_max": source_ell_max,
-            "max_source_truncation": float(trunc), "min_total_depth": min_tau_pre,
+            "max_source_truncation": float(trunc), "top_shell_relative_norm": float(top_shell),
+            "min_total_depth": min_tau_pre,
             "initial_state_weight_max": float(math.exp(-min_tau_pre)) if min_tau_pre is not None else None,
             "max_step": float(max_step), "seconds": time.perf_counter() - t0,
             "provenance": dict(history.provenance)}
-    return LosSky(directions=np.asarray(directions, dtype=np.float64), T=0.25 * (accT - 1.0),
+    return LosSky(directions=np.asarray(directions, dtype=np.float64), T=0.25 * accT,
                   Q=accP.real, U=accP.imag, V=accV, diagnostics=diag)
 
 

@@ -1,0 +1,596 @@
+{
+  "schema": "htt.r108.s8.uvb_vo_probe/1",
+  "started_utc": "2026-11-24T01:49:24.778959+00:00",
+  "script": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r108/s8_uvb_vo_probe.py",
+    "sha256": "d2c40c8dd4a44001b4826717d9a57f9e5a734fb164b34e20bb7ed0ea78a73c94"
+  },
+  "versions": {
+    "astroquery": "0.4.11",
+    "pyvo": "1.10.0",
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]"
+  },
+  "vizier": {
+    "vizier.cds.unistra.fr": {
+      "connectivity_get_catalogs_II_246": {
+        "ok": false,
+        "error": "HTTPError: 404 Client Error: Not Found for url: https://vizier.cds.unistra.fr/viz-bin/votable",
+        "wall_s": 1.753
+      },
+      "find_catalogs": {
+        "Haardt Madau": {
+          "ok": true,
+          "result": null,
+          "wall_s": 0.796
+        },
+        "UV background": {
+          "ok": true,
+          "result": null,
+          "wall_s": 0.254
+        },
+        "ionizing background": {
+          "ok": true,
+          "result": null,
+          "wall_s": 0.255
+        },
+        "Faucher-Giguere": {
+          "ok": true,
+          "result": null,
+          "wall_s": 0.255
+        },
+        "Puchwein": {
+          "ok": true,
+          "result": null,
+          "wall_s": 0.259
+        },
+        "Khaire Srianand": {
+          "ok": true,
+          "result": null,
+          "wall_s": 0.246
+        },
+        "quasar luminosity function": {
+          "ok": true,
+          "result": null,
+          "wall_s": 0.251
+        },
+        "mean free path ionizing photons": {
+          "ok": true,
+          "result": null,
+          "wall_s": 0.255
+        },
+        "HeII Lyman alpha forest": {
+          "ok": true,
+          "result": null,
+          "wall_s": 0.252
+        }
+      },
+      "catalog_ids": {
+        "HM12 ApJ 746, 125": {
+          "id": "J/ApJ/746/125",
+          "ok": true,
+          "result": null,
+          "wall_s": 0.256
+        },
+        "FG20 MNRAS 493, 1614": {
+          "id": "J/MNRAS/493/1614",
+          "ok": true,
+          "result": null,
+          "wall_s": 0.248
+        },
+        "P19 MNRAS 485, 47": {
+          "id": "J/MNRAS/485/47",
+          "ok": true,
+          "result": null,
+          "wall_s": 0.397
+        },
+        "KS19 MNRAS 484, 4174": {
+          "id": "J/MNRAS/484/4174",
+          "ok": true,
+          "result": null,
+          "wall_s": 0.247
+        },
+        "Kulkarni+2019 MNRAS 488, 1035": {
+          "id": "J/MNRAS/488/1035",
+          "ok": true,
+          "result": null,
+          "wall_s": 0.248
+        },
+        "Shen+2020 MNRAS 495, 3252": {
+          "id": "J/MNRAS/495/3252",
+          "ok": true,
+          "result": null,
+          "wall_s": 0.248
+        },
+        "Becker+2021 MNRAS 508, 1853": {
+          "id": "J/MNRAS/508/1853",
+          "ok": true,
+          "result": null,
+          "wall_s": 0.25
+        },
+        "Worseck+2014 MNRAS 445, 1745": {
+          "id": "J/MNRAS/445/1745",
+          "ok": true,
+          "result": null,
+          "wall_s": 0.249
+        }
+      }
+    },
+    "vizier.cfa.harvard.edu": {
+      "connectivity_get_catalogs_II_246": {
+        "ok": true,
+        "result": [],
+        "wall_s": 0.005
+      },
+      "find_catalogs": {
+        "Haardt Madau": {
+          "ok": true,
+          "result": {
+            "null": null
+          },
+          "wall_s": 0.001
+        },
+        "UV background": {
+          "ok": true,
+          "result": {
+            "II/59B": "Catalogue of stellar UV fluxes (TD1) (Thompson+ 1978)",
+            "J/ApJ/814/40": "Nearby galaxy filaments with UV obs. (Wakker+, 2015)",
+            "J/ApJ/837/106": "UV background photoionization & photoheating rates (Onorbe+, 2017)",
+            "J/A+A/318/347": "Absorption lines in QSO 0000-2619 (Savaglio+, 1997)",
+            "J/A+A/631/A59": "Fluctuations of UV background from GALEX (Armengot+, 2019)",
+            "J/AJ/168/22": "Faint sources, using Poisson Distribution (Ananthamoorthy+, 2024)",
+            "J/AJ/169/103": "Cosmic UV background spectra with New Horizons (Murthy+, 2025)"
+          },
+          "wall_s": 0.008
+        },
+        "ionizing background": {
+          "ok": true,
+          "result": {
+            "null": null
+          },
+          "wall_s": 0.001
+        },
+        "Faucher-Giguere": {
+          "ok": true,
+          "result": {
+            "null": null
+          },
+          "wall_s": 0.001
+        },
+        "Puchwein": {
+          "ok": true,
+          "result": {
+            "null": null
+          },
+          "wall_s": 0.002
+        },
+        "Khaire Srianand": {
+          "ok": true,
+          "result": {
+            "null": null
+          },
+          "wall_s": 0.001
+        },
+        "quasar luminosity function": {
+          "ok": true,
+          "result": {
+            "J/ApJ/633/630": "Low-mass stars found in CFHTLS (Willott+, 2005)",
+            "J/ApJ/710/1498": "QSO luminosity function at z~4 (Glikman+, 2010)",
+            "J/ApJ/746/169": "Luminosity function of broad-line quasars (Shen+, 2012)",
+            "J/ApJ/755/169": "3<z<5 quasar luminosity function in the COSMOS (Masters+, 2012)",
+            "J/ApJ/764/45": "Luminosity function of broad-line quasars. II. (Kelly+, 2013)",
+            "J/ApJ/768/105": "z~5 QSO luminosity function from SDSS Stripe 82 (McGreer+, 2013)",
+            "J/ApJ/773/14": "BOSS: quasar luminosity function (Ross+, 2013)",
+            "J/ApJ/829/33": "Luminous of high-z QSOs with SDSS and WISE. II (Yang+, 2016)",
+            "J/ApJ/842/87": "Radio luminosity function of FSRQs (Mao+, 2017)",
+            "J/ApJ/871/258": "ELQS in SDSS. III. The full ELQS quasar catalog (Schindler+, 2019)",
+            "J/ApJ/928/172": "3.5<z<5.0 SDSS quasars UV luminosity function (Pan+, 2022)",
+            "J/ApJ/943/67": "PS1 z>5.6 QSO Survey. III. z~6 quasar LF (Schindler+, 2023)",
+            "J/A+A/445/465": "ATCA 18.5 and 22GHz fluxes of Kuehr 5GHz sample (Ricci+, 2006)",
+            "J/A+A/636/A12": "1.4<=z<=5.0 QSOs luminosity function (Retana-Montenegro+, 2020)",
+            "J/AJ/131/2766": "Quasar luminosity function from SDSS-DR3 (Richards+, 2006)",
+            "J/AJ/155/110": "Deep CFHT imaging of VVDS-F22 field. II. Quasars (Yang+, 2018)",
+            "J/AJ/155/131": "z~5 quasar luminosity function from the CFHTLS (McGreer+, 2018)",
+            "J/MNRAS/260/202": "Quasar luminosity function (Hawkins+, 1993)",
+            "J/MNRAS/275/1102": "Evolution of quasar luminosity function (Hawkins+ 1995)",
+            "J/MNRAS/446/2985": "Double-lobed radio sources catalog (van Velzen+, 2015)"
+          },
+          "wall_s": 0.012
+        },
+        "mean free path ionizing photons": {
+          "ok": true,
+          "result": {
+            "null": null
+          },
+          "wall_s": 0.001
+        },
+        "HeII Lyman alpha forest": {
+          "ok": true,
+          "result": {
+            "null": null
+          },
+          "wall_s": 0.001
+        }
+      },
+      "catalog_ids": {
+        "HM12 ApJ 746, 125": {
+          "id": "J/ApJ/746/125",
+          "ok": true,
+          "result": {
+            "null": null
+          },
+          "wall_s": 0.001
+        },
+        "FG20 MNRAS 493, 1614": {
+          "id": "J/MNRAS/493/1614",
+          "ok": true,
+          "result": {
+            "null": null
+          },
+          "wall_s": 0.001
+        },
+        "P19 MNRAS 485, 47": {
+          "id": "J/MNRAS/485/47",
+          "ok": true,
+          "result": {
+            "null": null
+          },
+          "wall_s": 0.001
+        },
+        "KS19 MNRAS 484, 4174": {
+          "id": "J/MNRAS/484/4174",
+          "ok": true,
+          "result": {
+            "null": null
+          },
+          "wall_s": 0.001
+        },
+        "Kulkarni+2019 MNRAS 488, 1035": {
+          "id": "J/MNRAS/488/1035",
+          "ok": true,
+          "result": {
+            "J/MNRAS/488/1035": "AGN UV luminosity function (Kulkarni+, 2019)"
+          },
+          "wall_s": 0.001
+        },
+        "Shen+2020 MNRAS 495, 3252": {
+          "id": "J/MNRAS/495/3252",
+          "ok": true,
+          "result": {
+            "null": null
+          },
+          "wall_s": 0.001
+        },
+        "Becker+2021 MNRAS 508, 1853": {
+          "id": "J/MNRAS/508/1853",
+          "ok": true,
+          "result": {
+            "null": null
+          },
+          "wall_s": 0.001
+        },
+        "Worseck+2014 MNRAS 445, 1745": {
+          "id": "J/MNRAS/445/1745",
+          "ok": true,
+          "result": {
+            "J/MNRAS/445/1745": "Giant Gemini GMOS survey. I. (Worseck+, 2014)"
+          },
+          "wall_s": 0.002
+        }
+      }
+    }
+  },
+  "regtap": {
+    "UV background": {
+      "ok": true,
+      "result": [
+        [
+          "ivo://cds.vizier/iii/280",
+          "Astron low resolution UV spectra"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/422/407",
+          "BVR photometry of MS0302+17"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/562/a88",
+          "QJ0643-5041 UVES spectra"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/566/a115",
+          "XMM sources in NGC1512/1510"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/569/a124",
+          "GUViCS. Ultraviolet Source Catalogs"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/580/a139",
+          "GRB 130606A VLT/X-shooter spectroscopy"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/584/a92",
+          "Galactic Cold Cores. IV. Cold sub-mm sources"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/590/a68",
+          "AGN data and absorption-line measurements"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/603/a81",
+          "Trumpler 14 and 16 in the Carina nebula"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/607/a48",
+          "AGN data and absorption-line measurements"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/609/a37",
+          "875 nearby galaxies multiwavelength photometry"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/618/a184",
+          "SDSS J151349.52+035211.28 Xshooter spectra"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/620/a119",
+          "GRB 161023A light curves and EW"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/627/a95",
+          "Molecular DNM in Chamaeleon CO spectra"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/631/a59",
+          "Fluctuations of UV background from GALEX"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/632/a78",
+          "A case study of the HI content of HCG 16"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/642/a176",
+          "Chemical evolution of dSph galaxy Sextans"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/643/a36",
+          "HI-to-H2 transition in local diffuse ISM dataset"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/646/a57",
+          "VLT/MUSE MACS J0416.1-2403 redshift catalogue"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/669/l15",
+          "Atomic oxygen abundance toward Sgr B2"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/686/a239",
+          "Flare morphology with CHEOPS and TESS"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/706/a58",
+          "Substellar IMF of Trumpler 14 open cluster"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/708/a111",
+          "NIRCAm photometric properties of ONC disks"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/708/a204",
+          "S-PLUS Fornax Project (S+FP)"
+        ],
+        [
+          "ivo://cds.vizier/j/a+as/127/1",
+          "1997 reference of diffuse night sky brightness"
+        ],
+        [
+          "ivo://cds.vizier/j/aj/111/1128",
+          "UV-UBV photometry in NGC 595"
+        ],
+        [
+          "ivo://cds.vizier/j/aj/161/154",
+          "3FGL X-ray Analysis and ML"
+        ],
+        [
+          "ivo://cds.vizier/j/aj/168/22",
+          "Faint sources, using Poisson Distribution"
+        ],
+        [
+          "ivo://cds.vizier/j/aj/169/103",
+          "Cosmic UV background spectra with New Horizons"
+        ],
+        [
+          "ivo://cds.vizier/j/apj/596/768",
+          "Optical depths in 19 QSOs"
+        ]
+      ],
+      "wall_s": 2.959
+    },
+    "ionizing background": {
+      "ok": true,
+      "result": [
+        [
+          "ivo://cds.vizier/j/a+a/343/841",
+          "Imaging of symbiotic stars"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/421/539",
+          "VLT spectroscopy of Tol 1214-277 & Tol 65"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/565/a103",
+          "Anomalous microwave emission in Galactic clouds"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/582/a66",
+          "SABOCA NGC 3603 IRS 9A images"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/588/a45",
+          "R-band polarisation of stars in Gal 110-13 direction"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/590/a68",
+          "AGN data and absorption-line measurements"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/607/a48",
+          "AGN data and absorption-line measurements"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/615/a158",
+          "Data cubes of observed species toward Messier 8"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/617/a136",
+          "LOFAR M51 field low-frequency polarized sources"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/623/a159",
+          "NGC6530 member parameters from Gaia-ESO survey"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/627/a175",
+          "GLOSTAR. Radio Source Catalogue I"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/646/a57",
+          "VLT/MUSE MACS J0416.1-2403 redshift catalogue"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/661/a88",
+          "Gaia/Chandra X-ray sources in Galactic center"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/708/a111",
+          "NIRCAm photometric properties of ONC disks"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/710/a243",
+          "Symbiotic star candidates in inner Galactic disk"
+        ],
+        [
+          "ivo://cds.vizier/j/a+a/713/a237",
+          "The Blue Jay JWST galaxy sample properties"
+        ],
+        [
+          "ivo://cds.vizier/j/aj/111/1128",
+          "UV-UBV photometry in NGC 595"
+        ],
+        [
+          "ivo://cds.vizier/j/aj/126/2125",
+          "SDSS candidate type II quasars"
+        ],
+        [
+          "ivo://cds.vizier/j/aj/136/2136",
+          "HST/ACS Atlas of Great Orion Nebula proplyds"
+        ],
+        [
+          "ivo://cds.vizier/j/aj/139/279",
+          "Outlying HII regions in HI-selected galaxies"
+        ],
+        [
+          "ivo://cds.vizier/j/aj/155/131",
+          "z~5 quasar luminosity function from the CFHTLS"
+        ],
+        [
+          "ivo://cds.vizier/j/aj/169/103",
+          "Cosmic UV background spectra with New Horizons"
+        ],
+        [
+          "ivo://cds.vizier/j/aj/98/1305",
+          "Stellar content of NGC 346"
+        ],
+        [
+          "ivo://cds.vizier/j/apj/571/665",
+          "Analysis of the Ly{alpha} forest at z=0-5. V."
+        ],
+        [
+          "ivo://cds.vizier/j/apj/675/1002",
+          "Proximate damped Ly{alpha} systems in SDSS-DR5"
+        ],
+        [
+          "ivo://cds.vizier/j/apj/682/445",
+          "Spitzer observations of S254-S258"
+        ],
+        [
+          "ivo://cds.vizier/j/apj/714/778",
+          "YSOs in the Serpens Molecular Cloud"
+        ],
+        [
+          "ivo://cds.vizier/j/apj/762/l19",
+          "Quasar pairs spectroscopy"
+        ],
+        [
+          "ivo://cds.vizier/j/apj/764/25",
+          "FUSE spectra analysis of hot subdwarf stars"
+        ],
+        [
+          "ivo://cds.vizier/j/apj/765/47",
+          "Lyman-break galaxies and LAEs at z~3"
+        ]
+      ],
+      "wall_s": 4.041
+    }
+  },
+  "tapvizier": {
+    "tables_of_named_catalogues": {
+      "ok": false,
+      "error": "DALFormatError: ConnectTimeout: HTTPSConnectionPool(host='tapvizier.cds.unistra.fr', port=443): Max retries exceeded with url: /TAPVizieR/tap/sync (Caused by ConnectTimeoutError(<HTTPSConnection(host='tapvizier.cds.unistra.fr', port=443) at 0x748bf99d09e0>, 'Connection to tapvizier.cds.unistra.fr timed out. (connec",
+      "wall_s": 133.658
+    }
+  },
+  "summary": {
+    "vizier_server_reachable": {
+      "vizier.cds.unistra.fr": false,
+      "vizier.cfa.harvard.edu": true
+    },
+    "regtap_ok": {
+      "UV background": true,
+      "ionizing background": true
+    },
+    "tapvizier_ok": false,
+    "vizier_catalogue_ids_returned": [
+      "II/59B",
+      "J/A+A/318/347",
+      "J/A+A/445/465",
+      "J/A+A/631/A59",
+      "J/A+A/636/A12",
+      "J/AJ/131/2766",
+      "J/AJ/155/110",
+      "J/AJ/155/131",
+      "J/AJ/168/22",
+      "J/AJ/169/103",
+      "J/ApJ/633/630",
+      "J/ApJ/710/1498",
+      "J/ApJ/746/169",
+      "J/ApJ/755/169",
+      "J/ApJ/764/45",
+      "J/ApJ/768/105",
+      "J/ApJ/773/14",
+      "J/ApJ/814/40",
+      "J/ApJ/829/33",
+      "J/ApJ/837/106",
+      "J/ApJ/842/87",
+      "J/ApJ/871/258",
+      "J/ApJ/928/172",
+      "J/ApJ/943/67",
+      "J/MNRAS/260/202",
+      "J/MNRAS/275/1102",
+      "J/MNRAS/445/1745",
+      "J/MNRAS/446/2985",
+      "J/MNRAS/488/1035"
+    ],
+    "named_catalogue_ids_found": {
+      "HM12 ApJ 746, 125": false,
+      "FG20 MNRAS 493, 1614": false,
+      "P19 MNRAS 485, 47": false,
+      "KS19 MNRAS 484, 4174": false,
+      "Kulkarni+2019 MNRAS 488, 1035": true,
+      "Shen+2020 MNRAS 495, 3252": false,
+      "Becker+2021 MNRAS 508, 1853": false,
+      "Worseck+2014 MNRAS 445, 1745": true
+    }
+  },
+  "finished_utc": "2026-11-24T01:51:52.199957+00:00"
+}

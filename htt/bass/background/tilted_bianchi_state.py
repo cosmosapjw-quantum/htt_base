@@ -900,9 +900,12 @@ def solve_compensating_tilt_velocity(
         raise CodazziProjectionError(
             f"Cannot source non-zero momentum q={q.tolist()} from species with enthalpy eps+p={w} <= 0"
         )
-    # Solve (1 - v^2) / v = w / q_norm = r  =>  v^2 + r v - 1 = 0 => v = (-r + sqrt(r^2 + 4))/2
+    # Solve (1 - v^2) / v = w / q_norm = r  =>  v^2 + r v - 1 = 0 => v = (-r + sqrt(r^2 + 4))/2.
+    # Evaluated in the algebraically identical form 2 / (r + sqrt(r^2 + 4)): the difference form
+    # cancels catastrophically for small |q|/w (relative error ~ eps * r^2, 0.7%-36% at
+    # |q|/w ~ 1e-8; R108 S4 finding).
     r = w / q_norm
-    v_mag = 0.5 * (-r + math.sqrt(r * r + 4.0))
+    v_mag = 2.0 / (r + math.sqrt(r * r + 4.0))
     if not (0.0 <= v_mag < 1.0):
         raise BetaTruncationError(f"Solved speed invalid: v_mag={v_mag}")
     return (v_mag / q_norm) * q

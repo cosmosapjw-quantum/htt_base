@@ -1,0 +1,3221 @@
+{
+ "claim_ceiling": "no physical Pi/G_F, no family attribution, no calibrated p; CONDITIONAL / NUMERICAL / BLOCKED labels per node",
+ "gap_register_delta": [
+  {
+   "R108": "pairs reduced so far and split-product status in COMMANDER/ACQUISITION_STATUS.json; fewer than 300 pairs.",
+   "canonical_state_R107": "blocked_source",
+   "id": "SQ-CMB-NULL"
+  },
+  {
+   "R108": "frame velocities and Codazzi ranks/blind direction computed in the production sign convention (convention_bridge: D_j sigma^j_i + kappa q_i = 0); constraints.codazzi_constraint_residual and the codazzi_tilt_rhs comment state the opposite sign (owner to reconcile); acceptance blocked (no independent sigma_ab, no group-frame orientation).",
+   "canonical_state_R107": "blocked_source",
+   "id": "SQ-LIE-FLUX"
+  },
+  {
+   "R108": "CODE gap closed for the coupled-solver line of sight (review findings R1, R9 and S-4 fixed; optical-substep source nodes; S4 exact geodesics against the published BJS template pass the pre-registered 0.99 sky correlation). COMPUTE: eight-family atlas at epsilon 2e-4 with S2/S3 tables (S3 rows list every axis above 1e-3). Canonical state unchanged; no DAG acceptance claimed.",
+   "canonical_state_R107": "blocked_external",
+   "id": "SQ-NATIVE"
+  },
+  {
+   "R108": "LoS all-m T/E/B to lmax 256 per family exists (S1); DEPENDENCY on SQ-NATIVE acceptance and qualified nulls remains.",
+   "canonical_state_R107": "pending",
+   "id": "B02"
+  },
+  {
+   "R108": "LoS photon moments exist at the 48 common times (S5); the LoS-minus-hierarchy q/E difference exceeds the hierarchy-minus-fluid difference at every cell count (S5 summary), so the line of sight is not yet an independent check at that level.",
+   "canonical_state_R107": "blocked_source",
+   "id": "SQ-PHOTON-FLUX"
+  },
+  {
+   "R108": "unchanged (depends on SQ-CMB-NULL).",
+   "canonical_state_R107": "pending",
+   "id": "L03"
+  },
+  {
+   "R108": "DATA gap closed (D01/D02/D03 with receipts; CF3 table3 membership by agreeing routes, remainder by position only, CF3_TABLE3_OVERLAP.json); COMPUTE open: the source-level C = N + S_PV + Jcal Sigma_cal Jcal^T + C_sel was not formed.",
+   "canonical_state_R107": "ready_scoped",
+   "id": "SQ-CF4"
+  },
+  {
+   "R108": "unchanged: D04 (2M++ portal) and D05 (Manticore) unreachable (TCP connect timeouts; receipts in cf4/RECEIPTS.jsonl).",
+   "canonical_state_R107": "pending",
+   "id": "H02"
+  },
+  {
+   "R108": "registry built with boost/inverse tests; 2MRS entry and 6dFGSv conversion velocity missing.",
+   "canonical_state_R107": "ready_scoped",
+   "id": "SQ-FRAME"
+  },
+  {
+   "R108": "D08/D09 acquired; scan-law and frame-leakage controls built; D10 blocked (archive async limit); revolution-coherent chromatic systematic unqualified.",
+   "canonical_state_R107": "ready_scoped",
+   "id": "SQ-GAIA"
+  },
+  {
+   "R108": "unchanged (after SQ-GAIA).",
+   "canonical_state_R107": "pending",
+   "id": "K03"
+  },
+  {
+   "R108": "templates projected through the R105 Commander estimator for the S6 orientation basis; no scoring.",
+   "canonical_state_R107": "pending",
+   "id": "B03"
+  },
+  {
+   "R108": "theory C1 bracket and RACS-low empirical C1 exist; every p is CONDITIONAL (RADIO/P_OF_C1_THEORY.json); DAG acceptance (physical k, kappa; overdispersion-reproducing mocks) open.",
+   "canonical_state_R107": "ready_scoped",
+   "id": "SQ-RADIO"
+  },
+  {
+   "R108": "first joint bulk + H-dipole step done on R98 windows (CONDITIONAL); W1 TF step blocked (CDS unavailable).",
+   "canonical_state_R107": "pending",
+   "id": "H05"
+  }
+ ],
+ "git": {
+  "diff_head_sha256": "68355025a0522cde3a0af3a1995f8e67d41869fe07d780ffd110cf17e261df45",
+  "dirty_code_paths": [
+   " M htt/bass/background/tilted_bianchi_state.py",
+   " M htt/bass/transport/bjs_bianchi_vii_h.py",
+   " M htt/bass/transport/coupled_einstein_boltzmann.py",
+   " M htt/bass/transport/hybrid_los_transfer.py",
+   " M htt/bass/transport/test_bjs_bianchi_vii_h.py",
+   " M htt/bass/transport/test_hybrid_los_transfer.py",
+   " M scripts/r107_cloud/acquisition.py",
+   " M tests/r107_cloud/test_acquisition.py",
+   "?? htt/bass/background/test_compensating_tilt_root.py",
+   "?? htt/bass/transport/hybrid_los_parallel.py",
+   "?? htt/bass/transport/test_hybrid_los_parallel.py",
+   "?? htt/obsstat/catalogue_frame_registry.py",
+   "?? scripts/r108/__init__.py",
+   "?? scripts/r108/build_results.py",
+   "?? scripts/r108/cf4_2mpp_field.py",
+   "?? scripts/r108/cf4_acquire.py",
+   "?? scripts/r108/cf4_cf3_table3_overlap.py",
+   "?? scripts/r108/cf4_kband_contrast.py",
+   "?? scripts/r108/cf4_receipts.py",
+   "?? scripts/r108/commander_splits.py",
+   "?? scripts/r108/commander_status.py",
+   "?? scripts/r108/common.py",
+   "?? scripts/r108/f2_coupled_los.py",
+   "?? scripts/r108/frame_cf4_joint.py",
+   "?? scripts/r108/frame_input_receipts.py",
+   "?? scripts/r108/frame_lie_flux.py",
+   "?? scripts/r108/frame_registry_build.py",
+   "?? scripts/r108/frame_w1tf_joint.py",
+   "?? scripts/r108/frame_w1tf_probe.py",
+   "?? scripts/r108/gaia_acquire.py",
+   "?? scripts/r108/gaia_agn_split.py",
+   "?? scripts/r108/gaia_cmdlog.py",
+   "?? scripts/r108/gaia_estimator.py",
+   "?? scripts/r108/gaia_frame_leakage.py",
+   "?? scripts/r108/gaia_input_receipts.py",
+   "?? scripts/r108/gaia_scan_null.py",
+   "?? scripts/r108/gaia_scanlaw.py",
+   "?? scripts/r108/gaia_summary.py",
+   "?? scripts/r108/gaia_supersede.py",
+   "?? scripts/r108/radio_cmdlog.py",
+   "?? scripts/r108/radio_input_receipts.py",
+   "?? scripts/r108/radio_p_of_c1.py",
+   "?? scripts/r108/radio_racs_dipole.py",
+   "?? scripts/r108/radio_racs_fetch.py",
+   "?? scripts/r108/radio_summary.py",
+   "?? scripts/r108/radio_theory_c1.py",
+   "?? scripts/r108/radio_v3_diag.py",
+   "?? scripts/r108/review_r107_claims.py",
+   "?? scripts/r108/s1_family_atlas.py",
+   "?? scripts/r108/s4_aggregate.py",
+   "?? scripts/r108/s4_bjs_comparator.py",
+   "?? scripts/r108/s4_cmdlog.py",
+   "?? scripts/r108/s4_lit_fetch.py",
+   "?? scripts/r108/s4_posthoc_checks.py",
+   "?? scripts/r108/s5_photon_moments.py",
+   "?? scripts/r108/s6_b03_templates.py",
+   "?? scripts/r108/s7_los_performance.py",
+   "?? scripts/r108/s8_cmdlog.py",
+   "?? scripts/r108/s8_lowz_feasibility.py",
+   "?? scripts/r108/s8_lowz_tau.py",
+   "?? scripts/r108/s8_replay_compare.py",
+   "?? scripts/r108/s8_uvb_vo_probe.py",
+   "?? tests/obsstat/test_r108_cf4_2mpp.py",
+   "?? tests/obsstat/test_r108_cf4_acquire.py",
+   "?? tests/obsstat/test_r108_cf4_cf3_overlap.py",
+   "?? tests/obsstat/test_r108_cf4_kband.py",
+   "?? tests/obsstat/test_r108_cf4_receipts.py",
+   "?? tests/obsstat/test_r108_frame_cf4_joint.py",
+   "?? tests/obsstat/test_r108_frame_input_receipts.py",
+   "?? tests/obsstat/test_r108_frame_lie_flux.py",
+   "?? tests/obsstat/test_r108_frame_registry.py",
+   "?? tests/obsstat/test_r108_gaia_acquire.py",
+   "?? tests/obsstat/test_r108_gaia_agn_split.py",
+   "?? tests/obsstat/test_r108_gaia_estimator.py",
+   "?? tests/obsstat/test_r108_gaia_frame_leakage.py",
+   "?? tests/obsstat/test_r108_gaia_scan_null.py",
+   "?? tests/obsstat/test_r108_gaia_scanlaw.py",
+   "?? tests/obsstat/test_r108_gaia_supersede.py",
+   "?? tests/obsstat/test_r108_radio_input_receipts.py",
+   "?? tests/obsstat/test_r108_radio_p_of_c1.py",
+   "?? tests/obsstat/test_r108_radio_racs_dipole.py",
+   "?? tests/obsstat/test_r108_radio_theory_c1.py",
+   "?? tests/obsstat/test_r108_s4_rotation_fitter.py",
+   "?? tests/obsstat/test_r108_s4_summary.py",
+   "?? tests/obsstat/test_r108_s6_kernel.py",
+   "?? tests/obsstat/test_r108_s8_lowz_feasibility.py",
+   "?? tests/obsstat/test_r108_s8_lowz_tau.py"
+  ],
+  "dirty_code_sha256": {
+   "htt/bass/background/test_compensating_tilt_root.py": "cbdd64e0b7a536464a25c8fd7f759c2ddc4f94dfadb77ed0abf9647e338b0584",
+   "htt/bass/background/tilted_bianchi_state.py": "dd6bd75fb358b3c738d555414471066d14f40707ee43bd4afed683f07f7a7b2f",
+   "htt/bass/transport/bjs_bianchi_vii_h.py": "1b7e9c72ab1cb9f66bc9c2996c58e53b82bff572e4a27fefd42a15b609ddfd9e",
+   "htt/bass/transport/coupled_einstein_boltzmann.py": "b564041da20eb830a6099960909f7236a2dfae977842ebcb1d04629cbe25c56a",
+   "htt/bass/transport/hybrid_los_parallel.py": "85b40325ef1c0e2b8695bf846eb944e90deb0598f4dab3a8b60b6b17ae49d9f3",
+   "htt/bass/transport/hybrid_los_transfer.py": "96744df0f361d4c07aee3e30016450072d797df13c2bee57919c2a9cb66810db",
+   "htt/bass/transport/test_bjs_bianchi_vii_h.py": "b7709ab0bc3b7878f3b6778c00643038dd5aaedc27b377a27c99335633c119ac",
+   "htt/bass/transport/test_hybrid_los_parallel.py": "14a68cf9aba2e7e79d05771e99cc7637eaee6644af3c73eaf5b8a3ab69289bef",
+   "htt/bass/transport/test_hybrid_los_transfer.py": "42040c8514df07cdfb36eb79c494c9ccecedaea89c27baab1c2cdcbefd007505",
+   "htt/obsstat/catalogue_frame_registry.py": "f69967dddaeaa52f801a1e1662dbe12a5c5c9d51ffa8fb04feae526cab5d4298",
+   "scripts/r107_cloud/acquisition.py": "97037c43513c7c7973a6941781c26d3407da6cae1a31a1f2770ef6711ce833db",
+   "scripts/r108/__init__.py": "8d579afbf258026e1054383aed56826844a30771b57e9cb3eea11f72464079bc",
+   "scripts/r108/build_results.py": "c1f71936d542cb9a55811e9a8c33cbade1037e1cc1f0dd544741b09c54a1c29d",
+   "scripts/r108/cf4_2mpp_field.py": "6b24f23caf5f1f5bae3b7b48874947457d9c1da678ab0553e20a0e55feff6e67",
+   "scripts/r108/cf4_acquire.py": "d7510d7c6d27f796eb2898a3791cb2c00c1706244cc2fa339688bf4eba322112",
+   "scripts/r108/cf4_cf3_table3_overlap.py": "c28bc6b941fc56198b95329efd92a83e96d01408a15ae1250a3288bcb5ab6c06",
+   "scripts/r108/cf4_kband_contrast.py": "7f6f67a4245fae903e6bf79b7ef82cce16baeab61a8799b04f0d4a92df558245",
+   "scripts/r108/cf4_receipts.py": "b18b79316f9c13614f0065b532ff1f3353ce968e30d9ee3290b16016609d89f1",
+   "scripts/r108/commander_splits.py": "01926d899d66e06d6831f47346c6449d5face457d72f4af56fe19489fad5643c",
+   "scripts/r108/commander_status.py": "8a9a3a14774ec5ee65036be1442f2a6c4d778733e2199042bb4835fa8460f5fe",
+   "scripts/r108/common.py": "dded5b978a15680df0975cb2921e0931824c27cee7d508ea81721a1ceaaff41e",
+   "scripts/r108/f2_coupled_los.py": "0b60e9fcbb798493fd6aac322433439573ebd582491112f126bcc6ca9a4e14a4",
+   "scripts/r108/frame_cf4_joint.py": "51a39b27428abd53d256f22b442fa22279ec601d9fb68d95f4fc268b009eff21",
+   "scripts/r108/frame_input_receipts.py": "ec599d241d8ed66e95defaf87faebbb82d962b492a738634b3e73aed207cf88e",
+   "scripts/r108/frame_lie_flux.py": "f09a661fd9840f8b3e39e7ffa20bbf10790efc66769c5c3413fe59364151f018",
+   "scripts/r108/frame_registry_build.py": "f05d0b22dae211cc48e9d0d969f1a112b3d1401974b960fc819c33007f2ef4a1",
+   "scripts/r108/frame_w1tf_joint.py": "239137f2805a5927dd8398a459212b6b096208aa03483a70a48f19c668d43672",
+   "scripts/r108/frame_w1tf_probe.py": "ae56a67fa55c4b0506aaff3d2096289cc3e1e63e36d186228c5bbc1dc3f50cf0",
+   "scripts/r108/gaia_acquire.py": "b5ce4997fd7bd52a81bc451768c13a6f6de52cae7e7a5bab2b2aca1981eda6e0",
+   "scripts/r108/gaia_agn_split.py": "cf7f5d1f133e1c49330b053123dfafcada4c93233289a083e94bcc0743444dff",
+   "scripts/r108/gaia_cmdlog.py": "eff796ab73f20e224ada67d37c95ba63f6e67cf1a56bbf7eab55558d2a47da4b",
+   "scripts/r108/gaia_estimator.py": "84cdf08db5c8ba4c84d1f5c0be97677b0f51de91610703da79d15f404ebd7402",
+   "scripts/r108/gaia_frame_leakage.py": "b2d7537004954f35e1723562fa6799fd91985c6bcf241fe7ccdf942cad78c454",
+   "scripts/r108/gaia_input_receipts.py": "8a52ee575497ab47f751d1d05a70c0612f19cc64a9d7ef41fce0efd813924f34",
+   "scripts/r108/gaia_scan_null.py": "ad3e7b2cb8b47ad7350d3aeb4b8167909e6fc4dc825b2ede3949bee6d58157f2",
+   "scripts/r108/gaia_scanlaw.py": "a10b2b83bcd028625870d6bc3439d91d2b69bb5a1e2f59123f04fe1feb699a1b",
+   "scripts/r108/gaia_summary.py": "5f236da9f59c5ed43f2baf46f39e6c17dcf0a36a10569fd00674fcb18fa16780",
+   "scripts/r108/gaia_supersede.py": "75d253087aec1d7c91a57bed185023cedf5c11615d1ef41e542308fdf2954560",
+   "scripts/r108/radio_cmdlog.py": "18d83a9d3421348ce149e02d47439b85fd91589be538ff777d87746e134fe0c2",
+   "scripts/r108/radio_input_receipts.py": "5def968ebaa0ab53228d0fd501286fc2fd40bb7c2be563290a563ad2edc31e99",
+   "scripts/r108/radio_p_of_c1.py": "08dd5bcc983c4ceec2153f1c67b6d30ac6a2092d9f34af2fb16fe1c4f32f8570",
+   "scripts/r108/radio_racs_dipole.py": "18f2f4088bb2a086b444d80100709bfb7b3fda65319e4493e41082015c911080",
+   "scripts/r108/radio_racs_fetch.py": "98acf036ae5bc6fbd56161584b992034e1e19cf63480d2aec0192deef8a392c7",
+   "scripts/r108/radio_summary.py": "e8c3ba53d4f2059d40f437a617d508014dfa427c50cc70ab5e5f92280e85f96c",
+   "scripts/r108/radio_theory_c1.py": "8e0bfde578a0f7ca0d13857766e29794ae97d5b7cfddf086d8f0142a7cbe41c6",
+   "scripts/r108/radio_v3_diag.py": "416bbfec06daac2de9641ddd6993bd279f178deb4c30c95506aabe631ae018bf",
+   "scripts/r108/review_r107_claims.py": "cdb61ed26c39dff78ca18cb491aa48b7789c92843c1a8b6e248241895621df97",
+   "scripts/r108/s1_family_atlas.py": "5d70606693bcac06653daa1a917252ce557d551919115aa5b38e1112905a9cbc",
+   "scripts/r108/s4_aggregate.py": "12d14c7c2ca2ca9e15efb0d349c466b6fe858d4cf2f6d2dc896d5446cd418483",
+   "scripts/r108/s4_bjs_comparator.py": "7b0ba3ca9a930643481ec371ca2318f015e394010f76440af222814fd1b81d7b",
+   "scripts/r108/s4_cmdlog.py": "eddbeca9f8d8c08f7f89e5450f8c3accede25f0ed9c28037042d8588de707b95",
+   "scripts/r108/s4_lit_fetch.py": "1f74fbb626681f7adfe3b85c61de35e1a95af056c5e21e8e79f6b403301030d6",
+   "scripts/r108/s4_posthoc_checks.py": "be30727555d33751f0c8d0511a98fad6e923782b1da210e804e500f7772ed7b5",
+   "scripts/r108/s5_photon_moments.py": "b1eb89d9e6648fe7d2d0737b48f50b2443b2ef71b2380c27908d1b7558fa88fd",
+   "scripts/r108/s6_b03_templates.py": "8bf0aeeab51bbd2efc92af82aea1829bb4dbaa7a166dff00286bb953cbeef23c",
+   "scripts/r108/s7_los_performance.py": "8bede5caa6342a00c659ad5ebab59e2829fb0b5c93403374a33d4084bc80707c",
+   "scripts/r108/s8_cmdlog.py": "f664ae05bdf77f50c3e8b7242773a1d0b10ee5033778b68c6d97f4f51db1d83a",
+   "scripts/r108/s8_lowz_feasibility.py": "1a1c69aeb1edb85aff0fb930657eb37068bc8c46fd768ce25d671bce2c337aeb",
+   "scripts/r108/s8_lowz_tau.py": "724c95700c82f00513b4a3061d79a70ec6d2d211ca38732a3d446035a7e2a902",
+   "scripts/r108/s8_replay_compare.py": "a7ba16bfecf70c4f8dbd7e8858e98d387489b47c990754263e788f3d03084a5e",
+   "scripts/r108/s8_uvb_vo_probe.py": "d2c40c8dd4a44001b4826717d9a57f9e5a734fb164b34e20bb7ed0ea78a73c94",
+   "tests/obsstat/test_r108_cf4_2mpp.py": "630204a57bf14620ec3c4b326e86b570bd7995c8f5d06628acf5be21be96888e",
+   "tests/obsstat/test_r108_cf4_acquire.py": "6ef6695a5a9ef1be378619452848bda534dbba113fc9cde82c656673fc6ebdcd",
+   "tests/obsstat/test_r108_cf4_cf3_overlap.py": "f319cdeff11a34d8e64ed8c46f4ebaf4d44b148f03591f8dbb43c343fa8837ca",
+   "tests/obsstat/test_r108_cf4_kband.py": "610302e9736fadb35147d051131c0b7326d89f473498462534cc9bbb3355a975",
+   "tests/obsstat/test_r108_cf4_receipts.py": "4ff0beae6f7b1dbe8d1b070b1820b3bfed1928d461a2fca3f8b5ce7ac633fe20",
+   "tests/obsstat/test_r108_frame_cf4_joint.py": "a68866f4eda34d81971cd7def89c266c13d835e27f63696af398519674d9d57c",
+   "tests/obsstat/test_r108_frame_input_receipts.py": "05a0bae97fbf87097843b2ddefe416e3783355a25e904697347253ec54eb8721",
+   "tests/obsstat/test_r108_frame_lie_flux.py": "66976c8e087d5ed311a5d9b9f0d43d47d281dddab191ab7b2598b1e913f47257",
+   "tests/obsstat/test_r108_frame_registry.py": "94499c9cb941dbb40051dcc1552e6a1cef83ca590bb4f259c5a333a6d25190bc",
+   "tests/obsstat/test_r108_gaia_acquire.py": "f563e84706747f6a68f0b7ee4633976b94e0a063d62106a3450e4a819ab1dfd6",
+   "tests/obsstat/test_r108_gaia_agn_split.py": "2f3db18a458a291dc0c7a8a364242861e1c3b815af200c7626938be494bcefc5",
+   "tests/obsstat/test_r108_gaia_estimator.py": "a1260756f239f90ea1b331dfb221c4f0b0fa5670e3d5292c55ac53013031fac1",
+   "tests/obsstat/test_r108_gaia_frame_leakage.py": "8c8b879c8131a82f1e1c81657b85a9c6ff5b848e2b61bbbb00af8fb625e63e9d",
+   "tests/obsstat/test_r108_gaia_scan_null.py": "66791d9fc9406c1e1b39f454ce7e2e9cd3b90dda93892f3a24c600bbfb0df8db",
+   "tests/obsstat/test_r108_gaia_scanlaw.py": "9bb22d639f9fda641827cfdb7b8acb6d6132188897f5a05f40317fa34a62cad8",
+   "tests/obsstat/test_r108_gaia_supersede.py": "1ff159a166feb1613b5921a7975e5d9e855a261b3ae2ac28f1bd5a54b8200994",
+   "tests/obsstat/test_r108_radio_input_receipts.py": "8671dd32518ce6aa2e67274bbee88bc4e390f66197eda44c9a367b0c2c11e84a",
+   "tests/obsstat/test_r108_radio_p_of_c1.py": "0add58f756d41e04ab224cf5fb8d51a587a166d6796fe74618a24343dd67edc1",
+   "tests/obsstat/test_r108_radio_racs_dipole.py": "e20c96a0001b1b52940ab4fe95fceb7e31319d5e9e9da8d6be3ac485f6e8b9be",
+   "tests/obsstat/test_r108_radio_theory_c1.py": "a8dcbbfffae34d0c25214106c9dff4ad1b3297e52cb1e6c0b3e4470e38f06bca",
+   "tests/obsstat/test_r108_s4_rotation_fitter.py": "c2a736a7763c5343a55afb00c11268c575c4ec2d29401a4fa451759d86f61f2b",
+   "tests/obsstat/test_r108_s4_summary.py": "7070033a99d8f4e8eb2bba74aef77bb1c2015bc050b67e31def8dea3fc54f154",
+   "tests/obsstat/test_r108_s6_kernel.py": "72da1c58314cc3056a3b9c9407a9f0f977fc20e0f33e622755b78184ef486fbc",
+   "tests/obsstat/test_r108_s8_lowz_feasibility.py": "d28006c352d9685142a15d88e327a5f5f2ba9f0ef63956e6f57bc08562e9d708",
+   "tests/obsstat/test_r108_s8_lowz_tau.py": "057a0552612c555ebd1c646c49cce3c11a36e54541ce994487d257a1d78e8fbf",
+   "tests/r107_cloud/test_acquisition.py": "fde7b4acaf42a9973e6ae30a5c3559cb4881462498cfb3f4f1eafcdacc0820a6"
+  },
+  "head": "b79b9526b1817cc5946858f5891f7e7b567b87a2"
+ },
+ "nodes": {
+  "B03 (preparation only)": [
+   {
+    "bytes": 11209,
+    "file": "SOLVER/S6_B03_TEMPLATES.json",
+    "present": true,
+    "sha256": "990a0649439a4052a265f8cc8a4482f0503042a54c3791fa62aabbd5895c781f"
+   }
+  ],
+  "F0-F3 (cloud integration)": [
+   {
+    "bytes": 7704,
+    "file": "REVIEW/CLOUD_DIFF_REVIEW.json",
+    "present": true,
+    "sha256": "7762cf16f3550b19ee036257782dc951a7e02ac0e5ca4923886cae01fa34fb8d"
+   },
+   {
+    "bytes": 15271,
+    "file": "REVIEW/R107_CLAIM_CHECK.json",
+    "present": true,
+    "sha256": "d5cefcd32e5b1c3b1de00024363c7484e1d899aa4b9f7021af9e89809d7fc931"
+   },
+   {
+    "bytes": 153969,
+    "file": "F2_COUPLED_LOS.json",
+    "present": true,
+    "sha256": "ddf8e1eeb06bb2e053c7cc7f114d2543d310e85d72a62ced7853f9ef243d2e1e"
+   }
+  ],
+  "H02": [
+   {
+    "bytes": 17500,
+    "file": "CF4/TWOMPP_FIELD.json",
+    "present": true,
+    "sha256": "0b2653fc13f5f19730e4f2a0ab9274c2e949fa779e9e947c001a8f76114ff0ca"
+   }
+  ],
+  "H05": [
+   {
+    "bytes": 69832,
+    "file": "FRAME/CF4_BULK_HDIPOLE_JOINT.json",
+    "present": true,
+    "sha256": "703431b46ffb1a50e14df2fd90ab8ada76e0e3e0712c6c683dfccde3f7b079cb"
+   },
+   {
+    "bytes": 15587,
+    "file": "FRAME/W1TF_BULK_HDIPOLE_JOINT.json",
+    "present": true,
+    "sha256": "1ab7fac1c8903d5d18fd6e198b18174c86377047c220df46a6a3d7f32523515b"
+   },
+   {
+    "bytes": 27090,
+    "file": "FRAME/W1TF_CATALOGUE_PROBE.json",
+    "present": true,
+    "sha256": "c41e0b7de820817be8131011e432731e62e6e9a4d07aaaf33f60e95d5f028770"
+   }
+  ],
+  "REC/REI": [
+   {
+    "bytes": 50438,
+    "file": "REI/S8_REPLAY_COMPARISON.json",
+    "present": true,
+    "sha256": "71c028a1677059c16235e6e29495814b9443329ebc6f95f736b2612e84f418df"
+   },
+   {
+    "bytes": 30183,
+    "file": "REI/S8_LOWZ_TAU.json",
+    "present": true,
+    "sha256": "0077dc2eb96e4ba2af25643d2684945396fa979c3b990e4947395488b3a0af36"
+   },
+   {
+    "bytes": 36747,
+    "file": "REI/S8_LOWZ_FEASIBILITY.json",
+    "present": true,
+    "sha256": "99dc9c08f93a1ae1826eeb41f4366d6d9cb7346d90a29a790f776c59ec55322e"
+   },
+   {
+    "bytes": 17680,
+    "file": "REI/S8_UVB_VO_PROBE.json",
+    "present": true,
+    "sha256": "0d5d2ebc5281843ff49160376830ea1577467a8c693d0718738a9291ea3fc303"
+   }
+  ],
+  "SQ-CF4": [
+   {
+    "bytes": 144089,
+    "file": "CF4/ACQUISITION.json",
+    "present": true,
+    "sha256": "1dfee4e5335c65a7ab1a6af792c9f53353ee68d4be42fc3bb06ab8b7e1bccb73"
+   },
+   {
+    "bytes": 32823,
+    "file": "CF4/CF3_TABLE3_OVERLAP.json",
+    "present": true,
+    "sha256": "8603be271ac32a7caf73548989d313a6141c00458975aa0643dcf0f88f9fb387"
+   },
+   {
+    "bytes": 480827,
+    "file": "CF4/KBAND_CONTRAST.json",
+    "present": true,
+    "sha256": "1090258982fb3c35cca6e3a4c6f940978afcb496151a96c2d9d06286b5e73aef"
+   },
+   {
+    "bytes": 265374,
+    "file": "CF4/KBAND_CONTRAST_CORAS128.json",
+    "present": true,
+    "sha256": "d906538459e4da32a2588a9cc000e0b446fa7b062745fe49f24173665e54cf80"
+   }
+  ],
+  "SQ-CMB-NULL / L03": [
+   {
+    "bytes": 27985,
+    "file": "COMMANDER/MERGED.json",
+    "present": true,
+    "sha256": "d9aa4dd67f45642f819bd261764cf644977a34092d0c0262e419329db9a501fe"
+   },
+   {
+    "file": "COMMANDER/SPLIT_DIFFERENCE.json",
+    "present": false,
+    "reason": "split downloads may not have finished in this round"
+   },
+   {
+    "bytes": 14609,
+    "file": "COMMANDER/ACQUISITION_STATUS.json",
+    "present": true,
+    "sha256": "f4f3c00808750fd0a498468e364a91e2aab8e0d46db8768cc44e51568cda18a5"
+   }
+  ],
+  "SQ-FRAME": [
+   {
+    "bytes": 153888,
+    "file": "FRAME/CATALOGUE_FRAME_REGISTRY.json",
+    "present": true,
+    "sha256": "ba01791d0a185a2ce3ade33664e610692431f2d0a3a1f07c8fedc0d0a95b5f82"
+   }
+  ],
+  "SQ-GAIA / K03": [
+   {
+    "bytes": 57924,
+    "file": "GAIA/GAIA_R108_SUMMARY.json",
+    "present": true,
+    "sha256": "a50061cd5c1ac7434e091ea177c515159e45ea655280d77884e2c3434f5ff04a"
+   },
+   {
+    "bytes": 5655,
+    "file": "GAIA/SCANLAW_PIXEL_STATISTICS.json",
+    "present": true,
+    "sha256": "4274c530f5bb7f81a702deb65f449c50eaa4b35c592116570d68782128c8c4e3"
+   },
+   {
+    "bytes": 18255,
+    "file": "GAIA/SCANLAW_VALIDATION.json",
+    "present": true,
+    "sha256": "938a5a073b355f022a75773510ede8e571b85862da55607e61bc8ef60f493f01"
+   },
+   {
+    "bytes": 101341,
+    "file": "GAIA/SCAN_NULL.json",
+    "present": true,
+    "sha256": "6799e6be6f788a06b315233a985d1964eb265428b02bb47bb0717b9b957e331b"
+   },
+   {
+    "bytes": 14640,
+    "file": "GAIA/SCAN_NULL_CALIBRATION.json",
+    "present": true,
+    "sha256": "95888422a46d03e1f3450b71a6d584fb50195608dddcae802921b4ecc49fd0aa"
+   },
+   {
+    "bytes": 71243,
+    "file": "GAIA/FRAME_LEAKAGE.json",
+    "present": true,
+    "sha256": "276bbc940074e248e9df65159782228ea9cb0e1c55245c4651a6e41b18e2a622"
+   },
+   {
+    "bytes": 25680,
+    "file": "GAIA/AGN_SPLIT.json",
+    "present": true,
+    "sha256": "ec5af28a838f4d99c191adaee08244131b98f5f6bb5bcc07ea1af73237d48fd0"
+   }
+  ],
+  "SQ-LIE-FLUX": [
+   {
+    "bytes": 48990,
+    "file": "FRAME/LIE_FLUX_FRAMES.json",
+    "present": true,
+    "sha256": "ed3eaaf403e903192be19e87730ba854c811c98584ab0b2e7178bf7c9a5a4320"
+   }
+  ],
+  "SQ-NATIVE / B02": [
+   {
+    "bytes": 150993,
+    "file": "SOLVER/S1_ATLAS.json",
+    "present": true,
+    "sha256": "8a40f2a4fc3ef38c9404d7b19842f5daec736f8ac4b32af84c41ab6a4cdf0e72"
+   },
+   {
+    "bytes": 69732,
+    "file": "SOLVER/S2_TRUNCATION.json",
+    "present": true,
+    "sha256": "7ab621374e2aec8ecb24a3c973edd51d941b2ad7d1cce33debeb139adfa2ce4c"
+   },
+   {
+    "bytes": 32853,
+    "file": "SOLVER/S3_CONVERGENCE.json",
+    "present": true,
+    "sha256": "69a3d0bad0f66844247438f96613a8b8ed761c896b46e334f60aa0cd4e1e45c0"
+   },
+   {
+    "bytes": 286191,
+    "file": "SOLVER/S4_BJS_COMPARATOR.json",
+    "present": true,
+    "sha256": "a5959c546f55842813a1e26cf1c479ab83616c6fdb3dcfeeb21ee5f5b5e65ad6"
+   },
+   {
+    "bytes": 16581,
+    "file": "SOLVER/S7_LOS_PERFORMANCE.json",
+    "present": true,
+    "sha256": "feaedc45e6eeee09ad1e07a979465aaa71cb649a5e01003003dbb5cff4f8f7f8"
+   }
+  ],
+  "SQ-PHOTON-FLUX": [
+   {
+    "bytes": 371452,
+    "file": "SOLVER/S5_PHOTON_MOMENTS.json",
+    "present": true,
+    "sha256": "d7647344f71bfc9c3ae66d5704ed9206b25c702653b199b2b49a4e55cb1bf463"
+   }
+  ],
+  "SQ-RADIO": [
+   {
+    "bytes": 59081,
+    "file": "RADIO/SUMMARY.json",
+    "present": true,
+    "sha256": "d21552d1026e4a19b12e0e3e3e7ee0acfad986ac4229d19811b4f8df17dd0d2b"
+   },
+   {
+    "bytes": 51438,
+    "file": "RADIO/THEORY_C1.json",
+    "present": true,
+    "sha256": "358f9dff1955c4a9d88b135096d4d1aff16431eddb102160be512bb3e30f67b5"
+   },
+   {
+    "bytes": 115822,
+    "file": "RADIO/P_OF_C1_THEORY.json",
+    "present": true,
+    "sha256": "eda34529e520928035f73dda118d97f5a28bee8b3e9699ee6ac7ae4d04d1dca4"
+   },
+   {
+    "bytes": 75519,
+    "file": "RADIO/RACS_DIPOLE.json",
+    "present": true,
+    "sha256": "ea7ff4a273d91bf3a24cb97c69f41cd5c160b201d85f8fd6af4bb686d6e6a3f9"
+   },
+   {
+    "bytes": 878,
+    "file": "RADIO/RACS_CASDA_TABLE_VERSIONS.json",
+    "present": true,
+    "sha256": "7baf0422a264c7d1ed7030d6c8593cc37c92943d15fd94b3b88444ad618cac36"
+   },
+   {
+    "bytes": 3075,
+    "file": "RADIO/V3_DIAGNOSTIC.json",
+    "present": true,
+    "sha256": "90042d9627b4d92a171f8ad26c64be998667d7212571077b5199f8f31469255b"
+   }
+  ]
+ },
+ "raw_input_receipts": [
+  {
+   "bytes": 0,
+   "fetched_at_utc": "2026-11-24T01:21:40.982776+00:00",
+   "id": "D01",
+   "name": "J_AJ_152_50_ReadMe",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "status": "FAILED_HTTP_404",
+   "url": "https://cdsarc.cds.unistra.fr/ftp/J/AJ/152/50/ReadMe"
+  },
+  {
+   "bytes": 15946452,
+   "fetched_at_utc": "2026-11-24T01:34:46.450115+00:00",
+   "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+   "id": "D01",
+   "name": "J_AJ_152_50_table3.vot",
+   "query": "-source=J/AJ/152/50/table3\n-out.max=unlimited\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "route": "astroquery.vizier",
+   "rows": {
+    "J/AJ/152/50/table3": 17669
+   },
+   "sha256": "8ff91a41f05458892be2c5dd8a3855b99079c1362c17defba6ca8a2f58b9ffc4",
+   "status": "FETCHED",
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "bytes": 5182516,
+   "fetched_at_utc": "2026-11-24T01:34:50.828675+00:00",
+   "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+   "id": "D01",
+   "name": "J_AJ_152_50_table2.vot",
+   "query": "-source=J/AJ/152/50/table2\n-out.max=unlimited\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "route": "astroquery.vizier",
+   "rows": {
+    "J/AJ/152/50/table2": 11508
+   },
+   "sha256": "17124d39f6a09ba86e5506969a22963c278db7d786ebdeec07d6eea6e20b7e90",
+   "status": "FETCHED",
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "bytes": 1814,
+   "fetched_at_utc": "2026-11-24T01:34:52.321980+00:00",
+   "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+   "id": "D02",
+   "name": "J_MNRAS_445_2677_table1.vot",
+   "query": "-source=J/MNRAS/445/2677/table1\n-out.max=unlimited\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "route": "astroquery.vizier",
+   "rows": {},
+   "sha256": "c0815c1f23d81dfcf8be296e490e2620586ce8cef588c9ce1e12e9dbbc408b61",
+   "status": "FAILED_SERVICE_ERROR",
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "bytes": 1811691,
+   "fetched_at_utc": "2026-11-24T01:35:07.137014+00:00",
+   "final_url": "https://vizier.idia.ac.za/viz-bin/votable",
+   "id": "D02",
+   "name": "J_MNRAS_445_2677_table1.vot",
+   "query": "-source=J/MNRAS/445/2677/table1\n-out.max=unlimited\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "route": "astroquery.vizier",
+   "rows": {
+    "J/MNRAS/445/2677/table1": 8885
+   },
+   "sha256": "3a9fa69ffba01dc32720dcc034b0bfbb8c600a9604ee7fa89ed8fbf8e7371ef4",
+   "status": "FETCHED",
+   "url": "https://vizier.idia.ac.za/viz-bin/votable"
+  },
+  {
+   "bytes": 7464318,
+   "fetched_at_utc": "2026-11-24T01:35:23.577721+00:00",
+   "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+   "id": "D03",
+   "name": "J_MNRAS_443_1231_FPsample.vot",
+   "query": "-source=J/MNRAS/443/1231/FPsample\n-out.max=unlimited\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "route": "astroquery.vizier",
+   "rows": {
+    "J/MNRAS/443/1231/FPsample": 11102
+   },
+   "sha256": "ac12360640076f9fc153c6b44217f50a9eb5836feda9548640ea9c0ada5f84b7",
+   "status": "FETCHED",
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "bytes": 28201181,
+   "fetched_at_utc": "2026-11-24T01:35:38.846504+00:00",
+   "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+   "id": "D03",
+   "name": "VII_259_6dfgs.vot",
+   "query": "-source=VII/259/6dfgs\n-out.max=unlimited\n-out=6dFGS,RAJ2000,DEJ2000,cz,e_cz,q_cz,r_cz,f_cz,PrID,AV,bJmag,rFmag,Target,Nz,Nm,S/G\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "route": "astroquery.vizier",
+   "rows": {
+    "VII/259/6dfgs": 124647
+   },
+   "sha256": "902b06ed9e7d5e34a6d02655cf46fcc65aabfa5fc70f7cf58037ab3f050c6ccb",
+   "status": "FETCHED",
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "bytes": 21392,
+   "fetched_at_utc": "2026-11-24T01:37:15.218615+00:00",
+   "final_url": "https://vizier.idia.ac.za/viz-bin/VizieR?-source=VII/259&-meta.all",
+   "id": "D03",
+   "md5": "449672cc46cff08d9a979bfd324cff84",
+   "name": "vizier_VII_259_meta.html",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "route": "scripts.r107_cloud.acquisition.fetch_file",
+   "sha256": "fd567a5c7e325a47c04de8d6314603289dff99bfe73a496b4bc2335c050c60dd",
+   "status": "FETCHED",
+   "url": "https://vizier.idia.ac.za/viz-bin/VizieR?-source=VII/259&-meta.all"
+  },
+  {
+   "bytes": 36109,
+   "fetched_at_utc": "2026-11-24T01:37:23.154991+00:00",
+   "final_url": "https://vizier.idia.ac.za/viz-bin/VizieR?-source=J/MNRAS/445/2677&-meta.all",
+   "id": "D02",
+   "md5": "a69311cdec55c730dc81bb7a7672be29",
+   "name": "vizier_J_MNRAS_445_2677_meta.html",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "route": "scripts.r107_cloud.acquisition.fetch_file",
+   "sha256": "3a1b1c43cd729dcf8ae0264004f73a77e15ba86a1d3ea3c2ddcdb7311d0c8826",
+   "status": "FETCHED",
+   "url": "https://vizier.idia.ac.za/viz-bin/VizieR?-source=J/MNRAS/445/2677&-meta.all"
+  },
+  {
+   "bytes": 21325,
+   "fetched_at_utc": "2026-11-24T01:37:30.687028+00:00",
+   "final_url": "https://vizier.idia.ac.za/viz-bin/VizieR?-source=J/AJ/152/50&-meta.all",
+   "id": "D01",
+   "md5": "2ee71fcd6abfb36a4c96deba07f2ebc5",
+   "name": "vizier_J_AJ_152_50_meta.html",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "route": "scripts.r107_cloud.acquisition.fetch_file",
+   "sha256": "37e6e2230a5d95ac0331def97c4073f65506163d3afd5e3727c631ce60dc2ea1",
+   "status": "FETCHED",
+   "url": "https://vizier.idia.ac.za/viz-bin/VizieR?-source=J/AJ/152/50&-meta.all"
+  },
+  {
+   "bytes": 22296,
+   "fetched_at_utc": "2026-11-24T01:37:37.941979+00:00",
+   "final_url": "https://vizier.idia.ac.za/viz-bin/VizieR?-source=J/MNRAS/443/1231&-meta.all",
+   "id": "D03",
+   "md5": "805ffec47f943efb48a096c9c4eece62",
+   "name": "vizier_J_MNRAS_443_1231_meta.html",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "route": "scripts.r107_cloud.acquisition.fetch_file",
+   "sha256": "9b82ce1b3674b62ce8f22e900aeeb5f1ee739bc348c90bfc79b3f839327d75c8",
+   "status": "FETCHED",
+   "url": "https://vizier.idia.ac.za/viz-bin/VizieR?-source=J/MNRAS/443/1231&-meta.all"
+  },
+  {
+   "bytes": 0,
+   "fetched_at_utc": "2026-11-24T01:39:02.244420+00:00",
+   "id": "D04",
+   "name": "portal_index.html",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "route": "scripts.r107_cloud.acquisition.fetch_file",
+   "status": "FAILED_EXCEPTION",
+   "url": "https://git.aquila-consortium.org/guilhem_lavaux/cosmicflows-deployer/raw/branch/main/download/index.html"
+  },
+  {
+   "bytes": 0,
+   "fetched_at_utc": "2026-11-24T01:40:41.044429+00:00",
+   "id": "D05",
+   "name": "manticore_local_000.h5,manticore_local_001.h5",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "route": "scripts.r103.manticore_cf4_pv fetch via manticore-data 2.0.1 venv (~/Downloads/htt_r103/manticore-2.0.1-venv)",
+   "status": "FAILED_CONNECT_TIMEOUT",
+   "url": "https://manticore.web.data-2-osu.iap.fr/public-keys.json (manticore-data 2.0.1 public-key step)"
+  },
+  {
+   "bytes": 0,
+   "fetched_at_utc": "2026-11-24T01:55:32.119652+00:00",
+   "id": "D04",
+   "name": "portal_index_attempt2.html",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "route": "scripts.r107_cloud.acquisition.fetch_file",
+   "status": "FAILED_EXCEPTION",
+   "url": "https://git.aquila-consortium.org/guilhem_lavaux/cosmicflows-deployer/raw/branch/main/download/index.html"
+  },
+  {
+   "bytes": 0,
+   "fetched_at_utc": "2026-11-24T01:56:14.097192+00:00",
+   "id": "D04",
+   "name": "probe:git.aquila-consortium.org",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "route": "socket.getaddrinfo + socket.create_connection(443)",
+   "status": "FAILED_TCP_CONNECT",
+   "url": "https://git.aquila-consortium.org/"
+  },
+  {
+   "bytes": 0,
+   "fetched_at_utc": "2026-11-24T01:56:54.751204+00:00",
+   "id": "D04",
+   "name": "probe:cosmicflows.iap.fr",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "route": "socket.getaddrinfo + socket.create_connection(443)",
+   "status": "FAILED_TCP_CONNECT",
+   "url": "https://cosmicflows.iap.fr/"
+  },
+  {
+   "bytes": 0,
+   "fetched_at_utc": "2026-11-24T01:57:34.816257+00:00",
+   "id": "D04",
+   "name": "probe:cosmicflows.uwaterloo.ca",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "route": "socket.getaddrinfo + socket.create_connection(443)",
+   "status": "FAILED_TCP_CONNECT",
+   "url": "https://cosmicflows.uwaterloo.ca/"
+  },
+  {
+   "bytes": 0,
+   "fetched_at_utc": "2026-11-24T01:58:14.882314+00:00",
+   "id": "D04",
+   "name": "probe:www.aquila-consortium.org",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "route": "socket.getaddrinfo + socket.create_connection(443)",
+   "status": "FAILED_TCP_CONNECT",
+   "url": "https://www.aquila-consortium.org/"
+  },
+  {
+   "bytes": 0,
+   "fetched_at_utc": "2026-11-24T01:58:35.535462+00:00",
+   "id": "D04",
+   "name": "probe:manticore.web.data-2-osu.iap.fr",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "route": "socket.getaddrinfo + socket.create_connection(443)",
+   "status": "FAILED_TCP_CONNECT",
+   "url": "https://manticore.web.data-2-osu.iap.fr/"
+  },
+  {
+   "bytes": 0,
+   "fetched_at_utc": "2026-11-24T01:58:56.473263+00:00",
+   "id": "D04",
+   "name": "probe:data-2-osu.iap.fr",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "route": "socket.getaddrinfo + socket.create_connection(443)",
+   "status": "FAILED_TCP_CONNECT",
+   "url": "https://data-2-osu.iap.fr/"
+  },
+  {
+   "bytes": 0,
+   "fetched_at_utc": "2026-11-24T01:58:56.721450+00:00",
+   "id": "D04",
+   "name": "probe:vizier.cfa.harvard.edu",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "route": "socket.getaddrinfo + socket.create_connection(443)",
+   "status": "TCP_CONNECTED",
+   "url": "https://vizier.cfa.harvard.edu/"
+  },
+  {
+   "bytes": 0,
+   "fetched_at_utc": "2026-11-24T02:00:19.732327+00:00",
+   "id": "D01",
+   "name": "tapvizier_table3_count.vot",
+   "query": "SELECT COUNT(*) AS n FROM \"J/AJ/152/50/table3\"",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "route": "pyvo.dal.TAPService",
+   "status": "FAILED_EXCEPTION",
+   "url": "https://tapvizier.cds.unistra.fr/TAPVizieR/tap"
+  },
+  {
+   "bytes": 6302,
+   "fetched_at_utc": "2026-11-24T02:00:30.838241+00:00",
+   "final_url": "http://reg.g-vo.org/tap/sync",
+   "id": "D01",
+   "name": "regtap_D01_D03_tables.vot",
+   "query": "SELECT t.ivoid, t.table_name, t.table_description, t.nrows FROM rr.res_table AS t WHERE t.ivoid IN ('ivo://cds.vizier/j/aj/152/50','ivo://cds.vizier/j/mnras/445/2677','ivo://cds.vizier/vii/259','ivo://cds.vizier/j/mnras/443/1231')",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "route": "pyvo RegTAP",
+   "rows": {
+    "res_table": 8
+   },
+   "sha256": "e337ad29389048c5790f3e96c775ce611f6a053833ca6b7a3f1b6fc59c83fab8",
+   "status": "FETCHED",
+   "url": "http://reg.g-vo.org/tap/sync"
+  },
+  {
+   "bytes": 696070,
+   "id": "PRE_EXISTING",
+   "name": "table1.txt",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "08f3d4b264e28efcb574bea4efa370d66e4f299f8254e21bd04979fb8301a14d",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 8388736,
+   "id": "PRE_EXISTING",
+   "name": "xVelocity.npy",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "50edf12e9dd8a79959071eda57ccd197f2cfba2bae5233210ab6243541aa4643",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 8388736,
+   "id": "PRE_EXISTING",
+   "name": "yVelocity.npy",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "c125f3d97aa8f9ed34110285e018df0849d955b62f0a472cebb34d196e2cb447",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 8388736,
+   "id": "PRE_EXISTING",
+   "name": "zVelocity.npy",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "ae1e0dfadf48c27afcf7f30c53c2e978f7edeab3506c9e446ed7f73770b207d6",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 5037,
+   "id": "PRE_EXISTING",
+   "name": "configuration.hpp",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "73caeb95da7da53e069f9182feb4921c6b0dad7392157810ee1abda5ebe6b181",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 3471262,
+   "id": "PRE_EXISTING",
+   "name": "2MRS_group_member_catalog.dat",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "60cb3ece1aa773cc1263ac9d356b5f200853d465fa1de596ba9993101ea32dfc",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 8422,
+   "id": "PRE_EXISTING",
+   "name": "calibrated_parameters_CR1-50.dat",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "d4c1eceb688d3361aa13f453676da76d87d2c2ed2e90b11d68b70ed961b7a1a5",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 4936,
+   "id": "PRE_EXISTING",
+   "name": "cosmology.cpp",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "0f72bacc50185b1e6b570b71082806a76c68b9a4cc1e5775dc8757cad651a429",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 40934,
+   "id": "PRE_EXISTING",
+   "name": "transformations.cpp",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "b3e557d552d218be9e338762459ca6718f792dfc743257556e9131dd8c727e31",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 186915,
+   "id": "PRE_EXISTING",
+   "name": "mean.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "c4e172eb0f5d560b04a9fb39d73e6d3a8460f4f097842d16fee886e94eaf92b3",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 190183,
+   "id": "PRE_EXISTING",
+   "name": "residual_1.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "90084c39ca338f292ba6426c0e6f50ae40bc15171ec7296f79e25421f3961adc",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 188157,
+   "id": "PRE_EXISTING",
+   "name": "residual_2.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "aa975b3fafcab2ce451de24f17c4ce0bd5238dcb03af31c63659b98177110e94",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189883,
+   "id": "PRE_EXISTING",
+   "name": "residual_3.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "1735da95875154b1a793284f06036573df40a3fe3cb74aea5f02840804d7b34a",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 190278,
+   "id": "PRE_EXISTING",
+   "name": "residual_4.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "58265a85dd8a123a7b5b511759bfa4b96e3405225952b60375aa125cce2cbb1b",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189433,
+   "id": "PRE_EXISTING",
+   "name": "residual_5.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "bc7b055b2edcb1f54f5aa02c025056275485826ec4a8591e36f6d21468ef2b08",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189807,
+   "id": "PRE_EXISTING",
+   "name": "residual_6.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "b066aa1ba8efbea445d0d51f3718e9e006394d59b8778a21f0a6d30dc0628610",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 191121,
+   "id": "PRE_EXISTING",
+   "name": "residual_7.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "eae6c304796b2f2b02689f032720f4ff83264c8c286676bf0315a2de0d7d6fc5",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 190332,
+   "id": "PRE_EXISTING",
+   "name": "residual_8.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "9a96dad264434e671e8aedac79f6c833f3483d675ff7064860c08f836d61f281",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 2296,
+   "id": "PRE_EXISTING",
+   "name": "run.json",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "93d648a3f7c4439c17c15dfb111c8a33e8365d46e90b318469dbeb73afb0d363",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 549314,
+   "id": "PRE_EXISTING",
+   "name": "sites.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "be813eae09f87d569ef6af31934f7e6ffe58740d7c1cc681dc6a22067b15bc6f",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 11272,
+   "id": "PRE_EXISTING",
+   "name": "CF4_MARKS128.json",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "0b0ba74933184cdef8fc82e77b5a0e741ed11ca22046316c455b2eaa3835318a",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 1718997,
+   "id": "PRE_EXISTING",
+   "name": "SIXDF_CF3_2MRS_CROSSTABLE.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "38283acb2d4a2504908c68699b4862501f4871cf68b749e1ae59bd2ff6b881de",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 187010,
+   "id": "PRE_EXISTING",
+   "name": "mean.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "17be9e05847de18ce23393e2d1d23e6571dcf48d29a8c95b25c0155dd06903eb",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189439,
+   "id": "PRE_EXISTING",
+   "name": "residual_1.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "8a4c1baba55fe6d57ee86f7b30ea8a8f1057597b4f2dc3006efc3cb87c9cbd03",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 188981,
+   "id": "PRE_EXISTING",
+   "name": "residual_10.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "a816469ec49291bc3eabf45cec2141f1f7af8509c1529c8c981ed2d4c5b5afab",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 190135,
+   "id": "PRE_EXISTING",
+   "name": "residual_100.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "e1ea1244602a06f0d2118a192aa1207792645c27202832daa8ac04e72b80d95a",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 190175,
+   "id": "PRE_EXISTING",
+   "name": "residual_101.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "ab84e1f17e1cb767b499b874186097f3bf82149626944d10b8d2522834b36134",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 190542,
+   "id": "PRE_EXISTING",
+   "name": "residual_102.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "630b4ff5eadb08367ca641aea7ef5fa9f8dc2a26b85d92d50d9d8f2cff83bb07",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 188230,
+   "id": "PRE_EXISTING",
+   "name": "residual_103.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "fdffd820ebd3d2bad6e6660174601168865a17cdc2c037138d4c29fc35a91b68",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 190647,
+   "id": "PRE_EXISTING",
+   "name": "residual_104.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "4e2f40e1bbdd9842e3ec796629ad355905e324bf3c39e77610631e491b1ffbbc",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 188076,
+   "id": "PRE_EXISTING",
+   "name": "residual_105.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "fd9dcc64a9517e50842a54b0157278843b64445fc5101a7beb67457ac279d187",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 188460,
+   "id": "PRE_EXISTING",
+   "name": "residual_106.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "877a280d7c524cd239e1b05b1c2a22209b4241057e611a87f2d2d4d0f095643e",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 191095,
+   "id": "PRE_EXISTING",
+   "name": "residual_107.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "5f402074849fcfeafb68d1bc46a34afadf51f5ef37c76eca0be036d6d5f411ad",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 190232,
+   "id": "PRE_EXISTING",
+   "name": "residual_108.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "52a136d97d7d6c3e1ec0d2386a8fbdc36c8a9dc8630fbc4a80b1c0fcba44e6e2",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 188965,
+   "id": "PRE_EXISTING",
+   "name": "residual_109.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "8ad29ef15f0a93bba48eeebae8b64eb090021e95851d85b0c1be6196ccb2e0e5",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189132,
+   "id": "PRE_EXISTING",
+   "name": "residual_11.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "aa02adc162ec80157d7b2291dbb9706ab2ef45741ec12ffb15aaf3dcec536482",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 187144,
+   "id": "PRE_EXISTING",
+   "name": "residual_110.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "70a19d4fe58049823a0c95c11127bdb275773d05e46f74140380db47c255f7dd",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 191423,
+   "id": "PRE_EXISTING",
+   "name": "residual_111.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "9002dddba05015d7fc8994dfc0ffd850f3d95186dc24c32a84a2333b5f17fc16",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 187633,
+   "id": "PRE_EXISTING",
+   "name": "residual_112.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "279c7be3384cdb3891f25e18c7a3f814c341055ea30c4509e8adb59f6d2ccd36",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189574,
+   "id": "PRE_EXISTING",
+   "name": "residual_113.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "13af6487485f8972bcffa3ab7390329db1caae556bfa8168bfed2873f6cc7652",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 187683,
+   "id": "PRE_EXISTING",
+   "name": "residual_114.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "1b6e4017b1809ed8494ababfce0d6e6a41209441e97b84620ffa61294a745c14",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 188402,
+   "id": "PRE_EXISTING",
+   "name": "residual_115.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "cec0c05159924414adb662f8665376b9ff7a00e52f69faa2b204c79af3963a85",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 186672,
+   "id": "PRE_EXISTING",
+   "name": "residual_116.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "5b208c9add28afb8691e5cff4c17374c6e1cd3b0f7f70740d5299a737cfa6502",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189174,
+   "id": "PRE_EXISTING",
+   "name": "residual_117.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "038e0f1dc3c453d43ceda78a7cfc2fe670f03dae589c4e456c27f9a1a4d68e73",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 190240,
+   "id": "PRE_EXISTING",
+   "name": "residual_118.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "085214c85457213bdc8f638bd27bd476bf1e2d7651814d54b1073b5f688c3cbf",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 187964,
+   "id": "PRE_EXISTING",
+   "name": "residual_119.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "5935f04cf68ca1c84b9bb4a28af36e6f95c77f121a1329fe744301e183f77f2d",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 191107,
+   "id": "PRE_EXISTING",
+   "name": "residual_12.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "cc1f930f9fa31b962f7ce9abada1d314ebdbf29bfd1e13a4d7373d3b4cc0edbb",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 187224,
+   "id": "PRE_EXISTING",
+   "name": "residual_120.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "5a874d29d8764a3288313717bb54225e35addc4a6ec02454dbc830500bc7ad00",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 190842,
+   "id": "PRE_EXISTING",
+   "name": "residual_121.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "67801d3b5292672c8f0e4c61ec2aede085a10bca0496b7a44ae234f55d3963c0",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 188073,
+   "id": "PRE_EXISTING",
+   "name": "residual_122.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "d6b735487b87f18d26ccdab977a35247eeafb55720596d4859ae90ec43d09e22",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 188133,
+   "id": "PRE_EXISTING",
+   "name": "residual_123.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "aa56fba415db969711618f690d62f5319cae942c6ade2076c621ba4cc4c64d96",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 190640,
+   "id": "PRE_EXISTING",
+   "name": "residual_124.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "86dcd05040a8a0ac784783e5527c7ef6641cc1749f2629b1dd090e47a39f6e7b",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 187491,
+   "id": "PRE_EXISTING",
+   "name": "residual_125.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "df20e7bf50acc6e219f51ea42a0db8c0d6f757b1899591fa069c9ec19120e450",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 188604,
+   "id": "PRE_EXISTING",
+   "name": "residual_126.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "7405ea5d7a55d54ed1039f731d48f2f7adc44065e0078f2a5c8f3023331fee62",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 188485,
+   "id": "PRE_EXISTING",
+   "name": "residual_127.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "ca56f02a1eadc82848f7a2c28e64f59adac984fa7712219baad20176b0a27061",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 188822,
+   "id": "PRE_EXISTING",
+   "name": "residual_128.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "d5579b4f3ebd0ca3fb5d9f894a9f313c66f9c7c80611324ed5656e148e52e2b8",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 188794,
+   "id": "PRE_EXISTING",
+   "name": "residual_13.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "40ef07a3a3016ee2dacfc9bc25b685fe4c9bd708e70b4cedec48cdd104ca8311",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 188280,
+   "id": "PRE_EXISTING",
+   "name": "residual_14.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "7bed674bf0bd07f6cd14cdd208a5876822bb0d04facc15cb43d5eb556995dd6a",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 190377,
+   "id": "PRE_EXISTING",
+   "name": "residual_15.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "65669594c5cb314c15556dd146b8f6bd88f6ad8975395fc8239d3775575d8493",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 190279,
+   "id": "PRE_EXISTING",
+   "name": "residual_16.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "3e045265a931fa8a447beb5a2386c1936cfae8cbb1eab4a83c8d2fcbe3194278",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189309,
+   "id": "PRE_EXISTING",
+   "name": "residual_17.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "631478b82f924fffe10236cd7851a3077c9183570e3975e8473cfbedc1e2e618",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189361,
+   "id": "PRE_EXISTING",
+   "name": "residual_18.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "2ce0d8b3fd823005914ecf612cb51ad87d91519e7949fd9390c5098b264c8fa6",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 190329,
+   "id": "PRE_EXISTING",
+   "name": "residual_19.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "8e49bb4277de006646a1cb36e21616af7a78b21798e04437c475cf0156a85d3e",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189404,
+   "id": "PRE_EXISTING",
+   "name": "residual_2.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "1e8e3da71d30807e851fc9ccf02391efaf413167c21b814da0e0c3369fe1f684",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189856,
+   "id": "PRE_EXISTING",
+   "name": "residual_20.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "f8baca8070b3ce2394f43a127be587b1722f74d13dd6a3d76b0eb3e42fce296a",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 187600,
+   "id": "PRE_EXISTING",
+   "name": "residual_21.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "09816cb4442197bcef9f4e463eef2a14c94b66c6dce2bcfa97ab3afc890b1033",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 185523,
+   "id": "PRE_EXISTING",
+   "name": "residual_22.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "fc4c7b1ef46381ef5e71614f14906c9640bd23ea7aeb79e5ecd45a75462c475d",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 192633,
+   "id": "PRE_EXISTING",
+   "name": "residual_23.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "3c1cf3345026eb365e653571fcaf79da7513098ba733c818b44ca23211d623b5",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189695,
+   "id": "PRE_EXISTING",
+   "name": "residual_24.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "5e08124ac474a7589bd853ffecb2eb2ca8df3ac7b3dc594f5877f1c3ea77cf72",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189320,
+   "id": "PRE_EXISTING",
+   "name": "residual_25.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "6d75902d08c6fbe7778d021752334da904829cd896735c7ea572b59ed26f72e3",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189516,
+   "id": "PRE_EXISTING",
+   "name": "residual_26.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "bed6febc5e3c377c692598521266c5655daf6267771c8a85eead8e8123da7438",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189726,
+   "id": "PRE_EXISTING",
+   "name": "residual_27.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "41c484b9c5005527cde0f652262768f728394bed804344cb928337d92d207640",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 186335,
+   "id": "PRE_EXISTING",
+   "name": "residual_28.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "3ecfc15a8e5f2f23a579eab3e7144f509847a468ee6cfb03a7d5ebddef3136e4",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189533,
+   "id": "PRE_EXISTING",
+   "name": "residual_29.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "79ad6d5441b6e78d7995e20dae38d1aeccdbcbcc672b129486a8b94c56bc41e0",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 188144,
+   "id": "PRE_EXISTING",
+   "name": "residual_3.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "326a7cd08bd024e1dc5dce7ca0749fba2333dfd549462263e606b32d568b0262",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189924,
+   "id": "PRE_EXISTING",
+   "name": "residual_30.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "8f011b61fde5495b9ad42b976c03b5e0e17ad2bbec6c92d03d045c47fb34c440",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 186985,
+   "id": "PRE_EXISTING",
+   "name": "residual_31.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "8a0e8c051709dce98127cdb0c11691ccfb7c37d50a17ec52ae5b927c669a2e2b",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 190545,
+   "id": "PRE_EXISTING",
+   "name": "residual_32.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "a4b61a2265fcffc3c60b47965a52c48a88c5221875f3b4e4e3df76438a3a736d",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 188540,
+   "id": "PRE_EXISTING",
+   "name": "residual_33.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "719cba0d4839e88ecea435f8d0f7521994c388c198e84d69cbb74a9480d2dbd2",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 188613,
+   "id": "PRE_EXISTING",
+   "name": "residual_34.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "5751f8f6ea2dfde3bc549ad9d335cc5eb4698f5946df6e2afb7ddeb5cff82176",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 186941,
+   "id": "PRE_EXISTING",
+   "name": "residual_35.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "6bfe9187833430440759ae227f02ab908766b0a341ad7accd17af0d17201f174",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189233,
+   "id": "PRE_EXISTING",
+   "name": "residual_36.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "7e2f849d541e6d66008bc6663eddeeb0dd5d5d296e6c2a0ad74456a7eb831e40",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189691,
+   "id": "PRE_EXISTING",
+   "name": "residual_37.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "1c21164f8aa6fde5978df9c7329b2882c91c5d92f1b86947886bb1d0ce84876d",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189093,
+   "id": "PRE_EXISTING",
+   "name": "residual_38.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "0e4bdc6a1222b0c22971b12d8a3081dde555034297bc14375d80c8c2ca81d615",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 190900,
+   "id": "PRE_EXISTING",
+   "name": "residual_39.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "fd24064c8d3678985755a6d0d56939c4f63b8d265cd680eac2b7fc3ba79781ca",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 190111,
+   "id": "PRE_EXISTING",
+   "name": "residual_4.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "cc3004e1b11c3817c3bfa8b7160c483aa8e298f24d7f43759f4198124c87f62d",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 190655,
+   "id": "PRE_EXISTING",
+   "name": "residual_40.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "3fb6789897d1f72f22af1f088a195c8e1f5829f7dcfe7aa4c5a6bd741db8b2b7",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189006,
+   "id": "PRE_EXISTING",
+   "name": "residual_41.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "ea307eabf39de5985f7f0f9f2437030d50885a9320d98649621d5d82b82d9547",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 187912,
+   "id": "PRE_EXISTING",
+   "name": "residual_42.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "31650ded3d7c66676ff4864686dcde092f6931fab298116a80b99e07689acd16",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189087,
+   "id": "PRE_EXISTING",
+   "name": "residual_43.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "4fd5be867d026aa12135835d3fa8ace03942d3d1eee66ff7e99f05269ba26b02",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 188922,
+   "id": "PRE_EXISTING",
+   "name": "residual_44.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "8b8c078d199c5aa834d28dfa7125e6b436c11b6002e31e77801d4421864acf7a",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 187534,
+   "id": "PRE_EXISTING",
+   "name": "residual_45.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "a4c0fa48a9b0dda9a9371175c76aca8cc49b3213bfb09e575d418d97b27283cd",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 188640,
+   "id": "PRE_EXISTING",
+   "name": "residual_46.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "0d801ad148c5b000eb37bcd055d3c525f74fa8f7d7fd445bfeb6d6ec8d0c1aa4",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 187557,
+   "id": "PRE_EXISTING",
+   "name": "residual_47.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "648221ce316fb5d9740e7755df5d3eec3127f4db3d92bbc1a21db4a6127ddd20",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189186,
+   "id": "PRE_EXISTING",
+   "name": "residual_48.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "1552cb7200e3fc46bf413900e3f932209f61724f9a5d18c9403037077b649083",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 186206,
+   "id": "PRE_EXISTING",
+   "name": "residual_49.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "ff0933db335b25619420c636b62dbde45e4c8540cf56e7466085ddd70b9bcc72",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189495,
+   "id": "PRE_EXISTING",
+   "name": "residual_5.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "98576aabaa9a7186289ca66ce912bad8a939cb14202dfd16a8348c63c46c19d5",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 190217,
+   "id": "PRE_EXISTING",
+   "name": "residual_50.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "4eec01d61f83b35b8165710b4d9c9f8e177e76346666f69bb8a67beeb0f8308f",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 190479,
+   "id": "PRE_EXISTING",
+   "name": "residual_51.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "12009326d21b986b9322f78250e28a686c14715556fd79226134aab6f65a8a33",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 187323,
+   "id": "PRE_EXISTING",
+   "name": "residual_52.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "554c25fb019d9e5e340eb70d1b36855fe272376ce37f5e68636e5521441e3854",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189757,
+   "id": "PRE_EXISTING",
+   "name": "residual_53.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "c60a141dd01d2c336f19fafded6243043df42b818c1ba83926ad1a57ec89b405",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189685,
+   "id": "PRE_EXISTING",
+   "name": "residual_54.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "1d33e7f6780dcec6e6f72f32d5c715e0961c1d0c83a467a44c264a541627e3a7",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 188628,
+   "id": "PRE_EXISTING",
+   "name": "residual_55.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "4d94b124ee1ee4fab7b2c7c0c90ff47fb1183617be5fd648a4f21522f03f7f04",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 188704,
+   "id": "PRE_EXISTING",
+   "name": "residual_56.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "c6d700786244101d849d736276054cebda40d61076723d53ef317ca56f56d7b2",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189097,
+   "id": "PRE_EXISTING",
+   "name": "residual_57.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "4f329b59b195ce9fadd98949a8be794cda2010a193a80900387b5efe62d2da6a",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 191142,
+   "id": "PRE_EXISTING",
+   "name": "residual_58.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "64edd004b01570b393600046d692b17e2c58b3ae8baac6af2af6f74b298cec08",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 190339,
+   "id": "PRE_EXISTING",
+   "name": "residual_59.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "567508d320bd4dd6ccf9723c4d47de917b72b2cbbe5bb8fd5000bf8aeabea61f",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189332,
+   "id": "PRE_EXISTING",
+   "name": "residual_6.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "ad5fab8c3636b6afac29a7ed80a635ea52abc40f5933c83d56b925758df61554",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 192080,
+   "id": "PRE_EXISTING",
+   "name": "residual_60.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "74e42d6adf44b2aeccd894da61cfd188057ea8b985eb69a0610797b867488bff",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189554,
+   "id": "PRE_EXISTING",
+   "name": "residual_61.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "efc81ad349cdc35327e5daf47977fca723e66995a1bb6b913536fd9f4b18f892",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 190073,
+   "id": "PRE_EXISTING",
+   "name": "residual_62.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "2dca3b8ab6b378462268eec4757868d0d084e24deed59b58ea705fbe8ce772e9",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189944,
+   "id": "PRE_EXISTING",
+   "name": "residual_63.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "2e252e8fd073a67a9b02227968b70ab3d6fc94ce03ac92698e28ff011636c7f9",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 190310,
+   "id": "PRE_EXISTING",
+   "name": "residual_64.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "ea36f737fb88c390fb7e12833b31c3a1a0b65f73c146590521a755fb59ddee87",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 188821,
+   "id": "PRE_EXISTING",
+   "name": "residual_65.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "7c8d7b09a2ef38f939ba0d58e3d23324550e2cb5bcc3f41238f0473be88e7b70",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189936,
+   "id": "PRE_EXISTING",
+   "name": "residual_66.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "ffe612fd10bbfed135828342edaa52146fa43fc986e23123f4bb8e5a189c27a8",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189698,
+   "id": "PRE_EXISTING",
+   "name": "residual_67.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "747c1f7b3486e9e893b9c0374479d1d262c67266113ad2cdb4c1d12978b2db15",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189927,
+   "id": "PRE_EXISTING",
+   "name": "residual_68.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "a39259fa4a428f5801a5c4c9ce8ce8cbd559cc460d469286402478e36d705bce",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 188168,
+   "id": "PRE_EXISTING",
+   "name": "residual_69.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "01fb4ca634f180d3e956c0598f9683718909ff35c25dedb5f429eb453400d79d",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189776,
+   "id": "PRE_EXISTING",
+   "name": "residual_7.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "67eeced037253f93dae4b2133f4a23a4f2e312a3f14cc5f33d0c6fe63fe76aa9",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 187827,
+   "id": "PRE_EXISTING",
+   "name": "residual_70.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "471c4ccf429c654c131c0536b14af95148b2179b27ebdbccd59e2dae6a4375ed",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 190178,
+   "id": "PRE_EXISTING",
+   "name": "residual_71.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "634d26213c9faa5d09553e751cd9c73c20e97cbe7286ca7b20fcb1a0f9e4465a",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 188968,
+   "id": "PRE_EXISTING",
+   "name": "residual_72.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "91e49b9d8703e4c5a8220750a94e854e98eb05df578612430ac6ec58e33b59f5",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 190081,
+   "id": "PRE_EXISTING",
+   "name": "residual_73.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "ff3d9da8d590fbb28ff2dfd0628d9d83ee585c6b95d1c3ed4181c1fd22a4be0a",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 188814,
+   "id": "PRE_EXISTING",
+   "name": "residual_74.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "777dc4bd431b83ef6a1cbbbe4c923d2f4d27179ac23c1b7dcfebf2e6d6e05443",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 187766,
+   "id": "PRE_EXISTING",
+   "name": "residual_75.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "6d61bb9f955021a0064c00dc469254a497f3ef9c97b9bb0b983a322006d48de4",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189846,
+   "id": "PRE_EXISTING",
+   "name": "residual_76.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "fb86d7bd6394c001ba1ec5bea2b75d60fe160881c44a17fb22d7fce9e80852dc",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 188741,
+   "id": "PRE_EXISTING",
+   "name": "residual_77.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "f0248e22c5a83b67070924da405fa585b9b9cc110919fc2c635f8c508368dbe4",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 190782,
+   "id": "PRE_EXISTING",
+   "name": "residual_78.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "88f3e211d8cf475be51a158a1fc6d326105b68d37e04e2f8caec82fb5b0259b9",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 191398,
+   "id": "PRE_EXISTING",
+   "name": "residual_79.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "2a92bbc87e86569950b0ee616cb1794686c83fe160e5d23b0205907e48cc80c4",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189940,
+   "id": "PRE_EXISTING",
+   "name": "residual_8.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "4b2b6972b4d3611660138573b7768513f99d16952e0997f326932a18b1855f1f",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189841,
+   "id": "PRE_EXISTING",
+   "name": "residual_80.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "85881be649d0e1cde674801d6c3eeb33d770f85f5a4f966373e4a68ce8e2fabb",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 190136,
+   "id": "PRE_EXISTING",
+   "name": "residual_81.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "60fafafe7d2ffbe913bc0100c7aa5798db58685156bf31c99391bc20a5843c40",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 187452,
+   "id": "PRE_EXISTING",
+   "name": "residual_82.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "8bdd60fa37920fe722f654120bd998a972c5f43641aa0df0ebec0955852587c2",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 191205,
+   "id": "PRE_EXISTING",
+   "name": "residual_83.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "4897dd6ed0992b652421f33712606363a28605c45f5bafbf0561b4e4e28a8f0e",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189401,
+   "id": "PRE_EXISTING",
+   "name": "residual_84.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "749c0b94398aac30936739ebef1a94d625d4a285e1eb9c86aa16a3592b09a2cf",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 186119,
+   "id": "PRE_EXISTING",
+   "name": "residual_85.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "528bef398f4767abda65046c321a31af89afbde634333f30a873f83e83a1a4ca",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 191427,
+   "id": "PRE_EXISTING",
+   "name": "residual_86.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "a61450de98e03e89abea0672eabed04e653af279db238498f26e6ff650eb5377",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189472,
+   "id": "PRE_EXISTING",
+   "name": "residual_87.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "245096bc35813699a18fb8eac3d06ddf887cface546473dfe2ec14f501b75fd2",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 190342,
+   "id": "PRE_EXISTING",
+   "name": "residual_88.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "322f668c7dca53fe9a6b70afc28577b8fa4dfd9553eb4a9305fdaf772bcf6def",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 190501,
+   "id": "PRE_EXISTING",
+   "name": "residual_89.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "56802d3391c17f4056c498e6977613aff7c2edeb582a5c75faf104115b37e0fc",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189839,
+   "id": "PRE_EXISTING",
+   "name": "residual_9.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "f1909df6c8062fb75fd6ffdafc952519049cae725ef980282afed61f71264d4a",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 189056,
+   "id": "PRE_EXISTING",
+   "name": "residual_90.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "9977eff34052dcdf31beb6af94d30ef8021717dc6906b544f213889ab7720c4a",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 188955,
+   "id": "PRE_EXISTING",
+   "name": "residual_91.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "b7e12817fdca6f19cfa8c7c2be298be6d61f173db3cf6613a58ed9b47793c30e",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 188863,
+   "id": "PRE_EXISTING",
+   "name": "residual_92.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "bfd7272fd03f075930eea934e6b2e02e219a07745692e7b0b339e36b87aedafe",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 188605,
+   "id": "PRE_EXISTING",
+   "name": "residual_93.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "d69915ae30eb057b4d2dd38e09db099f6bad13100b9e8d5c18b4e1d1d72b9877",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 188355,
+   "id": "PRE_EXISTING",
+   "name": "residual_94.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "7fad6150703650fc3361e607ab8d7f647dafe83130b5aaa2462bf1055eaee621",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 187672,
+   "id": "PRE_EXISTING",
+   "name": "residual_95.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "268a32975c686c48aa4b97652a3ba44f3100d834c9dc5501567e19d4eac72b8f",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 191692,
+   "id": "PRE_EXISTING",
+   "name": "residual_96.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "ac5039c2a36ce9869889d1d3933ba086258a82638edb4cc3e93636132bc37bd4",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 188707,
+   "id": "PRE_EXISTING",
+   "name": "residual_97.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "e33230a93d4df55466d5b7db278e9abfe63028d67d86d31b42f6a1536bb0339c",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 187830,
+   "id": "PRE_EXISTING",
+   "name": "residual_98.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "a3f0191e67b6bf2022a70e9183858c2b368d0fc9b72027fa79b2248f50568711",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 187145,
+   "id": "PRE_EXISTING",
+   "name": "residual_99.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "880a14ea04c13472ed0494bb69d2140c2cb6893871735e74c00716f6cbdf155e",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 13301,
+   "id": "PRE_EXISTING",
+   "name": "run.json",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "79e5a513015a1c54d7d4b1b9cf659653c259ead57ccb1f77f45c81b307c1c9b2",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 549314,
+   "id": "PRE_EXISTING",
+   "name": "sites.tsv",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "be813eae09f87d569ef6af31934f7e6ffe58740d7c1cc681dc6a22067b15bc6f",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 20112,
+   "id": "PRE_EXISTING",
+   "name": "CF3_ReadMe.txt",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "74ebe9ea1431f0612c350624fd64ed70089ff0a28ecc7d5fd02eb13ab7694f0f",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 11912,
+   "id": "PRE_EXISTING",
+   "name": "pr124_mes_authority_table.json",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "81ad8c382fbe481eaf715b971680199fed5142e2498928cff57ae9d847cc20f3",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 1235181,
+   "id": "PRE_EXISTING",
+   "name": "selected_source_observables.npz",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 28609,
+   "id": "PRE_EXISTING",
+   "name": "CF4_UPSTREAM_KBAND_RESULTS.json",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "54580599c10daef17c809a8b5ad28f59b50274f3873a632717458fd9b5ab1a25",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 12023,
+   "id": "PRE_EXISTING",
+   "name": "CF4_2MRS_FIELD.json",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "14a95a21ed81f4a9cab6a4f759190bd499594be763359b8e26de18fea1de712d",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 10286,
+   "id": "PRE_EXISTING",
+   "name": "CF4_CORAS_MARKS.json",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "ee4991e3490c6f7349135e59e72bd367fe89d8e476bb8f45b0682d58210eac9b",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 11271,
+   "id": "PRE_EXISTING",
+   "name": "CF4_FIELD_HOLDOUT.json",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "71de6766f163037e7e538ce11b4e3e2722b19e18bf4447073cee63702c8c1a25",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 225312,
+   "id": "PRE_EXISTING",
+   "name": "CF3_OVERLAP.json.gz",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "3ff4dd319fc3b4dd8e7e2947240c61470c286a587707989614bcdf946670c119",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 1399,
+   "id": "PRE_EXISTING",
+   "name": "obs_defaults.json",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "8c05bad58f2a85d23d5baae55e373421d84737456ca3dfd8b2538c9e70763d1a",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 10672507,
+   "id": "PRE_EXISTING",
+   "name": "table2.dat",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "8e908928e68352b59292cf67020a4d70aaa6d30f278dfa6aa3e41a9df808332f",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 5104038,
+   "id": "PRE_EXISTING",
+   "name": "table3.dat",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "c2351c52de3e38a7fd80256b6f0818c550dd9f105b91e84fbcc1eb7234160b4d",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 6012374,
+   "id": "PRE_EXISTING",
+   "name": "table4.dat",
+   "receipt_file": "cf4/RECEIPTS.jsonl",
+   "sha256": "b6edfec68bdfddeada8f3b8f11938f3bbda98a8e2894ff136a369c2ad6594e94",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 603990720,
+   "fetched_at_utc": "2026-11-24T03:08:12.220599+00:00",
+   "final_url": "https://pla.esac.esa.int/pla/aio/product-action?MAP.MAP_ID=COM_CMB_IQU-commander_2048_R3.00_hm1.fits",
+   "id": "COM_CMB_IQU-commander_2048_R3.00_hm1.fits",
+   "receipt_file": "commander_splits/RECEIPTS.jsonl",
+   "sha256": "060dac34ff3afaf8914096af5f460db5a69cbbee6fe76d375f1b397ff4fca7b2",
+   "status": "FETCHED",
+   "url": "https://pla.esac.esa.int/pla/aio/product-action?MAP.MAP_ID=COM_CMB_IQU-commander_2048_R3.00_hm1.fits"
+  },
+  {
+   "bytes": 10305,
+   "fetched_at_utc": "2026-11-24T01:43:04Z",
+   "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+   "id": "vizier_J_ApJ_944_94_table2",
+   "name": "astroquery.vizier J/ApJ/944/94/table2",
+   "query": "-source=J/ApJ/944/94/table2\n-out.max=1\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "rows": 1,
+   "sha256": "1dc7625c46446ec91747d2ad3a6ece41963ecef9e1ff4bec2dce8d6038e7b761",
+   "status": 200,
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "bytes": 2527,
+   "fetched_at_utc": "2026-11-24T01:43:04Z",
+   "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+   "id": "vizier_J_ApJ_944_94_table4",
+   "name": "astroquery.vizier J/ApJ/944/94/table4",
+   "query": "-source=J/ApJ/944/94/table4\n-out.max=1\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "rows": 0,
+   "sha256": "e044710e6cc93dceb23b122217e32604bfff1268692da3bcbf7da644c3ff7445",
+   "status": 200,
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "bytes": 2527,
+   "fetched_at_utc": "2026-11-24T01:43:09Z",
+   "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+   "id": "vizier_J_ApJ_944_94_table4",
+   "name": "astroquery.vizier J/ApJ/944/94/table4",
+   "query": "-source=J/ApJ/944/94/table4\n-out.max=1\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "rows": 0,
+   "sha256": "e044710e6cc93dceb23b122217e32604bfff1268692da3bcbf7da644c3ff7445",
+   "status": 200,
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "bytes": 0,
+   "fetched_at_utc": "2026-11-24T01:43:14Z",
+   "id": "vizier_J_ApJ_944_94_table4",
+   "name": "astroquery.vizier J/ApJ/944/94/table4",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "status": "failed",
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "bytes": 5453,
+   "fetched_at_utc": "2026-11-24T01:43:14Z",
+   "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+   "id": "vizier_J_MNRAS_445_2677_table1",
+   "name": "astroquery.vizier J/MNRAS/445/2677/table1",
+   "query": "-source=J/MNRAS/445/2677/table1\n-out.max=1\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "rows": 1,
+   "sha256": "d6163268196f92e4494d1b5e38ea1446d78c12822395585c5d2d3da89bb74d84",
+   "status": 200,
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "bytes": 1814,
+   "fetched_at_utc": "2026-11-24T01:43:14Z",
+   "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+   "id": "vizier_J_ApJS_199_26_table3",
+   "name": "astroquery.vizier J/ApJS/199/26/table3",
+   "query": "-source=J/ApJS/199/26/table3\n-out.max=1\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "rows": 0,
+   "sha256": "a10b2973b070860f3090e4a236bcfa04925a87bdf7f3c9cc0a14d80d53edd74d",
+   "status": 200,
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "bytes": 1814,
+   "fetched_at_utc": "2026-11-24T01:43:19Z",
+   "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+   "id": "vizier_J_ApJS_199_26_table3",
+   "name": "astroquery.vizier J/ApJS/199/26/table3",
+   "query": "-source=J/ApJS/199/26/table3\n-out.max=1\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "rows": 0,
+   "sha256": "a10b2973b070860f3090e4a236bcfa04925a87bdf7f3c9cc0a14d80d53edd74d",
+   "status": 200,
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "bytes": 0,
+   "fetched_at_utc": "2026-11-24T01:43:24Z",
+   "id": "vizier_J_ApJS_199_26_table3",
+   "name": "astroquery.vizier J/ApJS/199/26/table3",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "status": "failed",
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "bytes": 19238,
+   "fetched_at_utc": "2026-11-24T01:43:24Z",
+   "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+   "id": "vizier_J_AJ_152_50_table3",
+   "name": "astroquery.vizier J/AJ/152/50/table3",
+   "query": "-source=J/AJ/152/50/table3\n-out.max=1\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "rows": 1,
+   "sha256": "c9c6c310df7a12b2217e2a9e5f65be7d020184af907e46f6868275d6bb092f8b",
+   "status": 200,
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "bytes": 7905,
+   "fetched_at_utc": "2026-11-24T01:43:24Z",
+   "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+   "id": "vizier_VIII_65_nvss",
+   "name": "astroquery.vizier VIII/65/nvss",
+   "query": "-source=VIII/65/nvss\n-out.max=1\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "rows": 1,
+   "sha256": "a4ff08f51586f39ffcd1be1d40f44bdbfd9026277f36d8ff0d1f0a7c31fa9d9b",
+   "status": 200,
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "bytes": 26394,
+   "fetched_at_utc": "2026-11-24T01:43:24Z",
+   "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+   "id": "vizier_J_ApA_644_A159",
+   "name": "astroquery.vizier J/A+A/644/A159",
+   "query": "-source=J/A+A/644/A159\n-out.max=1\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "rows": 6,
+   "sha256": "eae027426e2522fb550fe81df01b29221ca00e81272fbb175c3bf0ec261d7d3a",
+   "status": 200,
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "bytes": 7660,
+   "fetched_at_utc": "2026-11-24T01:43:24Z",
+   "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+   "id": "vizier_J_ApJ_964_69",
+   "name": "astroquery.vizier J/ApJ/964/69",
+   "query": "-source=J/ApJ/964/69\n-out.max=1\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "rows": 1,
+   "sha256": "6959cc1c1edd87c35af2722c543f6dd2f66d6217346a9d4e221408796a96a40d",
+   "status": 200,
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "bytes": 35717,
+   "fetched_at_utc": "2026-11-24T01:43:24Z",
+   "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+   "id": "vizier_J_other_PASA_38_58",
+   "name": "astroquery.vizier J/other/PASA/38.58",
+   "query": "-source=J/other/PASA/38.58\n-out.max=1\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "rows": 4,
+   "sha256": "1f96bc46ce896e883915a6360038e8ff5f18bab1b408ddcd542833b92c8eede2",
+   "status": 200,
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "bytes": 1814,
+   "fetched_at_utc": "2026-11-24T01:43:26Z",
+   "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+   "id": "vizier_VII_259_6dfgs",
+   "name": "astroquery.vizier VII/259/6dfgs",
+   "query": "-source=VII/259/6dfgs\n-out.max=1\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "rows": 0,
+   "sha256": "f860361d5819666012aa55268003b79fdc942c9ceda35c7d07177d9463df6204",
+   "status": 200,
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "bytes": 1814,
+   "fetched_at_utc": "2026-11-24T01:43:31Z",
+   "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+   "id": "vizier_VII_259_6dfgs",
+   "name": "astroquery.vizier VII/259/6dfgs",
+   "query": "-source=VII/259/6dfgs\n-out.max=1\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "rows": 0,
+   "sha256": "f860361d5819666012aa55268003b79fdc942c9ceda35c7d07177d9463df6204",
+   "status": 200,
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "bytes": 0,
+   "fetched_at_utc": "2026-11-24T01:43:36Z",
+   "id": "vizier_VII_259_6dfgs",
+   "name": "astroquery.vizier VII/259/6dfgs",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "status": "failed",
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "bytes": 1969806,
+   "fetched_at_utc": "2026-11-24T01:43:39Z",
+   "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+   "id": "vizier_J_AJ_152_50_table3",
+   "name": "astroquery.vizier J/AJ/152/50/table3",
+   "query": "-source=J/AJ/152/50/table3\n-out.max=unlimited\n-out=PGC,HV,Vgsr,Vls,Vcmb,GLON,GLAT\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "rows": 17669,
+   "sha256": "0a7759f6995d8677305400db7edacc2a0d58b9dc3ab7b05778bc988df34128ff",
+   "status": 200,
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "bytes": 3636,
+   "fetched_at_utc": "2026-11-24T01:43:44Z",
+   "final_url": "https://gea.esac.esa.int/tap-server/tap/async/798614b9-e7a8-11f1-89b3-bc97e148b76b-O",
+   "id": "gaia_tap_schema_gaia_source",
+   "job_id": "798614b9-e7a8-11f1-89b3-bc97e148b76b-O",
+   "name": "pyvo TAP https://gea.esac.esa.int/tap-server/tap",
+   "query": "SELECT column_name, description, unit, ucd FROM tap_schema.columns WHERE table_name = 'gaiadr3.gaia_source' AND column_name IN ('ra', 'dec', 'ref_epoch', 'pmra', 'radial_velocity')",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "rows": 5,
+   "sha256": "77edf6b602b69df3a5ababf42dc93350a8876dfd0e8ecfe9d118bb116452adf6",
+   "status": "COMPLETED",
+   "url": "https://gea.esac.esa.int/tap-server/tap"
+  },
+  {
+   "bytes": 1261,
+   "fetched_at_utc": "2026-11-24T01:43:49Z",
+   "final_url": "https://gea.esac.esa.int/tap-server/tap/async/7d846b93-e7a8-11f1-89b3-bc97e148b76b-O",
+   "id": "gaia_astroquery_ref_epoch",
+   "job_id": "7d846b93-e7a8-11f1-89b3-bc97e148b76b-O",
+   "name": "astroquery.gaia",
+   "query": "SELECT TOP 5 source_id, ref_epoch FROM gaiadr3.gaia_source",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "rows": 5,
+   "sha256": "be40fbb0d73760256c75a9c94578b75b90ec135704ebf4a9c987d2be583c6caa",
+   "status": "COMPLETED",
+   "url": "https://gea.esac.esa.int/tap-server/tap"
+  },
+  {
+   "bytes": 0,
+   "fetched_at_utc": "2026-11-24T01:44:03Z",
+   "id": "casda_tap_as110_tables",
+   "name": "pyvo TAP https://casda.csiro.au/casda_vo_tools/tap",
+   "query": "SELECT table_name, description FROM tap_schema.tables WHERE table_name LIKE 'AS110%' OR table_name LIKE 'as110%'",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "status": "failed",
+   "url": "https://casda.csiro.au/casda_vo_tools/tap"
+  },
+  {
+   "bytes": 28481,
+   "fetched_at_utc": "2026-11-24T01:51:55Z",
+   "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+   "id": "vizier_J_ApJ_902_145",
+   "name": "astroquery.vizier J/ApJ/902/145",
+   "query": "-source=J/ApJ/902/145\n-out.max=1\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "rows": 2,
+   "sha256": "847d62112e052b6c2e8d50b621b19e91d0b1725c3cdf4f16b997997de71bebc0",
+   "status": 200,
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "bytes": 1814,
+   "fetched_at_utc": "2026-11-24T01:53:32Z",
+   "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+   "id": "vizier_J_ApJ_902_145_table1",
+   "name": "astroquery.vizier J/ApJ/902/145/table1",
+   "query": "-source=J/ApJ/902/145/table1\n-out.max=unlimited\n-out=PGC,HRV,QWflag\n-out.add=_RA,_DE\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "rows": 0,
+   "sha256": "dc2c85d75fa04734823740d049abfc18a612cbe200241cfe6ed011cc26246aa5",
+   "status": 200,
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "bytes": 1814,
+   "fetched_at_utc": "2026-11-24T01:53:37Z",
+   "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+   "id": "vizier_J_ApJ_902_145_table1",
+   "name": "astroquery.vizier J/ApJ/902/145/table1",
+   "query": "-source=J/ApJ/902/145/table1\n-out.max=unlimited\n-out=PGC,HRV,QWflag\n-out.add=_RA,_DE\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "rows": 0,
+   "sha256": "dc2c85d75fa04734823740d049abfc18a612cbe200241cfe6ed011cc26246aa5",
+   "status": 200,
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "bytes": 0,
+   "fetched_at_utc": "2026-11-24T01:53:42Z",
+   "id": "vizier_J_ApJ_902_145_table1",
+   "name": "astroquery.vizier J/ApJ/902/145/table1",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "status": "failed",
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "bytes": 1814,
+   "fetched_at_utc": "2026-11-24T01:53:43Z",
+   "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+   "id": "vizier_J_ApJ_902_145_table4",
+   "name": "astroquery.vizier J/ApJ/902/145/table4",
+   "query": "-source=J/ApJ/902/145/table4\n-out.max=unlimited\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "rows": 0,
+   "sha256": "2744a5fda13c0d4895904a4b38508156082f336808c57f5f78a4e2845d3464cb",
+   "status": 200,
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "bytes": 1814,
+   "fetched_at_utc": "2026-11-24T01:53:48Z",
+   "final_url": "https://vizier.cfa.harvard.edu/viz-bin/votable",
+   "id": "vizier_J_ApJ_902_145_table4",
+   "name": "astroquery.vizier J/ApJ/902/145/table4",
+   "query": "-source=J/ApJ/902/145/table4\n-out.max=unlimited\n-out.all\n-out.meta=huUD\n-out.form=mini\n-oc.form=d",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "rows": 0,
+   "sha256": "2744a5fda13c0d4895904a4b38508156082f336808c57f5f78a4e2845d3464cb",
+   "status": 200,
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "bytes": 0,
+   "fetched_at_utc": "2026-11-24T01:53:53Z",
+   "id": "vizier_J_ApJ_902_145_table4",
+   "name": "astroquery.vizier J/ApJ/902/145/table4",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "status": "failed",
+   "url": "https://vizier.cfa.harvard.edu/viz-bin/votable"
+  },
+  {
+   "bytes": 696070,
+   "id": "pre_existing_input:table1.txt",
+   "name": "pre-existing input, not fetched in R108",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "sha256": "08f3d4b264e28efcb574bea4efa370d66e4f299f8254e21bd04979fb8301a14d",
+   "status": "pre_existing"
+  },
+  {
+   "bytes": 19918,
+   "id": "pre_existing_input:ReadMe",
+   "name": "pre-existing input, not fetched in R108",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "sha256": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4",
+   "status": "pre_existing"
+  },
+  {
+   "bytes": 6012374,
+   "id": "pre_existing_input:table4.dat",
+   "name": "pre-existing input, not fetched in R108",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "sha256": "b6edfec68bdfddeada8f3b8f11938f3bbda98a8e2894ff136a369c2ad6594e94",
+   "status": "pre_existing"
+  },
+  {
+   "bytes": 745282,
+   "id": "pre_existing_input:icrf3sx.txt",
+   "name": "pre-existing input, not fetched in R108",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "sha256": "83abfa7c8ece43066cff93cd256e8744ecd46cdb4c1f6cde6ed4c411b0bab3bb",
+   "status": "pre_existing"
+  },
+  {
+   "bytes": 5224614,
+   "id": "pre_existing_input:6dfgs.dat.gz",
+   "name": "pre-existing input, not fetched in R108",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "sha256": "264cf54f1a8c038ae07f72b5be11f2548b33070ab3c0cd51b3b5fa2203cb1fb9",
+   "status": "pre_existing"
+  },
+  {
+   "bytes": 10424,
+   "id": "pre_existing_input:ReadMe",
+   "name": "pre-existing input, not fetched in R108",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "sha256": "59ab49eb12ef2db602881f6c2495d3e746d032576e399f9e62b8221b0fdf7114",
+   "status": "pre_existing"
+  },
+  {
+   "bytes": 6296,
+   "id": "pre_existing_input:ReadMe",
+   "name": "pre-existing input, not fetched in R108",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "sha256": "7235bb67b68e98321ff2551eb912f2eff67db3a18a48266da6cd438f3f76b429",
+   "status": "pre_existing"
+  },
+  {
+   "bytes": 99786240,
+   "id": "pre_existing_input:quaia_G20.0.fits",
+   "name": "pre-existing input, not fetched in R108",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "sha256": "efeda9ae727bf2cd75569f52460a0492827c8a3fcd8ce29dc692b559fca2acb0",
+   "status": "pre_existing"
+  },
+  {
+   "bytes": 1610660160,
+   "id": "pre_existing_input:COM_CMB_IQU-commander_2048_R3.00_full.fits",
+   "name": "pre-existing input, not fetched in R108",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "sha256": "fe0332e61087ab445656ef272b31578ca4b1edcc7c3784a7662577684e2685a4",
+   "status": "pre_existing"
+  },
+  {
+   "bytes": 1235181,
+   "id": "pre_existing_repository_input:selected_source_observables.npz",
+   "name": "pre-existing input, not fetched in R108",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "sha256": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+   "status": "pre_existing"
+  },
+  {
+   "bytes": 7695,
+   "id": "pre_existing_repository_input:h03_tomography.py",
+   "name": "pre-existing input, not fetched in R108",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "sha256": "1c7fe777e3f44183f501e599877964aa212912b0c8c78c905e0aa9404ac03d40",
+   "status": "pre_existing"
+  },
+  {
+   "bytes": 3120,
+   "id": "pre_existing_repository_input:CF4_H05_AXES.json",
+   "name": "pre-existing input, not fetched in R108",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "sha256": "f092e6b847e7911c3337b421719bf1347589309c5202c42b282b955bb4843b60",
+   "status": "pre_existing"
+  },
+  {
+   "bytes": 17938,
+   "id": "pre_existing_repository_input:CROSS_RESULTS.json",
+   "name": "pre-existing input, not fetched in R108",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "sha256": "38d99aec401ad93cd400c0feaa85051c3dfdde3b228e2d998bef2e42f3cd71ae",
+   "status": "pre_existing"
+  },
+  {
+   "bytes": 7042,
+   "id": "pre_existing_repository_input:RADIO_MATCHED_REFITS.json",
+   "name": "pre-existing input, not fetched in R108",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "sha256": "5a2eca905b85890ba8d06f8df43fe2e57a9aa1f3bbfb837075519ca8888d3124",
+   "status": "pre_existing"
+  },
+  {
+   "bytes": 276745,
+   "id": "pre_existing_repository_input:PROVIDER_NVSS_RESULT.json",
+   "name": "pre-existing input, not fetched in R108",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "sha256": "60735aa244272fc4d295813ab644c429c19cedca122bd9b308dcb7da0053806a",
+   "status": "pre_existing"
+  },
+  {
+   "bytes": 115665,
+   "id": "pre_existing_repository_input:INTEGRATED_DAG.json",
+   "name": "pre-existing input, not fetched in R108",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "sha256": "90aba8c1ca9c8e3a7744be0f071dcfe09b81e5353892aca13878191e20f58c11",
+   "status": "pre_existing"
+  },
+  {
+   "bytes": 165617,
+   "id": "pre_existing_repository_input:CF4_P1_RESULTS.json",
+   "name": "pre-existing input, not fetched in R108",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "sha256": "436630f094950d1d21d82ab61a9b587df788cc4f28c3976f5ff2b677a5350591",
+   "status": "pre_existing"
+  },
+  {
+   "bytes": 5104038,
+   "id": "pre_existing_input:table3.dat",
+   "name": "pre-existing input, not fetched in R108",
+   "receipt_file": "frame/RECEIPTS.jsonl",
+   "sha256": "c2351c52de3e38a7fd80256b6f0818c550dd9f105b91e84fbcc1eb7234160b4d",
+   "status": "pre_existing"
+  },
+  {
+   "bytes": 569780480,
+   "fetched_at_utc": "2026-11-24T01:22:23.352743+00:00",
+   "final_url": "https://cdn.gea.esac.esa.int/Gaia/gedr3/auxiliary/commanded_scan_law/CommandedScanLaw_001.csv.gz",
+   "id": "D09",
+   "md5": "82d24407396f6008a9d72608839533a8",
+   "name": "CommandedScanLaw_001.csv.gz",
+   "receipt_file": "gaia/RECEIPTS.jsonl",
+   "sha256": "c0c55b1dad49a19b182955ade5693c7c74d8c313725f6679f48a3f6bfe157bf4",
+   "status": "FETCHED",
+   "url": "https://cdn.gea.esac.esa.int/Gaia/gedr3/auxiliary/commanded_scan_law/CommandedScanLaw_001.csv.gz"
+  },
+  {
+   "bytes": 62,
+   "fetched_at_utc": "2026-11-24T01:22:23.846737+00:00",
+   "final_url": "https://cdn.gea.esac.esa.int/Gaia/gedr3/auxiliary/commanded_scan_law/_MD5SUM.txt",
+   "id": "D09",
+   "md5": "39ab9f2da003b8bdc60e3ceb0b1f0296",
+   "name": "CommandedScanLaw_MD5SUM.txt",
+   "receipt_file": "gaia/RECEIPTS.jsonl",
+   "sha256": "e8c14ceb0b99fbb66c437a3a7d112c980c91d9ad3ab0d362734ea3ac3b5572b5",
+   "status": "FETCHED",
+   "url": "https://cdn.gea.esac.esa.int/Gaia/gedr3/auxiliary/commanded_scan_law/_MD5SUM.txt"
+  },
+  {
+   "bytes": 2148506,
+   "fetched_at_utc": "2026-11-24T01:31:44.559443+00:00",
+   "final_url": "https://vizier.idia.ac.za/viz-bin/votable?-source=J/A+A/644/A159/table10&-out=**&-out.max=unlimited",
+   "id": "D08",
+   "name": "icrf3_sx_table10.vot",
+   "query": {
+    "tool": "astroquery 0.4.11 Vizier(columns=['**'], row_limit=-1, vizier_server='vizier.idia.ac.za').get_catalogs('J/A+A/644/A159/table10')"
+   },
+   "receipt_file": "gaia/RECEIPTS.jsonl",
+   "rows": 4536,
+   "sha256": "720043b5918e76fb103ba8e1b36ac55d4e872ef8af5712d3e14e708e3c09c5db",
+   "status": "FETCHED",
+   "url": "https://vizier.idia.ac.za/viz-bin/votable"
+  },
+  {
+   "bytes": 345600,
+   "fetched_at_utc": "2026-11-24T02:32:50.689241+00:00",
+   "final_url": "https://gea.esac.esa.int/tap-server/tap/async/3de652c8-e7af-11f1-89b3-bc97e148b76b-O",
+   "id": "D08G",
+   "job_id": "3de652c8-e7af-11f1-89b3-bc97e148b76b-O",
+   "name": "icrf3sx_gaia_dr3_astrometry.fits",
+   "query": "SELECT x.source_id, x.icrf_name, x.iers_name, x.icrf3sx, x.icrf3k, x.icrf3xka, x.ocars, x.aw15, x.r90, x.m65, x.c75, x.dr14q, x.lqac5, x.lamost5, x.lqrf, x.cat2qz, x.bzcat5, x.cat2whspj, x.alma19, x.guw, x.b19, g.ref_epoch, g.ra, g.dec, g.ra_error, g.dec_error, g.ra_dec_corr, g.ruwe, g.astrometric_params_solved, g.nu_eff_used_in_astrometry FROM gaiadr3.gaia_crf3_xm AS x JOIN gaiadr3.gaia_source AS g USING (source_id) WHERE x.icrf3sx = 'true'",
+   "receipt_file": "gaia/RECEIPTS.jsonl",
+   "rows": 3142,
+   "sha256": "914013c61ced4bb544c19e5a34d82183e5d7849a3b0e76ed29150bef7867b7d7",
+   "status": "FETCHED",
+   "url": "https://gea.esac.esa.int/tap-server/tap"
+  },
+  {
+   "bytes": 75885120,
+   "fetched_at_utc": "2026-11-24T02:41:22.968528+00:00",
+   "final_url": [
+    "https://gea.esac.esa.int/tap-server/tap/async/5d5ea99c-e7af-11f1-89b3-bc97e148b76b-O",
+    "https://gea.esac.esa.int/tap-server/tap/async/630420da-e7af-11f1-89b3-bc97e148b76b-O",
+    "https://gea.esac.esa.int/tap-server/tap/async/69964208-e7af-11f1-89b3-bc97e148b76b-O",
+    "https://gea.esac.esa.int/tap-server/tap/async/792ff14b-e7af-11f1-89b3-bc97e148b76b-O",
+    "https://gea.esac.esa.int/tap-server/tap/async/86048cf1-e7af-11f1-89b3-bc97e148b76b-O",
+    "https://gea.esac.esa.int/tap-server/tap/async/946790d7-e7af-11f1-89b3-bc97e148b76b-O",
+    "https://gea.esac.esa.int/tap-server/tap/async/a46bc1a1-e7af-11f1-89b3-bc97e148b76b-O",
+    "https://gea.esac.esa.int/tap-server/tap/async/cee9723e-e7af-11f1-89b3-bc97e148b76b-O",
+    "https://gea.esac.esa.int/tap-server/tap/async/d53b5614-e7af-11f1-89b3-bc97e148b76b-O",
+    "https://gea.esac.esa.int/tap-server/tap/async/eee5eceb-e7af-11f1-89b3-bc97e148b76b-O",
+    "https://gea.esac.esa.int/tap-server/tap/async/f9de7587-e7af-11f1-89b3-bc97e148b76b-O",
+    "https://gea.esac.esa.int/tap-server/tap/async/0265d70c-e7b0-11f1-89b3-bc97e148b76b-O",
+    "https://gea.esac.esa.int/tap-server/tap/async/0d82feaa-e7b0-11f1-89b3-bc97e148b76b-O",
+    "https://gea.esac.esa.int/tap-server/tap/async/1adafb38-e7b0-11f1-89b3-bc97e148b76b-O",
+    "https://gea.esac.esa.int/tap-server/tap/async/25cccd28-e7b0-11f1-89b3-bc97e148b76b-O",
+    "https://gea.esac.esa.int/tap-server/tap/async/2987d972-e7b0-11f1-89b3-bc97e148b76b-O",
+    "https://gea.esac.esa.int/tap-server/tap/async/36e0e76c-e7b0-11f1-89b3-bc97e148b76b-O",
+    "https://gea.esac.esa.int/tap-server/tap/async/426387a3-e7b0-11f1-89b3-bc97e148b76b-O",
+    "https://gea.esac.esa.int/tap-server/tap/async/552e047d-e7b0-11f1-89b3-bc97e148b76b-O",
+    "https://gea.esac.esa.int/tap-server/tap/async/5b69ef57-e7b0-11f1-89b3-bc97e148b76b-O",
+    "https://gea.esac.esa.int/tap-server/tap/async/625b207a-e7b0-11f1-89b3-bc97e148b76b-O",
+    "https://gea.esac.esa.int/tap-server/tap/async/663db1f3-e7b0-11f1-89b3-bc97e148b76b-O",
+    "https://gea.esac.esa.int/tap-server/tap/async/6d4be0f5-e7b0-11f1-89b3-bc97e148b76b-O",
+    "https://gea.esac.esa.int/tap-server/tap/async/791219d8-e7b0-11f1-89b3-bc97e148b76b-O"
+   ],
+   "id": "D10F",
+   "job_id": [
+    "5d5ea99c-e7af-11f1-89b3-bc97e148b76b-O",
+    "630420da-e7af-11f1-89b3-bc97e148b76b-O",
+    "69964208-e7af-11f1-89b3-bc97e148b76b-O",
+    "792ff14b-e7af-11f1-89b3-bc97e148b76b-O",
+    "86048cf1-e7af-11f1-89b3-bc97e148b76b-O",
+    "946790d7-e7af-11f1-89b3-bc97e148b76b-O",
+    "a46bc1a1-e7af-11f1-89b3-bc97e148b76b-O",
+    "cee9723e-e7af-11f1-89b3-bc97e148b76b-O",
+    "d53b5614-e7af-11f1-89b3-bc97e148b76b-O",
+    "eee5eceb-e7af-11f1-89b3-bc97e148b76b-O",
+    "f9de7587-e7af-11f1-89b3-bc97e148b76b-O",
+    "0265d70c-e7b0-11f1-89b3-bc97e148b76b-O",
+    "0d82feaa-e7b0-11f1-89b3-bc97e148b76b-O",
+    "1adafb38-e7b0-11f1-89b3-bc97e148b76b-O",
+    "25cccd28-e7b0-11f1-89b3-bc97e148b76b-O",
+    "2987d972-e7b0-11f1-89b3-bc97e148b76b-O",
+    "36e0e76c-e7b0-11f1-89b3-bc97e148b76b-O",
+    "426387a3-e7b0-11f1-89b3-bc97e148b76b-O",
+    "552e047d-e7b0-11f1-89b3-bc97e148b76b-O",
+    "5b69ef57-e7b0-11f1-89b3-bc97e148b76b-O",
+    "625b207a-e7b0-11f1-89b3-bc97e148b76b-O",
+    "663db1f3-e7b0-11f1-89b3-bc97e148b76b-O",
+    "6d4be0f5-e7b0-11f1-89b3-bc97e148b76b-O",
+    "791219d8-e7b0-11f1-89b3-bc97e148b76b-O"
+   ],
+   "name": "gaia_crf3_xm_flags.fits",
+   "query": "SELECT x.source_id, x.icrf_name, x.icrf3sx, x.icrf3k, x.icrf3xka, x.ocars, x.aw15, x.r90, x.m65, x.c75, x.dr14q, x.lqac5, x.lamost5, x.lqrf, x.cat2qz, x.bzcat5, x.cat2whspj, x.alma19, x.guw, x.b19 FROM gaiadr3.gaia_crf3_xm AS x",
+   "receipt_file": "gaia/RECEIPTS.jsonl",
+   "rows": 1614173,
+   "sha256": "f9e7c0d8b6288ccf87a81e392a04dfa268c1ed76db7321a5bcb5d220d93d7352",
+   "status": "FETCHED",
+   "url": "https://gea.esac.esa.int/tap-server/tap"
+  },
+  {
+   "bytes": 95846569,
+   "id": "PRE:quaia_crf3_join",
+   "name": "quaia_crf3_join.npz",
+   "receipt_file": "gaia/RECEIPTS.jsonl",
+   "route": "pre-existing input: not fetched in R108; identity by SHA-256 at receipt time",
+   "sha256": "2fbaa40a8afe58066064efa8a7784ac508c5b2c67b41c779676eab7df8cf9ef4",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 104598751,
+   "id": "PRE:quaia_gaia_full_join",
+   "name": "quaia_gaia_full_join.npz",
+   "receipt_file": "gaia/RECEIPTS.jsonl",
+   "route": "pre-existing input: not fetched in R108; identity by SHA-256 at receipt time",
+   "sha256": "4cd83b1e8bb9f71f89aacfc2db5daba87f9a79f2af8ccd2e7e94b0be57252dae",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 143677440,
+   "id": "PRE:gaia_crf3_astrometry_full",
+   "name": "gaia_crf3_astrometry_full.fits",
+   "receipt_file": "gaia/RECEIPTS.jsonl",
+   "route": "pre-existing input: not fetched in R108; identity by SHA-256 at receipt time",
+   "sha256": "e69cfff82f762c00d1d6a259c6d003fd20f805f3b1fcd4acc81d847c485120c0",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 153706,
+   "id": "PRE:R98_GAIA_FULL_SHARED_PATCH",
+   "name": "GAIA_FULL_SHARED_PATCH.json",
+   "receipt_file": "gaia/RECEIPTS.jsonl",
+   "route": "pre-existing input: not fetched in R108; identity by SHA-256 at receipt time",
+   "sha256": "0a56bc358b6048f4b018d93d2b55be2f2ac5526e22191a44ca6a9f1148a9d800",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 924116,
+   "id": "PRE:R98_patch_cache",
+   "name": "gaia_joint_patch_statistics.npz",
+   "receipt_file": "gaia/RECEIPTS.jsonl",
+   "route": "pre-existing input: not fetched in R108; identity by SHA-256 at receipt time",
+   "sha256": "70d1bc9c959ccfa0197923fc7d7e950ac790eaa1345ca0aca507ade446464c92",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 35427,
+   "id": "PRE:R106_GAIA_OBSERVED",
+   "name": "GAIA_OBSERVED.json",
+   "receipt_file": "gaia/RECEIPTS.jsonl",
+   "route": "pre-existing input: not fetched in R108; identity by SHA-256 at receipt time",
+   "sha256": "6c76b5c27086fafdf4b603c8c8fb98391971f86bd03ad8dbfa4fb812fb640aef",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 18188920,
+   "fetched_at_utc": "2026-11-24T01:23:32+00:00",
+   "final_url": "https://casda.csiro.au/casda_vo_tools/tap/async/1795483402957A/results/result",
+   "id": "D11",
+   "job_id": "1795483402957A",
+   "name": "racs_dr1_galcut_dec_-090.0_-075.0.vot",
+   "query": "SELECT id, source_name, source_id, tile_id, sbid, n_gaus, ra, dec, total_flux_source, e_total_flux_source, peak_flux, e_peak_flux, maj_axis, min_axis, dc_maj, dc_min, s_code, separation_tile_centre, noise, gal_lon, gal_lat, flag_close FROM AS110.racs_dr1_sources_galacticcut_v2021_08_v01 WHERE dec >= -90.0 AND dec < -75.0",
+   "receipt_file": "radio/RECEIPTS.jsonl",
+   "route": "pyvo.dal.TAPService async",
+   "rows": 48290,
+   "sha256": "816681d7d95ea593c4f4231b2ef1a6726e31da25e8ba20fd3fa9feb27d36de88",
+   "status": "ok QUERY_STATUS=OK",
+   "url": "https://casda.csiro.au/casda_vo_tools/tap"
+  },
+  {
+   "bytes": 68443885,
+   "fetched_at_utc": "2026-11-24T01:23:52+00:00",
+   "final_url": "https://casda.csiro.au/casda_vo_tools/tap/async/1795483410742A/results/result",
+   "id": "D11",
+   "job_id": "1795483410742A",
+   "name": "racs_dr1_galcut_dec_-075.0_-060.0.vot",
+   "query": "SELECT id, source_name, source_id, tile_id, sbid, n_gaus, ra, dec, total_flux_source, e_total_flux_source, peak_flux, e_peak_flux, maj_axis, min_axis, dc_maj, dc_min, s_code, separation_tile_centre, noise, gal_lon, gal_lat, flag_close FROM AS110.racs_dr1_sources_galacticcut_v2021_08_v01 WHERE dec >= -75.0 AND dec < -60.0",
+   "receipt_file": "radio/RECEIPTS.jsonl",
+   "route": "pyvo.dal.TAPService async",
+   "rows": 181905,
+   "sha256": "2fe46874b6ab38ade4ca9a33c56297352ace616d0af2839b5965f35034b0be4a",
+   "status": "ok QUERY_STATUS=OK",
+   "url": "https://casda.csiro.au/casda_vo_tools/tap"
+  },
+  {
+   "bytes": 58473357,
+   "fetched_at_utc": "2026-11-24T01:24:13+00:00",
+   "final_url": "https://casda.csiro.au/casda_vo_tools/tap/async/1795483430889A/results/result",
+   "id": "D11",
+   "job_id": "1795483430889A",
+   "name": "racs_dr1_galcut_dec_-060.0_-050.0.vot",
+   "query": "SELECT id, source_name, source_id, tile_id, sbid, n_gaus, ra, dec, total_flux_source, e_total_flux_source, peak_flux, e_peak_flux, maj_axis, min_axis, dc_maj, dc_min, s_code, separation_tile_centre, noise, gal_lon, gal_lat, flag_close FROM AS110.racs_dr1_sources_galacticcut_v2021_08_v01 WHERE dec >= -60.0 AND dec < -50.0",
+   "receipt_file": "radio/RECEIPTS.jsonl",
+   "route": "pyvo.dal.TAPService async",
+   "rows": 155458,
+   "sha256": "16e035bccc0432bdeb45ae0062b4226fdf341481d0a121498ff9b1a72dd2b751",
+   "status": "ok QUERY_STATUS=OK",
+   "url": "https://casda.csiro.au/casda_vo_tools/tap"
+  },
+  {
+   "bytes": 67952427,
+   "fetched_at_utc": "2026-11-24T01:24:35+00:00",
+   "final_url": "https://casda.csiro.au/casda_vo_tools/tap/async/1795483451813A/results/result",
+   "id": "D11",
+   "job_id": "1795483451813A",
+   "name": "racs_dr1_galcut_dec_-050.0_-040.0.vot",
+   "query": "SELECT id, source_name, source_id, tile_id, sbid, n_gaus, ra, dec, total_flux_source, e_total_flux_source, peak_flux, e_peak_flux, maj_axis, min_axis, dc_maj, dc_min, s_code, separation_tile_centre, noise, gal_lon, gal_lat, flag_close FROM AS110.racs_dr1_sources_galacticcut_v2021_08_v01 WHERE dec >= -50.0 AND dec < -40.0",
+   "receipt_file": "radio/RECEIPTS.jsonl",
+   "route": "pyvo.dal.TAPService async",
+   "rows": 180609,
+   "sha256": "e417dcc9b654a0b8bccda180b104935b6911854f60630f6028ffe6c6e2b6eb7e",
+   "status": "ok QUERY_STATUS=OK",
+   "url": "https://casda.csiro.au/casda_vo_tools/tap"
+  },
+  {
+   "bytes": 82596252,
+   "fetched_at_utc": "2026-11-24T01:24:58+00:00",
+   "final_url": "https://casda.csiro.au/casda_vo_tools/tap/async/1795483473822A/results/result",
+   "id": "D11",
+   "job_id": "1795483473822A",
+   "name": "racs_dr1_galcut_dec_-040.0_-030.0.vot",
+   "query": "SELECT id, source_name, source_id, tile_id, sbid, n_gaus, ra, dec, total_flux_source, e_total_flux_source, peak_flux, e_peak_flux, maj_axis, min_axis, dc_maj, dc_min, s_code, separation_tile_centre, noise, gal_lon, gal_lat, flag_close FROM AS110.racs_dr1_sources_galacticcut_v2021_08_v01 WHERE dec >= -40.0 AND dec < -30.0",
+   "receipt_file": "radio/RECEIPTS.jsonl",
+   "route": "pyvo.dal.TAPService async",
+   "rows": 219739,
+   "sha256": "a2900efed9081a19986594150e4cd8b6bbca7c101576ebcd91699cb57f54ee00",
+   "status": "ok QUERY_STATUS=OK",
+   "url": "https://casda.csiro.au/casda_vo_tools/tap"
+  },
+  {
+   "bytes": 90059436,
+   "fetched_at_utc": "2026-11-24T01:26:19+00:00",
+   "final_url": "https://casda.csiro.au/casda_vo_tools/tap/async/1795483497004A/results/result",
+   "id": "D11",
+   "job_id": "1795483497004A",
+   "name": "racs_dr1_galcut_dec_-030.0_-020.0.vot",
+   "query": "SELECT id, source_name, source_id, tile_id, sbid, n_gaus, ra, dec, total_flux_source, e_total_flux_source, peak_flux, e_peak_flux, maj_axis, min_axis, dc_maj, dc_min, s_code, separation_tile_centre, noise, gal_lon, gal_lat, flag_close FROM AS110.racs_dr1_sources_galacticcut_v2021_08_v01 WHERE dec >= -30.0 AND dec < -20.0",
+   "receipt_file": "radio/RECEIPTS.jsonl",
+   "route": "pyvo.dal.TAPService async",
+   "rows": 239534,
+   "sha256": "f0c57dc4a01994edd91ca82946c7428a484e01f57212775ea98236c2f3ff8b9b",
+   "status": "ok QUERY_STATUS=OK",
+   "url": "https://casda.csiro.au/casda_vo_tools/tap"
+  },
+  {
+   "bytes": 88834620,
+   "fetched_at_utc": "2026-11-24T01:27:16+00:00",
+   "final_url": "https://casda.csiro.au/casda_vo_tools/tap/async/1795483578326A/results/result",
+   "id": "D11",
+   "job_id": "1795483578326A",
+   "name": "racs_dr1_galcut_dec_-020.0_-010.0.vot",
+   "query": "SELECT id, source_name, source_id, tile_id, sbid, n_gaus, ra, dec, total_flux_source, e_total_flux_source, peak_flux, e_peak_flux, maj_axis, min_axis, dc_maj, dc_min, s_code, separation_tile_centre, noise, gal_lon, gal_lat, flag_close FROM AS110.racs_dr1_sources_galacticcut_v2021_08_v01 WHERE dec >= -20.0 AND dec < -10.0",
+   "receipt_file": "radio/RECEIPTS.jsonl",
+   "route": "pyvo.dal.TAPService async",
+   "rows": 236103,
+   "sha256": "7254ea625d9313a24e7ccd7c385acbdd6d1a64fd51764f95806396480254240f",
+   "status": "ok QUERY_STATUS=OK",
+   "url": "https://casda.csiro.au/casda_vo_tools/tap"
+  },
+  {
+   "bytes": 87858378,
+   "fetched_at_utc": "2026-11-24T01:27:41+00:00",
+   "final_url": "https://casda.csiro.au/casda_vo_tools/tap/async/1795483635556A/results/result",
+   "id": "D11",
+   "job_id": "1795483635556A",
+   "name": "racs_dr1_galcut_dec_-010.0_+000.0.vot",
+   "query": "SELECT id, source_name, source_id, tile_id, sbid, n_gaus, ra, dec, total_flux_source, e_total_flux_source, peak_flux, e_peak_flux, maj_axis, min_axis, dc_maj, dc_min, s_code, separation_tile_centre, noise, gal_lon, gal_lat, flag_close FROM AS110.racs_dr1_sources_galacticcut_v2021_08_v01 WHERE dec >= -10.0 AND dec < 0.0",
+   "receipt_file": "radio/RECEIPTS.jsonl",
+   "route": "pyvo.dal.TAPService async",
+   "rows": 234122,
+   "sha256": "384f3b5cb553dadb182eee2bba183ab17efd17da58a98e1be71380bddac75acc",
+   "status": "ok QUERY_STATUS=OK",
+   "url": "https://casda.csiro.au/casda_vo_tools/tap"
+  },
+  {
+   "bytes": 77179096,
+   "fetched_at_utc": "2026-11-24T01:28:01+00:00",
+   "final_url": "https://casda.csiro.au/casda_vo_tools/tap/async/1795483660367A/results/result",
+   "id": "D11",
+   "job_id": "1795483660367A",
+   "name": "racs_dr1_galcut_dec_+000.0_+010.0.vot",
+   "query": "SELECT id, source_name, source_id, tile_id, sbid, n_gaus, ra, dec, total_flux_source, e_total_flux_source, peak_flux, e_peak_flux, maj_axis, min_axis, dc_maj, dc_min, s_code, separation_tile_centre, noise, gal_lon, gal_lat, flag_close FROM AS110.racs_dr1_sources_galacticcut_v2021_08_v01 WHERE dec >= 0.0 AND dec < 10.0",
+   "receipt_file": "radio/RECEIPTS.jsonl",
+   "route": "pyvo.dal.TAPService async",
+   "rows": 206308,
+   "sha256": "46dd86c1245bf71530b1934fe9f5c4a9e9343a16be0f218fb271f5abce1bff4e",
+   "status": "ok QUERY_STATUS=OK",
+   "url": "https://casda.csiro.au/casda_vo_tools/tap"
+  },
+  {
+   "bytes": 80747936,
+   "fetched_at_utc": "2026-11-24T01:28:22+00:00",
+   "final_url": "https://casda.csiro.au/casda_vo_tools/tap/async/1795483680494A/results/result",
+   "id": "D11",
+   "job_id": "1795483680494A",
+   "name": "racs_dr1_galcut_dec_+010.0_+020.0.vot",
+   "query": "SELECT id, source_name, source_id, tile_id, sbid, n_gaus, ra, dec, total_flux_source, e_total_flux_source, peak_flux, e_peak_flux, maj_axis, min_axis, dc_maj, dc_min, s_code, separation_tile_centre, noise, gal_lon, gal_lat, flag_close FROM AS110.racs_dr1_sources_galacticcut_v2021_08_v01 WHERE dec >= 10.0 AND dec < 20.0",
+   "receipt_file": "radio/RECEIPTS.jsonl",
+   "route": "pyvo.dal.TAPService async",
+   "rows": 215475,
+   "sha256": "b58365932a854f64bcc46051d68d5a005253785261957ab72e02a675a1e110f8",
+   "status": "ok QUERY_STATUS=OK",
+   "url": "https://casda.csiro.au/casda_vo_tools/tap"
+  },
+  {
+   "bytes": 77200091,
+   "fetched_at_utc": "2026-11-24T01:28:42+00:00",
+   "final_url": "https://casda.csiro.au/casda_vo_tools/tap/async/1795483700976A/results/result",
+   "id": "D11",
+   "job_id": "1795483700976A",
+   "name": "racs_dr1_galcut_dec_+020.0_+031.0.vot",
+   "query": "SELECT id, source_name, source_id, tile_id, sbid, n_gaus, ra, dec, total_flux_source, e_total_flux_source, peak_flux, e_peak_flux, maj_axis, min_axis, dc_maj, dc_min, s_code, separation_tile_centre, noise, gal_lon, gal_lat, flag_close FROM AS110.racs_dr1_sources_galacticcut_v2021_08_v01 WHERE dec >= 20.0 AND dec < 31.0",
+   "receipt_file": "radio/RECEIPTS.jsonl",
+   "route": "pyvo.dal.TAPService async",
+   "rows": 206095,
+   "sha256": "fdbad806e52820c128730ca5a830596173d0ed0dc1a1650bad4ce290d5100294",
+   "status": "ok QUERY_STATUS=OK",
+   "url": "https://casda.csiro.au/casda_vo_tools/tap"
+  },
+  {
+   "bytes": 7154,
+   "fetched_at_utc": "2026-11-24T01:28:43+00:00",
+   "final_url": "https://casda.csiro.au/casda_vo_tools/tap/async/1795483721134A/results/result",
+   "id": "D11",
+   "job_id": "1795483721134A",
+   "name": "racs_dr1_galcut_dec_+031.0_+090.0.vot",
+   "query": "SELECT id, source_name, source_id, tile_id, sbid, n_gaus, ra, dec, total_flux_source, e_total_flux_source, peak_flux, e_peak_flux, maj_axis, min_axis, dc_maj, dc_min, s_code, separation_tile_centre, noise, gal_lon, gal_lat, flag_close FROM AS110.racs_dr1_sources_galacticcut_v2021_08_v01 WHERE dec >= 31.0 AND dec < 90.0",
+   "receipt_file": "radio/RECEIPTS.jsonl",
+   "route": "pyvo.dal.TAPService async",
+   "rows": 0,
+   "sha256": "0cd821ff66d03988dc2bee975bd84c7dd852e550956b56d700e9200937fa977a",
+   "status": "ok QUERY_STATUS=OK",
+   "url": "https://casda.csiro.au/casda_vo_tools/tap"
+  },
+  {
+   "bytes": 771096,
+   "id": "PRE:R106_C1ZERO_DRAWS",
+   "name": "C1ZERO_DRAWS.npz",
+   "receipt_file": "radio/RECEIPTS.jsonl",
+   "route": "pre-existing input: not fetched in R108; identity by SHA-256 at receipt time",
+   "sha256": "cf288192ba5bb953c4905b91285b870dcaeb9b2addd9c151949a0b5470e310f0",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 179273,
+   "id": "PRE:R106_NVSS_REVIEW_CORRECTIONS",
+   "name": "NVSS_REVIEW_CORRECTIONS.json",
+   "receipt_file": "radio/RECEIPTS.jsonl",
+   "route": "pre-existing input: not fetched in R108; identity by SHA-256 at receipt time",
+   "sha256": "735ae72014af311e7bfa0649adce4584b136aaa15feecb551360e0123feaae0d",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 981001,
+   "id": "PRE:R65_PROVIDER_NVSS_CARRIERS",
+   "name": "PROVIDER_NVSS_CARRIERS.npz",
+   "receipt_file": "radio/RECEIPTS.jsonl",
+   "route": "pre-existing input: not fetched in R108; identity by SHA-256 at receipt time",
+   "sha256": "a51da9a98c3d0563446eb61f21aceff69fbfeed5446ec74471177170b8664e89",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 276745,
+   "id": "PRE:R65_PROVIDER_NVSS_RESULT",
+   "name": "PROVIDER_NVSS_RESULT.json",
+   "receipt_file": "radio/RECEIPTS.jsonl",
+   "route": "pre-existing input: not fetched in R108; identity by SHA-256 at receipt time",
+   "sha256": "60735aa244272fc4d295813ab644c429c19cedca122bd9b308dcb7da0053806a",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 5912,
+   "fetched_at_utc": "2026-11-24T01:22:28+00:00",
+   "id": "R108:racs_casda_probe",
+   "name": "racs_casda_probe.json",
+   "query": "SELECT COUNT(*) AS n FROM AS110.racs_dr1_sources_galacticcut_v2021_08_v01",
+   "receipt_file": "radio/RECEIPTS.jsonl",
+   "route": "pre-existing input: not fetched in R108; identity by SHA-256 at receipt time",
+   "rows": 2123638,
+   "sha256": "1048b95d62a43f3fc130bdb9f9713ad12f1e8c42272bd805f63a2c56fea662b2",
+   "status": "R108_PROBE_OUTPUT"
+  },
+  {
+   "bytes": 152904706,
+   "id": "R108:racs_dr1_columns_cache",
+   "name": "racs_dr1_galcut_v01_columns.npz",
+   "receipt_file": "radio/RECEIPTS.jsonl",
+   "route": "pre-existing input: not fetched in R108; identity by SHA-256 at receipt time",
+   "sha256": "fcfeb0347b1630594cb56950acee41d4d52acf5a5e9287d437cdd86043d5a1b4",
+   "status": "R108_DERIVED_CACHE"
+  },
+  {
+   "bytes": 31119,
+   "fetched_at_utc": "2026-11-24T03:49:38.445823+00:00",
+   "final_url": "https://export.arxiv.org/api/query?id_list=1105.2039,1903.08657,1801.04931,1801.09693,1807.09774,2001.02696,1503.02075,1403.0007,2103.16610,1405.7405,2505.23544&max_results=11",
+   "id": "S8-ARXIV-API",
+   "name": "arxiv_api_8e273a3a2bbe37cf.xml",
+   "receipt_file": "s8/RECEIPTS.jsonl",
+   "route": "export.arxiv.org API (metadata only)",
+   "sha256": "8e273a3a2bbe37cfe5ed0c0c8482d5195e0ccef3e329f598fe5f5be0ce4bcf74",
+   "status": "FETCHED",
+   "url": "https://export.arxiv.org/api/query?id_list=1105.2039,1903.08657,1801.04931,1801.09693,1807.09774,2001.02696,1503.02075,1403.0007,2103.16610,1405.7405,2505.23544&max_results=11"
+  },
+  {
+   "bytes": 4381,
+   "id": "S8-PRE-R8-puchwein_v1_rates_fiducial.txt",
+   "name": "puchwein_v1_rates_fiducial.txt",
+   "receipt_file": "s8/RECEIPTS.jsonl",
+   "route": "rei_bianchi R8 radiation directory (on disk, untracked); download receipt in R8 PUBLIC_DATA_RECEIPT/QLF_DATA_RECEIPT: https://arxiv.org/src/1801.04931v1/anc/rates_fiducial.txt (sha256 equal: True)",
+   "sha256": "5b4cca58fcc46e821970c0a5a8cbb188cf2b5e6c00f56d6942588c86806662fe",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 7213,
+   "id": "S8-PRE-R8-puchwein_v1_rates_eq-eq.txt",
+   "name": "puchwein_v1_rates_eq-eq.txt",
+   "receipt_file": "s8/RECEIPTS.jsonl",
+   "route": "rei_bianchi R8 radiation directory (on disk, untracked); download receipt in R8 PUBLIC_DATA_RECEIPT/QLF_DATA_RECEIPT: https://arxiv.org/src/1801.04931v1/anc/rates_eq-eq.txt (sha256 equal: True)",
+   "sha256": "e1e8b6557064fc11b861032cecbc79aa0fc73741f27e7707db7d68d3d0aab04e",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 831,
+   "id": "S8-PRE-R8-puchwein_v1_readme.txt",
+   "name": "puchwein_v1_readme.txt",
+   "receipt_file": "s8/RECEIPTS.jsonl",
+   "route": "rei_bianchi R8 radiation directory (on disk, untracked); download receipt in R8 PUBLIC_DATA_RECEIPT/QLF_DATA_RECEIPT: https://arxiv.org/src/1801.04931v1/anc/readme.txt (sha256 equal: True)",
+   "sha256": "9f3ebde0f062f9aefad350aa58c53d2cc1c69f4722175e1478b1e792400a65bf",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 762,
+   "id": "S8-PRE-R8-PUBLIC_DATA_RECEIPT.json",
+   "name": "PUBLIC_DATA_RECEIPT.json",
+   "receipt_file": "s8/RECEIPTS.jsonl",
+   "route": "rei_bianchi R8 radiation directory (on disk, untracked); no download receipt (author/derived file of the R8 round)",
+   "sha256": "1ff969ccd9ac49086905411bd2dd3e940a4c1a3fa7b0433065b3a6a8f2335231",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 15627,
+   "id": "S8-PRE-R8-PUBLIC_UVB_RESULTS.json",
+   "name": "PUBLIC_UVB_RESULTS.json",
+   "receipt_file": "s8/RECEIPTS.jsonl",
+   "route": "rei_bianchi R8 radiation directory (on disk, untracked); no download receipt (author/derived file of the R8 round)",
+   "sha256": "e72fcc0f39e5fdd01d625e9505c38d1730ac0d705c8663c5b2a03d1d915949f5",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 3547,
+   "id": "S8-PRE-R8-uvb_table_adapter.py",
+   "name": "uvb_table_adapter.py",
+   "receipt_file": "s8/RECEIPTS.jsonl",
+   "route": "rei_bianchi R8 radiation directory (on disk, untracked); no download receipt (author/derived file of the R8 round)",
+   "sha256": "c6ab21409e9133f0c6484964c01a5a057d27c4efbffbc57ed4fde05eaeec770e",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 32704,
+   "id": "S8-PRE-R8-qlf_v3_e912_18_2.npz",
+   "name": "qlf_v3_e912_18_2.npz",
+   "receipt_file": "s8/RECEIPTS.jsonl",
+   "route": "rei_bianchi R8 radiation directory (on disk, untracked); download receipt in R8 PUBLIC_DATA_RECEIPT/QLF_DATA_RECEIPT: https://raw.githubusercontent.com/gkulkarni/QLF/v3.0/e912_18_2.npz (sha256 equal: True)",
+   "sha256": "94ac06bed8720b46dd4962c01693ce8d7b1d13d65dc50c225eb93680e3430610",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 1082,
+   "id": "S8-PRE-R8-QLF_DATA_RECEIPT.json",
+   "name": "QLF_DATA_RECEIPT.json",
+   "receipt_file": "s8/RECEIPTS.jsonl",
+   "route": "rei_bianchi R8 radiation directory (on disk, untracked); no download receipt (author/derived file of the R8 round)",
+   "sha256": "0b7d7a84d84a148ca484c77594af85b0d2592a9e26cbb78d1be9e60b624069f1",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 439,
+   "id": "S8-PRE-R8-QLF_CACHE_AUDIT.json",
+   "name": "QLF_CACHE_AUDIT.json",
+   "receipt_file": "s8/RECEIPTS.jsonl",
+   "route": "rei_bianchi R8 radiation directory (on disk, untracked); no download receipt (author/derived file of the R8 round)",
+   "sha256": "6c71cec1832847bf5b7128c311bf1856ae695b2823f854e90d9cd8c7e0bf49ca",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 1206,
+   "id": "S8-PRE-R8-SOURCE_CONTRACT.json",
+   "name": "SOURCE_CONTRACT.json",
+   "receipt_file": "s8/RECEIPTS.jsonl",
+   "route": "rei_bianchi R8 radiation directory (on disk, untracked); no download receipt (author/derived file of the R8 round)",
+   "sha256": "7466cb84b9ace483819399ff94ceb6f594bf3e397c297805756b4c23f1248469",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 17102,
+   "id": "S8-PRE-R8-SOURCE_CANDIDATES.md",
+   "name": "SOURCE_CANDIDATES.md",
+   "receipt_file": "s8/RECEIPTS.jsonl",
+   "route": "rei_bianchi R8 radiation directory (on disk, untracked); no download receipt (author/derived file of the R8 round)",
+   "sha256": "19a3b3c422c43b96e29694f6b2873a26f0ae85d7326c65e737eee05262bb44f2",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 9934,
+   "id": "S8-PRE-CKPT-ZERO",
+   "name": "checkpoint.txt",
+   "receipt_file": "s8/RECEIPTS.jsonl",
+   "route": "rei_bianchi AXBI z = 4 restart checkpoint (ZERO); sha256 equal to S8_LOWZ_TAU.json: True",
+   "sha256": "352eae297cbc239bed29de412e0ee1f72cbdf954069ed673abdad87dba5724a2",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 9935,
+   "id": "S8-PRE-CKPT-SHEAR_HALF_PLUS",
+   "name": "checkpoint.txt",
+   "receipt_file": "s8/RECEIPTS.jsonl",
+   "route": "rei_bianchi AXBI z = 4 restart checkpoint (SHEAR_HALF_PLUS); sha256 equal to S8_LOWZ_TAU.json: True",
+   "sha256": "3b3bac5c062126b05960da69f10424773704fcf105afb2140f4f565589574d36",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 9936,
+   "id": "S8-PRE-CKPT-SHEAR_HALF_MINUS",
+   "name": "checkpoint.txt",
+   "receipt_file": "s8/RECEIPTS.jsonl",
+   "route": "rei_bianchi AXBI z = 4 restart checkpoint (SHEAR_HALF_MINUS); sha256 equal to S8_LOWZ_TAU.json: True",
+   "sha256": "7626bee34c885473387ea8bf329831ca6a4b0ccaf3e42e15bcd769a59dfcae8b",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 9935,
+   "id": "S8-PRE-CKPT-SHEAR_PLUS",
+   "name": "checkpoint.txt",
+   "receipt_file": "s8/RECEIPTS.jsonl",
+   "route": "rei_bianchi AXBI z = 4 restart checkpoint (SHEAR_PLUS); sha256 equal to S8_LOWZ_TAU.json: True",
+   "sha256": "671f1295428dc652304e9dd7f9d097e3330aaf272aba271fe99cd987acb521a5",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 9936,
+   "id": "S8-PRE-CKPT-SHEAR_MINUS",
+   "name": "checkpoint.txt",
+   "receipt_file": "s8/RECEIPTS.jsonl",
+   "route": "rei_bianchi AXBI z = 4 restart checkpoint (SHEAR_MINUS); sha256 equal to S8_LOWZ_TAU.json: True",
+   "sha256": "d338724e4172b4db44c2fbb1be1fe960430119a9f2e71fc031b23135189863fe",
+   "status": "PRE_EXISTING_INPUT"
+  },
+  {
+   "bytes": 353467,
+   "id": "S8-PRE-R106-RESULT",
+   "name": "REI_RESTART_REPLAY.json",
+   "receipt_file": "s8/RECEIPTS.jsonl",
+   "route": "committed R106 result (htt_base docs); reference of the replay",
+   "sha256": "b0029c27c9f6851c56089bda653ae3e8d44552688b82283f9b4962aef2cc1963",
+   "status": "PRE_EXISTING_INPUT"
+  }
+ ],
+ "schema": "htt.r108.results.1",
+ "solver_identity_atlas": {
+  "git": {
+   "dirty_code_paths": [
+    "M htt/bass/transport/bjs_bianchi_vii_h.py",
+    " M htt/bass/transport/coupled_einstein_boltzmann.py",
+    " M htt/bass/transport/hybrid_los_transfer.py",
+    " M htt/bass/transport/test_bjs_bianchi_vii_h.py",
+    " M htt/bass/transport/test_hybrid_los_transfer.py",
+    " M scripts/r107_cloud/acquisition.py",
+    " M tests/r107_cloud/test_acquisition.py",
+    "?? scripts/r108/"
+   ],
+   "head": "b79b9526b1817cc5946858f5891f7e7b567b87a2"
+  },
+  "hyrec_tables": {
+   "Alpha_inf.dat": "357101049c9382e90e5e1e896961407d3b465b61b78de9750b852c05ea4d1023",
+   "R_inf.dat": "ce914f4b552ba55ba00f7916f36b0986f19adfdb638e5aefae91f7b2d05a8112",
+   "fit_swift.dat": "46a644d7d2633b8f13080f9062df9b72a2e5adfa956d70d32ad1d7f4ec0a4641",
+   "two_photon_tables.dat": "93d23871e21c40f5b72a6ef9acf3eb7be054735c8aee9401e455736c1d9d8cf9",
+   "two_photon_tables_hires.dat": "db201c729a38c7919172cf080c8ba44cdf8e6b131a6eaa8adcbc9e58fd4d0c93"
+  },
+  "machine": "x86_64",
+  "openblas_threads": "1",
+  "python": "3.12.3",
+  "sources": {
+   "htt/bass/recombination/opacity_history.py": "3a2ffc1a22f92eae32781c88e9911040b49cc1f9e4c1502ee4dd0c24d3b44b88",
+   "htt/bass/recombination/tilted_hyrec.py": "b21f746b9e74c30178832c5f345d5e5c87914c4e92e153df2f1d282e790977a7",
+   "htt/bass/transport/coupled_einstein_boltzmann.py": "28b638cfb4428237148c7851fd0809eaa905190f74da9fb636ac42e9652a73c9",
+   "htt/bass/transport/general_bianchi_transfer.py": "9bcb541d35cabc05b8c325a58bbef57f253627203ff1ac1c354e4bd789f60410",
+   "htt/bass/transport/general_lie_stokes.py": "1d0b5e94d41f4d9aba806ceb4b9ce087ee4a0ccec6dcdc92f9345a5221676357",
+   "htt/bass/transport/hybrid_los_transfer.py": "529bf0316fa2b0923c93629bee72a833e99105abf1a22946d52f7c041e8f418c",
+   "htt/bass/transport/moving_collision_stage.py": "e2d2e94f98f3fab70d0030ef8781b91a1019bcdff9075cd21f16e585db2c1504"
+  }
+ },
+ "start_commit": "b79b9526b1817cc5946858f5891f7e7b567b87a2"
+}

@@ -1,0 +1,376 @@
+{
+ "claim": "template projection only; no observed coefficient is read or scored (SQ-CMB-NULL not qualified)",
+ "euler_convention": "healpy rotate_alm ZYZ (phi, theta, psi)",
+ "git": {
+  "dirty_code_paths": [
+   "M htt/bass/background/tilted_bianchi_state.py",
+   " M htt/bass/transport/bjs_bianchi_vii_h.py",
+   " M htt/bass/transport/coupled_einstein_boltzmann.py",
+   " M htt/bass/transport/hybrid_los_transfer.py",
+   " M htt/bass/transport/test_bjs_bianchi_vii_h.py",
+   " M htt/bass/transport/test_hybrid_los_transfer.py",
+   " M scripts/r107_cloud/acquisition.py",
+   " M tests/r107_cloud/test_acquisition.py",
+   "?? htt/bass/background/test_compensating_tilt_root.py",
+   "?? htt/bass/transport/hybrid_los_parallel.py",
+   "?? htt/bass/transport/test_hybrid_los_parallel.py",
+   "?? htt/obsstat/catalogue_frame_registry.py",
+   "?? scripts/r108/",
+   "?? tests/obsstat/test_r108_cf4_2mpp.py",
+   "?? tests/obsstat/test_r108_cf4_acquire.py",
+   "?? tests/obsstat/test_r108_cf4_cf3_overlap.py",
+   "?? tests/obsstat/test_r108_cf4_kband.py",
+   "?? tests/obsstat/test_r108_frame_cf4_joint.py",
+   "?? tests/obsstat/test_r108_frame_lie_flux.py",
+   "?? tests/obsstat/test_r108_frame_registry.py",
+   "?? tests/obsstat/test_r108_gaia_acquire.py",
+   "?? tests/obsstat/test_r108_gaia_agn_split.py",
+   "?? tests/obsstat/test_r108_gaia_estimator.py",
+   "?? tests/obsstat/test_r108_gaia_frame_leakage.py",
+   "?? tests/obsstat/test_r108_gaia_scan_null.py",
+   "?? tests/obsstat/test_r108_gaia_scanlaw.py",
+   "?? tests/obsstat/test_r108_radio_p_of_c1.py",
+   "?? tests/obsstat/test_r108_radio_racs_dipole.py",
+   "?? tests/obsstat/test_r108_radio_theory_c1.py",
+   "?? tests/obsstat/test_r108_s4_rotation_fitter.py",
+   "?? tests/obsstat/test_r108_s6_kernel.py",
+   "?? tests/obsstat/test_r108_s8_lowz_tau.py"
+  ],
+  "head": "b79b9526b1817cc5946858f5891f7e7b567b87a2"
+ },
+ "kernel": {
+  "column_identity_max_abs": 3.4461593685175624e-14,
+  "estimator_code_sha256": "8cd655f2e95a4cc53027aa67122bdd15265f641222cc91ab6fab60cdd2ee8102",
+  "git": {
+   "dirty_code_paths": [
+    "M htt/bass/transport/bjs_bianchi_vii_h.py",
+    " M htt/bass/transport/coupled_einstein_boltzmann.py",
+    " M htt/bass/transport/hybrid_los_transfer.py",
+    " M htt/bass/transport/test_bjs_bianchi_vii_h.py",
+    " M htt/bass/transport/test_hybrid_los_transfer.py",
+    " M scripts/r107_cloud/acquisition.py",
+    " M tests/r107_cloud/test_acquisition.py",
+    "?? htt/obsstat/catalogue_frame_registry.py",
+    "?? scripts/r108/",
+    "?? tests/obsstat/test_r108_cf4_2mpp.py",
+    "?? tests/obsstat/test_r108_cf4_acquire.py",
+    "?? tests/obsstat/test_r108_cf4_cf3_overlap.py",
+    "?? tests/obsstat/test_r108_cf4_kband.py",
+    "?? tests/obsstat/test_r108_frame_cf4_joint.py",
+    "?? tests/obsstat/test_r108_frame_lie_flux.py",
+    "?? tests/obsstat/test_r108_frame_registry.py",
+    "?? tests/obsstat/test_r108_gaia_agn_split.py",
+    "?? tests/obsstat/test_r108_gaia_estimator.py",
+    "?? tests/obsstat/test_r108_gaia_frame_leakage.py",
+    "?? tests/obsstat/test_r108_gaia_scan_null.py",
+    "?? tests/obsstat/test_r108_gaia_scanlaw.py",
+    "?? tests/obsstat/test_r108_radio_p_of_c1.py",
+    "?? tests/obsstat/test_r108_radio_racs_dipole.py",
+    "?? tests/obsstat/test_r108_radio_theory_c1.py",
+    "?? tests/obsstat/test_r108_s6_kernel.py",
+    "?? tests/obsstat/test_r108_s8_lowz_tau.py"
+   ],
+   "head": "b79b9526b1817cc5946858f5891f7e7b567b87a2"
+  },
+  "inputs": {
+   "COM_CMB_IQU-commander_2048_R3.00_full.fits": {
+    "bytes": 1610660160,
+    "sha256": "fe0332e61087ab445656ef272b31578ca4b1edcc7c3784a7662577684e2685a4"
+   },
+   "COM_Mask_CMB-common-Mask-Int_2048_R3.00.fits": {
+    "bytes": 201335040,
+    "sha256": "23f49a3479073408b83a7f1bb2cca490d9be7f934b2e0e891524b6a1d06a5fc4"
+   },
+   "COM_Mask_CMB-common-Mask-Pol_2048_R3.00.fits": {
+    "bytes": 201335040,
+    "sha256": "c967e45449596c561c940d7ca0d494f1a26d947e6b5a9ef44185fdbf93b036d4"
+   }
+  },
+  "kept_fraction_TP": [
+   0.7794118722279867,
+   0.7814398805300394
+  ],
+  "kernel_npz": "/home/cosmosapjw/Downloads/htt_r108/s6/kernel.npz",
+  "kernel_sha256": "4c4e0ccea43c84b70e43030bab046ed29af62b05fbd7d1c87f9366b1e6da4c4e",
+  "lmax": 256,
+  "nside": 2048,
+  "response_TP": [
+   0.9999103152636716,
+   0.9988205806955991
+  ],
+  "schema": "htt.r108.s6_kernel.1",
+  "seconds": 1253.5010309999925,
+  "validation_direct": [
+   [
+    0.35697236035143043,
+    0.3874592597356016,
+    0.27964425562761996,
+    0.20151113345075244,
+    0.2003142136563756
+   ],
+   [
+    0.15432961479869953,
+    0.0416939106565608,
+    -0.4657658709554468,
+    0.7792555385874784,
+    -0.41387835697223013
+   ],
+   [
+    0.268390609132666,
+    -0.07751581473139134,
+    0.20717860787705036,
+    -0.07591102295119187,
+    0.3134759163068616
+   ]
+  ],
+  "validation_kernel": [
+   [
+    0.3569723603514306,
+    0.38745925973560347,
+    0.2796442556276224,
+    0.20151113345075303,
+    0.20031421365637617
+   ],
+   [
+    0.1543296147986979,
+    0.041693910656561285,
+    -0.46576587095544636,
+    0.7792555385874806,
+    -0.41387835697223047
+   ],
+   [
+    0.2683906091326635,
+    -0.07751581473139324,
+    0.207178607877051,
+    -0.07591102295119107,
+    0.3134759163068608
+   ]
+  ],
+  "validation_random_field_max_rel": 3.2056259875093325e-15,
+  "validation_seed": 108
+ },
+ "n_orientations": 384,
+ "orientation_basis_npz": "/home/cosmosapjw/Downloads/htt_r108/s6/orientation_basis.npz",
+ "orientation_basis_sha256": "bfaeabd83419387fbf53244c87a9b92f33e2c6ea003738f4ea9df22ca40644a5",
+ "rows": [
+  {
+   "cut_rms_uK_TEB": [
+    6.903225740711364e-10,
+    0.0,
+    0.0
+   ],
+   "family": "FLRW",
+   "fullsky_rms_uK_TEB": [
+    6.861416090904757e-10,
+    0.0,
+    0.0
+   ],
+   "handedness": 1,
+   "mask_leakage_rel_max_TEB": [
+    0.16393129764234887,
+    0.0,
+    0.0
+   ],
+   "mask_leakage_rel_median_TEB": [
+    0.0706909763181045,
+    0.0,
+    0.0
+   ],
+   "tag": "FLRW_hp_L8_c384",
+   "template_npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/FLRW_hp_L8_c384_ns128_st0.02.npz",
+   "template_sha256": "fa741e606ee432405b77fa1a1f8c494ff4b419c57b0a4e0981cfd29b509bf5d6"
+  },
+  {
+   "cut_rms_uK_TEB": [
+    146.06588778313287,
+    12.113558116538858,
+    9.557165752685841e-05
+   ],
+   "family": "I",
+   "fullsky_rms_uK_TEB": [
+    146.0658438492205,
+    12.11355727208148,
+    6.849937144581957e-05
+   ],
+   "handedness": 1,
+   "mask_leakage_rel_max_TEB": [
+    4.846480739354468e-05,
+    2.8941594879796098e-05,
+    1.720570242479877
+   ],
+   "mask_leakage_rel_median_TEB": [
+    2.091131787092746e-05,
+    1.1970943599899408e-05,
+    0.9180373891824948
+   ],
+   "tag": "I_hp_L8_c384",
+   "template_npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/I_hp_L8_c384_ns128_st0.02.npz",
+   "template_sha256": "f869f199c155a82d125fd0d2cd2cc00b39051758d0bd9357747770539d123e35"
+  },
+  {
+   "cut_rms_uK_TEB": [
+    145.48765536267703,
+    12.10637856401387,
+    0.07757581445121493
+   ],
+   "family": "V",
+   "fullsky_rms_uK_TEB": [
+    145.48723600852986,
+    12.106373650219766,
+    0.06752558844072239
+   ],
+   "handedness": 1,
+   "mask_leakage_rel_max_TEB": [
+    0.0029658075791783554,
+    0.0008861988048417839,
+    0.9665777264359081
+   ],
+   "mask_leakage_rel_median_TEB": [
+    0.001178829252671371,
+    0.00047974434793805667,
+    0.5216234282009193
+   ],
+   "tag": "V_hp_L8_c384",
+   "template_npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/V_hp_L8_c384_ns128_st0.02.npz",
+   "template_sha256": "04fc703a26ab9eb51e58e367e49e59a9e637f616dada38a6384e53716ecc4b0a"
+  },
+  {
+   "cut_rms_uK_TEB": [
+    145.8129075998531,
+    12.110314291390837,
+    0.11812001722248527
+   ],
+   "family": "VII_h",
+   "fullsky_rms_uK_TEB": [
+    145.8127504347492,
+    12.110312708610701,
+    0.11569828835430729
+   ],
+   "handedness": 1,
+   "mask_leakage_rel_max_TEB": [
+    0.0016166933858851205,
+    0.0005483424452693009,
+    0.3298835851155305
+   ],
+   "mask_leakage_rel_median_TEB": [
+    0.0007007756620386104,
+    0.0002779384368515667,
+    0.17967361520802266
+   ],
+   "tag": "VII_h_hp_L8_c384",
+   "template_npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/VII_h_hp_L8_c384_ns128_st0.02.npz",
+   "template_sha256": "257f3c4b0fc8af62a6da987e6b261951974e7f3c1419479f379f1ca8328ab832"
+  },
+  {
+   "cut_rms_uK_TEB": [
+    145.7769820444064,
+    12.110056396369993,
+    0.1178253476330846
+   ],
+   "family": "VII_h",
+   "fullsky_rms_uK_TEB": [
+    145.776887097104,
+    12.110054650806328,
+    0.11569896803285672
+   ],
+   "handedness": -1,
+   "mask_leakage_rel_max_TEB": [
+    0.0017394057222261806,
+    0.0005438257447658531,
+    0.3247943682875457
+   ],
+   "mask_leakage_rel_median_TEB": [
+    0.000693506085504763,
+    0.0002869902832316873,
+    0.19199485132248112
+   ],
+   "tag": "VII_h_hm_L8_c384",
+   "template_npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/VII_h_hm_L8_c384_ns128_st0.02.npz",
+   "template_sha256": "fc9b35c6970af2526c13684dc494ae061d2583360bc422c79a0d8f4efce5f076"
+  },
+  {
+   "cut_rms_uK_TEB": [
+    378.92633647991033,
+    10.64584259153197,
+    0.4605597065578935
+   ],
+   "family": "VI_h",
+   "fullsky_rms_uK_TEB": [
+    378.9265419677574,
+    10.645868316099698,
+    0.4553947650196545
+   ],
+   "handedness": 1,
+   "mask_leakage_rel_max_TEB": [
+    0.00125925022192624,
+    0.0018326230716560836,
+    0.2392531115795623
+   ],
+   "mask_leakage_rel_median_TEB": [
+    0.0005038061181958217,
+    0.0009375099875580787,
+    0.14859356468935941
+   ],
+   "tag": "VI_h_hp_L8_c384",
+   "template_npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/VI_h_hp_L8_c384_ns128_st0.02.npz",
+   "template_sha256": "95b5ffee6d26f03b30e29bef55f75a7d2b94a2ff6dbae2fe711202d6323c5564"
+  },
+  {
+   "cut_rms_uK_TEB": [
+    1488.222746186934,
+    8.626076718519052,
+    0.6608510926846292
+   ],
+   "family": "VI_-1/9",
+   "fullsky_rms_uK_TEB": [
+    1488.225932351788,
+    8.626147087246675,
+    0.6521529256045205
+   ],
+   "handedness": 1,
+   "mask_leakage_rel_max_TEB": [
+    0.0009767232808592752,
+    0.003911883779490651,
+    0.25693721775660283
+   ],
+   "mask_leakage_rel_median_TEB": [
+    0.0003952317158440801,
+    0.0018355904659392076,
+    0.1598830443405514
+   ],
+   "tag": "VI_m1_9_hp_L8_c384",
+   "template_npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/VI_m1_9_hp_L8_c384_ns128_st0.02.npz",
+   "template_sha256": "f6d69252825b3f00ee8f880d03577325b7f9b679eda0cf691277b9d123990795"
+  },
+  {
+   "cut_rms_uK_TEB": [
+    148.75459277790856,
+    12.114532533976153,
+    0.26952574772654936
+   ],
+   "family": "IX",
+   "fullsky_rms_uK_TEB": [
+    148.7545363222495,
+    12.114530256720546,
+    0.26947632043036984
+   ],
+   "handedness": 1,
+   "mask_leakage_rel_max_TEB": [
+    0.0005073701353721962,
+    0.00016545257984490184,
+    0.04479496397376344
+   ],
+   "mask_leakage_rel_median_TEB": [
+    0.00022600569995100966,
+    8.573158296770733e-05,
+    0.026635143023959182
+   ],
+   "tag": "IX_hp_L8_c384",
+   "template_npz": "/home/cosmosapjw/Downloads/htt_r108/atlas/alm/IX_hp_L8_c384_ns128_st0.02.npz",
+   "template_sha256": "c70c81da6f63e46f4d79ed22671431fa4d4c72e08ba9a200de9121ab1cfe1b86"
+  }
+ ],
+ "schema": "htt.r108.s6_b03_templates.1",
+ "seconds": 1908.4261385349673,
+ "units": "micro-kelvin at epsilon = 2e-4 (template linear in epsilon)"
+}

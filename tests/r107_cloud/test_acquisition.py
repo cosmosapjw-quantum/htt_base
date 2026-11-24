@@ -76,3 +76,31 @@ def test_fetch_rejects_digest_size_budget_and_scheme_violations(tmp_path):
 def test_dry_run_is_the_default(capsys):
     assert acq.main(["fetch", "--items", "D01", "--directory", "/nonexistent", "--max-bytes", "10"]) == 0
     assert "dry run" in capsys.readouterr().err
+
+
+def test_redirects_to_non_https_are_refused():
+    """R108 review R10: a redirect may not downgrade the transport to plain http."""
+    from urllib.request import Request
+
+    handler = acq._HttpsOnlyRedirect()
+    req = Request("https://example.org/a")
+    with pytest.raises(ValueError, match="non-https"):
+        handler.redirect_request(req, None, 302, "Found", {}, "http://mirror.example.org/a")
+    ok = handler.redirect_request(req, None, 302, "Found", {}, "https://mirror.example.org/a")
+    assert ok.full_url == "https://mirror.example.org/a"
+
+
+def test_reuse_without_provider_size_or_digest_is_marked_unverified(tmp_path):
+    data = b"r108 payload" * 10
+    dest = tmp_path / "dest"
+    spec = _spec(tmp_path, data, expected_bytes=None, sha256=None)
+    first = acq.fetch_file(spec, dest, 10 ** 6, allow_file_urls=True)
+    assert first["status"] == "FETCHED" and first["final_url"] == spec["url"]
+    again = acq.fetch_file(spec, dest, 10 ** 6, allow_file_urls=True)
+    assert again["status"] == "REUSED_UNVERIFIED" and again["sha256"] == first["sha256"]
+
+
+def test_cds_paths_follow_the_catalogue_identifier():
+    for it in acq.ITEMS:
+        for f in it.get("files", []):
+            assert "/cats/J/other/" not in f["url"], f["url"]

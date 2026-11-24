@@ -1,0 +1,108 @@
+{
+ "schema": "htt.r108.cloud_diff_review.1",
+ "range": "bd0c6f492955b7311f369f93cf0c4ed547984f6e..b79b9526b1817cc5946858f5891f7e7b567b87a2",
+ "integration": "fast-forward of research/r69-observable-physics-bridges-20261118 to b79b9526b (no local commits after bd0c6f492)",
+ "reviewer": "one separate read-only reviewer in fresh context (AGENTS.md step 6). Its probes under /tmp were not durable. Post-fix numbers below come from R108 files or tests; the pre-fix values quoted for R4 (6.8e-14, 6.6e-13 and 4.45e-9) come from non-durable probes of the pre-fix code (lead and reviewer) and are not file-backed.",
+ "findings": [
+  {
+   "id": "R1",
+   "severity": "blocker",
+   "where": "htt/bass/transport/hybrid_los_transfer.py history_from_coupled_result",
+   "defect": "read result.history['iterations']; the solver writes 'picard_iterations', so every coupled run failed closed",
+   "evidence": "F1 run: 1 failed / 42 passed, ValueError 'coupled result has no recorded history' (logs F1_pytest.log)",
+   "resolution": "read 'picard_iterations'; fail-closed check kept; test_history_from_coupled_result_refuses_a_non_moving_collision_model also pins the key"
+  },
+  {
+   "id": "R2",
+   "severity": "major",
+   "where": "test_coupled_solver_history_feeds_the_line_of_sight",
+   "defect": "first-pass bound 2e-2 at 48 cells was never measured; measured T2 3.06e-2 fails",
+   "evidence": "F2_COUPLED_LOS.json: cell-end source nodes give T2 3.06e-2, 7.98e-3, 2.01e-3, 5.24e-4 at 48/96/192/384 cells; per-doubling ratios are written by scripts/r108/review_r107_claims.py into REVIEW/R107_CLAIM_CHECK.json (3.83 to 4.01, second order); the native amplitude moves far less, so the error sits in the source sampling",
+   "resolution": "solver records the photon state after every optical substep of cells within depth 40 of the observer (history_substep_tau_max) and history_from_coupled_result inserts them as source nodes (default); test runs at 192 cells with 3x the measured 192-cell values for both node sets (substeps: T1 4.68e-4, T2 1.18e-3, E2 2.81e-3, B2 3.04e-3; cell ends: T1 2.87e-3, T2 6.04e-3, E2 1.82e-2, B2 1.993e-2)"
+  },
+  {
+   "id": "R3",
+   "severity": "major",
+   "where": "htt/bass/transport/bjs_bianchi_vii_h.py",
+   "defect": "the published template is written in incoming-photon angles (McEwen et al. 2006 below eq. A3; Kogut et al. 1997 footnote 2) but the module did not say so; evaluating it at sky directions gives f(-n), which equals the other handedness composed with a pi rotation, so a rotation-and-handedness fit silently picks the wrong handedness",
+   "evidence": "test_sky_directions_use_the_incoming_photon_convention: sky map equals template at -n and equals the opposite-handedness template at R_x(pi) n to 1e-12; the naive evaluation differs at O(1)",
+   "resolution": "bjs_temperature_sky(directions, p) for outward sky directions; docstring states the convention"
+  },
+  {
+   "id": "R4",
+   "severity": "minor",
+   "where": "hybrid_los_transfer.py trace_rays / los_sky",
+   "defect": "Delta = lnE + N with lnE accumulated over |N| ~ 7 lost one ulp per RK4 step; T formed as (accT - 1)/4",
+   "evidence": "test_redshift_accumulation_has_no_step_dependent_rounding_floor: Bianchi I, shear 1e-10, T error below 1e-14 and independent of the ray step after the fix (pre-fix non-durable probe: 6.8e-14 at step 0.02, 6.6e-13 at 0.002); REVIEW/R107_CLAIM_CHECK.json native-vs-HEALPix T agreement 1.07e-10 with the fixed code",
+   "resolution": "Delta accumulated directly from stage rates dlnE/dN + 1; F_T = expm1(-4 Delta) + 4 T red, observed increment summed without the 1 - 1 cancellation (identical in exact arithmetic)"
+  },
+  {
+   "id": "R5",
+   "severity": "minor",
+   "where": "hybrid_los_transfer.py los_sky",
+   "defect": "with automatic source_ell_max the truncation check can never trip",
+   "resolution": "emission on the top native shell (ell = L_native >= 4) is checked against max_source_truncation and reported as top_shell_relative_norm",
+   "evidence": "test_top_native_shell_emission_fails_closed_in_automatic_mode"
+  },
+  {
+   "id": "R6",
+   "severity": "minor",
+   "where": "R107 THEORY_FOUNDATIONS.md TF1/TF3, RESULTS_KO.md",
+   "defect": "several quoted numbers are rounded below the file values or are not in any result file",
+   "evidence": "REVIEW/R107_CLAIM_CHECK.json (script scripts/r108/review_r107_claims.py): e.g. TF3 'L=12 <= 4e-3' file 4.21e-3, 'L=16 <= 1.6e-4' file 1.64e-4, 'ray step <= 1e-6' file 1.005e-6 (TT, focusing), 'node doubling <= 5e-3' file 5.22e-3; BJS quadrature/m-power numbers and the 'falls by 4' statement are in no R107 file",
+   "resolution": "recorded as errata (THEORY_FOUNDATIONS.md R108 errata section); R107 result files unchanged"
+  },
+  {
+   "id": "R7",
+   "severity": "minor",
+   "where": "R107 THEORY_FOUNDATIONS.md TF4",
+   "defect": "spatial curvature written as -6a^2 - (1/2) tr n^2 + (1/4)(tr n)^2 (factor 2 in the n terms); IX check quoted as 3n^2/4",
+   "evidence": "exact_spatial_ricci_from_compact: IX n = I gives 1.5 = 3n^2/2; V a = 0.5 gives -1.5; VII_h a = 0.5, n = diag(1,1,0) gives -1.5 (dictionary unaffected)",
+   "resolution": "text corrected in place with an R108 note"
+  },
+  {
+   "id": "R8",
+   "severity": "minor",
+   "where": "test_bjs_bianchi_vii_h.py",
+   "defect": "self-consistency tests only; no external regression anchor; sigma_over_h has no dictionary to the native sigma_ab",
+   "resolution": "OPEN: needs McEwen's Bianchi2 output (or published A, B values) at a reference (Omega_0, x); S4 matched comparison with exact geodesics is the R108 independent check"
+  },
+  {
+   "id": "R9",
+   "severity": "minor",
+   "where": "history_from_coupled_result",
+   "defect": "always applied the moving-electron gain, also for include_moving_correction=False native runs (different physics)",
+   "resolution": "solver history records include_moving_correction and stage_velocity_collision; LoS refuses non-moving runs",
+   "evidence": "test_history_from_coupled_result_refuses_a_non_moving_collision_model"
+  },
+  {
+   "id": "R10",
+   "severity": "minor",
+   "where": "scripts/r107_cloud/acquisition.py",
+   "defect": "urlopen follows https->http redirects; unverifiable reuse reported as REUSED_EXISTING; D02 path used cats/J/other/",
+   "resolution": "https-only redirect handler, final_url in receipts, REUSED_UNVERIFIED status, D02 path J/MNRAS/445/2677 (manifest JSON regenerated)",
+   "evidence": "tests/r107_cloud/test_acquisition.py: test_redirects_to_non_https_are_refused, test_reuse_without_provider_size_or_digest_is_marked_unverified, test_cds_paths_follow_the_catalogue_identifier"
+  },
+  {
+   "id": "R11",
+   "severity": "minor",
+   "where": "htt/bass/recombination/rei_lowz_continuation.py test",
+   "defect": "'reproduces R105 to 2e-10' compares two evaluations of the same integrand; cosmology defaults not tied to the solver",
+   "resolution": "independent units test and cosmology source handled in lane S8 (see REI/)"
+  },
+  {
+   "id": "R12",
+   "severity": "minor",
+   "where": "scripts/r107_cloud/hybrid_los_convergence.py",
+   "defect": "result file lacks nside, lmax, cells, versions, command and git SHA",
+   "resolution": "OPEN for the R107 file. R108 solver results carry identity blocks (scripts/r108/common.py, which after the second review also hashes every dirty code file and git diff HEAD); lane files that lacked them are listed in REVIEW/SECOND_REVIEW.json"
+  },
+  {
+   "id": "R13",
+   "severity": "nit",
+   "where": "geometry recording / LosSourceHistory",
+   "defect": "raw ODE geometry recorded (native loop projects Jacobi drift < 1e-12); frozen dataclass keeps caller arrays",
+   "resolution": "accepted as is (harmless at the measured drift)"
+  }
+ ]
+}
