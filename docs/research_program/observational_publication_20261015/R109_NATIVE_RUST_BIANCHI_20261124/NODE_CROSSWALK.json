@@ -1,0 +1,912 @@
+{
+  "schema": "htt.r109.canonical_crosswalk/1",
+  "authority": {
+    "R78": {
+      "path": "R78_UNIFIED_SCIENCE_DAG_20261119/INTEGRATED_DAG.json",
+      "sha256": "90aba8c1ca9c8e3a7744be0f071dcfe09b81e5353892aca13878191e20f58c11"
+    },
+    "R105": {
+      "path": "R105_RESEARCH_20261124/NODE60_EXECUTION.json",
+      "sha256": "9b2f78f4c1935f3c72e4deffbd4c394b47672172b1ea813b68c610c4997529ab"
+    },
+    "R108": {
+      "path": "R108_LOS_ATLAS_DATA_20261124/R108_RESULTS.json",
+      "sha256": "128c0c38f7ed1d6c81e5fb680068798b84fbb4a8ca2f61cdfae1952873277f52"
+    }
+  },
+  "original_42_sha256": "e3264e105cabf78ddac37addc36cacc3cfa05ee942e33e54b431b22e3e87de0d",
+  "next_id": "SQ-CF4",
+  "counts": {
+    "nodes": 60,
+    "edges": 129,
+    "R109_coverage": {
+      "inherited": 42,
+      "direct_scoped_numerical": 9,
+      "upstream_relevance_only": 9
+    },
+    "canonical_states": {
+      "completed_scoped": 18,
+      "blocked_source": 3,
+      "blocked_external": 1,
+      "pending": 23,
+      "theory_verified_physical_data_pending": 7,
+      "ready_scoped": 4,
+      "pending_conditional": 1,
+      "blocked_physical_anchor": 1,
+      "blocked_input": 1,
+      "pending_dependency": 1
+    },
+    "scientific_promotions": 0
+  },
+  "evidence": {
+    "rotations": {
+      "repo": "cosmosapjw-quantum/bass",
+      "commit": "3966f2a0824a8b32309a8a99481dd6940b952a35",
+      "path": "research/r109_native_sky/LIE_ROTATIONS.json",
+      "sha256": "6f549d0d0d57133b4631a86c4388da5903135587eb273a87df892aa3594261c1",
+      "scope": "native rotated generic Lie data"
+    },
+    "codazzi": {
+      "repo": "cosmosapjw-quantum/htt_base",
+      "path": "R109_NATIVE_RUST_BIANCHI_20261124/CODAZZI_FIX_KO.md",
+      "sha256": "e5fcd442f77ade841f97b5e988ba58ae9f7e3c3b7b51cbe651e28cbad705a84c",
+      "scope": "initial-data versus public residual sign"
+    },
+    "manticore": {
+      "repo": "cosmosapjw-quantum/htt_base",
+      "path": "R109_NATIVE_RUST_BIANCHI_20261124/MANTICORE_ROUTE_KO.md",
+      "sha256": "05fc0ac4fc06fe1cad112871ab50210cfc10cb37e2d73e080c3041b82f1294b4",
+      "measured_cluster_los_draws": 1120,
+      "unique_clusters": 14,
+      "target_3d_Manticore_grids": 0
+    },
+    "commander": {
+      "repo": "cosmosapjw-quantum/htt_base",
+      "path": "R109_NATIVE_RUST_BIANCHI_20261124/COMMANDER_NATIVE_PROJECTION.json",
+      "sha256": "4fe75d85f5eddf123ebd3429be0603ed6cf24a712f100569e203341794798fe2",
+      "operator_output_shape": [
+        12,
+        384,
+        3,
+        5
+      ],
+      "coefficient_file": "COMMANDER_NATIVE_COEFFICIENTS.npz",
+      "coefficient_sha256": "1e4df89eccc23b18cb20a6c00d8aca3a3efe56239aaa9534a0d19e45fd864edc"
+    },
+    "atlas": {
+      "repo": "cosmosapjw-quantum/bass",
+      "commit": "3966f2a0824a8b32309a8a99481dd6940b952a35",
+      "path": "research/r109_native_sky/ATLAS.json",
+      "sha256": "9126f5ee4cddb00a9e67774d149f0eb2328a53e6c7aa91207ecfc97f3fe04c5f",
+      "cases": 69,
+      "mode_archive_sha256": "bc04eec2fa7a3887d228dfe886ea8c46c08bc8ef59d0033f71ed6a30f64e9844"
+    },
+    "material": {
+      "repo": "cosmosapjw-quantum/htt_base",
+      "path": "R109_NATIVE_RUST_BIANCHI_20261124/NATIVE_MATERIAL_SKY.json",
+      "sha256": "bb8347b3995ac3a691782f5c0da435bf2280ea7cb9bb77e0307847f474159907",
+      "cases": 6,
+      "native_skies": 24
+    }
+  },
+  "six_papers": {
+    "P1": {
+      "topic": "Five-variable tensor inference",
+      "nodes": [
+        "S01",
+        "SQ-P1-ANCHOR",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06"
+      ]
+    },
+    "P2": {
+      "topic": "Large-angle CMB morphology",
+      "nodes": [
+        "L01",
+        "SQ-CMB-NULL",
+        "SQ-PHOTON-FLUX",
+        "L03",
+        "L02",
+        "L04",
+        "L05",
+        "L06"
+      ]
+    },
+    "P3": {
+      "topic": "Directional Hubble field",
+      "nodes": [
+        "H01",
+        "H03",
+        "SQ-CF4",
+        "H02",
+        "H04",
+        "H05",
+        "H06"
+      ]
+    },
+    "P4": {
+      "topic": "Radio dipole and observer motion",
+      "nodes": [
+        "V01",
+        "V02",
+        "V03",
+        "SQ-RADIO",
+        "V04",
+        "V05",
+        "V06"
+      ]
+    },
+    "P5": {
+      "topic": "Bianchi classification",
+      "nodes": [
+        "B01",
+        "SQ-LIE-FLUX",
+        "SQ-NATIVE",
+        "B02",
+        "B03",
+        "B04",
+        "B05"
+      ]
+    },
+    "P6": {
+      "topic": "Beyond-FLRW kinematics",
+      "nodes": [
+        "K01",
+        "K02",
+        "SQ-GAIA",
+        "K03",
+        "K04",
+        "K05",
+        "K06"
+      ]
+    }
+  },
+  "seven_cross_routes": [
+    {
+      "id": "PHY-01",
+      "axes": [
+        "P3",
+        "P6",
+        "P5"
+      ],
+      "objective": "Hemisphere shear leakage exact, Type V j0 chi0 still nonzero masked contrast"
+    },
+    {
+      "id": "PHY-02",
+      "axes": [
+        "P2",
+        "P6",
+        "P5"
+      ],
+      "objective": "Photon moment covariance PSD plus Einstein normal-flux ellipsoid, exceptional Lie image"
+    },
+    {
+      "id": "PHY-03",
+      "axes": [
+        "P2",
+        "P4"
+      ],
+      "objective": "Same beta implies Q_count=A(3+beta\u00b2)Sgamma/4 and d=k(3+beta\u00b2)m/4"
+    },
+    {
+      "id": "PHY-04",
+      "axes": [
+        "P6",
+        "P4",
+        "P5"
+      ],
+      "objective": "V_B=-c n\u00d7Nn, allsky B2 norm c\u00b2||N_STF||\u00b2/5 orthogonal local shear E2"
+    },
+    {
+      "id": "PHY-05",
+      "axes": [
+        "P5",
+        "P6"
+      ],
+      "objective": "exceptional VI_-1/9 rank M2 left flux null; independent noisy residual covariance can rank3"
+    },
+    {
+      "id": "PHY-06",
+      "axes": [
+        "P1",
+        "P2",
+        "P5",
+        "P6"
+      ],
+      "objective": "commutator[D,sigma]!=0 can rotate eigenframe with dot chi=0; photon ell4 changes F and dot stress"
+    },
+    {
+      "id": "PHY-07",
+      "axes": [
+        "P1",
+        "P3",
+        "RADIO_DIPOLE"
+      ],
+      "objective": "radius variation makes dipole n and (100Mpc/r)n design rank12 vs fixed r rank9"
+    }
+  ],
+  "R108_route_groups": [
+    "B03 (preparation only)",
+    "F0-F3 (cloud integration)",
+    "H02",
+    "H05",
+    "REC/REI",
+    "SQ-CF4",
+    "SQ-CMB-NULL / L03",
+    "SQ-FRAME",
+    "SQ-GAIA / K03",
+    "SQ-LIE-FLUX",
+    "SQ-NATIVE / B02",
+    "SQ-PHOTON-FLUX",
+    "SQ-RADIO"
+  ],
+  "nodes": [
+    {
+      "id": "E0",
+      "paper": "COMMON",
+      "canonical_state": "completed_scoped",
+      "depends_on": [],
+      "r109": "inherited"
+    },
+    {
+      "id": "E1",
+      "paper": "COMMON",
+      "canonical_state": "completed_scoped",
+      "depends_on": [
+        "E0"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "E2",
+      "paper": "COMMON",
+      "canonical_state": "completed_scoped",
+      "depends_on": [
+        "E1"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "B01",
+      "paper": "P5",
+      "canonical_state": "completed_scoped",
+      "depends_on": [
+        "E2"
+      ],
+      "r109": "direct_scoped_numerical",
+      "evidence": [
+        "atlas"
+      ],
+      "comment": "Twelve finite Lie-family initial-state templates, including exceptional VI_-1/9; scoped inventory only."
+    },
+    {
+      "id": "E3",
+      "paper": "COMMON",
+      "canonical_state": "completed_scoped",
+      "depends_on": [
+        "E0"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "H01",
+      "paper": "P3",
+      "canonical_state": "completed_scoped",
+      "depends_on": [
+        "E1"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "H03",
+      "paper": "P3",
+      "canonical_state": "completed_scoped",
+      "depends_on": [
+        "H01"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "K01",
+      "paper": "P6",
+      "canonical_state": "completed_scoped",
+      "depends_on": [
+        "E1",
+        "E2"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "K02",
+      "paper": "P6",
+      "canonical_state": "completed_scoped",
+      "depends_on": [
+        "K01",
+        "H01"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "L01",
+      "paper": "P2",
+      "canonical_state": "completed_scoped",
+      "depends_on": [
+        "E2"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "S01",
+      "paper": "P1",
+      "canonical_state": "completed_scoped",
+      "depends_on": [
+        "E3"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "SQ-CMB-NULL",
+      "paper": "P2",
+      "canonical_state": "blocked_source",
+      "depends_on": [
+        "E2",
+        "L01"
+      ],
+      "r109": "upstream_relevance_only",
+      "comment": "Commander response now acts on deterministic native skies, but supplies no additional independent null realizations or calibration.",
+      "evidence": [
+        "commander"
+      ]
+    },
+    {
+      "id": "SQ-LIE-FLUX",
+      "paper": "P5",
+      "canonical_state": "blocked_source",
+      "depends_on": [
+        "B01",
+        "K01"
+      ],
+      "r109": "direct_scoped_numerical",
+      "evidence": [
+        "atlas",
+        "codazzi",
+        "rotations"
+      ],
+      "comment": "Hamiltonian, Codazzi, Jacobi and radiation/dust flux diagnostics on evolved Lie data. Independent observed rho, j, pi and shear covariance remain open."
+    },
+    {
+      "id": "SQ-NATIVE",
+      "paper": "P5",
+      "canonical_state": "blocked_external",
+      "depends_on": [
+        "B01",
+        "L01"
+      ],
+      "r109": "direct_scoped_numerical",
+      "evidence": [
+        "atlas",
+        "material",
+        "commander"
+      ],
+      "comment": "Three original Rust repositories now supply executable deterministic templates and source-bound finite material. Family-confusion, real Planck injection and held-out null remain open."
+    },
+    {
+      "id": "B02",
+      "paper": "P5",
+      "canonical_state": "pending",
+      "depends_on": [
+        "B01"
+      ],
+      "r109": "direct_scoped_numerical",
+      "evidence": [
+        "atlas",
+        "material"
+      ],
+      "comment": "All signed m of polarized finite homogeneous skies; separately integrated early REC and late REI material. High-ell and physical initial-mode transfer remain open."
+    },
+    {
+      "id": "SQ-PHOTON-FLUX",
+      "paper": "P2",
+      "canonical_state": "blocked_source",
+      "depends_on": [
+        "L01",
+        "B01"
+      ],
+      "r109": "direct_scoped_numerical",
+      "evidence": [
+        "atlas"
+      ],
+      "comment": "Observer/propagation frames, numerical photon flux and separate dust/recoil terms in a common synthetic normal frame. Independent source photon moments and covariance remain open."
+    },
+    {
+      "id": "PHY-02",
+      "paper": "CROSS",
+      "canonical_state": "theory_verified_physical_data_pending",
+      "depends_on": [
+        "SQ-CMB-NULL",
+        "SQ-PHOTON-FLUX",
+        "SQ-LIE-FLUX"
+      ],
+      "r109": "direct_scoped_numerical",
+      "evidence": [
+        "atlas"
+      ],
+      "comment": "Normal photon flux and multifluid constraints are checked in numerical initial-value trajectories. The observational frame-matched moment law and held-out test remain open."
+    },
+    {
+      "id": "V01",
+      "paper": "P4",
+      "canonical_state": "completed_scoped",
+      "depends_on": [
+        "E1",
+        "E2"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "V02",
+      "paper": "P4",
+      "canonical_state": "completed_scoped",
+      "depends_on": [
+        "V01",
+        "L01"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "V03",
+      "paper": "P4",
+      "canonical_state": "completed_scoped",
+      "depends_on": [
+        "V01"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "X01",
+      "paper": "COMMON",
+      "canonical_state": "completed_scoped",
+      "depends_on": [
+        "E0"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "L03",
+      "paper": "P2",
+      "canonical_state": "pending",
+      "depends_on": [
+        "L01",
+        "X01"
+      ],
+      "r109": "upstream_relevance_only",
+      "comment": "Simulated intrinsic sky modes can enter a matched release pipeline; the Planck null depth is inherited."
+    },
+    {
+      "id": "SQ-CF4",
+      "paper": "P3",
+      "canonical_state": "ready_scoped",
+      "depends_on": [
+        "E1",
+        "X01",
+        "H01"
+      ],
+      "r109": "upstream_relevance_only",
+      "comment": "The new Manticore source has 14 cluster locations. It does not supply the selected CF4 catalogue covariance or held-out independence.",
+      "evidence": [
+        "manticore"
+      ]
+    },
+    {
+      "id": "H02",
+      "paper": "P3",
+      "canonical_state": "pending",
+      "depends_on": [
+        "H01",
+        "X01"
+      ],
+      "r109": "upstream_relevance_only",
+      "comment": "Manticore supplied 1,120 LOS draws on 14 clusters. The project still lacks a three-dimensional posterior grid on the registered CF4 support.",
+      "evidence": [
+        "manticore"
+      ]
+    },
+    {
+      "id": "H04",
+      "paper": "P3",
+      "canonical_state": "pending",
+      "depends_on": [
+        "H02",
+        "H03"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "SQ-FRAME",
+      "paper": "COMMON",
+      "canonical_state": "ready_scoped",
+      "depends_on": [
+        "X01",
+        "V01",
+        "K01"
+      ],
+      "r109": "direct_scoped_numerical",
+      "evidence": [
+        "atlas",
+        "material"
+      ],
+      "comment": "Exact FLRW boost control, source electron velocity and observer velocity are distinct. Signed REI donor redshift/clock tested in its finite observer frame. Survey frame calibration remains open."
+    },
+    {
+      "id": "SQ-GAIA",
+      "paper": "P6",
+      "canonical_state": "ready_scoped",
+      "depends_on": [
+        "X01",
+        "K01"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "K03",
+      "paper": "P6",
+      "canonical_state": "pending",
+      "depends_on": [
+        "K01"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "SQ-OPTICAL",
+      "paper": "COMMON",
+      "canonical_state": "pending_conditional",
+      "depends_on": [
+        "H01",
+        "K01",
+        "B01",
+        "SQ-FRAME"
+      ],
+      "r109": "upstream_relevance_only",
+      "comment": "The REI photon-redshift optical-depth check uses LRS-I material; a finite-z Jacobi/position-drift transfer fit is still separate."
+    },
+    {
+      "id": "B03",
+      "paper": "P5",
+      "canonical_state": "pending",
+      "depends_on": [
+        "B02",
+        "L03"
+      ],
+      "r109": "direct_scoped_numerical",
+      "evidence": [
+        "atlas",
+        "commander"
+      ],
+      "comment": "The measured R108 Commander response acts on the signed R109 recoil modes across archived orientations. No observed temperature/polarization score, matched-release null or blinded recovery."
+    },
+    {
+      "id": "B04",
+      "paper": "P5",
+      "canonical_state": "pending",
+      "depends_on": [
+        "B03"
+      ],
+      "r109": "upstream_relevance_only",
+      "comment": "Family simulations supply candidates; no R109 confusion matrix or observational evidence ratio."
+    },
+    {
+      "id": "K04",
+      "paper": "P6",
+      "canonical_state": "pending",
+      "depends_on": [
+        "K02",
+        "H04"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "PHY-01",
+      "paper": "CROSS",
+      "canonical_state": "theory_verified_physical_data_pending",
+      "depends_on": [
+        "SQ-CF4",
+        "SQ-OPTICAL",
+        "SQ-LIE-FLUX"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "PHY-05",
+      "paper": "CROSS",
+      "canonical_state": "theory_verified_physical_data_pending",
+      "depends_on": [
+        "SQ-LIE-FLUX",
+        "SQ-OPTICAL"
+      ],
+      "r109": "direct_scoped_numerical",
+      "evidence": [
+        "atlas",
+        "codazzi",
+        "rotations"
+      ],
+      "comment": "Common-time Codazzi/Jacobi and split radiation/dust flux on exceptional VI_-1/9, with temporal and angular refinements. Independent noisy residual covariance and rank test remain open."
+    },
+    {
+      "id": "PHY-06",
+      "paper": "CROSS",
+      "canonical_state": "theory_verified_physical_data_pending",
+      "depends_on": [
+        "SQ-CMB-NULL",
+        "SQ-PHOTON-FLUX",
+        "SQ-LIE-FLUX",
+        "SQ-OPTICAL"
+      ],
+      "r109": "upstream_relevance_only",
+      "comment": "Numerical higher multipoles and evolving stress supply controlled test cases. This round does not identify the proposed dot-stress commutator on measured photons."
+    },
+    {
+      "id": "SQ-P1-ANCHOR",
+      "paper": "P1",
+      "canonical_state": "blocked_physical_anchor",
+      "depends_on": [
+        "S01",
+        "X01"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "S02",
+      "paper": "P1",
+      "canonical_state": "blocked_input",
+      "depends_on": [
+        "S01",
+        "E2"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "S03",
+      "paper": "P1",
+      "canonical_state": "pending",
+      "depends_on": [
+        "S02",
+        "X01"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "SQ-RADIO",
+      "paper": "P4",
+      "canonical_state": "ready_scoped",
+      "depends_on": [
+        "V01",
+        "X01"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "PHY-03",
+      "paper": "CROSS",
+      "canonical_state": "theory_verified_physical_data_pending",
+      "depends_on": [
+        "SQ-RADIO",
+        "SQ-PHOTON-FLUX",
+        "SQ-FRAME"
+      ],
+      "r109": "upstream_relevance_only",
+      "comment": "Doppler FLRW control uses one observer velocity; radio flux response and survey count law require real source populations."
+    },
+    {
+      "id": "PHY-04",
+      "paper": "CROSS",
+      "canonical_state": "theory_verified_physical_data_pending",
+      "depends_on": [
+        "SQ-GAIA",
+        "SQ-RADIO",
+        "SQ-OPTICAL",
+        "SQ-FRAME"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "PHY-07",
+      "paper": "CROSS",
+      "canonical_state": "theory_verified_physical_data_pending",
+      "depends_on": [
+        "SQ-CF4",
+        "SQ-RADIO",
+        "SQ-OPTICAL",
+        "SQ-FRAME"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "SQ-CROSS-COV",
+      "paper": "COMMON",
+      "canonical_state": "pending_dependency",
+      "depends_on": [
+        "SQ-CF4",
+        "SQ-GAIA",
+        "SQ-RADIO",
+        "SQ-FRAME",
+        "SQ-OPTICAL"
+      ],
+      "r109": "upstream_relevance_only",
+      "comment": "A finite weighted law on model skies cannot determine actual cross-survey covariance or a held-out null."
+    },
+    {
+      "id": "K05",
+      "paper": "P6",
+      "canonical_state": "pending",
+      "depends_on": [
+        "K03",
+        "K04",
+        "V03"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "V04",
+      "paper": "P4",
+      "canonical_state": "pending",
+      "depends_on": [
+        "V02",
+        "V03",
+        "H04"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "X02",
+      "paper": "COMMON",
+      "canonical_state": "completed_scoped",
+      "depends_on": [
+        "E0"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "B05",
+      "paper": "P5",
+      "canonical_state": "pending",
+      "depends_on": [
+        "B04",
+        "X02"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "H05",
+      "paper": "P3",
+      "canonical_state": "pending",
+      "depends_on": [
+        "H04",
+        "X02"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "H06",
+      "paper": "P3",
+      "canonical_state": "pending",
+      "depends_on": [
+        "H05"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "K06",
+      "paper": "P6",
+      "canonical_state": "pending",
+      "depends_on": [
+        "K05",
+        "X02"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "X03",
+      "paper": "COMMON",
+      "canonical_state": "completed_scoped",
+      "depends_on": [
+        "E0"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "L02",
+      "paper": "P2",
+      "canonical_state": "completed_scoped",
+      "depends_on": [
+        "L01",
+        "X03"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "L04",
+      "paper": "P2",
+      "canonical_state": "pending",
+      "depends_on": [
+        "L02",
+        "L03"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "L05",
+      "paper": "P2",
+      "canonical_state": "pending",
+      "depends_on": [
+        "L04",
+        "X02"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "L06",
+      "paper": "P2",
+      "canonical_state": "pending",
+      "depends_on": [
+        "L05"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "S04",
+      "paper": "P1",
+      "canonical_state": "pending",
+      "depends_on": [
+        "S03",
+        "X03"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "S05",
+      "paper": "P1",
+      "canonical_state": "pending",
+      "depends_on": [
+        "S04",
+        "X02"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "S06",
+      "paper": "P1",
+      "canonical_state": "pending",
+      "depends_on": [
+        "S05"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "V05",
+      "paper": "P4",
+      "canonical_state": "pending",
+      "depends_on": [
+        "V04",
+        "X03"
+      ],
+      "r109": "inherited"
+    },
+    {
+      "id": "V06",
+      "paper": "P4",
+      "canonical_state": "pending",
+      "depends_on": [
+        "V05",
+        "X02"
+      ],
+      "r109": "inherited"
+    }
+  ],
+  "physical_Pi": null,
+  "physical_GF": null,
+  "calibrated_p": null,
+  "family_attribution": null
+}
