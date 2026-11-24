@@ -291,3 +291,89 @@ def test_species_backed_background_run_reaches_reionization_window_with_physical
     assert result.eta[0] == pytest.approx(eta_start, abs=1.0e-8)
     assert result.eta[-1] == pytest.approx(eta_end, rel=5.0e-4)
     assert result.a[-1] == pytest.approx(1.0 / 9.0, rel=1.0e-6)
+
+
+def _type_v_tilted_parts():
+    algebra = build_bianchi_algebra("V", a_twist=1.)
+    species = decompose_tilted_species(TiltedSpeciesParams(
+        rho_hat=3., p_hat=0., v=np.array([.18, .09, -.04]), label="dust",
+    ))
+    # Type V gives 3 sigma[:,0]=q; zero kernel selects the smallest norm.
+    x, y, z = species.q / 3.
+    forced = np.array([[x, y, z], [y, -x / 2., 0.], [z, 0., -x / 2.]])
+    free = np.array([[0., 0., 0.], [0., .08, .12], [0., .12, -.08]])
+    return algebra, species, forced, free
+
+
+@pytest.mark.parametrize(("policy", "u", "free_scale"), [
+    ("project_shear_amplitude", 1., 1.7), ("solve_curvature_scale", 1.3, 1.),
+])
+def test_tilted_hamiltonian_closures_simultaneously_hit_physical_flux_and_H(policy, u, free_scale):
+    algebra, species, forced, free = _type_v_tilted_parts()
+    expected = forced / u + free_scale * free
+    H = np.sqrt((species.mu + np.sum(expected**2) / 2. + 3. * u**2) / 3.)
+    result = build_tilted_initial_conditions(algebra=algebra, species=[species], H=H,
+                                              sigma_ab=forced + free, closure=policy)
+    assert result.H == H
+    np.testing.assert_allclose(result.sigma_ab, expected, rtol=0., atol=2e-14)
+    np.testing.assert_allclose(result.algebra.C, u * algebra.C, rtol=0., atol=2e-14)
+    np.testing.assert_allclose(_koszul_divergence(result.sigma_ab, result.algebra.C), -species.q, atol=2e-14)
+    assert result.metadata.gauss_admissible and result.metadata.codazzi_satisfied
+    assert result.metadata.shear_amplitude_scale == pytest.approx(np.linalg.norm(expected) / np.linalg.norm(forced + free))
+    assert abs(result.residuals.gauss) < 2e-14
+
+
+def test_tilted_shear_norm_floor_and_missing_null_direction_are_distinct():
+    algebra, species, forced, free = _type_v_tilted_parts()
+    forced_sq = np.sum(forced**2)
+
+    def solve(seed, remaining_sq):
+        H = np.sqrt((species.mu + (forced_sq + remaining_sq) / 2. + 3.) / 3.)
+        return build_tilted_initial_conditions(algebra=algebra, species=[species],
+                                                sigma_ab=seed, H=H, closure="project_shear_amplitude")
+
+    np.testing.assert_allclose(solve(forced + free, 0.).sigma_ab, forced, rtol=0., atol=2e-14)
+    with pytest.raises(ValueError, match="below the minimum"):
+        solve(forced + free, -forced_sq / 2.)
+    with pytest.raises(ValueError, match="null shear direction"):
+        solve(forced, .5)
+
+
+def test_fixed_H_with_no_positive_coupled_curvature_scale_raises():
+    algebra, species, forced, free = _type_v_tilted_parts()
+    with pytest.raises(ValueError, match="no positive curvature scale"):
+        build_tilted_initial_conditions(algebra=algebra, species=[species], sigma_ab=forced + free,
+                                        H=.01, closure="solve_curvature_scale")
+
+
+@pytest.mark.parametrize(("R", "B", "U", "expected"), [
+    (-1., 10., 9., 1.),           # two positive scales, starting solution retained
+    (-1., 4.25, 1., 2.),         # u=1/2 and 2, exact log-distance tie
+    (-1e-290, 4.25e-290, 1e-290, 2.),  # dimensionful coefficient scaling
+    (-1., 5., 1e-28, np.sqrt(5.)),     # continuous q->0 branch
+    (-1., 2., 1., 1.),           # discriminant zero, two branches meet
+    (0., 1e-290, 4e-290, 2.),    # linear limit when R=0
+    (0., 1e100, 1e-300, 1e-200),  # u² underflows, u remains representable
+    (1e-300, -1e100, 1e-300, 1e200),  # u² overflows, u remains representable
+    (1., -3., 4., 2.),           # positive R admits just one positive scale
+])
+def test_coupled_curvature_roots_select_nearest_log_scale(R, B, U, expected):
+    from bass.background.initial_conditions import _nearest_curvature_scale
+    assert _nearest_curvature_scale(R, B, U) == pytest.approx(expected, rel=3e-14, abs=0.)
+
+
+@pytest.mark.parametrize("closure", ["solve_curvature_scale", "project_shear_amplitude"])
+def test_compensated_nonzero_streams_recover_zero_flux_closure(closure):
+    algebra, positive, _, free = _type_v_tilted_parts()
+    negative = decompose_tilted_species(TiltedSpeciesParams(
+        rho_hat=3., p_hat=0., v=-positive.params.v, label="counterstream",
+    ))
+    H = np.sqrt((2. * positive.mu + 3. + np.sum(free**2)) / 3.)
+    tilted = build_tilted_initial_conditions(algebra=algebra, species=[positive, negative],
+                                             sigma_ab=free, H=H, closure=closure)
+    orthogonal = build_orthogonal_initial_conditions(algebra=algebra, rho=2. * positive.mu,
+                                                      p=2. * positive.p, sigma_ab=free, H=H, closure=closure)
+    np.testing.assert_array_equal(tilted.sigma_ab, orthogonal.sigma_ab)
+    np.testing.assert_array_equal(tilted.algebra.C, orthogonal.algebra.C)
+    assert tilted.metadata.shear_amplitude_scale == orthogonal.metadata.shear_amplitude_scale
+    assert tilted.metadata.notes == ()

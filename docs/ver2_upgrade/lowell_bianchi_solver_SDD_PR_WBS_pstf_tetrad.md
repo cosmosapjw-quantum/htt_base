@@ -495,7 +495,7 @@ where applicable. Axis permutations are allowed tetrad choices but must be store
 | Type | Class | \(a_\alpha\) | \((n_1,n_2,n_3)\) | Parameter domain | Orthogonal branch | Tilted branch |
 |---|---:|---:|---:|---|---|---|
 | I | A | \((0,0,0)\) | \((0,0,0)\) | none | \(q_\alpha=0\), \({}^3R_{\alpha\beta}=0\) | tilt allowed only if total \(q_\alpha\) is balanced by Codazzi; otherwise solve shear off-diagonal or compensating species tilt |
-| II | A | \((0,0,0)\) | \((n,0,0)\) up to permutation | \(n\neq0\) | \(D^\beta\sigma_{\alpha\beta}=0\) | \(D^\beta\sigma_{\alpha\beta}=\kappa q_\alpha\) fixes allowed tilt/shear combination |
+| II | A | \((0,0,0)\) | \((n,0,0)\) up to permutation | \(n\neq0\) | \(D^\beta\sigma_{\alpha\beta}=0\) | \(D^\beta\sigma_{\alpha\beta}=-\kappa q_\alpha\) fixes allowed tilt/shear combination |
 | VI\(_0\) | A | \((0,0,0)\) | \((0,n,-n)\) | \(n\neq0\) | trace-free class-A curvature; orthogonal branch has zero total flux | tilt source enters only through \(q_\alpha,\pi_{\alpha\beta}\) and constraints |
 | VII\(_0\) | A | \((0,0,0)\) | \((0,n,n)\) | \(n\neq0\) | helical class-A algebra without class-B vector | tilt handled by same Codazzi closure, no special template assumption |
 | VIII | A | \((0,0,0)\) | sign pattern \((-n,n,n)\) up to permutation | \(n>0\) | non-compact semisimple algebra; orthogonal allowed | tilted allowed with class-A momentum constraint |
@@ -746,7 +746,7 @@ For homogeneous geodesic irrotational normal congruence,
 
 \[
 \boxed{
-D^\beta\sigma_{\alpha\beta}=\kappa q_\alpha.
+D^\beta\sigma_{\alpha\beta}=-\kappa q_\alpha.
 }
 \]
 
@@ -763,7 +763,7 @@ Tilted branch:
 \[
 q_\alpha=\sum_s q_\alpha^{(s)}
 \quad\Rightarrow\quad
-D^\beta\sigma_{\alpha\beta}=\kappa\sum_s q_\alpha^{(s)}.
+D^\beta\sigma_{\alpha\beta}=-\kappa\sum_s q_\alpha^{(s)}.
 \]
 
 ### 5.5.4 Magnetic Weyl constraint
@@ -1078,8 +1078,18 @@ The code must allow at least three closure policies:
 Compute \(\rho_i,p_i,q_{\alpha,i},\pi_{\alpha\beta,i}\) from species tilts. Enforce
 
 \[
-D^\beta\sigma_{\alpha\beta,i}=\kappa q_{\alpha,i}.
+D^\beta\sigma_{\alpha\beta,i}=-\kappa q_{\alpha,i}.
 \]
+
+For a fixed Hubble value and nonzero total flux, split the projected shear
+into its Codazzi-forced component and the input component in the divergence
+kernel. At fixed geometry, `project_shear_amplitude` changes the kernel
+amplitude to meet the Gauss norm. For `solve_curvature_scale`, a uniform
+rescaling of the algebra by a positive factor `u` requires division of the
+forced shear by `u`; the kernel component retains its initial value. When
+two positive scales solve Gauss, choose the closest to one in logarithmic
+scale, with the larger solution on a tie. Check both constraints on the
+final shear and the final algebra.
 
 Supported closure policies:
 
@@ -1103,7 +1113,7 @@ def build_constraint_satisfying_background_ic(algebra, geom, matter_spec, shear_
             sigma=sigma,
             matter=matter,
             geom=geom,
-            target="D_sigma_equals_kappa_q",
+            target="D_sigma_equals_minus_kappa_q",
             policy=policy,
         )
 
@@ -2010,7 +2020,7 @@ q_\alpha^{(s)}=(\hat\rho_s+\hat p_s)\Gamma_s^2v_{s\alpha},
 \]
 
 \[
-D^\beta\sigma_{\alpha\beta}=\kappa\sum_s q_\alpha^{(s)}.
+D^\beta\sigma_{\alpha\beta}=-\kappa\sum_s q_\alpha^{(s)}.
 \]
 
 ### WBS
@@ -3254,7 +3264,7 @@ Must pass:
 \[
 \mathcal C_\alpha
 \equiv
-D^\beta\sigma_{\alpha\beta}-\kappa q_\alpha=0.
+D^\beta\sigma_{\alpha\beta}+\kappa q_\alpha=0.
 \]
 
 ## 11.4 Background gate

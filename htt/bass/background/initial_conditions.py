@@ -51,6 +51,9 @@ __all__ = [
 ]
 
 
+_CODAZZI_SVD_RCOND = 1.0e-6
+
+
 class CodazziProjectionError(ValueError):
     """Raised when the requested branch cannot satisfy the Codazzi surface."""
 
@@ -208,7 +211,7 @@ def project_shear_to_codazzi(
     before = A @ x0 - target
     # Preserve the old Gram pseudoinverse cutoff, 1e-12 in squared
     # singular values, while solving directly on the divergence operator.
-    delta, _, rank, _ = np.linalg.lstsq(A, -before, rcond=1.0e-6)
+    delta, _, rank, _ = np.linalg.lstsq(A, -before, rcond=_CODAZZI_SVD_RCOND)
     x_proj = x0 + delta
     sigma_proj = _sigma_from_basis_coefficients(x_proj)
     after = evaluate_background_constraints(
@@ -268,6 +271,99 @@ def project_tilted_codazzi(
     return sigma_proj, matter, meta
 
 
+def _nearest_curvature_scale(ricci: float, linear: float, forced_sq: float) -> float:
+    """Positive u nearest one in log scale for R u^4 + B u² − ||x_parallel||² = 0."""
+    if not all(math.isfinite(v) for v in (ricci, linear, forced_sq)) or forced_sq <= 0.0:
+        raise ValueError("non-finite or unrepresentable curvature closure coefficients")
+    # Normalize B and sqrt(|R| U) at their common scale before squaring.
+    # Compute u directly from square-root ratios; u can be representable
+    # even when y=u² or a ratio of the original coefficients overflows.
+    forced_norm = math.sqrt(forced_sq)
+    if ricci == 0.0:
+        candidates = [forced_norm / math.sqrt(linear)] if linear > 0.0 else []
+    else:
+        sqrt_r = math.sqrt(abs(ricci))
+        geometric_mean = sqrt_r * forced_norm
+        scale = max(abs(linear), geometric_mean)
+        b = linear / scale
+        cross = 2.0 * (geometric_mean / scale)
+        if ricci > 0.0:
+            root_disc = math.hypot(b, cross)
+        else:
+            # Both roots have the same sign. The factorization retains
+            # the splitting near a double root.
+            gap = b - cross
+            if b <= 0.0 or gap < -16.0 * np.finfo(float).eps * max(b, cross):
+                raise ValueError("no positive curvature scale satisfies Gauss and Codazzi")
+            root_disc = math.sqrt(max(0.0, gap)) * math.sqrt(b + cross)
+        stable = -0.5 * (b + math.copysign(root_disc, linear))
+        sqrt_stable = math.sqrt(abs(stable))
+        sqrt_scale = math.sqrt(scale)
+        candidates = []
+        if (stable > 0.0) == (ricci > 0.0):
+            candidates.append((sqrt_stable * sqrt_scale) / sqrt_r)
+        if stable < 0.0:
+            candidates.append(forced_norm / (sqrt_scale * sqrt_stable))
+    scales = [u for u in candidates if math.isfinite(u) and u > 0.0]
+    if not scales:
+        raise ValueError("no finite positive curvature scale satisfies Gauss and Codazzi")
+    if len(scales) == 1:
+        return scales[0]
+    # The two positive solutions straddle the fold u_*=(U/|R|)^(1/4),
+    # their geometric mean. Choose the root on the side of u_* containing
+    # u=1 (minimum |ln u|), taking the larger root on an exact tie.
+    return min(scales) if forced_sq > abs(ricci) else max(scales)
+
+
+def _joint_tilted_rescaling(
+    *, H: float, matter: MatterNormalFrameState, sigma: np.ndarray,
+    geometry: TetradGeometry, lambda_value: float, closure: str, kappa: float,
+) -> tuple[float, BianchiAlgebra, TetradGeometry, np.ndarray, float, float]:
+    x = _sigma_to_basis_coefficients(sigma)
+    A = _codazzi_operator_matrix(geometry)
+    left, singular, right = np.linalg.svd(A, full_matrices=True)
+    rank = int(np.count_nonzero(singular > singular[0] * _CODAZZI_SVD_RCOND))
+    if rank == 0:
+        raise CodazziProjectionError("nonzero tilted momentum has zero divergence range")
+    target = -kappa * matter.q
+    forced = right[:rank].T @ ((left[:, :rank].T @ target) / singular[:rank])
+    free = right[rank:].T @ (right[rank:] @ x)
+    forced_sq = float(forced @ forced)
+    free_sq = float(free @ free)
+    # Twice the Gauss energy after subtracting matter and Lambda.
+    expansion = 6.0 * H * H
+    density = 2.0 * kappa * matter.rho
+    vacuum = 2.0 * lambda_value
+    twice_energy = math.fsum([expansion, -density, -vacuum])
+    ricci = geometry.ricci_scalar
+    u = 1.0
+    algebra = geometry.algebra
+    if closure == "project_shear_amplitude":
+        # Only the kernel radius is free on this affine Codazzi surface.
+        radius_sq = math.fsum([twice_energy, ricci, -forced_sq])
+        roundoff = 32.0 * np.finfo(float).eps * max(
+            abs(v) for v in (expansion, density, vacuum, ricci, forced_sq)
+        )
+        if radius_sq < -roundoff:
+            raise ValueError("target shear norm is below the minimum required by tilted Codazzi")
+        if abs(radius_sq) <= roundoff:
+            result = forced
+        else:
+            free_norm = math.sqrt(free_sq)
+            if free_norm <= 64.0 * np.finfo(float).eps * math.hypot(*x):
+                raise ValueError("positive remaining shear norm requires an input Codazzi-null shear direction")
+            result = forced + math.sqrt(radius_sq) * (free / free_norm)
+    else:
+        u = _nearest_curvature_scale(ricci, math.fsum([twice_energy, -free_sq]), forced_sq)
+        result = forced / u + free
+        algebra = rescale_bianchi_algebra(algebra, u)
+        geometry = build_geometry(algebra)
+    xnorm = math.hypot(*x)
+    if xnorm == 0.0 or not np.all(np.isfinite(result)):
+        raise ValueError("nonfinite or unrepresented constrained shear")
+    return H, algebra, geometry, _sigma_from_basis_coefficients(result), u, math.hypot(*result) / xnorm
+
+
 def _resolve_hamiltonian_closure(
     *,
     H: float | None,
@@ -294,6 +390,11 @@ def _resolve_hamiltonian_closure(
         if H is None:
             raise ValueError("closure='hold_H' requires an explicit H value")
         return float(H), algebra, geometry, sigma, 1.0, 1.0
+    if closure in {"solve_curvature_scale", "project_shear_amplitude"} and np.any(kappa * matter.q):
+        if H is None or not math.isfinite(H):
+            raise ValueError(f"closure={closure!r} requires a finite explicit H value")
+        return _joint_tilted_rescaling(H=float(H), matter=matter, sigma=sigma, geometry=geometry,
+                                       lambda_value=lambda_value, closure=closure, kappa=kappa)
     if closure == "solve_curvature_scale":
         if H is None:
             raise ValueError("closure='solve_curvature_scale' requires an explicit H value")
@@ -478,6 +579,26 @@ def build_tilted_initial_conditions(
         lambda_value=lambda_value,
         kappa=kappa,
     ).residuals
+    gauss_ok = abs(residuals.gauss) < 1.0e-10
+    codazzi_ok = float(np.linalg.norm(residuals.codazzi)) < 1.0e-10
+    notes = ()
+    if closure in {"solve_curvature_scale", "project_shear_amplitude"} and np.any(kappa * normal_frame.q):
+        # Verify the actual rescaled connection and reconstructed tensor. Near
+        # a singular structure map the divergence contraction may cancel.
+        eps = np.finfo(float).eps
+        shear_norm = math.hypot(*sigma_eff.flat)
+        gauss_scale = max(3.0 * H_value**2, abs(kappa * normal_frame.rho), abs(lambda_value),
+                          0.5 * shear_norm**2, 0.5 * abs(geometry_eff.ricci_scalar))
+        flux_norm = math.hypot(*(kappa * normal_frame.q))
+        contraction_scale = math.hypot(*geometry_eff.Gamma.flat) * shear_norm
+        gauss_ok = math.isfinite(residuals.gauss) and abs(residuals.gauss) <= 256.0 * eps * gauss_scale
+        codazzi_ok = math.hypot(*residuals.codazzi) <= 1e-10 * flux_norm + 256.0 * eps * contraction_scale
+        if not (gauss_ok and codazzi_ok):
+            raise CodazziProjectionError(f"joint {closure} failed: Gauss={residuals.gauss:.3e}, "
+                                         f"Codazzi={np.linalg.norm(residuals.codazzi):.3e}")
+        notes = ("shear_amplitude_scale is the final/initial projected Frobenius norm ratio",
+                 "fixed Codazzi forcing; shear kernel radius adjusted" if closure == "project_shear_amplitude"
+                 else "Codazzi row-space shear inversely scaled; kernel component preserved")
     return TiltedInitialConditions(
         algebra=algebra_eff,
         geometry=geometry_eff,
@@ -493,9 +614,10 @@ def build_tilted_initial_conditions(
             codazzi_policy=codazzi_policy,
             hamiltonian_closure=closure,
             jacobi_ok=algebra_eff.jacobi_residual_norm < 1.0e-12,
-            gauss_admissible=abs(residuals.gauss) < 1.0e-10,
-            codazzi_satisfied=float(np.linalg.norm(residuals.codazzi)) < 1.0e-10,
+            gauss_admissible=gauss_ok,
+            codazzi_satisfied=codazzi_ok,
             algebra_scale_factor=algebra_scale,
             shear_amplitude_scale=shear_scale,
+            notes=notes,
         ),
     )
