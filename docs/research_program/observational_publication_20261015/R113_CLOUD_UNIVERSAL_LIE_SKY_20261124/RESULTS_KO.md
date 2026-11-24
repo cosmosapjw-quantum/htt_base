@@ -23,9 +23,9 @@
 - matched recombination: shear 1e-2, tilt 1e-3 창에서 delta x_e 최대 3.2e-7
   (상대 2.9e-6), l = 2 C_l 변화 TT -3.8e-6, EE +2.1e-5; rays와 harmonic의 delta x_e
   차이 2e-15.
-- push 상태: 클라우드 세션의 권한 분류기가 git push를 거부했다. 세 커밋은 git
-  bundle로 소유자에게 전달했다. REC `05db545`가 GitHub에 올라가기 전에는 BASS
-  `db72d1b`의 cargo git pin이 해석되지 않는다.
+- push 상태: 처음에는 클라우드 세션의 권한 분류기가 git push를 거부해 세 커밋을 git
+  bundle로 전달했다. 소유자 승인 후 REC `05db545`, BASS `db72d1b`, htt_base `964983c7`을
+  push했고 git ls-remote로 확인했다.
 
 ## 해석
 
