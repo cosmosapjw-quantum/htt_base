@@ -1,0 +1,772 @@
+{
+ "schema": "htt.r107.gap_register/1",
+ "source": "docs/research_program/observational_publication_20261015/R105_RESEARCH_20261124/NODE60_EXECUTION.json",
+ "source_sha256": "9b2f78f4c1935f3c72e4deffbd4c394b47672172b1ea813b68c610c4997529ab",
+ "n_nodes": 60,
+ "n_open": 42,
+ "gap_type_counts": {
+  "CODE": 5,
+  "COMPUTE": 22,
+  "DATA": 7,
+  "DECISION": 7,
+  "DEPENDENCY": 33,
+  "THEORY": 3
+ },
+ "unblocked_without_dependencies": [
+  "SQ-CF4",
+  "SQ-CMB-NULL",
+  "SQ-FRAME",
+  "SQ-GAIA",
+  "SQ-LIE-FLUX",
+  "SQ-NATIVE",
+  "SQ-P1-ANCHOR",
+  "SQ-PHOTON-FLUX",
+  "SQ-RADIO"
+ ],
+ "rows": [
+  {
+   "id": "SQ-CMB-NULL",
+   "paper": "P2",
+   "canonical_state": "blocked_source",
+   "gap_types": [
+    "DATA",
+    "COMPUTE"
+   ],
+   "open_hard_dependencies": [],
+   "acquisition_items": [
+    "D06",
+    "D07"
+   ],
+   "route": "Commander pairs 7-299 and HM/OE splits through the existing R105 estimator; split-difference null.",
+   "owner": "local",
+   "acceptance_to_close": "same-release null with >= 300 matched pairs and a split-difference zero-signal check",
+   "dag_acceptance": "Same-release source-qualified T/E/B null and actual matched cosmic/instrument simulation coverage, no invented PTE."
+  },
+  {
+   "id": "SQ-LIE-FLUX",
+   "paper": "P5",
+   "canonical_state": "blocked_source",
+   "gap_types": [
+    "THEORY",
+    "DATA",
+    "COMPUTE"
+   ],
+   "open_hard_dependencies": [],
+   "acquisition_items": [
+    "D08",
+    "D11"
+   ],
+   "route": "R107 THEORY_FOUNDATIONS.md TF5: Codazzi relation q_a = 3 sigma_ab a^b - eps_abc sigma^b_d n^cd fixes the identifiable flux; supply q from independent frames (CMB dipole, radio dipole, CF4 bulk flow) with covariance.",
+   "owner": "local",
+   "acceptance_to_close": "rank-aware Codazzi residual with independently sourced q and shear covariance",
+   "dag_acceptance": "Rank-aware normal Codazzi residual using independently sourced shear+u with covariance and Hamiltonian consistency."
+  },
+  {
+   "id": "SQ-NATIVE",
+   "paper": "P5",
+   "canonical_state": "blocked_external",
+   "gap_types": [
+    "CODE",
+    "COMPUTE"
+   ],
+   "open_hard_dependencies": [],
+   "acquisition_items": [
+    "D00"
+   ],
+   "route": "htt/bass/transport/hybrid_los_transfer.py (exact-characteristic high-ell transfer, coupled-solver history hook) and htt/bass/transport/bjs_bianchi_vii_h.py; local: family runs with record_history, LoS truncation audit, matched BJS run.",
+   "owner": "cloud code done; local runs",
+   "acceptance_to_close": "provenance-bound native vs independent comparator agreement and calibrated null (needs SQ-CMB-NULL for the null part)",
+   "dag_acceptance": "Qualify actual external solver provenance, CMB/Planck response family confusion and injection with heldout calibrated null."
+  },
+  {
+   "id": "B02",
+   "paper": "P5",
+   "canonical_state": "pending",
+   "gap_types": [
+    "DEPENDENCY",
+    "CODE",
+    "COMPUTE"
+   ],
+   "open_hard_dependencies": [
+    "SQ-NATIVE"
+   ],
+   "acquisition_items": [
+    "D00"
+   ],
+   "route": "htt/bass/transport/hybrid_los_transfer.py: all-m T/E/B to ell_max >= 128 from the native ell<=2 source; per family convergence in cells, ray step and Nside; native-L truncation audit.",
+   "owner": "cloud code done; local runs",
+   "acceptance_to_close": "Einstein/Boltzmann/recombination/constraint/IC/mode tests on actual runs plus LoS-vs-native and BJS agreement",
+   "dag_acceptance": "Einstein/Boltzmann physics, recombination, constraints, IC and mode test actual"
+  },
+  {
+   "id": "SQ-PHOTON-FLUX",
+   "paper": "P2",
+   "canonical_state": "blocked_source",
+   "gap_types": [
+    "CODE",
+    "COMPUTE"
+   ],
+   "open_hard_dependencies": [],
+   "acquisition_items": [],
+   "route": "htt/bass/transport/hybrid_los_transfer.py.history_window: independent line-of-sight photon moments q/E, pi/E at matched solver times; compare with the hierarchy and fluid moments.",
+   "owner": "cloud code done; local runs",
+   "acceptance_to_close": "P - f f^T PSD and Einstein-Codazzi checks with independently computed photon moments",
+   "dag_acceptance": "Check P-ff^T PSD and Einstein-Codazzi joint photon-only vs multifluid constraints with independently defined frame."
+  },
+  {
+   "id": "PHY-02",
+   "paper": "CROSS",
+   "canonical_state": "theory_verified_physical_data_pending",
+   "gap_types": [
+    "DEPENDENCY"
+   ],
+   "open_hard_dependencies": [
+    "SQ-CMB-NULL",
+    "SQ-PHOTON-FLUX",
+    "SQ-LIE-FLUX"
+   ],
+   "acquisition_items": [],
+   "route": "after SQ-CMB-NULL, SQ-PHOTON-FLUX, SQ-LIE-FLUX",
+   "owner": "local",
+   "acceptance_to_close": "as in the DAG",
+   "dag_acceptance": "Physically matched source/null/frames and heldout independent predictive discriminator; preserve signed source data and joint covariance."
+  },
+  {
+   "id": "L03",
+   "paper": "P2",
+   "canonical_state": "pending",
+   "gap_types": [
+    "DEPENDENCY",
+    "DATA",
+    "COMPUTE"
+   ],
+   "open_hard_dependencies": [
+    "SQ-CMB-NULL"
+   ],
+   "acquisition_items": [
+    "D06",
+    "D07"
+   ],
+   "route": "release-matched Commander null bank; residual foreground and weight-selection law.",
+   "owner": "local",
+   "acceptance_to_close": "simulation IDs independent; same mask/beam/foreground law",
+   "dag_acceptance": "Simulation IDs independent units; actual and null same mask/beam/foreground law"
+  },
+  {
+   "id": "SQ-CF4",
+   "paper": "P3",
+   "canonical_state": "ready_scoped",
+   "gap_types": [
+    "DATA",
+    "COMPUTE"
+   ],
+   "open_hard_dependencies": [],
+   "acquisition_items": [
+    "D01",
+    "D02",
+    "D03"
+   ],
+   "route": "CF3 table3 overlap, 6dFGSv IDs and non-2MRS K magnitudes; calibrated method/selection holdout.",
+   "owner": "local",
+   "acceptance_to_close": "source-level C = N + S_PV + J Sigma J^T + C_sel with held-out coverage and explicit missing-source remainder",
+   "dag_acceptance": "Match exact group/method IDs, form source-level C=N+S_PV+Jcal Sigma_cal Jcal^T+Csel, compare heldout contrast/coverage with an explicit missing-source remainder."
+  },
+  {
+   "id": "H02",
+   "paper": "P3",
+   "canonical_state": "pending",
+   "gap_types": [
+    "DEPENDENCY",
+    "DATA",
+    "COMPUTE"
+   ],
+   "open_hard_dependencies": [
+    "SQ-CF4"
+   ],
+   "acquisition_items": [
+    "D01",
+    "D04",
+    "D05"
+   ],
+   "route": "independent field (2M++ C15) or posterior ensemble (Manticore); CF3-independent calibration window.",
+   "owner": "local",
+   "acceptance_to_close": "method-group overlap and correlated errors with reproduced source nulls",
+   "dag_acceptance": "Use method-group overlap and correlated errors, reproduce source null simulations"
+  },
+  {
+   "id": "H04",
+   "paper": "P3",
+   "canonical_state": "pending",
+   "gap_types": [
+    "DEPENDENCY",
+    "COMPUTE"
+   ],
+   "open_hard_dependencies": [
+    "H02"
+   ],
+   "acquisition_items": [],
+   "route": "after H02 and H03",
+   "owner": "local",
+   "acceptance_to_close": "false-positive calibration and shared-calibration posterior predictive checks",
+   "dag_acceptance": "False-positive calibration plus shared calibration posterior predictive checks"
+  },
+  {
+   "id": "SQ-FRAME",
+   "paper": "COMMON",
+   "canonical_state": "ready_scoped",
+   "gap_types": [
+    "CODE",
+    "COMPUTE"
+   ],
+   "open_hard_dependencies": [],
+   "acquisition_items": [],
+   "route": "catalogue frame registry (position frame, epoch, redshift frame, velocity reference) on top of htt.obsstat.publication_frame_kinematics; boost/inverse validation on the same release.",
+   "owner": "local",
+   "acceptance_to_close": "unit-tested frame dictionary per catalogue; no unmeasured beta",
+   "dag_acceptance": "Produce a unit-tested local proper Lorentz/Fermi frame dictionary, source frame identity and redshift-dependent applicability; no unmeasured beta."
+  },
+  {
+   "id": "SQ-GAIA",
+   "paper": "P6",
+   "canonical_state": "ready_scoped",
+   "gap_types": [
+    "DATA",
+    "COMPUTE"
+   ],
+   "open_hard_dependencies": [],
+   "acquisition_items": [
+    "D08",
+    "D09",
+    "D10"
+   ],
+   "route": "ICRF3 centroid control, scan-law mocks and AGN cross-identification nulls.",
+   "owner": "local",
+   "acceptance_to_close": "16D fit reproduced on registered subset with source-specific null",
+   "dag_acceptance": "Reproduce 16D fit on registered subset with stable cross-hemisphere/patch forecast and a source-specific null; keep local cosmic shear unqualified."
+  },
+  {
+   "id": "K03",
+   "paper": "P6",
+   "canonical_state": "pending",
+   "gap_types": [
+    "DEPENDENCY",
+    "COMPUTE"
+   ],
+   "open_hard_dependencies": [
+    "SQ-GAIA"
+   ],
+   "acquisition_items": [],
+   "route": "after SQ-GAIA",
+   "owner": "local",
+   "acceptance_to_close": "independent source qualification and nonradial response",
+   "dag_acceptance": "Independent source qualification and nonradial response demonstrated"
+  },
+  {
+   "id": "SQ-OPTICAL",
+   "paper": "COMMON",
+   "canonical_state": "pending_conditional",
+   "gap_types": [
+    "DEPENDENCY",
+    "COMPUTE"
+   ],
+   "open_hard_dependencies": [
+    "SQ-FRAME"
+   ],
+   "acquisition_items": [],
+   "route": "finite_redshift_optics / position_drift_optics exist; needs SQ-FRAME then held-out prediction on CF4/Gaia samples.",
+   "owner": "local",
+   "acceptance_to_close": "z->0 local H, same-tensor scalar/E2 consistency, T_C, T_G and finite-z remainder with held-out prediction",
+   "dag_acceptance": "Validate z->0 local H and same-tensor scalar/E2 consistency; compute T_C(z), T_G(z), and precise finite-z optical remainder with heldout prediction."
+  },
+  {
+   "id": "B03",
+   "paper": "P5",
+   "canonical_state": "pending",
+   "gap_types": [
+    "DEPENDENCY",
+    "CODE",
+    "COMPUTE"
+   ],
+   "open_hard_dependencies": [
+    "B02",
+    "L03",
+    "SQ-CMB-NULL",
+    "SQ-OPTICAL"
+   ],
+   "acquisition_items": [],
+   "route": "after B02, L03, SQ-CMB-NULL, SQ-OPTICAL; project htt/bass/transport/hybrid_los_transfer.py alm through beam, pixel window, mask and Commander transfer.",
+   "owner": "local",
+   "acceptance_to_close": "no fake T/E/B source or forged full-sky score",
+   "dag_acceptance": "No fake T/E/B source or forged full-sky score"
+  },
+  {
+   "id": "B04",
+   "paper": "P5",
+   "canonical_state": "pending",
+   "gap_types": [
+    "DEPENDENCY",
+    "COMPUTE"
+   ],
+   "open_hard_dependencies": [
+    "B03"
+   ],
+   "acquisition_items": [],
+   "route": "after B03; injection-recovery and family equivalence classes (compare Saadeh et al. 2016).",
+   "owner": "local",
+   "acceptance_to_close": "degenerate families reported as equivalence classes",
+   "dag_acceptance": "Degenerate families reported equivalence class and compared Saadeh 2016"
+  },
+  {
+   "id": "K04",
+   "paper": "P6",
+   "canonical_state": "pending",
+   "gap_types": [
+    "DEPENDENCY"
+   ],
+   "open_hard_dependencies": [
+    "H04",
+    "SQ-OPTICAL"
+   ],
+   "acquisition_items": [],
+   "route": "after K02, H04, SQ-OPTICAL",
+   "owner": "local",
+   "acceptance_to_close": "unbounded output for null sectors; no zero fill",
+   "dag_acceptance": "Output unbounded or undefined for genuinely null sectors; no zero fill"
+  },
+  {
+   "id": "PHY-01",
+   "paper": "CROSS",
+   "canonical_state": "theory_verified_physical_data_pending",
+   "gap_types": [
+    "DEPENDENCY"
+   ],
+   "open_hard_dependencies": [
+    "SQ-CF4",
+    "SQ-OPTICAL",
+    "SQ-LIE-FLUX"
+   ],
+   "acquisition_items": [],
+   "route": "after SQ-CF4, SQ-OPTICAL, SQ-LIE-FLUX",
+   "owner": "local",
+   "acceptance_to_close": "as in the DAG",
+   "dag_acceptance": "Physically matched source/null/frames and heldout independent predictive discriminator; preserve signed source data and joint covariance."
+  },
+  {
+   "id": "PHY-05",
+   "paper": "CROSS",
+   "canonical_state": "theory_verified_physical_data_pending",
+   "gap_types": [
+    "DEPENDENCY"
+   ],
+   "open_hard_dependencies": [
+    "SQ-LIE-FLUX",
+    "SQ-OPTICAL"
+   ],
+   "acquisition_items": [],
+   "route": "after SQ-LIE-FLUX, SQ-OPTICAL",
+   "owner": "local",
+   "acceptance_to_close": "as in the DAG",
+   "dag_acceptance": "Physically matched source/null/frames and heldout independent predictive discriminator; preserve signed source data and joint covariance."
+  },
+  {
+   "id": "PHY-06",
+   "paper": "CROSS",
+   "canonical_state": "theory_verified_physical_data_pending",
+   "gap_types": [
+    "DEPENDENCY"
+   ],
+   "open_hard_dependencies": [
+    "SQ-CMB-NULL",
+    "SQ-PHOTON-FLUX",
+    "SQ-LIE-FLUX",
+    "SQ-OPTICAL"
+   ],
+   "acquisition_items": [],
+   "route": "after SQ-CMB-NULL, SQ-PHOTON-FLUX, SQ-LIE-FLUX, SQ-OPTICAL",
+   "owner": "local",
+   "acceptance_to_close": "as in the DAG",
+   "dag_acceptance": "Physically matched source/null/frames and heldout independent predictive discriminator; preserve signed source data and joint covariance."
+  },
+  {
+   "id": "SQ-P1-ANCHOR",
+   "paper": "P1",
+   "canonical_state": "blocked_physical_anchor",
+   "gap_types": [
+    "THEORY",
+    "COMPUTE"
+   ],
+   "open_hard_dependencies": [],
+   "acquisition_items": [],
+   "route": "R107 THEORY_FOUNDATIONS.md TF6: physical anchor = calibrated template response d a_lm / d(sigma/H)_0 from B02 (LoS) per family; proposed route (not a DAG edge): join to the 274 rows once B02/B03 templates exist.",
+   "owner": "local",
+   "acceptance_to_close": "one identified physical x with source covariance and partial identified interval",
+   "dag_acceptance": "One identified physical x with actual source covariance and partial identified interval; original P1 F/common-scale null."
+  },
+  {
+   "id": "S02",
+   "paper": "P1",
+   "canonical_state": "blocked_input",
+   "gap_types": [
+    "DEPENDENCY"
+   ],
+   "open_hard_dependencies": [
+    "SQ-P1-ANCHOR"
+   ],
+   "acquisition_items": [],
+   "route": "after SQ-P1-ANCHOR",
+   "owner": "local",
+   "acceptance_to_close": "as in the DAG",
+   "dag_acceptance": "One joint source, exact normalized weights; posterior unknown mass not silently renormalized"
+  },
+  {
+   "id": "S03",
+   "paper": "P1",
+   "canonical_state": "pending",
+   "gap_types": [
+    "DEPENDENCY"
+   ],
+   "open_hard_dependencies": [
+    "S02"
+   ],
+   "acquisition_items": [],
+   "route": "after S02",
+   "owner": "local",
+   "acceptance_to_close": "as in the DAG",
+   "dag_acceptance": "Outputs change on declared denominator/selection, zero/missing distinct"
+  },
+  {
+   "id": "SQ-RADIO",
+   "paper": "P4",
+   "canonical_state": "ready_scoped",
+   "gap_types": [
+    "THEORY",
+    "DATA",
+    "COMPUTE"
+   ],
+   "open_hard_dependencies": [],
+   "acquisition_items": [
+    "D11"
+   ],
+   "route": "R107 THEORY_FOUNDATIONS.md TF7: C1 prior from LSS clustering theory (dN/dz, bias bracket) plus RACS-low cross-survey C1; feed the R106 closed-form p(C1) curve.",
+   "owner": "cloud spec; local compute",
+   "acceptance_to_close": "one physically selected k, kappa with paired covariance and C1 fixed by independent input",
+   "dag_acceptance": "Estimate one physically selected k,kappa and paired covariance; source-preserving Lorentz aberration/reselection/heldout validation; distinguish log-count vs count-density."
+  },
+  {
+   "id": "PHY-03",
+   "paper": "CROSS",
+   "canonical_state": "theory_verified_physical_data_pending",
+   "gap_types": [
+    "DEPENDENCY"
+   ],
+   "open_hard_dependencies": [
+    "SQ-RADIO",
+    "SQ-PHOTON-FLUX",
+    "SQ-FRAME"
+   ],
+   "acquisition_items": [],
+   "route": "after SQ-RADIO, SQ-PHOTON-FLUX, SQ-FRAME",
+   "owner": "local",
+   "acceptance_to_close": "as in the DAG",
+   "dag_acceptance": "Physically matched source/null/frames and heldout independent predictive discriminator; preserve signed source data and joint covariance."
+  },
+  {
+   "id": "PHY-04",
+   "paper": "CROSS",
+   "canonical_state": "theory_verified_physical_data_pending",
+   "gap_types": [
+    "DEPENDENCY"
+   ],
+   "open_hard_dependencies": [
+    "SQ-GAIA",
+    "SQ-RADIO",
+    "SQ-OPTICAL",
+    "SQ-FRAME"
+   ],
+   "acquisition_items": [],
+   "route": "after SQ-GAIA, SQ-RADIO, SQ-OPTICAL, SQ-FRAME",
+   "owner": "local",
+   "acceptance_to_close": "as in the DAG",
+   "dag_acceptance": "Physically matched source/null/frames and heldout independent predictive discriminator; preserve signed source data and joint covariance."
+  },
+  {
+   "id": "PHY-07",
+   "paper": "CROSS",
+   "canonical_state": "theory_verified_physical_data_pending",
+   "gap_types": [
+    "DEPENDENCY"
+   ],
+   "open_hard_dependencies": [
+    "SQ-CF4",
+    "SQ-RADIO",
+    "SQ-OPTICAL",
+    "SQ-FRAME"
+   ],
+   "acquisition_items": [],
+   "route": "after SQ-CF4, SQ-RADIO, SQ-OPTICAL, SQ-FRAME",
+   "owner": "local",
+   "acceptance_to_close": "as in the DAG",
+   "dag_acceptance": "Physically matched source/null/frames and heldout independent predictive discriminator; preserve signed source data and joint covariance."
+  },
+  {
+   "id": "SQ-CROSS-COV",
+   "paper": "COMMON",
+   "canonical_state": "pending_dependency",
+   "gap_types": [
+    "DEPENDENCY",
+    "COMPUTE"
+   ],
+   "open_hard_dependencies": [
+    "SQ-CF4",
+    "SQ-GAIA",
+    "SQ-RADIO",
+    "SQ-FRAME",
+    "SQ-OPTICAL"
+   ],
+   "acquisition_items": [],
+   "route": "after SQ-CF4, SQ-GAIA, SQ-RADIO, SQ-FRAME, SQ-OPTICAL",
+   "owner": "local",
+   "acceptance_to_close": "source-level cross-covariance and calibrated held-out prediction",
+   "dag_acceptance": "Independent source-level cross-covariance and calibrated heldout predictive test; report identifiable target rank and nuisance profile."
+  },
+  {
+   "id": "K05",
+   "paper": "P6",
+   "canonical_state": "pending",
+   "gap_types": [
+    "DEPENDENCY"
+   ],
+   "open_hard_dependencies": [
+    "K03",
+    "K04",
+    "SQ-CROSS-COV"
+   ],
+   "acquisition_items": [],
+   "route": "after K03, K04, V03, SQ-CROSS-COV",
+   "owner": "local",
+   "acceptance_to_close": "as in the DAG",
+   "dag_acceptance": "Calibration, source clock, observer frame and shared sky treatment exact"
+  },
+  {
+   "id": "V04",
+   "paper": "P4",
+   "canonical_state": "pending",
+   "gap_types": [
+    "DEPENDENCY",
+    "COMPUTE"
+   ],
+   "open_hard_dependencies": [
+    "H04",
+    "SQ-FRAME",
+    "SQ-RADIO"
+   ],
+   "acquisition_items": [],
+   "route": "after V02, V03, H04, SQ-FRAME, SQ-RADIO",
+   "owner": "local",
+   "acceptance_to_close": "identified singular modes; no identification from a null column",
+   "dag_acceptance": "Do not identify from a normalization of a null column"
+  },
+  {
+   "id": "B05",
+   "paper": "P5",
+   "canonical_state": "pending",
+   "gap_types": [
+    "DEPENDENCY",
+    "DECISION"
+   ],
+   "open_hard_dependencies": [
+    "B04"
+   ],
+   "acquisition_items": [],
+   "route": "after B04 and X02",
+   "owner": "local",
+   "acceptance_to_close": "real Planck likelihood and calibrated family modes, else HOLD",
+   "dag_acceptance": "Real Planck likelihood and family physical mode calibration, hold if unavailable"
+  },
+  {
+   "id": "H05",
+   "paper": "P3",
+   "canonical_state": "pending",
+   "gap_types": [
+    "COMPUTE",
+    "DEPENDENCY"
+   ],
+   "open_hard_dependencies": [
+    "H04"
+   ],
+   "acquisition_items": [],
+   "route": "start now from R105 CF4_LITERATURE_H05.md and CF4_H05_AXES.json; formal acceptance after H04.",
+   "owner": "local",
+   "acceptance_to_close": "novel difference is covariance/window/calibration robustness",
+   "dag_acceptance": "Real novel difference is covariance/window/calibration robustness, not a recycled dipole"
+  },
+  {
+   "id": "H06",
+   "paper": "P3",
+   "canonical_state": "pending",
+   "gap_types": [
+    "DEPENDENCY",
+    "DECISION"
+   ],
+   "open_hard_dependencies": [
+    "H05"
+   ],
+   "acquisition_items": [],
+   "route": "after H05",
+   "owner": "local",
+   "acceptance_to_close": "full law with competing models or an informative null",
+   "dag_acceptance": "Actual full law, competing models, independent data validation or scientifically informative null"
+  },
+  {
+   "id": "K06",
+   "paper": "P6",
+   "canonical_state": "pending",
+   "gap_types": [
+    "DEPENDENCY",
+    "DECISION"
+   ],
+   "open_hard_dependencies": [
+    "K05"
+   ],
+   "acquisition_items": [],
+   "route": "after K05 and X02",
+   "owner": "local",
+   "acceptance_to_close": "identified combinations with independent error budget",
+   "dag_acceptance": "Source-supported physical identified combinations with independent error budget"
+  },
+  {
+   "id": "L04",
+   "paper": "P2",
+   "canonical_state": "pending",
+   "gap_types": [
+    "DEPENDENCY",
+    "COMPUTE"
+   ],
+   "open_hard_dependencies": [
+    "L03"
+   ],
+   "acquisition_items": [],
+   "route": "after L03",
+   "owner": "local",
+   "acceptance_to_close": "finite-MC ranks, nuisance sensitivity, look-elsewhere",
+   "dag_acceptance": "Correct finite MC ranks, nuisance sensitivity and look elsewhere"
+  },
+  {
+   "id": "L05",
+   "paper": "P2",
+   "canonical_state": "pending",
+   "gap_types": [
+    "DEPENDENCY"
+   ],
+   "open_hard_dependencies": [
+    "L04"
+   ],
+   "acquisition_items": [],
+   "route": "after L04",
+   "owner": "local",
+   "acceptance_to_close": "no independent-sky multiplication",
+   "dag_acceptance": "No independent-sky multiplication or historical p reuse"
+  },
+  {
+   "id": "L06",
+   "paper": "P2",
+   "canonical_state": "pending",
+   "gap_types": [
+    "DEPENDENCY",
+    "DECISION"
+   ],
+   "open_hard_dependencies": [
+    "L05"
+   ],
+   "acquisition_items": [],
+   "route": "after L05",
+   "owner": "local",
+   "acceptance_to_close": "qualified simulations and reported null results",
+   "dag_acceptance": "Qualified simulations, method novelty over Planck VII and reporting of null results"
+  },
+  {
+   "id": "S04",
+   "paper": "P1",
+   "canonical_state": "pending",
+   "gap_types": [
+    "DEPENDENCY"
+   ],
+   "open_hard_dependencies": [
+    "S03"
+   ],
+   "acquisition_items": [],
+   "route": "after S03 and X03",
+   "owner": "local",
+   "acceptance_to_close": "actual selected likelihood or justified outer interval",
+   "dag_acceptance": "At least one actual selected likelihood or justified outer interval, not synthetic-only"
+  },
+  {
+   "id": "S05",
+   "paper": "P1",
+   "canonical_state": "pending",
+   "gap_types": [
+    "DEPENDENCY",
+    "DECISION"
+   ],
+   "open_hard_dependencies": [
+    "S04"
+   ],
+   "acquisition_items": [],
+   "route": "after S04",
+   "owner": "local",
+   "acceptance_to_close": "distinct from standard pushforward",
+   "dag_acceptance": "Distinct from standard pushforward; model comparison and source-linked robustness"
+  },
+  {
+   "id": "S06",
+   "paper": "P1",
+   "canonical_state": "pending",
+   "gap_types": [
+    "DEPENDENCY",
+    "DECISION"
+   ],
+   "open_hard_dependencies": [
+    "S05"
+   ],
+   "acquisition_items": [],
+   "route": "after S05",
+   "owner": "local",
+   "acceptance_to_close": "all P1 gates with evidence or HOLD",
+   "dag_acceptance": "All P1 gates shown with actual evidence or HOLD"
+  },
+  {
+   "id": "V05",
+   "paper": "P4",
+   "canonical_state": "pending",
+   "gap_types": [
+    "DEPENDENCY",
+    "COMPUTE"
+   ],
+   "open_hard_dependencies": [
+    "V04"
+   ],
+   "acquisition_items": [],
+   "route": "after V04 and X03; injections on independent mocks",
+   "owner": "local",
+   "acceptance_to_close": "calibrated null and prior family",
+   "dag_acceptance": "No unqualified Bayes evidence; calibrated null and prior family"
+  },
+  {
+   "id": "V06",
+   "paper": "P4",
+   "canonical_state": "pending",
+   "gap_types": [
+    "DEPENDENCY",
+    "DECISION"
+   ],
+   "open_hard_dependencies": [
+    "V05"
+   ],
+   "acquisition_items": [],
+   "route": "after V05 and X02",
+   "owner": "local",
+   "acceptance_to_close": "distinct transfer or non-identifiability statement",
+   "dag_acceptance": "Actual distinct transfer or physical non-identifiability statement and real-data significance"
+  }
+ ]
+}
