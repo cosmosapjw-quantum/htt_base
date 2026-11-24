@@ -39,7 +39,10 @@ def modes(raw):
     return lmax, np.asarray([data[int(l),int(m)] for l,m in zip(ls,ms)]).T.copy()
 
 
-def project(kernel_path, archive_path, out):
+def project(kernel_path, archive_path, out, modes_name="modes.tsv"):
+    """modes_name selects the archive member per family: R109 forward
+    Lagrangian modes ("modes.tsv", l<=4) or the R110 line-of-sight replay
+    ("los_modes.tsv", any l up to the instrument kernel band limit)."""
     receipt = json.loads(REGISTERED.read_text())["kernel"]
     if sha(kernel_path) != receipt["kernel_sha256"]:
         raise ValueError("kernel bytes differ from the R108 released mask and beam operator")
@@ -57,7 +60,7 @@ def project(kernel_path, archive_path, out):
     verif = 0.
     with tarfile.open(archive_path, "r:gz") as ar:
         for i, family in enumerate(FAMILIES):
-            raw = ar.extractfile("recoil_"+family+"/modes.tsv").read()
+            raw = ar.extractfile("recoil_"+family+"/"+modes_name).read()
             ell, data = modes(raw)
             if ell>L:
                 raise ValueError("template exceeds instrument kernel bandlimit")
@@ -97,6 +100,10 @@ def project(kernel_path, archive_path, out):
                 frames="BASS final observer includes its boost; extrinsic healpy ZYZ orientations in R108 Galactic frame",
                 scope="linear projection only; no observed data, noise score, physical orientation prior or calibration",
                 truncated_vs_padded_max_relative=verif, summaries=summaries)
+    if modes_name != "modes.tsv":
+        record["modes_name"] = modes_name
+        record["input"] = ("R110 line-of-sight replay of the native BASS solve; synthetic "
+                           "templates only; band-limited at the supplied ell_max")
     (out/"COMMANDER_NATIVE_PROJECTION.json").write_text(json.dumps(record,indent=2)+"\n")
 
 
@@ -104,5 +111,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     for option in ("kernel","atlas","out"):
         parser.add_argument("--"+option,type=Path,required=True)
+    parser.add_argument("--modes-name",default="modes.tsv",choices=["modes.tsv","los_modes.tsv"],
+                        help="per-family archive member (R110 atlases also carry los_modes.tsv)")
     g = parser.parse_args()
-    project(g.kernel,g.atlas,g.out)
+    project(g.kernel,g.atlas,g.out,g.modes_name)
