@@ -1,0 +1,13 @@
+# R118-C2H BASS 자산 복원 및 REC–REI native 연결
+
+판정 PASS_SCOPED. 원래 전체 atomic owner replacement는 HOLD.
+BASS의 current native Lie geometry/ray/LOS, partitioned stage, spectral mixture와 Thomson operator를 유지. 역사적 F08 root probe를 정확한 소스 바이트로 복원하여 최종 REI pin에서 16/16 point-root, photon records 70,656, CSV byte exact 재현. 음수 photon source 거부. F08 characteristic-born packet 표현을 current BASS ray에 연결하여 cold REI를 공용 AXBI packet stage로 실행. 12/12 live cases, z20->19.98/19.9, FLRW 및 non-tilted expanding LRS I. 독립 Killing oracle energy 상대오차 2.465e-14, 방향 절대오차 1.144e-14, 같은 accepted state의 tau 적분 상대차 8.882e-16, N ledger 1.084e-19 photons/H, energy ledger 4.239e-12 eV/H. 기하학은 선행 accepted records로 고정되고 CMB thermal bath는 isotropic. 새로운 stress-energy feedback, class-B, full EoR live trajectory는 미완료.
+
+REC: 원본 2s table interior point spikes 8개, positive nodal source split, dynamic 1s/2s와 tracked photons, 고정 material 및 Planck companion reservoir, calibrated scalar COM 충돌. 22 cases/99 steps, gross-event-relative number/energy errors 1.672e-4/2.077e-4, source-only DOP853 signal error 2.244e-3 ->3.517e-5 (1->64 steps). 원본 integrated rate/first energy moment 유지하지만 full continuous spectrum과 동등하지 않음. HII/2p, T_m 고정. full exterior Schur 및 동적 companion/thermal coupling HOLD.
+
+REI: 기존 AXBI 공용 packet residual/solver 추출, 동일 입력에서 기존 stage와 정확히 동일한 결과. REC z20 donor로 독립 FLRW z4까지 time/spectral/angular refinement 3개, 총 226136 신규 accepted steps. 기존 ledger gate 유지. 시간/주파수 global fraction convergence unresolved; xHeIII spectral8->16: .0342518155->.0257371196, tau base .0320251404, time .0319480858, spectral .0321035339. 단일축 refinement이며 full convergence가 아님.
+
+BASS historical assets registry: ASSET_RECOVERY.md. PR171 bolometric contract, PR173 native source-only ledger, AX03 massive Vlasov stress, Type-II spectral closure는 식별된 후속 후보이며 이번 신규 실행으로 승격하지 않음. 전체 historical branch merge 없음. R78 및 historical admissions 유지.
+검증: REC 146 Rust +10 targeted Python, REI 275 Rust +18 examples, BASS 276 Rust +3 examples. Native independent subagent dispatch unavailable; analytic/numerical oracle and regression only, no independent referee claim. Wolfram algebra check supported. Exact owner commits, trees, remote heads, committed compact-file hashes and raw receipts rechecked in ACCEPTANCE.json.
+
+Next R118-C2I-BASS-REI-SUPPORT-CONVERGENCE-AND-REC-COMPANION-EXTERIOR-01: source-support-preserving threshold-aware packet compression and long interval refinement, PR171/PR173 stress ledger recovery, REC dynamic companion/exterior closure. No new production science admission until respective accuracy/owner-swap conditions are met.

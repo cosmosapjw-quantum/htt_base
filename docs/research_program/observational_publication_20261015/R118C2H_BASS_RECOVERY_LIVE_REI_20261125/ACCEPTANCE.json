@@ -1,0 +1,170 @@
+{
+  "research_id": "R118-C2H-REC-ATOMIC-RADIATIVE-OWNER-REPLACEMENT-AND-REI-LIVE-CONTINUATION-01",
+  "status": "PASS_SCOPED",
+  "parent_htt": "0e5c7407cd9c8874d27b8d8a6c5c4143fe7d8fab",
+  "owners": {
+    "REC": {
+      "commit": "9a84ae0c928dac39b63780670ae30c4b1620a3f1",
+      "tree": "5f18e891b0b2c1d064cff262b9222db063a470a3",
+      "branch": "research/r109-finite-tilt-ray-thomson-20261124",
+      "receipt": "research/r118c2h_atomic_2s/ACCEPTANCE.json",
+      "receipt_sha256": "bc0ce5474fade0e2f2031e1179385500b23d98d25fcceed00039d34ec1960058",
+      "summary": {
+        "status": "PASS_SCOPED",
+        "parent": "789522e6b7ad95948d3715f4c085e6d381c061aa",
+        "scope": "live 1s/2s and actual scalar COM with fixed material/companion bath",
+        "cases": 22,
+        "steps": 99,
+        "max_node_residual": 0.00022583003037351514,
+        "max_number_event_relative": 0.00016711816334499284,
+        "max_energy_event_relative": 0.0002076941327979822,
+        "ode_signal_errors": [
+          0.002244372737910745,
+          0.0011238679545225126,
+          0.0005623554379553274,
+          0.0002812832175345199,
+          0.00014066800045271167,
+          7.034060031976423e-05,
+          3.517195050718986e-05
+        ],
+        "rust_tests": 146,
+        "python_tests": 10,
+        "full_owner_swap": "HOLD"
+      }
+    },
+    "REI": {
+      "commit": "63eb2ab893e686aa0eacae7cb1bdf2ca83d49324",
+      "tree": "582f4bc3cf8c47ffe8ba8eb98ec8b683ccb58bcb",
+      "branch": "research/htt-tilted-thomson-20261124",
+      "receipt": "research/r118c2h_packet_stage/ACCEPTANCE.json",
+      "receipt_sha256": "f9514d4968f46cf489f4a70d4fd9b911d0b2b5deaa9c84205b70aecd8a756107",
+      "summary": {
+        "status": "PASS_SCOPED",
+        "parent": "5998afd4a58bc7e02ea07088a5bfe14bba2c48df",
+        "scope": "reusable native AXBI packet stage; three independent full FLRW refinements",
+        "donor_sha256": "e72aa466566bdff42f8c0720a0f52b69a3859c91fa51899d01b2d4408eca11f2",
+        "new_long_steps": 226136,
+        "refinements": [
+          {
+            "case": "base",
+            "accepted": 58116,
+            "tau": 0.03202514041686396,
+            "terminal": {
+              "x_HII": 0.9999971058646908,
+              "x_HeII": 0.9657415070153134,
+              "x_HeIII": 0.03425181553141792,
+              "temperature_K": 8063.524866731795,
+              "photon_n_per_H": 2.1555369444141674,
+              "photon_u_eV_per_H": 43.54904994890009
+            },
+            "gate_ratios": {
+              "photon_count": 9.53228483699858e-06,
+              "augmented_energy_eV_per_H": 0.9621969925309247,
+              "J1_eV_per_H": 0.0003935069598789483
+            }
+          },
+          {
+            "case": "time",
+            "accepted": 109995,
+            "tau": 0.03194808576208807,
+            "terminal": {
+              "x_HII": 0.9999971086368027,
+              "x_HeII": 0.9657046963204218,
+              "x_HeIII": 0.03428863356183946,
+              "temperature_K": 8087.57742570132,
+              "photon_n_per_H": 2.1532675579751936,
+              "photon_u_eV_per_H": 43.50511166710602
+            },
+            "gate_ratios": {
+              "photon_count": 1.5920598173124745e-05,
+              "augmented_energy_eV_per_H": 0.5265220524674098,
+              "J1_eV_per_H": 0.00038686455142141466
+            }
+          },
+          {
+            "case": "spectral",
+            "accepted": 58025,
+            "tau": 0.03210353392274883,
+            "terminal": {
+              "x_HII": 0.9999973125537946,
+              "x_HeII": 0.9742552840407259,
+              "x_HeIII": 0.02573711957354255,
+              "temperature_K": 7860.148254171338,
+              "photon_n_per_H": 2.2558169107592922,
+              "photon_u_eV_per_H": 44.88010487340178
+            },
+            "gate_ratios": {
+              "photon_count": 1.5263571660849693e-05,
+              "augmented_energy_eV_per_H": 0.9595482821507223,
+              "J1_eV_per_H": 0.0005453829889887995
+            }
+          },
+          {
+            "case": "angular",
+            "accepted": 58116,
+            "tau": 0.03202514041686343,
+            "terminal": {
+              "x_HII": 0.9999971058646907,
+              "x_HeII": 0.9657415070153508,
+              "x_HeIII": 0.034251815531417554,
+              "temperature_K": 8063.524866731134,
+              "photon_n_per_H": 2.1555369444104864,
+              "photon_u_eV_per_H": 43.54904994880466
+            },
+            "gate_ratios": {
+              "photon_count": 2.538815728733255e-05,
+              "augmented_energy_eV_per_H": 0.9621841226418171,
+              "J1_eV_per_H": 0.00038170167982200205
+            }
+          }
+        ],
+        "convergence_status": "UNRESOLVED_TIME_AND_SPECTRAL",
+        "rust_tests": 275,
+        "example_tests": 18
+      }
+    },
+    "BASS": {
+      "commit": "5685a18aa064b63e1e3f2329ff828e1ad9aba16a",
+      "tree": "cbaf1311659342b9554f8b9774d58826ecfb91c0",
+      "branch": "research/r109-native-nonlinear-sky-20261124",
+      "receipt": "research/r118c2h_bass_recovery/ACCEPTANCE.json",
+      "receipt_sha256": "6faf8fa736e3fb1f1a4a7a048c3e7c33e3fd2b223c8892ed454dbb26d0fd2f01",
+      "summary": {
+        "root_count": 16,
+        "packet_records": 70656,
+        "live_cases": 12,
+        "tests": {
+          "test": 276,
+          "examples": 3
+        },
+        "maxima": {
+          "tau_relative": 8.881784197001252e-16,
+          "characteristic_error": 2.4646951146678475e-14,
+          "direction_error": 1.1435297153639112e-14,
+          "max_number_defect": 1.0842021724855044e-19,
+          "max_energy_defect": 4.239269525696532e-12,
+          "max_root_residual": 3.42120068945812e-12
+        },
+        "status": "PASS_SCOPED",
+        "research_id": "R118-C2H-REC-ATOMIC-RADIATIVE-OWNER-REPLACEMENT-AND-REI-LIVE-CONTINUATION-01",
+        "rec_pin": "9a84ae0c928dac39b63780670ae30c4b1620a3f1",
+        "rei_pin": "63eb2ab893e686aa0eacae7cb1bdf2ca83d49324",
+        "limitations": [
+          "point-root enclosure only",
+          "expanding non-tilted LRS I only",
+          "short live z20 to 19.98/19.9 only",
+          "geometry accepted before new matter/UV evolution",
+          "CMB isotropic thermal bath; no stress-energy feedback",
+          "threshold crossing only in separate unit test",
+          "no production science promotion"
+        ]
+      }
+    }
+  },
+  "full_atomic_owner_swap": "HOLD",
+  "full_coupled_einstein_boltzmann": "HOLD",
+  "production_science_promotion": false,
+  "R78_changed": false,
+  "native_subagent": "NOT_RUN_NO_HOST_DISPATCH",
+  "next_id": "R118-C2I-BASS-REI-SUPPORT-CONVERGENCE-AND-REC-COMPANION-EXTERIOR-01"
+}
