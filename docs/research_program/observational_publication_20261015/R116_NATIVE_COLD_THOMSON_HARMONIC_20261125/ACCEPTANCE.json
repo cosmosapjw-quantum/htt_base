@@ -1,0 +1,119 @@
+{
+  "schema": "bass.r116.acceptance/1",
+  "native_subagent": "NOT_RUN",
+  "baseline": "4abb1d3b81a68711aa3438570f5a80f8cca42216",
+  "theory": "188ca33d0813082ce23c6ce7a6d9419ef942c540",
+  "binary_sha256": "68303e729caa85477b988a89c7b66e3656105bccee78f1bbe97df3d8b8463d91",
+  "compiler": "rustc 1.99.0 (b940084d7 2026-09-28)",
+  "test_logs": {
+    "cargo_tests": {
+      "passed": 226,
+      "sha256": "0cd38d56d2531f00652ad6c22f62fc1de13eb1139a4b0a3d5812ddff5871bac0"
+    },
+    "examples": {
+      "passed": 3,
+      "sha256": "33749fd0a92af6f760d7f7fb1e1804311ec80ad9f9a085ab749ac2cef6079219"
+    }
+  },
+  "primary_cases": 32,
+  "extra_cases": 4,
+  "family_invariants": [
+    {
+      "family": "I",
+      "initial": "I",
+      "final": "I",
+      "h0": "None",
+      "h1": "None"
+    },
+    {
+      "family": "II",
+      "initial": "II",
+      "final": "II",
+      "h0": "None",
+      "h1": "None"
+    },
+    {
+      "family": "III",
+      "initial": "III",
+      "final": "III",
+      "h0": "Some(-1.0)",
+      "h1": "Some(-0.9999999999999993)"
+    },
+    {
+      "family": "IV",
+      "initial": "IV",
+      "final": "IV",
+      "h0": "None",
+      "h1": "None"
+    },
+    {
+      "family": "V",
+      "initial": "V",
+      "final": "V",
+      "h0": "None",
+      "h1": "None"
+    },
+    {
+      "family": "VI0",
+      "initial": "VI_0",
+      "final": "VI_0",
+      "h0": "None",
+      "h1": "None"
+    },
+    {
+      "family": "VIh:-0.25",
+      "initial": "VI_h",
+      "final": "VI_h",
+      "h0": "Some(-0.25)",
+      "h1": "Some(-0.25000000000000033)"
+    },
+    {
+      "family": "VIstar",
+      "initial": "VI*_-1/9",
+      "final": "VI*_-1/9",
+      "h0": "Some(-0.11111111111111113)",
+      "h1": "Some(-0.1111111111111111)"
+    },
+    {
+      "family": "VII0",
+      "initial": "VII_0",
+      "final": "VII_0",
+      "h0": "None",
+      "h1": "None"
+    },
+    {
+      "family": "VIIh:0.25",
+      "initial": "VII_h",
+      "final": "VII_h",
+      "h0": "Some(0.25)",
+      "h1": "Some(0.25000000000000033)"
+    },
+    {
+      "family": "VIII",
+      "initial": "VIII",
+      "final": "VIII",
+      "h0": "None",
+      "h1": "None"
+    },
+    {
+      "family": "IX",
+      "initial": "IX",
+      "final": "IX",
+      "h0": "None",
+      "h1": "None"
+    }
+  ],
+  "thin_drift_before": 8.574474463785009e-12,
+  "thin_drift_after": 2.2204438294560993e-22,
+  "max_family_los_rel": 5.903135050573792e-15,
+  "max_direct_rel": 5.677064342984924e-15,
+  "max_cl_scaled": 3.648459742809799e-15,
+  "max_family_gauss": 8.038356669182178e-07,
+  "max_family_codazzi": 1.724527598495409e-08,
+  "max_family_jacobi": 9.838428222093529e-24,
+  "max_family_energy_defect": 9.112888666330116e-17,
+  "min_sampled_screen": 0.41627986182902815,
+  "median_wall_ratio": 17.610190133705494,
+  "strong_wall_ratio": 114.64473698594816,
+  "science_DAG_promotions": 0
+}
