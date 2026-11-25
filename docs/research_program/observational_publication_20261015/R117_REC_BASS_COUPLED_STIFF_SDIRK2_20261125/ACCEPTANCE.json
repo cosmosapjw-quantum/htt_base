@@ -1,0 +1,584 @@
+{
+  "research_id": "R117-REC-BASS-COUPLED-STIFF-SDIRK2-01",
+  "status": "IMPLEMENTATION_VERIFIED_SCOPED",
+  "scope": "partitioned stage-consistent opacity and REC SDIRK2; smooth finite-stiffness convergence, tracer thermochemistry",
+  "rec": {
+    "commit": "f67be237187372f4d89fe8c021819a38261b14eb",
+    "tree": "bb886873f49e0e383439ca77ce6642fb08f6a7c0",
+    "tests": 141,
+    "standalone_cases": 21,
+    "receipt_sha256": "1da0c8eaca7bf1307ed55330f9a3319c7cf8cc2ea37924be6877c6901b34e543",
+    "ratios": {
+      "helium": {
+        "final_delta_xe": 3.212893553223388,
+        "final_delta_tm_k": 2.046875
+      },
+      "hydrogen": {
+        "final_delta_xe": 4.316770186335404,
+        "final_delta_tm_k": 4.435144121493478
+      },
+      "thermal": {
+        "final_delta_xe": 0.07692307692307693,
+        "final_delta_tm_k": 5.948239018599129
+      }
+    }
+  },
+  "bass": {
+    "commit": "5622db58771dbb2dff1e89ccdf1b547fa1d3e27a",
+    "tree": "85d35cc4a954aaf2281609c151b831607c72c229",
+    "receipt_sha256": "41666bf7c04a97ea271994be29cc738feed7391e65d3a1a7b560887e9877a492",
+    "schema": "bass.r117.acceptance/1",
+    "baseline": "4e30aeb722a132f87ddfbc44d0f22247d4c6f47e",
+    "rec_pin": "f67be237187372f4d89fe8c021819a38261b14eb",
+    "binary_sha256": "0b8917a3f90034488bbe0ad3657a9d14d2970d82776796820ef9f87673987029",
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+    "native_subagent": "NOT_RUN",
+    "cases_passed": 33,
+    "domain_probes_rejected": 3,
+    "accepted_stages": 5824,
+    "metrics_max": {
+      "max_charge": 1.1102230246251565e-16,
+      "max_h_nuclei": 0.0,
+      "max_he_nuclei": 0.0,
+      "max_thermal_defect": 9.054310124496835e-31,
+      "max_stage_residual": 2.841458595044408e-14,
+      "max_independent_rate_relative": 0.0,
+      "max_stage_rate_continuity": 0.0,
+      "max_stage_depth_defect": 2.220446049250313e-16,
+      "depth_sum_defect": 2.842170943040401e-14,
+      "max_stage_clock_defect": 1.1102230246251565e-16,
+      "max_iterations": 3.0,
+      "max_chemistry_residual": 6.400571810620396e-07,
+      "max_beta_prime": 0.10864731806633886,
+      "max_gauss": 5.4566969853731e-07,
+      "max_codazzi": 7.906784537735e-09,
+      "max_jacobi": 2.4254298479213456e-21,
+      "max_recoil_defect": 7.305307610685658e-14
+    },
+    "min_sampled_screen": 0.011653907998981068,
+    "tests": {
+      "final_all": {
+        "passed": 231,
+        "sha256": "aaa11a389e7db26b945b7ac354ee5db8654de22b1cdd946c55f0bb4eb924318f"
+      },
+      "final_examples": {
+        "passed": 3,
+        "sha256": "fecf83915c6c7c8058a598ecec00b139a6b1aae87a0b38b9a337dbc28b9d8b21"
+      }
+    },
+    "ratios": {
+      "h_i": {
+        "n": [
+          64,
+          128,
+          256,
+          512
+        ],
+        "successive_diffs": [
+          {
+            "abs_xe": 1.0082057411153755e-10,
+            "abs_tm_k": 2.605484041851014e-07,
+            "mode_l2": 1.2464445787172963e-07,
+            "abs_depth": 0.0006138509656654634
+          },
+          {
+            "abs_xe": 5.0556336894658216e-11,
+            "abs_tm_k": 7.042217475827783e-08,
+            "mode_l2": 2.9176275021576302e-08,
+            "abs_depth": 0.00014726654779373405
+          },
+          {
+            "abs_xe": 7.005507285384738e-14,
+            "abs_tm_k": 1.4765191735932603e-08,
+            "mode_l2": 8.236361334269497e-09,
+            "abs_depth": 3.9811118595523e-05
+          }
+        ],
+        "ratios": [
+          {
+            "abs_xe": 1.9942222934705987,
+            "abs_tm_k": 3.6998062766369624,
+            "mode_l2": 4.272116909357111,
+            "abs_depth": 4.1682987403578
+          },
+          {
+            "abs_xe": 721.6656101426307,
+            "abs_tm_k": 4.769472419846623,
+            "mode_l2": 3.5423743370972467,
+            "abs_depth": 3.6991311218845047
+          }
+        ],
+        "history_rms_diffs": [
+          {
+            "xe": 1.6725611825068432e-09,
+            "tm_k": 3.837570855988432e-07
+          },
+          {
+            "xe": 2.6013758410406e-10,
+            "tm_k": 9.899789724357495e-08
+          },
+          {
+            "xe": 6.714545822425547e-11,
+            "tm_k": 2.671950897453982e-08
+          }
+        ],
+        "history_rms_ratios": [
+          {
+            "xe": 6.429525315487618,
+            "tm_k": 3.8764165329152926
+          },
+          {
+            "xe": 3.8742394643468003,
+            "tm_k": 3.705079211519453
+          }
+        ]
+      },
+      "thermal_i": {
+        "n": [
+          32,
+          64,
+          128,
+          256
+        ],
+        "successive_diffs": [
+          {
+            "abs_xe": 1.4679035764686432e-11,
+            "abs_tm_k": 1.724244677347997e-05,
+            "mode_l2": 2.598439481929632e-06,
+            "abs_depth": 1.3922735652826396e-07
+          },
+          {
+            "abs_xe": 4.508504680700298e-12,
+            "abs_tm_k": 4.005882800584004e-06,
+            "mode_l2": 6.480336048242284e-07,
+            "abs_depth": 3.458291063891325e-08
+          },
+          {
+            "abs_xe": 7.382983113757291e-13,
+            "abs_tm_k": 1.1405081181692367e-06,
+            "mode_l2": 1.6180575625569503e-07,
+            "abs_depth": 8.858060113105942e-09
+          }
+        ],
+        "ratios": [
+          {
+            "abs_xe": 3.2558546135093205,
+            "abs_tm_k": 4.304281386107015,
+            "mode_l2": 4.009729530360434,
+            "abs_depth": 4.025900479631783
+          },
+          {
+            "abs_xe": 6.106616541353383,
+            "abs_tm_k": 3.512366757208459,
+            "mode_l2": 4.0050095856921635,
+            "abs_depth": 3.904117853947063
+          }
+        ],
+        "history_rms_diffs": [
+          {
+            "xe": 9.158951985385538e-12,
+            "tm_k": 0.0001574964140425415
+          },
+          {
+            "xe": 2.8985906647948717e-12,
+            "tm_k": 3.886578098039161e-05
+          },
+          {
+            "xe": 4.486993291868631e-13,
+            "tm_k": 9.891035882648033e-06
+          }
+        ],
+        "history_rms_ratios": [
+          {
+            "xe": 3.1597948950248553,
+            "tm_k": 4.052315689269203
+          },
+          {
+            "xe": 6.459984395447445,
+            "tm_k": 3.9293943972617
+          }
+        ]
+      },
+      "thermal_viih": {
+        "n": [
+          32,
+          64,
+          128
+        ],
+        "successive_diffs": [
+          {
+            "abs_xe": 1.0847989173612405e-11,
+            "abs_tm_k": 4.0853855892919455e-05,
+            "mode_l2": 2.386055295605774e-06,
+            "abs_depth": 1.3978622215174777e-07
+          },
+          {
+            "abs_xe": 3.5227376571356217e-12,
+            "abs_tm_k": 8.831926123775702e-06,
+            "mode_l2": 5.960769695468843e-07,
+            "abs_depth": 3.4723746459132745e-08
+          }
+        ],
+        "ratios": [
+          {
+            "abs_xe": 3.079420107154113,
+            "abs_tm_k": 4.625701723539121,
+            "mode_l2": 4.002931529831735,
+            "abs_depth": 4.02566647917055
+          }
+        ],
+        "history_rms_diffs": [
+          {
+            "xe": 7.735362041458328e-12,
+            "tm_k": 0.0002998997024796134
+          },
+          {
+            "xe": 2.286295232518699e-12,
+            "tm_k": 7.394573336661625e-05
+          }
+        ],
+        "history_rms_ratios": [
+          {
+            "xe": 3.383360963814223,
+            "tm_k": 4.0556728404157925
+          }
+        ]
+      },
+      "thermal_nonuniform": {
+        "n": [
+          32,
+          64,
+          128
+        ],
+        "successive_diffs": [
+          {
+            "abs_xe": 1.0700662578244646e-11,
+            "abs_tm_k": 6.86169960317784e-06,
+            "mode_l2": 2.4894187171187374e-06,
+            "abs_depth": 1.296993622746604e-07
+          },
+          {
+            "abs_xe": 2.6283419884975956e-12,
+            "abs_tm_k": 1.7539015857437334e-06,
+            "mode_l2": 6.218234985386625e-07,
+            "abs_depth": 3.2618319797776685e-08
+          }
+        ],
+        "ratios": [
+          {
+            "abs_xe": 4.071259609698403,
+            "abs_tm_k": 3.9122489305853323,
+            "mode_l2": 4.003416922919576,
+            "abs_depth": 3.9762735505309785
+          }
+        ],
+        "history_rms_diffs": [
+          {
+            "xe": 5.6054725744751444e-12,
+            "tm_k": 7.243749163124801e-05
+          },
+          {
+            "xe": 1.3480458725012361e-12,
+            "tm_k": 1.8253262205781914e-05
+          }
+        ],
+        "history_rms_ratios": [
+          {
+            "xe": 4.15822093952519,
+            "tm_k": 3.9684682559538684
+          }
+        ]
+      }
+    },
+    "route_comparisons": {
+      "he_I__he_i_rays": {
+        "abs_xe": 0.0,
+        "abs_tm_k": 4.547473508864641e-12,
+        "mode_l2": 8.077250711374007e-16,
+        "abs_depth": 0.0
+      },
+      "he_I__he_i_continuum": {
+        "abs_xe": 8.881784197001252e-16,
+        "abs_tm_k": 5.911715561524034e-11,
+        "mode_l2": 9.616171882723952e-16,
+        "abs_depth": 1.7763568394002505e-15
+      }
+    },
+    "legacy": {
+      "he_overlap_i": {
+        "command": [
+          "/home/cosmosapjw/worktrees/bass-r109-native-20261124/_rustcore/target/release/examples/homogeneous_sky",
+          "--out",
+          "/home/cosmosapjw/Downloads/bass_r117_final/legacy_he_overlap_i",
+          "--family",
+          "I",
+          "--shear",
+          "0.001",
+          "--dust-beta",
+          "1e-05,3e-06,0",
+          "--duration",
+          "0.02681125745065677",
+          "--steps",
+          "128",
+          "--route",
+          "harmonic",
+          "--feedback",
+          "recoil",
+          "--dust-fraction",
+          "0.6680919294494923",
+          "--baryon-fraction",
+          "0.15653723972015052",
+          "--omega-lambda",
+          "2.95151483022882e-10",
+          "--neutrino-fraction",
+          "0.4082846699067635",
+          "--expansion-equation",
+          "gauss-reduced",
+          "--collision",
+          "sdirk2",
+          "--lie-update",
+          "congruence",
+          "--lmax",
+          "3",
+          "--los-lmax",
+          "4",
+          "--los-ntheta",
+          "8",
+          "--los-nphi",
+          "16",
+          "--recombination",
+          "species-thermal",
+          "--species-reference",
+          "/home/cosmosapjw/Downloads/bass_r117_final/helium_overlap.tsv",
+          "--harmonic-lmax",
+          "4",
+          "--harmonic-ntheta",
+          "10",
+          "--harmonic-nphi",
+          "24"
+        ],
+        "returncode": 0,
+        "stderr": "",
+        "byte_equal": {
+          "modes.tsv": true,
+          "cl.tsv": true,
+          "los_modes.tsv": true,
+          "los_cl.tsv": true,
+          "diagnostics.tsv": true,
+          "lie_constants.tsv": true,
+          "thermochemistry.tsv": true
+        }
+      },
+      "h_i": {
+        "command": [
+          "/home/cosmosapjw/worktrees/bass-r109-native-20261124/_rustcore/target/release/examples/homogeneous_sky",
+          "--out",
+          "/home/cosmosapjw/Downloads/bass_r117_final/legacy_h_i",
+          "--family",
+          "I",
+          "--shear",
+          "0.001",
+          "--dust-beta",
+          "1e-05,3e-06,0",
+          "--duration",
+          "0.4414362887286691",
+          "--steps",
+          "128",
+          "--route",
+          "harmonic",
+          "--feedback",
+          "recoil",
+          "--dust-fraction",
+          "0.7096320726663242",
+          "--baryon-fraction",
+          "0.15653723972015052",
+          "--omega-lambda",
+          "5.611003179596944e-10",
+          "--neutrino-fraction",
+          "0.40828466990676354",
+          "--expansion-equation",
+          "gauss-reduced",
+          "--collision",
+          "sdirk2",
+          "--lie-update",
+          "congruence",
+          "--lmax",
+          "3",
+          "--los-lmax",
+          "4",
+          "--los-ntheta",
+          "8",
+          "--los-nphi",
+          "16",
+          "--recombination",
+          "species-thermal",
+          "--species-reference",
+          "/home/cosmosapjw/Downloads/bass_r117_final/h_window.tsv",
+          "--harmonic-lmax",
+          "4",
+          "--harmonic-ntheta",
+          "10",
+          "--harmonic-nphi",
+          "24"
+        ],
+        "returncode": 0,
+        "stderr": "",
+        "byte_equal": {
+          "modes.tsv": true,
+          "cl.tsv": true,
+          "los_modes.tsv": true,
+          "los_cl.tsv": true,
+          "diagnostics.tsv": true,
+          "lie_constants.tsv": true,
+          "thermochemistry.tsv": true
+        }
+      },
+      "grid_I": {
+        "command": [
+          "/home/cosmosapjw/worktrees/bass-r109-native-20261124/_rustcore/target/release/examples/homogeneous_sky",
+          "--out",
+          "/home/cosmosapjw/Downloads/bass_r117_final/legacy_grid_I",
+          "--family",
+          "I",
+          "--shear",
+          "0.02",
+          "--duration",
+          "0.04",
+          "--steps",
+          "4",
+          "--route",
+          "harmonic",
+          "--harmonic-lmax",
+          "8",
+          "--harmonic-ntheta",
+          "24",
+          "--harmonic-nphi",
+          "48",
+          "--feedback",
+          "recoil",
+          "--dust-fraction",
+          "0.8",
+          "--baryon-fraction",
+          "0.157",
+          "--dust-beta",
+          "0.06,0.02,-0.01",
+          "--observer-beta",
+          "0.01,-0.02,0.03",
+          "--tau",
+          "0.1",
+          "--collision",
+          "sdirk2",
+          "--lie-update",
+          "congruence",
+          "--lmax",
+          "4",
+          "--los-lmax",
+          "6",
+          "--los-ntheta",
+          "12",
+          "--los-nphi",
+          "24"
+        ],
+        "returncode": 0,
+        "stderr": "",
+        "byte_equal": {
+          "modes.tsv": true,
+          "cl.tsv": true,
+          "los_modes.tsv": true,
+          "los_cl.tsv": true,
+          "diagnostics.tsv": true,
+          "lie_constants.tsv": true
+        }
+      },
+      "continuum_I": {
+        "command": [
+          "/home/cosmosapjw/worktrees/bass-r109-native-20261124/_rustcore/target/release/examples/homogeneous_sky",
+          "--out",
+          "/home/cosmosapjw/Downloads/bass_r117_final/legacy_continuum_I",
+          "--family",
+          "I",
+          "--shear",
+          "0.02",
+          "--duration",
+          "0.04",
+          "--steps",
+          "4",
+          "--route",
+          "harmonic-continuum",
+          "--harmonic-lmax",
+          "8",
+          "--harmonic-ntheta",
+          "24",
+          "--harmonic-nphi",
+          "48",
+          "--feedback",
+          "recoil",
+          "--dust-fraction",
+          "0.8",
+          "--baryon-fraction",
+          "0.157",
+          "--dust-beta",
+          "0.06,0.02,-0.01",
+          "--observer-beta",
+          "0.01,-0.02,0.03",
+          "--tau",
+          "0.1",
+          "--collision",
+          "sdirk2",
+          "--lie-update",
+          "congruence",
+          "--lmax",
+          "4",
+          "--los-lmax",
+          "6",
+          "--los-ntheta",
+          "12",
+          "--los-nphi",
+          "24",
+          "--harmonic-work-lmax",
+          "20"
+        ],
+        "returncode": 0,
+        "stderr": "",
+        "byte_equal": {
+          "modes.tsv": true,
+          "cl.tsv": true,
+          "los_modes.tsv": true,
+          "los_cl.tsv": true,
+          "diagnostics.tsv": true,
+          "lie_constants.tsv": true
+        }
+      }
+    },
+    "probes": [
+      {
+        "case": "he_strong_probe_128",
+        "steps": 128,
+        "stderr": "stage material source eta 1.20954678160883032e-3: positive finite material weights, temperature and Sobolev expansion required; minimum Sobolev expansion -1.11144121951887573e1\n"
+      },
+      {
+        "case": "he_strong_probe_512",
+        "steps": 512,
+        "stderr": "stage material source eta 3.02386695402207580e-4: positive finite material weights, temperature and Sobolev expansion required; minimum Sobolev expansion -9.33773106114903158e1\n"
+      },
+      {
+        "case": "he_strong_probe_2048",
+        "steps": 2048,
+        "stderr": "stage material source eta 7.55966738505518951e-5: positive finite material weights, temperature and Sobolev expansion required; minimum Sobolev expansion -1.48495299194368016e2\n"
+      }
+    ],
+    "science_DAG_promotions": 0
+  },
+  "native_subagent": "NOT_RUN",
+  "rei_changed": false,
+  "science_DAG_promotions": 0,
+  "next": "R118-NATIVE-COLD-SPECTRAL-MOMENTS-01",
+  "remaining": [
+    "monolithic full-system SDIRK and stiff-uniform stability not established",
+    "early strong-tilt Sobolev failure: nonmonotonic frequency characteristics",
+    "HeIII kinetic source and phase joins",
+    "frequency-resolved thermal/binding energy exchange",
+    "T3 acceleration and high-l long histories",
+    "T5 native observation dispatch"
+  ]
+}
