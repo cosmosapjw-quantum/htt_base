@@ -1,0 +1,13 @@
+{
+ "scope":"R115 analytic and manufactured checks, not production validation",
+ "sandbox_script_sha256":"1273f8a9b1d7c6bc8e8418d7dd60fb2f73a4f4529052f92d946530aeb31b2e94",
+ "sandbox_results_sha256":"39f483b3d141f0ed23636a057456ae4e80e50c99571346ba390050cc5980312d",
+ "sandbox_environment":{"numpy":"2.3.5","scipy":"1.17.0","sympy":"1.14.0","mpmath":"1.3.0"},
+ "T1":{"symbolic_thermal_residual":0,"tilted_adiabatic_max_abs_error":1.6450174555870944e-12},
+ "T2":{"N":[64,128,256,512,1024],"lag_BE_errors":[0.0009509745418088788,0.0004778272128724812,0.0002395014681868779,0.00011989806103759266,0.000059985907567944194],"SDIRK2_errors":[9.221248395399156e-7,2.301021279542806e-7,5.747490285174415e-8,1.4362625133631962e-8,3.589871935781683e-9],"Strang_errors":[5.974104967647041e-5,1.599145139466769e-5,4.069741011181909e-6,1.0220274947250669e-6,2.557954849316739e-7]},
+ "T3":{"coefficients_compared":724,"beta":[0.001,0.2,0.6,0.85],"ell_max":10,"input_tail_max":6.976686806388617e-12,"scaled_gain_gap_max":1.111446218281117e-11,"unpolarized_rest_energy_defect_max":4.718003765447065e-12},
+ "T4":{"equal_B4_and_log_variance":true,"sigma_logT":0.025,"x":40,"Wien_ratios":[1.4511369380716233,1.5670329599940107]},
+ "T5":{"existing_R114_pytest":"6 passed in 2.19 s","new_adapter":"NOT_IMPLEMENTED"},
+ "wolfram":{"thermal_identity":0,"fifth_derivative_div_factorial":"56/(1-x)^9"},
+ "native_subagent":"NOT_RUN","science_DAG_promotions":0
+}
