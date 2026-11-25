@@ -1,0 +1,1360 @@
+{
+  "research_id": "R118-C2F-SOURCE-STATE-CALIBRATED-LIVE-RESONANCE-EVOLUTION-01",
+  "status": "IMPLEMENTATION_VERIFIED_SCOPED",
+  "rec": {
+    "commit": "7fe5017c195fbf4ff4619c5c69b6eae364fe728b",
+    "tree": "ce87a048d929d2cb168ea25e4102ae6a3b420226",
+    "receipt_sha256": "228772c8664320999f24af194e809067544271486f0389e7266d335c73b5a5e3",
+    "acceptance": {
+      "research_id": "R118-C2F-SOURCE-STATE-CALIBRATED-LIVE-RESONANCE-EVOLUTION-01",
+      "status": "IMPLEMENTATION_VERIFIED_SCOPED",
+      "runtime_independence": "PASS_ISOLATED_HMLA_AND_SCALAR_LIVE_LINE",
+      "full_recombination_status": "UNRESOLVED_FULL_INTERIOR_EXTERIOR_ATOMIC_OWNERSHIP",
+      "feedback_status": "BLOCKED_NO_SELF_CONSISTENT_POPULATION_LINE_THERMAL_COUPLING",
+      "science_promotion": false,
+      "states": {
+        "states": {
+          "z1300": {
+            "z": 1299.9999999999995,
+            "T_r_K": 3545.8754999999987,
+            "T_m_K": 3545.8665548690897,
+            "H_s": 6.757967830907817e-14,
+            "n_H_m3": 417771126.2791504,
+            "x_HII": 0.5693223446870876,
+            "x_1s": 0.43067765531284036,
+            "x_2s": 1.799773765088119e-14,
+            "x_2p": 5.401162265502384e-14,
+            "n_1s_m3": 179924689.12330905,
+            "qss_relative_residual": 2.962316700641033e-16,
+            "neutral_as_ground_relative_error": 1.6720013081149069e-13,
+            "population_scope": "HMLA_retained_QSS_neutral_escape"
+          },
+          "z1100": {
+            "z": 1099.7154650522846,
+            "T_r_K": 3000.0000000000014,
+            "T_m_K": 2999.967229886054,
+            "H_s": 5.1464449497217536e-14,
+            "n_H_m3": 253006533.53099903,
+            "x_HII": 0.1452073126914045,
+            "x_1s": 0.8547926873085684,
+            "x_2s": 6.77430907050093e-15,
+            "x_2p": 2.036514656936899e-14,
+            "n_1s_m3": 216268134.70358807,
+            "qss_relative_residual": 1.6438144024867004e-15,
+            "neutral_as_ground_relative_error": 3.174975177352224e-14,
+            "population_scope": "HMLA_retained_QSS_neutral_escape"
+          },
+          "z900": {
+            "z": 899.9999999999998,
+            "T_r_K": 2455.6754999999994,
+            "T_m_K": 2455.232118317969,
+            "H_s": 3.726311372802297e-14,
+            "n_H_m3": 138765308.08316916,
+            "x_HII": 0.012602703060126652,
+            "x_1s": 0.9873972969398714,
+            "x_2s": 4.887272212302288e-16,
+            "x_2p": 1.4953697166829645e-15,
+            "n_1s_m3": 137016490.1103497,
+            "qss_relative_residual": 1.105756524261406e-15,
+            "neutral_as_ground_relative_error": 2.0094210750447426e-15,
+            "population_scope": "HMLA_retained_QSS_neutral_escape"
+          }
+        },
+        "tighter_bdf_saha_relative": {
+          "x_HII": 6.97820884886681e-10,
+          "T_m_K": 1.6951650585718181e-12,
+          "x_1s": 1.185418695016634e-10,
+          "n_1s_m3": 1.1854197486238273e-10
+        },
+        "tighter_bdf_saha": {
+          "z": 1099.7154650522846,
+          "T_r_K": 3000.0000000000014,
+          "T_m_K": 2999.9672298911396,
+          "H_s": 5.1464449497217536e-14,
+          "n_H_m3": 253006533.53099903,
+          "x_HII": 0.1452073125900758,
+          "x_1s": 0.8547926874098971,
+          "x_2s": 6.774309061041089e-15,
+          "x_2p": 2.036514654093106e-14,
+          "n_1s_m3": 216268134.72922492,
+          "qss_relative_residual": 6.849226686597431e-16,
+          "neutral_as_ground_relative_error": 3.174975172542294e-14,
+          "population_scope": "HMLA_retained_QSS_neutral_escape"
+        },
+        "radau_status": "REJECTED_TRIAL_Tm_over_Tr_outside_table",
+        "rate_archive_sha256": "48cd597519606cdafd0ee6405b781d28467cd323278d16596055a8d0577a1d27"
+      },
+      "source_compilation": [
+        {
+          "case": "anchor",
+          "T_m_K": 3000.0,
+          "n_1s_m3": 250000000.0,
+          "source_sha256": "94b459f64c3ccc0d85a575798d4d4583d97bd4edb9caa1c2aed9cd32d8aee401",
+          "max_marginal": 1.027291633806762e-13,
+          "max_same_sym": 6.222279709019213e-16,
+          "direct_x_per_s": [
+            -1.6618538265772594e-06,
+            1.5388447106137293e-06,
+            -6799168239456192.0
+          ],
+          "wall_s": 17.91448793100426
+        },
+        {
+          "case": "z1300",
+          "T_m_K": 3545.8665548690897,
+          "n_1s_m3": 179924689.12330905,
+          "source_sha256": "774aac1249de8aff304935dd0e2a370a436b9c72551c5105888b77cfcbe5198d",
+          "max_marginal": 1.1360573056162477e-13,
+          "max_same_sym": 5.571983680972295e-16,
+          "direct_x_per_s": [
+            -0.000516042558333201,
+            0.00048368503468992793,
+            -5541484908307307.0
+          ],
+          "wall_s": 17.686430898029357
+        },
+        {
+          "case": "z1100",
+          "T_m_K": 2999.967229886054,
+          "n_1s_m3": 216268134.70358807,
+          "source_sha256": "87affc0e5fc7b60c23911fb7e96af5008d48c6df90dad4005b275b92fa3789f6",
+          "max_marginal": 1.0294395555003074e-13,
+          "max_same_sym": 6.105619249363711e-16,
+          "direct_x_per_s": [
+            -1.4370053290830888e-06,
+            1.330638175712758e-06,
+            -5881720144566889.0
+          ],
+          "wall_s": 18.74714121595025
+        },
+        {
+          "case": "z900",
+          "T_m_K": 2455.232118317969,
+          "n_1s_m3": 137016490.1103497,
+          "source_sha256": "cc08c7e74e5725daa25f01e997c3d2886d860a099a9a986353849e0d01e67b45",
+          "max_marginal": 8.993583373613838e-14,
+          "max_same_sym": 6.244217954528263e-16,
+          "direct_x_per_s": [
+            -1.4510427790999096e-10,
+            1.320319692781575e-10,
+            -3079845837490744.5
+          ],
+          "wall_s": 17.9704133879859
+        }
+      ],
+      "source_parity": {
+        "1": {
+          "normalized_gap": 1.2549297553188575e-15,
+          "source_path": "/home/cosmosapjw/Downloads/bass_r118c2e_source/REFINE_1.npz",
+          "source_sha256": "fddd4ff1655f86c41097a3ce91187c897d84da5eca79c3d2533318727cc134b5"
+        },
+        "4": {
+          "normalized_gap": 6.276996324983922e-16,
+          "source_path": "/home/cosmosapjw/Downloads/bass_r118c2e_source/REFINE_4.npz",
+          "source_sha256": "363fa0603d4e747173854a9f2693e1d5a0b3847db6ecfa9bb43ac12ab3b41383"
+        }
+      },
+      "live_cases": 65,
+      "live_steps": 209,
+      "metrics_max": {
+        "number_defect": 4.4104245893935345e-16,
+        "centered_balance_defect": 5.791516704167855e-14,
+        "max_be_residual": 1.9513254935245362e-11,
+        "max_be_number_defect": 1.3872547792076708e-16,
+        "max_be_centered_defect": 0.00012234868320696546,
+        "max_drift_number": 1.5170772359236241e-16,
+        "max_drift_centered": 1.5141395131493766e-15,
+        "max_zone_centered": 1.5189572297821247e-15,
+        "max_zone_number": 2.8720549800715124e-16,
+        "partition_number": 1.5118463895783204e-16,
+        "partition_X": 2.8516018236943314e-17,
+        "max_iterations": 2.0
+      },
+      "thermal_null_per_photon_max": 1.1545917635960096e-18,
+      "time_signal_errors": [
+        0.1384289281551105,
+        0.07677236422825526,
+        0.04067749814776823,
+        0.020976567809877018,
+        0.010657110552289123,
+        0.005372023047892134
+      ],
+      "time_ratios": [
+        1.8031088341052182,
+        1.8873423323471377,
+        1.939187502762718,
+        1.9683166189330088,
+        1.9838169824067944
+      ],
+      "live": [
+        {
+          "case": "live_reverse_4",
+          "metrics": {
+            "action_gap": 1.070082554820941e-14,
+            "action_absolute_per_max_f": 1.3782650670464983e-16,
+            "centered_rate_per_photon": -0.0006944623449156555,
+            "initial_x_rate_python": -0.07116373323410745,
+            "number": 102.47313444006878,
+            "projection_to_collision": 7.663868859139e-12,
+            "balance_to_collision": 9.719121666524637e-11
+          },
+          "run": {
+            "scope": "rec_owned_scalar_fixed_calibrated_bath_local_live_exterior",
+            "T_m_K": 2999.967229886054,
+            "n_1s_m3": 216268134.70358807,
+            "steps": 4.0,
+            "number_defect": 1.4708475969268654e-16,
+            "centered_balance_defect": 2.611041217560213e-16,
+            "centered_absolute_defect": 8.079953373041349e-12,
+            "collision_X": -0.08313460465127173,
+            "collision_energy_j_m3": -3.1880291008963127e-24,
+            "initial_X_rate": -0.07116373323410738,
+            "initial_number_defect": 1.0027624151430906e-16,
+            "initial_entropy_rate": -0.003386741906153714,
+            "max_be_residual": 1.148653499385715e-16,
+            "max_be_number_defect": 0.0,
+            "max_be_centered_defect": 1.1814453248186046e-13,
+            "max_be_centered_absolute_defect": 2.598615767013257e-15,
+            "max_iterations": 1.0,
+            "max_free_increase": 0.0,
+            "min_occupation": 6.307889764188251e-18,
+            "max_drift_number": 1.5134932487185463e-16,
+            "max_drift_centered": 3.876698828292987e-16,
+            "max_zone_centered": 3.720528496347535e-16,
+            "max_zone_number": 2.1106136320020351e-16,
+            "core_projection_X": -6.869851909563351e-14,
+            "exterior_projection_X": 5.684341886080801e-13,
+            "partition_number": 0.0,
+            "partition_X": 2.848928468176087e-17,
+            "red_in": 10.505654250241427,
+            "red_out": 10.41035254456996,
+            "blue_in": 11.376644051874433,
+            "blue_out": 11.639237934388618,
+            "face_X": -7.605281248945019,
+            "interface_atom_heat": 0.0
+          }
+        },
+        {
+          "case": "live_reverse_8",
+          "metrics": {
+            "action_gap": 1.070082554820941e-14,
+            "action_absolute_per_max_f": 1.3782650670464983e-16,
+            "centered_rate_per_photon": -0.0006944623449156555,
+            "initial_x_rate_python": -0.07116373323410745,
+            "number": 102.47313444006878,
+            "projection_to_collision": 3.3902136457421075e-11,
+            "balance_to_collision": 2.8151531235877843e-10
+          },
+          "run": {
+            "scope": "rec_owned_scalar_fixed_calibrated_bath_local_live_exterior",
+            "T_m_K": 2999.967229886054,
+            "n_1s_m3": 216268134.70358807,
+            "steps": 8.0,
+            "number_defect": 1.4708475969268654e-16,
+            "centered_balance_defect": 7.987270525541259e-16,
+            "centered_absolute_defect": 2.4715410273934424e-11,
+            "collision_X": -0.08779419516063751,
+            "collision_energy_j_m3": -3.366714140711332e-24,
+            "initial_X_rate": -0.07116373323410738,
+            "initial_number_defect": 1.0027624151430906e-16,
+            "initial_entropy_rate": -0.003386741906153714,
+            "max_be_residual": 1.1018901914582432e-16,
+            "max_be_number_defect": 0.0,
+            "max_be_centered_defect": 2.4302702455779515e-13,
+            "max_be_centered_absolute_defect": 3.110359192426415e-15,
+            "max_iterations": 1.0,
+            "max_free_increase": 0.0,
+            "min_occupation": 6.3078564778821735e-18,
+            "max_drift_number": 1.5138521709769364e-16,
+            "max_drift_centered": 4.937541723606494e-16,
+            "max_zone_centered": 4.992505082310833e-16,
+            "max_zone_number": 1.9035133805094377e-16,
+            "core_projection_X": 2.055300374337321e-14,
+            "exterior_projection_X": -2.9558577807620168e-12,
+            "partition_number": 0.0,
+            "partition_X": 0.0,
+            "red_in": 10.505533247055808,
+            "red_out": 10.4224600688894,
+            "blue_in": 11.362466710429398,
+            "blue_out": 11.638600006123493,
+            "face_X": -7.633137569535755,
+            "interface_atom_heat": 0.0
+          }
+        },
+        {
+          "case": "live_reverse_16",
+          "metrics": {
+            "action_gap": 1.070082554820941e-14,
+            "action_absolute_per_max_f": 1.3782650670464983e-16,
+            "centered_rate_per_photon": -0.0006944623449156555,
+            "initial_x_rate_python": -0.07116373323410745,
+            "number": 102.47313444006878,
+            "projection_to_collision": 2.4140430831649433e-11,
+            "balance_to_collision": 1.047826441872244e-09
+          },
+          "run": {
+            "scope": "rec_owned_scalar_fixed_calibrated_bath_local_live_exterior",
+            "T_m_K": 2999.967229886054,
+            "n_1s_m3": 216268134.70358807,
+            "steps": 16.0,
+            "number_defect": 0.0,
+            "centered_balance_defect": 3.016032873781987e-15,
+            "centered_absolute_defect": 9.332394579342207e-11,
+            "collision_X": -0.08906431644029895,
+            "collision_energy_j_m3": -3.415420496123902e-24,
+            "initial_X_rate": -0.07116373323410738,
+            "initial_number_defect": 1.0027624151430906e-16,
+            "initial_entropy_rate": -0.003386741906153714,
+            "max_be_residual": 9.969731235887126e-17,
+            "max_be_number_defect": 0.0,
+            "max_be_centered_defect": 1.3278757295916286e-12,
+            "max_be_centered_absolute_defect": 5.986530715595961e-15,
+            "max_iterations": 1.0,
+            "max_free_increase": 0.0,
+            "min_occupation": 6.307861222588542e-18,
+            "max_drift_number": 1.5140202314508256e-16,
+            "max_drift_centered": 1.5141395131493766e-15,
+            "max_zone_centered": 1.5189572297821247e-15,
+            "max_zone_number": 2.8720549800715124e-16,
+            "core_projection_X": 4.68444727452777e-14,
+            "exterior_projection_X": 2.1032064978498966e-12,
+            "partition_number": 1.5118463895783204e-16,
+            "partition_X": 2.8516018236943314e-17,
+            "red_in": 10.5054589899425,
+            "red_out": 10.378874366786606,
+            "blue_in": 11.356525669176945,
+            "blue_out": 11.638863431249797,
+            "face_X": -8.689600686110921,
+            "interface_atom_heat": 0.0
+          }
+        },
+        {
+          "case": "live_reverse_32",
+          "metrics": {
+            "action_gap": 1.070082554820941e-14,
+            "action_absolute_per_max_f": 1.3782650670464983e-16,
+            "centered_rate_per_photon": -0.0006944623449156555,
+            "initial_x_rate_python": -0.07116373323410745,
+            "number": 102.47313444006878,
+            "projection_to_collision": 2.7012929811139887e-11,
+            "balance_to_collision": 2.484570281886325e-10
+          },
+          "run": {
+            "scope": "rec_owned_scalar_fixed_calibrated_bath_local_live_exterior",
+            "T_m_K": 2999.967229886054,
+            "n_1s_m3": 216268134.70358807,
+            "steps": 32.0,
+            "number_defect": 0.0,
+            "centered_balance_defect": 7.205118477607628e-16,
+            "centered_absolute_defect": 2.2294208146256267e-11,
+            "collision_X": -0.08973063997742962,
+            "collision_energy_j_m3": -3.4409725371289135e-24,
+            "initial_X_rate": -0.07116373323410738,
+            "initial_number_defect": 1.0027624151430906e-16,
+            "initial_entropy_rate": -0.003386741906153714,
+            "max_be_residual": 9.547658860277654e-17,
+            "max_be_number_defect": 1.3872547792076708e-16,
+            "max_be_centered_defect": 4.469113223562591e-12,
+            "max_be_centered_absolute_defect": 6.957108500404985e-15,
+            "max_iterations": 1.0,
+            "max_free_increase": 0.0,
+            "min_occupation": 6.307792279679049e-18,
+            "max_drift_number": 1.5170772359236241e-16,
+            "max_drift_centered": 8.53922864132875e-16,
+            "max_zone_centered": 8.582889928784414e-16,
+            "max_zone_number": 2.2228542157967286e-16,
+            "core_projection_X": -3.6463887465032485e-14,
+            "exterior_projection_X": -2.3874235921539366e-12,
+            "partition_number": 0.0,
+            "partition_X": 2.810238296948176e-17,
+            "red_in": 10.505419625694081,
+            "red_out": 10.362176131385658,
+            "blue_in": 11.353750147132645,
+            "blue_out": 11.639094998402125,
+            "face_X": -9.107502343530378,
+            "interface_atom_heat": 0.0
+          }
+        },
+        {
+          "case": "live_physical_s1_1",
+          "metrics": {
+            "action_gap": 3.930591705921035e-08,
+            "action_absolute_per_max_f": 1.1081289314934211e-16,
+            "centered_rate_per_photon": -1.5072165264178074e-10,
+            "initial_x_rate_python": -1.547289536866132e-08,
+            "number": 102.65874358191101,
+            "projection_to_collision": 2.2047565544978674e-05,
+            "balance_to_collision": 0.0006348310036774373
+          },
+          "run": {
+            "scope": "rec_owned_scalar_fixed_calibrated_bath_local_live_exterior",
+            "T_m_K": 2999.967229886054,
+            "n_1s_m3": 216268134.70358807,
+            "steps": 4.0,
+            "number_defect": 1.470141529797845e-16,
+            "centered_balance_defect": 2.7717172820721933e-16,
+            "centered_absolute_defect": 8.57353571714267e-12,
+            "collision_X": -1.3505225276456332e-08,
+            "collision_energy_j_m3": -5.178956630167196e-31,
+            "initial_X_rate": -1.547289549079443e-08,
+            "initial_number_defect": 3.1612698898476156e-17,
+            "initial_entropy_rate": -1.5688179447672546e-16,
+            "max_be_residual": 1.0912201916623117e-16,
+            "max_be_number_defect": 0.0,
+            "max_be_centered_defect": 5.939859366925896e-07,
+            "max_be_centered_absolute_defect": 2.1708797255538753e-15,
+            "max_iterations": 1.0,
+            "max_free_increase": 0.0,
+            "min_occupation": 7.22496462279406e-18,
+            "max_drift_number": 1.4701415298354406e-16,
+            "max_drift_centered": 1.5950836378271096e-16,
+            "max_zone_centered": 1.0350311882099529e-16,
+            "max_zone_number": 1.9033967258549133e-16,
+            "core_projection_X": 1.3540245178333618e-14,
+            "exterior_projection_X": -2.8421709430404007e-13,
+            "partition_number": 0.0,
+            "partition_X": 0.0,
+            "red_in": 0.0,
+            "red_out": 1.0787839185785067e-08,
+            "blue_in": 1.0362913308496292e-08,
+            "blue_out": 0.0,
+            "face_X": 4.4945349050347887e-07,
+            "interface_atom_heat": 0.0
+          }
+        },
+        {
+          "case": "live_physical_s1_100",
+          "metrics": {
+            "action_gap": 3.930591705921035e-08,
+            "action_absolute_per_max_f": 1.1081289314934211e-16,
+            "centered_rate_per_photon": -1.5072165264178074e-10,
+            "initial_x_rate_python": -1.547289536866132e-08,
+            "number": 102.65874358191101,
+            "projection_to_collision": 1.542703719043155e-05,
+            "balance_to_collision": 0.00014560473753820902
+          },
+          "run": {
+            "scope": "rec_owned_scalar_fixed_calibrated_bath_local_live_exterior",
+            "T_m_K": 2999.967229886054,
+            "n_1s_m3": 216268134.70358807,
+            "steps": 4.0,
+            "number_defect": 4.4104245893935345e-16,
+            "centered_balance_defect": 8.399519744899245e-16,
+            "centered_absolute_defect": 2.598157589750258e-11,
+            "collision_X": -1.7843908334840134e-07,
+            "collision_energy_j_m3": -6.842746084355907e-30,
+            "initial_X_rate": -1.547289549079443e-08,
+            "initial_number_defect": 3.1612698898476156e-17,
+            "initial_entropy_rate": -1.5688179447672546e-16,
+            "max_be_residual": 2.140579823358046e-15,
+            "max_be_number_defect": 0.0,
+            "max_be_centered_defect": 3.317660045841928e-07,
+            "max_be_centered_absolute_defect": 5.895527087238458e-15,
+            "max_iterations": 1.0,
+            "max_free_increase": 9.094947017729282e-13,
+            "min_occupation": 7.224964615314029e-18,
+            "max_drift_number": 1.4701415335574412e-16,
+            "max_drift_centered": 2.4793794283279386e-16,
+            "max_zone_centered": 1.7336142020687043e-16,
+            "max_zone_number": 2.41929756684826e-16,
+            "core_projection_X": 2.5167594516675024e-13,
+            "exterior_projection_X": 2.5011104298755527e-12,
+            "partition_number": 0.0,
+            "partition_X": 0.0,
+            "red_in": 0.0,
+            "red_out": 1.0787830790641982e-06,
+            "blue_in": 1.036289883280996e-06,
+            "blue_out": 0.0,
+            "face_X": 4.4945300449835364e-05,
+            "interface_atom_heat": 0.0
+          }
+        },
+        {
+          "case": "live_physical_s1_10000",
+          "metrics": {
+            "action_gap": 3.930591705921035e-08,
+            "action_absolute_per_max_f": 1.1081289314934211e-16,
+            "centered_rate_per_photon": -1.5072165264178074e-10,
+            "initial_x_rate_python": -1.547289536866132e-08,
+            "number": 102.65874358191101,
+            "projection_to_collision": 1.5045067316463775e-06,
+            "balance_to_collision": 7.32891806475005e-06
+          },
+          "run": {
+            "scope": "rec_owned_scalar_fixed_calibrated_bath_local_live_exterior",
+            "T_m_K": 2999.967229886054,
+            "n_1s_m3": 216268134.70358807,
+            "steps": 4.0,
+            "number_defect": 0.0,
+            "centered_balance_defect": 1.3432290389610912e-16,
+            "centered_absolute_defect": 4.154907330927203e-12,
+            "collision_X": -5.669196045335928e-07,
+            "collision_energy_j_m3": -2.174011898779235e-29,
+            "initial_X_rate": -1.547289549079443e-08,
+            "initial_number_defect": 3.1612698898476156e-17,
+            "initial_entropy_rate": -1.5688179447672546e-16,
+            "max_be_residual": 3.079074324336377e-13,
+            "max_be_number_defect": 0.0,
+            "max_be_centered_defect": 1.3999678912591966e-06,
+            "max_be_centered_absolute_defect": 9.98560214244424e-14,
+            "max_iterations": 1.0,
+            "max_free_increase": 1.8189894035458565e-12,
+            "min_occupation": 7.224963867516386e-18,
+            "max_drift_number": 1.470141852049011e-16,
+            "max_drift_centered": 2.322328316266932e-16,
+            "max_zone_centered": 1.684089810814471e-16,
+            "max_zone_number": 1.5782691318455785e-16,
+            "core_projection_X": -1.7081333499339643e-13,
+            "exterior_projection_X": 6.821210263296962e-13,
+            "partition_number": 0.0,
+            "partition_X": 2.7673257380526536e-17,
+            "red_in": 0.0,
+            "red_out": 0.00010787830764572075,
+            "blue_in": 0.00010362898871152654,
+            "blue_out": 0.0,
+            "face_X": 0.004494530047591505,
+            "interface_atom_heat": 0.0
+          }
+        },
+        {
+          "case": "live_physical_s4_1",
+          "metrics": {
+            "action_gap": 8.530662313910723e-08,
+            "action_absolute_per_max_f": 2.5312506532774127e-16,
+            "centered_rate_per_photon": -1.4777886316037324e-10,
+            "initial_x_rate_python": -1.5170792527300897e-08,
+            "number": 102.65874358191107,
+            "projection_to_collision": 3.9378648402265814e-05,
+            "balance_to_collision": 0.00023047613686644216
+          },
+          "run": {
+            "scope": "rec_owned_scalar_fixed_calibrated_bath_local_live_exterior",
+            "T_m_K": 2999.967229886054,
+            "n_1s_m3": 216268134.70358807,
+            "steps": 4.0,
+            "number_defect": 1.470141529797845e-16,
+            "centered_balance_defect": 9.844018810934041e-17,
+            "centered_absolute_defect": 3.044973144326956e-12,
+            "collision_X": -1.3211663410045255e-08,
+            "collision_energy_j_m3": -5.066382115985317e-31,
+            "initial_X_rate": -1.517079242000708e-08,
+            "initial_number_defect": 7.28462484246791e-17,
+            "initial_entropy_rate": -1.534418464134002e-16,
+            "max_be_residual": 1.2226018807842802e-16,
+            "max_be_number_defect": 0.0,
+            "max_be_centered_defect": 4.085276140845016e-07,
+            "max_be_centered_absolute_defect": 1.382776185583398e-15,
+            "max_iterations": 1.0,
+            "max_free_increase": 0.0,
+            "min_occupation": 7.216604388379067e-18,
+            "max_drift_number": 1.4701415298354406e-16,
+            "max_drift_centered": 3.8960642431451307e-17,
+            "max_zone_centered": 2.8296402940992875e-17,
+            "max_zone_number": 1.6843467651683768e-16,
+            "core_projection_X": 6.551009734678814e-14,
+            "exterior_projection_X": -4.547473508864641e-13,
+            "partition_number": 0.0,
+            "partition_X": 0.0,
+            "red_in": 0.0,
+            "red_out": 1.0791999669096003e-08,
+            "blue_in": 1.0362913308496292e-08,
+            "blue_out": 0.0,
+            "face_X": 4.495419007738363e-07,
+            "interface_atom_heat": 0.0
+          }
+        },
+        {
+          "case": "live_physical_s4_100",
+          "metrics": {
+            "action_gap": 8.530662313910723e-08,
+            "action_absolute_per_max_f": 2.5312506532774127e-16,
+            "centered_rate_per_photon": -1.4777886316037324e-10,
+            "initial_x_rate_python": -1.5170792527300897e-08,
+            "number": 102.65874358191107,
+            "projection_to_collision": 1.643129227483975e-05,
+            "balance_to_collision": 2.0107488790756475e-05
+          },
+          "run": {
+            "scope": "rec_owned_scalar_fixed_calibrated_bath_local_live_exterior",
+            "T_m_K": 2999.967229886054,
+            "n_1s_m3": 216268134.70358807,
+            "steps": 4.0,
+            "number_defect": 1.470141529797845e-16,
+            "centered_balance_defect": 1.125000325258864e-16,
+            "centered_absolute_defect": 3.479875305153994e-12,
+            "collision_X": -1.7306364516058871e-07,
+            "collision_energy_j_m3": -6.63660986172393e-30,
+            "initial_X_rate": -1.517079242000708e-08,
+            "initial_number_defect": 7.28462484246791e-17,
+            "initial_entropy_rate": -1.534418464134002e-16,
+            "max_be_residual": 2.7795926722630867e-15,
+            "max_be_number_defect": 0.0,
+            "max_be_centered_defect": 1.3101300360777856e-07,
+            "max_be_centered_absolute_defect": 5.0605082865631675e-15,
+            "max_iterations": 1.0,
+            "max_free_increase": 9.094947017729282e-13,
+            "min_occupation": 7.216604365557547e-18,
+            "max_drift_number": 1.4701415324832708e-16,
+            "max_drift_centered": 5.36918413802626e-17,
+            "max_zone_centered": 4.328526631200084e-17,
+            "max_zone_number": 1.8434415477648706e-16,
+            "core_projection_X": -1.1517523046400413e-13,
+            "exterior_projection_X": 2.7284841053187847e-12,
+            "partition_number": 0.0,
+            "partition_X": 0.0,
+            "red_in": 0.0,
+            "red_out": 1.0791991265886724e-06,
+            "blue_in": 1.036289883280996e-06,
+            "blue_out": 0.0,
+            "face_X": 4.495414145973046e-05,
+            "interface_atom_heat": 0.0
+          }
+        },
+        {
+          "case": "live_physical_s4_10000",
+          "metrics": {
+            "action_gap": 8.530662313910723e-08,
+            "action_absolute_per_max_f": 2.5312506532774127e-16,
+            "centered_rate_per_photon": -1.4777886316037324e-10,
+            "initial_x_rate_python": -1.5170792527300897e-08,
+            "number": 102.65874358191107,
+            "projection_to_collision": 1.2580333950863728e-06,
+            "balance_to_collision": 1.6575343261336383e-06
+          },
+          "run": {
+            "scope": "rec_owned_scalar_fixed_calibrated_bath_local_live_exterior",
+            "T_m_K": 2999.967229886054,
+            "n_1s_m3": 216268134.70358807,
+            "steps": 4.0,
+            "number_defect": 0.0,
+            "centered_balance_defect": 2.969235702592398e-17,
+            "centered_absolute_defect": 9.184508992966534e-13,
+            "collision_X": -5.54106714301978e-07,
+            "collision_energy_j_m3": -2.1248772849847455e-29,
+            "initial_X_rate": -1.517079242000708e-08,
+            "initial_number_defect": 7.28462484246791e-17,
+            "initial_entropy_rate": -1.534418464134002e-16,
+            "max_be_residual": 3.616814372851348e-13,
+            "max_be_number_defect": 0.0,
+            "max_be_centered_defect": 1.2546781968353428e-06,
+            "max_be_centered_absolute_defect": 1.3396902851460957e-13,
+            "max_iterations": 1.0,
+            "max_free_increase": 9.094947017729282e-13,
+            "min_occupation": 7.216602083461765e-18,
+            "max_drift_number": 1.4701417446319377e-16,
+            "max_drift_centered": 4.6601617611682687e-17,
+            "max_zone_centered": 5.367477824489196e-17,
+            "max_zone_number": 2.3132126718432636e-16,
+            "core_projection_X": 7.180714356458395e-14,
+            "exterior_projection_X": 6.252776074688882e-13,
+            "partition_number": 0.0,
+            "partition_X": 2.7673257380526536e-17,
+            "red_in": 0.0,
+            "red_out": 0.00010791990757770913,
+            "blue_in": 0.00010362898871152654,
+            "blue_out": 0.0,
+            "face_X": 0.004495414046146258,
+            "interface_atom_heat": 0.0
+          }
+        }
+      ],
+      "source_action_checks": [
+        {
+          "case": "anchor_s1_hot_t0_n0",
+          "metrics": {
+            "action_gap": 5.806605039054255e-10,
+            "action_absolute_per_max_f": 1.7306673903564542e-16,
+            "centered_rate_per_photon": -1.593427365523494e-08,
+            "initial_x_rate_python": -1.7015485186237114e-06,
+            "number": 106.78544596706776,
+            "continuum_error": 0.02388579020819015,
+            "direct_x_rate": -1.6618538265772594e-06
+          }
+        },
+        {
+          "case": "anchor_s1_cold_t0_n0",
+          "metrics": {
+            "action_gap": 3.793264796579998e-10,
+            "action_absolute_per_max_f": 1.132810862230265e-16,
+            "centered_rate_per_photon": 1.5966170192569268e-08,
+            "initial_x_rate_python": 1.5756012316253413e-06,
+            "number": 98.68373019826639,
+            "continuum_error": 0.02388578958998395,
+            "direct_x_rate": 1.5388447106137293e-06
+          }
+        },
+        {
+          "case": "anchor_s1_narrow_t0_n0",
+          "metrics": {
+            "action_gap": 1.594137283409438e-15,
+            "action_absolute_per_max_f": 7.858264521210043e-17,
+            "centered_rate_per_photon": -0.0011580748944646675,
+            "initial_x_rate_python": -6960821856772476.0,
+            "number": 6.010683669979901e+18,
+            "continuum_error": 0.023775498946796366,
+            "direct_x_rate": -6799168239456192.0
+          }
+        },
+        {
+          "case": "anchor_s4_hot_t0_n0",
+          "metrics": {
+            "action_gap": 6.319584364232329e-10,
+            "action_absolute_per_max_f": 1.9824458921028804e-16,
+            "centered_rate_per_photon": -1.5623166632507027e-08,
+            "initial_x_rate_python": -1.6683268163630365e-06,
+            "number": 106.7854459670678,
+            "continuum_error": 0.0038950415429424,
+            "direct_x_rate": -1.6618538265772594e-06
+          }
+        },
+        {
+          "case": "anchor_s4_cold_t0_n0",
+          "metrics": {
+            "action_gap": 1.1302514897666363e-09,
+            "action_absolute_per_max_f": 3.5525463125458635e-16,
+            "centered_rate_per_photon": 1.5654440425173552e-08,
+            "initial_x_rate_python": 1.5448385753311218e-06,
+            "number": 98.68373019826639,
+            "continuum_error": 0.0038950419542603245,
+            "direct_x_rate": 1.5388447106137293e-06
+          }
+        },
+        {
+          "case": "anchor_s4_narrow_t0_n0",
+          "metrics": {
+            "action_gap": 3.4080630627829516e-15,
+            "action_absolute_per_max_f": 1.6995881778759386e-16,
+            "centered_rate_per_photon": -0.0011349654682192359,
+            "initial_x_rate_python": -6821918405816454.0,
+            "number": 6.010683669979901e+18,
+            "continuum_error": 0.0033460219778413064,
+            "direct_x_rate": -6799168239456192.0
+          }
+        },
+        {
+          "case": "z1300_s1_hot_t0_n0",
+          "metrics": {
+            "action_gap": 5.53502193043773e-10,
+            "action_absolute_per_max_f": 1.0355214840160856e-16,
+            "centered_rate_per_photon": -1.1429694066086591e-08,
+            "initial_x_rate_python": -0.0005265984207996953,
+            "number": 46072.83605348218,
+            "continuum_error": 0.02045541078852027,
+            "direct_x_rate": -0.000516042558333201
+          }
+        },
+        {
+          "case": "z1300_s1_cold_t0_n0",
+          "metrics": {
+            "action_gap": 7.112162751833382e-10,
+            "action_absolute_per_max_f": 1.3332045133036354e-16,
+            "centered_rate_per_photon": 1.1452574349272906e-08,
+            "initial_x_rate_python": 0.0004935790102901995,
+            "number": 43097.64732504574,
+            "continuum_error": 0.020455409759046295,
+            "direct_x_rate": 0.00048368503468992793
+          }
+        },
+        {
+          "case": "z1300_s1_narrow_t0_n0",
+          "metrics": {
+            "action_gap": 2.3415284914247387e-15,
+            "action_absolute_per_max_f": 9.088713023370549e-17,
+            "centered_rate_per_photon": -0.0009322334038267188,
+            "initial_x_rate_python": -5603106333939392.0,
+            "number": 6.010411460197888e+18,
+            "continuum_error": 0.011120020473160826,
+            "direct_x_rate": -5541484908307307.0
+          }
+        },
+        {
+          "case": "z1300_s4_hot_t0_n0",
+          "metrics": {
+            "action_gap": 5.060410403380991e-10,
+            "action_absolute_per_max_f": 9.775324808563866e-17,
+            "centered_rate_per_photon": -1.1237898012404665e-08,
+            "initial_x_rate_python": -0.0005177618327191231,
+            "number": 46072.836053482184,
+            "continuum_error": 0.003331652303301514,
+            "direct_x_rate": -0.000516042558333201
+          }
+        },
+        {
+          "case": "z1300_s4_cold_t0_n0",
+          "metrics": {
+            "action_gap": 5.651766514534992e-10,
+            "action_absolute_per_max_f": 1.0939162974836555e-16,
+            "centered_rate_per_photon": 1.126039436297392e-08,
+            "initial_x_rate_python": 0.0004852965049824091,
+            "number": 43097.647325045786,
+            "continuum_error": 0.0033316521928132836,
+            "direct_x_rate": 0.00048368503468992793
+          }
+        },
+        {
+          "case": "z1300_s4_narrow_t0_n0",
+          "metrics": {
+            "action_gap": 2.9347179620566157e-15,
+            "action_absolute_per_max_f": 1.1763143583225446e-16,
+            "centered_rate_per_photon": -0.0009233322474764782,
+            "initial_x_rate_python": -5549606721802895.0,
+            "number": 6.010411460197889e+18,
+            "continuum_error": 0.0014656384759643558,
+            "direct_x_rate": -5541484908307307.0
+          }
+        },
+        {
+          "case": "z1100_s1_hot_t0_n0",
+          "metrics": {
+            "action_gap": 4.629279771669912e-10,
+            "action_absolute_per_max_f": 1.193610644469955e-16,
+            "centered_rate_per_photon": -1.3784305804434463e-08,
+            "initial_x_rate_python": -1.471329685121211e-06,
+            "number": 106.73948374002443,
+            "continuum_error": 0.0238860326417643,
+            "direct_x_rate": -1.4370053290830888e-06
+          }
+        },
+        {
+          "case": "z1100_s1_cold_t0_n0",
+          "metrics": {
+            "action_gap": 5.525998334689634e-10,
+            "action_absolute_per_max_f": 1.4276209868398296e-16,
+            "centered_rate_per_photon": 1.3811898613061924e-08,
+            "initial_x_rate_python": 1.3624218401264738e-06,
+            "number": 98.64117006741532,
+            "continuum_error": 0.02388603071241064,
+            "direct_x_rate": 1.330638175712758e-06
+          }
+        },
+        {
+          "case": "z1100_s1_narrow_t0_n0",
+          "metrics": {
+            "action_gap": 1.0117285150324285e-15,
+            "action_absolute_per_max_f": 4.314341380540645e-17,
+            "centered_rate_per_photon": -0.0010018106257182484,
+            "initial_x_rate_python": -6021566789493200.0,
+            "number": 6.010683691017991e+18,
+            "continuum_error": 0.023776487403178354,
+            "direct_x_rate": -5881720144566889.0
+          }
+        },
+        {
+          "case": "z1100_s4_hot_t0_n0",
+          "metrics": {
+            "action_gap": 8.121082106938325e-10,
+            "action_absolute_per_max_f": 2.2038594744505461e-16,
+            "centered_rate_per_photon": -1.3515172936833434e-08,
+            "initial_x_rate_python": -1.4426025820036245e-06,
+            "number": 106.73948374002441,
+            "continuum_error": 0.0038950814853504993,
+            "direct_x_rate": -1.4370053290830888e-06
+          }
+        },
+        {
+          "case": "z1100_s4_cold_t0_n0",
+          "metrics": {
+            "action_gap": 9.807540730977146e-10,
+            "action_absolute_per_max_f": 2.6667478359964807e-16,
+            "centered_rate_per_photon": 1.3542227039626992e-08,
+            "initial_x_rate_python": 1.3358211204253856e-06,
+            "number": 98.64117006741532,
+            "continuum_error": 0.0038950819909117163,
+            "direct_x_rate": 1.330638175712758e-06
+          }
+        },
+        {
+          "case": "z1100_s4_narrow_t0_n0",
+          "metrics": {
+            "action_gap": 3.2325411576684534e-15,
+            "action_absolute_per_max_f": 1.3945339167564759e-16,
+            "centered_rate_per_photon": -0.0009818186554107124,
+            "initial_x_rate_python": -5901401379614383.0,
+            "number": 6.010683691017993e+18,
+            "continuum_error": 0.0033461699237212284,
+            "direct_x_rate": -5881720144566889.0
+          }
+        },
+        {
+          "case": "z900_s1_hot_t0_n0",
+          "metrics": {
+            "action_gap": 3.217676577847675e-10,
+            "action_absolute_per_max_f": 6.556411444560304e-17,
+            "centered_rate_per_photon": -8.773976353736687e-09,
+            "initial_x_rate_python": -1.4927192654195083e-10,
+            "number": 0.017013030412868113,
+            "continuum_error": 0.028721748923916525,
+            "direct_x_rate": -1.4510427790999096e-10
+          }
+        },
+        {
+          "case": "z900_s1_cold_t0_n0",
+          "metrics": {
+            "action_gap": 4.984609274018182e-10,
+            "action_absolute_per_max_f": 1.0176638021537655e-16,
+            "centered_rate_per_photon": 8.791538620071806e-09,
+            "initial_x_rate_python": 1.358241581497114e-10,
+            "number": 0.015449418358128198,
+            "continuum_error": 0.028721747435151348,
+            "direct_x_rate": 1.320319692781575e-10
+          }
+        },
+        {
+          "case": "z900_s1_narrow_t0_n0",
+          "metrics": {
+            "action_gap": 3.827679529963694e-15,
+            "action_absolute_per_max_f": 8.939996507166911e-17,
+            "centered_rate_per_photon": -0.0005360577777621033,
+            "initial_x_rate_python": -3222329845232728.0,
+            "number": 6.011161443613583e+18,
+            "continuum_error": 0.04626335708350782,
+            "direct_x_rate": -3079845837490744.5
+          }
+        },
+        {
+          "case": "z900_s4_hot_t0_n0",
+          "metrics": {
+            "action_gap": 7.466861194404994e-10,
+            "action_absolute_per_max_f": 1.5567211545191062e-16,
+            "centered_rate_per_photon": -8.569025554741745e-09,
+            "initial_x_rate_python": -1.4578509236908282e-10,
+            "number": 0.017013030412868113,
+            "continuum_error": 0.004691897932166537,
+            "direct_x_rate": -1.4510427790999096e-10
+          }
+        },
+        {
+          "case": "z900_s4_cold_t0_n0",
+          "metrics": {
+            "action_gap": 1.0757370492592506e-09,
+            "action_absolute_per_max_f": 2.2471237194397314e-16,
+            "centered_rate_per_photon": 8.586177600253422e-09,
+            "initial_x_rate_python": 1.3265144984437954e-10,
+            "number": 0.015449418358128193,
+            "continuum_error": 0.0046918982480804875,
+            "direct_x_rate": 1.320319692781575e-10
+          }
+        },
+        {
+          "case": "z900_s4_narrow_t0_n0",
+          "metrics": {
+            "action_gap": 3.396697654799516e-15,
+            "action_absolute_per_max_f": 7.774702483923998e-17,
+            "centered_rate_per_photon": -0.0005158096542120491,
+            "initial_x_rate_python": -3100615105643123.0,
+            "number": 6.011161443613582e+18,
+            "continuum_error": 0.006743606416774722,
+            "direct_x_rate": -3079845837490744.5
+          }
+        }
+      ],
+      "isolation": {
+        "status": "PASS_ISOLATED_INPUT_TREE",
+        "scope": "REC HMLA + source compiler + scalar live line",
+        "command": [
+          "/usr/bin/python3",
+          "/home/cosmosapjw/Downloads/rec_r118c2f_isolated/driver.py",
+          "standalone_line",
+          "--rates",
+          "/home/cosmosapjw/Downloads/rec_r118c2f_isolated/atomic_rates.zip",
+          "--binary",
+          "/home/cosmosapjw/Downloads/rec_r118c2f_isolated/rec_live_line",
+          "--out",
+          "/home/cosmosapjw/Downloads/rec_r118c2f_isolated/result",
+          "--subcells",
+          "4",
+          "--workers",
+          "4",
+          "--duration",
+          "100",
+          "--steps",
+          "4",
+          "--initial",
+          "radiation",
+          "--exterior"
+        ],
+        "table_members": {
+          "HyRec/Alpha_inf.dat": "c543c755d99ba8e999450dd5cb486a3ad88d26378da0ccc8363b10418e4832bd",
+          "HyRec/R_inf.dat": "ce914f4b552ba55ba00f7916f36b0986f19adfdb638e5aefae91f7b2d05a8112",
+          "HyRec/two_photon_tables.dat": "93d23871e21c40f5b72a6ef9acf3eb7be054735c8aee9401e455736c1d9d8cf9"
+        },
+        "table_archive_sha256": "7900a4e0c76f30c1fb8d860551700d446fb0f1c00dcc4dc179bccfab4e8a8c05",
+        "binary_sha256": "71798cc6139060fcce0ab95dcbfac5ef9456957aa4d5ca3af18049fe0af99210",
+        "result_receipt_sha256": "d0cc088043911309e5ee31b8deb53db0e452bc1e35a0740da873011692f2c6af",
+        "source_state": {
+          "z": 1099.7154650522846,
+          "T_r_K": 3000.0000000000014,
+          "T_m_K": 2999.967229886054,
+          "H_s": 5.1464449497217536e-14,
+          "n_H_m3": 253006533.53099903,
+          "x_HII": 0.1452073126914045,
+          "x_1s": 0.8547926873085684,
+          "x_2s": 6.77430907050093e-15,
+          "x_2p": 2.036514656936899e-14,
+          "n_1s_m3": 216268134.70358807,
+          "qss_relative_residual": 1.6438144024867004e-15,
+          "neutral_as_ground_relative_error": 3.174975177352224e-14,
+          "population_scope": "HMLA_retained_QSS_neutral_escape"
+        },
+        "audit": "Python audit hook: external data reads denied; subprocess executable restricted to REC native bin",
+        "result_hashes": {
+          "CASE.txt": "203304cb70f60d3071738be057ec26aa0c056327b673a3275ca29c226101e190",
+          "SOURCE.npz": "cebadb158c21e7196cbb8eed172a7ac2e0f75865243480991ddf9c923a47b5fc",
+          "HISTORY.json": "f2091c97c87a9546b79df7c2f2cc70e063635a0cd73137e8ea876cb5fff8dad5",
+          "GRAPH.txt": "89ec7c9ce0b7a9a525906f06130e9f96968e9fcf4914ef655476580bfb3fdd19",
+          "line/state.tsv": "457885b8c2ac319486070adc0cdfcf509edb99bf9d564462d1ff36c6ef384109",
+          "line/run.txt": "b1869e2616a48213e839fc21e49608b9e8c8b97c76ab57db6f0145250703451a",
+          "line/history.tsv": "2d3b9d6b9ce58f7e945bebfa62b9685553a8920db7d6d2ac5f01a64b18a2f484",
+          "line/full.tsv": "fe973a4ca7fde171955b10c3af4b9ec104f45cfa9ccfd532bcc62ccddf2f10d5"
+        }
+      },
+      "owned_history_cases": 12,
+      "owned_history_steps": 5760,
+      "owned_history": [
+        {
+          "case": "s0_n128",
+          "shear": 0.0,
+          "steps": 128,
+          "command": [
+            "/home/cosmosapjw/Downloads/htt_r109_original_rec/rust/rec_microphysics/target/release/rec_owned_history",
+            "1600",
+            "900",
+            "128",
+            "0.0"
+          ],
+          "path": "/home/cosmosapjw/Downloads/rec_r118c2f_owned_history/s0_n128.tsv",
+          "sha256": "f5c0b4560cdd48f983ff0e1b68c5a70fe3dfef77e31dac528521397d0c7ce809",
+          "x_HII_end": 0.013154641236872155,
+          "T_m_end": 2455.3165804393184,
+          "max_residual": 1.3608896995420672e-12,
+          "max_heat_residual_j_per_H": 2.475845009611515e-31,
+          "T_min_end": 2455.6755,
+          "T_max_end": 2455.6755
+        },
+        {
+          "case": "s0_n256",
+          "shear": 0.0,
+          "steps": 256,
+          "command": [
+            "/home/cosmosapjw/Downloads/htt_r109_original_rec/rust/rec_microphysics/target/release/rec_owned_history",
+            "1600",
+            "900",
+            "256",
+            "0.0"
+          ],
+          "path": "/home/cosmosapjw/Downloads/rec_r118c2f_owned_history/s0_n256.tsv",
+          "sha256": "88b69049e5d53bd1b9a374f0ee4aa7b5a5331d0c0cb28b22de51f67a8825ef7d",
+          "x_HII_end": 0.012986102056474658,
+          "T_m_end": 2455.3097058724497,
+          "max_residual": 7.772389502835875e-13,
+          "max_heat_residual_j_per_H": 1.4510401008075786e-31,
+          "T_min_end": 2455.6755,
+          "T_max_end": 2455.6755
+        },
+        {
+          "case": "s0_n512",
+          "shear": 0.0,
+          "steps": 512,
+          "command": [
+            "/home/cosmosapjw/Downloads/htt_r109_original_rec/rust/rec_microphysics/target/release/rec_owned_history",
+            "1600",
+            "900",
+            "512",
+            "0.0"
+          ],
+          "path": "/home/cosmosapjw/Downloads/rec_r118c2f_owned_history/s0_n512.tsv",
+          "sha256": "93b95d8ffe95f9999d221ecb5fd8e26298f09c47b6c26722906adf9ce74f1631",
+          "x_HII_end": 0.012902159301017901,
+          "T_m_end": 2455.306225578179,
+          "max_residual": 4.822453200659105e-13,
+          "max_heat_residual_j_per_H": 8.972071129120087e-32,
+          "T_min_end": 2455.6755,
+          "T_max_end": 2455.6755
+        },
+        {
+          "case": "s0_n1024",
+          "shear": 0.0,
+          "steps": 1024,
+          "command": [
+            "/home/cosmosapjw/Downloads/htt_r109_original_rec/rust/rec_microphysics/target/release/rec_owned_history",
+            "1600",
+            "900",
+            "1024",
+            "0.0"
+          ],
+          "path": "/home/cosmosapjw/Downloads/rec_r118c2f_owned_history/s0_n1024.tsv",
+          "sha256": "5850832e34bea2f58965918eb23313bd683c9287569ab62b2a76af5dd1a7dfff",
+          "x_HII_end": 0.012860272364253467,
+          "T_m_end": 2455.304474584091,
+          "max_residual": 2.0892207235057025e-13,
+          "max_heat_residual_j_per_H": 3.666325737912436e-32,
+          "T_min_end": 2455.6755,
+          "T_max_end": 2455.6755
+        },
+        {
+          "case": "s0.01_n128",
+          "shear": 0.01,
+          "steps": 128,
+          "command": [
+            "/home/cosmosapjw/Downloads/htt_r109_original_rec/rust/rec_microphysics/target/release/rec_owned_history",
+            "1600",
+            "900",
+            "128",
+            "0.01"
+          ],
+          "path": "/home/cosmosapjw/Downloads/rec_r118c2f_owned_history/s0.01_n128.tsv",
+          "sha256": "01f2bd18f1e0535d0fc0f53e4af2eb2df33e53a81eb45039dce8c8b383f71a0d",
+          "x_HII_end": 0.013164676500229344,
+          "T_m_end": 2455.3911870892302,
+          "max_residual": 1.232481998403312e-12,
+          "max_heat_residual_j_per_H": 2.2420711566793045e-31,
+          "T_min_end": 2445.9267150946384,
+          "T_max_end": 2473.504401635621
+        },
+        {
+          "case": "s0.01_n256",
+          "shear": 0.01,
+          "steps": 256,
+          "command": [
+            "/home/cosmosapjw/Downloads/htt_r109_original_rec/rust/rec_microphysics/target/release/rec_owned_history",
+            "1600",
+            "900",
+            "256",
+            "0.01"
+          ],
+          "path": "/home/cosmosapjw/Downloads/rec_r118c2f_owned_history/s0.01_n256.tsv",
+          "sha256": "8e1f5de29b50541f43bb2ac1084dda279b324bd99108b94afed2b0ca6be3b2f8",
+          "x_HII_end": 0.012996064586054179,
+          "T_m_end": 2455.3843186746817,
+          "max_residual": 5.233578327656918e-13,
+          "max_heat_residual_j_per_H": 9.24997915255279e-32,
+          "T_min_end": 2445.926715094641,
+          "T_max_end": 2473.5044016356155
+        },
+        {
+          "case": "s0.01_n512",
+          "shear": 0.01,
+          "steps": 512,
+          "command": [
+            "/home/cosmosapjw/Downloads/htt_r109_original_rec/rust/rec_microphysics/target/release/rec_owned_history",
+            "1600",
+            "900",
+            "512",
+            "0.01"
+          ],
+          "path": "/home/cosmosapjw/Downloads/rec_r118c2f_owned_history/s0.01_n512.tsv",
+          "sha256": "733a7967e9d4c878fbec1e3140510c1f4b49b761a37d5eed25cf2098db777500",
+          "x_HII_end": 0.01291208528952259,
+          "T_m_end": 2455.380841507318,
+          "max_residual": 4.138122136621014e-13,
+          "max_heat_residual_j_per_H": 7.421229677136735e-32,
+          "T_min_end": 2445.926715094641,
+          "T_max_end": 2473.5044016356155
+        },
+        {
+          "case": "s0.01_n1024",
+          "shear": 0.01,
+          "steps": 1024,
+          "command": [
+            "/home/cosmosapjw/Downloads/htt_r109_original_rec/rust/rec_microphysics/target/release/rec_owned_history",
+            "1600",
+            "900",
+            "1024",
+            "0.01"
+          ],
+          "path": "/home/cosmosapjw/Downloads/rec_r118c2f_owned_history/s0.01_n1024.tsv",
+          "sha256": "625227524e8b8bbf32cdbc9e41874d698420299afee31b2734bb87e6f6dc9228",
+          "x_HII_end": 0.012870180039306178,
+          "T_m_end": 2455.379092089499,
+          "max_residual": 2.2371221628653126e-13,
+          "max_heat_residual_j_per_H": 4.0424662977603056e-32,
+          "T_min_end": 2445.926715094641,
+          "T_max_end": 2473.5044016356155
+        },
+        {
+          "case": "s-0.01_n128",
+          "shear": -0.01,
+          "steps": 128,
+          "command": [
+            "/home/cosmosapjw/Downloads/htt_r109_original_rec/rust/rec_microphysics/target/release/rec_owned_history",
+            "1600",
+            "900",
+            "128",
+            "-0.01"
+          ],
+          "path": "/home/cosmosapjw/Downloads/rec_r118c2f_owned_history/s-0.01_n128.tsv",
+          "sha256": "ee628850c1a44e7ab6dbbc26fdf95c9979e38bc58f0d4b0a8afdb7613ca7d915",
+          "x_HII_end": 0.013165762492622135,
+          "T_m_end": 2455.4098577202594,
+          "max_residual": 1.45701159470768e-12,
+          "max_heat_residual_j_per_H": 2.665087374952655e-31,
+          "T_min_end": 2437.9347827233933,
+          "T_max_end": 2465.4624517729235
+        },
+        {
+          "case": "s-0.01_n256",
+          "shear": -0.01,
+          "steps": 256,
+          "command": [
+            "/home/cosmosapjw/Downloads/htt_r109_original_rec/rust/rec_microphysics/target/release/rec_owned_history",
+            "1600",
+            "900",
+            "256",
+            "-0.01"
+          ],
+          "path": "/home/cosmosapjw/Downloads/rec_r118c2f_owned_history/s-0.01_n256.tsv",
+          "sha256": "9a19e11d99b116766ffd9b21af36fd45ff673571c1b4c1bab4c51daa262c0ca4",
+          "x_HII_end": 0.01299714092459281,
+          "T_m_end": 2455.4029900725486,
+          "max_residual": 6.981329576938311e-13,
+          "max_heat_residual_j_per_H": 1.2771464003039956e-31,
+          "T_min_end": 2437.9347827233983,
+          "T_max_end": 2465.4624517729203
+        },
+        {
+          "case": "s-0.01_n512",
+          "shear": -0.01,
+          "steps": 512,
+          "command": [
+            "/home/cosmosapjw/Downloads/htt_r109_original_rec/rust/rec_microphysics/target/release/rec_owned_history",
+            "1600",
+            "900",
+            "512",
+            "-0.01"
+          ],
+          "path": "/home/cosmosapjw/Downloads/rec_r118c2f_owned_history/s-0.01_n512.tsv",
+          "sha256": "bfa3b9a662dd90d79b57e1ba6e425814b269e2d2830597162c6549544241d810",
+          "x_HII_end": 0.012913156772783041,
+          "T_m_end": 2455.3995132938057,
+          "max_residual": 3.688247623978569e-13,
+          "max_heat_residual_j_per_H": 6.49447933490325e-32,
+          "T_min_end": 2437.9347827233983,
+          "T_max_end": 2465.4624517729203
+        },
+        {
+          "case": "s-0.01_n1024",
+          "shear": -0.01,
+          "steps": 1024,
+          "command": [
+            "/home/cosmosapjw/Downloads/htt_r109_original_rec/rust/rec_microphysics/target/release/rec_owned_history",
+            "1600",
+            "900",
+            "1024",
+            "-0.01"
+          ],
+          "path": "/home/cosmosapjw/Downloads/rec_r118c2f_owned_history/s-0.01_n1024.tsv",
+          "sha256": "91059df55b91f8ad6d205c895464d134704e7d9a5cf75bbc7340c78bd51ca272",
+          "x_HII_end": 0.012871249087977654,
+          "T_m_end": 2455.3977640716053,
+          "max_residual": 1.7827688110483297e-13,
+          "max_heat_residual_j_per_H": 3.183176400826161e-32,
+          "T_min_end": 2437.9347827233983,
+          "T_max_end": 2465.4624517729203
+        }
+      ],
+      "rec_rust_tests": 145,
+      "python_tests": 25,
+      "provenance": {
+        "rec_parent": "f67be237187372f4d89fe8c021819a38261b14eb",
+        "bass_parent": "8a92aaa4974d18c0277634b1a08e20022c5a4dbd",
+        "htt_parent": "fbbc144a06b42b28df38e7243b9b7497e6bb548d",
+        "sources": {
+          "/home/cosmosapjw/Downloads/htt_r109_original_rec/archive/inputs/original_hyrec_oct2012/HyRec_Oct2012.zip": "48cd597519606cdafd0ee6405b781d28467cd323278d16596055a8d0577a1d27",
+          "/home/cosmosapjw/Downloads/htt_r109_original_rec/src/full_bianchi_hyrec/trajectory/primitive_rates.py": "abcfa386e1579a95895397e78b2dc4df769d599022089f3864b6306e59135fc9",
+          "/home/cosmosapjw/Downloads/htt_r109_original_rec/src/full_bianchi_hyrec/trajectory/hmla_flrw.py": "6ef3f63876e0434d6d0ac7d8c16dd0a7be1970688e9e17c689abb0e3aea693a1",
+          "/home/cosmosapjw/Downloads/htt_r109_original_rec/src/full_bianchi_hyrec/trajectory/primordial_2012_helium.py": "ce41e63a508871b47fee0386b8b9ae0e246948a454c6d5ad74abf46293b9d0a7",
+          "/home/cosmosapjw/Downloads/htt_r109_original_rec/src/full_bianchi_hyrec/recoil/pair_cell_conductance.py": "d54d00d78aae8e17868a66819390f3e17c5b8fc26b98472ab2bffa755e1f0ee0",
+          "/home/cosmosapjw/Downloads/htt_r109_original_rec/src/full_bianchi_hyrec/recoil/same_cell_regular.py": "939d4a4b9340afd93d79d3cb6ffe3d20173abcc487a200bbc14a54e63679f4bb",
+          "/home/cosmosapjw/Downloads/htt_r109_original_rec/src/full_bianchi_hyrec/recoil/exterior_interface.py": "aa9dee1a362451212d067386d7a5e6d3da597277cd420024003466b463a44dcd",
+          "/home/cosmosapjw/Downloads/htt_r109_original_rec/src/full_bianchi_hyrec/recoil/scalar_com_khw.py": "1c924f8d11485a4c3d6278f2196d0ebcc8ddd53b5de29d80d23a3e4a330b0756",
+          "/home/cosmosapjw/Downloads/htt_r109_original_rec/src/full_bianchi_hyrec/recoil/far_exterior.py": "b0cbf2e30ebe107f037d45935635c71af71bfeee6130333c0ddfa6e5987749b8"
+        },
+        "python": "3.12.3",
+        "numpy": "2.4.2",
+        "scipy": "1.17.0",
+        "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+        "native_subagent": "NOT_RUN_no_host_dispatch",
+        "live_binary_sha256": "71798cc6139060fcce0ab95dcbfac5ef9456957aa4d5ca3af18049fe0af99210",
+        "history_binary_sha256": "0c2ef261ae4378c8bc2283feb68b03068e5ad464605f30d897bab6908d8ea767",
+        "raw_root": "/home/cosmosapjw/Downloads"
+      },
+      "next_id": "R118-C2G-REC-OWNED-ANGULAR-LINE-AND-ATOMIC-OWNERSHIP-01",
+      "receipt_sha256": {
+        "ANCHOR_PARITY.json": "8606d09f64c79114cb70065e7c8b9e26abb67e3a3e1d25c09f297e751dd1d4fb",
+        "COMPILE_RESULTS.json": "deae8149de95ee62c6709fb5381937d774a0d560a53e06b1b63263a42a598fbb",
+        "ISOLATION.json": "979c66ef91d254032d489802ca7ecf30d2908528961cb0a8aa90dfcc90528986",
+        "LIVE_RESULTS.json": "c9483cc051c0d0c8a81b2f9889dc0e66a3317b4d82a8574589083336ffe3c7d2",
+        "OWNED_HISTORY.json": "a18078b78301a5d41234a8231c0af4634ed07765c90d6f14e043cc85346b0790",
+        "PLAN.md": "971d854e8f55371fca5be462052423564d7db10a4b4d0962e6f678d6cfa072ff",
+        "README.md": "1b2273269d8c10e043c36385dc63193c527a2ddf9e5497aad8671a4c21dbfb3f",
+        "SOURCE_RECEIPT.json": "4d009390266aa5b60d64a93e12f7219da7f07297e7c58ff1f9f967a2b07ec656",
+        "STATES.json": "53b95cdbfb773ae12cfeef2293b32ec8e3ac78800844a721fcbea9bbb4f114c0",
+        "anchor.npz": "94b459f64c3ccc0d85a575798d4d4583d97bd4edb9caa1c2aed9cd32d8aee401",
+        "compile_states.py": "f6eb3deb78b8f7d8363251b2bd9cc48871cea6e1a5bf13ec184eb4c1e5b76f2f",
+        "isolated_run.py": "d4a86fbe7d13237efdf38f2dd8464e07515e9d60c4e2231fd69411765a72c4e7",
+        "logs/build.log.gz": "bc16604f29cb54a8882d028d39b791b50a18824bae7958128f4cc679647c2caa",
+        "logs/build_final.log.gz": "d6a449d7056bcc3daffcdce1a665bcc92471b139126c3120dc81db562b418d9f",
+        "logs/compile_final.log.gz": "9df5585f31e5090c806123e1f7ae80787f60e5df4cdb81863008033ea4ae677b",
+        "logs/compile_trial.log.gz": "5284c7af234f9a3ee81ec0be67f9b6fff15ab976d0fcc0922f8baf8c82afcc73",
+        "logs/isolated.log.gz": "ab0eb4b8bf605ee5fe538e2f6beee93228705cc1541bad241822d03e38a48c56",
+        "logs/live_trial.log.gz": "df50b20bae41a9171c7fd6d8984f1dd0f1bda134e261dd56b761e198f0f92f5d",
+        "logs/owned_history.log.gz": "8a02c851eaa493d862aecac9de641c0ac99c798239dc1524464c7c40188c5c35",
+        "logs/py_green.log.gz": "07002c3b44d3a519d08c8d943def13e95ee9ca361ffbe9b4b8175e3e14089aea",
+        "logs/py_red.log.gz": "c3624a9591211cbc641b2af3629acc59d62cbd5de3f82a24aedfa759ad8ff598",
+        "logs/py_regression.log.gz": "e1ef2d083694b495c7c7669547fb06f653192da4b67b1312470f017cf29e7815",
+        "logs/rec_all.log.gz": "a1ae1e070978bc5d720191d4c7801b819ae559a511483e078f29cd0a69b3356a",
+        "logs/rec_examples.log.gz": "4651525d68553b03c54d377e91a9d206f42eae01447f10959c9e3b2d283a698c",
+        "logs/rust_green.log.gz": "37cde02facc1a97f57e577e6a6d51942188cc601cf2071130fe00417de71a896",
+        "logs/rust_red.log.gz": "d13c51bc8e9363973eed0c510628eb3808268940458daf9079d9ebc42f2842c1",
+        "logs/unanchored_green.log.gz": "b83401d236a94b1c2c7e619e03fd60eec193d762d470073230ce1f3a363aaa66",
+        "logs/unanchored_red.log.gz": "75c7f8c25a862349b4e772c05a4d9d2166cd9c7acade29d951198308e723b618",
+        "owned_history_audit.py": "02815fa1e224ce21c62e57e84e36d3172a42edde8156c124512d8b5dd005c16f",
+        "run_live.py": "75129ba5fe15e8143cd035834775356c710c671c6e244c10919ce0218d07be8f",
+        "verify_results.py": "2e8e52c1cb312879f6270001f6a297bdb42faa7f1c39350313cd1d180cbc0dc6",
+        "z1100.npz": "87affc0e5fc7b60c23911fb7e96af5008d48c6df90dad4005b275b92fa3789f6",
+        "z1100_HISTORY.json.gz": "1411ab658231aed7b2839987a6d58065e93e034c9c7b96abf0f28dddce6278e1",
+        "z1300.npz": "774aac1249de8aff304935dd0e2a370a436b9c72551c5105888b77cfcbe5198d",
+        "z1300_HISTORY.json.gz": "7efca8047b312a4f27142fab73921fe3fc99acb1e185e8f6c9139f3d29d8336d",
+        "z900.npz": "cc08c7e74e5725daa25f01e997c3d2886d860a099a9a986353849e0d01e67b45",
+        "z900_HISTORY.json.gz": "c2fedd6388fcb5a4192825d7897dabb1326a5aca5e60de4beaa94122f7229eee"
+      }
+    }
+  },
+  "bass": {
+    "commit": "101b4d5c648a93bd869393beff61102e264f6c2e",
+    "tree": "3e7155643f480525687d643b3564b71faeff4bae",
+    "receipt_sha256": "d7670395bf37fa876e000b633aa86c83c7dee9a47510f03cc21c957480262aa8",
+    "acceptance": {
+      "research_id": "R118-C2F-SOURCE-STATE-CALIBRATED-LIVE-RESONANCE-EVOLUTION-01",
+      "status": "PASS_REC_PIN_AND_SHARED_DUAL_TRANSPORT",
+      "rec_commit": "7fe5017c195fbf4ff4619c5c69b6eae364fe728b",
+      "rec_tree": "ce87a048d929d2cb168ea25e4102ae6a3b420226",
+      "rec_acceptance_sha256": "228772c8664320999f24af194e809067544271486f0389e7266d335c73b5a5e3",
+      "bass_parent": "8a92aaa4974d18c0277634b1a08e20022c5a4dbd",
+      "tests": {
+        "pin_red": {
+          "sha256": "cedf1992555017200307fc0f4195d55ab2fdd9075b171b87c581ebb6c9fc6990",
+          "passed": 188,
+          "failed": 1
+        },
+        "tests": {
+          "sha256": "02d684d92cef0c4bf332349e94af975108abe08614e5312f442ca0c31ac5348f",
+          "passed": 274,
+          "failed": 0
+        },
+        "examples": {
+          "sha256": "e652c0ff6248588433ccba5cdfe5a8377d2ad458d11895661313dca7d0661812",
+          "passed": 3,
+          "failed": 0
+        }
+      },
+      "science_promotion": false,
+      "production_default_changed": false,
+      "full_line_feedback": "NOT_IMPLEMENTED"
+    }
+  },
+  "rei_changed": false,
+  "r78_changed": false,
+  "science_promotion": false,
+  "next_id": "R118-C2G-REC-OWNED-ANGULAR-LINE-AND-ATOMIC-OWNERSHIP-01"
+}
