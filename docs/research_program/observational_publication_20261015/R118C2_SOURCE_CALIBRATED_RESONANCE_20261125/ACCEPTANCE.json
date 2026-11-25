@@ -1,0 +1,364 @@
+{
+  "schema": "bass.r118c2.acceptance/1",
+  "research_id": "R118-C2-SOURCE-CALIBRATED-RESONANCE-KERNEL-01",
+  "status": "IMPLEMENTATION_VERIFIED_SCOPED",
+  "scope": "Frozen local scalar source-normalized FP patch; pure scattering branching supplied; nonseparable physical REC full kernel not implemented in BASS; no feedback",
+  "source": {
+    "bass_parent": "ff794d6fd3cf4b101a269ba29980b2c6782ddefa",
+    "rec_commit": "f67be237187372f4d89fe8c021819a38261b14eb",
+    "htt_parent": "69d13c89ea742cc3e97e720f7838bd2c15edd1c6",
+    "binary_sha256": "8668299a2673b238bafebe1cc2d0ea441f1f7c754b02856fdc06cfd2d8ab1df8",
+    "rec_source_sha256": {
+      "/home/cosmosapjw/Downloads/htt_r109_original_rec/src/full_bianchi_hyrec/recoil/event_weight.py": "e1d314ca6887b7cf5689e1386a74ee7fd351b6b81af132b7b5d40b22f1899b57",
+      "/home/cosmosapjw/Downloads/htt_r109_original_rec/src/full_bianchi_hyrec/recoil/thermal_deposition.py": "17f8644946e29c077eb326911181648fd28b7aee7a21e0c76d743a9135edb272",
+      "/home/cosmosapjw/Downloads/htt_r109_original_rec/src/full_bianchi_hyrec/recoil/full_harmonic_deposition.py": "dd72feb31ee6bde3e5d881149f62a28716be3ddec1e2d7dba0e658ad07f8c6a1",
+      "/home/cosmosapjw/Downloads/htt_r109_original_rec/src/full_bianchi_hyrec/recoil/nonlinear_bose_runtime.py": "5ec3472eb075a7d050341b42837319e4397fb4175480b23e1e8ef9924385fd58",
+      "/home/cosmosapjw/Downloads/htt_r109_original_rec/src/full_bianchi_hyrec/trajectory/primordial_2012_helium.py": "ce41e63a508871b47fee0386b8b9ae0e246948a454c6d5ad74abf46293b9d0a7",
+      "/home/cosmosapjw/Downloads/htt_r109_original_rec/rust/rec_microphysics/src/species_thermal.rs": "dfbf97ad7e86fddcd318c269b10a7c7596ce274ae41d7da627b7b9a5a5468ebb",
+      "/home/cosmosapjw/Downloads/htt_r109_original_rec/data/full_hummer_reference.npz": "a70565eadbdb1adebbe4ffa46ab27715301b5c1e3905cedbe5f0f0d76fce1102",
+      "/home/cosmosapjw/Downloads/htt_r109_original_rec/data/full_scalar_com_khw_v050.npz": "14f0810adf35221eca4861481557baa55da9ada85c3dfc503262ef356e2a615d",
+      "/home/cosmosapjw/Downloads/htt_r109_original_rec/data/pr02_nonlinear_bose_runtime_v049.npz": "4c055786b684f400ff9cd636ac5baa238ca2bcf80a786ca823cf17386a1e7827"
+    },
+    "input_sha256": {
+      "/home/cosmosapjw/Downloads/bass_r117_final/helium.tsv": "a36a9b6d5d2bd33cc6b6e3c84fb0bdb866736ba7a9282b863cdc2aebdaba4d8c",
+      "/home/cosmosapjw/Downloads/bass_r117_final/h_window.tsv": "f95cdfbf4f38f91e9cc8b0026864b98ad2ff7f965f444b661a64d508224b3adb"
+    },
+    "parent_receipt_sha256": "25a2b0d3f13e48a2e4ccb737cc13688366b795fda1d124674a3c3fd514b7d976",
+    "python": "3.12.3",
+    "numpy": "2.4.2",
+    "scipy": "1.17.0",
+    "mpmath": "1.3.0",
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+    "native_subagent": "NOT_RUN_no_host_delegation_tool"
+  },
+  "cases": 88,
+  "time_steps": 8410,
+  "tests": {
+    "rust": 258,
+    "examples": 3,
+    "new": 6
+  },
+  "legacy_byte_equal": 44,
+  "metrics_max": {
+    "number_defect": 2.7977620220553945e-14,
+    "energy_balance_defect": 2.7882430873903832e-14,
+    "max_step_number_defect": 1.993158484487207e-15,
+    "max_step_continuity_l1": 4.673524618838659e-15,
+    "max_step_energy_defect": 1.1063943365924635e-14,
+    "max_nonlinear_scaled_residual": 3.407086814659812e-16,
+    "max_nonlinear_iterations": 10.0,
+    "equilibrium_relative_l1": 2.9907413638314587e-15
+  },
+  "profile_max": {
+    "voigt_relative": 1.099120794378905e-13,
+    "dipole_relative": 7.702727344849336e-13,
+    "volume_relative": 6.661338147750939e-16,
+    "up_relative": 1.6613377340490842e-12,
+    "down_relative": 1.6613377340490842e-12
+  },
+  "dense_be_max": 1.4680152479399353e-14,
+  "stiff": [
+    {
+      "case": "bench_voigt_stiff",
+      "high_precision_relative_l1": 1.9168694409543718e-16,
+      "max_dimensionless_rate": 27682553059.74072,
+      "mp_decimal_digits": 70
+    },
+    {
+      "case": "bench_dipole_stiff",
+      "high_precision_relative_l1": 2.7842311789427754e-16,
+      "max_dimensionless_rate": 18219575209.42519,
+      "mp_decimal_digits": 70
+    }
+  ],
+  "bose_root_max": 4.554709146067712e-15,
+  "bose_stiff": {
+    "case": "bose_high_stiff",
+    "relative_l1_to_fixed_number_equilibrium": 0.00024250553235450874
+  },
+  "hummer": {
+    "source_rate_scale_s": 1.430465268903049,
+    "new_rate_scale_s": 1.4304652717965285,
+    "rate_relative_gap": 2.0227541863704346e-09,
+    "cell_voigt_relative_gap": 6.661338147750939e-16,
+    "central_cell": [
+      -0.25,
+      0.25
+    ],
+    "retained_fraction": 0.999999950226293,
+    "binned_second_moment": 0.32913779221546036,
+    "voigt_FPA_second_moment": 1.0,
+    "dipole_FPA_cell_averaged_second_moment": 0.32932176181185235,
+    "central_angular_moments": [
+      1.0,
+      3.853021661883836e-08,
+      0.09999998210508973,
+      1.0153401759708758e-08,
+      -3.1432140733715196e-09
+    ],
+    "conditional_l2_factorization_l1": 0.12038215893859801,
+    "conditional_l1_nonzero_l1": 0.0005850329054433966,
+    "source_sha256": "a70565eadbdb1adebbe4ffa46ab27715301b5c1e3905cedbe5f0f0d76fce1102"
+  },
+  "mesh": [
+    {
+      "case": "bench_voigt_uniform_wide128",
+      "mean": 3.0135609833252555,
+      "variance": 0.34833866833914345,
+      "mean_abs_error": 1.5409935752902735,
+      "variance_abs_error": 0.9325783005343518,
+      "central_dx": 3.125
+    },
+    {
+      "case": "bench_voigt_uniform_wide256",
+      "mean": 0.7299580109088399,
+      "variance": 1.4621718433762965,
+      "mean_abs_error": 0.742609397126142,
+      "variance_abs_error": 0.1812548745028013,
+      "central_dx": 1.5625
+    },
+    {
+      "case": "bench_voigt_uniform_wide512",
+      "mean": 1.483644047390804,
+      "variance": 1.3799421483850967,
+      "mean_abs_error": 0.011076639355821927,
+      "variance_abs_error": 0.0990251795116015,
+      "central_dx": 0.78125
+    },
+    {
+      "case": "bench_voigt_stretched_wide128",
+      "mean": 1.4744240068938388,
+      "variance": 1.2774079854885807,
+      "mean_abs_error": 0.001856598858856806,
+      "variance_abs_error": 0.0035089833849144547,
+      "central_dx": 0.09375353541818268
+    },
+    {
+      "case": "bench_voigt_stretched_wide256",
+      "mean": 1.4730264002110385,
+      "variance": 1.2800477031928037,
+      "mean_abs_error": 0.0004589921760564941,
+      "variance_abs_error": 0.0008692656806914556,
+      "central_dx": 0.046825460509583465
+    },
+    {
+      "case": "bench_voigt_stretched_wide512",
+      "mean": 1.4726767300395167,
+      "variance": 1.280709785903705,
+      "mean_abs_error": 0.00010932200453472873,
+      "variance_abs_error": 0.00020718296979005402,
+      "central_dx": 0.023406319488864458
+    },
+    {
+      "case": "bench_dipole_uniform_wide128",
+      "mean": 2.7329430842478866,
+      "variance": 1.2194185330073954,
+      "mean_abs_error": 1.4920447797733267,
+      "variance_abs_error": 0.3168492796156188,
+      "central_dx": 3.125
+    },
+    {
+      "case": "bench_dipole_uniform_wide256",
+      "mean": 0.7077138413252428,
+      "variance": 1.727561756302292,
+      "mean_abs_error": 0.533184463149317,
+      "variance_abs_error": 0.19129394367927777,
+      "central_dx": 1.5625
+    },
+    {
+      "case": "bench_dipole_uniform_wide512",
+      "mean": 1.268981428948075,
+      "variance": 1.5270333308261133,
+      "mean_abs_error": 0.02808312447351513,
+      "variance_abs_error": 0.009234481796901006,
+      "central_dx": 0.78125
+    },
+    {
+      "case": "bench_dipole_stretched_wide128",
+      "mean": 1.2420053521865633,
+      "variance": 1.5329799596189337,
+      "mean_abs_error": 0.0011070477120034283,
+      "variance_abs_error": 0.003287853004080521,
+      "central_dx": 0.09375353541818268
+    },
+    {
+      "case": "bench_dipole_stretched_wide256",
+      "mean": 1.2411689344250318,
+      "variance": 1.5354469944341642,
+      "mean_abs_error": 0.0002706299504720011,
+      "variance_abs_error": 0.0008208181888500476,
+      "central_dx": 0.046825460509583465
+    },
+    {
+      "case": "bench_dipole_stretched_wide512",
+      "mean": 1.240962656897266,
+      "variance": 1.5360724443660438,
+      "mean_abs_error": 6.435242270619312e-05,
+      "variance_abs_error": 0.00019536825697041849,
+      "central_dx": 0.023406319488864458
+    }
+  ],
+  "physical_source_states": [
+    {
+      "case": "physical_H_2800_dipole",
+      "metrics": {
+        "T_m_k": 7634.123263946744,
+        "n_ground_m3": 11.075562929820324,
+        "H_s": 2.4504146140245676e-13,
+        "doppler_fraction": 3.74367725321417e-05,
+        "voigt_a": 0.0005400175110979019,
+        "peak_scattering_s": 2.2399825603782862e-08,
+        "peak_scattering_per_eta": 91412.38986896722,
+        "static_sobolev_tau_diagnostic": 6.0693612718030945
+      }
+    },
+    {
+      "case": "physical_H_2000_dipole",
+      "metrics": {
+        "T_m_k": 5453.722608263124,
+        "n_ground_m3": 9097.180420889918,
+        "H_s": 1.3812436479089578e-13,
+        "doppler_fraction": 3.164210293565733e-05,
+        "voigt_a": 0.0006389117931717356,
+        "peak_scattering_s": 2.1765580426480136e-05,
+        "peak_scattering_per_eta": 157579587.49298644,
+        "static_sobolev_tau_diagnostic": 8844.092337177635
+      }
+    },
+    {
+      "case": "physical_H_1400_dipole",
+      "metrics": {
+        "T_m_k": 3818.418955145048,
+        "n_ground_m3": 102860898.18199083,
+        "H_s": 7.631417511730938e-14,
+        "doppler_fraction": 2.64765019071305e-05,
+        "voigt_a": 0.0007635643408354056,
+        "peak_scattering_s": 0.2940745443639218,
+        "peak_scattering_per_eta": 3853472096263.5493,
+        "static_sobolev_tau_diagnostic": 180993030.57424024
+      }
+    },
+    {
+      "case": "physical_H_1100_dipole",
+      "metrics": {
+        "T_m_k": 3000.743674863379,
+        "n_ground_m3": 216465689.02355766,
+        "H_s": 5.1486025413036525e-14,
+        "doppler_fraction": 2.3471090409395857e-05,
+        "voigt_a": 0.0008613367497511945,
+        "peak_scattering_s": 0.6980324933067072,
+        "peak_scattering_per_eta": 13557707896596.77,
+        "static_sobolev_tau_diagnostic": 564568256.0129375
+      }
+    },
+    {
+      "case": "physical_H_900_dipole",
+      "metrics": {
+        "T_m_k": 2455.235522127419,
+        "n_ground_m3": 136998024.9468999,
+        "H_s": 3.7263113789406505e-14,
+        "doppler_fraction": 2.123075291753646e-05,
+        "voigt_a": 0.0009522277803745132,
+        "peak_scattering_s": 0.48834217445014044,
+        "peak_scattering_per_eta": 13105243357010.352,
+        "static_sobolev_tau_diagnostic": 493687257.03303987
+      }
+    },
+    {
+      "case": "physical_He_2800_dipole",
+      "metrics": {
+        "T_m_k": 7634.123263946744,
+        "n_ground_m3": 3699955.237493403,
+        "H_s": 2.4504146140245676e-13,
+        "doppler_fraction": 1.8785367651829273e-05,
+        "voigt_a": 0.0014853136770206837,
+        "peak_scattering_s": 0.0047527721697139935,
+        "peak_scattering_per_eta": 19395787727.155396,
+        "static_sobolev_tau_diagnostic": 646888.7317297877
+      }
+    },
+    {
+      "case": "physical_He_2400_dipole",
+      "metrics": {
+        "T_m_k": 6543.923481729325,
+        "n_ground_m3": 31754047.71802423,
+        "H_s": 1.881205478156837e-13,
+        "doppler_fraction": 1.7392388241458624e-05,
+        "voigt_a": 0.0016042744167021833,
+        "peak_scattering_s": 0.044050603084890116,
+        "peak_scattering_per_eta": 234161571377.3591,
+        "static_sobolev_tau_diagnostic": 7231619.187788049
+      }
+    },
+    {
+      "case": "physical_He_2000_dipole",
+      "metrics": {
+        "T_m_k": 5453.722608263124,
+        "n_ground_m3": 65266770.39473537,
+        "H_s": 1.3812436479089578e-13,
+        "doppler_fraction": 1.5877665106227157e-05,
+        "voigt_a": 0.0017573215781066468,
+        "peak_scattering_s": 0.0991613779054972,
+        "peak_scattering_per_eta": 717913729815.9958,
+        "static_sobolev_tau_diagnostic": 20243915.65939753
+      }
+    },
+    {
+      "case": "physical_He_1700_dipole",
+      "metrics": {
+        "T_m_k": 4636.071262017869,
+        "n_ground_m3": 76294772.59027596,
+        "H_s": 1.0522113660900907e-13,
+        "doppler_fraction": 1.463912660099504e-05,
+        "voigt_a": 0.0019059991939155306,
+        "peak_scattering_s": 0.12570249860000435,
+        "peak_scattering_per_eta": 1194650643882.5303,
+        "static_sobolev_tau_diagnostic": 31064508.325124897
+      }
+    }
+  ],
+  "turning_boundary_escape": {
+    "he_turn_dipole_12": 0.13137101998213366,
+    "he_turn_dipole_40": 0.05643197228165616,
+    "he_turn_dipole_100": 0.03720847511108771,
+    "he_turn_refine_128": 0.07402199908478728,
+    "he_turn_refine_256": 0.056948945654899386,
+    "he_turn_refine_512": 0.04717491643477633
+  },
+  "remaining": [
+    "actual nonseparable REC scalar angular-frequency bridge with source-owned core/exterior measure",
+    "source-owned scattering branching/destruction and true emission, continuum and population feedback",
+    "physical global frequency boundary coupling and converged high-order transport",
+    "polarized kernel and coupled thermal/momentum exchange"
+  ],
+  "science_promotion": false,
+  "next_id": "R118-C2B-REC-NATIVE-ANGULAR-REDISTRIBUTION-BRIDGE-01",
+  "receipt_sha256": {
+    "ORACLE.json": "836c9f12e13c87a3f5f047a359fec074cb454accdef290e3eff6e525f5920182",
+    "REGRESSION.json": "2de8957a8daf002011dddabcb96fe61a38d6a2c82c54cd7cd778bd6b0445f8c0",
+    "RESULTS.json": "384dd93a8bada078feffc26aab99886852a8b3ea639d2f881dceb02ed94e18d1",
+    "SOURCE_RECEIPT.json": "3c3f89a6c0cc5ffdd166f49770528f9d412c6d3b16c12a39e1b650376d7476fb",
+    "logs/all.log.gz": "b3ac38786332e943f77f033501d5f82f94e3c37498396f12f5d76843c7a386f8",
+    "logs/build_final2.log.gz": "cd403ffc0b5bd8dad3b11c42cbea717719654f51f058f220087fd7f64b08229b",
+    "logs/drift_green.log.gz": "a2979bac38c3b493737cff5f73349b43d25b4566c2dc3553763c50d72215fed3",
+    "logs/drift_red.log.gz": "fdd9ac2d6495101fc2b5331da9d432c097b21995793add33f3c22a3e77104955",
+    "logs/examples.log.gz": "3b71048e28262ac9edacb818c3930278517d183f34213e6c55126245845def5b",
+    "logs/green.log.gz": "e1f577f014fed15740ef4287ef8ba90740d6c130bee61d3dfb605b44bb34819f",
+    "logs/legacy_build.log.gz": "3c8df0d9af1383eba81bfeaec5dffc89f8587fa88c278950901fc2c72dbc0c9f",
+    "logs/moment_green.log.gz": "4e79acddabdf7cf91bf673082fdc59a3db1f63b617d48f9e20791bc90f173b39",
+    "logs/moment_red.log.gz": "51b4101ae7cf0fc62c4aaefa23dc02c53a6d1c8e2906a0f9544762857e3eca4b",
+    "logs/oracle.log.gz": "dc0d80e5dd091a9e1d78e8305024b959f64cb336192a3c2d39a37c3b29098000",
+    "logs/oracle_red.log.gz": "2accbc57031770904558440a1c696080f231c452dbbe988ffd7852548797b712",
+    "logs/red.log.gz": "1171790d4a6ff99dedb4087d1255b451c932226698cc17d5951f4277652a7dc5",
+    "logs/sweep_final.log.gz": "f5e0e0c0629f6ee6b1e73f0359825dd8cc326caddabb088af15ff541fe6e36a1",
+    "INITIAL_TRIAL.json.gz": "acd97bb0f8885120e592db6cd196d8fdd187108faa44f8f646caa38e5059a1c0"
+  },
+  "bass_commit": "16d8633aeb50ccc264160f0a249f3ebc3a3fcafb",
+  "bass_tree": "7f7b97403f3be48a02dc5f4560de95a4fc251f41",
+  "bass_acceptance_sha256": "d228e6f568981d2278dbd745910d4d7ff87f4dd7781c0c2f900ad40a4933f73e",
+  "htt_parent": "69d13c89ea742cc3e97e720f7838bd2c15edd1c6",
+  "rec_pin": "f67be237187372f4d89fe8c021819a38261b14eb",
+  "rei_changed": false,
+  "rec_changed": false,
+  "r78_changed": false
+}
