@@ -1,0 +1,108 @@
+{
+  "research_id": "R116-REC-SPECIES-THERMAL-01",
+  "parent": "R116-A",
+  "status": "IMPLEMENTATION_VERIFIED_SCOPED",
+  "scope": "T1 source-owned matched BE tracer thermochemistry + lagged Thomson opacity; one helium owner phase",
+  "rec": {
+    "commit": "cb1685271e32223400df0817895952895087ef31",
+    "tree": "57a04d9e396e466eda0f417a5116363ec7bcf473",
+    "tests": 137,
+    "source_rows": 105859,
+    "c_hei_oracle_cases": 27,
+    "standalone_cases": 21,
+    "receipts": {
+      "REFERENCE_RECEIPT.json": "2c41dec626a76ec32443099c26b655dc85808f5a2ab3201b4bdbb3829c0e88fb",
+      "SLICE_RECEIPT.json": "ea3f48d014d2393cbf1a45e70f6d527cb60a5b7687fec01ea08c8a432215a8fa",
+      "RESULTS.json": "a313ebde67ba3132d289d483b4b439b1c466890f6c46ce6a8839c3342438fe76"
+    }
+  },
+  "bass": {
+    "commit": "4e30aeb722a132f87ddfbc44d0f22247d4c6f47e",
+    "tree": "8a3dbc1a1e73df209ba44172ba811747365ee27d",
+    "tests": 228,
+    "example_tests": 3,
+    "cli_cases": 12,
+    "binary_sha256": "dd9b208b370546e0d9cbf244469bc65d89c4a9dbfacd907e8943516493c7b493",
+    "receipt_sha256": "550b5cc56f0360d46417996610f3c289b68d143013000afff0dec344fd043aec",
+    "metrics_max": {
+      "max_charge": 1.1102230246251565e-16,
+      "max_h_nuclei": 0.0,
+      "max_he_nuclei": 0.0,
+      "max_w_closure": 1.8189894035458565e-12,
+      "max_continuity": 3.400058012914542e-16,
+      "max_thermal_defect_j_per_h": 6.858910384099556e-31,
+      "max_scaled_residual": 1.8552083655231212e-06,
+      "max_gauss": 8.152232255920211e-08,
+      "max_codazzi": 1.1857924974498212e-15,
+      "max_jacobi": 2.5056523962583994e-30,
+      "max_collision_energy_defect": 2.335525202176738e-14
+    },
+    "comparisons": {
+      "he_overlap_i__he_overlap_i_rays": {
+        "xe": 1.1102230246251565e-16,
+        "tm_k": 1.8189894035458565e-12,
+        "x_heii": 2.1514636860259229e-19,
+        "delta_xe": 1.1102230246251565e-16,
+        "delta_tm_k": 1.8189894035458565e-12
+      },
+      "he_overlap_i__he_overlap_i_continuum": {
+        "xe": 1.887379141862766e-15,
+        "tm_k": 1.2732925824820995e-10,
+        "x_heii": 4.326644294574966e-18,
+        "delta_xe": 1.887379141862766e-15,
+        "delta_tm_k": 1.2732925824820995e-10
+      },
+      "h_i_64__h_i": {
+        "xe": 2.3102497692661927e-10,
+        "tm_k": 1.1752035788958892e-08,
+        "x_heii": 0.0,
+        "delta_xe": 2.3102497692661927e-10,
+        "delta_tm_k": 1.1752035788958892e-08
+      },
+      "h_i__h_i_256": {
+        "xe": 5.4474869060072706e-11,
+        "tm_k": 2.863998815882951e-09,
+        "x_heii": 0.0,
+        "delta_xe": 5.4474869060072706e-11,
+        "delta_tm_k": 2.863998815882951e-09
+      }
+    },
+    "legacy": {
+      "grid_I": {
+        "returncode": 0,
+        "stderr": "",
+        "byte_equal": {
+          "modes.tsv": true,
+          "cl.tsv": true,
+          "los_modes.tsv": true,
+          "los_cl.tsv": true,
+          "diagnostics.tsv": true,
+          "lie_constants.tsv": true
+        }
+      },
+      "continuum_I": {
+        "returncode": 0,
+        "stderr": "",
+        "byte_equal": {
+          "modes.tsv": true,
+          "cl.tsv": true,
+          "los_modes.tsv": true,
+          "los_cl.tsv": true,
+          "diagnostics.tsv": true,
+          "lie_constants.tsv": true
+        }
+      }
+    }
+  },
+  "rei_changed": false,
+  "science_dag_changed": false,
+  "independent_native_agent_review": "NOT_RUN",
+  "next": "R117-REC-BASS-COUPLED-STIFF-SDIRK2-01",
+  "open": [
+    "T2 fully stage-coupled second-order chemistry and opacity",
+    "T1 kinetic HeIII rate authority and phase continuity",
+    "T4 spectral atomic transfer and active thermal/binding energy feedback",
+    "T3 acceleration and long/high-l strong-tilt tests",
+    "T5 HTT native dispatch"
+  ]
+}
