@@ -1,0 +1,256 @@
+{
+  "research_id": "R118-NATIVE-COLD-SPECTRAL-MOMENTS-01",
+  "status": "IMPLEMENTATION_VERIFIED_SCOPED",
+  "bass_commit": "9eeedf1a3cfbe1d80a68de77af4339db828ff72f",
+  "bass_tree": "7749e6145347799085ada9dd26c1b82b9eb6b6aa",
+  "bass_acceptance_sha256": "01514d772b43f444ff14fe68e7009472ebf7e08f6991974eb568b1e531f468ca",
+  "rec_changed": false,
+  "rei_changed": false,
+  "schema": "bass.r118.acceptance/1",
+  "baseline": "5622db58771dbb2dff1e89ccdf1b547fa1d3e27a",
+  "rec_pin": "f67be237187372f4d89fe8c021819a38261b14eb",
+  "binary_sha256": "607e916ec8a9a13a72832f2970a4742df3f447a407b23277ad57a9f34ddf9d49",
+  "scope": "fixed accepted history cold spectral moments; not new feedback or grid-free spectral collision",
+  "native_subagent": "NOT_RUN",
+  "tests": {
+    "all_final": {
+      "passed": 237,
+      "sha256": "29b7904bce58798f6fbf9470d1677595d1b69be9e55c8a3ac80ae5c847db596b"
+    },
+    "examples_final": {
+      "passed": 3,
+      "sha256": "88991b8310dd616f079dd3a367361e7fa3efaba365ddc69ad18e6c311672c29b"
+    }
+  },
+  "accepted_cases": 41,
+  "realizability_warnings": 6,
+  "legacy_byte_equal_files": 318,
+  "accepted_events": 8464,
+  "metrics_max": {
+    "number_collision_defect": 1.937395176221299e-15,
+    "rest_energy_collision_defect": 1.8424763534372016e-15,
+    "number_continuity_defect": 4.019096650014045e-10,
+    "class_a_number_drift": 6.328271240363392e-14,
+    "bolometric_integral_gap": 1.8534531687208755e-09,
+    "bolometric_screen_gap": 1.5170225681882615e-09,
+    "observer_invariance": 4.440892098500626e-16,
+    "max_m0_defect": 6.772360450213455e-14,
+    "signed_reality": 8.355534721610419e-17,
+    "low_spin_defect": 0.0
+  },
+  "ratios": {
+    "thermal_I_L8": {
+      "mean_variance": 3.9827282518881146,
+      "mean_y_m": 3.9826182574443907,
+      "energy_comoving": 4.009751392247589
+    },
+    "cold_beta_0.2": {
+      "mean_variance": 4.004252464150791,
+      "mean_y_m": 4.004291869124978,
+      "energy_comoving": 4.0042716645409016
+    }
+  },
+  "comparisons": {
+    "thermal_stronger_L16__thermal_stronger_ray_oracle": {
+      "mean_variance": 1.1802811196925597e-15,
+      "mean_y_m": 9.699967202072071e-17,
+      "energy_comoving": 4.000577646934289e-12,
+      "number_comoving": 0.0
+    },
+    "thermal_viih_64_L16__thermal_viih_64_ray_oracle": {
+      "mean_variance": 8.967197331806261e-14,
+      "mean_y_m": 4.511263831339552e-14,
+      "energy_comoving": 1.8640984311701914e-09,
+      "number_comoving": 1.7162837817608079e-09
+    },
+    "thermal_stronger_L12__thermal_stronger_L16": {
+      "mean_variance": 8.639736061993863e-20,
+      "mean_y_m": 7.184194645432074e-17,
+      "energy_comoving": 1.9984014443252818e-15,
+      "number_comoving": 8.881784197001252e-16
+    },
+    "thermal_viih_64_L12__thermal_viih_64_L16": {
+      "mean_variance": 1.2705494208814505e-20,
+      "mean_y_m": 1.5791605812576345e-18,
+      "energy_comoving": 1.3322676295501878e-15,
+      "number_comoving": 2.220446049250313e-16
+    }
+  },
+  "oracle": [
+    {
+      "scheme": "backward-euler",
+      "n_directions": 72,
+      "dense_unknowns": 648,
+      "frequency_nodes": 384,
+      "frequency_log_bounds": [
+        -22,
+        7
+      ],
+      "input_sha256": "9348d02cbc7267c402ce08a8eb6bc7e42c49a27a74d759853a92efb3d186d8a1",
+      "errors": {
+        "B3": 7.327471962526033e-15,
+        "B4": 7.438494264988549e-15,
+        "M0": 4.996003610813204e-16,
+        "M1": 6.245004513516506e-17,
+        "M2": 1.734723475976807e-17
+      }
+    },
+    {
+      "scheme": "sdirk2",
+      "n_directions": 72,
+      "dense_unknowns": 648,
+      "frequency_nodes": 384,
+      "frequency_log_bounds": [
+        -22,
+        7
+      ],
+      "input_sha256": "6b1ee581e5919a36e0a1ba48b51761cf5364505095038370b3f163a7e726344f",
+      "errors": {
+        "B3": 8.215650382226158e-15,
+        "B4": 8.215650382226158e-15,
+        "M0": 1.4988010832439613e-15,
+        "M1": 2.0122792321330962e-16,
+        "M2": 5.377642775528102e-17
+      }
+    }
+  ],
+  "warnings": [
+    {
+      "case": "thermal_i_32",
+      "metrics": {
+        "number_collision_defect": 6.673977669797208e-20,
+        "rest_energy_collision_defect": 4.434435991717491e-20,
+        "number_continuity_defect": -1.7763568394002505e-15,
+        "class_a_number_drift": 2.1094237467877974e-15,
+        "bolometric_integral_gap": 2.6423307986078726e-14,
+        "bolometric_screen_gap": 3.204616162786061e-14,
+        "observer_invariance": 0.0,
+        "max_m0_defect": 2.220446049250313e-16,
+        "min_variance": -1.1156503711376063e-06,
+        "min_y_m": -1.4696785589300015e-06,
+        "min_primary_eigenvalue": 0.0,
+        "min_log_gram": -5.724524842984688e-07,
+        "signed_reality": 1.3877814277568815e-17,
+        "low_spin_defect": 0.0,
+        "events": 128,
+        "spectral_wall_s": 0.121514498
+      }
+    },
+    {
+      "case": "thermal_i_64",
+      "metrics": {
+        "number_collision_defect": 2.5034634377998295e-20,
+        "rest_energy_collision_defect": 2.5163200158229413e-20,
+        "number_continuity_defect": -2.1094237467877974e-15,
+        "class_a_number_drift": 2.1094237467877974e-15,
+        "bolometric_integral_gap": 4.773959005888173e-14,
+        "bolometric_screen_gap": 5.229649478687161e-14,
+        "observer_invariance": 0.0,
+        "max_m0_defect": 2.220446049250313e-16,
+        "min_variance": -1.1154272513453245e-06,
+        "min_y_m": -1.4693337177951876e-06,
+        "min_primary_eigenvalue": 0.0,
+        "min_log_gram": -5.723407613721785e-07,
+        "signed_reality": 9.486769009248164e-20,
+        "low_spin_defect": 0.0,
+        "events": 256,
+        "spectral_wall_s": 0.21336071
+      }
+    },
+    {
+      "case": "thermal_i_128",
+      "metrics": {
+        "number_collision_defect": 1.711703554777679e-20,
+        "rest_energy_collision_defect": 1.431830377221054e-20,
+        "number_continuity_defect": -8.881784197001252e-16,
+        "class_a_number_drift": 2.3314683517128287e-15,
+        "bolometric_integral_gap": 1.127986593019159e-13,
+        "bolometric_screen_gap": 1.1821331343709825e-13,
+        "observer_invariance": 0.0,
+        "max_m0_defect": 2.220446049250313e-16,
+        "min_variance": -1.1153719752453296e-06,
+        "min_y_m": -1.4692478857662034e-06,
+        "min_primary_eigenvalue": 0.0,
+        "min_log_gram": -5.723130880013011e-07,
+        "signed_reality": 6.93889721262889e-18,
+        "low_spin_defect": 0.0,
+        "events": 512,
+        "spectral_wall_s": 0.44751045
+      }
+    },
+    {
+      "case": "thermal_viih_64",
+      "metrics": {
+        "number_collision_defect": 2.0415474000881372e-20,
+        "rest_energy_collision_defect": 2.1602431042768118e-20,
+        "number_continuity_defect": 3.772413747341039e-10,
+        "class_a_number_drift": null,
+        "bolometric_integral_gap": 4.440892098500626e-14,
+        "bolometric_screen_gap": 4.802900449915007e-14,
+        "observer_invariance": 0.0,
+        "max_m0_defect": 2.220446049250313e-16,
+        "min_variance": -4.785338269876923e-05,
+        "min_y_m": -2.5530259740965885e-05,
+        "min_primary_eigenvalue": -9.152248269744898e-06,
+        "min_log_gram": -2.3945771983743676e-05,
+        "signed_reality": 6.938893903907228e-18,
+        "low_spin_defect": 0.0,
+        "events": 256,
+        "spectral_wall_s": 0.211711247
+      }
+    },
+    {
+      "case": "thermal_stronger",
+      "metrics": {
+        "number_collision_defect": 1.3538939825323253e-20,
+        "rest_energy_collision_defect": 1.8584801111147487e-20,
+        "number_continuity_defect": -8.881784197001252e-16,
+        "class_a_number_drift": 2.3314683517128287e-15,
+        "bolometric_integral_gap": 1.3677947663381929e-13,
+        "bolometric_screen_gap": 1.4279841263837744e-13,
+        "observer_invariance": 0.0,
+        "max_m0_defect": 2.220446049250313e-16,
+        "min_variance": -2.537813528647869e-07,
+        "min_y_m": -2.157889737312499e-06,
+        "min_primary_eigenvalue": 0.0,
+        "min_log_gram": -7.444832948225778e-07,
+        "signed_reality": 1.3877787807814457e-17,
+        "low_spin_defect": 0.0,
+        "events": 512,
+        "spectral_wall_s": 0.510136832
+      }
+    },
+    {
+      "case": "thermal_viih_64_L8",
+      "metrics": {
+        "number_collision_defect": 4.8592634284785847e-20,
+        "rest_energy_collision_defect": 4.0592102900848896e-20,
+        "number_continuity_defect": 3.7727251513808004e-10,
+        "class_a_number_drift": null,
+        "bolometric_integral_gap": 1.0304423980755928e-11,
+        "bolometric_screen_gap": null,
+        "observer_invariance": 0.0,
+        "max_m0_defect": 3.3306690738754696e-16,
+        "min_variance": 0.0,
+        "min_y_m": -5.809867145538383e-09,
+        "min_primary_eigenvalue": 0.0,
+        "min_log_gram": 0.0,
+        "signed_reality": 8.67361841385974e-19,
+        "low_spin_defect": 0.0,
+        "events": 256,
+        "spectral_wall_s": 1.092247134
+      }
+    }
+  ],
+  "science_DAG_promotions": 0,
+  "next": "R118-B-NONMONOTONE-FREQUENCY-TRANSFER-01",
+  "remaining": [
+    "frequency-resolved radiation occupation and nonmonotone resonance transfer",
+    "spectral atomic/thermal/recoil redistribution and active energy ledger",
+    "adaptive spectral angular band and full realizability",
+    "grid-free general spectral gain, T3 efficiency and long high-l validation",
+    "HeIII kinetic source and source phase joins",
+    "stiff-uniform full-system stability",
+    "T5 native dispatch"
+  ]
+}
