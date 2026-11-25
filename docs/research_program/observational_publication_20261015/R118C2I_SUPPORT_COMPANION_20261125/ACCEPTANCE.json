@@ -1,0 +1,40 @@
+{
+  "id": "R118-C2I-BASS-REI-SUPPORT-CONVERGENCE-AND-REC-COMPANION-EXTERIOR-01",
+  "status": "PASS_SCOPED",
+  "parent": "a591be2d29945265bc15ceea43f1401ef17aa70f",
+  "owners": {
+    "REC": {
+      "commit": "eeb314d80cc71bb55f400f836de6a83b045144ad",
+      "tree": "3f37d0ac7142bcf81a7f0ef3e4dadff6c54cfa5f",
+      "branch": "research/r109-finite-tilt-ray-thomson-20261124",
+      "receipt": "research/r118c2i_dynamic_companion/ACCEPTANCE.json",
+      "receipt_sha256": "675525bb6f84ec567eb36cde3580115c869e6d1634385d060eff7c8f423528c2",
+      "status": "PASS_SCOPED"
+    },
+    "REI": {
+      "commit": "b33b7f1c5945b9ccf3c59b0168305a7063ad4490",
+      "tree": "7eac427c7dc7b2ed51f09bbf80811650fc6b09e1",
+      "branch": "research/htt-tilted-thomson-20261124",
+      "receipt": "research/r118c2i_covariant_recovery/ACCEPTANCE.json",
+      "receipt_sha256": "81e67af047ca781ba96e6e07964b947a4f20448c73a65e2c729d38d33a4a15b3",
+      "status": "PASS_SCOPED"
+    },
+    "BASS": {
+      "commit": "312d5d06b17dc4963a2641eb32a5d0bc11275693",
+      "tree": "ff65222179a4f75c783bf73debd86336f77f1e8c",
+      "branch": "research/r109-native-nonlinear-sky-20261124",
+      "receipt": "research/r118c2i_support/ACCEPTANCE.json",
+      "receipt_sha256": "94e5a06173d09a67f237a413a1664f177134d2312d8949bc0013920aeb450b0d",
+      "status": "PASS_SCOPED"
+    }
+  },
+  "science_promotion": false,
+  "R78_changed": false,
+  "blockers": [
+    "REI covariant long trajectory checkpointed at z=19.526371616320315 by AXBI_RUNTIME_CAP",
+    "full spectral and temporal convergence not established",
+    "REC dynamic companion auxiliary closure; native exterior diffusion, additional levels and full owner replacement unresolved",
+    "UV stress diagnostic only; no active Einstein feedback"
+  ],
+  "next": "R118-C2J-REI-COVARIANT-LONG-ERROR-CONTROL-AND-REC-EXTERIOR-COUPLING-01"
+}
