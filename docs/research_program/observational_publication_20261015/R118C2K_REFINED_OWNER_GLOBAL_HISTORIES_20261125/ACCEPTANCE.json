@@ -1,0 +1,39 @@
+{
+  "id": "R118-C2K-REFINED-EXTERIOR-OWNER-AND-REI-GLOBAL-CONVERGENCE-01",
+  "status": "PASS_SCOPED",
+  "parent": "53f96efe069f5a1722b451506b98c4da52504c1d",
+  "owners": {
+    "REC": {
+      "commit": "91df4b2a3ddcd86a9319823061ab3d580866c62d",
+      "tree": "90b323adbe1f4f0a09414342f127a8e9e0583938",
+      "branch": "research/r109-finite-tilt-ray-thomson-20261124",
+      "receipt": "research/r118c2k_refined_owner/ACCEPTANCE.json",
+      "receipt_sha256": "72f15af6e571130a976649f2abb571cbfa85e3e855aaf0b09d41e4b5e9a52968"
+    },
+    "REI": {
+      "commit": "e93661d3b83beb4cb2c381339dde6e860c28e7c1",
+      "tree": "b89674bd81a4d7de471e9c0107d898c87615e016",
+      "branch": "research/htt-tilted-thomson-20261124",
+      "receipt": "research/r118c2k_segment/ACCEPTANCE.json",
+      "receipt_sha256": "e776fb381885defa24234fbe8b06e838af2546e3a5af8d8a87fe719f50a2a965"
+    },
+    "BASS": {
+      "commit": "0ca6807484b1714e259b77cdda17bf43dca13060",
+      "tree": "016f98b38261ee29ec550046e1e492e03a65e3e5",
+      "branch": "research/r109-native-nonlinear-sky-20261124",
+      "receipt": "research/r118c2k_rate_control/ACCEPTANCE.json",
+      "receipt_sha256": "8185c81770cae43f7a4ce197c8765faa8f489775a87594c6f656c70bb0f8f4a1"
+    }
+  },
+  "total_tests": 788,
+  "science_promotion": false,
+  "R78_changed": false,
+  "native_subagent": "NOT_RUN_NO_HOST_DISPATCH",
+  "blockers": [
+    "REC full Liouville, remaining exterior and full atomic owner swap unresolved",
+    "REI full time and spectral convergence unresolved; HeIII q32-q64 absolute 0.00330720257",
+    "BASS rate control local only; full emitter, nonionizing and material four-force ownership unresolved; active geometry feedback HOLD"
+  ],
+  "next": "R118-C2L-HEII-THRESHOLD-CONVERGENCE-AND-REC-LIOUVILLE-OWNER-01",
+  "report_sha256": "e51c9e4dd90475648615a772a3b8ca13b9ffb04064d6151a352607ebfbda703b"
+}
