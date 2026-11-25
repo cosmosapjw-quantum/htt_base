@@ -1,0 +1,131 @@
+{
+  "schema": "htt.r114.executed_commands/1",
+  "claim_ceiling": "deterministic single-history local validation run ledger; zero R78 DAG node promotions",
+  "repositories": {
+    "rec": {
+      "path": "/home/cosmosapjw/Downloads/htt_r109_original_rec",
+      "branch": "research/r109-finite-tilt-ray-thomson-20261124",
+      "r113_pin": "05db5451a97c66b9a87de98ae35b88ab820d368f",
+      "merge_commit": "845d03389d9aa8bc5f6cd39f239aefc1e3c4a330",
+      "r114_commit": "6ad757d232a9833e984d18657d169766b27e33a4"
+    },
+    "bass": {
+      "path": "/home/cosmosapjw/worktrees/bass-r109-native-20261124",
+      "branch": "research/r109-native-nonlinear-sky-20261124",
+      "r113_pin": "db72d1bcf8341d1fdeed3f1f03b169f00594efb6",
+      "merge_commit": "c6b7dbf645027e9e2521c147fc31accdb67d89de",
+      "r114_commit": "4abb1d3b81a68711aa3438570f5a80f8cca42216",
+      "binary_path": "/home/cosmosapjw/Downloads/htt_r114/bin/homogeneous_sky_r114",
+      "binary_sha256": "3b775cf326921797d9488f00c8e78261aa58e2b436b2128ee0ec8cefd6c38686",
+      "r112_baseline_binary": "/home/cosmosapjw/Downloads/htt_r114/bin/homogeneous_sky_r112_40626723b",
+      "r112_baseline_sha256": "027d3cde2a542a5c4da1817704344b78c01c1ae40fe017153439b161e2f04900"
+    },
+    "rei": {
+      "path": "/home/cosmosapjw/worktrees/rei-htt-thomson-20261124",
+      "branch": "research/htt-tilted-thomson-20261124",
+      "head": "503508f1c82a968bebc57900d43a65135c3db185",
+      "bass_ionization_binary": "/home/cosmosapjw/worktrees/rei-htt-thomson-20261124/rust/rei_microphysics/target/release/examples/bass_ionization",
+      "bass_ionization_sha256": "7c6cde5e9d5086909f1ca4e57979a97c8753e7903d3aa2fc30a729119b32731e"
+    },
+    "htt_base": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "branch": "research/r69-observable-physics-bridges-20261118",
+      "r113_pin": "5a9a4fc455ac800c3b8491efe2c94a4953991a0e",
+      "merge_commit": "4f0de307fe80f8aef36d02190639739e71f39d90"
+    }
+  },
+  "commands": [
+    {
+      "stage": "F1_F3_pre_fix",
+      "cwd": "/home/cosmosapjw/worktrees/bass-r109-native-20261124",
+      "command": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python /home/cosmosapjw/Downloads/htt_r114/run_f1_f3.py",
+      "exit_code": 0,
+      "summary": "REC 129, REI 271, BASS 218+3, V1 20/20 byte-identical, F3 RECOMBINATION_DEMO/CROSS_ROUTE_ATLAS 0.0 diff",
+      "artifact": "/home/cosmosapjw/Downloads/htt_r114/f1_f3_out/f1_f3_summary.json"
+    },
+    {
+      "stage": "F2_REC_r114",
+      "cwd": "/home/cosmosapjw/Downloads/htt_r109_original_rec/rust/rec_microphysics",
+      "command": "cargo test --release --locked",
+      "exit_code": 0,
+      "summary": "129 passed, 0 failed at 6ad757d232a9833e984d18657d169766b27e33a4"
+    },
+    {
+      "stage": "F1_F3_post_f010_recheck",
+      "cwd": "/home/cosmosapjw/worktrees/bass-r109-native-20261124",
+      "command": "cargo test --release --locked --manifest-path _rustcore/Cargo.toml && cargo test --release --locked --manifest-path _rustcore/Cargo.toml --examples && cargo build --release --locked --manifest-path _rustcore/Cargo.toml --example homogeneous_sky",
+      "exit_code": 0,
+      "summary": "221 + 3 examples passed, 0 failed, 0 warnings; V1 20/20 TSVs byte-identical vs R112; recomb_f010 max_peak_rel_vs_R113=2.189e-10",
+      "artifact": "docs/research_program/observational_publication_20261015/R114_LOCAL_UNIVERSAL_LIE_SKY_20261125/F1_F3_REPRODUCTION.json"
+    },
+    {
+      "stage": "C1_harmonic_long_atlas",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:htt:htt/src .venv/bin/python -B -m scripts.r114.c1_harmonic_long_atlas",
+      "exit_code": 0,
+      "wall_seconds": 1480.4667198670213,
+      "artifact": "docs/research_program/observational_publication_20261015/R114_LOCAL_UNIVERSAL_LIE_SKY_20261125/C1_HARMONIC_LONG_ATLAS.json",
+      "artifact_sha256": "3060f718bd9b6ee4b2a79afe8322f7fa725e0e259f77f5bf5ad7af1c749d84ca",
+      "tar_archive": "/home/cosmosapjw/Downloads/htt_r114/c1_atlas/C1_HARMONIC_L32_MODES.tar.gz",
+      "tar_archive_sha256": "24420dae0d3e25b3c77f52cb82f69c74d7af28a3699ded6f8fd83cecab0787b3"
+    },
+    {
+      "stage": "C2_tight_coupling_matched",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:htt:htt/src .venv/bin/python -B -m scripts.r114.c2_tight_coupling_matched",
+      "exit_code": 0,
+      "run_sum_wall_seconds": 715.0494438212481,
+      "artifact": "docs/research_program/observational_publication_20261015/R114_LOCAL_UNIVERSAL_LIE_SKY_20261125/C2_TIGHT_COUPLING_MATCHED.json",
+      "artifact_sha256": "756ae1740f1395cf094b3d981532fa0b69463dcb530a64ed20264d19942c6950"
+    },
+    {
+      "stage": "C3_rei_matched_join",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:htt:htt/src .venv/bin/python -B -m scripts.r114.c3_rei_matched_join",
+      "exit_code": 0,
+      "run_sum_wall_seconds": 271.7964462580858,
+      "artifact": "docs/research_program/observational_publication_20261015/R114_LOCAL_UNIVERSAL_LIE_SKY_20261125/C3_REI_MATCHED_JOIN.json",
+      "artifact_sha256": "312b3a5421d32e1e2fd0f06774814c20067650b534fdb26a181d89e436bf1e86"
+    },
+    {
+      "stage": "C4_bjs_harmonic_highl",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:htt:htt/src .venv/bin/python -B -m scripts.r114.c4_bjs_harmonic_highl",
+      "exit_code": 0,
+      "wall_seconds": 2389.4157327129506,
+      "artifact": "docs/research_program/observational_publication_20261015/R114_LOCAL_UNIVERSAL_LIE_SKY_20261125/C4_BJS_HARMONIC_HIGHL.json",
+      "artifact_sha256": "eada206b858e218c18bd96284a159d26830bf7a4cd223e88f77f15c25610bebc"
+    },
+    {
+      "stage": "C5_commander_c1_leakage",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:htt:htt/src .venv/bin/python -B -m scripts.r114.c5_commander_c1_leakage",
+      "exit_code": 0,
+      "wall_seconds": 118.08438037597807,
+      "artifact": "docs/research_program/observational_publication_20261015/R114_LOCAL_UNIVERSAL_LIE_SKY_20261125/C5_COMMANDER_LEAKAGE.json",
+      "artifact_sha256": "d64abf5b7759a56041642e01e2c63b28ee3bff047c980a6514fb763ad1bd9e83"
+    },
+    {
+      "stage": "C6_performance_benchmarks",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:htt:htt/src .venv/bin/python -B -m scripts.r114.c6_performance_benchmarks",
+      "exit_code": 0,
+      "artifact": "docs/research_program/observational_publication_20261015/R114_LOCAL_UNIVERSAL_LIE_SKY_20261125/C6_PERFORMANCE_BENCHMARKS.json",
+      "artifact_sha256": "7362e0c3b6cf91e35bce9db0eef71c5a1ee0139d7553f441357e92e33e24e7ea"
+    },
+    {
+      "stage": "GAP_REGISTER_update",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:htt:htt/src .venv/bin/python -B scripts/r107_cloud/gap_register.py --output docs/research_program/observational_publication_20261015/R107_CLOUD_SOLVER_DATA_THEORY_20261124/GAP_REGISTER.json",
+      "exit_code": 0,
+      "artifact": "docs/research_program/observational_publication_20261015/R107_CLOUD_SOLVER_DATA_THEORY_20261124/GAP_REGISTER.json"
+    },
+    {
+      "stage": "pytest_and_r86_audit",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:htt:htt/src .venv/bin/python -B -m pytest -p no:cacheprovider -v tests/r107_cloud/test_gap_register.py tests/obsstat/test_r109_*.py tests/obsstat/test_r111_*.py tests/obsstat/test_r114_universal_lie_sky.py tests/obsstat/test_r86_preexecution_readiness.py && OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=. .venv/bin/python -B scripts/r86_audit_preexecution.py",
+      "exit_code": 0,
+      "summary": "32 passed, 0 failed; r86_audit_preexecution pass=true (nodes=60, edges=129, actual_next_sci=SQ-CF4, agent_start=BLOCKED_NOT_DISPATCHED)"
+    }
+  ]
+}

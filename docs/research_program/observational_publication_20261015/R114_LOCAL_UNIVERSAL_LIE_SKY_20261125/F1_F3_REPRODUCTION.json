@@ -1,0 +1,110 @@
+{
+  "schema": "htt.r114.f1_f3_reproduction/1",
+  "claim_ceiling": "verification of R113 cloud baseline and post-F0-10 R114 determinism/regression bounds; zero R78 DAG promotions",
+  "repos": {
+    "rec": {
+      "branch": "research/r109-finite-tilt-ray-thomson-20261124",
+      "base_r112": "3752213099ccb35998c22f1aaf0d42fb674184e4",
+      "cloud_r113_pin": "05db5451a97c66b9a87de98ae35b88ab820d368f",
+      "merge_commit": "845d03389d9aa8bc5f6cd39f239aefc1e3c4a330",
+      "r114_commit": "6ad757d232a9833e984d18657d169766b27e33a4"
+    },
+    "bass": {
+      "branch": "research/r109-native-nonlinear-sky-20261124",
+      "base_r112": "40626723bcee34b3c02d1827344b2ee5ac3b368d",
+      "cloud_r113_pin": "db72d1bcf8341d1fdeed3f1f03b169f00594efb6",
+      "merge_commit": "c6b7dbf645027e9e2521c147fc31accdb67d89de",
+      "r114_commit": "4abb1d3b81a68711aa3438570f5a80f8cca42216"
+    },
+    "rei": {
+      "branch": "research/htt-tilted-thomson-20261124",
+      "head": "503508f1c82a968bebc57900d43a65135c3db185",
+      "bass_ionization_binary_sha256": "7c6cde5e9d5086909f1ca4e57979a97c8753e7903d3aa2fc30a729119b32731e"
+    },
+    "htt_base": {
+      "branch": "research/r69-observable-physics-bridges-20261118",
+      "base_r112": "e810a4f705c3785e06f9f998f5c57e64c3baef22",
+      "cloud_r113_pin": "5a9a4fc455ac800c3b8491efe2c94a4953991a0e",
+      "merge_commit": "4f0de307fe80f8aef36d02190639739e71f39d90"
+    }
+  },
+  "f1": {
+    "r112_binary_sha256": "027d3cde2a542a5c4da1817704344b78c01c1ae40fe017153439b161e2f04900",
+    "r113_merged_pre_fix_binary_sha256": "724cda54810b4a7d3bf346ab525673d354419351708fd153e6d38d2eaec722ea",
+    "r114_final_binary_sha256": "3b775cf326921797d9488f00c8e78261aa58e2b436b2128ee0ec8cefd6c38686",
+    "pre_fix_bass_cargo_test_passed": 218,
+    "pre_fix_bass_examples_passed": 3,
+    "pre_fix_bass_v1_matched_tsvs": 20,
+    "pre_fix_bass_v1_total_tsvs": 20,
+    "r114_final_bass_cargo_test_passed": 221,
+    "r114_final_bass_cargo_test_breakdown": [187, 1, 2, 5, 10, 3, 2, 6, 5],
+    "r114_final_bass_examples_passed": 3,
+    "r114_final_bass_warnings": 0,
+    "r114_final_v1_matched_tsvs": 20,
+    "r114_final_v1_total_tsvs": 20
+  },
+  "f2": {
+    "rec_r114_cargo_test_passed": 129,
+    "rec_r114_cargo_test_failed": 0,
+    "rec_r114_cargo_test_breakdown": [0, 0, 5, 76, 8, 20, 1, 2, 8, 3, 5, 1],
+    "rei_cargo_test_passed": 271,
+    "rei_cargo_test_failed": 0
+  },
+  "f3_cloud_reproduction_pre_fix": {
+    "RECOMBINATION_DEMO.json": {
+      "exact_equal": true,
+      "max_abs_diff": 0.0,
+      "max_rel_diff": 0.0,
+      "n_mismatches": 0,
+      "wall_seconds": 256.26026864600135,
+      "out_sha256": "303ad1d812436888058ae08d757a5301ee01e3fbf1f117e9f6a38bfbb4b81dd3"
+    },
+    "CROSS_ROUTE_ATLAS.json": {
+      "exact_equal": true,
+      "max_abs_diff": 0.0,
+      "max_rel_diff": 0.0,
+      "n_mismatches": 0,
+      "wall_seconds": 39.53918599803001,
+      "out_sha256": "d64769b31855d805b4d78a9a23960d80b1ea04d6558afb52a1b1e814e59483fe"
+    },
+    "TRUNCATION_STUDY.json": {
+      "exact_equal": false,
+      "numeric_physics_equal": true,
+      "max_abs_diff": 0.4012260437011719,
+      "n_mismatches": 3,
+      "mismatch_fields": "wall-clock rays_seconds only (cases[0..2].rays_seconds)",
+      "wall_seconds": 54.520679278997704,
+      "out_sha256": "fb743341cdd80ef3dc8113e451b447dda056d249d7195592a1450dd0016d6d53"
+    },
+    "LONG_EPOCH_DEMO.json": {
+      "exact_equal": false,
+      "numeric_physics_equal": true,
+      "max_abs_diff": 0.0,
+      "max_rel_diff": 0.0,
+      "n_mismatches": 1,
+      "mismatch_fields": "settings.common[19] repo path (/home/claude/bass vs local worktree)",
+      "wall_seconds": 24.362127506989054,
+      "out_sha256": "4d8e7ca80ce693e2d1f330755e7ca6929fd1002673da5fbcc53ab9e76908863d"
+    }
+  },
+  "f3_post_f010_recheck": {
+    "binary_sha256": "3b775cf326921797d9488f00c8e78261aa58e2b436b2128ee0ec8cefd6c38686",
+    "max_peak_rel_vs_r113": 2.189147029833629e-10,
+    "long_small": {
+      "rays_table_seconds": 5.421298027038574,
+      "rays_matched_seconds": 13.350188493728638,
+      "harmonic16_matched_seconds": 16.597140550613403,
+      "delta_xe_final": 2.8234527549406314e-08,
+      "delta_xe_route_gap_max": 9.71445146547012e-17,
+      "los_route_gap_matched_l2_lmax": 9.047648127243369e-09
+    },
+    "window_strong": {
+      "rays_table_seconds": 0.8231732845306396,
+      "rays_matched_seconds": 2.134747266769409,
+      "harmonic16_matched_seconds": 2.884267568588257,
+      "delta_xe_final": 3.100400194303715e-08,
+      "delta_xe_route_gap_max": 2.2898349882893854e-16,
+      "los_route_gap_matched_l2_lmax": 4.0098713752520366e-12
+    }
+  }
+}

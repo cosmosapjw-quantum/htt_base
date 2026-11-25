@@ -1,0 +1,131 @@
+{
+  "schema": "htt.r114.f0_cloud_diff_review/1",
+  "reviewed_ranges": {
+    "bass": "40626723bcee34b3c02d1827344b2ee5ac3b368d..db72d1bcf8341d1fdeed3f1f03b169f00594efb6",
+    "rec": "3752213099ccb35998c22f1aaf0d42fb674184e4..05db5451a97c66b9a87de98ae35b88ab820d368f",
+    "htt_base": "e810a4f705c3785e06f9f998f5c57e64c3baef22..5a9a4fc455ac800c3b8491efe2c94a4953991a0e"
+  },
+  "reviewer_subagent": "332962c3-66c8-4c98-b99d-628a1a5c811d",
+  "counts_by_severity": {
+    "CRITICAL": 0,
+    "HIGH": 1,
+    "MEDIUM": 5,
+    "LOW": 4
+  },
+  "findings": [
+    {
+      "id": "F0-1",
+      "severity": "HIGH",
+      "repo": "bass",
+      "locations": [
+        "_rustcore/src/homogeneous_sky/solve.rs:117-119,740"
+      ],
+      "summary": "MatchedRecombination::active checked node.eta < stop_eta at step start rather than step end, allowing a straddling step [node.eta, next.eta] or 1-ULP roundoff at stop_eta to advance delta_xe inside the REI-owned z < 20 segment.",
+      "r114_resolution": "Gate active() on step endpoint next.eta <= stop_eta + 32*EPSILON*(1+stop_eta), update doc comment at solve.rs:95, and add non-grid-aligned stop_eta test in r113_matched_recombination.rs."
+    },
+    {
+      "id": "F0-2",
+      "severity": "MEDIUM",
+      "repo": "bass",
+      "locations": [
+        "_rustcore/src/geom/lie.rs:196"
+      ],
+      "summary": "invariants() inverted nonzero c.kappa for any Bianchi type; 1e-17 roundoff in rotated/evolved Type IV (rank(N)=1, n2*n3=0) produced spurious h ~ O(1e16) instead of None.",
+      "r114_resolution": "Restrict inverse kappa -> h strictly to types with nonzero n2*n3 (III, VI_h, VI*_-1/9, VII_h) and add rotated Type IV regression test."
+    },
+    {
+      "id": "F0-3",
+      "severity": "MEDIUM",
+      "repo": "rec / bass",
+      "locations": [
+        "rec_microphysics/src/matched_history.rs:67",
+        "_rustcore/src/homogeneous_sky/solve.rs:743-777"
+      ],
+      "summary": "isotropic_peebles_rate recomputed compton_temperature_k via None; solve.rs called rec.reference on node.eta unnecessarily and before checking x_ref_next >= X_MAX, and recomputed 2048-direction compton_temperature_k(&rsky) on every Illinois regula falsi iteration.",
+      "r114_resolution": "Pass Some(temperature_k) in REC isotropic_peebles_rate; in BASS solve.rs, read x_ref_next first to short-circuit x_ref_next >= X_MAX, avoid unused reference calls on node.eta, and precompute compton_temperature_k(&rsky) once outside implicit_matched_step."
+    },
+    {
+      "id": "F0-4",
+      "severity": "MEDIUM",
+      "repo": "bass",
+      "locations": [
+        "_rustcore/examples/homogeneous_sky.rs:330-332,450-465"
+      ],
+      "summary": "CLI validated --nmu/--nphi against --lmax even under --route harmonic, while failing to verify that harmonic collision grid (n_theta, n_phi) covers --lmax.",
+      "r114_resolution": "Parse --route before grid resolution checks; under Route::Harmonic require nt >= lmax+1 and np >= 2*lmax+1 while checking minimal nmu/nphi >= 4 even for node seeding."
+    },
+    {
+      "id": "F0-5",
+      "severity": "MEDIUM",
+      "repo": "bass",
+      "locations": [
+        "_rustcore/src/homogeneous_sky/solve.rs:129-133,542-547"
+      ],
+      "summary": "Open geometries (K < 0) permit omega_lambda >= 1.0, producing zero or negative flat-FLRW matter+radiation energy in MatchedRecombination::reference.",
+      "r114_resolution": "Reject cfg.omega_lambda >= 1.0 at solve_general entry when opts.recombination.is_some() and guard e2 > 0 in MatchedRecombination::reference."
+    },
+    {
+      "id": "F0-6",
+      "severity": "LOW",
+      "repo": "bass",
+      "locations": [
+        "_rustcore/src/homogeneous_sky/recoil.rs:72-81,220-260"
+      ],
+      "summary": "If an input sky before recoil scattering (e.g. harmonic Gibbs ringing) has nonpositive intensity, recoil::trial bisects 24 levels (4095 trials) before failing.",
+      "r114_resolution": "Fail fast at scatter_with_recoil_events entry if any input photon has nonpositive or nonfinite trace."
+    },
+    {
+      "id": "F0-7",
+      "severity": "LOW",
+      "repo": "bass",
+      "locations": [
+        "_rustcore/src/homogeneous_sky/ionization.rs:127-136"
+      ],
+      "summary": "Ionization::cells_with_offset omitted an immediate added.is_finite() guard and retained zero-depth cells when total + added <= 0.",
+      "r114_resolution": "Check added.is_finite() and filter out zero-depth cells when delta_xe != 0 (preserving delta_xe == 0 short-circuit)."
+    },
+    {
+      "id": "F0-8",
+      "severity": "LOW",
+      "repo": "bass",
+      "locations": [
+        "_rustcore/src/homogeneous_sky/frames.rs:94-95",
+        "_rustcore/src/kinetic/spin_sht.rs:206-207"
+      ],
+      "summary": "frames::relative_velocity used (gf-1)/b2 instead of cancellation-free gf^2/(1+gf); spin_sht::evaluate_at did not guard zero direction norm.",
+      "r114_resolution": "Use gf*gf/(1+gf) in frames::relative_velocity and guard norm <= 0 in evaluate_at."
+    },
+    {
+      "id": "F0-9",
+      "severity": "LOW",
+      "repo": "bass / htt_base",
+      "locations": [
+        "research/r113_cloud_universal_lie_sky/THEORY.md:211,239,357",
+        "research/r113_cloud_universal_lie_sky/README_KO.md:144,150-153",
+        "_rustcore/examples/homogeneous_sky.rs:261",
+        "docs/.../R113_CLOUD_UNIVERSAL_LIE_SKY_20261124/LOCAL_AGENT_HANDOFF.md:26"
+      ],
+      "summary": "Documentation/repository differences: (1) LOCAL_AGENT_HANDOFF.md suggests building R112 in a separate worktree, whereas AGENTS.md prohibits new worktrees; (2) THEORY.md:211 has +-A/3 vs code/Dossier II -+A/3; (3) THEORY.md:239 omits sqrt(6) PSTF/harmonic conversion note; (4) THEORY.md:357 omits radiation-total observer frame; (5) README_KO.md:144 quotes C_10 not in LONG_EPOCH_DEMO.json and mixes delta_tau vs delta_tau/tau in lines 150-153; (6) homogeneous_sky.rs:261 comment called total xe the hydrogen fraction.",
+      "r114_resolution": "Fixed comment in homogeneous_sky.rs:261; followed AGENTS.md pre-merge R112 snapshot without creating a worktree; recorded all R113 doc discrepancies transparently in F0 review without rewriting cloud history."
+    },
+    {
+      "id": "F0-10",
+      "severity": "MEDIUM",
+      "repo": "bass",
+      "locations": [
+        "_rustcore/src/kinetic/spin_sht.rs:145-185",
+        "_rustcore/src/homogeneous_sky/field.rs:138-270",
+        "_rustcore/src/homogeneous_sky/solve.rs:260-272"
+      ],
+      "summary": "Harmonic collision cells overwrote full self.coefficients via SpinSht(grid_after) with uncentered ring/GL means (leaking ~1e-15 * O(1) monopole across 4000 half-steps), used (t t^T + p p^T) instead of projector(&e), and integrated HarmonicSky::moments over fixed grids (sum w_k - 4pi = +8.17e-14 on 19x38), inducing 1e-14 frame_rad drift in I/IX and 1e-5 L-pair jitter at C_4 ~ 1e-10 C_2.",
+      "r114_resolution": "Added HarmonicSky::absorb_delta, ring/GL-mean centering in SpinSht::analyze, exact projector(&e) in HarmonicSky::photons, and closed-form l <= 2 analytic HarmonicSky::moments (while preserving grid positivity/eigenvalue checks); reduced I/IX frame_rad to <=7e-17, eliminated initial slice grid dependence to 0.0, verified 221+3 Rust tests and V1 20/20 TSV byte-identity with final binary SHA-256 3b775cf326921797d9488f00c8e78261aa58e2b436b2128ee0ec8cefd6c38686."
+    }
+  ],
+  "verified_invariants": [
+    "geom::lie potentials and kinetic::{wigner, spin_sht, lie_hierarchy} match Dossier II and sky_spectrum::analyze_rings signs/conventions identically.",
+    "Harmonic rest-electron collisions match PSTF BE exactly on (L+3)x(2L+6) grid; zero-depth segments emit matching events without SHT overhead.",
+    "Legacy solve* entry points and R112 CLI defaults preserve all 20 TSV outputs byte-for-byte (SHA-256 identical).",
+    "MatchedStep residual G(x) is strictly increasing on [0, X_MAX] and FLRW identity holds to <= 1e-14 in REC.",
+    "energy_frame solves T^a_b u^b = -rho_E u^a cleanly (1000 Monte Carlo 3D tests converged with 0 overshoots)."
+  ]
+}
