@@ -1,0 +1,41 @@
+{
+  "id": "R118-C2J-REI-COVARIANT-LONG-ERROR-CONTROL-AND-REC-EXTERIOR-COUPLING-01",
+  "status": "PASS_SCOPED",
+  "parent": "e99c1bb900850b7e71d3bcc59b90f57803d77c77",
+  "owners": {
+    "REC": {
+      "commit": "7a1c593973ea74ccb13b987a30ebc1623f8b4cd4",
+      "tree": "d6435af3b3cff51549f6f391228fc6bc71f943c6",
+      "branch": "research/r109-finite-tilt-ray-thomson-20261124",
+      "receipt": "research/r118c2j_exterior/ACCEPTANCE.json",
+      "receipt_sha256": "8368236c7eac066eb481fbe09e51ddf16198ca922476791fb3741bec8ef6743b",
+      "status": "PASS_SCOPED"
+    },
+    "REI": {
+      "commit": "156a812155a06eca03b1cc9ee4ce7c1473902e87",
+      "tree": "ed6ad60646340388e98053d1d7ce91990cb3d14d",
+      "branch": "research/htt-tilted-thomson-20261124",
+      "receipt": "research/r118c2j_error_control/ACCEPTANCE.json",
+      "receipt_sha256": "f82fe4a57da5df3dac1e3333f9e4cfd073157e66f40edca24ce983a6ec48c550",
+      "status": "PASS_SCOPED"
+    },
+    "BASS": {
+      "commit": "4c050431f8053d77c3c76ee2045f7db4f1bc49c9",
+      "tree": "45e2c0df0376265c784b8a371057fab97b9f2bc9",
+      "branch": "research/r109-native-nonlinear-sky-20261124",
+      "receipt": "research/r118c2j_fourforce/ACCEPTANCE.json",
+      "receipt_sha256": "e5c458fe83a13f4501388db89f98bdb279908bafe441664f1bb3b86473111fa9",
+      "status": "PASS_SCOPED"
+    }
+  },
+  "science_promotion": false,
+  "R78_changed": false,
+  "blockers": [
+    "REI global trajectory convergence remains unresolved; best z=5.830240858322552 by runtime cap",
+    "REC point closure heating rejected; refined action passes scoped but full dynamic refined registry and companion owner swap unresolved",
+    "HeIII cross-scheme spectral sensitivity",
+    "UV axial diagnostic only; nonlinear rate-checked compression deferred; material and emitter momentum, general tilted four-force and active Einstein feedback unresolved"
+  ],
+  "next": "R118-C2K-REFINED-EXTERIOR-OWNER-AND-REI-GLOBAL-CONVERGENCE-01",
+  "report_sha256": "a77ef3b79ba28f5b4ea3f5ff4141612b1a3a7df3e37f2905ce5dea2dbfdd87bb"
+}
