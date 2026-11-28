@@ -1,0 +1,194 @@
+{
+  "schema": "htt.r125.handoff/1",
+  "base": "48826ebddd7a8552ad5cb32c3fce382513dfcecf",
+  "prior_stage_commits": [
+    "d16ead877a6a313935478a385db839db0d6261d3 R125 R1: scope constrained finite-start initial-data operator",
+    "a2a5f945de235bbe818eb3b55e145a641d514f92 R125 R2: constrained initial-data operator",
+    "730ec33bca4ba58b993c3ac2182aa2c4370357cd R125 R3: constrained initial-data operator",
+    "5d630abd939d6dbc6da6a51ffadaf25979fec483 R125 R4: constrained initial-data operator",
+    "461a46cb178d72898167c917fdfa9ec8667ed86b R125 R5: constrained initial-data operator",
+    "686c9c6c0646a50434d5f1317da6eb533b848657 R125 R6: constrained initial-data operator",
+    "22810676285a702c2430f45f4e6504666dea4452 R125 R7: constrained initial-data operator",
+    "1bc65fa04b8316ae505a16b951c304134b416af9 R125 R8: constrained initial-data operator",
+    "d9a2f86c3b887c0d994c05f74bd2b04d73c77e87 R125 R9: constrained initial-data operator",
+    "7fed9d5f180c47f00b3b3d8e846b92f95b3ba588 R125 R10: constrained initial-data operator",
+    "f156330947d95d2ce292e59f87eab52ababb2cfb R125 C1: constrained initial-data operator",
+    "679b869205fe54301d2a27c0699757759490632b R125 C2: constrained initial-data operator",
+    "54ccc1db2697e5c72ca4422f21a04bca7aa57777 R125 C3: constrained initial-data operator",
+    "11475f67c5c8a2784f18d2ad244fa9ce2653465e R125 C4: constrained initial-data operator",
+    "f7f0911f5269c1dd7aa7c0824fe3168757ee121a R125 C5: implement batched constrained initial-data transfer",
+    "2f99426f5b7dd94ceaa67ef2bcaad67aad94fb67 R125 C6: integrate constrained response basis and held-out mixtures",
+    "1ae88316a0a0b214e07daa13410d4a9dc40967df R125 C7: execute supported native initial-data base scan",
+    "09d218e0d3d1e3f424693091d7ac8edf246c33c3 R125 C8: refine native initial columns and measure response conditioning",
+    "f7b5d518563a1ade42efe571de7a1ad6689a7017 R125 C9: audit multi-column response and native evidence"
+  ],
+  "scope": "balanced VII0/VIIh finite-start selected physical initial-data basis, table-only, frame-aware finite Euclidean conditioning; R78 unchanged",
+  "counts": {
+    "native_base": 12,
+    "native_fine": 12,
+    "native_smoke": 1,
+    "basis_batch_solves": 18,
+    "heldout_solves": 6,
+    "native_raw_verified": 96,
+    "oracle_npz_verified": 24,
+    "scoped_tests_passed": 100
+  },
+  "findings": {
+    "VII0_m0": {
+      "native_column": "relative_dust",
+      "base_error": 3.4438102852400143e-06,
+      "fine_error": 9.735650717958448e-07,
+      "host_empirical_rank": 3,
+      "high_empirical_rank": 2,
+      "radiation_empirical_rank": 2,
+      "singular_values": [
+        1.0428024610573683,
+        0.49059741554016856,
+        0.011892360517296429,
+        1.1075033008171157e-14,
+        7.337256408468606e-17,
+        1.0803285291347867e-19,
+        8.114387047523253e-21,
+        6.806586412623776e-37
+      ],
+      "empirical_scale": 1.5794900175234357e-07,
+      "heldout_relative": 8.963892061232942e-09
+    },
+    "VII0_m1": {
+      "native_column": "relative_dust",
+      "base_error": 3.264108079855593e-05,
+      "fine_error": 8.180095030060477e-06,
+      "host_empirical_rank": 5,
+      "high_empirical_rank": 4,
+      "radiation_empirical_rank": 4,
+      "singular_values": [
+        1.042970128513868,
+        0.5664177562648236,
+        0.014354411888708027,
+        0.00014673549035212305,
+        1.6004250594878693e-06,
+        1.279458321473289e-14,
+        9.419586280702596e-17,
+        7.3054393492746e-18
+      ],
+      "empirical_scale": 9.056064964097765e-08,
+      "heldout_relative": 2.3636902024470987e-08
+    },
+    "VII0_m2": {
+      "native_column": "metric",
+      "base_error": 0.00019067937424527162,
+      "fine_error": 4.770262981107787e-05,
+      "host_empirical_rank": 4,
+      "high_empirical_rank": 4,
+      "radiation_empirical_rank": 4,
+      "singular_values": [
+        0.3757252384029338,
+        0.14469653997935902,
+        0.011781735905596988,
+        9.662265387436324e-06,
+        1.2888675304204215e-14,
+        9.476633119859848e-16
+      ],
+      "empirical_scale": 1.6061229551295232e-07,
+      "heldout_relative": 1.3756280047208565e-07
+    },
+    "VIIh_m0": {
+      "native_column": "relative_dust",
+      "base_error": 2.1453955147168924e-05,
+      "fine_error": 5.4252686759612015e-06,
+      "host_empirical_rank": 5,
+      "high_empirical_rank": 5,
+      "radiation_empirical_rank": 5,
+      "singular_values": [
+        1.0193810034611248,
+        0.45946602790063656,
+        0.012016763639655,
+        8.859423698908374e-05,
+        2.1028441718351057e-06,
+        1.0530442983247628e-14,
+        5.628997328969859e-17,
+        1.1271089940795131e-17
+      ],
+      "empirical_scale": 1.6360015148107332e-07,
+      "heldout_relative": 1.6990904711514474e-08
+    },
+    "VIIh_m1": {
+      "native_column": "relative_dust",
+      "base_error": 3.805554749525863e-05,
+      "fine_error": 9.548905116381912e-06,
+      "host_empirical_rank": 5,
+      "high_empirical_rank": 5,
+      "radiation_empirical_rank": 5,
+      "singular_values": [
+        1.033626619432041,
+        0.5285209190894286,
+        0.01463852087395301,
+        0.00021174267964189038,
+        3.839664107501246e-06,
+        1.2008158795280114e-14,
+        3.556026121881689e-17,
+        2.3547105052794728e-17
+      ],
+      "empirical_scale": 1.8188171977769475e-07,
+      "heldout_relative": 1.5591882058634103e-08
+    },
+    "VIIh_m2": {
+      "native_column": "metric",
+      "base_error": 0.00018601780184698965,
+      "fine_error": 4.654079056945785e-05,
+      "host_empirical_rank": 4,
+      "high_empirical_rank": 4,
+      "radiation_empirical_rank": 4,
+      "singular_values": [
+        0.40954154559392103,
+        0.1507232232879781,
+        0.012490417818704915,
+        1.2645354787779105e-05,
+        1.1649536697650708e-14,
+        2.7631121442545774e-15
+      ],
+      "empirical_scale": 1.1731414084350232e-07,
+      "heldout_relative": 3.624555713601134e-08
+    }
+  },
+  "max_heldout_sky_relative": 1.3756280047208565e-07,
+  "remaining": [
+    "selected initial-data subspace, not all scalar density/expansion/higher radiation perturbations",
+    "arbitrary radiation/initial polarization columns oracle-only; native CLI not extended",
+    "leading RD tensor correspondence only; no early-time source history or actual AniCLASS regular-mode parity",
+    "finite time/truncation discrepancy not rigorous rank bound; no unique physical prior/observational covariance",
+    "C4K drivers not activated; historical opacity and conditional z<4 tail",
+    "R78 calibrated inference unchanged; independent native reviewer NOT_RUN"
+  ],
+  "cleanup": {
+    "removed_scratch": "/home/cosmosapjw/htt-r125-native.OhQLlK",
+    "verified_removed": true,
+    "scratch_apparent_bytes": 49892187,
+    "new_backup_bytes": 2472282,
+    "approx_net_apparent_bytes": 47419905,
+    "primary_worktrees": [
+      "worktree /home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "HEAD f7b5d518563a1ade42efe571de7a1ad6689a7017",
+      "branch refs/heads/research/r69-observable-physics-bridges-20261118"
+    ],
+    "preserved_tracked_dirty": [
+      "M docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/COMMANDER/ACQUISITION_STATUS.json",
+      " M docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/COMMANDER/MERGED.json",
+      " D legacy/research_supplements_20261123/COMPONENT_INDEX.json",
+      " D legacy/research_supplements_20261123/CONSOLIDATION_DECISIONS.md",
+      " D legacy/research_supplements_20261123/COVERAGE.json",
+      " D legacy/research_supplements_20261123/EXACT_HELPER_PROVENANCE.json",
+      " D legacy/research_supplements_20261123/FILE_CATALOGUE.json.gz",
+      " D legacy/research_supplements_20261123/README.md",
+      " D legacy/research_supplements_20261123/legacy_exact_helpers.py",
+      " D legacy/research_supplements_20261123/research_primitives.py",
+      " D legacy/research_supplements_20261123/response_primitives.py",
+      " M scripts/r100/source_intake.py",
+      " M scripts/r102/acquire_commander_pair.py",
+      " M scripts/r105/commander_ensemble.py",
+      " M tests/obsstat/test_r102_acquire_commander.py"
+    ],
+    "other_worktrees": "preserved; active or not proven redundant"
+  },
+  "next": "R126: quantify which initial-data combinations are erased by physical Thomson optical depth versus projected degeneracy; construct finite-time transfer Gram/adjoint in physically specified initial-state metric and observable response, test more physical early IC or low-opacity histories only with source-owned inputs. Extend native IC support only through explicit producer contract; consider an exact m0 flat analytic reduction and near-null amplification on k,a scales. Do not turn empirical numerical rank into survey attribution."
+}
