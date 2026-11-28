@@ -1,0 +1,119 @@
+{
+  "schema": "htt.r124.handoff/1",
+  "base": "f03b24eae0f8bdea8068cd6bc9365f8d6d2c2b89",
+  "prior_stage_commits": [
+    "533ce558c203eb92ce577386c145500ae864a704 R124 R1: scope Codazzi-constrained linear response",
+    "91375fccde2a20df8f7ec3b4d83c0c430deb1498 R124 R2: constrained linear sectors",
+    "790c89956b2a8aebfe3b15104f5a1edb4a346859 R124 R3: constrained linear sectors",
+    "338b5c459a84e234afd593c4c648890eabcca116 R124 R4: constrained linear sectors",
+    "4cd7b515e7ebbcb9d196da3a3ce848183c0235db R124 R5: constrained linear sectors",
+    "a6e3c447a6ea6857c870a76849da8b2a1476c615 R124 R6: constrained linear sectors",
+    "0b44146cc57e1ab02b26a7ecf9b40b5c85956818 R124 R7: constrained linear sectors",
+    "8843e8a53748483fa40fc9c1955b5d208f2e0fa0 R124 R8: constrained linear sectors",
+    "3d998b9723d8429d4fe0c17f8cb60b66a6ff3cb5 R124 R9: constrained linear sectors",
+    "89b9d287a267ed0115b08f88ca6840f7e1024ebb R124 R10: constrained linear sectors",
+    "beccfaa42cfa5326385ae1a1ee1412d3c623906d R124 C1: constrained linear sectors",
+    "9c8a316e65b4e12ca3403b6db97d1370d7c66ae1 R124 C2: constrained linear sectors",
+    "c8aa55d4e89d0933c5573f08b6f89e88dc8fde8e R124 C3: constrained linear sectors",
+    "d582b9581ddb4262dd298ba466b60b8fa9205a3b R124 C4: constrained linear sectors",
+    "968e28343d18d8e519a85ef7ef08f46bb4698086 R124 C5: implement independent scalar-vector recoil and observer response",
+    "e0ef7203a971b68674870d306bc6c56ea90032e1 R124 C6: integrate independent constrained sectors and angular ladder",
+    "00674f46d4fc03e68efd8a8553530ebb37718c29 R124 C7: execute signed scalar-vector native base scan",
+    "d8b31c110d030830210559cfc2a7978a7bd29967 R124 C8: refine scalar-vector response and observer comparison",
+    "b71be27e2df3e2afffe597461b1a5930907b3086 R124 C9: audit constrained sector and frame evidence"
+  ],
+  "scope": "balanced VII0/VIIh finite-start linear anisotropy and momentum subsystem, Codazzi-constrained coflow, Thomson recoil, normal/host observers; R78 unchanged",
+  "counts": {
+    "native_base": 16,
+    "native_fine": 8,
+    "native_normal": 8,
+    "native_tensor": 4,
+    "native_smoke": 1,
+    "independent_ODE_solves": 16,
+    "native_raw_verified": 144,
+    "oracle_histories_verified": 16,
+    "scoped_tests_passed": 93
+  },
+  "findings": {
+    "VII0_m0": {
+      "base_error": 2.034754834499665e-05,
+      "fine_host_error": 5.03753004572872e-06,
+      "fine_normal_error": 5.037530045728721e-06,
+      "max_oracle_codazzi": 0.0,
+      "doppler_abs_error": 5.275810838481065e-15
+    },
+    "VII0_m1": {
+      "base_error": 5.2003922856743576e-05,
+      "fine_host_error": 1.300033952544445e-05,
+      "fine_normal_error": 1.3000713513432036e-05,
+      "max_oracle_codazzi": 2.0973674186297586e-14,
+      "doppler_abs_error": 1.3378117353290887e-11
+    },
+    "VIIh_m0": {
+      "base_error": 6.404817847933722e-05,
+      "fine_host_error": 1.601188634524991e-05,
+      "fine_normal_error": 1.601274572331353e-05,
+      "max_oracle_codazzi": 8.51884751976173e-16,
+      "doppler_abs_error": 4.066828589407722e-11
+    },
+    "VIIh_m1": {
+      "base_error": 7.607525558321557e-05,
+      "fine_host_error": 1.9022840075339474e-05,
+      "fine_normal_error": 1.9023371739562293e-05,
+      "max_oracle_codazzi": 9.794527607565001e-16,
+      "doppler_abs_error": 2.5277679248711704e-11
+    }
+  },
+  "tensor_refinement": {
+    "VII0": {
+      "relative_6400": 1.4163709767897374e-05,
+      "relative_3200": 5.6078161639381365e-05,
+      "error_ratio": 3.959284859570111
+    },
+    "VIIh": {
+      "relative_6400": 1.4799597157236008e-05,
+      "relative_3200": 5.882454917860599e-05,
+      "error_ratio": 3.9747398901222617
+    }
+  },
+  "remaining": [
+    "scalar anisotropic/momentum subsystem only, not complete perturbed mean-density/expansion reconstruction",
+    "balanced VII0/VIIh first-order finite-start coflow, not general multifluid initial state or nonlinear solution",
+    "finite multipole/time numerical comparisons, no rigorous continuum bound",
+    "no regular-mode AniCLASS amplitude parity",
+    "C4K research drivers not production activated; historical donor and conditional z<4 tail",
+    "survey response/covariance/null and physical body/measure/transport unqualified",
+    "native independent model reviewer NOT_RUN"
+  ],
+  "cleanup": {
+    "removed_scratch": "/home/cosmosapjw/htt-r124-native.sanFm1",
+    "verified_removed": true,
+    "scratch_apparent_bytes": 83006183,
+    "new_backup_bytes": 4879066,
+    "approx_net_apparent_bytes": 78127117,
+    "primary_worktrees": [
+      "worktree /home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "HEAD b71be27e2df3e2afffe597461b1a5930907b3086",
+      "branch refs/heads/research/r69-observable-physics-bridges-20261118"
+    ],
+    "preserved_tracked_dirty": [
+      "M docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/COMMANDER/ACQUISITION_STATUS.json",
+      " M docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/COMMANDER/MERGED.json",
+      " D legacy/research_supplements_20261123/COMPONENT_INDEX.json",
+      " D legacy/research_supplements_20261123/CONSOLIDATION_DECISIONS.md",
+      " D legacy/research_supplements_20261123/COVERAGE.json",
+      " D legacy/research_supplements_20261123/EXACT_HELPER_PROVENANCE.json",
+      " D legacy/research_supplements_20261123/FILE_CATALOGUE.json.gz",
+      " D legacy/research_supplements_20261123/README.md",
+      " D legacy/research_supplements_20261123/legacy_exact_helpers.py",
+      " D legacy/research_supplements_20261123/research_primitives.py",
+      " D legacy/research_supplements_20261123/response_primitives.py",
+      " M scripts/r100/source_intake.py",
+      " M scripts/r102/acquire_commander_pair.py",
+      " M scripts/r105/commander_ensemble.py",
+      " M tests/obsstat/test_r102_acquire_commander.py"
+    ],
+    "other_worktrees": "preserved; active or not proven redundant"
+  },
+  "next": "R125: generalize finite-start balanced VII linear response to a physically typed multi-column initial-data operator (independent species relative tilt on Codazzi kernel, initial radiation quadrupoles, metric/tensor deformation) and test admissible native initial data where CLI supports them. First audit finite-start versus regular-mode mapping; compute frame-aware signed response and rank under physical seed units. Keep unimplemented native initial-data cases explicitly conditional and do not manufacture AniCLASS or observational parity."
+}
