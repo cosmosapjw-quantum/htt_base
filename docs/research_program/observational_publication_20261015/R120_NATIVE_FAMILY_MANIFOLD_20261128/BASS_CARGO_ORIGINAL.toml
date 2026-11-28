@@ -1,0 +1,37 @@
+[package]
+name = "bianchi_rustcore"
+version = "0.1.0"
+edition = "2021"
+description = "Rust compute core for the Bianchi background cosmology solver (R0/R1: ray tracing)."
+
+[lib]
+name = "bianchi_rustcore"
+# cdylib -> Python extension module;  rlib -> reusable by future Rust bins/benches.
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+diffsol = "0.16.1"
+nalgebra = "0.35.0"
+numpy = { version = "0.29.0", optional = true }
+# extension-module is a crate feature (below), NOT enabled here, so `cargo test` can
+# link libpython and run the pure-Rust unit tests. maturin enables it via pyproject.
+pyo3 = { version = "0.29.0", optional = true }
+rayon = "1.12.0"
+rec_microphysics = { version = "=0.1.1", git = "https://github.com/cosmosapjw-quantum/rec_bianchi.git", rev = "91df4b2a3ddcd86a9319823061ab3d580866c62d" }
+rei_microphysics = { git = "https://github.com/cosmosapjw-quantum/rei_bianchi.git", rev = "e93661d3b83beb4cb2c381339dde6e860c28e7c1" }
+
+[features]
+# Default CPU backend.  GPU (diffsol CUDA / cudarc) lands behind `cuda` later (plan §3, R5).
+default = ["cpu"]
+cpu = []
+cuda = []
+python-binding = ["dep:pyo3", "dep:numpy"]
+# maturin build enables this (see pyproject [tool.maturin].features) to produce the
+# Python extension; omitted for `cargo test` so unit tests link against libpython.
+extension-module = ["python-binding", "pyo3/extension-module"]
+
+# Release profile tuned for the numeric hot loops (plan §5 benchmarking).
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
