@@ -1,0 +1,297 @@
+{
+  "schema": "htt.r127.handoff/1",
+  "base": "f1018f335b7e1095779ad4d75f72bb9abfee75fe",
+  "prior_stage_commits": [
+    "90239bb651eccc72d3058b4fda64532370c2c82b R127 R1: opacity memory kernel",
+    "9d8264284ff21f04341194d793eba69aec0f26b2 R127 R2: opacity memory kernel",
+    "a07d6eb756e145f905b4c8dc9f109dc4a593e6f5 R127 R3: opacity memory kernel",
+    "27b7c796920dc8f6fddab931563f90f0c111fc97 R127 R4: opacity memory kernel",
+    "d730942dd57b784a16f55b4ba52e56cf6501705c R127 R5: opacity memory kernel",
+    "e5c77b1317789cceddc00eb94c173209ff8fc55e R127 R6: opacity memory kernel",
+    "a3b06d572f8dcc8e5fd48ba4f0ea84653f1242f8 R127 R7: opacity memory kernel",
+    "098e17ca26e8904a8b4b8b448ed0097bba6bedba R127 R8: opacity memory kernel",
+    "a680c36de430b8c055faf7bc26842f0df7cba9ad R127 R9: opacity memory kernel",
+    "78ea768d038b48072fb53eef4badfa9ebd353f2d R127 R10: opacity memory kernel",
+    "a94846f00a521421b789c49eedc909c500e90238 R127 C1: opacity memory kernel",
+    "585aba6f7d7df2c68d875b1928636d46331b0943 R127 C2: opacity memory kernel",
+    "f1c6a0d025e740e77b1b81cc10e0bc74bce7f664 R127 C3: opacity memory kernel",
+    "f0ca358d2b69044bf0c18188757914416a5e8080 R127 C4: opacity memory kernel",
+    "885f1a561ccccc224e00f49f2ed2c4eb075de29c R127 C5: implement nodal opacity tangents and time-local adjoint",
+    "b1aa950a31c4fd25f8965e4d7640703e5260efa1 R127 C6: integrate signed nodal-window tangents",
+    "8b035cfdbc9a6ec1c393ff5e1620ceca2129673e R127 C7: independent channel adjoints and source-knot response kernels",
+    "58389ea54e9b3d8a0590465184797530d2012332 R127 C8: native nested signed opacity stencils and window sensitivity",
+    "0870bef42f5a619f8410b5bee1c5efc5f74348d7 R127 C9: source-knot kernel and native evidence audit"
+  ],
+  "scope": "finite-start balanced VII0/VIIh fixed-clock relative nodal opacity sensitivity; R78 unchanged",
+  "counts": {
+    "tangent_batches": 12,
+    "adjoint_batches": 6,
+    "channel_goals": 18,
+    "independent_FD_solves": 8,
+    "native_base": 8,
+    "native_fine": 8,
+    "native_smoke": 1,
+    "native_raw_verified": 64,
+    "scoped_tests_passed": 120
+  },
+  "max_adjoint_tangent_relative": 7.91240017445422e-07,
+  "max_quadrature_group_abs": 3.099213594093264e-14,
+  "max_R126_global_abs_gap": 6.428457384466402e-10,
+  "max_prior_R126_sky_relative": 2.085074783655942e-07,
+  "max_tangent_L12_to_L20_relative": 1.0190682650813394e-06,
+  "native": {
+    "VIIh_m1": {
+      "column": "relative_dust",
+      "window": "rec_peak",
+      "tangent_norm": 0.009579946757226489,
+      "fd": {
+        "h03": {
+          "width": 0.03,
+          "norm": 0.009583109120832734,
+          "relative_to_tangent": 0.00033010838033790984,
+          "absolute_to_tangent": 3.1624207077514476e-06
+        },
+        "h01": {
+          "width": 0.01,
+          "norm": 0.0095803209471975,
+          "relative_to_tangent": 3.9059964327643495e-05,
+          "absolute_to_tangent": 3.7419237859799064e-07
+        }
+      },
+      "native": {
+        "base": {
+          "norm": 0.009583045048620417,
+          "relative_to_matched_fd": 3.797990319074748e-05,
+          "relative_to_tangent": 0.00032540433536738187
+        },
+        "fine": {
+          "norm": 0.009583123220523976,
+          "relative_to_matched_fd": 9.21581683537155e-06,
+          "relative_to_tangent": 0.0003316647561813687
+        }
+      },
+      "time_error_ratio": 4.121165152173542,
+      "path": "fd/VIIh_m1.npz",
+      "sha256": "cb37c97520368d886507227a3311fd345e6285fd43f28152a6508d1df21d4734"
+    },
+    "VIIh_m2": {
+      "column": "metric",
+      "window": "rei_donor",
+      "tangent_norm": 0.0013993592781321705,
+      "fd": {
+        "h03": {
+          "width": 0.03,
+          "norm": 0.0013993585258329996,
+          "relative_to_tangent": 5.464228001947209e-07,
+          "absolute_to_tangent": 7.646418152354438e-10
+        },
+        "h01": {
+          "width": 0.01,
+          "norm": 0.0013993611256908692,
+          "relative_to_tangent": 1.3207597563422933e-06,
+          "absolute_to_tangent": 1.848217419221173e-09
+        }
+      },
+      "native": {
+        "base": {
+          "norm": 0.0013995018563100726,
+          "relative_to_matched_fd": 0.00011843365157219005,
+          "relative_to_tangent": 0.00011792180925439352
+        },
+        "fine": {
+          "norm": 0.0013993956479962696,
+          "relative_to_matched_fd": 3.0612457050937717e-05,
+          "relative_to_tangent": 3.0100648185618684e-05
+        }
+      },
+      "time_error_ratio": 3.8688058059214887,
+      "path": "fd/VIIh_m2.npz",
+      "sha256": "686e13b484fa6bff49aae219067cdb40f63655aa72be600c9f7dd26a168c7e82"
+    }
+  },
+  "findings": {
+    "VII0_m0": {
+      "tau": [
+        29.369001899101253,
+        3.1297204022017646,
+        0.04181305677175539,
+        0.03198789668689721,
+        0.022352975781365622
+      ],
+      "loss_over_initial_size": [
+        0.540184906627346,
+        0.0010303056393812385,
+        0.0003250344804126417,
+        1.5181210707377623e-05,
+        4.010415943641797e-06
+      ],
+      "total_goal_gradient": [
+        -6.252723113598331e-05,
+        -0.002037179506424855,
+        -0.0007048464583967206,
+        -0.00121109656882329,
+        -0.0008481910617040981
+      ],
+      "global_derivative": -0.004863840826484946
+    },
+    "VII0_m1": {
+      "tau": [
+        29.369001899101253,
+        3.1297204022017646,
+        0.04181305677175539,
+        0.03198789668689721,
+        0.022352975781365622
+      ],
+      "loss_over_initial_size": [
+        0.46246895260746923,
+        0.0012371510925443994,
+        0.00039214102633118803,
+        1.839303163707893e-05,
+        4.8614003832763834e-06
+      ],
+      "total_goal_gradient": [
+        -0.00015515995702959702,
+        -0.004268941380734226,
+        -0.0014144848495638072,
+        -0.0024155898375700473,
+        -0.0016924171597367218
+      ],
+      "global_derivative": -0.0099465931846344
+    },
+    "VII0_m2": {
+      "tau": [
+        29.369001899101253,
+        3.1297204022017646,
+        0.04181305677175539,
+        0.03198789668689721,
+        0.022352975781365622
+      ],
+      "loss_over_initial_size": [
+        0.5219889434052799,
+        0.001411747815989429,
+        0.00031727692575317287,
+        5.2674634815446176e-06,
+        9.048634704418347e-07
+      ],
+      "total_goal_gradient": [
+        -7.032725636680882e-05,
+        -0.0005832891678898413,
+        -9.468747711503168e-05,
+        -0.0001143373027676925,
+        -8.276874384101473e-05
+      ],
+      "global_derivative": -0.000945409947980389
+    },
+    "VIIh_m0": {
+      "tau": [
+        29.36894251080947,
+        3.1296967865529557,
+        0.0418113835276463,
+        0.031859461258224246,
+        0.02216486296491691
+      ],
+      "loss_over_initial_size": [
+        0.5411311096850435,
+        0.0010375840300458523,
+        0.0003268726871087318,
+        1.283629164233824e-05,
+        3.0357620020748826e-06
+      ],
+      "total_goal_gradient": [
+        -3.107413017199713e-05,
+        -0.0009453182975742221,
+        -0.00040905490311229497,
+        -0.0007511063392990285,
+        -0.0005183834372594534
+      ],
+      "global_derivative": -0.002654937107416996
+    },
+    "VIIh_m1": {
+      "tau": [
+        29.36894251080947,
+        3.1296967865529557,
+        0.0418113835276463,
+        0.031859461258224246,
+        0.02216486296491691
+      ],
+      "loss_over_initial_size": [
+        0.4633581313271559,
+        0.0012452339543703925,
+        0.0003941977545290339,
+        1.579123460721644e-05,
+        3.7740844680070714e-06
+      ],
+      "total_goal_gradient": [
+        -9.040122258152858e-05,
+        -0.002330695522899941,
+        -0.000882561292226904,
+        -0.0015646574719978916,
+        -0.0010837468403121066
+      ],
+      "global_derivative": -0.00595206235001837
+    },
+    "VIIh_m2": {
+      "tau": [
+        29.36894251080947,
+        3.1296967865529557,
+        0.0418113835276463,
+        0.031859461258224246,
+        0.02216486296491691
+      ],
+      "loss_over_initial_size": [
+        0.5219846297489438,
+        0.0014116956626933283,
+        0.00031722975308276827,
+        5.159816249242791e-06,
+        9.067026867133785e-07
+      ],
+      "total_goal_gradient": [
+        -6.718939735486529e-05,
+        -0.0006041289038290916,
+        -9.360953025121904e-05,
+        -0.00012607736277020113,
+        -0.00012140798819649661
+      ],
+      "global_derivative": -0.0010124131824018738
+    }
+  },
+  "remaining": [
+    "relative nodal opacity is a controlled scalar fixed-clock intervention; full source-owner derivatives of geometry, expansion, clocks, matter and IC not implemented",
+    "historical REI donor and conditional z<4 continuation not a newly qualified physical history",
+    "finite Galerkin response and quadrature differences not rigorous continuum bounds; no calibrated observation covariance or null",
+    "native supports only selected relative dust and tensor metric seeds; arbitrary radiation IC oracle-only",
+    "C4M research drivers not activated; REC/REI were C5 at intake",
+    "native independent reviewer NOT_RUN"
+  ],
+  "cleanup": {
+    "removed_scratch": "/home/cosmosapjw/htt-r127-native.zfpKBY",
+    "verified_removed": true,
+    "scratch_apparent_bytes": 36088488,
+    "new_backup_bytes": 1231210,
+    "approx_net_apparent_bytes": 34857278,
+    "primary_worktrees": [
+      "worktree /home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "HEAD 0870bef42f5a619f8410b5bee1c5efc5f74348d7",
+      "branch refs/heads/research/r69-observable-physics-bridges-20261118"
+    ],
+    "preserved_tracked_dirty": [
+      "M docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/COMMANDER/ACQUISITION_STATUS.json",
+      " M docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/COMMANDER/MERGED.json",
+      " D legacy/research_supplements_20261123/COMPONENT_INDEX.json",
+      " D legacy/research_supplements_20261123/CONSOLIDATION_DECISIONS.md",
+      " D legacy/research_supplements_20261123/COVERAGE.json",
+      " D legacy/research_supplements_20261123/EXACT_HELPER_PROVENANCE.json",
+      " D legacy/research_supplements_20261123/FILE_CATALOGUE.json.gz",
+      " D legacy/research_supplements_20261123/README.md",
+      " D legacy/research_supplements_20261123/legacy_exact_helpers.py",
+      " D legacy/research_supplements_20261123/research_primitives.py",
+      " D legacy/research_supplements_20261123/response_primitives.py",
+      " M scripts/r100/source_intake.py",
+      " M scripts/r102/acquire_commander_pair.py",
+      " M scripts/r105/commander_ensemble.py",
+      " M tests/obsstat/test_r102_acquire_commander.py"
+    ],
+    "other_worktrees": "preserved; not proven redundant"
+  },
+  "next": "R128: use signed source-window transfer rather than a single scalar objective to construct conditional opacity-shape modes, explicitly project out total optical depth using a declared source measure and physical metric; compare independent held-out nodal interventions and prioritize actual source-owned low-z and REC/REI derivative intake. No fabricated source parameter or covariance."
+}
