@@ -1,0 +1,44 @@
+{
+  "methods": {
+    "DOP853": {
+      "endpoint": [
+        -0.00018061655600770332,
+        -1.113216840533724,
+        0.04132175716714079,
+        -2.4200983028032796
+      ],
+      "tau": 32.59487623054303,
+      "method": "DOP853",
+      "nfev": 47789,
+      "rtol": 2e-10,
+      "atol": 2e-12,
+      "max_step": 0.02,
+      "unit_seed_T20": -0.4412042692242025,
+      "unit_seed_E20": -0.04011569723402736,
+      "history_file": "ORACLE_DOP853.tsv.gz",
+      "history_raw_sha256": "d313cb56820b5ed2a79e8d568ff6e6cbda52b5a61ded575ebc370ed0413183a0"
+    },
+    "Radau": {
+      "endpoint": [
+        -0.00018061654985802574,
+        -1.1132167373988477,
+        0.041321763632298655,
+        -2.4200983175478368
+      ],
+      "tau": 32.59487623054303,
+      "method": "Radau",
+      "nfev": 65010,
+      "rtol": 5e-11,
+      "atol": 5e-13,
+      "max_step": 0.01,
+      "unit_seed_T20": -0.44120422834847556,
+      "unit_seed_E20": -0.040115703510486385,
+      "history_file": "ORACLE_Radau.tsv.gz",
+      "history_raw_sha256": "76ba39e7505a3de598d70f8252441f833a16fabe3f6326cd740bff86b73682db"
+    }
+  },
+  "endpoint_relative_difference": 3.918056188432217e-08,
+  "opacity_sha256": "789d3f9b0c10e531ee2965e8d186a0f274ca942e68ddbefb1b7d33af03344e26",
+  "constants_sha256": "0ae59545126a68aa42dadb1b11c5aba661fe9453b194464d5ca1b0f312c8e7bd",
+  "scope": "continuous linear flat I, same finite-start table history, unit derivative not finite unit shear"
+}
