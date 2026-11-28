@@ -1,0 +1,138 @@
+{
+  "native_cases": {
+    "rec_subswap": {
+      "path": "direct/rec_subswap.npz",
+      "sha256": "0df007674b117c653e5ab829062dfac05819a78de21e7c422aeb44e8f676b84b",
+      "m": 1,
+      "seed": "relative_dust",
+      "direction": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.027437830329048125,
+        0.0,
+        0.0,
+        -1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "depth_residual": -2.959871930885427e-17,
+      "tangent_norm": 0.0027704755619366935,
+      "fd": {
+        "h03": {
+          "width": 0.03,
+          "norm": 0.002770387745985616,
+          "relative_to_tangent": 3.1705562045707964e-05,
+          "max_tau_difference": 0.0
+        },
+        "h01": {
+          "width": 0.01,
+          "norm": 0.0027702022555691486,
+          "relative_to_tangent": 9.865010907191196e-05,
+          "max_tau_difference": 0.0
+        }
+      },
+      "wall_s": 12.130698552005924
+    },
+    "rei_subswap": {
+      "path": "direct/rei_subswap.npz",
+      "sha256": "50bc2bc42df0eb585cbdbaec75ea705f5dd0ce62c0653ba1a5e0d0bb72f8bad0",
+      "m": 2,
+      "seed": "metric",
+      "direction": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        -0.04992371500002841
+      ],
+      "depth_residual": -6.2256921623191075e-19,
+      "tangent_norm": 2.8641468321846786e-05,
+      "fd": {
+        "h03": {
+          "width": 0.03,
+          "norm": 2.8639930079915863e-05,
+          "relative_to_tangent": 5.3713761265636783e-05,
+          "max_tau_difference": 0.0
+        },
+        "h01": {
+          "width": 0.01,
+          "norm": 2.8632932632247952e-05,
+          "relative_to_tangent": 0.0002983725654734616,
+          "max_tau_difference": 0.0
+        }
+      },
+      "wall_s": 6.392561061074957
+    }
+  },
+  "compensation": {
+    "scalar_compensation": {
+      "path": "direct/scalar_compensation.npz",
+      "sha256": "60e3950501188b00f56293d8db87da77be834bd25312c4c762ae02b93fa14296",
+      "family": "VII0",
+      "m": 0,
+      "selection": "raw",
+      "profile_rank": 3,
+      "width": 0.03,
+      "max_relative_nodal_change": 0.03,
+      "initial_relative_shift": 0.004568033804891996,
+      "IC_shift_per_unit_shape": 0.15226779349639988,
+      "depth_residual": -1.6588293239028218e-17,
+      "raw_prediction_norm": 0.008873520490150813,
+      "profile_prediction_norm": 7.115346106799234e-18,
+      "raw_fd_norm": 0.008873627811499042,
+      "comp_fd_norm": 3.536272852143539e-08,
+      "predicted_retained_fraction": 8.0186281360334165e-16,
+      "measured_retained_fraction": 3.9851489461401565e-06,
+      "raw_fd_error_over_raw": 1.3354603592226616e-05,
+      "comp_fd_error_over_raw": 3.985197145026188e-06,
+      "wall_s": 19.16291802492924
+    },
+    "tensor_compensation": {
+      "path": "direct/tensor_compensation.npz",
+      "sha256": "54080cdeb844a550d9e60bd7539a8c3581407b3ffb38ef1a08e4cc05535fbf21",
+      "family": "VIIh",
+      "m": 2,
+      "selection": "profiled",
+      "profile_rank": 8,
+      "width": 0.0020888316507921938,
+      "max_relative_nodal_change": 0.0020888316507921938,
+      "initial_relative_shift": 0.05000000000000001,
+      "IC_shift_per_unit_shape": 23.93682611092062,
+      "depth_residual": -1.0828469197698976e-17,
+      "raw_prediction_norm": 0.0037474893262102087,
+      "profile_prediction_norm": 0.0005206182064209109,
+      "raw_fd_norm": 0.003749886092390731,
+      "comp_fd_norm": 0.0005206456830046254,
+      "predicted_retained_fraction": 0.13892453349491082,
+      "measured_retained_fraction": 0.13884306620969625,
+      "raw_fd_error_over_raw": 0.0006495817031563096,
+      "comp_fd_error_over_raw": 0.00031075959942768373,
+      "wall_s": 17.59738144406583
+    }
+  },
+  "counts": {
+    "directional_tangents": 2,
+    "native_case_FD_solves": 8,
+    "compensation_FD_solves": 8
+  },
+  "scope": "finite independent changed-table and co-varying-IC controls; no native compensation parity"
+}
