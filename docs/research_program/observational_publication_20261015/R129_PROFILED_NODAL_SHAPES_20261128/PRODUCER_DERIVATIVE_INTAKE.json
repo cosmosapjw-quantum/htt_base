@@ -1,0 +1,148 @@
+{
+  "bass": {
+    "source": "research/r118c4n_rei_stage_owner/TABLE_JET.npz",
+    "sha256": "af599b4a9564f02e4a11412d28240a2517f8704aab1de1c110e6ba166946c0de",
+    "arrays": {
+      "base": {
+        "shape": [
+          9,
+          11
+        ],
+        "dtype": "float128"
+      },
+      "first": {
+        "shape": [
+          9,
+          11
+        ],
+        "dtype": "float128"
+      },
+      "second": {
+        "shape": [
+          9,
+          11
+        ],
+        "dtype": "float128"
+      }
+    },
+    "qualification": "not matched historical complete opacity derivative"
+  },
+  "rec": {
+    "source": "research/r118c4n_exact_spline_atomic/EXACT_HISTORY.npz",
+    "sha256": "0e75163c52fbc83c17f9dcf81b672e2c57bfc822fed7003c6466526cad9d5e9a",
+    "arrays": {
+      "u": {
+        "shape": [
+          1774
+        ],
+        "dtype": "float64",
+        "first": -7.01301578963963,
+        "last": -7.000998870128049
+      },
+      "y": {
+        "shape": [
+          1774,
+          2
+        ],
+        "dtype": "float64"
+      },
+      "dy": {
+        "shape": [
+          1774,
+          2,
+          2
+        ],
+        "dtype": "float64"
+      },
+      "last": {
+        "shape": [
+          32,
+          314,
+          7
+        ],
+        "dtype": "float64"
+      },
+      "last_d": {
+        "shape": [
+          2,
+          32,
+          314,
+          7
+        ],
+        "dtype": "float64"
+      },
+      "limits": {
+        "shape": [
+          10,
+          6
+        ],
+        "dtype": "float64"
+      }
+    },
+    "qualification": "not matched historical complete opacity derivative"
+  },
+  "rei": {
+    "source": "research/r118c4n_dg_jvp/DG_JVP.npz",
+    "sha256": "7985c0922b1403a0abb968796c25294afca3adc7470ac3d9d909b1cda34e86f1",
+    "arrays": {
+      "base_rhs_0": {
+        "shape": [
+          2,
+          4128
+        ],
+        "dtype": "float64"
+      },
+      "d_rhs_0": {
+        "shape": [
+          2,
+          4128
+        ],
+        "dtype": "float64"
+      },
+      "d_increment_0": {
+        "shape": [
+          2,
+          4128
+        ],
+        "dtype": "float64"
+      },
+      "full_secant_0": {
+        "shape": [
+          2,
+          4128
+        ],
+        "dtype": "float64"
+      },
+      "base_rhs_22": {
+        "shape": [
+          2,
+          4128
+        ],
+        "dtype": "float64"
+      },
+      "d_rhs_22": {
+        "shape": [
+          2,
+          4128
+        ],
+        "dtype": "float64"
+      },
+      "d_increment_22": {
+        "shape": [
+          2,
+          4128
+        ],
+        "dtype": "float64"
+      },
+      "full_secant_22": {
+        "shape": [
+          2,
+          4128
+        ],
+        "dtype": "float64"
+      }
+    },
+    "qualification": "not matched historical complete opacity derivative"
+  },
+  "decision": "C4N BASS prescribed table jet from actual short REI stage, REC represented fixed-H exact inverse spline with finite gas derivatives, REI local fixed-geometry/theta DG JVP; no matched global donor or qualified z<4 tail."
+}
