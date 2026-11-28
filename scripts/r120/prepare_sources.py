@@ -19,11 +19,13 @@ def prepare(workspace):
         dest.mkdir(parents=True,exist_ok=True)
         with tarfile.open(fileobj=io.BytesIO(raw)) as t:t.extractall(dest,filter="data")
     for n,s in lock.items():
-        assert git(s,"rev-parse",s["commit"]+":"+s["crate"]).decode().strip()==s["tree"]
+        if git(s,"rev-parse",s["commit"]+":"+s["crate"]).decode().strip()!=s["tree"]:
+            raise ValueError("crate tree mismatch: "+n)
         export(git(s,"archive",s["commit"]+":"+s["crate"]),paths[n])
     bass=lock["bass"]
     for rel,tree in bass["extra_trees"].items():
-        assert git(bass,"rev-parse",bass["commit"]+":"+rel).decode().strip()==tree
+        if git(bass,"rev-parse",bass["commit"]+":"+rel).decode().strip()!=tree:
+            raise ValueError("BASS extra tree mismatch: "+rel)
         export(git(bass,"archive",bass["commit"],rel),d/"bass_repo")
     rei=lock["rei"]
     for rel,h in external.items():

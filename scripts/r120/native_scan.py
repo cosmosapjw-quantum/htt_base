@@ -3,7 +3,7 @@ import argparse,gzip,hashlib,json,math,os,shutil,subprocess,time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 import numpy as np
-from common.native_morphology_atlas import decode_signed_modes
+from common.native_morphology_atlas import RECEIPT_SHA, decode_signed_modes
 from common.morphology_manifold import initial_geometry,lie_text
 from scripts.r120.plan_grid import make
 
@@ -20,6 +20,7 @@ def sources(scratch):
     binary=scratch/"target/release/examples/homogeneous_sky";table=scratch/"merged_ZERO.tsv"
     if sha(binary)!=c["binary_sha256"]["bass"] or sha(table)!=c["opacity_sha256"]:
         raise ValueError("native binary or history mismatch")
+    if sha(R114)!=RECEIPT_SHA:raise ValueError("historical anchor receipt changed")
     x=json.loads(R114.read_text());a=x["cosmology_anchors"]
     ts=np.loadtxt(table,skiprows=1)
     if ts.ndim!=2 or ts.shape[1]!=2 or not np.isfinite(ts).all() or ts[0,0]!=0 or abs(ts[-1,0]-a["duration"])>1e-12 or np.any(np.diff(ts[:,0])<=0) or np.any(ts[:,1]<0):
