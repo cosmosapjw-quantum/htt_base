@@ -1,0 +1,314 @@
+{
+  "schema": "htt.r129.handoff/1",
+  "base": "a80fc61991944b6968a7df62d2d8baa3f185c501",
+  "prior_stage_commits": [
+    "49cc2a730d78cc87cfbee8fb372916a7f79a63d0 R129 R1: profiled nodal shapes",
+    "311c788d5451e1510c91831699bcdbce9983d1e0 R129 R2: profiled nodal shapes",
+    "7ba29069dc6c0ca0f4a5eadd718ba3016712c127 R129 R3: profiled nodal shapes",
+    "5602a51f66e47c58b3c4f303e24cf7f0a2cfa716 R129 R4: profiled nodal shapes",
+    "a28cdc3883f57ed43e907a7d9b3665a92de88952 R129 R5: profiled nodal shapes",
+    "acd75efa1ffcbd23127e67252551945ce4763939 R129 R6: profiled nodal shapes",
+    "a4738553e264b24b2ee6ea129e5104d553eb6edf R129 R7: profiled nodal shapes",
+    "089bb9bf483e39005bea549f638144c001c0c9df R129 R8: profiled nodal shapes",
+    "a20cb9124f2d6f93032e8db5c0ad6d93f5b97812 R129 R9: profiled nodal shapes",
+    "dabcf8bd2dc0f8332f6212e72b23b42fdeed2d8b R129 R10: profiled nodal shapes",
+    "e753dfd55b335980f28356ee235c82f4758fe036 R129 C1: profiled nodal shapes",
+    "e4f4957fba922e9ad0f56f0a7f77a14b3ad0dd6b R129 C2: profiled nodal shapes",
+    "45c6f71ebe5c74cc7781182b6ac5a6893b35fe1c R129 C3: profiled nodal shapes",
+    "acb91ab60ea5e30c25679ab76f540f4003d2d5a8 R129 C4: profiled nodal shapes",
+    "d8c41435656f59a6752693ef4b9a59e876d6a254 R129 C5: nested source basis and real physical nuisance profile",
+    "ccdd769e1afde5caf3bbba451dc76dd6659c8c9b R129 C6: integrate refined source opacity tangents and metrics",
+    "e8666eadb2034591a660256a4e0dce5709bfa383 R129 C7: profile physical initial conditions and verify direct shape compensations",
+    "eb8d6b88e9b3eff72a46b9bbb019d287a11fc432 R129 C8: native refined equal-depth signed stencils",
+    "5fea8b39c8200dce1a45e3ab6473375a0c03f3bb R129 C9: audit refined transfer and nuisance projection evidence"
+  ],
+  "scope": "finite-start balanced VII0/VIIh nested equal-depth opacity shape and physically whitened initial-state nuisance; R78 unchanged",
+  "counts": {
+    "nested_tangent_batches": 12,
+    "profiles": 432,
+    "direct_directional_tangents": 2,
+    "independent_changed_table_solves": 16,
+    "native_base": 8,
+    "native_fine": 8,
+    "native_smoke": 1,
+    "native_raw_verified": 64,
+    "scoped_tests_passed": 133
+  },
+  "audit": {
+    "nested_verified": 12,
+    "profiles_verified": 432,
+    "direct_verified": 4,
+    "native_verified": 16,
+    "native_raw_verified": 64,
+    "max_nested_aggregation_relative": 3.1684829810267855e-06,
+    "max_baseline_relative": 5.180217470633743e-07,
+    "max_constraint": 5.588592739622089e-13,
+    "max_depth_null_residual": 2.97342310278878e-14,
+    "max_metric_orthogonality": 8.881784197001252e-16,
+    "max_singular_replay_error": 3.3306690738754696e-16,
+    "max_fit_closure_empirical": 6.824153577929977e-12,
+    "max_fit_closure_machine": 3.6233233610479552e-06,
+    "max_projector_motion": 2.3951629862027896e-05,
+    "max_direct_depth_residual": 2.959871930885427e-17,
+    "native": {
+      "base": {
+        "verified": 8,
+        "max_gauss": 0.00032209687584328073,
+        "max_codazzi": 2.3890020056753676e-14,
+        "max_jacobi": 4.756288522179909e-24,
+        "min_screen": 7.610051512681496e-14
+      },
+      "fine": {
+        "verified": 8,
+        "max_gauss": 8.058249945674945e-05,
+        "max_codazzi": 6.1387947565704434e-15,
+        "max_jacobi": 1.1713170283849399e-23,
+        "min_screen": 7.610051510970424e-14
+      }
+    },
+    "scope": "direct source/hash and finite matrix/FD re-read; not independent fresh-context reviewer or trajectory reintegration"
+  },
+  "direct": {
+    "native_cases": {
+      "rec_subswap": {
+        "path": "direct/rec_subswap.npz",
+        "sha256": "0df007674b117c653e5ab829062dfac05819a78de21e7c422aeb44e8f676b84b",
+        "m": 1,
+        "seed": "relative_dust",
+        "direction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.027437830329048125,
+          0.0,
+          0.0,
+          -1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "depth_residual": -2.959871930885427e-17,
+        "tangent_norm": 0.0027704755619366935,
+        "fd": {
+          "h03": {
+            "width": 0.03,
+            "norm": 0.002770387745985616,
+            "relative_to_tangent": 3.1705562045707964e-05,
+            "max_tau_difference": 0.0
+          },
+          "h01": {
+            "width": 0.01,
+            "norm": 0.0027702022555691486,
+            "relative_to_tangent": 9.865010907191196e-05,
+            "max_tau_difference": 0.0
+          }
+        },
+        "wall_s": 12.130698552005924
+      },
+      "rei_subswap": {
+        "path": "direct/rei_subswap.npz",
+        "sha256": "50bc2bc42df0eb585cbdbaec75ea705f5dd0ce62c0653ba1a5e0d0bb72f8bad0",
+        "m": 2,
+        "seed": "metric",
+        "direction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          -0.04992371500002841
+        ],
+        "depth_residual": -6.2256921623191075e-19,
+        "tangent_norm": 2.8641468321846786e-05,
+        "fd": {
+          "h03": {
+            "width": 0.03,
+            "norm": 2.8639930079915863e-05,
+            "relative_to_tangent": 5.3713761265636783e-05,
+            "max_tau_difference": 0.0
+          },
+          "h01": {
+            "width": 0.01,
+            "norm": 2.8632932632247952e-05,
+            "relative_to_tangent": 0.0002983725654734616,
+            "max_tau_difference": 0.0
+          }
+        },
+        "wall_s": 6.392561061074957
+      }
+    },
+    "compensation": {
+      "scalar_compensation": {
+        "path": "direct/scalar_compensation.npz",
+        "sha256": "60e3950501188b00f56293d8db87da77be834bd25312c4c762ae02b93fa14296",
+        "family": "VII0",
+        "m": 0,
+        "selection": "raw",
+        "profile_rank": 3,
+        "width": 0.03,
+        "max_relative_nodal_change": 0.03,
+        "initial_relative_shift": 0.004568033804891996,
+        "IC_shift_per_unit_shape": 0.15226779349639988,
+        "depth_residual": -1.6588293239028218e-17,
+        "raw_prediction_norm": 0.008873520490150813,
+        "profile_prediction_norm": 7.115346106799234e-18,
+        "raw_fd_norm": 0.008873627811499042,
+        "comp_fd_norm": 3.536272852143539e-08,
+        "predicted_retained_fraction": 8.0186281360334165e-16,
+        "measured_retained_fraction": 3.9851489461401565e-06,
+        "raw_fd_error_over_raw": 1.3354603592226616e-05,
+        "comp_fd_error_over_raw": 3.985197145026188e-06,
+        "wall_s": 19.16291802492924
+      },
+      "tensor_compensation": {
+        "path": "direct/tensor_compensation.npz",
+        "sha256": "54080cdeb844a550d9e60bd7539a8c3581407b3ffb38ef1a08e4cc05535fbf21",
+        "family": "VIIh",
+        "m": 2,
+        "selection": "profiled",
+        "profile_rank": 8,
+        "width": 0.0020888316507921938,
+        "max_relative_nodal_change": 0.0020888316507921938,
+        "initial_relative_shift": 0.05000000000000001,
+        "IC_shift_per_unit_shape": 23.93682611092062,
+        "depth_residual": -1.0828469197698976e-17,
+        "raw_prediction_norm": 0.0037474893262102087,
+        "profile_prediction_norm": 0.0005206182064209109,
+        "raw_fd_norm": 0.003749886092390731,
+        "comp_fd_norm": 0.0005206456830046254,
+        "predicted_retained_fraction": 0.13892453349491082,
+        "measured_retained_fraction": 0.13884306620969625,
+        "raw_fd_error_over_raw": 0.0006495817031563096,
+        "comp_fd_error_over_raw": 0.00031075959942768373,
+        "wall_s": 17.59738144406583
+      }
+    },
+    "counts": {
+      "directional_tangents": 2,
+      "native_case_FD_solves": 8,
+      "compensation_FD_solves": 8
+    },
+    "scope": "finite independent changed-table and co-varying-IC controls; no native compensation parity"
+  },
+  "native": {
+    "rec_subswap": {
+      "sector": "VIIh_m1",
+      "column": "relative_dust",
+      "shape_sha256": "0df007674b117c653e5ab829062dfac05819a78de21e7c422aeb44e8f676b84b",
+      "native": {
+        "base": {
+          "norm": 0.0027703675495291814,
+          "relative_to_same_width_oracle": 3.741007193360183e-05,
+          "relative_to_tangent": 5.3782168986464295e-05,
+          "native_depth_spread": 1.1474721617332762e-07,
+          "native_depths": [
+            32.594723801443685,
+            32.5947239161909,
+            32.594723801443685,
+            32.5947239161909
+          ]
+        },
+        "fine": {
+          "norm": 0.0027705020071247042,
+          "relative_to_same_width_oracle": 4.218515029528244e-05,
+          "relative_to_tangent": 1.3255369673289109e-05,
+          "native_depth_spread": 2.758006445446881e-08,
+          "native_depths": [
+            32.59453725396359,
+            32.59453722638354,
+            32.594537253963594,
+            32.59453722638353
+          ]
+        }
+      },
+      "time_error_ratio": 0.8868066528563582
+    },
+    "rei_subswap": {
+      "sector": "VIIh_m2",
+      "column": "metric",
+      "shape_sha256": "50bc2bc42df0eb585cbdbaec75ea705f5dd0ce62c0653ba1a5e0d0bb72f8bad0",
+      "native": {
+        "base": {
+          "norm": 2.864520983624666e-05,
+          "relative_to_same_width_oracle": 0.00020303773706971775,
+          "relative_to_tangent": 0.00015555505258422396,
+          "native_depth_spread": 1.9845884935421054e-09,
+          "native_depths": [
+            32.59472383129201,
+            32.594723833276596,
+            32.59472383129201,
+            32.594723833276596
+          ]
+        },
+        "fine": {
+          "norm": 2.8642364616325577e-05,
+          "relative_to_same_width_oracle": 0.00010563877442616673,
+          "relative_to_tangent": 6.987177817981115e-05,
+          "native_depth_spread": 4.580158474709606e-10,
+          "native_depths": [
+            32.59453721330431,
+            32.59453721376231,
+            32.59453721330433,
+            32.59453721376232
+          ]
+        }
+      },
+      "time_error_ratio": 1.9220001194885625
+    }
+  },
+  "remaining": [
+    "empirical truncated nuisance rank, not certified continuum identifiability",
+    "unbounded linear nuisance profile and specified finite physical-size shift controls, not prior or likelihood",
+    "fixed-background depth, not exact nonlinear native equality",
+    "C4N local producer derivative receipts are not matched full source trajectory; independent z<4 tail unresolved",
+    "native arbitrary radiation/IC compensation not supported; fresh independent subagent unavailable",
+    "R78 calibration gates unchanged"
+  ],
+  "cleanup": {
+    "removed_scratch": "/home/cosmosapjw/htt-r129-native.1LvTlC",
+    "verified_removed": true,
+    "scratch_apparent_bytes": 36089309,
+    "new_backup_bytes": 2018551,
+    "approx_net_apparent_bytes": 34070758,
+    "primary_worktrees": [
+      "worktree /home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "HEAD 5fea8b39c8200dce1a45e3ab6473375a0c03f3bb",
+      "branch refs/heads/research/r69-observable-physics-bridges-20261118"
+    ],
+    "preserved_tracked_dirty": [
+      "M docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/COMMANDER/ACQUISITION_STATUS.json",
+      " M docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/COMMANDER/MERGED.json",
+      " D legacy/research_supplements_20261123/COMPONENT_INDEX.json",
+      " D legacy/research_supplements_20261123/CONSOLIDATION_DECISIONS.md",
+      " D legacy/research_supplements_20261123/COVERAGE.json",
+      " D legacy/research_supplements_20261123/EXACT_HELPER_PROVENANCE.json",
+      " D legacy/research_supplements_20261123/FILE_CATALOGUE.json.gz",
+      " D legacy/research_supplements_20261123/README.md",
+      " D legacy/research_supplements_20261123/legacy_exact_helpers.py",
+      " D legacy/research_supplements_20261123/research_primitives.py",
+      " D legacy/research_supplements_20261123/response_primitives.py",
+      " M scripts/r100/source_intake.py",
+      " M scripts/r102/acquire_commander_pair.py",
+      " M scripts/r105/commander_ensemble.py",
+      " M tests/obsstat/test_r102_acquire_commander.py"
+    ],
+    "other_worktrees": "preserved; not proven redundant"
+  },
+  "next": "R130: bounded-nuisance opacity response via physical initial-state trust-region/SVD filter, finite shape amplitude and positivity, compare regular/finite-start subspace only where supported, certify numerical error separation and seek producer-matched source direction/low-z donor. Native compensation only if producer contract supports exact IC; do not fabricate arbitrary IC parity."
+}
