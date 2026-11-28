@@ -266,11 +266,14 @@ class FamilyIdentificationGate:
             # A file marker (or even a verified deterministic sky) does not certify C6.
             return FamilyCompatibilityGateVerdict(
                 verdict="BLOCKED",
-                requested_tier=requested_tier,
+                requested_claim_tier=requested_tier,
                 allowed_claim_tier=ClaimTier.C0_DIAGNOSTIC,
                 is_family_identification_claimed=True,
                 is_native_atlas_available=native_available,
-                transfer_label="forbidden_unverified",
+                transfer_label=("external-transfer-conditional"
+                                if transfer_spec is not None and TransferSource(transfer_spec.source) in
+                                (TransferSource.ANICLASS_EXTERNAL, TransferSource.EXTERNAL_TRANSFER)
+                                else "forbidden_unverified"),
                 missing_gates=("native_atlas_source_qualification", "external_null_mask_covariance_gates"),
                 blocking_reasons=("Atlas presence cannot establish observational family identification.",),
             )
