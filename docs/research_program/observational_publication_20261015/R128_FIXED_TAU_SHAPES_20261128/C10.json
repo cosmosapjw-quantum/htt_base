@@ -1,0 +1,562 @@
+{
+  "schema": "htt.r128.handoff/1",
+  "base": "23ee7471dca43cbc61f0fb4635c88e9306e5aa41",
+  "prior_stage_commits": [
+    "838dde655998887a19ac84b5206feb61837bd7f1 R128 R1: fixed tau shape",
+    "4e17ab2dadf903c37aa11f58085a5c8d85492e28 R128 R2: fixed tau shape",
+    "77d25f2bcc6c614a5b51f3ee389c1d9e8b08b75e R128 R3: fixed tau shape",
+    "7a1453158d7c46e92f81272ef6e98f8dbd5f9253 R128 R4: fixed tau shape",
+    "1ba907e5418977b8fdd132f38022a357c0648d37 R128 R5: fixed tau shape",
+    "7c2068f63c479f829ec767401004b487d056a737 R128 R6: fixed tau shape",
+    "f3f6554b6479521b13585fc958a1136a7cbf8246 R128 R7: fixed tau shape",
+    "9eef769ea0361ff38d8b344562f969d3c7f5de4f R128 R8: fixed tau shape",
+    "bdd65c75a5ed19b196cdae5edd72c9cbdca8db9d R128 R9: fixed tau shape",
+    "17a8026783a2f77d691c327e1727f9937481415e R128 R10: fixed tau shape",
+    "5eb782eb40a4767284ce7f021c1e59feb74880f7 R128 C1: fixed tau shape",
+    "1b0171838c434bfefd68bf9ef4963cd460a0777a R128 C2: fixed tau shape",
+    "605f9a61dc631dfc902a27c2af49c62c88e0e4a4 R128 C3: fixed tau shape",
+    "6799a6034d340475cdcde4503680a8e9e9554556 R128 C4: fixed tau shape",
+    "b5ecf19b4aa2955aed894f3a7c30d70223ced081 R128 C5: implement exact-depth geometry and independent nodal tangent",
+    "fffee7ae253aa0952433cfde58e6ced35c9ddbbc R128 C6: constrained signed response spectra and physical source metrics",
+    "8a5eb7cf05c01a180c8d5a666355554d5f2d3860 R128 C7: direct equal-depth shape histories and visibility verification",
+    "1c774bfe8ca9a390b5b26604162660c953d53598 R128 C8: native fixed-depth nested signed shape comparisons",
+    "6ab3c940fa1b188c653884ec3b4d5b127eece143 R128 C9: audit fixed-depth shape spectra and native evidence"
+  ],
+  "scope": "finite-start balanced VII0/VIIh affine fixed-background opacity shape, real signed TEB; R78 unchanged",
+  "counts": {
+    "conditional_spectra": 108,
+    "direct_shape_tangents": 4,
+    "independent_changed_table_solves": 16,
+    "scalar_B_controls": 2,
+    "native_base": 8,
+    "native_fine": 8,
+    "native_smoke": 1,
+    "native_raw_verified": 64,
+    "scoped_tests_passed": 126
+  },
+  "audit": {
+    "spectra_verified": 108,
+    "shape_npz_verified": 4,
+    "native_verified": 16,
+    "native_raw_verified": 64,
+    "max_null_residual": 3.1819343235023508e-15,
+    "max_metric_orthogonality_error": 4.440892098500626e-16,
+    "max_singular_value_replay_error": 4.440892098500626e-16,
+    "max_fixed_background_depth_difference": 3.552713678800501e-14,
+    "max_visibility_mass_error": 5.551115123125783e-16,
+    "max_FD_tangent_relative": 0.00033131864627777575,
+    "native": {
+      "base": {
+        "verified": 8,
+        "max_gauss": 0.0003220968738082419,
+        "max_codazzi": 2.391106781277386e-14,
+        "max_jacobi": 9.1598815374007e-24,
+        "min_screen": 7.610051358743451e-14
+      },
+      "fine": {
+        "verified": 8,
+        "max_gauss": 8.05825071013011e-05,
+        "max_codazzi": 6.145295496127633e-15,
+        "max_jacobi": 1.8629936505359652e-23,
+        "min_screen": 7.610051362007055e-14
+      }
+    },
+    "scope": "direct source/hash/finite evidence re-read, not independent trajectory reintegration or fresh reviewer"
+  },
+  "shape_results": {
+    "early_rec": {
+      "path": "shapes/early_rec.npz",
+      "sha256": "9fa25368bb09fc26f789ff8e578c54e2d5cba1a96cd602888e564d7ef1bfc427",
+      "m": 1,
+      "seed": "relative_dust",
+      "group_coefficients": [
+        -0.10656484432154968,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max_node_amplitude": 1.0,
+      "depth_residual": 1.1171619185290638e-15,
+      "GL8_depth_residual": 9.454242944073599e-16,
+      "baseline_relative_to_R127": 2.7284776664351837e-08,
+      "direction_relative_to_R127": 2.149941330278498e-07,
+      "prior_tangent_sha256": "7a1301b3c80275055f3d3c14951a1592c82c3fe9e30eed8472cadfdfe209caac",
+      "tangent_norm": 0.009580001767576654,
+      "tangent_endpoint_constraint": 5.338561224632547e-19,
+      "nfev": 41474,
+      "fd": {
+        "h03": {
+          "width": 0.03,
+          "relative_to_tangent": 0.00033131864627777575,
+          "norm": 0.009583175740907848,
+          "same_depth_sky_separation": 0.0005749905444544708,
+          "separation_over_baseline": 0.0014677800203471848,
+          "channel_separation": [
+            0.000574988727406835,
+            1.4334996184843754e-06,
+            1.8613425525444858e-07
+          ]
+        },
+        "h01": {
+          "width": 0.01,
+          "relative_to_tangent": 2.279936721996592e-05,
+          "norm": 0.009580220173484333,
+          "same_depth_sky_separation": 0.00019160440346968665,
+          "separation_over_baseline": 0.0004891091130727553,
+          "channel_separation": [
+            0.00019160379726781924,
+            4.779590231380124e-07,
+            6.210232772108953e-08
+          ]
+        }
+      },
+      "visibility": {
+        "h03_minus": {
+          "tau": 32.59447500511321,
+          "mass": 0.9999999999999931,
+          "exact_mass": 0.999999999999993,
+          "mean_eta": 0.7192782523304846,
+          "mean_z": 986.9337944213676,
+          "std_eta": 1.2012606291754073,
+          "tau_difference": -1.4210854715202004e-14,
+          "min_xe": 0.0002,
+          "max_xe": 1.16260270341903
+        },
+        "h03_plus": {
+          "tau": 32.59447500511322,
+          "mass": 0.9999999999999927,
+          "exact_mass": 0.999999999999993,
+          "mean_eta": 0.7231947398554841,
+          "mean_z": 982.7506596078703,
+          "std_eta": 1.2002387930384957,
+          "tau_difference": -7.105427357601002e-15,
+          "min_xe": 0.0002,
+          "max_xe": 1.16260270341903
+        },
+        "h01_minus": {
+          "tau": 32.59447500511319,
+          "mass": 0.9999999999999932,
+          "exact_mass": 0.999999999999993,
+          "mean_eta": 0.7206105976616507,
+          "mean_z": 985.5090110280472,
+          "std_eta": 1.2009131993801478,
+          "tau_difference": -3.552713678800501e-14,
+          "min_xe": 0.0002,
+          "max_xe": 1.16260270341903
+        },
+        "h01_plus": {
+          "tau": 32.59447500511321,
+          "mass": 0.9999999999999932,
+          "exact_mass": 0.999999999999993,
+          "mean_eta": 0.7219157863640226,
+          "mean_z": 984.1149900898134,
+          "std_eta": 1.2005726589771144,
+          "tau_difference": -1.4210854715202004e-14,
+          "min_xe": 0.0002,
+          "max_xe": 1.16260270341903
+        }
+      },
+      "wall_s": 11.794550751103088
+    },
+    "late_swap": {
+      "path": "shapes/late_swap.npz",
+      "sha256": "14519a9c02f6a571a14f6129415b390f2df1fda7e159a3b7b137f86c21549b16",
+      "m": 2,
+      "seed": "metric",
+      "group_coefficients": [
+        0.0,
+        0.0,
+        -0.7619805557775535,
+        1.0,
+        0.0
+      ],
+      "max_node_amplitude": 1.0,
+      "depth_residual": -1.3670434142326604e-16,
+      "GL8_depth_residual": -1.328554237109425e-16,
+      "baseline_relative_to_R127": 7.980951194156306e-11,
+      "direction_relative_to_R127": 1.2495203503158583e-08,
+      "prior_tangent_sha256": "5a1a8c9c28ce0d9c53b73579f5406708f7cd64d3d1229a2b4cfef4f4bf8f56dd",
+      "tangent_norm": 0.0013916275974998106,
+      "tangent_endpoint_constraint": 0.0,
+      "nfev": 14510,
+      "fd": {
+        "h03": {
+          "width": 0.03,
+          "relative_to_tangent": 6.261132919763867e-07,
+          "norm": 0.001391626728009578,
+          "same_depth_sky_separation": 8.349760368057469e-05,
+          "separation_over_baseline": 0.0003248671810342164,
+          "channel_separation": [
+            8.04434855379443e-05,
+            1.753038449972908e-05,
+            1.3906152386498709e-05
+          ]
+        },
+        "h01": {
+          "width": 0.01,
+          "relative_to_tangent": 8.152485520508887e-07,
+          "norm": 0.0013916264830773008,
+          "same_depth_sky_separation": 2.783252966154601e-05,
+          "separation_over_baseline": 0.00010828904128539935,
+          "channel_separation": [
+            2.6814490419793233e-05,
+            5.843459579499555e-06,
+            4.635384669087397e-06
+          ]
+        }
+      },
+      "visibility": {
+        "h03_minus": {
+          "tau": 32.594475005113225,
+          "mass": 0.9999999999999927,
+          "exact_mass": 0.999999999999993,
+          "mean_eta": 0.7173360919548759,
+          "mean_z": 985.3528388667323,
+          "std_eta": 1.1926150873634211,
+          "tau_difference": 0.0,
+          "min_xe": 0.00020457188333466536,
+          "max_xe": 1.16260270341903
+        },
+        "h03_plus": {
+          "tau": 32.594475005113225,
+          "mass": 0.9999999999999925,
+          "exact_mass": 0.999999999999993,
+          "mean_eta": 0.7251935148237566,
+          "mean_z": 984.2640464201108,
+          "std_eta": 1.2087945871278103,
+          "tau_difference": 0.0,
+          "min_xe": 0.0001954281166653347,
+          "max_xe": 1.16260270341903
+        },
+        "h01_minus": {
+          "tau": 32.594475005113225,
+          "mass": 0.999999999999993,
+          "exact_mass": 0.999999999999993,
+          "mean_eta": 0.7199567661042897,
+          "mean_z": 984.9897131194541,
+          "std_eta": 1.1980414366312904,
+          "tau_difference": 0.0,
+          "min_xe": 0.00020152396111155514,
+          "max_xe": 1.16260270341903
+        },
+        "h01_plus": {
+          "tau": 32.594475005113225,
+          "mass": 0.9999999999999926,
+          "exact_mass": 0.999999999999993,
+          "mean_eta": 0.7225759067542634,
+          "mean_z": 984.6267823403041,
+          "std_eta": 1.2034344505392247,
+          "tau_difference": 0.0,
+          "min_xe": 0.0001984760388884449,
+          "max_xe": 1.16260270341903
+        }
+      },
+      "wall_s": 5.403791235061362
+    },
+    "leading_tail_locked": {
+      "path": "shapes/leading_tail_locked.npz",
+      "sha256": "eb0f88c8c9e4b497721afb01d9b62a6cb337429b9a12bee380a12a6e32d37531",
+      "m": 2,
+      "seed": "heldout",
+      "group_coefficients": [
+        -0.007129545958690378,
+        0.0461174141111887,
+        0.7939044007204371,
+        1.0,
+        -0.0
+      ],
+      "max_node_amplitude": 1.0,
+      "depth_residual": 1.2923689896027213e-16,
+      "GL8_depth_residual": 1.3503738058306958e-16,
+      "baseline_relative_to_R127": 4.8024659160769105e-08,
+      "direction_relative_to_R127": 1.2214067276822112e-07,
+      "prior_tangent_sha256": "5a1a8c9c28ce0d9c53b73579f5406708f7cd64d3d1229a2b4cfef4f4bf8f56dd",
+      "tangent_norm": 0.0078072380906052926,
+      "tangent_endpoint_constraint": 0.0,
+      "nfev": 58826,
+      "fd": {
+        "h03": {
+          "width": 0.03,
+          "relative_to_tangent": 6.984574297370634e-06,
+          "norm": 0.007807183609426999,
+          "same_depth_sky_separation": 0.00046843101656562,
+          "separation_over_baseline": 0.004759551938491185,
+          "channel_separation": [
+            0.0004591549588780963,
+            6.709386945893444e-05,
+            6.405274154461513e-05
+          ]
+        },
+        "h01": {
+          "width": 0.01,
+          "relative_to_tangent": 4.702498098319969e-05,
+          "norm": 0.007807603922264598,
+          "same_depth_sky_separation": 0.00015615207844529196,
+          "separation_over_baseline": 0.0015866027256536373,
+          "channel_separation": [
+            0.00015305991170257976,
+            2.2365510408771143e-05,
+            2.1352259284165883e-05
+          ]
+        }
+      },
+      "visibility": {
+        "h03_minus": {
+          "tau": 32.59447500511323,
+          "mass": 0.9999999999999925,
+          "exact_mass": 0.999999999999993,
+          "mean_eta": 0.7161435916017275,
+          "mean_z": 986.2476745523464,
+          "std_eta": 1.1924870318227376,
+          "tau_difference": 7.105427357601002e-15,
+          "min_xe": 0.00019523657359567738,
+          "max_xe": 1.16260270341903
+        },
+        "h03_plus": {
+          "tau": 32.59447500511319,
+          "mass": 0.9999999999999931,
+          "exact_mass": 0.999999999999993,
+          "mean_eta": 0.7263834016537227,
+          "mean_z": 983.3712803255116,
+          "std_eta": 1.208911853950201,
+          "tau_difference": -3.552713678800501e-14,
+          "min_xe": 0.00020476342640432264,
+          "max_xe": 1.16260270341903
+        },
+        "h01_minus": {
+          "tau": 32.594475005113225,
+          "mass": 0.9999999999999932,
+          "exact_mass": 0.999999999999993,
+          "mean_eta": 0.7195595566638959,
+          "mean_z": 985.2877614752632,
+          "std_eta": 1.1979999644549368,
+          "tau_difference": 0.0,
+          "min_xe": 0.00019841219119855913,
+          "max_xe": 1.16260270341903
+        },
+        "h01_plus": {
+          "tau": 32.5944750051132,
+          "mass": 0.9999999999999929,
+          "exact_mass": 0.999999999999993,
+          "mean_eta": 0.7229728258033172,
+          "mean_z": 984.3289639389286,
+          "std_eta": 1.2034747240759127,
+          "tau_difference": -2.1316282072803006e-14,
+          "min_xe": 0.0002015878088014409,
+          "max_xe": 1.16260270341903
+        }
+      },
+      "wall_s": 22.975208493997343
+    },
+    "intra_rec": {
+      "path": "shapes/intra_rec.npz",
+      "sha256": "bcb2ded56720ad26629c44daa08f3511d8ac977bd920c598e345f54ce42cdf57",
+      "m": 1,
+      "seed": "heldout",
+      "group_coefficients": null,
+      "max_node_amplitude": 1.0,
+      "depth_residual": -2.9004576518332215e-15,
+      "GL8_depth_residual": -2.89308507706032e-15,
+      "baseline_relative_to_R127": 3.378088534228689e-08,
+      "direction_relative_to_R127": null,
+      "prior_tangent_sha256": "7a1301b3c80275055f3d3c14951a1592c82c3fe9e30eed8472cadfdfe209caac",
+      "tangent_norm": 0.006118650860580464,
+      "tangent_endpoint_constraint": 6.31808370870527e-19,
+      "nfev": 58778,
+      "fd": {
+        "h03": {
+          "width": 0.03,
+          "relative_to_tangent": 5.659783682707168e-05,
+          "norm": 0.006118996014106934,
+          "same_depth_sky_separation": 0.0003671397608464161,
+          "separation_over_baseline": 0.0016107215693382446,
+          "channel_separation": [
+            0.0003592181654414986,
+            7.23046664936699e-05,
+            2.2933573957123852e-05
+          ]
+        },
+        "h01": {
+          "width": 0.01,
+          "relative_to_tangent": 3.629490877366892e-05,
+          "norm": 0.006118429815592514,
+          "same_depth_sky_separation": 0.00012236859631185027,
+          "separation_over_baseline": 0.0005368575090715775,
+          "channel_separation": [
+            0.00011972818362093766,
+            2.4099886589766867e-05,
+            7.644009191777864e-06
+          ]
+        }
+      },
+      "visibility": {
+        "h03_minus": {
+          "tau": 32.59447500511323,
+          "mass": 0.9999999999999933,
+          "exact_mass": 0.999999999999993,
+          "mean_eta": 0.7219748345975904,
+          "mean_z": 984.0883078317755,
+          "std_eta": 1.2005861461254914,
+          "tau_difference": 7.105427357601002e-15,
+          "min_xe": 0.0002,
+          "max_xe": 1.16260270341903
+        },
+        "h03_plus": {
+          "tau": 32.59447500511323,
+          "mass": 0.9999999999999926,
+          "exact_mass": 0.999999999999993,
+          "mean_eta": 0.7205544272667185,
+          "mean_z": 985.5321284381623,
+          "std_eta": 1.2008985220489838,
+          "tau_difference": 7.105427357601002e-15,
+          "min_xe": 0.0002,
+          "max_xe": 1.16260270341903
+        },
+        "h01_minus": {
+          "tau": 32.59447500511323,
+          "mass": 0.9999999999999932,
+          "exact_mass": 0.999999999999993,
+          "mean_eta": 0.7215030505868787,
+          "mean_z": 984.5678095592006,
+          "std_eta": 1.2006900470014004,
+          "tau_difference": 7.105427357601002e-15,
+          "min_xe": 0.0002,
+          "max_xe": 1.16260270341903
+        },
+        "h01_plus": {
+          "tau": 32.594475005113225,
+          "mass": 0.9999999999999932,
+          "exact_mass": 0.999999999999993,
+          "mean_eta": 0.7210295839493299,
+          "mean_z": 985.0490804526274,
+          "std_eta": 1.2007941723433635,
+          "tau_difference": 0.0,
+          "min_xe": 0.0002,
+          "max_xe": 1.16260270341903
+        }
+      },
+      "wall_s": 22.089856968959793
+    }
+  },
+  "native": {
+    "early_rec": {
+      "sector": "VIIh_m1",
+      "column": "relative_dust",
+      "shape_sha256": "9fa25368bb09fc26f789ff8e578c54e2d5cba1a96cd602888e564d7ef1bfc427",
+      "native": {
+        "base": {
+          "norm": 0.0095831013264476,
+          "relative_to_same_width_oracle": 3.828329742858471e-05,
+          "relative_to_tangent": 0.00032553590486758603,
+          "native_depth_spread": 4.665554904192959e-06,
+          "native_depths": [
+            32.59472152603979,
+            32.594726191594695,
+            32.59472152603979,
+            32.594726191594695
+          ]
+        },
+        "fine": {
+          "norm": 0.009583179576547718,
+          "relative_to_same_width_oracle": 9.24016664016727e-06,
+          "relative_to_tangent": 0.00033180430086090205,
+          "native_depth_spread": 1.494393657708315e-07,
+          "native_depths": [
+            32.59453731489337,
+            32.59453716545401,
+            32.59453731489337,
+            32.59453716545401
+          ]
+        }
+      },
+      "time_error_ratio": 4.14313928735507
+    },
+    "late_swap": {
+      "sector": "VIIh_m2",
+      "column": "metric",
+      "shape_sha256": "14519a9c02f6a571a14f6129415b390f2df1fda7e159a3b7b137f86c21549b16",
+      "native": {
+        "base": {
+          "norm": 0.0013917546904554665,
+          "relative_to_same_width_oracle": 0.00011157917489968277,
+          "relative_to_tangent": 0.00011108430469783511,
+          "native_depth_spread": 1.0545837625386412e-07,
+          "native_depths": [
+            32.59472388501338,
+            32.594723779555025,
+            32.59472388501337,
+            32.594723779555004
+          ]
+        },
+        "fine": {
+          "norm": 0.0013916486005498834,
+          "relative_to_same_width_oracle": 4.40682513938529e-05,
+          "relative_to_tangent": 4.386162197218378e-05,
+          "native_depth_spread": 2.7707557137546246e-08,
+          "native_depths": [
+            32.59453722738683,
+            32.5945371996793,
+            32.59453722738686,
+            32.59453719967937
+          ]
+        }
+      },
+      "time_error_ratio": 2.5319628387898097
+    }
+  },
+  "scalar_B_control": [
+    {
+      "sign": -1,
+      "tau": 32.59487623054303,
+      "B_end": 6.9859375218474686e-15,
+      "exact": 6.9859442378518956e-15,
+      "relative_error": 9.613595812751896e-07
+    },
+    {
+      "sign": 1,
+      "tau": 32.59487623054303,
+      "B_end": 6.985939331755262e-15,
+      "exact": 6.9859442378518956e-15,
+      "relative_error": 7.022811041590415e-07
+    }
+  ],
+  "remaining": [
+    "fixed background affine tau, not exact coupled native physical-depth equality",
+    "chosen source metric and conditional initial state, not probability prior or Fisher covariance",
+    "full historical source-owner derivative mismatch and independent low-z tail remain unresolved",
+    "finite truncation and finite stencil evidence, no continuum certificate",
+    "arbitrary radiation initial state not exposed by native CLI; independent native reviewer NOT_RUN"
+  ],
+  "cleanup": {
+    "removed_scratch": "/home/cosmosapjw/htt-r128-native.8qNJxQ",
+    "verified_removed": true,
+    "scratch_apparent_bytes": 36102219,
+    "new_backup_bytes": 597169,
+    "approx_net_apparent_bytes": 35505050,
+    "primary_worktrees": [
+      "worktree /home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "HEAD 6ab3c940fa1b188c653884ec3b4d5b127eece143",
+      "branch refs/heads/research/r69-observable-physics-bridges-20261118"
+    ],
+    "preserved_tracked_dirty": [
+      "M docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/COMMANDER/ACQUISITION_STATUS.json",
+      " M docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/COMMANDER/MERGED.json",
+      " D legacy/research_supplements_20261123/COMPONENT_INDEX.json",
+      " D legacy/research_supplements_20261123/CONSOLIDATION_DECISIONS.md",
+      " D legacy/research_supplements_20261123/COVERAGE.json",
+      " D legacy/research_supplements_20261123/EXACT_HELPER_PROVENANCE.json",
+      " D legacy/research_supplements_20261123/FILE_CATALOGUE.json.gz",
+      " D legacy/research_supplements_20261123/README.md",
+      " D legacy/research_supplements_20261123/legacy_exact_helpers.py",
+      " D legacy/research_supplements_20261123/research_primitives.py",
+      " D legacy/research_supplements_20261123/response_primitives.py",
+      " M scripts/r100/source_intake.py",
+      " M scripts/r102/acquire_commander_pair.py",
+      " M scripts/r105/commander_ensemble.py",
+      " M tests/obsstat/test_r102_acquire_commander.py"
+    ],
+    "other_worktrees": "preserved; not proven redundant"
+  },
+  "next": "R129: source-resolved shape operator beyond five windows, construct nested redshift basis with exact depth and positivity bounds; isolate uncertain low-z tail, test finite-nodal conditioning and profile physically allowed initial-state nuisance directions using R125 basis, no invented survey covariance. Prioritize source-owner compatible derivative intake and independently qualified low-z history."
+}
