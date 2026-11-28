@@ -1,0 +1,75 @@
+{
+  "runs": {
+    "early_rec": {
+      "sector": "VIIh_m1",
+      "column": "relative_dust",
+      "shape_sha256": "9fa25368bb09fc26f789ff8e578c54e2d5cba1a96cd602888e564d7ef1bfc427",
+      "native": {
+        "base": {
+          "norm": 0.0095831013264476,
+          "relative_to_same_width_oracle": 3.828329742858471e-05,
+          "relative_to_tangent": 0.00032553590486758603,
+          "native_depth_spread": 4.665554904192959e-06,
+          "native_depths": [
+            32.59472152603979,
+            32.594726191594695,
+            32.59472152603979,
+            32.594726191594695
+          ]
+        },
+        "fine": {
+          "norm": 0.009583179576547718,
+          "relative_to_same_width_oracle": 9.24016664016727e-06,
+          "relative_to_tangent": 0.00033180430086090205,
+          "native_depth_spread": 1.494393657708315e-07,
+          "native_depths": [
+            32.59453731489337,
+            32.59453716545401,
+            32.59453731489337,
+            32.59453716545401
+          ]
+        }
+      },
+      "time_error_ratio": 4.14313928735507
+    },
+    "late_swap": {
+      "sector": "VIIh_m2",
+      "column": "metric",
+      "shape_sha256": "14519a9c02f6a571a14f6129415b390f2df1fda7e159a3b7b137f86c21549b16",
+      "native": {
+        "base": {
+          "norm": 0.0013917546904554665,
+          "relative_to_same_width_oracle": 0.00011157917489968277,
+          "relative_to_tangent": 0.00011108430469783511,
+          "native_depth_spread": 1.0545837625386412e-07,
+          "native_depths": [
+            32.59472388501338,
+            32.594723779555025,
+            32.59472388501337,
+            32.594723779555004
+          ]
+        },
+        "fine": {
+          "norm": 0.0013916486005498834,
+          "relative_to_same_width_oracle": 4.40682513938529e-05,
+          "relative_to_tangent": 4.386162197218378e-05,
+          "native_depth_spread": 2.7707557137546246e-08,
+          "native_depths": [
+            32.59453722738683,
+            32.5945371996793,
+            32.59453722738686,
+            32.59453719967937
+          ]
+        }
+      },
+      "time_error_ratio": 2.5319628387898097
+    }
+  },
+  "npz_sha256": "245764e3b5ccb0f7a7774350a9f2b9e844c9611df20e7f6a3675a545e8508a33",
+  "counts": {
+    "base": 8,
+    "fine": 8
+  },
+  "smoke_LOS_byte_replay": true,
+  "scope": "nested signed finite difference at fixed background depth; native actual nonlinear background and time integration may change measured depth"
+}
