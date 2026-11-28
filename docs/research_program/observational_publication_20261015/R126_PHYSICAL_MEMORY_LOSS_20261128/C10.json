@@ -1,0 +1,188 @@
+{
+  "schema": "htt.r126.handoff/1",
+  "base": "7bb983b858739e23dc952a9b106b0affe7ae6045",
+  "prior_stage_commits": [
+    "08f3cb8be8845a4a28a4a6ae1358f99ffe8678e8 R126 R1: physical memory loss",
+    "1a23b5c9db36453c16e60a49492ecb45a1e5dbae R126 R2: physical memory loss",
+    "850968221746c5f11b8f774dad3f81d0f6f4cef6 R126 R3: physical memory loss",
+    "aaead4abb74f90c640760878555d2eaddb94e53c R126 R4: physical memory loss",
+    "d71225ded610bf86613c1608a94881356c83680d R126 R5: physical memory loss",
+    "766fffb4f505e59c9e5a761b445dd904b8955cf2 R126 R6: physical memory loss",
+    "4380da51abb97a49207eb91df98cce15d76a653f R126 R7: physical memory loss",
+    "9542358d4184fde8284d503c9f786a80b6a1080b R126 R8: physical memory loss",
+    "f0af8ca60eab1f07ece8822a135e426e8dc04622 R126 R9: physical memory loss",
+    "fcf12b40e45f36814e61faba7fa2eb518e5bd7c7 R126 R10: physical memory loss",
+    "ca64911be4c3e35324bce80eeab3bc31554a717f R126 C1: physical memory loss",
+    "7f53ac5138dcd0eb2cbed46d692e06b2e7b429df R126 C2: physical memory loss",
+    "82da18eeebd56c6064db496018a35b0b66b4bfe9 R126 C3: physical memory loss",
+    "bd63630082abbc9cacfe65df7e4d3ac7a208b1fe R126 C4: physical memory loss",
+    "a43512d50e114ab02eaea5249bdf42af6f0700fc R126 C5: implement physical state-size and integrated collision budgets",
+    "b17d71dc3442fb42c6af27cc6e8815487e7c6929 R126 C6: integrate collision and noncollision physical-size budgets",
+    "68e89eafd42bf62e50aea80958947fea7ce3cf06 R126 C7: backward adjoint and centered opacity sensitivity checks",
+    "d18067bb7895a48a023a388b611eef4288880376 R126 C8: native opacity intervention and whitened state versus sky spectra",
+    "11402224241a1d5f6c7406c1f16c69fd91076143 R126 C9: direct physical budget and adjoint evidence audit"
+  ],
+  "scope": "finite-start balanced VII0/VIIh physical state-size and collision/noncollision budgets, controlled opacity intervention, terminal observer map; R78 unchanged",
+  "counts": {
+    "forward_budget_solves": 36,
+    "adjoint_objectives": 3,
+    "native_base": 4,
+    "native_fine": 4,
+    "native_smoke": 1,
+    "native_raw_verified": 32,
+    "scoped_tests_passed": 111
+  },
+  "findings": {
+    "VII0_m0": {
+      "physical_opacity_state_rank_diagnostic": 5,
+      "physical_opacity_host_rank_diagnostic": 3,
+      "quarter_opacity_state_rank_diagnostic": 7,
+      "quarter_opacity_host_rank_diagnostic": 4,
+      "physical_B_column": {
+        "endpoint_size_squared_over_initial": 1.4092092712641176e-32,
+        "collision_budget_over_initial": 0.9978929638078556,
+        "noncollision_budget_over_initial": -0.002107036205620217,
+        "host_sky_norm_per_unit_initial_size": 2.851755960984273e-14
+      }
+    },
+    "VII0_m1": {
+      "physical_opacity_state_rank_diagnostic": 5,
+      "physical_opacity_host_rank_diagnostic": 5,
+      "quarter_opacity_state_rank_diagnostic": 7,
+      "quarter_opacity_host_rank_diagnostic": 7,
+      "physical_B_column": {
+        "endpoint_size_squared_over_initial": 1.0555024903756605e-19,
+        "collision_budget_over_initial": 0.9978929638151025,
+        "noncollision_budget_over_initial": -0.002107036196088228,
+        "host_sky_norm_per_unit_initial_size": 3.819923727411333e-08
+      }
+    },
+    "VII0_m2": {
+      "physical_opacity_state_rank_diagnostic": 4,
+      "physical_opacity_host_rank_diagnostic": 4,
+      "quarter_opacity_state_rank_diagnostic": 6,
+      "quarter_opacity_host_rank_diagnostic": 6,
+      "physical_B_column": {
+        "endpoint_size_squared_over_initial": 1.8726645856899274e-15,
+        "collision_budget_over_initial": 0.9978929638906744,
+        "noncollision_budget_over_initial": -0.0021070362193155697,
+        "host_sky_norm_per_unit_initial_size": 8.207222746341248e-08
+      }
+    },
+    "VIIh_m0": {
+      "physical_opacity_state_rank_diagnostic": 6,
+      "physical_opacity_host_rank_diagnostic": 5,
+      "quarter_opacity_state_rank_diagnostic": 8,
+      "quarter_opacity_host_rank_diagnostic": 7,
+      "physical_B_column": {
+        "endpoint_size_squared_over_initial": 1.250891708480521e-32,
+        "collision_budget_over_initial": 0.9978928614360884,
+        "noncollision_budget_over_initial": -0.002107138567419869,
+        "host_sky_norm_per_unit_initial_size": 2.7115612825141574e-14
+      }
+    },
+    "VIIh_m1": {
+      "physical_opacity_state_rank_diagnostic": 5,
+      "physical_opacity_host_rank_diagnostic": 5,
+      "quarter_opacity_state_rank_diagnostic": 7,
+      "quarter_opacity_host_rank_diagnostic": 7,
+      "physical_B_column": {
+        "endpoint_size_squared_over_initial": 1.3425940642276088e-19,
+        "collision_budget_over_initial": 0.9978928616290591,
+        "noncollision_budget_over_initial": -0.0021071383764986466,
+        "host_sky_norm_per_unit_initial_size": 4.301523217082173e-08
+      }
+    },
+    "VIIh_m2": {
+      "physical_opacity_state_rank_diagnostic": 4,
+      "physical_opacity_host_rank_diagnostic": 4,
+      "quarter_opacity_state_rank_diagnostic": 6,
+      "quarter_opacity_host_rank_diagnostic": 6,
+      "physical_B_column": {
+        "endpoint_size_squared_over_initial": 2.025904871588225e-15,
+        "collision_budget_over_initial": 0.9978928622677798,
+        "noncollision_budget_over_initial": -0.0021071378413685614,
+        "host_sky_norm_per_unit_initial_size": 9.434951253663301e-08
+      }
+    }
+  },
+  "max_budget_closure_relative": 1.1414588624400122e-09,
+  "max_whitened_closure_op": 2.0067847448746097e-09,
+  "max_adjoint_transfer_relative": 2.957687214259423e-08,
+  "max_centered_fd_relative": 2.4394889016489633e-05,
+  "max_R125_baseline_relative": 8.731378192718696e-08,
+  "native": {
+    "VIIh_m1": {
+      "column": "relative_dust",
+      "base": {
+        "relative_signed_error": 3.729090846923044e-05,
+        "norm": 0.4281590046042624,
+        "reference_norm": 0.42816154361428255,
+        "tau_abs_error": 6.221331264200103e-05
+      },
+      "fine": {
+        "relative_signed_error": 9.342741982919668e-06,
+        "norm": 0.4281608752656208,
+        "reference_norm": 0.42816154361428255,
+        "tau_abs_error": 1.5558645364066592e-05
+      },
+      "time_error_ratio": 3.9914308387629034
+    },
+    "VIIh_m2": {
+      "column": "metric",
+      "base": {
+        "relative_signed_error": 0.00018599889285716441,
+        "norm": 0.25977612882417367,
+        "reference_norm": 0.25972820289633036,
+        "tau_abs_error": 6.220679276935925e-05
+      },
+      "fine": {
+        "relative_signed_error": 4.653291208596228e-05,
+        "norm": 0.2597401929214341,
+        "reference_norm": 0.25972820289633036,
+        "tau_abs_error": 1.5552105002925032e-05
+      },
+      "time_error_ratio": 3.9971470625685437
+    }
+  },
+  "remaining": [
+    "state-size is an enthalpy-compatible diagnostic, not energy or statistical prior",
+    "finite truncation/solver differences not continuum rank certificates",
+    "opacity scaling is a controlled intervention, not a physical new recombination history",
+    "full arbitrary radiation initial data remain oracle-only",
+    "no primordial regular-mode parity or calibrated observational likelihood",
+    "C4L research drivers not activated; historical donor and conditional low-z tail",
+    "native independent reviewer NOT_RUN"
+  ],
+  "cleanup": {
+    "removed_scratch": "/home/cosmosapjw/htt-r126-native.hOzfI9",
+    "verified_removed": true,
+    "scratch_apparent_bytes": 21279628,
+    "new_backup_bytes": 860864,
+    "approx_net_apparent_bytes": 20418764,
+    "primary_worktrees": [
+      "worktree /home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "HEAD 11402224241a1d5f6c7406c1f16c69fd91076143",
+      "branch refs/heads/research/r69-observable-physics-bridges-20261118"
+    ],
+    "preserved_tracked_dirty": [
+      "M docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/COMMANDER/ACQUISITION_STATUS.json",
+      " M docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/COMMANDER/MERGED.json",
+      " D legacy/research_supplements_20261123/COMPONENT_INDEX.json",
+      " D legacy/research_supplements_20261123/CONSOLIDATION_DECISIONS.md",
+      " D legacy/research_supplements_20261123/COVERAGE.json",
+      " D legacy/research_supplements_20261123/EXACT_HELPER_PROVENANCE.json",
+      " D legacy/research_supplements_20261123/FILE_CATALOGUE.json.gz",
+      " D legacy/research_supplements_20261123/README.md",
+      " D legacy/research_supplements_20261123/legacy_exact_helpers.py",
+      " D legacy/research_supplements_20261123/research_primitives.py",
+      " D legacy/research_supplements_20261123/response_primitives.py",
+      " M scripts/r100/source_intake.py",
+      " M scripts/r102/acquire_commander_pair.py",
+      " M scripts/r105/commander_ensemble.py",
+      " M tests/obsstat/test_r102_acquire_commander.py"
+    ],
+    "other_worktrees": "preserved; not proven redundant"
+  },
+  "next": "R127: separate time-local damping from observer projection using source-knot windows and an opacity-response kernel; validate window derivatives and recombination/reionization dominance under source-owned history; design source-owner IC extension without fabricating native parity; consider physical initial-data metric sensitivity and signed mode cancellation. Preserve calibrated inference distinction."
+}
