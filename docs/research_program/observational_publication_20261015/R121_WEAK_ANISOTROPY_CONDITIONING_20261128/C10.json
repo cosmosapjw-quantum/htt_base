@@ -1,0 +1,83 @@
+{
+  "schema": "htt.r121.handoff/1",
+  "base": "080a283d167c9ca932a28b7321512c737fef73cf",
+  "prior_stage_commits": [
+    "c23a6805c36e4afa2ab38e1923630aa654baff4f R121 R1: scope weak anisotropy conditioning",
+    "d3ae8a88e259bd204adc369f0e5c445060a6f22b R121 R2: weak anisotropy research",
+    "ddbc19df0b9a153958b7fea01bc08008b77bf041 R121 R3: weak anisotropy research",
+    "3d6fca317326552e5976252344b2a93e973bf3b0 R121 R4: weak anisotropy research",
+    "7a1f36590371abb7ac15ef246776c78581a92f36 R121 R5: weak anisotropy research",
+    "02afae035522c8ed6315027b41f425a99a9531a0 R121 R6: weak anisotropy research",
+    "efdbded8d02f46daa7ba26f49dcdf329edbb3d65 R121 R7: weak anisotropy research",
+    "627c2349d82f05a3fe9cd07dec3f7c8565ce207a R121 R8: weak anisotropy research",
+    "01178791153edcad1afd797d9b2436242d8ba17f R121 R9: weak anisotropy research",
+    "cbcb3656d5ef42ad3dcac1b66ad138941d51ddf7 R121 R10: weak anisotropy research",
+    "fc808a0a0551785d230544d7cd0048624a1877a8 R121 C1: weak anisotropy research",
+    "dd0ba129a8d008041d279fa4efad95e3a93e2501 R121 C2: weak anisotropy research",
+    "8f2cea7fde002ac902ce3488f5be88088e9330ef R121 C3: weak anisotropy research",
+    "bfe38c61ffabb7cd721c8b82f88e913ff7fc95d0 R121 C4: weak anisotropy research",
+    "e71faa7b2105917f8f6181c62d0fb770a2248e1f R121 C5: implement signed amplitude and conditioned tangent analysis",
+    "f975f5124c4cc2e2d9e650176f122a56bb55f0d9 R121 C6: test amplitude-shape and column conditioning",
+    "4a507ed9811c4e0a6bbb19ff41ba7ccd84008409 R121 C7: execute weak curvature and narrow imbalance scan",
+    "e01deb2bb0c8530a4c8010f4e215c4aad37f558a R121 C8: refine weak chart and analyze signed response",
+    "51a56020952467da993c01ac886bfb1cb21a0209 R121 C9: audit finite native and external artifacts"
+  ],
+  "scope": "weak-curvature signed decomposition and amplitude-aware finite identifiability; no R78 promotion",
+  "counts": {
+    "native_base": 26,
+    "native_fine": 20,
+    "native_replay": 1,
+    "external_tensor_runs": 1,
+    "native_raw_verified": 230,
+    "external_raw_verified": 5,
+    "scoped_tests_passed": 75
+  },
+  "physical_findings": {
+    "VI_zero_norm_slopes": [
+      1.9991525074242458,
+      1.999918265124164
+    ],
+    "VII_shape_count_above_combined_empirical_difference": 3,
+    "VII_absolute_count_above_time_difference": 4,
+    "tensor_support": "native off-|m|=2 scales approximately quadratically with seed; AniCLASS dense tensor m=2 by construction, not amplitude parity"
+  },
+  "remaining": [
+    "finite time/grid errors, no certified continuum rank",
+    "matched near-FLRW regular-mode initial condition/observer/opacity bridge to AniCLASS absent",
+    "C4H research drivers not production activated",
+    "historical scalar donor and conditional z<4 tail",
+    "survey response/covariance/null absent",
+    "independent native reviewer unavailable"
+  ],
+  "cleanup": {
+    "removed_scratch": "/home/cosmosapjw/htt-r121-native.dMmKRp",
+    "verified_removed": true,
+    "scratch_apparent_bytes": 95815193,
+    "new_backup_bytes": 348015,
+    "approx_net_apparent_bytes": 95467178,
+    "primary_worktrees": [
+      "worktree /home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "HEAD 51a56020952467da993c01ac886bfb1cb21a0209",
+      "branch refs/heads/research/r69-observable-physics-bridges-20261118"
+    ],
+    "preserved_tracked_dirty": [
+      "docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/COMMANDER/ACQUISITION_STATUS.json",
+      "docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/COMMANDER/MERGED.json",
+      "legacy/research_supplements_20261123/COMPONENT_INDEX.json",
+      "legacy/research_supplements_20261123/CONSOLIDATION_DECISIONS.md",
+      "legacy/research_supplements_20261123/COVERAGE.json",
+      "legacy/research_supplements_20261123/EXACT_HELPER_PROVENANCE.json",
+      "legacy/research_supplements_20261123/FILE_CATALOGUE.json.gz",
+      "legacy/research_supplements_20261123/README.md",
+      "legacy/research_supplements_20261123/legacy_exact_helpers.py",
+      "legacy/research_supplements_20261123/research_primitives.py",
+      "legacy/research_supplements_20261123/response_primitives.py",
+      "scripts/r100/source_intake.py",
+      "scripts/r102/acquire_commander_pair.py",
+      "scripts/r105/commander_ensemble.py",
+      "tests/obsstat/test_r102_acquire_commander.py"
+    ],
+    "other_worktrees": "preserved; no proof redundant"
+  },
+  "next": "R122: derive and validate a common near-FLRW tensor initial-state bridge (metric beta, shear, photon/neutrino moments, curvature/twist scales and observer), or separate finite-start response oracle; use weak VI curvature/shear crossover and local signed carriers, refine weakest shape direction with 6400-step targeted stencils and held-out coordinate width. Only add survey response once source covariance and mask are qualified."
+}
