@@ -1,0 +1,193 @@
+{
+  "schema": "htt.r126.memory_loss/1",
+  "points": [
+    {
+      "name": "VIIh_m1_relative_dust_pos_host",
+      "N6": [
+        0.01,
+        0.01,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "A3": [
+        0.0,
+        0.0,
+        0.005
+      ],
+      "shear6": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "expected_type": "VII_h",
+      "kind": "oracle",
+      "parameters": {
+        "k": 0.01,
+        "A0": 0.005,
+        "eps": 5e-05,
+        "m": 1,
+        "column": "relative_dust",
+        "h": 0.25
+      },
+      "recombination": "table",
+      "observer_frame": "host",
+      "dust_beta": [
+        4.215e-05,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "VIIh_m1_relative_dust_neg_host",
+      "N6": [
+        0.01,
+        0.01,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "A3": [
+        0.0,
+        0.0,
+        0.005
+      ],
+      "shear6": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "expected_type": "VII_h",
+      "kind": "oracle",
+      "parameters": {
+        "k": 0.01,
+        "A0": 0.005,
+        "eps": -5e-05,
+        "m": 1,
+        "column": "relative_dust",
+        "h": 0.25
+      },
+      "recombination": "table",
+      "observer_frame": "host",
+      "dust_beta": [
+        -4.215e-05,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "VIIh_m2_metric_pos_host",
+      "N6": [
+        0.0100005,
+        0.0099995,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "A3": [
+        0.0,
+        0.0,
+        0.005
+      ],
+      "shear6": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "expected_type": "VII_h",
+      "kind": "oracle",
+      "parameters": {
+        "k": 0.01,
+        "A0": 0.005,
+        "eps": 5e-05,
+        "m": 2,
+        "column": "metric",
+        "h": 0.250000000625
+      },
+      "recombination": "table",
+      "observer_frame": "host"
+    },
+    {
+      "name": "VIIh_m2_metric_neg_host",
+      "N6": [
+        0.0099995,
+        0.0100005,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "A3": [
+        0.0,
+        0.0,
+        0.005
+      ],
+      "shear6": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "expected_type": "VII_h",
+      "kind": "oracle",
+      "parameters": {
+        "k": 0.01,
+        "A0": 0.005,
+        "eps": -5e-05,
+        "m": 2,
+        "column": "metric",
+        "h": 0.250000000625
+      },
+      "recombination": "table",
+      "observer_frame": "host"
+    }
+  ],
+  "base": [
+    "VIIh_m1_relative_dust_pos_host",
+    "VIIh_m1_relative_dust_neg_host",
+    "VIIh_m2_metric_pos_host",
+    "VIIh_m2_metric_neg_host"
+  ],
+  "fine": [
+    "VIIh_m1_relative_dust_pos_host",
+    "VIIh_m1_relative_dust_neg_host",
+    "VIIh_m2_metric_pos_host",
+    "VIIh_m2_metric_neg_host"
+  ],
+  "base_steps": 1600,
+  "fine_steps": 3200,
+  "ell_max": 8,
+  "harmonic_lmax": 8,
+  "los_grid": [
+    16,
+    32
+  ],
+  "opacity_scale": 0.25,
+  "oracle_scales": [
+    0.0,
+    0.25,
+    0.5,
+    1.0
+  ],
+  "oracle_L": 16,
+  "tight_L": 20,
+  "tight_scales": [
+    0.25,
+    1.0
+  ],
+  "scope": "counterfactual opacity intervention on exact fixed source background"
+}
