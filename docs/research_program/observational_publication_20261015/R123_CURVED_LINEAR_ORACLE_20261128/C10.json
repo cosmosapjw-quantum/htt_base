@@ -1,0 +1,90 @@
+{
+  "schema": "htt.r123.handoff/1",
+  "base": "d21a15365a9b6e77475e45205ee5b26afa120830",
+  "prior_stage_commits": [
+    "3cb21148c49b9743c9e2036d9f93f3aeb1e73038 R123 R1: scope independent balanced VII tensor response",
+    "693d1f877e946561e820f0171ceb1c2eeb8a27ba R123 R2: curved linear oracle",
+    "00ff07f460922bfaec0b23c227e12f6a8123e9c1 R123 R3: curved linear oracle",
+    "9088f3d5ebf08e27c357d59b598b4977c0fb1e8a R123 R4: curved linear oracle",
+    "e5c61e2ae815ea353ae40a865cfed94ffc3f4790 R123 R5: curved linear oracle",
+    "9ec82a808c7e6237ca4ea1caad9912e3858f5346 R123 R6: curved linear oracle",
+    "1d3093447b8796c73ea87f0f5a3ce957b11e2037 R123 R7: curved linear oracle",
+    "eefde6f359ba82b56e5fc9386dcfee270a68aafa R123 R8: curved linear oracle",
+    "2e6cd78050ea79b72f758af0d34a41e4822fa7ff R123 R9: curved linear oracle",
+    "64f3d71b0946e4606bf26655c3b57da7362dde99 R123 R10: curved linear oracle",
+    "544ff2ef5f49557f585cd7dca03bba976ca5fcc8 R123 C1: curved linear oracle",
+    "491e272d0818096809d05bcee2fe5c2088b34721 R123 C2: curved linear oracle",
+    "07384f13f514a708319fcf15b63db62f99543a2b R123 C3: curved linear oracle",
+    "9c339bbce6aee3c4b63879b82780bc95a1d549a1 R123 C4: curved linear oracle",
+    "13a2fb7a029c6aa79e0a9e474f427d422e316093 R123 C5: implement independent spin-2 Galerkin response",
+    "f57bfb0b98180a451a1d903e0562dbd14e957d60 R123 C6: integrate independent curved tensor oracle and convergence ladder",
+    "7667f31c1d04eaaebee7d6c1d4733011ded442d9 R123 C7: execute balanced VII signed native base scan",
+    "29fa1c9db7a0eb9051555277daebebbc6b241dc7 R123 C8: refine native tensor response and compare signed oracle",
+    "be280a8a7aa96bc1463ae4e744ca115fa5a2ffc4 R123 C9: audit native and independent curved oracle evidence"
+  ],
+  "scope": "balanced VII0/VIIh finite-start non-tilted linear tensor oracle, table-only opacity; R78 unchanged",
+  "counts": {
+    "native_base": 8,
+    "native_fine": 4,
+    "native_angular": 4,
+    "native_smoke": 1,
+    "independent_ODE_solves": 9,
+    "native_raw_verified": 64,
+    "oracle_histories_verified": 9,
+    "scoped_tests_passed": 87
+  },
+  "findings": {
+    "VII0": {
+      "base_error": 0.00022312872961426124,
+      "fine_error": 5.6078161639381365e-05,
+      "angular_delta": 7.742640888882147e-09,
+      "B_over_E": 1.6247893662978474
+    },
+    "VIIh": {
+      "base_error": 0.00023429761388593092,
+      "fine_error": 5.882454917860599e-05,
+      "angular_delta": 5.554233612952257e-09,
+      "B_over_E": 1.476136992752601
+    }
+  },
+  "remaining": [
+    "finite-start balanced tensor sector only; scalar/vector, tilt, generic non-FLRW backgrounds and nonlinear oracle unresolved",
+    "finite Galerkin and time convergence, no rigorous continuum certificate",
+    "no regular-mode AniCLASS amplitude parity",
+    "C4J research drivers not production activated",
+    "historical scalar donor and conditional z<4 tail",
+    "survey covariance/null/physical body and transport not qualified",
+    "independent reviewer NOT_RUN"
+  ],
+  "cleanup": {
+    "removed_scratch": "/home/cosmosapjw/htt-r123-native.7m0Wyu",
+    "verified_removed": true,
+    "scratch_apparent_bytes": 35626487,
+    "new_backup_bytes": 1347164,
+    "approx_net_apparent_bytes": 34279323,
+    "primary_worktrees": [
+      "worktree /home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "HEAD be280a8a7aa96bc1463ae4e744ca115fa5a2ffc4",
+      "branch refs/heads/research/r69-observable-physics-bridges-20261118"
+    ],
+    "preserved_tracked_dirty": [
+      "M docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/COMMANDER/ACQUISITION_STATUS.json",
+      " M docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/COMMANDER/MERGED.json",
+      " D legacy/research_supplements_20261123/COMPONENT_INDEX.json",
+      " D legacy/research_supplements_20261123/CONSOLIDATION_DECISIONS.md",
+      " D legacy/research_supplements_20261123/COVERAGE.json",
+      " D legacy/research_supplements_20261123/EXACT_HELPER_PROVENANCE.json",
+      " D legacy/research_supplements_20261123/FILE_CATALOGUE.json.gz",
+      " D legacy/research_supplements_20261123/README.md",
+      " D legacy/research_supplements_20261123/legacy_exact_helpers.py",
+      " D legacy/research_supplements_20261123/research_primitives.py",
+      " D legacy/research_supplements_20261123/response_primitives.py",
+      " M scripts/r100/source_intake.py",
+      " M scripts/r102/acquire_commander_pair.py",
+      " M scripts/r105/commander_ensemble.py",
+      " M tests/obsstat/test_r102_acquire_commander.py"
+    ],
+    "other_worktrees": "preserved; active or not proven redundant"
+  },
+  "next": "R124: extend finite-start Galerkin oracle to independent longitudinal scalar (m=0) and vector (|m|=1) sectors with correct Codazzi-constrained matter/radiation initial data and observer velocity, or first refine balanced VII tensor response at 6400 steps. Compare curvature/twist parameter scales under physical source constraints; derive an explicit regular-mode initialization bridge separately. Keep survey inference and nonlinear producer integration separate."
+}
