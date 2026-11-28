@@ -59,7 +59,7 @@ NATIVE_ATLAS_MANIFEST = NATIVE_SOLVER_ATLAS_DIR / "ATLAS_MANIFEST.json"
 
 
 def is_native_atlas_present() -> bool:
-    """Check whether a verified native low-ell Bianchi morphology atlas exists on disk."""
+    """Legacy marker presence only; not source or observational validation."""
     return NATIVE_SOLVER_ATLAS_DIR.is_dir() and NATIVE_ATLAS_MANIFEST.is_file()
 
 
@@ -109,6 +109,12 @@ class BianchiTransferAdapter:
                 raise NativeSolverUnavailableError(
                     "Native BASS transfer source declared, but native solver atlas is not installed on disk."
                 )
+
+    @staticmethod
+    def open_deterministic_atlas(manifest: Path, raw_root: Path, receipt: Path, ledger: Path):
+        """Open source-locked homogeneous LOS templates, distinct from transfer(k)."""
+        from common.native_morphology_atlas import NativeMorphologyAtlas
+        return NativeMorphologyAtlas(manifest, raw_root, receipt, ledger)
 
     def evaluate_lowell_transfer(
         self,
@@ -255,6 +261,19 @@ class FamilyIdentificationGate:
                     missing_gates=tuple(missing),
                     blocking_reasons=tuple(reasons),
                 )
+
+        if is_family_identification or requested_tier == ClaimTier.C6_BIANCHI_FAMILY_IDENTIFICATION:
+            # A file marker (or even a verified deterministic sky) does not certify C6.
+            return FamilyCompatibilityGateVerdict(
+                verdict="BLOCKED",
+                requested_tier=requested_tier,
+                allowed_claim_tier=ClaimTier.C0_DIAGNOSTIC,
+                is_family_identification_claimed=True,
+                is_native_atlas_available=native_available,
+                transfer_label="forbidden_unverified",
+                missing_gates=("native_atlas_source_qualification", "external_null_mask_covariance_gates"),
+                blocking_reasons=("Atlas presence cannot establish observational family identification.",),
+            )
 
         # For morphology compatibility (C5) under external transfer:
         if requested_tier == ClaimTier.C5_MORPHOLOGY_COMPATIBILITY:
