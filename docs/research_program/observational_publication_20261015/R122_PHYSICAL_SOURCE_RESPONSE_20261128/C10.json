@@ -1,0 +1,90 @@
+{
+  "schema": "htt.r122.handoff/1",
+  "base": "c69697d715434ce431b5a5329fc7f118e297be7f",
+  "prior_stage_commits": [
+    "e4003ef8f7236c52b7395d70fb8ee73cd169c836 R122 R1: scope source-response crossover and oracle",
+    "4dce6547b1522d4cc43c96dc8c77a5baf8f6e9aa R122 R2: physical source response",
+    "82e93b39094b098836c59c341434730ab5b49c8e R122 R3: physical source response",
+    "1133c92eee37daa4d1991113cc9d3fed7b03f28f R122 R4: physical source response",
+    "a223d22e8dac0b903da3f7cf08ea23eadba888aa R122 R5: physical source response",
+    "7369be16b2fd1848f48b06230219667a689cf77d R122 R6: physical source response",
+    "8753d701873316de8ac2334739cec8c577f36222 R122 R7: physical source response",
+    "68ae22d7316dc4c9e0cebaa55d42c4a7457d2dd3 R122 R8: physical source response",
+    "120f7f2fd11e9230fc67a93e05b49bd1780f94df R122 R9: physical source response",
+    "b80aab6308e43960f78652e5f3e8ce279666ff09 R122 R10: physical source response",
+    "a1e0888285fab121b348731235dc08cd1e7be360 R122 C1: physical source response",
+    "7bbb875e9eda3a31725bde9cc70ed0ee809ea2ad R122 C2: physical source response",
+    "f12b0b1ebebb3dbbe423f422bdf80b70c1511262 R122 C3: physical source response",
+    "56e3f096234b6a5586ec1952c032764dc033036f R122 C4: physical source response",
+    "6ebb5918599a702d91258522a37050dd4c72c353 R122 C5: implement finite-start Einstein-Thomson oracle and native scan",
+    "8ed912b3afc624ae8dbc9e368867e73bd66856d9 R122 C6: independently integrate finite-start response and regressions",
+    "b5f925cef333b1a5b85f3ec6590b0f8d75226ed7 R122 C7: execute crossover and signed I benchmark scans",
+    "0c7802bccae13dc4f8a80185af5912653f767625 R122 C8: refine crossover tangent and independent oracle comparison",
+    "4dd308879c6124d657dabecf37a2a7b5a10d58b1 R122 C9: audit all native response and oracle evidence"
+  ],
+  "scope": "finite-start linear I oracle, VI signed crossover, VII weak-direction time/stencil refinement; R78 unchanged",
+  "counts": {
+    "native_base": 13,
+    "native_fine": 16,
+    "native_replay": 1,
+    "independent_ODE_solves": 2,
+    "native_raw_verified": 139,
+    "oracle_histories_verified": 2,
+    "scoped_tests_passed": 81
+  },
+  "findings": {
+    "VI_crossover_interpolation": [
+      {
+        "bracket": [
+          0.035,
+          0.045
+        ],
+        "log_interpolation": 0.035007537941242374
+      }
+    ],
+    "VI_refined_center_ratio": 0.9995330163506913,
+    "I_fine_full_signed_relative_error": 1.2716610771728718e-06,
+    "VII_empirical_count": 4,
+    "VII_smallest_singular": 0.00023631615892242414,
+    "VII_empirical_error_scale": 7.571359283668403e-05
+  },
+  "remaining": [
+    "finite-start flat I only; no general curved nonlinear oracle or AniCLASS regular-mode parity",
+    "numerical grid comparisons not rigorous continuum error or rank certificate",
+    "C4I research drivers not production activated",
+    "historical scalar donor and conditional z<4 tail",
+    "survey response/covariance/null absent",
+    "independent reviewer NOT_RUN"
+  ],
+  "cleanup": {
+    "removed_scratch": "/home/cosmosapjw/htt-r122-native.rOWgUS",
+    "verified_removed": true,
+    "scratch_apparent_bytes": 123838378,
+    "new_backup_bytes": 333740,
+    "approx_net_apparent_bytes": 123504638,
+    "primary_worktrees": [
+      "worktree /home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "HEAD 4dd308879c6124d657dabecf37a2a7b5a10d58b1",
+      "branch refs/heads/research/r69-observable-physics-bridges-20261118"
+    ],
+    "preserved_tracked_dirty": [
+      "M docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/COMMANDER/ACQUISITION_STATUS.json",
+      " M docs/research_program/observational_publication_20261015/R108_LOS_ATLAS_DATA_20261124/COMMANDER/MERGED.json",
+      " D legacy/research_supplements_20261123/COMPONENT_INDEX.json",
+      " D legacy/research_supplements_20261123/CONSOLIDATION_DECISIONS.md",
+      " D legacy/research_supplements_20261123/COVERAGE.json",
+      " D legacy/research_supplements_20261123/EXACT_HELPER_PROVENANCE.json",
+      " D legacy/research_supplements_20261123/FILE_CATALOGUE.json.gz",
+      " D legacy/research_supplements_20261123/README.md",
+      " D legacy/research_supplements_20261123/legacy_exact_helpers.py",
+      " D legacy/research_supplements_20261123/research_primitives.py",
+      " D legacy/research_supplements_20261123/response_primitives.py",
+      " M scripts/r100/source_intake.py",
+      " M scripts/r102/acquire_commander_pair.py",
+      " M scripts/r105/commander_ensemble.py",
+      " M tests/obsstat/test_r102_acquire_commander.py"
+    ],
+    "other_worktrees": "preserved; active or not proven redundant"
+  },
+  "next": "R123: extend the independent finite-start linear oracle from I to balanced VII0/VIIh via Lie-generated streaming and screen rotation on a fixed near-FLRW trajectory; compare signed +/- seed mode response under identical opacity and frame. Study physically scaled curvature/shear response angle and observer-conditional morphology. Keep regular-mode and survey-likelihood gates separate."
+}
